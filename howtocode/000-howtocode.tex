@@ -1,0 +1,41 @@
+% Organisation des Buchprojektes
+%
+% Einbinden der Präambel
+%
+\include{000-preamble}
+%
+% Beginn des Dokumentes
+%
+\begin{document}
+%
+% Seitenzahlen unterdrücken
+\pagestyle{empty}
+\addtocontents{toc}{\protect\thispagestyle{empty}} 
+%
+% Die Titelei des Buches. 
+%
+\include{010-title-page-01}
+\include{020-title-page-02}
+\include{030-title-page-03}
+\include{040-title-page-04}
+%\include{050-preface}
+%\include{060-dedication}
+\include{100-table-contents}
+%
+% Beginn des Buchblocks
+% Seitenzahlen anzeigen
+\pagestyle{plain}
+§
+% Einfügen der einzelnen Kapitel - jeweils als eigene Datei
+\include{110-chapter-01}
+%
+%\include{900-anhang}
+%\include{901-table-pictures}
+%\include{902-table-tables}
+%\include{903-table-listings}
+%\include{904-table-bibliography}
+%\include{905-glossary}
+%\include{906-abbrevations}
+%\include{908-indices}
+%\include{990-author}
+\end{document}

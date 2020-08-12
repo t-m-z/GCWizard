@@ -1,0 +1,94 @@
+\documentclass{scrbook}
+\KOMAoptions{
+    paper=155mm:220mm, 
+    BCOR=10mm, 
+    DIV=calc, 
+    fontsize=11pt,
+    twoside=on,
+    headinclude=false, 
+    footinclude=false, 
+    headings=normal,
+    chapterentrydots=false,
+    open=right,
+    parskip=full*,
+    toc=index,
+    toc=listof,
+    toc=bibliography
+    }
+\usepackage{tocstyle}
+\usetocstyle{KOMAlike}
+\usepackage{chngcntr} 
+\counterwithout{footnote}{chapter}
+\usepackage{siunitx}
+\sisetup{arc-separator = \,}
+\usepackage{wrapfig}
+\usepackage[protrusion=true,expansion=false]{microtype}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[german,ngerman]{babel}
+\usepackage[autostyle,german=guillemets]{ csquotes}
+\usepackage{graphicx}
+\usepackage{subfig}
+\usepackage{floatrow}
+\usepackage{rotating}
+\usepackage{filecontents}
+\begin{filecontents}{mystyle.ist}
+    headings_flag  1 
+    heading_prefix "{\\bfseries " 
+    heading_suffix "\\hfil}\\nopagebreak\n"
+    delim_0 "\\dotfill" 
+    delim_1 "\\dotfill" 
+    delim_2 "\\dotfill" 
+    delim_r "--" 
+    suffix_2p "\\,f." 
+    suffix_3p "\\,ff." 
+    quote '+' 
+\end{filecontents}
+\usepackage{imakeidx}
+\makeindex[name=Stichwortverzeichnis,title=Stichwortverzeichnis,columns=2, options=-s mystyle]
+\makeindex[name=Personenverzeichnis,title=Personenverzeichnis,columns=2, options=-s mystyle]
+\indexsetup{toclevel=section,noclearpage}
+\usepackage[font=small]{idxlayout}
+\usepackage{scrlayer-scrpage}
+\RedeclareSectionCommands[toclinefill=\hfill]{section,subsection}
+\usepackage{ebgaramond}
+\usepackage[hyphens]{url}
+\expandafter\def\expandafter\UrlBreaks\expandafter{\UrlBreaks%  save the current one
+\do\a\do\b\do\c\do\d\do\e\do\f\do\g\do\h\do\i\do\j%
+\do\k\do\l\do\m\do\n\do\o\do\p\do\q\do\r\do\s\do\t%
+\do\u\do\v\do\w\do\x\do\y\do\z\do\A\do\B\do\C\do\D%
+\do\E\do\F\do\G\do\H\do\I\do\J\do\K\do\L\do\M\do\N%
+\do\O\do\P\do\Q\do\R\do\S\do\T\do\U\do\V\do\W\do\X%
+\do\Y\do\Z}
+\usepackage{pifont}
+\usepackage{longtable}
+\usepackage{tabularx}
+\usepackage{listings}
+\lstset{numbers=left, 
+        numberstyle=\tiny, 
+        stepnumber=1, 
+        numbersep=5pt,
+        basicstyle=\ttfamily\footnotesize\raggedright,
+        breaklines=true,
+        breakindent=0pt,
+        language={[LaTeX]TeX}}
+\lstset{literate=%
+    {Ö}{{\"O}}1
+    {Ä}{{\"A}}1
+    {Ü}{{\"U}}1
+    {ß}{{\ss}}1
+    {ü}{{\"u}}1
+    {ä}{{\"a}}1
+    {ö}{{\"o}}1
+    {~}{{\textasciitilde}}1
+}
+\pagenumbering{arabic}
+\setkomafont{disposition}{\bfseries}
+\setkomafont{caption}{\footnotesize\selectfont}
+\setkomafont{captionlabel}{\footnotesize}
+\graphicspath{}
+\deffootnote[1em]{1em}{0pt}{\textsuperscript{\thefootnotemark}}
+\deffootnotemark{\thefootnotemark\,}
+\renewcommand*{\dictumwidth}{0.66\textwidth}
+\renewcommand*\raggeddictumtext{}
+\setkomafont{descriptionlabe}{\normalfont\bfseries}
