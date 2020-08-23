@@ -80,3 +80,9 @@ web
 /assets/tokens/mapbox
 *.docx
 *.pdf
+*.aux
+*.gz
+*.lot
+*.toc
+*.lol
+*.lof
