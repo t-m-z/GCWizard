@@ -1,5 +1,27 @@
-/chapter{The GCWizard - working with git}
+\chapter{The GCWizard - working with git}\label{chapter-git}
 
-/section{Branching and forking}
+\section{Branching and forking}
+\enquote{Master branch}: This branch should always contain the stable code of the current productive version. So, if the current productive version would be 1.41.3, this branch's last commit contains exactly the code for this version. 
+So, when the new, following version 1.42.0 is released, the version branch \enquote{1.42.0} will be merged onto the \enquote{master}. So, checking out the master should reflect the code of the released app. 
 
-/section{Pull requests}
+Any contributions need to be done on a new version branch (e.g. \enquote{1.43.0} for a new feature version or \enquote{1.42.1} for a patch version with bug fixes, but without any new features).
+
+\enquote{Version branch}: Every single upcoming version has its own version branch. E.g. the next version would be 1.42.0, then there's a branch with name \enquote{1.42.0}. All features, fixes, etc. should be merged onto this version branch (PR destination branch is the version branch). You can think of it as the current temporary master branch.
+
+\enquote{Feature branch}: Every single feature needs its own branch. If you want to contribute a new feature \enquote{Increased N}, please create a branch with a corresponding name \(maybe \enquote{increased_n}\) from the current version branch. If you worked on two different features simultaneously, you would need to create two different feature branches. 
+
+This allows Mark to merge the features separately, maybe one includes some errors but the other one is ready to merge. The final PR's destination branch is the version branch, of course. 
+
+If there's just a small bug fix or a typo, it is ok, to do this the pragmatic way without creating a specific branch, but this should be an exception for really small things!
+
+
+\section{Pull requests}
+If you believe, your contribution ist ready for review and merge, you have di create an PR from your feature branch to the current version branch. Talking about codings/decodings or other algorithmic stuff you have to provide at least
+\begin{itemize}
+    \item registry.dart
+    \item main\_view.dart
+    \item de.json
+    \item en.json
+    \item the widget-dart-file
+    \item the logic-dart-file
+\end{itemize}

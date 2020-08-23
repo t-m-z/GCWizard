@@ -25,7 +25,7 @@
 \usepackage[protrusion=true,expansion=false]{microtype}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
-\usepackage[german,ngerman]{babel}
+\usepackage[english]{babel}
 \usepackage[autostyle,german=guillemets]{ csquotes}
 \usepackage{graphicx}
 \usepackage{subfig}
@@ -44,6 +44,9 @@
     suffix_3p "\\,ff." 
     quote '+' 
 \end{filecontents}
+\usepackage{dirtree}
+\usepackage{tikz}
+\usepackage{fontawesome}
 \usepackage{imakeidx}
 \makeindex[name=Stichwortverzeichnis,title=Stichwortverzeichnis,columns=2, options=-s mystyle]
 \makeindex[name=Personenverzeichnis,title=Personenverzeichnis,columns=2, options=-s mystyle]
@@ -51,7 +54,6 @@
 \usepackage[font=small]{idxlayout}
 \usepackage{scrlayer-scrpage}
 \RedeclareSectionCommands[toclinefill=\hfill]{section,subsection}
-\usepackage{ebgaramond}
 \usepackage[hyphens]{url}
 \expandafter\def\expandafter\UrlBreaks\expandafter{\UrlBreaks%  save the current one
 \do\a\do\b\do\c\do\d\do\e\do\f\do\g\do\h\do\i\do\j%
@@ -91,4 +93,4 @@
 \deffootnotemark{\thefootnotemark\,}
 \renewcommand*{\dictumwidth}{0.66\textwidth}
 \renewcommand*\raggeddictumtext{}
-\setkomafont{descriptionlabe}{\normalfont\bfseries}
+\setkomafont{descriptionlabel}{\normalfont\bfseries}

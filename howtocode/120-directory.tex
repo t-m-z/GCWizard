@@ -1,0 +1,207 @@
+% https://tex.stackexchange.com/questions/23647/drawing-a-directory-listing-a-la-the-tree-command-in-tikz
+%
+\newcommand{\FTdir}{}
+\def\FTdir(#1,#2,#3){%
+    \FTfile(#1,{{\color{black!40!white}\faFolderOpen}\hspace{0.2em}#3})
+    (tmp.west)++(0.8em,-0.4em)node(#2){}
+    (tmp.west)++(1.5em,0)
+    ++(0,-1.3em) 
+}
+
+\newcommand{\FTfile}{}
+\def\FTfile(#1,#2){%
+    node(tmp){}
+    (#1|-tmp)++(0.6em,0)
+    node(tmp)[anchor=west,black]{\ttfamily #2}
+    (#1)|-(tmp.west)
+    ++(0,-1.2em) 
+}
+
+\newcommand{\FTroot}{}
+\def\FTroot{tmp.west}
+
+\subsection{Top-level structure}
+\begin{tikzpicture}%
+\draw[color=black!60!white]
+\FTdir(\FTroot,root,GCWizard){       % root: parent = \FTroot
+    
+    \FTdir(root,android,android){       % normal dir: (parentID, currentID, label)
+    }
+    
+%    ++(0,-0.5em)                % additional space if neded
+    
+    \FTdir(root,assets,assets) {
+    }
+
+%++(0,-0.5em)
+
+    \FTdir(root,ios,ios) {
+    }
+    
+%    ++(0,-0.5em)
+    
+    \FTdir(root,lib,lib){
+    }
+
+    \FTdir(root,test,test){
+    }
+};
+\end{tikzpicture}
+\captionof{figure}{Top-level structure}
+\label{fig: structure-toplevel}
+
+\begin{description}
+    \item[\textbackslash android] contains the data for building the android app.
+    \item[\textbackslash assets] contains the ressorce files e.g. icons, symbols, language-files.
+    \item[\textbackslash ios] contains the data for building the iOS app.
+    \item[\textbackslash lib] contains the source for the frontend and the backend.
+    \item[\textbackslash test] contains the tests.
+\end{description}
+
+\subsection{assets-directory}
+\begin{tikzpicture}%
+\draw[color=black!60!white]
+\FTdir(\FTroot,root,GCWizard){       % root: parent = \FTroot
+    
+    \FTdir(root,assets,assets) {
+        \FTdir(assets,coordinates,coordinates){}
+        \FTdir(assets,graphics,graphics){}
+        \FTdir(assets,i18n,i18n){
+            \FTfile(i18n,de.json)
+            \FTfile(i18n,en.json)
+        }
+        \FTdir(assets,logo,logo){}
+        \FTdir(assets,symboltables,symbol\_tables){
+            \FTdir(symboltables,various,\dots)
+        }
+    }
+};
+\end{tikzpicture}
+\captionof{figure}{Sub-directory assets}
+\label{fig: structure-assets}
+
+\begin{description}
+    \item[\textbackslash coordinates] contains the icon-files for the coordinates menu.
+    \item[\textbackslash graphics] contains the ressource files e.g. icons, symbols, language-files.
+    \item[\textbackslash i18n] contains the language-files; currently English and German are supported. For other languages thes files have to be translated.
+    \item[\textbackslash logo] contains the files for the GCWizard-logo.
+    \item[\textbackslash smybol\_tables] contains all the symbols. For every symbol table exists a separate subdirectory.
+\end{description}
+
+\subsection{lib-directory}
+\begin{tikzpicture}%
+\draw[color=black!60!white]
+\FTdir(\FTroot,root,GCWizard){       % root: parent = \FTroot
+    
+    \FTdir(root,lib,lib){
+        \FTdir(lib,database,database){
+            \FTdir(database,common,common)
+            \FTdir(database,formulasolver,formula\_solver)
+            \FTdir(database,logs,logs)
+        }
+        \FTdir(lib,i18n,i18n){}
+        \FTdir(lib,logic,logic){
+            \FTdir(logic,tools,tools){
+                \FTdir(tools,coords,coords)
+                \FTdir(tools,cryptoandencodings,crypto\_and\_encodings)
+                \FTdir(tools,formulasolver,formuls\_solver)
+                \FTdir(tools,games,games)
+                \FTdir(tools,scienceandtechnology,science\_and\_technology)
+            }
+            \FTdir(logic,units,units)
+        }
+        \FTdir(lib,persistence,persistence)
+        \FTdir(lib,theme,theme)
+        \FTdir(lib,utils,utils)
+        \FTdir(lib,widgets,widgets){
+            \FTdir(widgets,common,common){}
+            \FTdir(widgets,mainmenu,main\_menu){}
+            \FTdir(widgets,selectorlists,selector\_lists){}
+            \FTdir(widgets,tools,tools){
+                \FTdir(tools,coords,coords)
+                    \FTdir(tools,cryptoandencodings,crypto\_and\_encodings)
+                    \FTdir(tools,formulasolver,formuls\_solver)
+                    \FTdir(tools,games,games)
+                    \FTdir(tools,scienceandtechnology,science\_and\_technology)
+            }
+            \FTdir(widgets,utils,utils){}
+            \FTfile(widgets,favorites.dart)
+            \FTfile(widgets,main\_menu.dart)
+            \FTfile(widgets,main\_view.dart)
+            \FTfile(widgets,registry.dart)
+        }
+        \FTfile(lib,main.dart)
+    }
+};
+\end{tikzpicture}
+\captionof{figure}{Sub-directory lib}
+\label{fig: structure-lib}
+
+\begin{description}
+    \item[\textbackslash database] contains the source code for managing the internal database.
+    \item[\textbackslash i18n] contains the source code for providing the internationalization.
+    \item[\textbackslash logic] contains the source code for the backend.
+    \item[\textbackslash persistence] contains the additional source code for managing formulas and calculating coordinates..
+    \item[\textbackslash theme] contains the source code for design of the front end.
+    \item[\textbackslash utils] contains the source code for common usable definitions.
+    \item[\textbackslash widgets] contains the source code for creating the frontend.
+\end{description}
+
+\subsection{test-directory}
+\begin{tikzpicture}%
+\draw[color=black!60!white]
+\FTdir(\FTroot,root,GCWizard){       % root: parent = \FTroot
+    
+    \FTdir(root,test,test){
+        \FTdir(test,logic,logic) {
+            \FTdir(logic,tools, tools){
+                \FTdir(tools,coords,coords){}
+                \FTdir(tools,cryptoandencodings,crypto\_and\_encodings)
+                \FTdir(tools,formulasolver,formula\_solver)
+                \FTdir(tools,scienceandtechnology,science\_and\_technology)
+            }
+        }
+        \FTdir(test,utils,utils){}
+    }
+};
+\end{tikzpicture}
+\captionof{figure}{Sub-directory tests}
+\label{fig: structure-tests}
+
+\begin{description}
+    \item[\textbackslash android] contains the data for building the android app.
+    \item[\textbackslash assets] contains the ressorce files e.g. icons, symbols, language-files.
+    \item[\textbackslash ios] contains the data for building the iOS app.
+    \item[\textbackslash lib] contains the source for the frontend and the backend.
+    \item[\textbackslash test] contains the tests.
+\end{description}
+
+\subsection{Important for contributers}
+\subsubsection{Directories}
+\begin{description}
+    \item[\textbackslash lib\textbackslash logic\textbackslash tools\textbackslash coords] 
+    \item[\textbackslash lib\textbackslash logic\textbackslash tools\textbackslash crypto\_and\_encodings] 
+    \item[\textbackslash lib\textbackslash logic\textbackslash tools\textbackslash formula\_solver] 
+    \item[\textbackslash lib\textbackslash logic\textbackslash tools\textbackslash games] 
+    \item[\textbackslash lib\textbackslash logic\textbackslash tools\textbackslash science\_and\_technology] 
+    \item[\textbackslash lib\textbackslash logic\textbackslash utils] 
+    \item[\textbackslash lib\textbackslash widget\textbackslash common] 
+    \item[\textbackslash lib\textbackslash widget\textbackslash main\_menu] 
+    \item[\textbackslash lib\textbackslash widget\textbackslash selector\_lists] 
+    \item[\textbackslash lib\textbackslash widget\textbackslash tools\textbackslash coords] 
+    \item[\textbackslash lib\textbackslash widget\textbackslash tools\textbackslash crypto\_and\_encodings] 
+    \item[\textbackslash lib\textbackslash widget\textbackslash tools\textbackslash formul\_solver] 
+    \item[\textbackslash lib\textbackslash widget\textbackslash tools\textbackslash games] 
+    \item[\textbackslash lib\textbackslash widget\textbackslash tools\textbackslash science\_and\_technology] 
+    \item[\textbackslash lib\textbackslash widget\textbackslash utils] 
+\end{description}
+
+\subsubsection{Files}
+\begin{description}
+    \item[\textbackslash assets\textbackslash i18n\textbackslash de.json] 
+    \item[\textbackslash assets\textbackslash i18n\textbackslash en.json] 
+    \item[\textbackslash lib\textbackslash widgets\textbackslash main\_view.dart] 
+    \item[\textbackslash lib\textbackslash widgets\textbackslash registry.dart] 
+\end{description}
+
+

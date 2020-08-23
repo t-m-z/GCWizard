@@ -1,5 +1,44 @@
-/chapter{Installing an Integrated Development Environment}
+\chapter{Installing an Integrated Development Environment}
 
-/section{Android Studio}
+Although GCWizrads supports Android and iOS, I focus on Android -- it is my favourite operating system. Hence iOS setup is missing at the moment.
 
-/section{Flutter}
+\section{Source Code}
+The Source code is provided at github and can be downloaded with \url{https://github.com/S-Man42/GCWizard.git} for https or \url{git@github.com:S-Man42/GCWizard.git} for SSH.
+
+Further details how Mark works git are provided in Chapter \ref{chapter-git} \enquote{The GCWizard -- Working with git}
+
+\section{Flutter}
+
+Flutter is Google’s UI toolkit for building natively compiled applications for mobile, web, and desktop from a single codebase.
+
+Download and extract Flutter SDK from \url{https://flutter.dev/docs/get-started/install}.
+
+\section{Android Studio}
+Android Studio is the official integrated development environment (IDE) for Google's Android operating system, built on JetBrains' IntelliJ IDEA software and designed specifically for Android development.
+
+Download and install Android Studio (with Android Virtual Device) from \url{https://developer.android.com/studio}. At first start, follow the install instructions. This should include the installation of the Android SDK (minimum API Level 28); if not, do it manually: \newline
+Main menu $\rightarrow$ Tools $\rightarrow$ SDK Manager $\rightarrow$ System settings $\rightarrow$ Android SDK.
+
+When asked, import existing project.
+
+
+Install Flutter/Dart plugin: Main menu $\rightarrow$ File $\rightarrow$ Settings $\rightarrow$ Plugins $\rightarrow$ Search for \enquote{flutter} $\rightarrow$ Install (should install Dart automatically) $\rightarrow$ Restart\newline
+After restart, set Flutter SDK path: Main menu $\rightarrow$ File $\rightarrow$ Settings $\rightarrow$ Languages \& Frameworks $\rightarrow$ Flutter $\rightarrow$ Flutter SDK path $\rightarrow$ Your path where you extracted flutter before.
+
+\subsection{Install emulator}
+Open AVD Manager (Toolbar, Button with Smartphone/Android logo) $\rightarrow$ Create Virtual Device $\rightarrow$ Choose one (e.g. the *Pixel 3*) .
+Choose Android Version, highest API level recommended (currently Android Q, API level 29) -> Download $\rightarrow$ Accept.
+After finishing Download, finish device creation; You can start the device now from the AVD Manager (Play button). Please wait until the device has booted.
+
+
+\subsection{Get the project ready for compiling}
+A message should appear at the top of the code view: \enquote{Packages get has not been run}. If so: Click \enquote{Get dependencies}; if not: Go to \enquote{Terminal} at bottom of the IDE and type in \enquote{flutter pub get}.
+
+Wait a minute for new indexing; afterwards there shouldn't be any error message, anymore.
+
+\subsection{Run project}
+Run \enquote{main.dart}. Sometimes, the IDE needs a moment to recognize the emulator, so wait a moment and try a second time; the first start may take a while.
+
+From now on, every code change will be deployed to the app immediately after saving due to the \enquote{*Hot Reload} feature of the IDE.
+
+
