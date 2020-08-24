@@ -24,3 +24,36 @@ conditions ? :
 \end{description}
 
 \subsection{Continuosly computing the input}
+- split the input into a list
+- map every element of the list
+- join the list - maybe with a delimiter
+
+like in Morse
+
+  if (input == null || input == '')
+    return '';
+
+  return input
+         .toUpperCase()
+         .split('')
+         .map((character) {
+            if (character == ' ')
+              return '|';
+    
+            var morse = AZToMorse[character];
+            return morse != null ? morse : '';
+          })
+         .join(String.fromCharCode(8195)); // using wide space
+
+
+\subsection{Error handling}
+return 0
+return ''
+return null
+
+class IncreaseNOutput(){
+final state;
+final error;
+final result;
+}
+this.state  this.error   this.result
