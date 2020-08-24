@@ -55,7 +55,7 @@ Your directories have to be sub-directories of \enquote{\textbackslash assets\te
 You can find more details about working with git in chapter \ref{chapter-git}. 
 
 \section{Tools for Encodings and decodings, Scientific and technology or games}
-The moste challenging part ist the contribution with new features. As an example for this step-by-step-tutorial we will create a feature which increases and decreases a given number.
+The most challenging part is the contribution with new features. As an example for this step-by-step-tutorial we will create a feature which increases and decreases a given number.
 
 \subsection{Building the Backend -- Logic}
 The business logic is located in \textbackslash lib\textbackslash logic. For crypto tools you should choose the path \enquote{\textbackslash lib\textbackslash logic\textbackslash tools\textbackslash crypto\_and\_encodings}. 
@@ -83,11 +83,26 @@ decryptIncreasedN(int number) {
 \label{fig: logic}
 
 \subsection{Building the Frontend -- Widget}
+In Flutter, everything is a widget. Widgets are just tiny chunks of UI that you can combine to make a complete app. Building an app Flutter is like building a lego set — piece by piece.
+Widgets are nested inside of eachother to build your app. Even the root of your app is just a widget. It’s widgets all the way down.
+The most important part of using Flutter Widgets effectively is designing your lowest level widgets to be reusable.
+
+Widget classes have (usually) only one requirement: it must have a build method which returns other Widgets. The only exception to this rule is low-level widgets like ‘Text’ that return primitive types like Strings or numbers, usually.
+StatefulWidget one has a concept of state within the Widget and some built in methods that tells Flutter to re-render if that state changes. This is a key concept in Flutter.
+It’s actually two classes: the state object and the widget. 
+
 Widgets are located in \enquote{/lib/widgets/}, The sub directory, again, follows the structure of the logic directory. So, your widget should be located into \enquote{/lib/widgets/tools/crypto\_and\_encodings/increased\_n.dart}.
 
 The widget structure supports you by encapsuling the boiler plate code for the simple widget creation, the navigation to the widget, the scrolling, the title and so on. You simply have to write a layout for inputs and outputs. All widgets are of type \enquote{StatefulWidget}, their state management -- if you like, their whole frontend logic -- is in their State-class. The most important one is the build()-method in the state class, which will be called by the framework to build your frontend.
 
 Usually -- as long as no-one has a better idea -- you will return a Column()-widget, which layouts your text fields and output fields and everything else in vertically order.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.7\linewidth]{Bilder/layout-high-level}
+    \caption{Layout areas}
+    \label{fig:layout-high-level}
+\end{figure}
  
 It's very important that you always import the widgets from the \enquote{material.dart} and not the \enquote{cupertino.dart}, which mostly contains the same widgets, but which is only for iOS.
 
