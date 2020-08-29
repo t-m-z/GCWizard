@@ -170,7 +170,7 @@
 
 \begin{description}
     \item[\textbackslash android] contains the data for building the android app.
-    \item[\textbackslash assets] contains the ressorce files e.g. icons, symbols, language-files.
+    \item[\textbackslash assets] contains the ressource files e.g. icons, symbols, language-files.
     \item[\textbackslash ios] contains the data for building the iOS app.
     \item[\textbackslash lib] contains the source for the frontend and the backend.
     \item[\textbackslash test] contains the tests.
@@ -179,30 +179,47 @@
 \subsection{Important directories and files for contributers}
 \subsubsection{Directories}
 \begin{description}
-    \item[\textbackslash lib\textbackslash logic\textbackslash tools\textbackslash coords] 
-    \item[\textbackslash lib\textbackslash logic\textbackslash tools\textbackslash crypto\_and\_encodings] 
-    \item[\textbackslash lib\textbackslash logic\textbackslash tools\textbackslash formula\_solver] 
-    \item[\textbackslash lib\textbackslash logic\textbackslash tools\textbackslash games] 
-    \item[\textbackslash lib\textbackslash logic\textbackslash tools\textbackslash science\_and\_technology] 
-    \item[\textbackslash lib\textbackslash logic\textbackslash utils] 
-    \item[\textbackslash lib\textbackslash widget\textbackslash common] 
-    \item[\textbackslash lib\textbackslash widget\textbackslash common\textbackslash base] 
-    \item[\textbackslash lib\textbackslash widget\textbackslash main\_menu] 
-    \item[\textbackslash lib\textbackslash widget\textbackslash selector\_lists] 
-    \item[\textbackslash lib\textbackslash widget\textbackslash tools\textbackslash coords] 
-    \item[\textbackslash lib\textbackslash widget\textbackslash tools\textbackslash crypto\_and\_encodings] 
-    \item[\textbackslash lib\textbackslash widget\textbackslash tools\textbackslash formul\_solver] 
-    \item[\textbackslash lib\textbackslash widget\textbackslash tools\textbackslash games] 
-    \item[\textbackslash lib\textbackslash widget\textbackslash tools\textbackslash science\_and\_technology] 
-    \item[\textbackslash lib\textbackslash widget\textbackslash utils] 
+    \item[\textbackslash lib\textbackslash logic\textbackslash] This directory with its subdirectories provides all the stuff for the backend.
+    \begin{description}
+        \item[tools] This directory with its subdirectories provides all the stuff for the
+        \begin{description}
+            \item[coords] Methods algorithms to calculate coordinates
+            \item[crypto\_and\_encodings] Methods for encryption/decryption or encoding/decoding
+            \item[formula\_solver] Methods for the formula solver
+            \item[games] Methods for encryption/decryption or encoding/decoding due to games like Scrabble, Sudoku etc.
+            \item[science\_and\_technology] Methods and calculations for scientific stuff
+        \end{description}
+        \item[units] These files provide all units which can be used for calculation like in Converting Units, Windchill, Heat Index, Beaufort
+    \end{description}
+    \item[\textbackslash lib\textbackslash utils\textbackslash] This directory contains common used definitions like alphabets, constants etc.
+    \item[\textbackslash lib\textbackslash widget\textbackslash] This directory with its subdirectories provides all the stuff for the frontend.
+    \begin{description}
+        \item[common] This directory with its subdirectories provides all the widgets for input and output.
+        \item[selector\_lists] This directory contains all dart-files to create submenues.
+        \item[tools] This directory with its subdirectories contains all the widgets.
+        \begin{description}
+            \item[coords] Widgets to calculate coordinates
+            \item[crypto\_and\_encodings] Widgets for encryption/decryption or encoding/decoding
+            \item[formula\_solver] Widgets for the formula solver
+            \item[games] Widgets for encryption/decryption or encoding/decoding due to games like Scrabble, Sudoku etc.
+            \item[science\_and\_technology] Widgets and calculations for scientific stuff
+        \end{description}
+    \end{description}
 \end{description}
 
 \subsubsection{Files}
 \begin{description}
-    \item[\textbackslash assets\textbackslash i18n\textbackslash de.json] 
-    \item[\textbackslash assets\textbackslash i18n\textbackslash en.json] 
-    \item[\textbackslash lib\textbackslash widgets\textbackslash main\_view.dart] 
-    \item[\textbackslash lib\textbackslash widgets\textbackslash registry.dart] 
+    \item[\textbackslash assets\textbackslash i18n\textbackslash de.json] Internationalization for German language.
+    \item[\textbackslash assets\textbackslash i18n\textbackslash en.json] Internationalization for English language.
+    \item[\textbackslash lib\textbackslash widgets\textbackslash main\_view.dart] Register all classes
+    \item[\textbackslash lib\textbackslash widgets\textbackslash registry.dart] Define all classes with their metadata
+    \begin{description}
+        \item[tool] Name of the Class.
+        \item[i18nPrefix] links the tool to the internationalization.
+        \item[category] ToolCategory.CRYPTOGRAPHY, .SCIENCE\_AND\_TECHNOLOGY,
+        \item[searchStrings] Strings for the search - with these keywords the tool can be found.
+        \item[iconPath] if there should be an icon displayed, the paths has to be entered here.
+    \end{description}
 \end{description}
 
 
