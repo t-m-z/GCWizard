@@ -1,73 +1,196 @@
+\tikzstyle{every node}=[thick,anchor=west, rounded corners, font={\scriptsize\ttfamily}, inner sep=2.5pt]
+\tikzstyle{selected}=[draw=black,fill=black!10]
+\tikzstyle{root}=[selected, fill=black!20]
+
 \addchap{GCW Widgets}
 \section{Structuring the layout}
 \subsection{GCWDivider}
+\begin{tikzpicture}
+    \node [root] {GCWDivider}
+    child { node [selected] {Divider}
+    };
+\end{tikzpicture}
+\captionof{figure}{GCWDivider}
+\label{fig: GCWDivider}
 \begin{table}[H]
 \begin{tabular}[h]{p{2cm}p{9cm}}
     \caption{GCWDivider}
-    Aim       & \\
-    Import    & \\
-    Parameter & \\
+    Aim       & Draws a horizontal line\\
+    Import    & GCWizard/lib/widgets/common/base/gcw\_divider.dart\\
+    Parameter & --\\
+    Example   & \begin{lstlisting}
+...
+GCWDivider(),
+...
+                \end{lstlisting}\\
     \label{tab:GCWDivider}
 \end{tabular}
 \end{table}
+\newpage
 
 \subsection{GCWTextDivider}
+\begin{tikzpicture}
+    \node [root] {GCWTextDivider}
+    child { node [selected] {GCWDivider}
+        edge from parent [-]
+        child { node [selected] {Divider}
+        };
+    };
+\end{tikzpicture}
+\captionof{figure}{GCWTextDivider}
+\label{fig: GCWTextDivider}
 \begin{table}[H]
 \begin{tabular}[h]{p{2cm}p{9cm}}
     \caption{GCWTextDivider}
-    Aim       & \\
-    Import    & \\
-    Parameter & \\
+    Aim       & Prints a text and fill with a horizontal line.\\
+    Import    & GCWizard/lib/widgets/common/gcw\_text\_divider.dart\\
+    Parameter & text String\\
+    Example   & \begin{lstlisting}
+...
+GCWTextDivider(
+  text: i18n(context, 'common_output')
+),
+...
+                \end{lstlisting}\\
     \label{tab:GCWTextDivider}
 \end{tabular}
 \end{table}
 
+\newpage
 \section{Input}
 \subsection{GCWTextfield}
+\begin{tikzpicture}
+    \node [root] {GCWTextfield}
+    child { node [selected] {TextFormField}
+        edge from parent [-]
+    };
+\end{tikzpicture}
+\captionof{figure}{GCWTextfield}
+\label{fig: GCWTextfield}
 \begin{table}[H]
 \begin{tabular}[h]{p{2cm}p{9cm}}
     \caption{GCWTextfield}
-    Aim       & \\
-    Import    & \\
-    Parameter & \\
+    Aim       & Get an input; with a given TextInputFormatter you can mask the input\\
+    Import    & GCWizard/lib/widgets/common/base/gcw\_textfield.dart\\
+    Parameter & TextEditingController controller\newline
+                Function onChanged\newline
+                Function validate\newline
+                List<TextInputFormatter> inputFormatters\newline
+                TextInputType keyboardType\newline
+                hintText\newline
+                FocusNode focusNode\newline
+                autofocus\newline
+                icon\newline
+                filled\newline
+                maxLength\newline
+                maxLines\newline
+                fontSize\newline\\
+    Example   & \\
     \label{tab:GCWTextfield}
 \end{tabular}
 \end{table}
 
+\newpage
 \subsection{GCWDropdownButton}
+\begin{tikzpicture}
+    \node [root] {GCWDropdownButton}
+    child { node [selected] {DropdownButton}
+        edge from parent [-]
+    };
+\end{tikzpicture}
+\captionof{figure}{GCWDropdownButton}
+\label{fig: GCWDropdownButton}
 \begin{table}[H]
 \begin{tabular}[h]{p{2cm}p{9cm}}
     \caption{GCWDropdownButton}
-    Aim       & \\
-    Import    & \\
-    Parameter & \\
+    Aim       & shows a Dropdown-List\\
+    Import    & GCWizard/lib/widgets/common/base/gcw\_dropdownbutton.dart\\
+    Parameter & items\newline
+                value\newline
+                Function onChanged\\
+    Example   & \\
     \label{tab:GCWDropdownButton}
 \end{tabular}
 \end{table}
 
+\newpage
 \section{Numeral input}
 \subsection{GCWDoubleSpinner}
+\begin{tikzpicture}
+    \node [root] {GCWDoubleSpinner}
+    child { node [selected] {GCWText}
+        child { node [selected] {SelectableText}
+        }
+    }
+    child [missing]
+    child { node [selected] {GCWIconButton}
+        edge from parent [-]
+        child { node [selected] {OutlineButton}
+        }
+    }
+    child [missing]
+    child { node [selected] {GCWDoubleTextfield}
+        child { node [selected] {GCWTextfield}
+            child { node [selected] {TextFormField}
+                edge from parent [-]
+            }
+        }
+    };
+\end{tikzpicture}
+\captionof{figure}{GCWDoubleSpinner}
+\label{fig: GCWDoubleSpinner}
 \begin{table}[H]
 \begin{tabular}[h]{p{2cm}p{9cm}}
     \caption{GCWDoubleSpinner}
     Aim       & \\
-    Import    & \\
-    Parameter & \\
+    Import    & GCWizard/lib/widgets/common/gcw\_double\_spinner.dart\\
+    Parameter & TextEditingController controller\newline
+                Function onChanged\newline
+                title\newline
+                value\newline
+                min\newline
+                max\newline
+                numberDecimalDigits\newline
+                SpinnerLayout layout\newline
+                FocusNode focusNode\\
+    Example   & \\
     \label{tab:GCWDoubleSpinner}
 \end{tabular}
 \end{table}
 
+\newpage
 \subsection{GCWDoubleTextfield}
+\begin{tikzpicture}
+    \node [root] {GCWDoubleTextfield}
+    child { node [selected] {GCWTextField}
+        edge from parent [-]
+        child { node [selected] {TextFormField}
+            edge from parent [-]
+        };
+    };
+\end{tikzpicture}
+\captionof{figure}{GCWDoubleTextfield}
+\label{fig: GCWDoubleTextfield}
 \begin{table}[H]
 \begin{tabular}[h]{p{2cm}p{9cm}}
     \caption{GCWDoubleTextfield}
-    Aim       & \\
-    Import    & \\
-    Parameter & \\
+    Aim       & Provides a Textfiled, which only accepts double-Numbers\\
+    Import    & GCWizard/lib/widgets/common/gcw\_double\_textfield.dart\\
+    Parameter & TextEditingController controller\newline
+                Function onChanged\newline
+                List<TextInputFormatter> inputFormatters\newline
+                TextInputType keyboardType\newline
+                hintText\newline
+                min\newline
+                max\newline
+                FocusNode focusNode\newline
+                numberDecimalDigits\newline\\
+    Example   & \\
     \label{tab:GCWDoubleTextfield}
 \end{tabular}
 \end{table}
 
+\newpage
 \subsection{GCWIntegerListTextfield}
 \begin{table}[H]
 \begin{tabular}[h]{p{2cm}p{9cm}}
@@ -75,10 +198,12 @@
     Aim       & \\
     Import    & \\
     Parameter & \\
+    Example   & \\
     \label{tab:GCWIntegerListTextfield}
 \end{tabular}
 \end{table}
 
+\newpage
 \subsection{GCWIntegerSpinner}
 \begin{table}[H]
 \begin{tabular}[h]{p{2cm}p{9cm}}
@@ -86,10 +211,12 @@
     Aim       & \\
     Import    & \\
     Parameter & \\
+    Example   & \\
     \label{tab:GCWIntegerSpinner}
 \end{tabular}
 \end{table}
 
+\newpage
 \subsection{GCWIntegerTextfield}
 \begin{table}[H]
 \begin{tabular}[h]{p{2cm}p{9cm}}
@@ -97,10 +224,12 @@
     Aim       & \\
     Import    & \\
     Parameter & \\
+    Example   & \\
     \label{tab:GCWIntegerTextfield}
 \end{tabular}
 \end{table}
 
+\newpage
 \subsection{GCWNumeralBaseSpinner}
 \begin{table}[H]
 \begin{tabular}[h]{p{2cm}p{9cm}}
@@ -108,10 +237,12 @@
     Aim       & \\
     Import    & \\
     Parameter & \\
+    Example   & \\
     \label{tab:GCWNumeralBaseSpinner}
 \end{tabular}
 \end{table}
 
+\newpage
 \section{Unit-Inputs}
 \subsection{GCWLengthsDropdownButton}
 \begin{table}[H]
@@ -120,10 +251,12 @@
     Aim       & \\
     Import    & \\
     Parameter & \\
+    Example   & \\
     \label{tab:GCWLengthsDropdownButton}
 \end{tabular}
 \end{table}
 
+\newpage
 \subsection{GCWDistance}
 \begin{table}[H]
 \begin{tabular}[h]{p{2cm}p{9cm}}
@@ -131,10 +264,12 @@
     Aim       & \\
     Import    & \\
     Parameter & \\
+    Example   & \\
     \label{tab:GCWDistance}
 \end{tabular}
 \end{table}
 
+\newpage
 \subsection{GCWVelocityDropdownButton}
 \begin{table}[H]
 \begin{tabular}[h]{p{2cm}p{9cm}}
@@ -142,10 +277,12 @@
     Aim       & \\
     Import    & \\
     Parameter & \\
+    Example   & \\
     \label{tab:GCWVelocityDropdownButton}
 \end{tabular}
 \end{table}
 
+\newpage
 \section{Miscellaneous inputs}
 \subsection{GCWABCDropdownButton}
 \begin{table}[H]
@@ -154,10 +291,12 @@
     Aim       & \\
     Import    & \\
     Parameter & \\
+    Example   & \\
     \label{tab:GCWABCDropdownButton}
 \end{tabular}
 \end{table}
 
+\newpage
 \subsection{GCWDropdownSpinner}
 \begin{table}[H]
 \begin{tabular}[h]{p{2cm}p{9cm}}
@@ -165,10 +304,12 @@
     Aim       & \\
     Import    & \\
     Parameter & \\
+    Example   & \\
     \label{tab:GCWDropdownSpinner}
 \end{tabular}
 \end{table}
 
+\newpage
 \subsection{GCWDatePicker}
 \begin{table}[H]
 \begin{tabular}[h]{p{2cm}p{9cm}}
@@ -176,10 +317,12 @@
     Aim       & \\
     Import    & \\
     Parameter & \\
+    Example   & \\
     \label{tab:GCWDatePicker}
 \end{tabular}
 \end{table}
 
+\newpage
 \subsection{GCWDateTimePicker}
 \begin{table}[H]
 \begin{tabular}[h]{p{2cm}p{9cm}}
@@ -187,148 +330,418 @@
     Aim       & \\
     Import    & \\
     Parameter & \\
+    Example   & \\
     \label{tab:GCWDateTimePicker}
 \end{tabular}
 \end{table}
 
+\newpage
 \section{Buttons}
 \subsection{GCWButton}
+\begin{tikzpicture}
+    \node [root] {GCWButton}
+        child { node [selected] {RaisedButton}
+        };
+\end{tikzpicture}
+\captionof{figure}{GCWButton}
+\label{fig: GCWButton}
 \begin{table}[H]
 \begin{tabular}[h]{p{2cm}p{9cm}}
     \caption{GCWButton}
     Aim       & \\
     Import    & \\
     Parameter & \\
+    Example   & \\
     \label{tab:GCWButton}
 \end{tabular}
 \end{table}
 
+\newpage
 \subsection{GCWIconButton}
+\begin{tikzpicture}
+    \node [root] {GCWIconButton}
+    child { node [selected] {OutlineButton}
+    };
+\end{tikzpicture}
+\captionof{figure}{GWCIconButton}
+\label{fig: GWCIconButton}
 \begin{table}[H]
 \begin{tabular}[h]{p{2cm}p{9cm}}
     \caption{GCWIconButton}
     Aim       & \\
     Import    & \\
     Parameter & \\
+    Example   & \\
     \label{tab:GCWIconButton}
 \end{tabular}
 \end{table}
 
+\newpage
 \subsection{GCWEncryptButtonBar}
+\begin{tikzpicture}
+    \node [root] {GCWEncryptButtonBar}
+    child { node [selected] {GCWToolBar}
+    }
+    child [missing]
+    child { node [selected] {GCWButton}
+        edge from parent [-]
+        child { node [selected] {RaisedButton}
+        }
+    };
+\end{tikzpicture}
+\captionof{figure}{GCWEncryptButtonBar}
+\label{fig: GCWEncryptButtonBar}
 \begin{table}[H]
 \begin{tabular}[h]{p{2cm}p{9cm}}
     \caption{GCWEncryptButtonBar}
-    Aim       & \\
-    Import    & \\
-    Parameter & \\
+    Aim       & Displays a Button Bar with two buttons: Encode, Decode\\
+    Import    & GCWizard/lib/widgets/common/gcw\_encrypt\_buttonbar.dart\\
+    Parameter & Function onPressedEncode\newline
+                Function onPressedDecode\\
+    Example   & \\
     \label{tab:GCWEncryptButtonBar}
 \end{tabular}
 \end{table}
 
-\subsection{GCWButtonBar}
+\newpage
+\subsection{GCWToolBar}
+\begin{tikzpicture}
+    \node [root] {GCWToolBar};
+\end{tikzpicture}
+\captionof{figure}{GCWToolBar}
+\label{fig: GCWToolBar}
 \begin{table}[H]
 \begin{tabular}[h]{p{2cm}p{9cm}}
-    \caption{GCWButtonBar}
-    Aim       & \\
-    Import    & \\
-    Parameter & \\
-    \label{tab:GCWButtonBar}
+    \caption{GCWToolBar}
+    Aim       & Displays a Button Bar\\
+    Import    & GCWizard/lib/widgets/common/gcw\_buttonbar.dart\\
+    Parameter & List<widget> children\\
+    Example   & \\
+    \label{tab:GCWToolBar}
 \end{tabular}
 \end{table}
 
+\newpage
 \section{Switches}
 \subsection{GCWSwitch}
+\begin{tikzpicture}
+    \node [root] {GCWSwitch}
+    child { node [selected] {Switch}
+    };
+\end{tikzpicture}
+\captionof{figure}{GCWSwitch}
+\label{fig: GCWSwitch}
 \begin{table}[H]
 \begin{tabular}[h]{p{2cm}p{9cm}}
     \caption{GCWSwitch}
     Aim       & \\
-    Import    & \\
-    Parameter & \\
+    Import    & GCWizard/lib/widgets/common/base/gcw\_switch.dart\\
+    Parameter & String text\newline
+                Function onChanged\newline
+                value\newline
+                inactiveTrackColor\newline
+                inactiveThumbColor\newline
+                activeThumbColor\newline
+                activeTrackColor\\
+     Example   & \\
     \label{tab:GCWSwitch}
 \end{tabular}
 \end{table}
 
+\newpage
 \subsection{GCWOnOffSwitch}
+\begin{tikzpicture}
+    \node [root] {GCWOnOffSwitch}
+    child { node [selected] {GCWText}
+        child { node [selected] {SelectableText}
+        }
+    }
+    child [missing]
+    child { node [selected] {GCWSwitch}
+        child { node [selected] {Switch}
+        }
+    };
+\end{tikzpicture}
+\captionof{figure}{GCWOnOffSwitch}
+\label{fig: GCWOnOffSwitch}
 \begin{table}[H]
 \begin{tabular}[h]{p{2cm}p{9cm}}
     \caption{GCWOnOffSwitch}
-    Aim       & \\
-    Import    & \\
-    Parameter & \\
+    Aim       & Sets an option to ON or OFF\\
+    Import    & GCWizard/lib/widgets/common/gcw\_onoff\_switch.dart\\
+    Parameter & Function onChanged;
+                String title;
+                value;
+                bool notitle;\\
+     Example   & \\
     \label{tab:GCWOnOffSwitch}
 \end{tabular}
 \end{table}
 
-\subsection{GCWTwoOptions}
+\newpage
+\subsection{GCWTwoOptionsSwitch}
+\begin{tikzpicture}
+    \node [root] {GCWTwoOptionsSwitch}
+    child { node [selected] {GCWText}
+        child { node [selected] {SelectableText}
+        }
+    }
+    child [missing]
+    child { node [selected] {GCWSwitch}
+        child { node [selected] {Switch}
+        }
+    }
+    child [missing]
+    child { node [selected] {GCWText}
+        child { node [selected] {SelectableText}
+        }
+    };
+\end{tikzpicture}
+\captionof{figure}{GCWTwoOptionsSwitch}
+\label{fig: GCWTwoOptionsSwitch}
+\begin{table}[H]
+    \begin{tabular}[h]{p{2cm}p{9cm}}
+        \caption{GCWTwoOptionsSwitch}
+        Aim       & Switches between two options and returns GCWSwitchPosition.left or GCWSwitchPosition.left\\
+        Import    & GCWizard/lib/widgets/common/gcw\_twooptions\_switch.dart\\
+        Parameter & String title\newline
+                    Function onChanged\newline
+                    String leftvalue\newline
+                    String rightvalue\newline
+                    GCWSwitchPosition value\newline
+                    bool alternativeColor\\
+        \label{tab:GCWTwoOptionsSwitch}
+\end{tabular}
+\end{table}
+\paragraph{Example} \,
+\begin{lstlisting}
+...
+... _currentMode == GCWSwitchPosition.left
+GCWTwoOptionsSwitch(
+    title = i18n(context, 'common_mode');
+    leftvalue = i18n(context, 'common_encrypt');
+    rightvalue = i18n(context, 'common_decrypt');
+    value = _currentmode;
+    onChanged: (value) {
+        setState(() {
+            _currentMode = value;
+        });
+    },
+),
+...
+\\within the creation of a widget
+_currentMode == GCWSwitchPosition.left
+? ...
+: ...,
+...
+\\ within a method:
+if (_currentMode == GCWSwitchPosition.left) {
+    ...
+} else {
+    ...
+}
+...
+\end{lstlisting}
+\captionof{lstlisting}{Example GCWSwitchPosition}
+\label{fig: ExampleGCWSwitchPosition}
 
+\newpage
 \section{Output}
+\subsection{GCWText}
+\begin{tikzpicture}
+    \node [root] {GCWText}
+    child { node [selected] {SelectableText}
+    };
+\end{tikzpicture}
+\captionof{figure}{GCWText}
+\label{fig: GCWText}
+\begin{table}[H]
+\begin{tabular}[h]{p{2cm}p{9cm}}
+    \caption{GCWText}
+    Aim       & Print text\\
+    Import    & GCWizard/lib/widgets/common/base/gcw\_text.dart\\
+    Parameter & String text\newline
+                Alignment align\newline
+                TextAlign textAlign\newline
+                TextStyle style\\
+    Example   & \\
+    \label{tab:GCWText}
+\end{tabular}
+\end{table}
+
+\newpage
+\subsection{GCWOutputText}
+\begin{tikzpicture}
+    \node [root] {GCWOutputText}
+    child { node [selected] {SelectableText}
+    }
+    child [missing]
+    child { node [selected] {GCWIconButton}
+        child { node [selected] {oUTLINEbUTTON}
+        }
+    };
+\end{tikzpicture}
+\captionof{figure}{GCWOutputText}
+\label{fig: GCWOutputText}
+\begin{table}[H]
+    \begin{tabular}[h]{p{2cm}p{9cm}}
+        \caption{GCWOutput}
+        Aim       & Print text and provide a copyToClipboard-Button\\
+        Import    & GCWizard/lib/widgets/common/base/gcw\_output\_text.dart\\
+        Parameter & String text\newline
+                    Alignment align\newline
+                    bool isMonotype\newline
+                    TextStyle style\newline
+                    bool suppressCopyButton\newline
+                    String copyText\\
+        Example   & \\
+        \label{tab:GCWOutputText}
+    \end{tabular}
+\end{table}
+
+\newpage
 \subsection{GCWOutput}
+\begin{tikzpicture}
+    \node [root] {GCWOutput}
+    child { node [selected] {GCWTextDivider}
+        child { node [selected] {GCWDivider}
+            child { node [selected] {Divider}
+            }
+        }
+    }
+    child [missing]
+    child { node [selected] {widget || text}
+        child { node [selected] {widget}
+        }
+        child { node [selected] {GCWOutputText}
+            child { node [selected] {SelectableText}
+            }
+        }
+    };
+\end{tikzpicture}
+\captionof{figure}{GCWOutputText}
+\label{fig: GCWOutput}
 \begin{table}[H]
 \begin{tabular}[h]{p{2cm}p{9cm}}
-    \caption{GCWOutput}
-    Aim       & \\
-    Import    & \\
-    Parameter & \\
-    \label{tab:GCWOutput}
+    \caption{GCWOutpu}
+    Aim       & Print a title and a childe -- widget or text\\
+    Import    & GCWizard/lib/widgets/common/gcw\_output.dart\\
+    Parameter & dynamic child\newline
+                String title\\
+    Example   & \begin{lstlisting}
+    ...
+    GCWOutputText(
+        text: output,
+    ),
+    ...
+\end{lstlisting}\\
+    \label{tab:GCWOut}
 \end{tabular}
 \end{table}
 
-\subsection{GCWOutputTExt}
-\begin{table}[H]
-\begin{tabular}[h]{p{2cm}p{9cm}}
-    \caption{GCWOutputTExt}
-    Aim       & \\
-    Import    & \\
-    Parameter & \\
-    \label{tab:GCWOutputTExt}
-\end{tabular}
-\end{table}
-
+\newpage
 \subsection{GCWDefaultOutput}
+\begin{tikzpicture}
+    \node [root] {GCWDefaultOutput}
+    child { node [selected] {GCWOutput}
+    };
+\end{tikzpicture}
+\captionof{figure}{GCWDefaultOutput}
+\label{fig: GCWDefaultOutput}
 \begin{table}[H]
 \begin{tabular}[h]{p{2cm}p{9cm}}
     \caption{GCWDefaultOutput}
-    Aim       & \\
-    Import    & \\
-    Parameter & \\
+    Aim       & Print the default-Output-Text and a widget\\
+    Import    & GCWizard/lib/widgets/common/gcw\_default\_output.dart\\
+    Parameter & dynamic child\\
+    Example   & \\
     \label{tab:GCWDefaultOutput}
 \end{tabular}
 \end{table}
 
+\newpage
 \subsection{GCWMultipleOutput}
+\begin{tikzpicture}
+    \node [root] {GCWMultipleOutput}
+    child { node [selected] {GCWTextDivider}
+        child { node [selected] {GCWDivider}
+            child { node [selected] {Divider}
+            }
+        }
+    }
+    child [missing]
+    child [missing]
+    child { node [selected] {GCWOutput}
+        child { node [selected] {GCWTextDivider}
+            child { node [selected] {GCWDivider}
+                child { node [selected] {Divider}
+                }
+            }
+        }
+        child [missing]
+        child { node [selected] {widget || text}
+            child { node [selected] {widget}
+            }
+            child { node [selected] {GCWOutputText}
+                child { node [selected] {SelectableText}
+                }
+            }
+        }
+    };
+\end{tikzpicture}
+\captionof{figure}{GCWMultipleOutput}
+\label{fig: GCWMultipleOutput}
 \begin{table}[H]
 \begin{tabular}[h]{p{2cm}p{9cm}}
     \caption{GCWMultipleOutput}
-    Aim       & \\
-    Import    & \\
-    Parameter & \\
+    Aim       & Print multiple lines of output\\
+    Import    & GCWizard/lib/widgets/common/gcw\_multiple\_output.dart\\
+    Parameter & List<dynamic> children\newline
+                bool suppressDefaultTitle\\
+    Example   & \\
     \label{tab:GCWMultipleOutput}
 \end{tabular}
 \end{table}
 
+\newpage
 \section{Messages}
 \subsection{GCWToast}
+\begin{tikzpicture}
+    \node [root] {GCWToast}
+    child { node [selected] {Fluttertoast.showToast}
+    };
+\end{tikzpicture}
+\captionof{figure}{GCWToast}
+\label{fig: GCWToast}
 \begin{table}[H]
 \begin{tabular}[h]{p{2cm}p{9cm}}
     \caption{GCWToast}
     Aim       & Shows a small message that pops up at the bottom of the device screen and immediately disappears on it’s own after a delay of few seconds.\\
     Import    & package:gc\_wizard/widgets/common/base/gcw\_toast.dart\\
-    Parameter & \\
-    -- text   & Text to display\\
+    Parameter & String text \\
+    Example   & \\
     \label{tab:GCWToast}
 \end{tabular}
 \end{table}
 
+\newpage
 \subsection{GCWDialog}
+\begin{tikzpicture}
+    \node [root] {GCWDialog}
+    child { node [selected] {AlertDialog}
+    };
+\end{tikzpicture}
+\captionof{figure}{GCWDialog}
+\label{fig: GCWDialog}
 \begin{table}[H]
 \begin{tabular}{p{2cm}p{9cm}}
     \caption{GCWDialog}
     Aim         & Informs the user about situations that require acknowledgement. A dialog has an optional title and an optional list of actions. The title is displayed above the content and the actions are displayed below the content.\\
     Import      & package:gc\_wizard/widgets/common/base/gcw\_dialog.dart\\
-    Parameter   & \\
-    -- title    & \\
-    -- content  & Text to display\\
-    -- actions  & List of buttons\\
+    Parameter   & String title\newline
+                  content\newline
+                  actions\\
+    Example   & \\
     \label{tab:GCWDialog}
 \end{tabular}
 \end{table}

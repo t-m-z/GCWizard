@@ -1,44 +1,91 @@
 \chapter{Installing an Integrated Development Environment}
 
-Although GCWizrads supports Android and iOS, I focus on Android -- it is my favourite operating system. Hence iOS setup is missing at the moment.
+Although GCWizard supports Android and iOS, I focus on Android -- it is my favourite operating system. Hence iOS setup is missing at the moment.
 
-\section{Source Code}
-The Source code is provided at github and can be downloaded with \url{https://github.com/S-Man42/GCWizard.git} for https or \url{git@github.com:S-Man42/GCWizard.git} for SSH.
+In order to install an Integrated Development Environment in Windows you have install and configure couple of dependencies like Git, Java, Android Studio and SDK manager with required SDK versions.
+\begin{itemize}
+    \item Installing Git for Windows
+    \item Installing Flutter
+    \item Installing Android Studio
+    \item Installing required Android SDKs
+    \item Creating a Test Device with AVD manager
+    \item Confirm everything with Flutter Doctor
+\end{itemize}
 
+
+\section{Installing Git for Windows}
+By far, the most widely used modern version control system in the world today is Git. Hence, download the latest Git for Windows installer from \url{https://gitforwindows.org/}. When you’ve successfully started the installer, you should see the Git Setup wizard screen. Follow the Next and Finish prompts to complete the installation. The default options are pretty sensible for most users. To verify the installation, Open windows Command Prompt (open start menu and type CMDand hit enter). Type git --version in command prompt and hit enter. If git is successfully installed you will get an informtion about the installed version.
+
+\subsection{Getting the source code}
+The Source code is provided at github and can be downloaded with \url{https://github.com/S-Man42/GCWizard.git} for https or \url{git@github.com:S-Man42/GCWizard.git} for SSH.\par
 Further details how Mark works git are provided in Chapter \ref{chapter-git} \enquote{The GCWizard -- Working with git}
 
-\section{Flutter}
+\section{Installing Flutter}
+Flutter is Google’s UI toolkit for building natively compiled applications for mobile, web, and desktop from a single codebase. Running at 60 fps, user interfaces created with Flutter perform far better than those created with other cross-platform development frameworks such as React Native and Ionic. Some more reasons to use Flutter are
+\begin{itemize}
+    \item Flutter uses Dart, a fast, object-oriented language with several useful features such as mixins, generics, isolates, and optional static types.
+    \item Flutter has its own UI components, along with an engine to render them on both the Android and iOS platforms. Most of those UI components, right out of the box, conform to the guidelines of Material Design.
+    \item Prototype and iterate easily.
+    \item Benefit from a rich set of Material Design widgets built using Flutter’s own framework.
+\end{itemize}
 
-Flutter is Google’s UI toolkit for building natively compiled applications for mobile, web, and desktop from a single codebase.
+Download and extract Flutter SDK from \url{https://flutter.dev/docs/get-started/install} and add Flutter to Windows Path. Thus 
+\begin{enumerate}
+    \item Navigate in to Flutter SDK folder.
+    \item Go inside to bin folder and copy  the directory path. 
+    \item Go to \emph{Control Panel $\rightarrow$ User Accounts $\rightarrow$ User Accounts $\rightarrow$ Change my environment variables}.
+    \item Under \emph{User variables} select path variable and click edit.
+    \item Enter the copied directory path to the bin-directory.
+\end{enumerate}
 
-Download and extract Flutter SDK from \url{https://flutter.dev/docs/get-started/install}.
+\section{Installing Android Studio}
+Android Studio is the official integrated development environment (IDE) for Google's Android operating system, built on JetBrains' IntelliJ IDEA software and designed specifically for Android development.\par
 
-\section{Android Studio}
-Android Studio is the official integrated development environment (IDE) for Google's Android operating system, built on JetBrains' IntelliJ IDEA software and designed specifically for Android development.
+Download and install Android Studio (with Android Virtual Device) from \url{https://developer.android.com/studio}. At first start, follow the install instructions. 
 
-Download and install Android Studio (with Android Virtual Device) from \url{https://developer.android.com/studio}. At first start, follow the install instructions. This should include the installation of the Android SDK (minimum API Level 28); if not, do it manually: \newline
-Main menu $\rightarrow$ Tools $\rightarrow$ SDK Manager $\rightarrow$ System settings $\rightarrow$ Android SDK.
+\subsection{Installing required Android SDKs}
+The first start of Android SDK should include the installation of the Android SDK (minimum API Level 28); if not, do it manually: \newline
+Open Android SDK manager by navigating to Main menu $\rightarrow$ Tools $\rightarrow$ SDK Manager $\rightarrow$ System settings $\rightarrow$ Android SDK.
+Now SDK manager will be appeared with list of available Android SDKs. You can install any kind of SDK versions you like. For GCWizard you have to install SDK API version 28. Select the API version and click ok and follow steps. It will take while to download and setup your SDKs.
 
-When asked, import existing project.
+\subsection{Installing Flutter/Dart plugin}
+Navigate to Main menu $\rightarrow$ File $\rightarrow$ Settings $\rightarrow$ Plugins $\rightarrow$ Search for \emph{flutter} $\rightarrow$ Install (should install Dart automatically) $\rightarrow$ Restart\par
+
+After restart, set Flutter SDK path. Therefor navigate to Main menu $\rightarrow$ File $\rightarrow$ Settings $\rightarrow$ Languages \& Frameworks $\rightarrow$ Flutter $\rightarrow$ Flutter SDK path $\rightarrow$ and enter your path where you extracted flutter before.
+
+\subsection{Installing an emulator}
+You need to test your template designs in different devices in order to improve the user experience. By using Android AVD manager you can create many virtual devices with different choice of devices and SDK versions which you can use to how your Flutter application perform in different environments.\par
+
+Navigate to Main menu $\rightarrow$ Tools $\rightarrow$ AVD Manager. In AVD Manager click on Create Virtual Device-Button and choose one (e.g. the *Pixel 3*).
+Choose Android Version, highest API level recommended (currently Android Q, API level 30) -> Download $\rightarrow$ Accept.
+After finishing Download, finish device creation; you can start the device now from the AVD Manager (Play button). Please wait until the device has booted.
 
 
-Install Flutter/Dart plugin: Main menu $\rightarrow$ File $\rightarrow$ Settings $\rightarrow$ Plugins $\rightarrow$ Search for \enquote{flutter} $\rightarrow$ Install (should install Dart automatically) $\rightarrow$ Restart\newline
-After restart, set Flutter SDK path: Main menu $\rightarrow$ File $\rightarrow$ Settings $\rightarrow$ Languages \& Frameworks $\rightarrow$ Flutter $\rightarrow$ Flutter SDK path $\rightarrow$ Your path where you extracted flutter before.
+\section{Confirm everything with Flutter Doctor}
+Ok, now your Flutter installation has been done and now it’s time to verify everything with Flutter doctor. Follow few steps below to finish your installation.
+\begin{enumerate}
+    \item Open new Windows command. You may also use the build-in-Terminal from Android Studio.
+    \item Run command flutter doctor . If all the previous steps went smoothly you will see an corresponding output and you’re ready to start making your first Flutter app.
+\end{enumerate}
+Issues, which could occur:
+\begin{description}
+    \item[A new version of Flutter is available] To solve this run \emph{flutter upgrade} in a terminal-window.
+    \item[No devices available] Install a device with the AVD Manager and start it.
+    \item[Android license status unknown] To get more information, run \emph{flutter doctor --android-licences}. It is more or less an update-issue of the SDK Manager. To fix this issue, open your SDK manager then uncheck Hide Obsolete Packages and remove the obsolete packages and download the updates. To remove emulator images, the emulator should not run.
+\end{description}
 
-\subsection{Install emulator}
-Open AVD Manager (Toolbar, Button with Smartphone/Android logo) $\rightarrow$ Create Virtual Device $\rightarrow$ Choose one (e.g. the *Pixel 3*) .
-Choose Android Version, highest API level recommended (currently Android Q, API level 29) -> Download $\rightarrow$ Accept.
-After finishing Download, finish device creation; You can start the device now from the AVD Manager (Play button). Please wait until the device has booted.
-
+\section{Building GCWizard}
+\subsection{Import GCWizard}
+Navigate to Main menu $\rightarrow$ File $\rightarrow$ New $\rightarrow$ Import Project\dots and enter the directory, you stored the source code in.
 
 \subsection{Get the project ready for compiling}
-A message should appear at the top of the code view: \enquote{Packages get has not been run}. If so: Click \enquote{Get dependencies}; if not: Go to \enquote{Terminal} at bottom of the IDE and type in \enquote{flutter pub get}.
+A message should appear at the top of the code view: \enquote{Packages get has not been run}. If so: Click \emph{Get dependencies}; if not: Go to \emph{Terminal} at bottom of the IDE and type in \emph{flutter pub get}.
 
 Wait a minute for new indexing; afterwards there shouldn't be any error message, anymore.
 
 \subsection{Run project}
-Run \enquote{main.dart}. Sometimes, the IDE needs a moment to recognize the emulator, so wait a moment and try a second time; the first start may take a while.
+Run \emph{main.dart}. Sometimes, the IDE needs a moment to recognize the emulator, so wait a moment and try a second time; the first start may take a while.
 
-From now on, every code change will be deployed to the app immediately after saving due to the \enquote{*Hot Reload} feature of the IDE.
+From now on, every code change will be deployed to the app immediately after saving due to the \emph{*Hot Reload} feature of the IDE.
 
 
