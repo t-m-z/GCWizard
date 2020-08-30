@@ -18,16 +18,31 @@
     Aim       & Draws a horizontal line\\
     Import    & GCWizard/lib/widgets/common/base/gcw\_divider.dart\\
     Parameter & --\\
-    Example   & \begin{lstlisting}
-...
-GCWDivider(),
-...
-                \end{lstlisting}\\
     \label{tab:GCWDivider}
 \end{tabular}
 \end{table}
-\newpage
+\paragraph*{Example} \,
+\begin{figure}[H]
+    \centering
+    \includegraphics[height=0.75cm]{Bilder/Divider}
+    \caption[]{Example GCWDivider}
+    \label{fig:GCWDivider}
+\end{figure}
+\begin{lstlisting}
+Widget build(BuildContext context) {
+    return Column(
+        children: <Widget>[
+            ...
+            GCWDivider(),
+            ...
+        ],
+    );
+}
+\end{lstlisting}
+\captionof{lstlisting}{Example GCWDivider}
+\label{fig: ExampleGCWDivider}
 
+\newpage
 \subsection{GCWTextDivider}
 \begin{tikzpicture}
     \node [root] {GCWTextDivider}
@@ -45,16 +60,31 @@ GCWDivider(),
     Aim       & Prints a text and fill with a horizontal line.\\
     Import    & GCWizard/lib/widgets/common/gcw\_text\_divider.dart\\
     Parameter & text String\\
-    Example   & \begin{lstlisting}
-...
-GCWTextDivider(
-  text: i18n(context, 'common_output')
-),
-...
-                \end{lstlisting}\\
     \label{tab:GCWTextDivider}
 \end{tabular}
 \end{table}
+\paragraph*{Example} \,
+\begin{figure}[H]
+    \centering
+    \includegraphics[height=0.75cm]{Bilder/TextDivider}
+    \caption[]{Example GCWTextDivider}
+    \label{fig:GCWTextDivider}
+\end{figure}
+\begin{lstlisting}
+Widget build(BuildContext context) {
+    return Column(
+        children: <Widget>[
+            ...
+            GCWTextDivider(
+                text: i18n(context, 'common_output')
+            ),
+            ...
+        ],
+    );
+}
+\end{lstlisting}
+\captionof{lstlisting}{Example GCWTextDivider}
+\label{fig: ExampleGCWTextDivider}
 
 \newpage
 \section{Input}
@@ -85,10 +115,29 @@ GCWTextDivider(
                 maxLength\newline
                 maxLines\newline
                 fontSize\newline\\
-    Example   & \\
     \label{tab:GCWTextfield}
 \end{tabular}
 \end{table}
+\paragraph*{Example} \,
+\begin{figure}[H]
+    \centering
+    \includegraphics[height=0.75cm]{Bilder/Textfield}
+    \caption[]{Example GCWTextfield}
+    \label{fig:GCWTextfield}
+\end{figure}
+\begin{lstlisting}
+Widget build(BuildContext context) {
+    return Column(
+        children: <Widget>[
+        ...
+
+        ...
+        ],
+    );
+}
+\end{lstlisting}
+\captionof{lstlisting}{Example GCWTextfield}
+\label{fig: ExampleGCWTextfield}
 
 \newpage
 \subsection{GCWDropdownButton}
@@ -108,10 +157,21 @@ GCWTextDivider(
     Parameter & items\newline
                 value\newline
                 Function onChanged\\
-    Example   & \\
     \label{tab:GCWDropdownButton}
 \end{tabular}
 \end{table}
+\paragraph*{Example} \,
+\begin{lstlisting}
+Widget build(BuildContext context) {
+    return Column(
+        children: <Widget>[
+        ...
+        ],
+    );
+}
+\end{lstlisting}
+\captionof{lstlisting}{Example GCWDropdownButton}
+\label{fig: ExampleGCWDropdownButton}
 
 \newpage
 \section{Numeral input}
@@ -142,7 +202,7 @@ GCWTextDivider(
 \begin{table}[H]
 \begin{tabular}[h]{p{2cm}p{9cm}}
     \caption{GCWDoubleSpinner}
-    Aim       & \\
+    Aim       & Provides a spinner to enter a double value\\
     Import    & GCWizard/lib/widgets/common/gcw\_double\_spinner.dart\\
     Parameter & TextEditingController controller\newline
                 Function onChanged\newline
@@ -153,10 +213,21 @@ GCWTextDivider(
                 numberDecimalDigits\newline
                 SpinnerLayout layout\newline
                 FocusNode focusNode\\
-    Example   & \\
     \label{tab:GCWDoubleSpinner}
 \end{tabular}
 \end{table}
+\paragraph*{Example} \,
+\begin{lstlisting}
+Widget build(BuildContext context) {
+    return Column(
+        children: <Widget>[
+        ...
+        ],
+    );
+}
+\end{lstlisting}
+\captionof{lstlisting}{Example GCWDoubleSpinner}
+\label{fig: ExampleGCWDoubleSpinner}
 
 \newpage
 \subsection{GCWDoubleTextfield}
@@ -185,36 +256,132 @@ GCWTextDivider(
                 max\newline
                 FocusNode focusNode\newline
                 numberDecimalDigits\newline\\
-    Example   & \\
     \label{tab:GCWDoubleTextfield}
 \end{tabular}
 \end{table}
+\paragraph*{Example} \,
+\begin{lstlisting}
+Widget build(BuildContext context) {
+    return Column(
+        children: <Widget>[
+            ...
+            Inhalt...
+        ],
+    );
+}
+\end{lstlisting}
+\captionof{lstlisting}{Example GCWDoubleTextfield}
+\label{fig: ExampleGCWDoubleTextfield}
 
 \newpage
 \subsection{GCWIntegerListTextfield}
+\begin{tikzpicture}
+    \node [root] {GCWIntegerListTextfield}
+    child { node [selected] {GCWTextField}
+        edge from parent [-]
+        child { node [selected] {TextFormField}
+            edge from parent [-]
+        };
+    };
+\end{tikzpicture}
+\captionof{figure}{GCWIntegerListTextfield}
+\label{fig: GCWIntegerListTextfield}
 \begin{table}[H]
 \begin{tabular}[h]{p{2cm}p{9cm}}
     \caption{GCWIntegerListTextfield}
-    Aim       & \\
-    Import    & \\
-    Parameter & \\
-    Example   & \\
+    Aim       & Reads a list of integers\\
+    Import    & GCWizard/lib/widgets/common/gcw\_integer\_list\_textfield.dart\\
+    Parameter & TextEditingController controller\newline
+                Function onChanged\newline
+                hintText\\
     \label{tab:GCWIntegerListTextfield}
 \end{tabular}
 \end{table}
+\paragraph*{Example} \,
+\begin{lstlisting}
+Widget build(BuildContext context) {
+    return Column(
+        children: <Widget>[
+            ...
+            Inhalt...
+        ],
+    );
+}
+\end{lstlisting}
+\captionof{lstlisting}{Example GCWIntegerListTextfield}
+\label{fig: ExampleGCWIntegerListTextfield}
 
 \newpage
 \subsection{GCWIntegerSpinner}
+\begin{tikzpicture}
+    \node [root] {GCWIntegerSpinner}
+    child { node [selected] {GCWText}
+        child { node [selected] {SelectableText}
+        }
+    }
+    child [missing]
+    child { node [selected] {GCWIconButton}
+        edge from parent [-]
+        child { node [selected] {OutlineButton}
+        }
+    }
+    child [missing]
+    child { node [selected] {GCWIntegerTextfield}
+        child { node [selected] {GCWTextfield}
+            child { node [selected] {TextFormField}
+                edge from parent [-]
+            }
+        }
+    };
+\end{tikzpicture}
+\captionof{figure}{GCWIntegerSpinner}
+\label{fig: GCWIntegerSpinner}
 \begin{table}[H]
 \begin{tabular}[h]{p{2cm}p{9cm}}
     \caption{GCWIntegerSpinner}
-    Aim       & \\
-    Import    & \\
-    Parameter & \\
-    Example   & \\
+    Aim       & Provides a spinner to enter an integer value\\
+    Import    & GCWizard/lib/widgets/common/gcw\_integer\_spinner.dart\\
+    Parameter & Function onChanged\newline
+                title\newline
+                value\newline
+                min\newline
+                max\newline
+                controller\newline
+                SpinnerLayout layout\newline
+                focusNode\\
     \label{tab:GCWIntegerSpinner}
 \end{tabular}
 \end{table}
+\paragraph*{Example} \,
+\begin{figure}[H]
+    \centering
+    \includegraphics[height=0.75cm]{Bilder/SpinnerInput}
+    \caption[]{Example GCWIntegerSpinner}
+    \label{fig:GCWIntegerSpinner}
+\end{figure}
+\begin{lstlisting}
+Widget build(BuildContext context) {
+    return Column(
+        children: <Widget>[
+...
+            GCWIntegerSpinner(
+                title: i18n(context, 'affine_key_b'),
+                min: 0,
+                max: 25,
+                value: _currentKeyBIndex,
+                onChanged: (value) {
+                    setState(() {
+                        _currentKeyBIndex = value;
+                    });
+                },
+            ),
+...
+        ],
+    );
+}
+\end{lstlisting}
+\captionof{lstlisting}{Example GCWIntegerSpinner}
+\label{fig: ExampleGCWIntegerSpinner}
 
 \newpage
 \subsection{GCWIntegerTextfield}
@@ -224,10 +391,22 @@ GCWTextDivider(
     Aim       & \\
     Import    & \\
     Parameter & \\
-    Example   & \\
     \label{tab:GCWIntegerTextfield}
 \end{tabular}
 \end{table}
+\paragraph*{Example} \,
+\begin{lstlisting}
+Widget build(BuildContext context) {
+    return Column(
+        children: <Widget>[
+            ...
+            Inhalt...
+        ],
+    );
+}
+\end{lstlisting}
+\captionof{lstlisting}{Example GCWIntegerTextfield}
+\label{fig: ExampleGCWIntegerTextfield}
 
 \newpage
 \subsection{GCWNumeralBaseSpinner}
@@ -237,10 +416,22 @@ GCWTextDivider(
     Aim       & \\
     Import    & \\
     Parameter & \\
-    Example   & \\
     \label{tab:GCWNumeralBaseSpinner}
 \end{tabular}
 \end{table}
+\paragraph*{Example} \,
+\begin{lstlisting}
+Widget build(BuildContext context) {
+    return Column(
+        children: <Widget>[
+            ...
+            Inhalt...
+        ],
+    );
+}
+\end{lstlisting}
+\captionof{lstlisting}{Example GCWNumeralBaseSpinner}
+\label{fig: ExampleGCWNumeralBaseSpinner}
 
 \newpage
 \section{Unit-Inputs}
@@ -251,10 +442,22 @@ GCWTextDivider(
     Aim       & \\
     Import    & \\
     Parameter & \\
-    Example   & \\
     \label{tab:GCWLengthsDropdownButton}
 \end{tabular}
 \end{table}
+\paragraph*{Example} \,
+\begin{lstlisting}
+Widget build(BuildContext context) {
+    return Column(
+        children: <Widget>[
+            ...
+            Inhalt...
+        ],
+    );
+}
+\end{lstlisting}
+\captionof{lstlisting}{Example GCWLengthsDropdownButton}
+\label{fig: ExampleGCWLengthsDropdownButton}
 
 \newpage
 \subsection{GCWDistance}
@@ -264,10 +467,22 @@ GCWTextDivider(
     Aim       & \\
     Import    & \\
     Parameter & \\
-    Example   & \\
     \label{tab:GCWDistance}
 \end{tabular}
 \end{table}
+\paragraph*{Example} \,
+\begin{lstlisting}
+Widget build(BuildContext context) {
+    return Column(
+        children: <Widget>[
+            ...
+            Inhalt...
+        ],
+    );
+}
+\end{lstlisting}
+\captionof{lstlisting}{Example GCWDistance}
+\label{fig: ExampleGCWDistance}
 
 \newpage
 \subsection{GCWVelocityDropdownButton}
@@ -277,10 +492,22 @@ GCWTextDivider(
     Aim       & \\
     Import    & \\
     Parameter & \\
-    Example   & \\
     \label{tab:GCWVelocityDropdownButton}
 \end{tabular}
 \end{table}
+\paragraph*{Example} \,
+\begin{lstlisting}
+Widget build(BuildContext context) {
+    return Column(
+        children: <Widget>[
+            ...
+            Inhalt...
+        ],
+    );
+}
+\end{lstlisting}
+\captionof{lstlisting}{Example GCWVelocityDropdownButton}
+\label{fig: ExampleGCWVelocityDropdownButton}
 
 \newpage
 \section{Miscellaneous inputs}
@@ -291,23 +518,76 @@ GCWTextDivider(
     Aim       & \\
     Import    & \\
     Parameter & \\
-    Example   & \\
     \label{tab:GCWABCDropdownButton}
 \end{tabular}
 \end{table}
+\paragraph*{Example} \,
+\begin{lstlisting}
+Widget build(BuildContext context) {
+    return Column(
+        children: <Widget>[
+            ...
+            Inhalt...
+        ],
+    );
+}
+\end{lstlisting}
+\captionof{lstlisting}{Example GCWABCDropdownButton}
+\label{fig: ExampleGCWABCDropdownButton}
 
 \newpage
 \subsection{GCWDropdownSpinner}
+\begin{tikzpicture}
+    \node [root] {GCWDropdownSpinner}
+    child { node [selected] {GCWIconButton}
+        child { node [selected] {OutlineButton}
+        }
+    }
+    child [missing]
+    child { node [selected] {GCWDropdownButton}
+        edge from parent [-]
+        child { node [selected] {DropdownButton}
+        }
+    };
+\end{tikzpicture}
+\captionof{figure}{GCWDropdownSpinner}
+\label{fig: GCWDropdownSpinner}
 \begin{table}[H]
 \begin{tabular}[h]{p{2cm}p{9cm}}
     \caption{GCWDialog}
     Aim       & \\
-    Import    & \\
-    Parameter & \\
-    Example   & \\
+    Import    & GCWizard/lib/widgets/common/gcw\_dropdown\_spinner.dart\\
+    Parameter & Function onChanged;
+                index;
+                List<dynamic> items;
+                SpinnerLayout layout;
+                String title;\\
     \label{tab:GCWDropdownSpinner}
 \end{tabular}
 \end{table}
+\paragraph*{Example} \,
+\begin{lstlisting}
+Widget build(BuildContext context) {
+    return Column(
+        children: <Widget>[
+            ...
+            GCWDropDownSpinner(
+                title: i18n(context, 'affine_key_a'),
+                index: _currentKeyAIndex,
+                items: aKeys.map((item) => GCWText(text: item.toString())).toList(),
+                onChanged: (value) {
+                    setState(() {
+                        _currentKeyAIndex = value;
+                    });
+                },
+            ),
+            ...
+        ],
+    );
+}
+\end{lstlisting}
+\captionof{lstlisting}{Example GCWDropdownSpinner}
+\label{fig: ExampleGCWDropdownSpinner}
 
 \newpage
 \subsection{GCWDatePicker}
@@ -330,10 +610,22 @@ GCWTextDivider(
     Aim       & \\
     Import    & \\
     Parameter & \\
-    Example   & \\
     \label{tab:GCWDateTimePicker}
 \end{tabular}
 \end{table}
+\paragraph*{Example} \,
+\begin{lstlisting}
+Widget build(BuildContext context) {
+    return Column(
+        children: <Widget>[
+            ...
+            Inhalt...
+        ],
+    );
+}
+\end{lstlisting}
+\captionof{lstlisting}{Example GCWDateTimePicker}
+\label{fig: ExampleGCWDateTimePicker}
 
 \newpage
 \section{Buttons}
@@ -371,10 +663,22 @@ GCWTextDivider(
     Aim       & \\
     Import    & \\
     Parameter & \\
-    Example   & \\
     \label{tab:GCWIconButton}
 \end{tabular}
 \end{table}
+\paragraph*{Example} \,
+\begin{lstlisting}
+Widget build(BuildContext context) {
+    return Column(
+        children: <Widget>[
+            ...
+            Inhalt...
+        ],
+    );
+}
+\end{lstlisting}
+\captionof{lstlisting}{Example GCWIconButton}
+\label{fig: ExampleGCWIconButton}
 
 \newpage
 \subsection{GCWEncryptButtonBar}
@@ -398,10 +702,22 @@ GCWTextDivider(
     Import    & GCWizard/lib/widgets/common/gcw\_encrypt\_buttonbar.dart\\
     Parameter & Function onPressedEncode\newline
                 Function onPressedDecode\\
-    Example   & \\
     \label{tab:GCWEncryptButtonBar}
 \end{tabular}
 \end{table}
+\paragraph*{Example} \,
+\begin{lstlisting}
+Widget build(BuildContext context) {
+    return Column(
+        children: <Widget>[
+            ...
+            Inhalt...
+        ],
+    );
+}
+\end{lstlisting}
+\captionof{lstlisting}{Example GCWEncryptButtonBar}
+\label{fig: ExampleGCWEncryptButtonBar}
 
 \newpage
 \subsection{GCWToolBar}
@@ -416,10 +732,22 @@ GCWTextDivider(
     Aim       & Displays a Button Bar\\
     Import    & GCWizard/lib/widgets/common/gcw\_buttonbar.dart\\
     Parameter & List<widget> children\\
-    Example   & \\
     \label{tab:GCWToolBar}
 \end{tabular}
 \end{table}
+\paragraph*{Example} \,
+\begin{lstlisting}
+Widget build(BuildContext context) {
+    return Column(
+        children: <Widget>[
+            ...
+            Inhalt...
+        ],
+    );
+}
+\end{lstlisting}
+\captionof{lstlisting}{Example GCWToolBar}
+\label{fig: ExampleGCWToolBar}
 
 \newpage
 \section{Switches}
@@ -443,10 +771,18 @@ GCWTextDivider(
                 inactiveThumbColor\newline
                 activeThumbColor\newline
                 activeTrackColor\\
-     Example   & \\
     \label{tab:GCWSwitch}
 \end{tabular}
 \end{table}
+\paragraph*{Example} \,
+\begin{lstlisting}
+    Inhalt...
+        ],
+    );
+}
+\end{lstlisting}
+\captionof{lstlisting}{Example GCWSwitch}
+\label{fig: ExampleGCWSwitch}
 
 \newpage
 \subsection{GCWOnOffSwitch}
@@ -473,10 +809,18 @@ GCWTextDivider(
                 String title;
                 value;
                 bool notitle;\\
-     Example   & \\
     \label{tab:GCWOnOffSwitch}
 \end{tabular}
 \end{table}
+\paragraph*{Example} \,
+\begin{lstlisting}
+    Inhalt...
+        ],
+    );
+}
+\end{lstlisting}
+\captionof{lstlisting}{Example GCWOnOffSwitch}
+\label{fig: ExampleGCWOnOffSwitch}
 
 \newpage
 \subsection{GCWTwoOptionsSwitch}
@@ -502,7 +846,7 @@ GCWTextDivider(
 \begin{table}[H]
     \begin{tabular}[h]{p{2cm}p{9cm}}
         \caption{GCWTwoOptionsSwitch}
-        Aim       & Switches between two options and returns GCWSwitchPosition.left or GCWSwitchPosition.left\\
+        Aim       & Switches between two options and returns GCWSwitchPosition.left or GCWSwitchPosition.right\\
         Import    & GCWizard/lib/widgets/common/gcw\_twooptions\_switch.dart\\
         Parameter & String title\newline
                     Function onChanged\newline
@@ -514,9 +858,16 @@ GCWTextDivider(
 \end{tabular}
 \end{table}
 \paragraph{Example} \,
+\begin{figure}[H]
+    \centering
+    \includegraphics[height=0.75cm]{Bilder/SwitchTwoOptions}
+    \caption[]{Example GCWTwoOptionsSwitch}
+    \label{fig:switchtwooptions}
+\end{figure}
 \begin{lstlisting}
 ...
-... _currentMode == GCWSwitchPosition.left
+_currentMode == GCWSwitchPosition.left
+...
 GCWTwoOptionsSwitch(
     title = i18n(context, 'common_mode');
     leftvalue = i18n(context, 'common_encrypt');
@@ -541,6 +892,9 @@ if (_currentMode == GCWSwitchPosition.left) {
     ...
 }
 ...
+        ],
+    );
+}
 \end{lstlisting}
 \captionof{lstlisting}{Example GCWSwitchPosition}
 \label{fig: ExampleGCWSwitchPosition}
@@ -564,10 +918,15 @@ if (_currentMode == GCWSwitchPosition.left) {
                 Alignment align\newline
                 TextAlign textAlign\newline
                 TextStyle style\\
-    Example   & \\
     \label{tab:GCWText}
 \end{tabular}
 \end{table}
+\paragraph*{Example} \,
+\begin{lstlisting}
+    Inhalt...
+\end{lstlisting}
+\captionof{lstlisting}{Example GCWIntegerSpinner}
+\label{fig: ExampleGCWIntegerSpinner}
 
 \newpage
 \subsection{GCWOutputText}
@@ -594,10 +953,18 @@ if (_currentMode == GCWSwitchPosition.left) {
                     TextStyle style\newline
                     bool suppressCopyButton\newline
                     String copyText\\
-        Example   & \\
         \label{tab:GCWOutputText}
     \end{tabular}
 \end{table}
+\paragraph*{Example} \,
+\begin{lstlisting}
+    Inhalt...
+        ],
+    );
+}
+\end{lstlisting}
+\captionof{lstlisting}{Example GCWOutputText}
+\label{fig: ExampleGCWOutputText}
 
 \newpage
 \subsection{GCWOutput}
@@ -619,25 +986,31 @@ if (_currentMode == GCWSwitchPosition.left) {
         }
     };
 \end{tikzpicture}
-\captionof{figure}{GCWOutputText}
+\captionof{figure}{GCWOutput}
 \label{fig: GCWOutput}
 \begin{table}[H]
 \begin{tabular}[h]{p{2cm}p{9cm}}
-    \caption{GCWOutpu}
+    \caption{GCWOutput}
     Aim       & Print a title and a childe -- widget or text\\
     Import    & GCWizard/lib/widgets/common/gcw\_output.dart\\
     Parameter & dynamic child\newline
                 String title\\
-    Example   & \begin{lstlisting}
-    ...
-    GCWOutputText(
-        text: output,
-    ),
-    ...
-\end{lstlisting}\\
-    \label{tab:GCWOut}
+    \label{tab:GCWOutput}
 \end{tabular}
 \end{table}
+\paragraph*{Example} \,
+\begin{lstlisting}
+    ...
+GCWOutput(
+    text: output,
+),
+...
+        ],
+    );
+}
+\end{lstlisting}
+\captionof{lstlisting}{Example GCWOutput}
+\label{fig: ExampleGCWOutput}
 
 \newpage
 \subsection{GCWDefaultOutput}
@@ -654,10 +1027,15 @@ if (_currentMode == GCWSwitchPosition.left) {
     Aim       & Print the default-Output-Text and a widget\\
     Import    & GCWizard/lib/widgets/common/gcw\_default\_output.dart\\
     Parameter & dynamic child\\
-    Example   & \\
     \label{tab:GCWDefaultOutput}
 \end{tabular}
 \end{table}
+\paragraph*{Example} \,
+\begin{lstlisting}
+    Inhalt...
+\end{lstlisting}
+\captionof{lstlisting}{Example GCWDefaultOutput}
+\label{fig: ExampleGCWDefaultOutput}
 
 \newpage
 \subsection{GCWMultipleOutput}
@@ -698,10 +1076,18 @@ if (_currentMode == GCWSwitchPosition.left) {
     Import    & GCWizard/lib/widgets/common/gcw\_multiple\_output.dart\\
     Parameter & List<dynamic> children\newline
                 bool suppressDefaultTitle\\
-    Example   & \\
     \label{tab:GCWMultipleOutput}
 \end{tabular}
 \end{table}
+\paragraph*{Example} \,
+\begin{lstlisting}
+    Inhalt...
+        ],
+    );
+}
+\end{lstlisting}
+\captionof{lstlisting}{Example GCWMultipleOutput}
+\label{fig: ExampleGCWMultipleOutput}
 
 \newpage
 \section{Messages}
@@ -719,10 +1105,18 @@ if (_currentMode == GCWSwitchPosition.left) {
     Aim       & Shows a small message that pops up at the bottom of the device screen and immediately disappears on it’s own after a delay of few seconds.\\
     Import    & package:gc\_wizard/widgets/common/base/gcw\_toast.dart\\
     Parameter & String text \\
-    Example   & \\
     \label{tab:GCWToast}
 \end{tabular}
 \end{table}
+\paragraph*{Example} \,
+\begin{lstlisting}
+    Inhalt...
+        ],
+    );
+}
+\end{lstlisting}
+\captionof{lstlisting}{Example GCWToast}
+\label{fig: ExampleGCWToastr}
 
 \newpage
 \subsection{GCWDialog}
@@ -741,7 +1135,16 @@ if (_currentMode == GCWSwitchPosition.left) {
     Parameter   & String title\newline
                   content\newline
                   actions\\
-    Example   & \\
     \label{tab:GCWDialog}
 \end{tabular}
 \end{table}
+\paragraph*{Example} \,
+\begin{lstlisting}
+    Inhalt...
+            ],
+    );
+}
+
+\end{lstlisting}
+\captionof{lstlisting}{Example GCWDialog}
+\label{fig: ExampleGCWDialogr}

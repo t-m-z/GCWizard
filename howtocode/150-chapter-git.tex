@@ -8,20 +8,47 @@
 \end{figure}
 
 \section{Branching and forking}
-\paragraph{Master branch}: This branch should always contain the stable code of the current productive version. So, if the current productive version would be 1.41.3, this branch's last commit contains exactly the code for this version. 
+\subsection{Master branch}
+This branch should always contain the stable code of the current productive version. So, if the current productive version would be 1.41.3, this branch's last commit contains exactly the code for this version. 
 When the new, following version 1.42.0 is released, the version branch \enquote{1.42.0} will be merged onto the \enquote{Master}. \\
-So, checking out the master should reflect the code of the released app. 
+So, checking out the master should reflect the code of the released app. \par
+\bigskip
+Any contributions need to be done on a new version branch (e.g. \enquote{1.43.0} for a new feature version or \enquote{1.42.1} for a patch version with bug fixes, but without any new features).
 
-Any contributions need to be done on a new version branch (e.g. \enquote{1.43.0} for a new feature version or \enquote{1.42.1} for a patch version with bug fixes, but without any new features).\par
+\subsection{Version branch}
+Every single upcoming version has its own version branch. E.g. the next version would be 1.42.0, then there's a branch with name \enquote{1.42.0}. All features, fixes, etc. should be merged onto this version branch (PR destination branch is the version branch). You can think of it as the current temporary master branch.
 
-\paragraph{Version branch}: Every single upcoming version has its own version branch. E.g. the next version would be 1.42.0, then there's a branch with name \enquote{1.42.0}. All features, fixes, etc. should be merged onto this version branch (PR destination branch is the version branch). You can think of it as the current temporary master branch.\par 
-
-\paragraph{Feature branch}: Every single feature needs its own branch. If you want to contribute a new feature \enquote{Increased N}, please create a branch with a corresponding name \(maybe \enquote{increased_n}\) from the current version branch. If you worked on two different features simultaneously, you would need to create two different feature branches. \par
-
-This allows Mark to merge the features separately, maybe one includes some errors but the other one is ready to merge. The final PR's destination branch is the version branch, of course. 
-
+\subsection{Feature branch}
+Every single feature needs its own branch. If you want to contribute a new feature \enquote{Increased N}, please create a branch with a corresponding name \(maybe \enquote{increased_n}\) from the current version branch. If you worked on two different features simultaneously, you would need to create two different feature branches. \par
+\bigskip
+This allows Mark to merge the features separately, maybe one includes some errors but the other one is ready to merge. The final PR's destination branch is the version branch, of course. \par
+\bigskip
 If there's just a small bug fix or a typo, it is ok, to do this the pragmatic way without creating a specific branch, but this should be an exception for really small things!
 
+\section{Comit-Messages}
+A commit message is a short description of the changes you've made to a file added before committing the changes.\par
+\bigskip
+Good commit messages are important not only for others who you may be collaborating on the project but also for you, to keep track of all your commits and knowing exactly what changes where maybe during that particular commit.\par
+\bigskip
+A good format would be:\par
+<type>: <subject>\\
+<body> (optional)\\
+<footer> (optional)\\
+\begin{description}
+    \item[type] A brief description of the changes:\\
+    -- \textbf{feat} - a new feature\\
+    -- \textbf{fix} - a bug fix\\
+    -- \textbf{docs} - changes in documentation\\
+    -- \textbf{style} - everything related to UI\\
+    -- \textbf{refactor} - code changes that neither fixes a bug or adds a feature\\
+    -- \textbf{test} - everything related to testing\\
+    -- \textbf{chore} - updating build tasks, package manager configs, etc.\\
+    \item[subject] A short description of the changes made. It shouldn't be greater than 50 characters, should begin with a capital letter and written in the imperative eg. Add instead of Added or Adds.
+    \item[body] The body is used to explain what changes you made and why you made them. Not all commits are complex enough that they need a body.\\    
+    A blank line between the body and the subject is required and each line should have no more than 72 characters.
+    \item[footer] The footer is also optional and mainly used when you are using an issue tracker to reference the issue ID.\\
+    A blank line between the body and the subject is required and each line should have no more than 72 characters.
+\end{description}
 
 \section{Pull requests}
 If you believe, your contribution ist ready for review and merge, you have to create an PR from your feature branch to the current version branch. Talking about codings/decodings or other algorithmic stuff you have to provide at least
