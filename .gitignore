@@ -78,6 +78,7 @@
 web
 /pubspec.lock
 /assets/tokens/mapbox
+<<<<<<< HEAD
 *.docx
 *.pdf
 *.aux
@@ -86,3 +87,14 @@ web
 *.toc
 *.lol
 *.lof
+=======
+*.tmp
+*.docx
+*.pdf
+*.aux
+*.lof
+*.lol
+*.lot
+*.gz
+*.toc
+>>>>>>> 2976d813a3c90bcb88905be56ab5f5723032e89a

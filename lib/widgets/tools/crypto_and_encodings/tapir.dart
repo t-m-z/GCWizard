@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/tapir.dart';
-import 'package:gc_wizard/utils/common_utils.dart';
-import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
-import 'package:gc_wizard/widgets/common/gcw_integer_list_textfield.dart';
-import 'package:gc_wizard/widgets/common/gcw_integer_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
-import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:gc_wizard/widgets/utils/textinputformatter/wrapper_for_masktextinputformatter.dart';
 
 class Tapir extends StatefulWidget {
   @override
@@ -26,9 +22,9 @@ class TapirState extends State<Tapir> {
 
   var _currentOneTimePad = '';
 
-  var _maskFormatter = MaskTextInputFormatter(
-      mask: '##### ' * 100000 + '#####',
-      filter: {"#": RegExp(r'[0-9]')}
+  var _maskFormatter = WrapperForMaskTextInputFormatter(
+    mask: '##### ' * 100000 + '#####',
+    filter: {"#": RegExp(r'[aaaa0-9]')}
   );
 
   @override
@@ -87,7 +83,7 @@ class TapirState extends State<Tapir> {
             )
           : Container(),
         GCWDefaultOutput(
-          text: _buildOutput()
+          child: _buildOutput()
         ),
       ],
     );

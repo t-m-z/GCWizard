@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/primes/primes.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
+import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
+import 'package:gc_wizard/widgets/common/gcw_multiple_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
 
 class IntegerFactorization extends StatefulWidget {
@@ -10,8 +12,6 @@ class IntegerFactorization extends StatefulWidget {
 }
 
 class IntegerFactorizationState extends State<IntegerFactorization> {
-  String _output = '1';
-
   List<BigInt> _currentFactors = [BigInt.one];
 
   @override
@@ -38,12 +38,8 @@ class IntegerFactorizationState extends State<IntegerFactorization> {
   }
 
   Widget _buildOutput() {
-    return GCWOutput(
-      child: Column(
-        children: _currentFactors.map((prime) => GCWOutputText(
-          text: prime.toString()
-        )).toList(),
-      )
+    return GCWMultipleOutput(
+      children: _currentFactors
     );
   }
 }

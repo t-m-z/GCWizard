@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/open_location_code.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/quadtree.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
+import 'package:gc_wizard/widgets/utils/textinputformatter/wrapper_for_masktextinputformatter.dart';
 import 'package:latlong/latlong.dart';
-import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class GCWCoordsQuadtree extends StatefulWidget {
   final Function onChanged;
@@ -19,7 +17,7 @@ class GCWCoordsQuadtreeState extends State<GCWCoordsQuadtree> {
   var _controller;
   var _currentCoord = '';
 
-  var _maskInputFormatter = MaskTextInputFormatter(
+  var _maskInputFormatter = WrapperForMaskTextInputFormatter(
     mask: '#' * 100,
     filter: {"#": RegExp(r'[0123]')}
   );
