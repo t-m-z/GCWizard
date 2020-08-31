@@ -435,14 +435,27 @@ Widget build(BuildContext context) {
 
 \newpage
 \section{Unit-Inputs}
-\subsection{GCWLengthsDropdownButton}
+\subsection{GCWUnitDropdownButton}
+\begin{tikzpicture}
+    \node [root] {GCWUnitDropdownButton}
+    child { node [selected] {GCWDropDownButton}
+        child { node [selected] {DropdownButton}
+        }
+    };
+\end{tikzpicture}
+\captionof{figure}{GCWUnitDropdownButton}
+\label{fig: GCWUnitDropdownButton}
 \begin{table}[H]
 \begin{tabular}[h]{p{2cm}p{9cm}}
-    \caption{GCWLengthsDropdownButton}
-    Aim       & \\
-    Import    & \\
-    Parameter & \\
-    \label{tab:GCWLengthsDropdownButton}
+    \caption{GCWUnitDropdownButton}
+    Aim       & Shows a Dropdown to enter units.\\
+    Import    & GCWizard/lib/widgets/common/units/gcw\_unit\_dropdownbutton.dart\\
+    Parameter & Function onChanged\newline
+                Unit value\newline
+                List<Unit> unitList\newline
+                UnitCategory unitCategory\newline
+                bool onlyShowSymbols\\
+    \label{tab:GCWUnitDropdownButton}
 \end{tabular}
 \end{table}
 \paragraph*{Example} \,
@@ -456,18 +469,57 @@ Widget build(BuildContext context) {
     );
 }
 \end{lstlisting}
-\captionof{lstlisting}{Example GCWLengthsDropdownButton}
-\label{fig: ExampleGCWLengthsDropdownButton}
+\captionof{lstlisting}{Example GCWUnitDropdownButton}
+\label{fig: ExampleGCWUnitDropdownButton}
 
 \newpage
-\subsection{GCWDistance}
+\subsection{GCWUnitInput}
+\begin{tikzpicture}
+    \node [root] {GCWUnitInput}
+    child { node [selected] {GCWDoubleSpinner}
+        child { node [selected] {GCWText}
+            child { node [selected] {SelectableText}
+            }
+        }
+        child [missing]
+        child { node [selected] {GCWIconButton}
+            edge from parent [-]
+            child { node [selected] {OutlineButton}
+            }
+        }
+        child [missing]
+        child { node [selected] {GCWIntegerTextfield}
+            child { node [selected] {GCWTextfield}
+                child { node [selected] {TextFormField}
+                    edge from parent [-]
+                }
+            }
+        }
+    }
+    child [missing]
+    child [missing]
+    child [missing]
+    child { node [selected] {GCWUnitDropDownButton}
+        child { node [selected] {GCWDropDownButton}
+            child { node [selected] {DropdownButton}
+            }
+        }
+    };
+\end{tikzpicture}
+\captionof{figure}{GCWUnitInput}
+\label{fig: GCWUnitInput}
 \begin{table}[H]
 \begin{tabular}[h]{p{2cm}p{9cm}}
-    \caption{GCWDistance}
-    Aim       & \\
-    Import    & \\
-    Parameter & \\
-    \label{tab:GCWDistance}
+    \caption{GCWUnitInput}
+    Aim       & Shows a dropdown and a doubleSpinner to enter an unit with value.\\
+    Import    & GCWizard/lib/widgets/common/units/gcw\_unit\_input.dart\\
+    Parameter & min\newline
+                numberDecimalDigits\newline
+                double value\newline
+                List<Unit> unitList\newline
+                UnitCategory unitCategory\newline
+                title\\
+    \label{tab:GCWUnitInput}
 \end{tabular}
 \end{table}
 \paragraph*{Example} \,
@@ -476,23 +528,44 @@ Widget build(BuildContext context) {
     return Column(
         children: <Widget>[
             ...
-            Inhalt...
+            GCWUnitInput(
+                value: _currentInputMass,
+                title: i18n(context, 'projectiles_mass'),
+                unitList: allMasses(),
+                onChanged: (value) {
+                    setState(() {
+                        _currentInputMass = value;
+                    });
+                },
+             )
+             ...
         ],
     );
 }
 \end{lstlisting}
-\captionof{lstlisting}{Example GCWDistance}
-\label{fig: ExampleGCWDistance}
+\captionof{lstlisting}{Example GCWUnitInput}
+\label{fig: ExampleGCWUnitInput}
 
 \newpage
-\subsection{GCWVelocityDropdownButton}
+\subsection{GCWUnitPrefixDropdownButton}
+\begin{tikzpicture}
+    \node [root] {GCWUnitPrefixDropDownButton}
+    child { node [selected] {GCWDropdownButton}
+        child { node [selected] {DropdownButton}
+        }
+    };
+\end{tikzpicture}
+\captionof{figure}{GCWUnitPrefixDropdownButton}
+\label{fig: GCWUnitPrefixDropdownButton}
 \begin{table}[H]
 \begin{tabular}[h]{p{2cm}p{9cm}}
-    \caption{GCWVelocityDropdownButton}
-    Aim       & \\
-    Import    & \\
-    Parameter & \\
-    \label{tab:GCWVelocityDropdownButton}
+    \caption{GCWUnitPrefixDropdownButton}
+    Aim       & Shows a dropdown to enter prefixes for units\\
+    Import    & GCWizard/lib/widgets/common/units/gcw\_unit\_prefix\_dropdownbutton.dart\\
+    Parameter & Function onChanged\newline
+                UnitPrefix value\newline
+                bool onlyShowSymbols\\
+    \label{tab:GCWUnitPrefixDropdownButton}
 \end{tabular}
 \end{table}
 \paragraph*{Example} \,
@@ -506,8 +579,63 @@ Widget build(BuildContext context) {
     );
 }
 \end{lstlisting}
-\captionof{lstlisting}{Example GCWVelocityDropdownButton}
-\label{fig: ExampleGCWVelocityDropdownButton}
+\captionof{lstlisting}{Example GCWUnitPrefixDropdownButton}
+\label{fig: ExampleGCWUnitPrefixDropdownButton}
+
+\newpage
+\subsection{GCWUnits}
+\begin{tikzpicture}
+    \node [root] {GCWUnits}
+    child { node [selected] {GCWUnitPrefixDropDownButton}
+        child { node [selected] {SelectableText}
+        }
+    }
+    child [missing]
+    child [missing]
+    child { node [selected] {GCWUnitDropDownButton}
+        edge from parent [-]
+        child { node [selected] {OutlineButton}
+        }
+    };
+\end{tikzpicture}
+\captionof{figure}{GCWUnits}
+\label{fig: GCWUnits}
+\begin{table}[H]
+    \begin{tabular}[h]{p{2cm}p{9cm}}
+        \caption{GCWUnits}
+        Aim       & Shows a dropdown to enter prefixes and also a dropwdown to enter units\\
+        Import    & GCWizard/lib/widgets/common/units/gcw\_units.dart\\
+        Parameter & UnitCategory unitCategory\newline
+                    Function onChanged\newline
+                    bool onlyShowUnitSymbols\newline
+                    bool onlyShowPrefixSymbols\newline
+                    Map<String, dynamic> value\\
+        \label{tab:GCWUnits}
+    \end{tabular}
+\end{table}
+\paragraph*{Example} \,
+\begin{lstlisting}
+    Widget build(BuildContext context) {
+        return Column(
+            children: <Widget>[
+                ...
+                GCWUnits(
+                    value: _currentOutputUnit,
+                    unitCategory: _currentMode,
+                    onlyShowPrefixSymbols: false,
+                    onChanged: (value) {
+                        setState(() {
+                            _currentOutputUnit = value;
+                        });
+                    },
+                ),
+                ...
+            ],
+        );
+    }
+\end{lstlisting}
+\captionof{lstlisting}{Example GCWUnits}
+\label{fig: ExampleGCWUnits}
 
 \newpage
 \section{Miscellaneous inputs}

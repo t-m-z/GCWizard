@@ -114,23 +114,21 @@
         \FTdir(lib,theme,theme)
         \FTdir(lib,utils,utils)
         \FTdir(lib,widgets,widgets){
-            \FTdir(widgets,common,common){}
+            \FTdir(widgets,common,common){
+                \FTdir(common, base, base)
+                \FTdir(common, units, units)
+            }
             \FTdir(widgets,mainmenu,main\_menu){}
             \FTdir(widgets,selectorlists,selector\_lists){}
             \FTdir(widgets,tools,tools){
                 \FTdir(tools,coords,coords)
-                    \FTdir(tools,cryptoandencodings,crypto\_and\_encodings)
-                    \FTdir(tools,formulasolver,formula\_solver)
-                    \FTdir(tools,games,games)
-                    \FTdir(tools,scienceandtechnology,science\_and\_technology)
+                \FTdir(tools,cryptoandencodings,crypto\_and\_encodings)
+                \FTdir(tools,formulasolver,formula\_solver)
+                \FTdir(tools,games,games)
+                \FTdir(tools,scienceandtechnology,science\_and\_technology)
             }
             \FTdir(widgets,utils,utils){}
-            \FTfile(widgets,favorites.dart)
-            \FTfile(widgets,main\_menu.dart)
-            \FTfile(widgets,main\_view.dart)
-            \FTfile(widgets,registry.dart)
         }
-        \FTfile(lib,main.dart)
     }
 };
 \end{tikzpicture}
