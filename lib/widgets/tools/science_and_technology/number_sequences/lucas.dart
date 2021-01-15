@@ -1,26 +1,26 @@
+import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/numbersequences_check.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/numbersequences_range.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/numbersequences_digits.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/numbersequences_nthnumber.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/numbersequences_contain.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/number_sequence.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/base/numbersequences_check.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/base/numbersequences_containsdigits.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/base/numbersequences_digits.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/base/numbersequences_nthnumber.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/base/numbersequences_range.dart';
 
 class NumberSequenceLucasCheckNumber extends NumberSequenceCheckNumber {
-  NumberSequenceLucasCheckNumber() : super(mode: NumberSequencesMode.LUCAS, maxIndex: 111111);
+  NumberSequenceLucasCheckNumber() : super(mode: NumberSequencesMode.LUCAS);
 }
 
 class NumberSequenceLucasDigits extends NumberSequenceDigits {
-  NumberSequenceLucasDigits() : super(mode: NumberSequencesMode.LUCAS, maxDigits: 1111);
+  NumberSequenceLucasDigits() : super(mode: NumberSequencesMode.LUCAS);
 }
 
 class NumberSequenceLucasRange extends NumberSequenceRange {
-  NumberSequenceLucasRange() : super(mode: NumberSequencesMode.LUCAS, maxIndex: 111111);
+  NumberSequenceLucasRange() : super(mode: NumberSequencesMode.LUCAS);
 }
 
 class NumberSequenceLucasNthNumber extends NumberSequenceNthNumber {
-  NumberSequenceLucasNthNumber() : super(mode: NumberSequencesMode.LUCAS, maxIndex: 111111);
+  NumberSequenceLucasNthNumber() : super(mode: NumberSequencesMode.LUCAS);
 }
 
-class NumberSequenceLucasContainsDigits extends NumberSequenceContainsDigits {
-  NumberSequenceLucasContainsDigits() : super(mode: NumberSequencesMode.LUCAS, maxIndex: 11111);
+class NumberSequenceLucasContains extends NumberSequenceContains {
+  NumberSequenceLucasContains() : super(mode: NumberSequencesMode.LUCAS);
 }

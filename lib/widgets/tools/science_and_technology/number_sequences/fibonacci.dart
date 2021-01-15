@@ -1,26 +1,26 @@
+import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/numbersequences_check.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/numbersequences_range.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/numbersequences_digits.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/numbersequences_nthnumber.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/numbersequences_contain.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/number_sequence.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/base/numbersequences_check.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/base/numbersequences_containsdigits.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/base/numbersequences_digits.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/base/numbersequences_nthnumber.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/base/numbersequences_range.dart';
 
 class NumberSequenceFibonacciCheckNumber extends NumberSequenceCheckNumber {
-  NumberSequenceFibonacciCheckNumber() : super(mode: NumberSequencesMode.FIBONACCI, maxIndex: 111111);
+  NumberSequenceFibonacciCheckNumber() : super(mode: NumberSequencesMode.FIBONACCI);
 }
 
 class NumberSequenceFibonacciDigits extends NumberSequenceDigits {
-  NumberSequenceFibonacciDigits() : super(mode: NumberSequencesMode.FIBONACCI, maxDigits: 1111);
+  NumberSequenceFibonacciDigits() : super(mode: NumberSequencesMode.FIBONACCI);
 }
 
 class NumberSequenceFibonacciRange extends NumberSequenceRange {
-  NumberSequenceFibonacciRange() : super(mode: NumberSequencesMode.FIBONACCI, maxIndex: 111111);
+  NumberSequenceFibonacciRange() : super(mode: NumberSequencesMode.FIBONACCI);
 }
 
 class NumberSequenceFibonacciNthNumber extends NumberSequenceNthNumber {
-  NumberSequenceFibonacciNthNumber() : super(mode: NumberSequencesMode.FIBONACCI, maxIndex: 111111);
+  NumberSequenceFibonacciNthNumber() : super(mode: NumberSequencesMode.FIBONACCI);
 }
 
-class NumberSequenceFibonacciContainsDigits extends NumberSequenceContainsDigits {
-  NumberSequenceFibonacciContainsDigits() : super(mode: NumberSequencesMode.FIBONACCI, maxIndex: 1111);
+class NumberSequenceFibonacciContains extends NumberSequenceContains {
+  NumberSequenceFibonacciContains() : super(mode: NumberSequencesMode.FIBONACCI);
 }
