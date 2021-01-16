@@ -44,6 +44,7 @@ import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/numeral_words_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/phi_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/periodic_table_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/pi_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/primes_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/resistor_selection.dart';
@@ -58,6 +59,7 @@ import 'package:gc_wizard/widgets/selector_lists/vanity_selection.dart';
 import 'package:gc_wizard/widgets/tools/coords/antipodes.dart';
 import 'package:gc_wizard/widgets/tools/coords/center_three_points.dart';
 import 'package:gc_wizard/widgets/tools/coords/center_two_points.dart';
+import 'package:gc_wizard/widgets/tools/coords/coordinate_averaging.dart';
 import 'package:gc_wizard/widgets/tools/coords/cross_bearing.dart';
 import 'package:gc_wizard/widgets/tools/coords/distance_and_bearing.dart';
 import 'package:gc_wizard/widgets/tools/coords/ellipsoid_transform.dart';
@@ -115,6 +117,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programmin
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/brainfk.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/chef_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/deadfish.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/malbolge.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/ook.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/whitespace_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gade.dart';
@@ -217,7 +220,8 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/pell_lucas.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/recaman.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/numeralbases.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/periodic_table.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/periodic_table/periodic_table.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/periodic_table/periodic_table_data_view.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/primes/primes_integerfactorization.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/primes/primes_isprime.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/primes/primes_nearestprime.dart';
@@ -277,6 +281,7 @@ class Registry {
   static final SEARCHSTRING_MAYANUMBERS = 'mayas majas zahlen ziffern numbers numerals vigesimalsystem 20 ';
   static final SEARCHSTRING_NUMERALWORDS = 'numeralwords zahlwoerter numberwords zaehlwort zahlwort zaehlwoerter numerals';
   static final SEARCHSTRING_NUMBERSEQUENCES = 'zahlenfolgen zahlenreihen numbersequences oeis integersequences ';
+  static final SEARCHSTRING_PERIODICTABLE = 'periodictablesoftheelements periodensystemderelemente chemie chemistry';
   static final SEARCHSTRING_PHI = SEARCHSTRING_IRRATIONALNUMBERS + 'phi goldener schnitt golden ratio fibonacci 1,6180339887 1.6180339887 0,6180339887 0.6180339887 ' +  [934, 966, 981].map((char) => String.fromCharCode(char)).join(' ');
   static final SEARCHSTRING_PI = SEARCHSTRING_IRRATIONALNUMBERS + 'pi circle kreis 3,1415926535 3.1415926535 ' +  [928, 960].map((char) => String.fromCharCode(char)).join(' ');
   static final SEARCHSTRING_PRIMES = 'primes primzahlen ';
@@ -635,10 +640,10 @@ class Registry {
         searchStrings: 'onetimepad einmalschluessel one-time-pad otp'
       ),
       GCWTool(
-        tool: PeriodicTable(),
-        i18nPrefix: 'periodictable',
+        tool: PeriodicTableSelection(),
+        i18nPrefix: 'periodictable_selection',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-        searchStrings: 'periodic tables of the elements periodensystem der elemente chemie chemistry'
+        searchStrings: SEARCHSTRING_PERIODICTABLE
       ),
       GCWTool(
         tool: PhiSelection(),
@@ -1044,7 +1049,7 @@ class Registry {
         tool: FormatConverter(),
         i18nPrefix: 'coords_formatconverter',
         iconPath: 'assets/coordinates/icon_format_converter.png',
-        searchStrings: SEARCHSTRING_COORDINATES + 'coordinateformatconverter converting koordinatenformatkonverter formate konvertieren umwandeln quadtree nac naturalareacode naturalareacoding openlocationcode pluscode olc waldmeister reversewhereigo reversewig maidenhead geo-hash geohash qth swissgrid swiss grid mercator gausskruger gausskrueger mgrs utm dec deg dms 1903 ch1903+ slippymap tiles'
+        searchStrings: SEARCHSTRING_COORDINATES + 'coordinateformatconverter converting koordinatenformatkonverter formate konvertieren umwandeln quadtree nac naturalareacode naturalareacoding openlocationcode pluscode olc waldmeister reversewhereigo reversewig maidenhead geo-hash geohash geohex qth swissgrid swiss grid mercator gausskruger gausskrueger mgrs utm dec deg dms 1903 ch1903+ slippymap tiles'
       ),
       GCWTool(
         tool: MapView(),
@@ -1058,6 +1063,12 @@ class Registry {
         i18nPrefix: 'coords_variablecoordinate',
         iconPath: 'assets/coordinates/icon_variable_coordinate.png',
         searchStrings: SEARCHSTRING_COORDINATES + SEARCHSTRING_FORMULASOLVER + 'variable waypoints flex '
+      ),
+      GCWTool(
+        tool: CoordinateAveraging(),
+        i18nPrefix: 'coords_averaging',
+        iconPath: 'assets/coordinates/icon_variable_coordinate.png',
+        searchStrings: SEARCHSTRING_COORDINATES + 'einmessen einmessung measurement averaging average ermitteln '
       ),
       GCWTool(
         tool: CenterTwoPoints(),
@@ -1248,6 +1259,11 @@ class Registry {
         tool: Deadfish(),
         i18nPrefix: 'deadfish',
         searchStrings: SEARCHSTRING_ESOTERICPROGRAMMINGLANGUAGE + 'deadfish idso xkcd toterfisch '
+      ),
+      GCWTool(
+        tool: Malbolge(),
+        i18nPrefix: 'malbolge',
+        searchStrings: SEARCHSTRING_ESOTERICPROGRAMMINGLANGUAGE + 'malbolge olmstead dante hell hoelle '
       ),
       GCWTool(
         tool: Ook(),
@@ -1914,6 +1930,18 @@ class Registry {
         tool: NumeralWordsLists(),
         i18nPrefix: 'numeralwords_lists',
         searchStrings: SEARCHSTRING_NUMERALWORDS,
+      ),
+
+      //PeriodicTableSelection ***************************************************************************************
+      GCWTool(
+        tool: PeriodicTable(),
+        i18nPrefix: 'periodictable',
+        searchStrings: SEARCHSTRING_PERIODICTABLE
+      ),
+      GCWTool(
+        tool: PeriodicTableDataView(),
+        i18nPrefix: 'periodictabledataview',
+        searchStrings: SEARCHSTRING_PERIODICTABLE
       ),
 
       //PrimesSelection **********************************************************************************************
