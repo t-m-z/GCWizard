@@ -456,8 +456,6 @@ class VariableCoordinateState extends State<VariableCoordinate> {
   }
 
   _calculateOutput(BuildContext context) {
-    _currentCoordMode = GCWSwitchPosition.left;
-
     Map<String, String> _substitutions = {};
     widget.formula.values.forEach((value) {
       _substitutions.putIfAbsent(value.key, () => value.value);
@@ -568,7 +566,7 @@ class VariableCoordinateState extends State<VariableCoordinate> {
           showToast(i18n(context, 'coords_common_location_lowaccuracy', parameters: [NumberFormat('0.0').format(locationData.accuracy)]));
 
         var insertedCoord = formatCoordOutput(LatLng(locationData.latitude, locationData.longitude), defaultCoordFormat(), defaultEllipsoid());
-        _currentInput = insertedCoord.replaceAll('\n', '');
+        _currentInput = insertedCoord.replaceAll('\n', ' ');
         _inputController.text = _currentInput;
 
         setState(() {

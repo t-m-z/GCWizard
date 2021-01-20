@@ -34,17 +34,26 @@ import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_fermat_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_fibonacci_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_jacobsthal_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_jacobsthaloblong_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_jacobsthallucas_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_lucas_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_mersenne_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_mersennefermat_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_pell_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_bell_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_pelllucas_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_recaman_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_mersenneprimes_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_mersenneexponents_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_sublimenumbers_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_weirdnumbers_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_perfectnumbers_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_superperfectnumbers_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_primarypseudoperfectnumbers_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/numeral_words_selection.dart';
-import 'package:gc_wizard/widgets/selector_lists/phi_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/periodic_table_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/phi_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/pi_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/primes_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/resistor_selection.dart';
@@ -56,6 +65,7 @@ import 'package:gc_wizard/widgets/selector_lists/segmentdisplay_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/symbol_table_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/tomtom_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/vanity_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/vigenere_selection.dart';
 import 'package:gc_wizard/widgets/tools/coords/antipodes.dart';
 import 'package:gc_wizard/widgets/tools/coords/center_three_points.dart';
 import 'package:gc_wizard/widgets/tools/coords/center_two_points.dart';
@@ -68,6 +78,8 @@ import 'package:gc_wizard/widgets/tools/coords/format_converter.dart';
 import 'package:gc_wizard/widgets/tools/coords/intersect_bearing_and_circle.dart';
 import 'package:gc_wizard/widgets/tools/coords/intersect_bearings.dart';
 import 'package:gc_wizard/widgets/tools/coords/intersect_four_points.dart';
+import 'package:gc_wizard/widgets/tools/coords/segment_line.dart';
+import 'package:gc_wizard/widgets/tools/coords/segment_bearings.dart';
 import 'package:gc_wizard/widgets/tools/coords/intersect_three_circles.dart';
 import 'package:gc_wizard/widgets/tools/coords/intersect_two_circles.dart';
 import 'package:gc_wizard/widgets/tools/coords/intersection.dart';
@@ -212,13 +224,22 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/fermat.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/fibonacci.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/jacobsthal.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/jacobsthal_oblong.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/jacobsthal_lucas.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/lucas.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/mersenne.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/mersennefermat.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/bell.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/pell.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/pell_lucas.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/recaman.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/mersenne_primes.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/mersenne_exponents.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/perfect_numbers.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/superperfect_numbers.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/primarypseudoperfect_numbers.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/weird_numbers.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/sublime_numbers.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/numeralbases.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/periodic_table/periodic_table.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/periodic_table/periodic_table_data_view.dart';
@@ -303,7 +324,7 @@ class Registry {
   static final SEARCHSTRING_SYMBOLTABLES_SIGNLANGUAGE = 'gebaarental deafmute deaf-mute deafblind hearing loss deaf-blind taub-stummes hands haende fingers daumen thumbs signs signlanguage gebaerdensprache deafblind gehoerloses taubstummes ';
   static final SEARCHSTRING_TOMTOM = 'a-tom-tom atomtom ';
   static final SEARCHSTRING_VANITY = 'telefontasten telephone keys buttons numbers ziffern telefonnummern vanity keypad sms mobile cellphone handy phoneword tasten tastatur ';
-  static final SEARCHSTRING_VIGENERE = SEARCHSTRING_ROTATION + 'vigenere ';
+  static final SEARCHSTRING_VIGENERE = SEARCHSTRING_ROTATION + 'vigenere autokey ';
 
   static initialize(BuildContext context) {
     toolList = [
@@ -550,12 +571,6 @@ class Registry {
         searchStrings: SEARCHSTRING_BINARY + 'gray hamming distance hamming-distanz'
       ),
       GCWTool(
-        tool: Gronsfeld(),
-        i18nPrefix: 'gronsfeld',
-        category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: SEARCHSTRING_VIGENERE + 'gronsfeld'
-      ),
-      GCWTool(
         tool: HashSelection(),
         i18nPrefix: 'hashes_selection',
         category: ToolCategory.CRYPTOGRAPHY,
@@ -795,12 +810,6 @@ class Registry {
         searchStrings: SEARCHSTRING_TOMTOM
       ),
       GCWTool(
-        tool: Trithemius(),
-        i18nPrefix: 'trithemius',
-        category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: SEARCHSTRING_VIGENERE + 'trithemius tabula recta'
-      ),
-      GCWTool(
         tool: UnitConverter(),
         i18nPrefix: 'unitconverter',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
@@ -813,16 +822,10 @@ class Registry {
         searchStrings: SEARCHSTRING_VANITY
       ),
       GCWTool(
-        tool: Vigenere(),
-        i18nPrefix: 'vigenere',
+        tool: VigenereSelection(),
+        i18nPrefix: 'vigenere_selection',
         category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: SEARCHSTRING_VIGENERE + 'autokey'
-      ),
-      GCWTool(
-          tool: VigenereBreaker(),
-          i18nPrefix: 'vigenerebreaker',
-          category: ToolCategory.GENERAL_CODEBREAKERS,
-          searchStrings: SEARCHSTRING_VIGENERE + 'autokey solver loeser codebreaker codebrecher codeknacker cracker '
+        searchStrings: SEARCHSTRING_VIGENERE + 'trithemius gronsfeld'
       ),
       GCWTool(
         tool: Z22(),
@@ -1037,115 +1040,148 @@ class Registry {
         tool: WaypointProjection(),
         i18nPrefix: 'coords_waypointprojection',
         iconPath: 'assets/coordinates/icon_waypoint_projection.png',
+        category: ToolCategory.COORDINATES,
         searchStrings: SEARCHSTRING_COORDINATES + SEARCHSTRING_COORDINATES_COMPASSROSE + 'winkel angles waypointprojections bearings wegpunktprojektionen wegpunktpeilungen cardinaldirections richtungen reverse projections rueckwaertspeilung kompassrose compassrose himmelsrichtungen '
       ),
       GCWTool(
         tool: DistanceBearing(),
         i18nPrefix: 'coords_distancebearing',
         iconPath: 'assets/coordinates/icon_distance_and_bearing.png',
+        category: ToolCategory.COORDINATES,
         searchStrings: SEARCHSTRING_COORDINATES + 'angles winkel bearings distances distanzen entfernungen abstand abstaende directions richtungen'
       ),
       GCWTool(
         tool: FormatConverter(),
         i18nPrefix: 'coords_formatconverter',
         iconPath: 'assets/coordinates/icon_format_converter.png',
-        searchStrings: SEARCHSTRING_COORDINATES + 'coordinateformatconverter converting koordinatenformatkonverter formate konvertieren umwandeln quadtree nac naturalareacode naturalareacoding openlocationcode pluscode olc waldmeister reversewhereigo reversewig maidenhead geo-hash geohash geohex qth swissgrid swiss grid mercator gausskruger gausskrueger mgrs utm dec deg dms 1903 ch1903+ slippymap tiles'
+        category: ToolCategory.COORDINATES,
+        searchStrings: SEARCHSTRING_COORDINATES + 'coordinateformatconverter converting koordinatenformatkonverter formate konvertieren umwandeln quadtree nac naturalareacode naturalareacoding openlocationcode pluscode olc waldmeister xyz ecef reversewhereigo reversewig maidenhead geo-hash geohash geohex qth swissgrid swiss grid mercator gausskruger gausskrueger mgrs utm dec deg dms 1903 ch1903+ slippymap tiles'
       ),
       GCWTool(
         tool: MapView(),
         autoScroll: false,
         i18nPrefix: 'coords_openmap',
-        iconPath: 'assets/coordinates/icon_variable_coordinate.png',
+        iconPath: 'assets/coordinates/icon_free_map.png',
+        category: ToolCategory.COORDINATES,
         searchStrings: SEARCHSTRING_COORDINATES + 'mapview kartenansicht freiekarte openmap measurement messen messungen '
       ),
       GCWTool(
         tool: VariableCoordinateFormulas(),
         i18nPrefix: 'coords_variablecoordinate',
         iconPath: 'assets/coordinates/icon_variable_coordinate.png',
+        category: ToolCategory.COORDINATES,
         searchStrings: SEARCHSTRING_COORDINATES + SEARCHSTRING_FORMULASOLVER + 'variable waypoints flex '
       ),
       GCWTool(
         tool: CoordinateAveraging(),
         i18nPrefix: 'coords_averaging',
-        iconPath: 'assets/coordinates/icon_variable_coordinate.png',
+        iconPath: 'assets/coordinates/icon_coordinate_measurement.png',
+        category: ToolCategory.COORDINATES,
         searchStrings: SEARCHSTRING_COORDINATES + 'einmessen einmessung measurement averaging average ermitteln '
       ),
       GCWTool(
         tool: CenterTwoPoints(),
         i18nPrefix: 'coords_centertwopoints',
         iconPath: 'assets/coordinates/icon_center_two_points.png',
+        category: ToolCategory.COORDINATES,
         searchStrings: SEARCHSTRING_COORDINATES + 'midpoint center centre middle mittelpunkt zentrum zwei two 2 points punkte'
       ),
       GCWTool(
         tool: CenterThreePoints(),
         i18nPrefix: 'coords_centerthreepoints',
         iconPath: 'assets/coordinates/icon_center_three_points.png',
-        searchStrings: SEARCHSTRING_COORDINATES + 'midpoint center centre middle mittelpunkt zentrum three drei 3 umkreis circumcircle circumscribed points punkte'
+        category: ToolCategory.COORDINATES,
+        searchStrings: SEARCHSTRING_COORDINATES + 'midpoint center centre middle mittelpunkt zentrum three drei 3 umkreis circumcircle circumscribed points punkte seitenhalbierende medians '
+      ),
+      GCWTool(
+        tool: SegmentLine(),
+        i18nPrefix: 'coords_segmentline',
+        iconPath: 'assets/coordinates/icon_segment_line.png',
+        category: ToolCategory.COORDINATES,
+        searchStrings: SEARCHSTRING_COORDINATES + 'segments segmentlines unterteilen einteilen teilungen abschnitte gleichmaessig regularly bisectors'
+      ),
+      GCWTool(
+        tool: SegmentBearings(),
+        i18nPrefix: 'coords_segmentbearings',
+        iconPath: 'assets/coordinates/icon_segment_bearings.png',
+        category: ToolCategory.COORDINATES,
+        searchStrings: SEARCHSTRING_COORDINATES + 'segments segmentbearings unterteilen einteilen teilungen abschnitte gleichmaessig regularly angles winkel peilungen bearings courses winkelhalbierende bisectors'
       ),
       GCWTool(
         tool: CrossBearing(),
         i18nPrefix: 'coords_crossbearing',
         iconPath: 'assets/coordinates/icon_cross_bearing.png',
+        category: ToolCategory.COORDINATES,
         searchStrings: SEARCHSTRING_COORDINATES + 'bearings angles intersections winkel kreuzpeilungen directions richtungen'
       ),
       GCWTool(
         tool: IntersectBearings(),
         i18nPrefix: 'coords_intersectbearings',
         iconPath: 'assets/coordinates/icon_intersect_bearings.png',
+        category: ToolCategory.COORDINATES,
         searchStrings: SEARCHSTRING_COORDINATES + SEARCHSTRING_COORDINATES_COMPASSROSE + 'bearings angles winkel intersections winkel peilung'
       ),
       GCWTool(
         tool: IntersectFourPoints(),
         i18nPrefix: 'coords_intersectfourpoints',
         iconPath: 'assets/coordinates/icon_intersect_four_points.png',
+        category: ToolCategory.COORDINATES,
         searchStrings: SEARCHSTRING_COORDINATES + 'bearings richtungen directions lines arcs crossing intersection linien kreuzung four vier 4 points punkte'
       ),
       GCWTool(
         tool: IntersectGeodeticAndCircle(),
         i18nPrefix: 'coords_intersectbearingcircle',
         iconPath: 'assets/coordinates/icon_intersect_bearing_and_circle.png',
+        category: ToolCategory.COORDINATES,
         searchStrings: SEARCHSTRING_COORDINATES + SEARCHSTRING_COORDINATES_COMPASSROSE + 'bearings angles distances circles arcs intersection distanzen entfernungen abstand abstaende winkel kreisbogen kreise'
       ),
       GCWTool(
         tool: IntersectTwoCircles(),
         i18nPrefix: 'coords_intersecttwocircles',
         iconPath: 'assets/coordinates/icon_intersect_two_circles.png',
+        category: ToolCategory.COORDINATES,
         searchStrings: SEARCHSTRING_COORDINATES + 'multilateration bilateration distances intersection distanzen entfernungen abstand abstaende two zwei 2 circles kreise'
       ),
       GCWTool(
         tool: IntersectThreeCircles(),
         i18nPrefix: 'coords_intersectthreecircles',
         iconPath: 'assets/coordinates/icon_intersect_three_circles.png',
+        category: ToolCategory.COORDINATES,
         searchStrings: SEARCHSTRING_COORDINATES + 'multilateration trilateration distances intersection distanzen entfernungen abstand abstaende drei three 3 circles kreise'
       ),
       GCWTool(
-          tool: Antipodes(),
-          i18nPrefix: 'coords_antipodes',
-          iconPath: 'assets/coordinates/icon_antipodes.png',
-          searchStrings: SEARCHSTRING_COORDINATES + 'gegenueberliegende oppositeside antipodes antipoden gegenpunkte'
+        tool: Antipodes(),
+        i18nPrefix: 'coords_antipodes',
+        iconPath: 'assets/coordinates/icon_antipodes.png',
+        category: ToolCategory.COORDINATES,
+        searchStrings: SEARCHSTRING_COORDINATES + 'gegenueberliegende oppositeside antipodes antipoden gegenpunkte'
       ),
       GCWTool(
         tool: Intersection(),
         i18nPrefix: 'coords_intersection',
         iconPath: 'assets/coordinates/icon_intersection.png',
+        category: ToolCategory.COORDINATES,
         searchStrings: SEARCHSTRING_COORDINATES + 'intersection 2 angles bearings directions richtungen vorwaertseinschnitt vorwaertseinschneiden vorwaertsschnitt vorwaertsschneiden'
       ),
       GCWTool(
-          tool: Resection(),
+        tool: Resection(),
         i18nPrefix: 'coords_resection',
         iconPath: 'assets/coordinates/icon_resection.png',
+        category: ToolCategory.COORDINATES,
         searchStrings: SEARCHSTRING_COORDINATES + 'resection 2 two zwei angles winkel directions richtungen bearings 3 three drei rueckwaertseinschnitt rueckwaertseinschneiden rueckwaertsschnitt rueckwaertsschneiden'
       ),
       GCWTool(
         tool: EquilateralTriangle(),
         i18nPrefix: 'coords_equilateraltriangle',
         iconPath: 'assets/coordinates/icon_equilateral_triangle.png',
+        category: ToolCategory.COORDINATES,
         searchStrings: SEARCHSTRING_COORDINATES + 'equilateral triangles gleichseitiges dreiecke'
       ),
       GCWTool(
         tool: EllipsoidTransform(),
         i18nPrefix: 'coords_ellipsoidtransform',
         iconPath: 'assets/coordinates/icon_ellipsoid_transform.png',
+        category: ToolCategory.COORDINATES,
         searchStrings: SEARCHSTRING_COORDINATES + 'rotationsellipsoids rotationsellipsoiden converter converting konverter konvertieren umwandeln bessel 1841 bessel krassowski krasowksi krasovsky krassovsky 1950 airy 1830 modified potsdam dhdn2001 dhdn1995 pulkowo mgi lv95 ed50 clarke 1866 osgb36 date datum wgs84'
       ),
 
@@ -1551,9 +1587,14 @@ class Registry {
         searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'mersenne oeis A000225',
       ),
       GCWTool(
-        tool: NumberSequenceFermatSelection(),
-        i18nPrefix: 'numbersequence_fermat',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'fermat oeis A000251',
+        tool: NumberSequenceMersennePrimesSelection(),
+        i18nPrefix: 'numbersequence_mersenneprimes',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'mersenne primes primzahlen oeis A000668',
+      ),
+      GCWTool(
+        tool: NumberSequenceMersenneExponentsSelection(),
+        i18nPrefix: 'numbersequence_mersenneexponents',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'mersenne exponents hochzahlen exponenten oeis A000043',
       ),
       GCWTool(
         tool: NumberSequenceMersenneFermatSelection(),
@@ -1561,9 +1602,39 @@ class Registry {
         searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'mersenne fermat oeis A000051',
       ),
       GCWTool(
-        tool: NumberSequenceLucasSelection(),
-        i18nPrefix: 'numbersequence_lucas',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'lucas oeis A000032',
+        tool: NumberSequenceFermatSelection(),
+        i18nPrefix: 'numbersequence_fermat',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'fermat oeis A000251',
+      ),
+      GCWTool(
+        tool: NumberSequencePerfectNumbersSelection(),
+        i18nPrefix: 'numbersequence_perfectnumbers',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'perfect numbers perfekte vollkommene zahlen oeis A000396',
+      ),
+      GCWTool(
+        tool: NumberSequenceSuperPerfectNumbersSelection(),
+        i18nPrefix: 'numbersequence_superperfectnumbers',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'superperfect numbers superperfekte vollkommene zahlen oeis A000396',
+      ),
+      GCWTool(
+        tool: NumberSequencePrimaryPseudoPerfectNumbersSelection(),
+        i18nPrefix: 'numbersequence_primarypseudoperfectnumbers',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'primarypseudoperfect numbers primaerpseudoperfekte vollkommene zahlen oeis A054377',
+      ),
+      GCWTool(
+        tool: NumberSequenceWeirdNumbersSelection(),
+        i18nPrefix: 'numbersequence_weirdnumbers',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'weird numbers merkwuerdige zahlen oeis A006037',
+      ),
+      GCWTool(
+        tool: NumberSequenceSublimeNumbersSelection(),
+        i18nPrefix: 'numbersequence_sublimenumbers',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'sublime erhabene numbers zahlen oeis A081357',
+      ),
+      GCWTool(
+        tool: NumberSequenceBellSelection(),
+        i18nPrefix: 'numbersequence_bell',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'bell oeis A000110',
       ),
       GCWTool(
         tool: NumberSequencePellSelection(),
@@ -1571,9 +1642,9 @@ class Registry {
         searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'pell oeis A000129',
       ),
       GCWTool(
-        tool: NumberSequenceJacobsthalSelection(),
-        i18nPrefix: 'numbersequence_jacobsthal',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'jacobsthal oeis A001045',
+        tool: NumberSequenceLucasSelection(),
+        i18nPrefix: 'numbersequence_lucas',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'lucas oeis A000032',
       ),
       GCWTool(
         tool: NumberSequencePellLucasSelection(),
@@ -1581,9 +1652,19 @@ class Registry {
         searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'pell lucas oeis A002203',
       ),
       GCWTool(
+        tool: NumberSequenceJacobsthalSelection(),
+        i18nPrefix: 'numbersequence_jacobsthal',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'jacobsthal oeis A001045',
+      ),
+      GCWTool(
         tool: NumberSequenceJacobsthalLucasSelection(),
         i18nPrefix: 'numbersequence_jacobsthallucas',
         searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'jacobsthal lucas A014551',
+      ),
+      GCWTool(
+        tool: NumberSequenceJacobsthalOblongSelection(),
+        i18nPrefix: 'numbersequence_jacobsthaloblong',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'jacobsthal oblong A084175',
       ),
       GCWTool(
         tool: NumberSequenceCatalanSelection(),
@@ -1758,6 +1839,33 @@ class Registry {
         searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'mersenne',
       ),
 
+      //NumberSequenceSelection Bell ****************************************************************************************
+      GCWTool(
+        tool: NumberSequenceBellNthNumber(),
+        i18nPrefix: 'numbersequence_nth',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES  + 'bell positions position',
+      ),
+      GCWTool(
+        tool: NumberSequenceBellRange(),
+        i18nPrefix: 'numbersequence_range',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'bell range bereich',
+      ),
+      GCWTool(
+        tool: NumberSequenceBellCheckNumber(),
+        i18nPrefix: 'numbersequence_check',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'bell tests is ist ueberpruefungen' ,
+      ),
+      GCWTool(
+        tool: NumberSequenceBellDigits(),
+        i18nPrefix: 'numbersequence_digits',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'bell',
+      ),
+      GCWTool(
+        tool: NumberSequenceBellContainsDigits(),
+        i18nPrefix: 'numbersequence_containsdigits',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'bell',
+      ),
+
       //NumberSequenceSelection Pell ****************************************************************************************
       GCWTool(
         tool: NumberSequencePellNthNumber(),
@@ -1866,6 +1974,33 @@ class Registry {
         searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'jacobsthal lucas',
       ),
 
+      //NumberSequenceSelection Jacobsthal Oblong ****************************************************************************************
+      GCWTool(
+        tool: NumberSequenceJacobsthalOblongNthNumber(),
+        i18nPrefix: 'numbersequence_nth',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES  + 'jacobsthal oblong positions position',
+      ),
+      GCWTool(
+        tool: NumberSequenceJacobsthalOblongRange(),
+        i18nPrefix: 'numbersequence_range',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'jacobsthal oblong range bereich',
+      ),
+      GCWTool(
+        tool: NumberSequenceJacobsthalOblongCheckNumber(),
+        i18nPrefix: 'numbersequence_check',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'jacobsthal oblong tests is ist ueberpruefungen' ,
+      ),
+      GCWTool(
+        tool: NumberSequenceJacobsthalOblongDigits(),
+        i18nPrefix: 'numbersequence_digits',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'jacobsthal oblong',
+      ),
+      GCWTool(
+        tool: NumberSequenceJacobsthalOblongContainsDigits(),
+        i18nPrefix: 'numbersequence_containsdigits',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'jacobsthal oblong',
+      ),
+
       //NumberSequenceSelection Catalan ****************************************************************************************
       GCWTool(
         tool: NumberSequenceCatalanNthNumber(),
@@ -1918,6 +2053,195 @@ class Registry {
         tool: NumberSequenceRecamanContainsDigits(),
         i18nPrefix: 'numbersequence_containsdigits',
         searchStrings: SEARCHSTRING_NUMBERSEQUENCES +'recaman',
+      ),
+
+      //NumberSequenceSelection Mersenne Primes ****************************************************************************************
+      GCWTool(
+        tool: NumberSequenceMersennePrimesNthNumber(),
+        i18nPrefix: 'numbersequence_nth',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES  + 'mersenne primes primzahlen positions position',
+      ),
+      GCWTool(
+        tool: NumberSequenceMersennePrimesRange(),
+        i18nPrefix: 'numbersequence_range',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'mersenne primes primzahlen range bereich',
+      ),
+      GCWTool(
+        tool: NumberSequenceMersennePrimesCheckNumber(),
+        i18nPrefix: 'numbersequence_check',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'mersenne primes primzahlen tests is ist ueberpruefungen' ,
+      ),
+      GCWTool(
+        tool: NumberSequenceMersennePrimesDigits(),
+        i18nPrefix: 'numbersequence_digits',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'mersenne primes primzahlen',
+      ),
+      GCWTool(
+        tool: NumberSequenceMersennePrimesContainsDigits(),
+        i18nPrefix: 'numbersequence_containsdigits',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'mersenne primes primzahlen',
+      ),
+
+      //NumberSequenceSelection Mersenne Exponents ****************************************************************************************
+      GCWTool(
+        tool: NumberSequenceMersenneExponentsNthNumber(),
+        i18nPrefix: 'numbersequence_nth',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES  + 'mersenne exponents hochzahlen exponenten positions position',
+      ),
+      GCWTool(
+        tool: NumberSequenceMersenneExponentsRange(),
+        i18nPrefix: 'numbersequence_range',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'mersenne exponents hochzahlen exponenten range bereich',
+      ),
+      GCWTool(
+        tool: NumberSequenceMersenneExponentsCheckNumber(),
+        i18nPrefix: 'numbersequence_check',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'mersenne exponents hochzahlen exponenten tests is ist ueberpruefungen' ,
+      ),
+      GCWTool(
+        tool: NumberSequenceMersenneExponentsDigits(),
+        i18nPrefix: 'numbersequence_digits',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'mersenne exponents hochzahlen exponenten',
+      ),
+      GCWTool(
+        tool: NumberSequenceMersenneExponentsContainsDigits(),
+        i18nPrefix: 'numbersequence_containsdigits',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'mersenne exponents hochzahlen exponenten',
+      ),
+
+      //NumberSequenceSelection Perfect numbers ****************************************************************************************
+      GCWTool(
+        tool: NumberSequencePerfectNumbersNthNumber(),
+        i18nPrefix: 'numbersequence_nth',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES  + 'perfect numbers perfekte zahlen positions position',
+      ),
+      GCWTool(
+        tool: NumberSequencePerfectNumbersRange(),
+        i18nPrefix: 'numbersequence_range',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'perfect numbers perfekte zahlen range bereich',
+      ),
+      GCWTool(
+        tool: NumberSequencePerfectNumbersCheckNumber(),
+        i18nPrefix: 'numbersequence_check',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'perfect numbers perfekte zahlen tests is ist ueberpruefungen' ,
+      ),
+      GCWTool(
+        tool: NumberSequencePerfectNumbersDigits(),
+        i18nPrefix: 'numbersequence_digits',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'perfect numbers perfekte zahlen',
+      ),
+      GCWTool(
+        tool: NumberSequencePerfectNumbersContainsDigits(),
+        i18nPrefix: 'numbersequence_containsdigits',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'perfect numbers perfekte zahlen',
+      ),
+
+      //NumberSequenceSelection SuperPerfect numbers ****************************************************************************************
+      GCWTool(
+        tool: NumberSequenceSuperPerfectNumbersNthNumber(),
+        i18nPrefix: 'numbersequence_nth',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES  + 'superperfect numbers superperfekte zahlen positions position',
+      ),
+      GCWTool(
+        tool: NumberSequenceSuperPerfectNumbersRange(),
+        i18nPrefix: 'numbersequence_range',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'superperfect numbers superperfekte zahlen range bereich',
+      ),
+      GCWTool(
+        tool: NumberSequenceSuperPerfectNumbersCheckNumber(),
+        i18nPrefix: 'numbersequence_check',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'superperfect numbers superperfekte zahlen tests is ist ueberpruefungen' ,
+      ),
+      GCWTool(
+        tool: NumberSequenceSuperPerfectNumbersDigits(),
+        i18nPrefix: 'numbersequence_digits',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'superperfect numbers superperfekte zahlen',
+      ),
+      GCWTool(
+        tool: NumberSequenceSuperPerfectNumbersContainsDigits(),
+        i18nPrefix: 'numbersequence_containsdigits',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'superperfect numbers superperfekte zahlen',
+      ),
+
+      //NumberSequenceSelection Weird numbers ****************************************************************************************
+      GCWTool(
+        tool: NumberSequenceWeirdNumbersNthNumber(),
+        i18nPrefix: 'numbersequence_nth',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES  + 'weird numbers merkwuerdige zahlen positions position',
+      ),
+      GCWTool(
+        tool: NumberSequenceWeirdNumbersRange(),
+        i18nPrefix: 'numbersequence_range',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'weird numbers merkwuerdige zahlen range bereich',
+      ),
+      GCWTool(
+        tool: NumberSequenceWeirdNumbersCheckNumber(),
+        i18nPrefix: 'numbersequence_check',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'weird numbers merkwuerdige zahlen tests is ist ueberpruefungen' ,
+      ),
+      GCWTool(
+        tool: NumberSequenceWeirdNumbersDigits(),
+        i18nPrefix: 'numbersequence_digits',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'weird numbers merkwuerdige zahlen',
+      ),
+      GCWTool(
+        tool: NumberSequenceWeirdNumbersContainsDigits(),
+        i18nPrefix: 'numbersequence_containsdigits',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'weird numbers merkwuerdige zahlen',
+      ),
+
+      //NumberSequenceSelection Sublime numbers ****************************************************************************************
+      GCWTool(
+        tool: NumberSequenceSublimeNumbersNthNumber(),
+        i18nPrefix: 'numbersequence_nth',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES  + 'sublime numbers erhabene zahlen positions position',
+      ),
+      GCWTool(
+        tool: NumberSequenceSublimeNumbersRange(),
+        i18nPrefix: 'numbersequence_range',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'sublime numbers erhabene zahlen range bereich',
+      ),
+      GCWTool(
+        tool: NumberSequenceSublimeNumbersCheckNumber(),
+        i18nPrefix: 'numbersequence_check',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'sublime numbers erhabene zahlen tests is ist ueberpruefungen' ,
+      ),
+      GCWTool(
+        tool: NumberSequenceSublimeNumbersDigits(),
+        i18nPrefix: 'numbersequence_digits',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'sublime numbers erhabene zahlen',
+      ),
+      GCWTool(
+        tool: NumberSequenceSublimeNumbersContainsDigits(),
+        i18nPrefix: 'numbersequence_containsdigits',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'sublime numbers erhabene zahlen',
+      ),
+
+      //NumberSequenceSelection PseudoPerfect numbers ****************************************************************************************
+      GCWTool(
+        tool: NumberSequencePrimaryPseudoPerfectNumbersNthNumber(),
+        i18nPrefix: 'numbersequence_nth',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES  + 'pseudoperfect numbers pseudoperfekte zahlen positions position',
+      ),
+      GCWTool(
+        tool: NumberSequencePrimaryPseudoPerfectNumbersRange(),
+        i18nPrefix: 'numbersequence_range',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'pseudoperfect numbers pseudoperfekte zahlen range bereich',
+      ),
+      GCWTool(
+        tool: NumberSequencePrimaryPseudoPerfectNumbersCheckNumber(),
+        i18nPrefix: 'numbersequence_check',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'pseudoperfect numbers pseudoperfekte zahlen tests is ist ueberpruefungen' ,
+      ),
+      GCWTool(
+        tool: NumberSequencePrimaryPseudoPerfectNumbersDigits(),
+        i18nPrefix: 'numbersequence_digits',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'pseudoperfect numbers pseudoperfekte zahlen',
+      ),
+      GCWTool(
+        tool: NumberSequencePrimaryPseudoPerfectNumbersContainsDigits(),
+        i18nPrefix: 'numbersequence_containsdigits',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'pseudoperfect numbers pseudoperfekte zahlen',
       ),
 
       //NumeralWordsSelection ****************************************************************************************
@@ -2960,6 +3284,30 @@ class Registry {
         i18nPrefix: 'vanity_multiplenumbers',
         searchStrings: SEARCHSTRING_VANITY
       ),
+
+      //VigenereSelection *******************************************************************************************
+      GCWTool(
+        tool: VigenereBreaker(),
+        i18nPrefix: 'vigenerebreaker',
+        category: ToolCategory.GENERAL_CODEBREAKERS,
+        searchStrings: SEARCHSTRING_VIGENERE + 'solver loeser codebreaker codebrecher codeknacker cracker '
+      ),
+      GCWTool(
+        tool: Vigenere(),
+        i18nPrefix: 'vigenere',
+        searchStrings: SEARCHSTRING_VIGENERE
+      ),
+      GCWTool(
+        tool: Gronsfeld(),
+        i18nPrefix: 'gronsfeld',
+        searchStrings: SEARCHSTRING_VIGENERE + 'gronsfeld'
+      ),
+      GCWTool(
+        tool: Trithemius(),
+        i18nPrefix: 'trithemius',
+        searchStrings: SEARCHSTRING_VIGENERE + 'trithemius tabularecta'
+      ),
+
     ].map((toolWidget) {
       toolWidget.toolName = i18n(context, toolWidget.i18nPrefix + '_title');
 
