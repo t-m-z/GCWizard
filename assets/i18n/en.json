@@ -197,8 +197,7 @@
 
   "bacon_title" : "Bacon Cipher",
   "bacon_description" : "Letters to five-element groups of A and B",
-  "bacon_example" : "XYZ → BABABBABBABABBB",
-  "bacon_invers" : "AAAAB → BBBBA",
+  "bacon_example" : "XYZ → BABABBABBABABBB / 101011011010111",
   "bacon_coding" : "Coding",
 
   "base_selection_title" : "Base Encodings",
@@ -396,7 +395,7 @@
   "ccitt2_example" : "ABC → 00011 11001 01110",
   "ccitt2_numeralbase" : "Coding",
 
-  "changelog_1.4.0" : "[new] Open Map\n[new] Vigenère Code Breaker (Thanks, Mike, guballa.de)\n[new] Malbolge (Thanks, Thomas)\n[new] Progress View (Thanks, Mike)\n[new] Chef (Thanks, Thomas)\n[new] Number Sequences (Thanks, Thomas)\n[new] Periodic Table: Table View\n[new] Coordinate Measurement\n[new] Coordinates: Segment Lines/Bearings\n[new] Cistercian (Thanks, Thomas)\n[new] Maya\n[new] Coord. Format: GeoHex\n[new] Coord. Format: XYZ\n[new] Ellipsoids: Sun, Mon, Planets\n[new] Var. Coordinate: Own location as input\nVigenère: Alphabet values as key\n[chg] Periodic Table: Elements in lists clickable",
+  "changelog_1.4.0" : "[new] Open Map\n[new] Vigenère Code Breaker (Thanks, Mike, guballa.de)\n[new] Malbolge (Thanks, Thomas)\n[new] Progress View (Thanks, Mike)\n[new] Chef (Thanks, Thomas)\n[new] Number Sequences (Thanks, Thomas)\n[new] Periodic Table: Table View\n[new] Coordinate Measurement\n[new] Coordinates: Segment Lines/Bearings\n[new] Cistercian (Thanks, Thomas)\n[new] Maya\n[new] Coord. Format: GeoHex\n[new] Coord. Format: XYZ\n[new] Ellipsoids: Sun, Moon, Planets\n[new] Var. Coordinate: Own location as input\n[new] Cipher Disk/Mexican Army Cipher Disk\n[new] Vigenère: Alphabet values as key\n[chg] Periodic Table: Elements in lists clickable",
   "changelog_1.3.0" : "[new] Hash Search\n[new] Multi Decoder\n[new] New Category: General Code Solvers\n[new] Whitespace (Thanks, Mike)\n[new] Burrows-Wheeler Transformation (Thanks, Thomas)\n[new] GPX/KML Export (Thanks, Mike)\n[new] Cross Sums: Frequency\n[new] Formula Solver: Nested variables\n[new] Formula Solver: Coordinate Checker/Map View\n[new] Numeral Words: Language 'Solresol' (Thanks, Thomas)\n[new] Coordinates: Antipode (Thanks, Mike)\n[new] Vigenère: Mode 'Ignore Non-Letters' (Thanks, Andy)\n[new] Many Symbol Tables (Thanks, Andreas)\n[chg] Encryptions: Default to 'Decrypt'\n[chg] Changed name for 'Universal Code Breaker' into 'Substitution Breaker'\n[chg] Internal code for Symbol Tables\n[chg] 'All Tools' Tab: Shows more tools\n[chg] Search in 'Favorites' Tab searches for all tools\n[fix] TAPIR: Dot was not considered (Thanks, 'MrDosinger')\n[fix] (EN) About Page was not working (Thanks, 'MrDosinger')\n[fix] Coordinates Tools: Same circles forced crashes (Thanks, Mike)\n[fix] Vignenère: Problem with spaces (Thanks, Andy)",
   "changelog_1.2.0" : "[new] Universal Code Breaker (Thanks, Mike, guballa.de)\n[new] Numeral words (Thanks, Thomas)\n[new] Symbol Tables: Export Encryption as Image (EXPERIMENTAL)\n[new] Theming: Light Theme\n[new] Coords Input: Use GPS\n[new] MapView: Show own position\n[new] Formula Solver: Nested formulas\n[new] Abaddon/Decabit: Input buttons (Thanks, Mike)\n[new] License/Third party page\n[new] Kenny Code: Case sensitivity (Thanks, Mike)\n[new] Coords: Compass Rose for direction input\n[new] Time Calculator\n[new] Book cipher (Thanks, Mike)\n[new] Coord Formats: Examples in DropDown list\n[new] Chronogram\n[new] Bacon: new options (Thanks, Mike)\n[new] BCD: new variants (Thanks, Thomas)\n[new] Enclosed Areas (Thanks, Mike)\n[new] Chao Cipher (Thanks, Thomas)\n[new] Humidex (Thanks, Thomas)\n[new] Summer Simmer (Thanks, Thomas)\n[new] Solitaire (Thanks, Mike)\n[new] RC4 (Thanks, Mike)\n[new] Symbol Tables: Download all as PDF (Thanks, Mike)\n[new] Roman Numbers: Subtraction rule also for decoding\n[new] Homophone (Thanks, Mike)\n[new] AMSCO Cipher (Thanks, Mike)\n[new] Gade (Thanks, Thomas)\n[new] Copy button in multiline output\n[new] A lot of Symbol Tables (Thanks, 'teambirdy2404', Mike, Thomas)\n[fix] Symbol Tables: Not all symbols were displayed (Thanks, Mike)\n[fix] Cross sum range: Freeze on big numbers (Thanks, Mike)\n[fix] Day Calculator: Problems with crossing daylight saving days (Thanks, 'Freakyfinder')\n[fix] Alphabet Values: Input handling (Thanks, 'Vyrembi')\n[fix] Periodic System data (Thanks, Mike)\n[fix] Enigma: Input freeze when numbers entered\n[fix] CCITT-1 (Thanks, Thomas)\n[chg] Alphabet Values: Removed pipe character as output delimiter\n[chg] Alphabet Values: Removed crosstotal switch\n[chg] More robust against wrong inputs (e.g. Playfair Key, Enigma input)\n[chg] Tool 'Substitution' renamed to 'Replacements'\n[chg] Upgraded internals for new Android versions",
   "changelog_1.1.0" : "[new] Bifid (Thanks, Thomas)\n[new] RSA\n[new] Heat Index (Thanks, Thomas)\n[new] BCD/Gray (Thanks, Thomas)\n[new] DTMF (Thanks, Thomas)\n[new] Projectiles/Bullets (Thanks, Thomas)\n[new] Sudoku Solver\n[new] Affine (Thanks, Thomas)\n[new] Many Symbol Tables (Thanks, Mike, Thomas, 'TeamBirdy2404')\n[new] DNA\n[new] Numeral Systems: Accept lists\n[new] Coordinate Format: Natural Area Code (NAC)\n[chg] Polybios/ADFGVX Input (#22)\n[chg] Symbol Tables: Sort order\n[fix] Caesar\n[fix] Masked Inputs (e.g. Quadtree, #118; Thanks, 'tomcat06')\n[fix] Deadfish (#163; Thanks, Mike)\n[fix] Skytale (Thanks, Thomas)",
@@ -512,12 +511,16 @@
   "chickenlanguage_description" : "Game Language, Secret Language",
   "chickenlanguage_example" : "code → cohodefodehedefe",
 
+  "cipherwheel_title": "Cipher Disk",
+  "cipherwheel_description": "Rotates the alphabet values as on a rotating wheel",
+  "cipherwheel_example": "ABCTUV → 8 9 10 1 2 3",
+
   "cistercian_selection_title" : "Cistercian Numbers",
   "cistercian_selection_description" : "Numbering system of the Cistercian monastic order",
-  "cistercian_selection_example" : "11 202 1000  → ⊺ ⊧ ⌋",
+  "cistercian_selection_example" : "11 202 1000 → ⊺ ⊧ ⌋",
   "cistercian_title" : "Cistercian Numbers",
   "cistercian_description" : "Numbering system of the Cistercian monastic order",
-  "cistercian_example" : "11 202 1000  → ⊺ ⊧ ⌋",
+  "cistercian_example" : "11 202 1000 → ⊺ ⊧ ⌋",
 
   "chronogram_title" : "Chronogram",
   "chronogram_description" : "Finds and adds roman numerals in texts",
@@ -1148,8 +1151,6 @@
   "coords_variablecoordinate_variable" : "Variable",
   "coords_variablecoordinate_possiblevalues" : "Possible Values",
   "coords_variablecoordinate_nooutputs" : "No coordinates calculated!\n\nReasons may be:\n- invalid/unparseable coordinate format\n- subformulas need to be wrapped into [ ]\n- missing variables\n- North's N/East's E handled as variables and therefore replaced (Try 'N [value] E [value]' or remove N/E and replace S/W with Minus)\n- negative or decimal result in a subformula\n- Reverse projection found no result",
-  "coords_variablecoordinate_alert_title" : "Warning: Many coordinates!",
-  "coords_variablecoordinate_alert_text" : "You generated %s1 coordinates.\n\nDo you want to see them?\n\nThis might slow down you device dramatically.",
   "coords_variablecoordinate_decleftpad" : "Decimal Places",
   "coords_variablecoordinate_decleftpad_left" : "Pad right\nXX° XX.X00",
   "coords_variablecoordinate_decleftpad_right" : "Pad left\nXX° XX.00X",
@@ -1441,8 +1442,6 @@
   "hashes_hashbreaker_searchconfiguration_searchmask" : "Search Mask",
   "hashes_hashbreaker_hashtobreak" : "Hash to find",
   "hashes_hashbreaker_solutionnotfound" : "No solution found within the given range.",
-  "hashes_hashbreaker_alert_range_title" : "Very large search range",
-  "hashes_hashbreaker_alert_range_text" : "The search contains %s1 elements.\n\nThe search could take a large amount of time and may slow down your device significantly.\n\nDo you want to continue?",
 
   "heatindex_title" : "Heat Index",
   "heatindex_description" : "Apparent temperature from temperature and humidity",
@@ -1579,6 +1578,10 @@
   "mayanumbers_description" : "Vigesimal System (Numeral Base 20) of the Mayas",
   "mayanumbers_single_numbers" : "Separate Numbers",
   "mayanumbers_vigesimal" : "Number in Vigesimal System (Numeral Base 20)",
+
+  "mexicanarmycipherwheel_title": "Mexican Army Cipher Disk",
+  "mexicanarmycipherwheel_description": "Used by the Mexican Army in a war with the USA before World War I.",
+  "mexicanarmycipherwheel_example": "TEST → 09580897",
 
   "morse_title" : "Morse",
   "morse_example" : "-- --- .-. ... .",
@@ -2164,7 +2167,6 @@
   "substitutionbreaker_title" : "Substitution Breaker",
   "substitutionbreaker_description" : "Chance to automatically break monoalphabetic replacement ciphers",
   "substitutionbreaker_example" : "QFRQ → TEST",
-  "substitutionbreaker_start" : "Solve",
   "substitutionbreaker_error" : "An error occured: %s1",
   "substitutionbreaker_exporttosubstition" : "Export to 'Replacements' tool",
 
@@ -2898,7 +2900,6 @@
   "vigenerebreaker_key_length": "Key Length",
   "vigenerebreaker_key_length_min": "min",
   "vigenerebreaker_key_length_max": "max",
-  "vigenerebreaker_start": "Solve",
   "vigenerebreaker_error" : "An error occured: %s1",
 
   "whitespace_language_title" : "Whitespace",

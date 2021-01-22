@@ -44,24 +44,23 @@ class _GCWUnitsState extends State<GCWUnits> {
       children: <Widget>[
         Row(
           children: <Widget>[
-            widget.unitCategory.usesPrefixes
-              ? Expanded(
-                  child: Container(
-                    child: GCWUnitPrefixDropDownButton(
-                      onlyShowSymbols: widget.onlyShowPrefixSymbols,
-                      value: _currentPrefix,
-                      onChanged: (value) {
-                        setState(() {
-                          _currentPrefix = value;
-                          _emitOnChange();
-                        });
-                      },
-                    ),
-                    padding: EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN),
+            if (widget.unitCategory.usesPrefixes)
+              Expanded(
+                child: Container(
+                  child: GCWUnitPrefixDropDownButton(
+                    onlyShowSymbols: widget.onlyShowPrefixSymbols,
+                    value: _currentPrefix,
+                    onChanged: (value) {
+                      setState(() {
+                        _currentPrefix = value;
+                        _emitOnChange();
+                      });
+                    },
                   ),
-                  flex: 1
-                )
-              : Container(),
+                  padding: EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN),
+                ),
+                flex: 1
+              ),
             Expanded(
               child: GCWUnitDropDownButton(
                 value: _currentUnit,

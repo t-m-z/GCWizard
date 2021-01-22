@@ -45,19 +45,18 @@ class _GCWOutputTextState extends State<GCWOutputText> {
             )
           ),
         ),
-        widget.text != null && widget.text.length > 0 && !widget.suppressCopyButton
-          ? GCWIconButton(
-              iconColor: widget.style != null ? widget.style.color : themeColors().mainFont(),
-              size: IconButtonSize.SMALL,
-              iconData: Icons.content_copy,
-              onPressed: () {
-                Clipboard.setData(ClipboardData(text: widget.copyText != null ? widget.copyText.toString() : widget.text));
-                insertIntoGCWClipboard(widget.copyText != null ? widget.copyText.toString() : widget.text);
+        if (widget.text != null && widget.text.length > 0 && !widget.suppressCopyButton)
+          GCWIconButton(
+            iconColor: widget.style != null ? widget.style.color : themeColors().mainFont(),
+            size: IconButtonSize.SMALL,
+            iconData: Icons.content_copy,
+            onPressed: () {
+              Clipboard.setData(ClipboardData(text: widget.copyText != null ? widget.copyText.toString() : widget.text));
+              insertIntoGCWClipboard(widget.copyText != null ? widget.copyText.toString() : widget.text);
 
-                showToast(i18n(context, 'common_clipboard_copied'));
-              },
-            )
-          : Container()
+              showToast(i18n(context, 'common_clipboard_copied'));
+            },
+          )
       ],
     );
   }
