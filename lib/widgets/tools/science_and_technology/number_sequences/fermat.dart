@@ -21,6 +21,6 @@ class NumberSequenceFermatNthNumber extends NumberSequenceNthNumber {
   NumberSequenceFermatNthNumber() : super(mode: NumberSequencesMode.FERMAT);
 }
 
-class NumberSequenceFermatContains extends NumberSequenceContains {
-  NumberSequenceFermatContains() : super(mode: NumberSequencesMode.FERMAT);
+class NumberSequenceFermatContainsDigits extends NumberSequenceContains {
+  NumberSequenceFermatContainsDigits() : super(mode: NumberSequencesMode.FERMAT);
 }

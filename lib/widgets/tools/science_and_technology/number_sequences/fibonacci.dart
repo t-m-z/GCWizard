@@ -21,6 +21,6 @@ class NumberSequenceFibonacciNthNumber extends NumberSequenceNthNumber {
   NumberSequenceFibonacciNthNumber() : super(mode: NumberSequencesMode.FIBONACCI);
 }
 
-class NumberSequenceFibonacciContains extends NumberSequenceContains {
-  NumberSequenceFibonacciContains() : super(mode: NumberSequencesMode.FIBONACCI);
+class NumberSequenceFibonacciContainsDigits extends NumberSequenceContains {
+  NumberSequenceFibonacciContainsDigits() : super(mode: NumberSequencesMode.FIBONACCI);
 }

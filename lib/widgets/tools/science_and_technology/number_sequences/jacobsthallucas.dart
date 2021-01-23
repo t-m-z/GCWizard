@@ -6,21 +6,21 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/
 import 'package:gc_wizard/logic/tools/science_and_technology/number_sequence.dart';
 
 class NumberSequenceJacobsthalLucasCheckNumber extends NumberSequenceCheckNumber {
-  NumberSequenceJacobsthalLucasCheckNumber() : super(mode: NumberSequencesMode.JACOBSTHALLUCAS);
+  NumberSequenceJacobsthalLucasCheckNumber() : super(mode: NumberSequencesMode.JACOBSTHAL_LUCAS);
 }
 
 class NumberSequenceJacobsthalLucasDigits extends NumberSequenceDigits {
-  NumberSequenceJacobsthalLucasDigits() : super(mode: NumberSequencesMode.JACOBSTHALLUCAS);
+  NumberSequenceJacobsthalLucasDigits() : super(mode: NumberSequencesMode.JACOBSTHAL_LUCAS);
 }
 
 class NumberSequenceJacobsthalLucasRange extends NumberSequenceRange {
-  NumberSequenceJacobsthalLucasRange() : super(mode: NumberSequencesMode.JACOBSTHALLUCAS);
+  NumberSequenceJacobsthalLucasRange() : super(mode: NumberSequencesMode.JACOBSTHAL_LUCAS);
 }
 
 class NumberSequenceJacobsthalLucasNthNumber extends NumberSequenceNthNumber {
-  NumberSequenceJacobsthalLucasNthNumber() : super(mode: NumberSequencesMode.JACOBSTHALLUCAS);
+  NumberSequenceJacobsthalLucasNthNumber() : super(mode: NumberSequencesMode.JACOBSTHAL_LUCAS);
 }
 
 class NumberSequenceJacobsthalLucasContains extends NumberSequenceContains {
-  NumberSequenceJacobsthalLucasContains() : super(mode: NumberSequencesMode.JACOBSTHALLUCAS);
+  NumberSequenceJacobsthalLucasContains() : super(mode: NumberSequencesMode.JACOBSTHAL_LUCAS);
 }

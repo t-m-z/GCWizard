@@ -21,6 +21,6 @@ class NumberSequenceRecamanNthNumber extends NumberSequenceNthNumber {
   NumberSequenceRecamanNthNumber() : super(mode: NumberSequencesMode.RECAMAN);
 }
 
-class NumberSequenceRecamanContains extends NumberSequenceContains {
-  NumberSequenceRecamanContains() : super(mode: NumberSequencesMode.RECAMAN);
+class NumberSequenceRecamanContainsDigits extends NumberSequenceContains {
+  NumberSequenceRecamanContainsDigits() : super(mode: NumberSequencesMode.RECAMAN);
 }

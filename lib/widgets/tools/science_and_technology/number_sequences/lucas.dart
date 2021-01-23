@@ -21,6 +21,6 @@ class NumberSequenceLucasNthNumber extends NumberSequenceNthNumber {
   NumberSequenceLucasNthNumber() : super(mode: NumberSequencesMode.LUCAS);
 }
 
-class NumberSequenceLucasContains extends NumberSequenceContains {
-  NumberSequenceLucasContains() : super(mode: NumberSequencesMode.LUCAS);
+class NumberSequenceLucasContainsDigits extends NumberSequenceContains {
+  NumberSequenceLucasContainsDigits() : super(mode: NumberSequencesMode.LUCAS);
 }

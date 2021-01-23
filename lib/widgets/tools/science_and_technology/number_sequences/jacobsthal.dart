@@ -21,6 +21,6 @@ class NumberSequenceJacobsthalNthNumber extends NumberSequenceNthNumber {
   NumberSequenceJacobsthalNthNumber() : super(mode: NumberSequencesMode.JACOBSTAHL);
 }
 
-class NumberSequenceJacobsthalContains extends NumberSequenceContains {
-  NumberSequenceJacobsthalContains() : super(mode: NumberSequencesMode.JACOBSTAHL);
+class NumberSequenceJacobsthalContainsDigits extends NumberSequenceContains {
+  NumberSequenceJacobsthalContainsDigits() : super(mode: NumberSequencesMode.JACOBSTAHL);
 }

@@ -21,6 +21,6 @@ class NumberSequenceMersenneNthNumber extends NumberSequenceNthNumber {
   NumberSequenceMersenneNthNumber() : super(mode: NumberSequencesMode.MERSENNE);
 }
 
-class NumberSequenceMersenneContains extends NumberSequenceContains {
-  NumberSequenceMersenneContains() : super(mode: NumberSequencesMode.MERSENNE);
+class NumberSequenceMersenneContainsDigits extends NumberSequenceContains {
+  NumberSequenceMersenneContainsDigits() : super(mode: NumberSequencesMode.MERSENNE);
 }
