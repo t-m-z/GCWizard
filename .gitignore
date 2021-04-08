@@ -89,3 +89,5 @@ web
 *.gz
 *.toc
 howtocode/
+/crowdin.properties
+/external_helpers/crowdin/crowdin_token.sh
