@@ -38,7 +38,7 @@ dependencies:
   universal_html: ^2.0.4
   uuid: ^3.0.2
   url_launcher: ^6.0.2
-  what3words: 3.0.4
+  what3words: ^3.0.4
 
 dev_dependencies:
   flutter_test:
