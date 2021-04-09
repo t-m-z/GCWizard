@@ -25,6 +25,7 @@ import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_slippymap.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_swissgrid.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_utm.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_xyz.dart';
+import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_w3w.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:gc_wizard/widgets/tools/coords/utils/user_location.dart';
 import 'package:intl/intl.dart';
@@ -281,6 +282,16 @@ class GCWCoordsState extends State<GCWCoords> {
         'coordFormat': getCoordinateFormatByKey(keyCoordsReverseWhereIGoWaldmeister),
         'widget': GCWCoordsReverseWhereIGoWaldmeister(
           coordinates: _pastedCoords,
+          onChanged: (newValue) {
+            setState(() {
+              _setCurrentValueAndEmitOnChange(newValue);
+            });
+          },
+        ),
+      },
+      {
+        'coordFormat': getCoordinateFormatByKey(keyCoordsWhat3Words),
+        'widget': GCWCoordsW3W(
           onChanged: (newValue) {
             setState(() {
               _setCurrentValueAndEmitOnChange(newValue);

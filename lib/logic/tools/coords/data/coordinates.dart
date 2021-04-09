@@ -25,6 +25,7 @@ const keyCoordsGeo3x3 = 'coords_geo3x3';
 const keyCoordsOpenLocationCode = 'coords_openlocationcode';
 const keyCoordsQuadtree = 'coords_quadtree';
 const keyCoordsReverseWhereIGoWaldmeister = 'coords_reversewhereigo_waldmeister';
+const keyCoordsWhat3Words = 'coords_what3words';
 
 class CoordinateFormat {
   final key;
@@ -67,6 +68,7 @@ List<CoordinateFormat> allCoordFormats = [
   CoordinateFormat(keyCoordsQuadtree, 'Quadtree', '021230223311203323'),
   CoordinateFormat(keyCoordsGeoHex, 'GeoHex', 'RU568425483853568'),
   CoordinateFormat(keyCoordsGeo3x3, 'Geo3x3', 'W7392967941169'),
+  CoordinateFormat(keyCoordsWhat3Words, 'What 3 Words', 'gelbes.beinen.freudige'),
 ];
 
 CoordinateFormat getCoordinateFormatByKey(String key) {
