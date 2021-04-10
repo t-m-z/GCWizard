@@ -1127,6 +1127,8 @@
   "coords_formatconverter_openlocationcode_novalidcode": "No valid OpenLocationCode input",
   "coords_formatconverter_slippymap_zoom": "Zoom",
   "coords_formatconverter_w3w_language" : "Language",
+  "coords_formatconverter_w3w_error" : "ERROR",
+  "coords_formatconverter_w3w_no_apikey" :  "API key is missing - check the settings",
   "coords_formatconverter_w3w" : "What 3 Words",
   "coords_formatconverter_w3w_de" : "German",
   "coords_formatconverter_w3w_en" : "English",

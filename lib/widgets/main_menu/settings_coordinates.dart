@@ -40,7 +40,6 @@ class CoordinatesSettingsState extends State<CoordinatesSettings> {
     super.dispose();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -130,8 +129,7 @@ class CoordinatesSettingsState extends State<CoordinatesSettings> {
                 _currentDefaultW3WAPIKey = text;
                 Prefs.setString('coord_default_w3w_apikey', _currentDefaultW3WAPIKey);
               });
-            }
-        ),
+            }),
       ],
     );
   }

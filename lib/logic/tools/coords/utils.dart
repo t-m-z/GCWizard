@@ -51,21 +51,35 @@ String formatCoordOutput(LatLng _coords, Map<String, String> _outputFormat, Elli
         return 0;
     }
   }
+
   String _getW3WLanguage() {
     switch (_outputFormat['subtype']) {
-      case keyCoordsWhat3WordsDE:         return 'de';
-      case keyCoordsWhat3WordsEN:         return 'en';
-      case keyCoordsWhat3WordsFR:         return 'fr';
-      case keyCoordsWhat3WordsCS:         return 'cs';
-      case keyCoordsWhat3WordsZH:         return 'zh';
-      case keyCoordsWhat3WordsDA:         return 'da';
-      case keyCoordsWhat3WordsNL:         return 'nl';
-      case keyCoordsWhat3WordsIT:         return 'it';
-      case keyCoordsWhat3WordsJA:         return 'ja';
-      case keyCoordsWhat3WordsKO:         return 'ko';
-      case keyCoordsWhat3WordsPL:         return 'pl';
-      case keyCoordsWhat3WordsRU:         return 'ru';
-      case keyCoordsWhat3WordsSP:         return 'sp';
+      case keyCoordsWhat3WordsDE:
+        return 'de';
+      case keyCoordsWhat3WordsEN:
+        return 'en';
+      case keyCoordsWhat3WordsFR:
+        return 'fr';
+      case keyCoordsWhat3WordsCS:
+        return 'cs';
+      case keyCoordsWhat3WordsZH:
+        return 'zh';
+      case keyCoordsWhat3WordsDA:
+        return 'da';
+      case keyCoordsWhat3WordsNL:
+        return 'nl';
+      case keyCoordsWhat3WordsIT:
+        return 'it';
+      case keyCoordsWhat3WordsJA:
+        return 'ja';
+      case keyCoordsWhat3WordsKO:
+        return 'ko';
+      case keyCoordsWhat3WordsPL:
+        return 'pl';
+      case keyCoordsWhat3WordsRU:
+        return 'ru';
+      case keyCoordsWhat3WordsSP:
+        return 'sp';
       default:
         return 'en';
     }

@@ -1128,6 +1128,8 @@
   "coords_formatconverter_slippymap_zoom": "Zoom",
   "coords_formatconverter_w3w_language" : "Sprache",
   "coords_formatconverter_w3w" : "What 3 Words",
+  "coords_formatconverter_w3w_error" : "FEHLER",
+  "coords_formatconverter_w3w_no_apikey" :  "Es fehlt der API-Key - prüfe die Einstellungen",
   "coords_formatconverter_w3w_de" : "Deutsch",
   "coords_formatconverter_w3w_en" : "Englisch",
   "coords_formatconverter_w3w_fr" : "Französisch",

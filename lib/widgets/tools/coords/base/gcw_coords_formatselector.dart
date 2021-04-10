@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/w3w.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/gcw_double_spinner.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
-import 'package:gc_wizard/widgets/tools/formula_solver/gcw_formula_replace_dialog.dart';
 import 'package:intl/intl.dart';
 
 class GCWCoordsFormatSelector extends StatefulWidget {
@@ -81,13 +79,13 @@ class _GCWCoordsFormatSelectorState extends State<GCWCoordsFormatSelector> {
               child: i18n(context, subtype.name),
             );
           }).toList(),
-            onChanged: (value) {
-              setState(() {
-                _currentSubtype = value;
-                _emitOnChange();
-              });
-            },
-          );
+          onChanged: (value) {
+            setState(() {
+              _currentSubtype = value;
+              _emitOnChange();
+            });
+          },
+        );
       case keyCoordsGaussKrueger:
         return GCWDropDownButton(
           value: _currentSubtype,
