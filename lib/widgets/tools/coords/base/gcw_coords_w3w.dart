@@ -21,11 +21,15 @@ class GCWCoordsW3W extends StatefulWidget {
 class GCWCoordsW3WState extends State<GCWCoordsW3W> {
   var _controllerCoord;
   var _currentCoord = '';
+  var _currentSubtype = keyCoordsWhat3WordsDE;
+  var _currentLanguage = 'de';
 
   @override
   void initState() {
     super.initState();
     _controllerCoord = TextEditingController(text: _currentCoord);
+    _currentSubtype = widget.subtype;
+    _currentLanguage = _getSubTypeLanguage(widget.subtype);
   }
 
   @override
@@ -54,7 +58,7 @@ class GCWCoordsW3WState extends State<GCWCoordsW3W> {
   }
 
   _setCurrentValueAndEmitOnChange() {
-    LatLng coords = What3WordsToLatLon(_currentCoord, _getSubTypeLanguage(widget.subtype));
+    LatLng coords = What3WordsToLatLon(_currentCoord, _getSubTypeLanguage(_currentLanguage));
     widget.onChanged(coords);
   }
 }

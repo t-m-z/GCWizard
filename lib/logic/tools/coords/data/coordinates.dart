@@ -84,11 +84,11 @@ List<CoordinateFormat> allCoordFormats = [
   CoordinateFormat(keyCoordsWhat3Words, 'coords_formatconverter_w3w', 'gelbes.beinen.freudige',
       subtypes: [
       CoordinateFormat(
-          keyCoordsWhat3WordsDE, 'coords_formatconverter_w3w_de', 'medizin.schwan.haltung'),
+          keyCoordsWhat3WordsDE, 'coords_formatconverter_w3w_de', 'hering.ernennt.bergahorn'),
       CoordinateFormat(
           keyCoordsWhat3WordsEN, 'coords_formatconverter_w3w_en', 'pack.breath.thinks'),
       CoordinateFormat(
-          keyCoordsWhat3WordsFR, 'coords_formatconverter_w3w_fr', 'médecine.cygne.attitude'),
+          keyCoordsWhat3WordsFR, 'coords_formatconverter_w3w_fr', 'effarant.bénéfice.antagonique'),
       CoordinateFormat(
           keyCoordsWhat3WordsCS, 'coords_formatconverter_w3w_cs', 'medicína.swan.attitude'),
       CoordinateFormat(
@@ -96,9 +96,9 @@ List<CoordinateFormat> allCoordFormats = [
       CoordinateFormat(
           keyCoordsWhat3WordsDA, 'coords_formatconverter_w3w_da', 'medicin.svane.holdning'),
       CoordinateFormat(
-          keyCoordsWhat3WordsNL, 'coords_formatconverter_w3w_nl', 'medizin.schwan.haltung'),
+          keyCoordsWhat3WordsNL, 'coords_formatconverter_w3w_nl', 'aanvragen.inlopen.aldus'),
       CoordinateFormat(
-          keyCoordsWhat3WordsIT, 'coords_formatconverter_w3w_it', 'medicina.cigno.atteggiamento'),
+          keyCoordsWhat3WordsIT, 'coords_formatconverter_w3w_it', 'ricompense.spettri.mantengono'),
       CoordinateFormat(
           keyCoordsWhat3WordsJA, 'coords_formatconverter_w3w_ja', '白鳥.の態.度'),
       CoordinateFormat(
@@ -108,7 +108,7 @@ List<CoordinateFormat> allCoordFormats = [
       CoordinateFormat(
           keyCoordsWhat3WordsRU, 'coords_formatconverter_w3w_ru', 'лебединое отношение'),
       CoordinateFormat(
-          keyCoordsWhat3WordsSP, 'coords_formatconverter_w3w_sp', 'medicina.cisne.actitud'),
+          keyCoordsWhat3WordsSP, 'coords_formatconverter_w3w_es', 'medicina.cisne.actitud'),
       ]),
 ];
 

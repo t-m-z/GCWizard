@@ -48,6 +48,7 @@ class FormatConverterState extends State<FormatConverter> {
           onChanged: (value) {
             setState(() {
               _currentOutputFormat = value;
+              _calculateOutput(context);
             });
           },
         ),
