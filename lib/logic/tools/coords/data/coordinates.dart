@@ -26,6 +26,19 @@ const keyCoordsOpenLocationCode = 'coords_openlocationcode';
 const keyCoordsQuadtree = 'coords_quadtree';
 const keyCoordsReverseWhereIGoWaldmeister = 'coords_reversewhereigo_waldmeister';
 const keyCoordsWhat3Words = 'coords_what3words';
+const keyCoordsWhat3WordsDE = 'coords_what3words_de';
+const keyCoordsWhat3WordsEN = 'coords_what3words_en';
+const keyCoordsWhat3WordsFR = 'coords_what3words_fr';
+const keyCoordsWhat3WordsCS = 'coords_what3words_cs';
+const keyCoordsWhat3WordsZH = 'coords_what3words_zh';
+const keyCoordsWhat3WordsDA = 'coords_what3words_da';
+const keyCoordsWhat3WordsNL = 'coords_what3words_nl';
+const keyCoordsWhat3WordsIT = 'coords_what3words_it';
+const keyCoordsWhat3WordsJA = 'coords_what3words_ja';
+const keyCoordsWhat3WordsKO = 'coords_what3words_ko';
+const keyCoordsWhat3WordsPL = 'coords_what3words_pl';
+const keyCoordsWhat3WordsRU = 'coords_what3words_ru';
+const keyCoordsWhat3WordsSP = 'coords_what3words_sp';
 
 class CoordinateFormat {
   final key;
@@ -68,7 +81,35 @@ List<CoordinateFormat> allCoordFormats = [
   CoordinateFormat(keyCoordsQuadtree, 'Quadtree', '021230223311203323'),
   CoordinateFormat(keyCoordsGeoHex, 'GeoHex', 'RU568425483853568'),
   CoordinateFormat(keyCoordsGeo3x3, 'Geo3x3', 'W7392967941169'),
-  CoordinateFormat(keyCoordsWhat3Words, 'What 3 Words', 'gelbes.beinen.freudige'),
+  CoordinateFormat(keyCoordsWhat3Words, 'coords_formatconverter_w3w', 'gelbes.beinen.freudige',
+      subtypes: [
+      CoordinateFormat(
+          keyCoordsWhat3WordsDE, 'coords_formatconverter_w3w_de', 'medizin.schwan.haltung'),
+      CoordinateFormat(
+          keyCoordsWhat3WordsEN, 'coords_formatconverter_w3w_en', 'pack.breath.thinks'),
+      CoordinateFormat(
+          keyCoordsWhat3WordsFR, 'coords_formatconverter_w3w_fr', 'médecine.cygne.attitude'),
+      CoordinateFormat(
+          keyCoordsWhat3WordsCS, 'coords_formatconverter_w3w_cs', 'medicína.swan.attitude'),
+      CoordinateFormat(
+          keyCoordsWhat3WordsZH, 'coords_formatconverter_w3w_zh', '医学.天鹅.态度'),
+      CoordinateFormat(
+          keyCoordsWhat3WordsDA, 'coords_formatconverter_w3w_da', 'medicin.svane.holdning'),
+      CoordinateFormat(
+          keyCoordsWhat3WordsNL, 'coords_formatconverter_w3w_nl', 'medizin.schwan.haltung'),
+      CoordinateFormat(
+          keyCoordsWhat3WordsIT, 'coords_formatconverter_w3w_it', 'medicina.cigno.atteggiamento'),
+      CoordinateFormat(
+          keyCoordsWhat3WordsJA, 'coords_formatconverter_w3w_ja', '白鳥.の態.度'),
+      CoordinateFormat(
+          keyCoordsWhat3WordsKO, 'coords_formatconverter_w3w_ko', '의학.백조.태도'),
+      CoordinateFormat(
+          keyCoordsWhat3WordsPL, 'coords_formatconverter_w3w_pl', 'medycyna.łabędzie.postawa'),
+      CoordinateFormat(
+          keyCoordsWhat3WordsRU, 'coords_formatconverter_w3w_ru', 'лебединое отношение'),
+      CoordinateFormat(
+          keyCoordsWhat3WordsSP, 'coords_formatconverter_w3w_sp', 'medicina.cisne.actitud'),
+      ]),
 ];
 
 CoordinateFormat getCoordinateFormatByKey(String key) {
