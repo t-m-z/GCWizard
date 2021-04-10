@@ -43,6 +43,9 @@ class _GCWCoordsFormatSelectorState extends State<GCWCoordsFormatSelector> {
                 case keyCoordsSlippyMap:
                   _currentSubtype = '10';
                   break;
+                case keyCoordsWhat3Words:
+                  _currentSubtype = keyCoordsWhat3WordsDE;
+                  break;
                 default:
                   _currentSubtype = null;
               }
@@ -62,6 +65,22 @@ class _GCWCoordsFormatSelectorState extends State<GCWCoordsFormatSelector> {
 
   _buildSubtype() {
     switch (widget.format['format'] ?? _currentFormat) {
+      case keyCoordsWhat3Words:
+        return GCWDropDownButton(
+          value: _currentSubtype,
+          items: getCoordinateFormatByKey(keyCoordsWhat3Words).subtypes.map((subtype) {
+            return GCWDropDownMenuItem(
+              value: subtype.key,
+              child: i18n(context, subtype.name),
+            );
+          }).toList(),
+          onChanged: (value) {
+            setState(() {
+              _currentSubtype = value;
+              _emitOnChange();
+            });
+          },
+        );
       case keyCoordsGaussKrueger:
         return GCWDropDownButton(
           value: _currentSubtype,

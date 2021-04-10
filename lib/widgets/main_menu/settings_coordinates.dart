@@ -3,6 +3,7 @@ import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_formatselector.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_ellipsoid.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_sign_dropdownbutton.dart';
@@ -23,6 +24,21 @@ class CoordinatesSettingsState extends State<CoordinatesSettings> {
   var _currentDefaultHemisphereLatitude = Prefs.getString('coord_default_hemisphere_latitude');
   var _currentDefaultHemisphereLongitude = Prefs.getString('coord_default_hemisphere_longitude');
   Ellipsoid _currentDefaultEllipsoid = defaultEllipsoid();
+
+  var _currentDefaultW3WAPIKey = Prefs.getString('coord_default_w3w_apikey');
+  var _controllerWhat3WordsAPIKey;
+
+  @override
+  void initState() {
+    super.initState();
+    _controllerWhat3WordsAPIKey = TextEditingController(text: _currentDefaultW3WAPIKey);
+  }
+
+  @override
+  void dispose() {
+    _controllerWhat3WordsAPIKey.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -101,7 +117,19 @@ class CoordinatesSettingsState extends State<CoordinatesSettings> {
                 break;
             }
           },
-        )
+        ),
+        GCWTextDivider(
+          text: i18n(context, 'settings_coordinates_defaultw3wapikey'),
+        ),
+        GCWTextField(
+            hintText: i18n(context, 'settings_coordinates_defaultw3wapikey'),
+            controller: _controllerWhat3WordsAPIKey,
+            onChanged: (text) {
+              setState(() {
+                _currentDefaultW3WAPIKey = text;
+                Prefs.setString('coord_default_w3w_apikey', _currentDefaultW3WAPIKey);
+              });
+            }),
       ],
     );
   }

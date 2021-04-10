@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/utils.dart';
+import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_submit_button.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_output.dart';
@@ -16,8 +17,8 @@ class FormatConverter extends StatefulWidget {
 
 class FormatConverterState extends State<FormatConverter> {
   var _currentCoords = defaultCoordinate;
-
   var _currentCoordsFormat = defaultCoordFormat();
+  var _APIKeymissing = false;
 
   Map<String, String> _currentOutputFormat = {'format': keyCoordsDEC};
   List<String> _currentOutput = [];
@@ -46,6 +47,7 @@ class FormatConverterState extends State<FormatConverter> {
           onChanged: (value) {
             setState(() {
               _currentOutputFormat = value;
+              _calculateOutput(context);
             });
           },
         ),
@@ -56,17 +58,23 @@ class FormatConverterState extends State<FormatConverter> {
             });
           },
         ),
-        GCWCoordsOutput(
-          outputs: _currentOutput,
-          points: [
-            GCWMapPoint(point: _currentCoords, coordinateFormat: _currentOutputFormat),
-          ],
-        ),
+        (_APIKeymissing)
+            ? GCWOutput(
+                title: i18n(context, 'coords_formatconverter_w3w_error'),
+                child: i18n(context, 'coords_formatconverter_w3w_no_apikey'),
+                suppressCopyButton: true)
+            : GCWCoordsOutput(
+                outputs: _currentOutput,
+                points: [
+                  GCWMapPoint(point: _currentCoords, coordinateFormat: _currentOutputFormat),
+                ],
+              ),
       ],
     );
   }
 
   _calculateOutput(BuildContext context) {
     _currentOutput = [formatCoordOutput(_currentCoords, _currentOutputFormat, defaultEllipsoid())];
+    _APIKeymissing = (_currentOutput == ['ERROR']);
   }
 }

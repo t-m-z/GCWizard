@@ -16,6 +16,7 @@ import 'package:gc_wizard/logic/tools/coords/converter/slippy_map.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/swissgrid.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/utm.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/xyz.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/w3w.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
@@ -48,6 +49,39 @@ String formatCoordOutput(LatLng _coords, Map<String, String> _outputFormat, Elli
         return 5;
       default:
         return 0;
+    }
+  }
+
+  String _getW3WLanguage() {
+    switch (_outputFormat['subtype']) {
+      case keyCoordsWhat3WordsDE:
+        return 'de';
+      case keyCoordsWhat3WordsEN:
+        return 'en';
+      case keyCoordsWhat3WordsFR:
+        return 'fr';
+      case keyCoordsWhat3WordsCS:
+        return 'cs';
+      case keyCoordsWhat3WordsZH:
+        return 'zh';
+      case keyCoordsWhat3WordsDA:
+        return 'da';
+      case keyCoordsWhat3WordsNL:
+        return 'nl';
+      case keyCoordsWhat3WordsIT:
+        return 'it';
+      case keyCoordsWhat3WordsJA:
+        return 'ja';
+      case keyCoordsWhat3WordsKO:
+        return 'ko';
+      case keyCoordsWhat3WordsPL:
+        return 'pl';
+      case keyCoordsWhat3WordsRU:
+        return 'ru';
+      case keyCoordsWhat3WordsSP:
+        return 'sp';
+      default:
+        return 'en';
     }
   }
 
@@ -90,6 +124,8 @@ String formatCoordOutput(LatLng _coords, Map<String, String> _outputFormat, Elli
       return latLonToQuadtree(_coords).join();
     case keyCoordsReverseWhereIGoWaldmeister:
       return latLonToWaldmeisterString(_coords);
+    case keyCoordsWhat3Words:
+      return latLonToWhat3Words(_coords, _getW3WLanguage());
     default:
       return latLonToDECString(_coords);
   }
