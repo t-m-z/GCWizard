@@ -4,46 +4,7 @@ import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/numeral_words.dart';
 
-final AZToVanity = {
-  'A': '2',
-  'B': '22',
-  'C': '222',
-  'D': '3',
-  'E': '33',
-  'F': '333',
-  'G': '4',
-  'H': '44',
-  'I': '444',
-  'J': '5',
-  'K': '55',
-  'L': '555',
-  'M': '6',
-  'N': '66',
-  'O': '666',
-  'P': '7',
-  'Q': '77',
-  'R': '777',
-  'S': '7777',
-  'T': '8',
-  'U': '88',
-  'V': '888',
-  'W': '9',
-  'X': '99',
-  'Y': '999',
-  'Z': '9999',
-  '1': '1',
-  '2': '2222',
-  '3': '3333',
-  '4': '4444',
-  '5': '5555',
-  '6': '6666',
-  '7': '77777',
-  '8': '8888',
-  '9': '99999',
-  '0': '0'
-};
-
-final VanityToAZ = switchMapKeyValue(AZToVanity);
+enum PhoneKeySpace { SPACE_ON_KEY_0, SPACE_ON_KEY_1 }
 
 class VanityWordsDecodeOutput {
   final String number;
@@ -300,6 +261,19 @@ Map<NumeralWordsLanguage, String> VANITYWORDS_LANGUAGES = {
   NumeralWordsLanguage.LAT: 'common_language_latin'
 };
 
+
+class PhoneModel {
+  String name;
+  PhoneKeySpace keySpace;
+
+  PhoneModel(this.name, this.keySpace);
+
+  @override
+  String toString() {
+    return this.name;
+  }
+}
+
 const DEFAULT_NUMBER_FOR_SPACE = '1';
 
 List<VanityWordsDecodeOutput> decodeVanityWords(String text, NumeralWordsLanguage language){
@@ -352,37 +326,108 @@ List<VanityWordsDecodeOutput> decodeVanityWords(String text, NumeralWordsLanguag
   return output;
 }
 
-String encryptVanitySingleNumbers(String input, {numberForSpace: DEFAULT_NUMBER_FOR_SPACE}) {
-  return _encodeVanityMultipleNumbers(input, numberForSpace: numberForSpace).map((code) => code[0]).join();
+const _PHONE_MODEL_KEY_SIEMENS_ME45 = 'Siemens ME45';
+final SIEMENS_ME45 = PhoneModel(_PHONE_MODEL_KEY_SIEMENS_ME45, PhoneKeySpace.SPACE_ON_KEY_1);
+
+final PHONE_MODELS = [SIEMENS_ME45];
+
+final Map<int, String> _vanitySiemensME45 = {
+  0: '.,?!0+-:¿¡"\'_',
+  1: ' 1€£\$¥¤',
+  2: 'abc2äàçæå',
+  3: 'def3éè',
+  4: 'ghi4ì',
+  5: 'jkl5',
+  6: 'mno6öñòø',
+  7: 'pqrs7ß',
+  8: 'tuv8üù',
+  9: 'wxyz9'
+
+  /*
+  Capital letters:
+1: as normal
+2: A B C 2 Ä Æ Å
+3: D E F 3 É
+4: G H I 4
+5: J K L 5
+6: M N O 6 Ö Ñ Ø
+7: P Q R S 7
+8: T U V 8 Ü
+9: W X Y Z 9
+0: as normal
+   */
+};
+
+String encodeVanitySingleNumbers(String input, PhoneModel model) {
+  return _encodeVanity(input, model).map((code) => code[0]).join();
 }
 
-_encodeVanityMultipleNumbers(String input, {numberForSpace: DEFAULT_NUMBER_FOR_SPACE}) {
-  if (input == null || input == '') return [];
+_encodeVanity(String input, PhoneModel model) {
+  if (input == null || model == null) return [];
 
-  input = removeDiacritics(input).toUpperCase();
+  Map<int, String> keyMap;
+  switch (model.name) {
+    case _PHONE_MODEL_KEY_SIEMENS_ME45:
+      keyMap = _vanitySiemensME45;
+      break;
+  }
+
+  var list = keyMap.values.join().split('').toList();
+  input = input.toLowerCase().split('').map((character) {
+    return list.contains(character) ? character : '';
+  }).join();
+
+  if (input.isEmpty) return [];
+
+  Map<String, String> AZToNumberblocks = {};
+  keyMap.entries.forEach((element) {
+    element.value.split('').asMap().forEach((index, character) {
+      AZToNumberblocks.putIfAbsent(character, () => '${element.key}' * (index + 1));
+    });
+  });
 
   return input.split('').map((character) {
-    if (character == ' ' && numberForSpace != null && numberForSpace.length > 0) return numberForSpace;
-
-    var code = AZToVanity[character];
-    if (code == null) return character;
-
-    return code;
+    return AZToNumberblocks[character];
   }).toList();
 }
 
-String encodeVanityMultipleNumbers(String input, {numberForSpace: DEFAULT_NUMBER_FOR_SPACE}) {
-  return _encodeVanityMultipleNumbers(input, numberForSpace: numberForSpace).join(' ');
+String encodeVanityMultipleNumbers(String input, PhoneModel model) {
+  return _encodeVanity(input, model).join(' ');
 }
 
-String decodeVanityMultipleNumbers(List<int> input) {
-  if (input == null) return '';
+String decodeVanityMultipleNumbers(String input, PhoneModel model) {
+  if (input == null || input.isEmpty || model == null) return '';
 
-  return input.map((code) {
-    var character = VanityToAZ[code.toString()];
+  var numberBlocks = input
+      .replaceAll(RegExp(r'[^0-9 ]'), '')
+      .split(' ')
+      .where((element) => element != null && !element.isEmpty)
+      .toList();
 
-    if (character == null) return UNKNOWN_ELEMENT;
+  if (numberBlocks.isEmpty) return '';
 
-    return character;
-  }).join();
+  Map<int, String> keyMap;
+  switch (model.name) {
+    case _PHONE_MODEL_KEY_SIEMENS_ME45:
+      keyMap = _vanitySiemensME45;
+      break;
+  }
+
+  Map<String, String> numberblocksToAZ = {};
+  keyMap.entries.forEach((element) {
+    element.value.split('').asMap().forEach((index, character) {
+      numberblocksToAZ.putIfAbsent('${element.key}' * (index + 1), () => character);
+    });
+  });
+
+  return numberBlocks
+      .map((numberBlock) {
+        var character = numberblocksToAZ[numberBlock];
+        if (character == null) return UNKNOWN_ELEMENT;
+
+        return character;
+      })
+      .join()
+      .toUpperCase();
 }
+

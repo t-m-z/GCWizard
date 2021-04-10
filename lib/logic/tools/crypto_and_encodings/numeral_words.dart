@@ -110,7 +110,7 @@ final Map<String, String> DEUWordToNum = {
   'punkt': '.',
   'komma': ',',
   'nord': 'numeralwords_n',
-  'ost': 'numeralwords_o',
+  'ost': 'numeralwords_e',
   'west': 'numeralwords_w',
   'sued': 'numeralwords_s',
 };
@@ -150,9 +150,9 @@ final Map<String, String> ENGWordToNum = {
   'point': '.',
   'komma': ',',
   'north': 'numeralwords_n',
-  'east': 'numeralwords_o',
+  'east': 'numeralwords_e',
   'west': 'numeralwords_w',
-  'south': 'numeralwords_sw'
+  'south': 'numeralwords_s'
 };
 
 final Map<String, String> DNKWordToNum = {
@@ -190,7 +190,7 @@ final Map<String, String> DNKWordToNum = {
   'punkt': '.',
   'komma': ',',
   'nord': 'numeralwords_n',
-  'øst': 'numeralwords_o',
+  'øst': 'numeralwords_e',
   'vest': 'numeralwords_w',
   'syd': 'numeralwords_s'
 };
@@ -230,7 +230,7 @@ final Map<String, String> NLDWordToNum = {
   'punt': '.',
   'komma': ',',
   'noord': 'numeralwords_n',
-  'oost': 'numeralwords_ow',
+  'oost': 'numeralwords_e',
   'west': 'numeralwords_w',
   'zuid': 'numeralwords_s'
 };
@@ -271,7 +271,7 @@ final Map<String, String> SWEWordToNum = {
   'punkt': '.',
   'komma': ',',
   'norr': 'numeralwords_n',
-  'ost': 'numeralwords_o',
+  'ost': 'numeralwords_e',
   'väst': 'numeralwords_w',
   'syd': 'numeralwords_s'
 };
@@ -313,7 +313,7 @@ final Map<String, String> NORWordToNum = {
   'punkt': '.',
   'komma': ',',
   'nord': 'numeralwords_n',
-  'øst': 'numeralwords_o',
+  'øst': 'numeralwords_e',
   'vest': 'numeralwords_w',
   'sør': 'numeralwords_s'
 };
@@ -353,7 +353,7 @@ final Map<String, String> ITAWordToNum = {
   'punto': '.',
   'virgola': ',',
   'nord': 'numeralwords_n',
-  'est': 'numeralwords_o',
+  'est': 'numeralwords_e',
   'west': 'numeralwords_w',
   'sud': 'numeralwords_s'
 };
@@ -394,7 +394,7 @@ final Map<String, String> FRAWordToNum = {
   'point': '.',
   'komma': ',',
   'nord': 'numeralwords_n',
-  'est': 'numeralwords_o',
+  'est': 'numeralwords_e',
   'oest': 'numeralwords_w',
   'sud': 'numeralwords_s'
 };
@@ -435,7 +435,7 @@ final Map<String, String> ESPWordToNum = {
   'punto': '.',
   'coma': ',',
   'norte': 'numeralwords_n',
-  'este': 'numeralwords_o',
+  'este': 'numeralwords_e',
   'oeste': 'numeralwords_w',
   'sur': 'numeralwords_s'
 };
@@ -477,7 +477,7 @@ final Map<String, String> PORWordToNum = {
   'ponto': '.',
   'virgula': ',',
   'norte': 'numeralwords_n',
-  'leste': 'numeralwords_o',
+  'leste': 'numeralwords_e',
   'oeste': 'numeralwords_w',
   'sul': 'numeralwords_s'
 };
@@ -520,7 +520,7 @@ final Map<String, String> POLWordToNum = {
   'kropka': '.',
   'przecinek': ',',
   'północ': 'numeralwords_n',
-  'wschód': 'numeralwords_o',
+  'wschód': 'numeralwords_e',
   'zachód': 'numeralwords_w',
   'południe': 'numeralwords_s'
 };
@@ -562,8 +562,8 @@ final Map<String, String> RUSWordToNum = {
   'týsjača': '1000',
   'grad': '°',
   'tochki': '.',
-  'sever': 'numeralwords_w',
-  'vostok': 'numeralwords_o',
+  'sever': 'numeralwords_n',
+  'vostok': 'numeralwords_e',
   'zapad': 'numeralwords_w',
   'yug': 'numeralwords_s'
 };
@@ -607,7 +607,7 @@ final Map<String, String> KYRWordToNum = {
   'точка': '.',
   'Запятой': ',',
   'север': 'numeralwords_n',
-  'Восток': 'numeralwords_nnumeralwords_o',
+  'Восток': 'numeralwords_e',
   'Запад': 'numeralwords_w',
   'юг': 'numeralwords_s'
 };
@@ -647,7 +647,7 @@ final Map<String, String> VOLWordToNum = {
   'puen': 'punkt',
   'nolued': 'numeralwords_n',
   'sulued': 'numeralwords_s',
-  'lofued': 'numeralwords_o',
+  'lofued': 'numeralwords_e',
   'vesued': 'numeralwords_w',
 };
 
@@ -687,7 +687,7 @@ final Map<String, String> EPOWordToNum = {
   'komo': ',',
   'nordo': 'numeralwords_n',
   'sudo': 'numeralwords_s',
-  'oriento': 'numeralwords_o',
+  'oriento': 'numeralwords_e',
   'okcidento': 'numeralwords_w',
   'grado': 'grad',
   'punkto': 'punkt',
@@ -726,7 +726,7 @@ final Map<String, String> SOLWordToNum = {
   'famimi': '1000',
   'dolasifa': 'numeralwords_n',
   'fasilado': 'numeralwords_s',
-  'fasilare': 'numeralwords_o',
+  'fasilare': 'numeralwords_e',
   'relasifa': 'numeralwords_w',
   'famidosi': 'grad',
   'relaresol': 'punkt',
