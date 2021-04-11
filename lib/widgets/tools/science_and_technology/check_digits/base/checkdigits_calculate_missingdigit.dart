@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/check_digits/base/check_digits.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
+import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 
 class CheckDigitsCalculateMissingDigits extends StatefulWidget {
@@ -46,17 +47,22 @@ class CheckDigitsCalculateMissingDigitsState extends State<CheckDigitsCalculateM
   }
 
   _buildOutput() {
+
     List<String> numbers = checkDigitsCalculateDigits(widget.mode, _currentInputN);
 
     Map output = new Map();
     for (int i = 0; i < numbers.length; i++)
-      output['number.' + i.toString()] = numbers[i];
+      output[(i + 1).toString()+'.'] = numbers[i];
 
-    return columnedMultiLineOutput(
-        context,
-        output.entries.map((entry) {
-          return [entry.key, entry.value];
-        }).toList(),
-        flexValues: [1]);
+    return GCWDefaultOutput(
+        child: Column(
+            children: columnedMultiLineOutput(
+              context,
+              output.entries.map((entry) {
+                return [entry.key, entry.value];
+              }).toList(),
+            )
+        )
+    );
   }
 }
