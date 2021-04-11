@@ -15,10 +15,10 @@ enum CheckDigitsMode {
 }
 
 final Map maxInt = {
-  CheckDigitsMode.EAN : 999999999999999999,
-  CheckDigitsMode.IMEI : 999999999999999,
-  CheckDigitsMode.ISBN : 9999999999999,
-  CheckDigitsMode.DETAXID : 99999999999,
+  CheckDigitsMode.EAN     : 999999999999999999, // 18 digits
+  CheckDigitsMode.IMEI    : 999999999999999,    // 15 digits
+  CheckDigitsMode.ISBN    : 9999999999999,      // 13 digits
+  CheckDigitsMode.DETAXID : 99999999999,        // 11 digits
 };
 
 class CheckDigitOutput{

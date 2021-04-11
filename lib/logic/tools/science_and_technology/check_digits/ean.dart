@@ -83,6 +83,44 @@ String checkDigitsEANCalculateNumber(String number){
 }
 
 List<String> checkDigitsEANCalculateDigits(String number){
+  if (number.length == 8 || number.length == 13 || number.length == 14 || number.length == 18 && int.tryParse(number[number.length - 1]) != null) {
+    List<String> result = new List<String>();
+    int maxDigits = 0;
+    int len = 0;
+    String maxNumber = '';
+    int index = 0;
+    String checkEAN = '';
+    for (int i = 0; i < number.length; i++)
+      if (int.tryParse(number[i]) == null) {
+        maxNumber = maxNumber + '9';
+      }
 
-  return [''];
+    len = maxNumber.length;
+    maxDigits = int.parse(maxNumber);
+    print('checkDigitsEANCalculateDigits');
+    print('ean       '+number);
+    print('maxnumber '+maxNumber);
+    print('maxdigits '+maxDigits.toString());
+    print('len       '+len.toString());
+    for (int i = 0; i < maxDigits; i++) {
+      maxNumber = i.toString();
+      maxNumber = maxNumber.padLeft(len, '0');
+      print('maxnumber '+maxNumber);
+      index = 0;
+      checkEAN = '';
+      for (int i = 0; i < number.length; i++) {
+        if (int.tryParse(number[i]) == null) {
+          checkEAN = checkEAN + maxNumber[index];
+          index++;
+        } else {
+          checkEAN = checkEAN + number[i];
+        }
+      }
+      print('checkEAN '+checkEAN);
+      if (_checkEAN(checkEAN, number.length))
+        result.add(checkEAN);
+    }
+    return result;
+  } else
+    return [''];
 }
