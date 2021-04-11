@@ -6,13 +6,13 @@ import 'base/checkdigits_check_number.dart';
 
 
 class CheckDigitsIBANCheckNumber extends CheckDigitsCheckNumber {
-  CheckDigitsIBANCheckNumber() : super(mode: CheckDigitsMode.DEPERSID);
+  CheckDigitsIBANCheckNumber() : super(mode: CheckDigitsMode.IBAN);
 }
 
 class CheckDigitsIBANCalculateCheckDigit extends CheckDigitsCalculateCheckDigit {
-  CheckDigitsIBANCalculateCheckDigit() : super(mode: CheckDigitsMode.DEPERSID);
+  CheckDigitsIBANCalculateCheckDigit() : super(mode: CheckDigitsMode.IBAN);
 }
 
 class CheckDigitsIBANCalculateMissingDigit extends CheckDigitsCalculateMissingDigits {
-  CheckDigitsIBANCalculateMissingDigit() : super(mode: CheckDigitsMode.DEPERSID);
+  CheckDigitsIBANCalculateMissingDigit() : super(mode: CheckDigitsMode.IBAN);
 }

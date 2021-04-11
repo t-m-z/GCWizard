@@ -6,13 +6,13 @@ import 'base/checkdigits_check_number.dart';
 
 
 class CheckDigitsIMEICheckNumber extends CheckDigitsCheckNumber {
-  CheckDigitsIMEICheckNumber() : super(mode: CheckDigitsMode.DEPERSID);
+  CheckDigitsIMEICheckNumber() : super(mode: CheckDigitsMode.IMEI);
 }
 
 class CheckDigitsIMEICalculateCheckDigit extends CheckDigitsCalculateCheckDigit {
-  CheckDigitsIMEICalculateCheckDigit() : super(mode: CheckDigitsMode.DEPERSID);
+  CheckDigitsIMEICalculateCheckDigit() : super(mode: CheckDigitsMode.IMEI);
 }
 
 class CheckDigitsIMEICalculateMissingDigit extends CheckDigitsCalculateMissingDigits {
-  CheckDigitsIMEICalculateMissingDigit() : super(mode: CheckDigitsMode.DEPERSID);
+  CheckDigitsIMEICalculateMissingDigit() : super(mode: CheckDigitsMode.IMEI);
 }

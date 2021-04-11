@@ -14,6 +14,13 @@ enum CheckDigitsMode {
   ISBN
 }
 
+final Map maxInt = {
+  CheckDigitsMode.EAN : 999999999999999999,
+  CheckDigitsMode.IMEI : 999999999999999,
+  CheckDigitsMode.ISBN : 9999999999999,
+  CheckDigitsMode.DETAXID : 99999999999,
+};
+
 class CheckDigitOutput{
   final bool correct;
   final String correctDigit;
