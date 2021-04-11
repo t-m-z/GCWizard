@@ -1,0 +1,62 @@
+import 'package:flutter/material.dart';
+import 'package:gc_wizard/logic/tools/science_and_technology/check_digits/base/check_digits.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
+import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
+
+class CheckDigitsCalculateMissingDigits extends StatefulWidget {
+  final CheckDigitsMode mode;
+  final int maxIndex;
+  const CheckDigitsCalculateMissingDigits({Key key, this.mode, this.maxIndex}) : super(key: key);
+
+  @override
+  CheckDigitsCalculateMissingDigitsState createState() => CheckDigitsCalculateMissingDigitsState();
+}
+
+class CheckDigitsCalculateMissingDigitsState extends State<CheckDigitsCalculateMissingDigits> {
+  String _currentInputN = '';
+  TextEditingController currentInputController;
+
+  @override
+  void initState() {
+    super.initState();
+    currentInputController = TextEditingController(text: _currentInputN);
+  }
+
+  @override
+  void dispose() {
+    currentInputController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: <Widget>[
+        GCWTextField(
+          controller: currentInputController,
+          onChanged: (text) {
+            setState(() {
+              _currentInputN = text;
+            });
+          },
+        ),
+        _buildOutput()
+      ],
+    );
+  }
+
+  _buildOutput() {
+    List<String> numbers = checkDigitsCalculateDigits(widget.mode, _currentInputN);
+
+    Map output = new Map();
+    for (int i = 0; i < numbers.length; i++)
+      output['number.' + i.toString()] = numbers[i];
+
+    return columnedMultiLineOutput(
+        context,
+        output.entries.map((entry) {
+          return [entry.key, entry.value];
+        }).toList(),
+        flexValues: [1]);
+  }
+}

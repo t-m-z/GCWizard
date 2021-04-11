@@ -15,6 +15,7 @@ import 'package:gc_wizard/widgets/selector_lists/bcd_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/beaufort_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/ccitt1_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/ccitt2_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/checkdigits/checkdigits_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/cistercian_numbers_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/coords_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/cryptography_selection.dart';
@@ -247,6 +248,7 @@ class _MainViewState extends State<MainView> {
         className(CenterTwoPoints()),
         className(Chao()),
         className(Chef()),
+        className(CheckDigitsSelection()),
         className(ChickenLanguage()),
         className(Chronogram()),
         className(CipherWheel()),

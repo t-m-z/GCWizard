@@ -7,10 +7,10 @@ import 'package:gc_wizard/widgets/main_menu/changelog.dart';
 import 'package:gc_wizard/widgets/main_menu/general_settings.dart';
 import 'package:gc_wizard/widgets/main_menu/licenses.dart';
 import 'package:gc_wizard/widgets/main_menu/settings_coordinates.dart';
-import 'package:gc_wizard/widgets/searchStrings/searchStrings_common.dart';
-import 'package:gc_wizard/widgets/searchStrings/searchStrings_de.dart';
-import 'package:gc_wizard/widgets/searchStrings/searchStrings_en.dart';
-import 'package:gc_wizard/widgets/searchStrings/searchStrings_fr.dart';
+import 'package:gc_wizard/widgets/searchstrings/searchstrings_common.dart';
+import 'package:gc_wizard/widgets/searchstrings/searchstrings_de.dart';
+import 'package:gc_wizard/widgets/searchstrings/searchstrings_en.dart';
+import 'package:gc_wizard/widgets/searchstrings/searchstrings_fr.dart';
 import 'package:gc_wizard/widgets/selector_lists/apparent_temperature.dart';
 import 'package:gc_wizard/widgets/selector_lists/astronomy_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/babylon_numbers_selection.dart';
@@ -19,6 +19,13 @@ import 'package:gc_wizard/widgets/selector_lists/bcd_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/beaufort_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/ccitt1_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/ccitt2_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/checkdigits/checkdigits_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/checkdigits/checkdigits_de_taxid_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/checkdigits/checkdigits_de_persid_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/checkdigits/checkdigits_ean_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/checkdigits/checkdigits_iban_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/checkdigits/checkdigits_imei_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/checkdigits/checkdigits_isbn_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/cistercian_numbers_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/combinatorics_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/coords_selection.dart';
@@ -208,6 +215,12 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/sun_pos
 import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/sun_rise_set.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/beaufort.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/binary.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/check_digits/de_persid.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/check_digits/de_taxid.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/check_digits/ean.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/check_digits/iban.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/check_digits/imei.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/check_digits/isbn.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/colors/colors.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/combination.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/combination_permutation.dart';
@@ -534,6 +547,28 @@ class Registry {
           category: ToolCategory.CRYPTOGRAPHY,
           missingHelpLocales: [],
           searchStrings: [SEARCHSTRING_COMMON_CHAO, SEARCHSTRING_DE_CHAO, SEARCHSTRING_EN_CHAO, SEARCHSTRING_FR_CHAO]),
+      GCWTool(
+          tool: CheckDigitsSelection(),
+          i18nPrefix: 'checkdigits_selection',
+          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
+          missingHelpLocales: ['cs', 'da', 'es', 'it', 'ja', 'ko', 'nl', 'pl', 'ru', 'zh',],
+          searchStrings: [
+            SEARCHSTRING_COMMON_CHECK_DIGITS,
+            SEARCHSTRING_DE_CHECK_DIGITS,
+            SEARCHSTRING_EN_CHECK_DIGITS,
+            SEARCHSTRING_FR_CHECK_DIGITS
+          ]),
+      GCWTool(
+          tool: BabylonNumbersSelection(),
+          i18nPrefix: 'babylonnumbers_selection',
+          category: ToolCategory.CRYPTOGRAPHY,
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_BABYLONIAN_NUMERALS,
+            SEARCHSTRING_DE_BABYLONIAN_NUMERALS,
+            SEARCHSTRING_EN_BABYLONIAN_NUMERALS,
+            SEARCHSTRING_FR_BABYLONIAN_NUMERALS
+          ]),
       GCWTool(
           tool: CipherWheel(),
           i18nPrefix: 'cipherwheel',
@@ -1728,6 +1763,380 @@ class Registry {
           tool: CCITT1(), i18nPrefix: 'ccitt1', missingHelpLocales: [], searchStrings: [SEARCHSTRING_COMMON_CCITT1]),
       GCWTool(
           tool: CCITT2(), i18nPrefix: 'ccitt2', missingHelpLocales: [], searchStrings: [SEARCHSTRING_COMMON_CCITT2]),
+
+      //CheckDigits Selection *****************************************************************************************
+      GCWTool(
+          tool: CheckDigitsEANSelection(),
+          i18nPrefix: 'checkdigits_ean_selection',
+          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
+          missingHelpLocales: ['cs', 'da', 'es', 'it', 'ja', 'ko', 'nl', 'pl', 'ru', 'zh',],
+          searchStrings: [
+            SEARCHSTRING_COMMON_CHECK_DIGITS,
+            SEARCHSTRING_DE_CHECK_DIGITS,
+            SEARCHSTRING_EN_CHECK_DIGITS,
+            SEARCHSTRING_FR_CHECK_DIGITS,
+            SEARCHSTRING_COMMON_CHECK_DIGITS_EAN,
+            SEARCHSTRING_DE_CHECK_DIGITS_EAN,
+            SEARCHSTRING_EN_CHECK_DIGITS_EAN,
+            SEARCHSTRING_FR_CHECK_DIGITS_EAN,
+          ]),
+      GCWTool(
+          tool: CheckDigitsIBANSelection(),
+          i18nPrefix: 'checkdigits_iban_selection',
+          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
+          missingHelpLocales: ['cs', 'da', 'es', 'it', 'ja', 'ko', 'nl', 'pl', 'ru', 'zh',],
+          searchStrings: [
+            SEARCHSTRING_COMMON_CHECK_DIGITS,
+            SEARCHSTRING_DE_CHECK_DIGITS,
+            SEARCHSTRING_EN_CHECK_DIGITS,
+            SEARCHSTRING_FR_CHECK_DIGITS,
+            SEARCHSTRING_COMMON_CHECK_DIGITS_IBAN,
+            SEARCHSTRING_DE_CHECK_DIGITS_IBAN,
+            SEARCHSTRING_EN_CHECK_DIGITS_IBAN,
+            SEARCHSTRING_FR_CHECK_DIGITS_IBAN,
+          ]),
+      GCWTool(
+          tool: CheckDigitsIMEISelection(),
+          i18nPrefix: 'checkdigits_imei_selection',
+          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
+          missingHelpLocales: ['cs', 'da', 'es', 'it', 'ja', 'ko', 'nl', 'pl', 'ru', 'zh',],
+          searchStrings: [
+            SEARCHSTRING_COMMON_CHECK_DIGITS,
+            SEARCHSTRING_DE_CHECK_DIGITS,
+            SEARCHSTRING_EN_CHECK_DIGITS,
+            SEARCHSTRING_FR_CHECK_DIGITS,
+            SEARCHSTRING_COMMON_CHECK_DIGITS_IMEI,
+            SEARCHSTRING_DE_CHECK_DIGITS_IMEI,
+            SEARCHSTRING_EN_CHECK_DIGITS_IMEI,
+            SEARCHSTRING_FR_CHECK_DIGITS_IMEI,
+          ]),
+      GCWTool(
+          tool: CheckDigitsISBNSelection(),
+          i18nPrefix: 'checkdigits_isbn_selection',
+          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
+          missingHelpLocales: ['cs', 'da', 'es', 'it', 'ja', 'ko', 'nl', 'pl', 'ru', 'zh',],
+          searchStrings: [
+            SEARCHSTRING_COMMON_CHECK_DIGITS,
+            SEARCHSTRING_DE_CHECK_DIGITS,
+            SEARCHSTRING_EN_CHECK_DIGITS,
+            SEARCHSTRING_FR_CHECK_DIGITS,
+            SEARCHSTRING_COMMON_CHECK_DIGITS_ISBN,
+            SEARCHSTRING_DE_CHECK_DIGITS_ISBN,
+            SEARCHSTRING_EN_CHECK_DIGITS_ISBN,
+            SEARCHSTRING_FR_CHECK_DIGITS_ISBN,
+          ]),
+      GCWTool(
+          tool: CheckDigitsDEPersIDSelection(),
+          i18nPrefix: 'checkdigits_persid_selection',
+          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
+          missingHelpLocales: ['cs', 'da', 'es', 'it', 'ja', 'ko', 'nl', 'pl', 'ru', 'zh',],
+          searchStrings: [
+            SEARCHSTRING_COMMON_CHECK_DIGITS,
+            SEARCHSTRING_DE_CHECK_DIGITS,
+            SEARCHSTRING_EN_CHECK_DIGITS,
+            SEARCHSTRING_FR_CHECK_DIGITS,
+            SEARCHSTRING_COMMON_CHECK_DIGITS_DEPERSID,
+            SEARCHSTRING_DE_CHECK_DIGITS_DEPERSID,
+            SEARCHSTRING_EN_CHECK_DIGITS_DEPERSID,
+            SEARCHSTRING_FR_CHECK_DIGITS_DEPERSID,
+          ]),
+      GCWTool(
+          tool: CheckDigitsDETaxIDSelection(),
+          i18nPrefix: 'checkdigits_taxid_selection',
+          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
+          missingHelpLocales: ['cs', 'da', 'es', 'it', 'ja', 'ko', 'nl', 'pl', 'ru', 'zh',],
+          searchStrings: [
+            SEARCHSTRING_COMMON_CHECK_DIGITS,
+            SEARCHSTRING_DE_CHECK_DIGITS,
+            SEARCHSTRING_EN_CHECK_DIGITS,
+            SEARCHSTRING_FR_CHECK_DIGITS,
+            SEARCHSTRING_COMMON_CHECK_DIGITS_DETAXID,
+            SEARCHSTRING_DE_CHECK_DIGITS_DETAXID,
+            SEARCHSTRING_EN_CHECK_DIGITS_DETAXID,
+            SEARCHSTRING_FR_CHECK_DIGITS_DETAXID,
+          ]),
+
+      //CheckDigits EAN Selection *****************************************************************************************
+      GCWTool(
+          tool: CheckDigitsEANCheckNumber(),
+          i18nPrefix: 'checkdigits_checknumber',
+          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
+          missingHelpLocales: ['cs', 'da', 'es', 'it', 'ja', 'ko', 'nl', 'pl', 'ru', 'zh',],
+          searchStrings: [
+            SEARCHSTRING_COMMON_CHECK_DIGITS,
+            SEARCHSTRING_DE_CHECK_DIGITS,
+            SEARCHSTRING_EN_CHECK_DIGITS,
+            SEARCHSTRING_FR_CHECK_DIGITS,
+            SEARCHSTRING_COMMON_CHECK_DIGITS_EAN,
+            SEARCHSTRING_DE_CHECK_DIGITS_EAN,
+            SEARCHSTRING_EN_CHECK_DIGITS_EAN,
+            SEARCHSTRING_FR_CHECK_DIGITS_EAN,
+          ]),
+      GCWTool(
+          tool: CheckDigitsEANCalculateCheckDigit(),
+          i18nPrefix: 'checkdigits_calculate_digit',
+          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
+          missingHelpLocales: ['cs', 'da', 'es', 'it', 'ja', 'ko', 'nl', 'pl', 'ru', 'zh',],
+          searchStrings: [
+            SEARCHSTRING_COMMON_CHECK_DIGITS,
+            SEARCHSTRING_DE_CHECK_DIGITS,
+            SEARCHSTRING_EN_CHECK_DIGITS,
+            SEARCHSTRING_FR_CHECK_DIGITS,
+            SEARCHSTRING_COMMON_CHECK_DIGITS_EAN,
+            SEARCHSTRING_DE_CHECK_DIGITS_EAN,
+            SEARCHSTRING_EN_CHECK_DIGITS_EAN,
+            SEARCHSTRING_FR_CHECK_DIGITS_EAN,
+          ]),
+      GCWTool(
+          tool: CheckDigitsEANCalculateMissingDigit(),
+          i18nPrefix: 'checkdigits_calculate_number',
+          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
+          missingHelpLocales: ['cs', 'da', 'es', 'it', 'ja', 'ko', 'nl', 'pl', 'ru', 'zh',],
+          searchStrings: [
+            SEARCHSTRING_COMMON_CHECK_DIGITS,
+            SEARCHSTRING_DE_CHECK_DIGITS,
+            SEARCHSTRING_EN_CHECK_DIGITS,
+            SEARCHSTRING_FR_CHECK_DIGITS,
+            SEARCHSTRING_COMMON_CHECK_DIGITS_EAN,
+            SEARCHSTRING_DE_CHECK_DIGITS_EAN,
+            SEARCHSTRING_EN_CHECK_DIGITS_EAN,
+            SEARCHSTRING_FR_CHECK_DIGITS_EAN,
+          ]),
+
+      //CheckDigits DE PersId Selection *****************************************************************************************
+      GCWTool(
+          tool: CheckDigitsDEPersIDCheckNumber(),
+          i18nPrefix: 'checkdigits_checknumber',
+          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
+          missingHelpLocales: ['cs', 'da', 'es', 'it', 'ja', 'ko', 'nl', 'pl', 'ru', 'zh',],
+          searchStrings: [
+            SEARCHSTRING_COMMON_CHECK_DIGITS,
+            SEARCHSTRING_DE_CHECK_DIGITS,
+            SEARCHSTRING_EN_CHECK_DIGITS,
+            SEARCHSTRING_FR_CHECK_DIGITS,
+            SEARCHSTRING_COMMON_CHECK_DIGITS_DEPERSID,
+            SEARCHSTRING_DE_CHECK_DIGITS_DEPERSID,
+            SEARCHSTRING_EN_CHECK_DIGITS_DEPERSID,
+            SEARCHSTRING_FR_CHECK_DIGITS_DEPERSID,
+          ]),
+      GCWTool(
+          tool: CheckDigitsDEPersIDCalculateCheckDigit(),
+          i18nPrefix: 'checkdigits_calculate_digit',
+          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
+          missingHelpLocales: ['cs', 'da', 'es', 'it', 'ja', 'ko', 'nl', 'pl', 'ru', 'zh',],
+          searchStrings: [
+            SEARCHSTRING_COMMON_CHECK_DIGITS,
+            SEARCHSTRING_DE_CHECK_DIGITS,
+            SEARCHSTRING_EN_CHECK_DIGITS,
+            SEARCHSTRING_FR_CHECK_DIGITS,
+            SEARCHSTRING_COMMON_CHECK_DIGITS_DEPERSID,
+            SEARCHSTRING_DE_CHECK_DIGITS_DEPERSID,
+            SEARCHSTRING_EN_CHECK_DIGITS_DEPERSID,
+            SEARCHSTRING_FR_CHECK_DIGITS_DEPERSID,
+          ]),
+      GCWTool(
+          tool: CheckDigitsDEPersIDCalculateMissingDigit(),
+          i18nPrefix: 'checkdigits_calculate_number',
+          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
+          missingHelpLocales: ['cs', 'da', 'es', 'it', 'ja', 'ko', 'nl', 'pl', 'ru', 'zh',],
+          searchStrings: [
+            SEARCHSTRING_COMMON_CHECK_DIGITS,
+            SEARCHSTRING_DE_CHECK_DIGITS,
+            SEARCHSTRING_EN_CHECK_DIGITS,
+            SEARCHSTRING_FR_CHECK_DIGITS,
+            SEARCHSTRING_COMMON_CHECK_DIGITS_DEPERSID,
+            SEARCHSTRING_DE_CHECK_DIGITS_DEPERSID,
+            SEARCHSTRING_EN_CHECK_DIGITS_DEPERSID,
+            SEARCHSTRING_FR_CHECK_DIGITS_DEPERSID,
+          ]),
+
+      //CheckDigits DE TaxId Selection *****************************************************************************************
+      GCWTool(
+          tool: CheckDigitsDETaxIDCheckNumber(),
+          i18nPrefix: 'checkdigits_checknumber',
+          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
+          missingHelpLocales: ['cs', 'da', 'es', 'it', 'ja', 'ko', 'nl', 'pl', 'ru', 'zh',],
+          searchStrings: [
+            SEARCHSTRING_COMMON_CHECK_DIGITS,
+            SEARCHSTRING_DE_CHECK_DIGITS,
+            SEARCHSTRING_EN_CHECK_DIGITS,
+            SEARCHSTRING_FR_CHECK_DIGITS,
+            SEARCHSTRING_COMMON_CHECK_DIGITS_DETAXID,
+            SEARCHSTRING_DE_CHECK_DIGITS_DETAXID,
+            SEARCHSTRING_EN_CHECK_DIGITS_DETAXID,
+            SEARCHSTRING_FR_CHECK_DIGITS_DETAXID,
+          ]),
+      GCWTool(
+          tool: CheckDigitsDEPersIDCalculateCheckDigit(),
+          i18nPrefix: 'checkdigits_calculate_digit',
+          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
+          missingHelpLocales: ['cs', 'da', 'es', 'it', 'ja', 'ko', 'nl', 'pl', 'ru', 'zh',],
+          searchStrings: [
+            SEARCHSTRING_COMMON_CHECK_DIGITS,
+            SEARCHSTRING_DE_CHECK_DIGITS,
+            SEARCHSTRING_EN_CHECK_DIGITS,
+            SEARCHSTRING_FR_CHECK_DIGITS,
+            SEARCHSTRING_COMMON_CHECK_DIGITS_DETAXID,
+            SEARCHSTRING_DE_CHECK_DIGITS_DETAXID,
+            SEARCHSTRING_EN_CHECK_DIGITS_DETAXID,
+            SEARCHSTRING_FR_CHECK_DIGITS_DETAXID,
+          ]),
+      GCWTool(
+          tool: CheckDigitsDEPersIDCalculateMissingDigit(),
+          i18nPrefix: 'checkdigits_calculate_number',
+          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
+          missingHelpLocales: ['cs', 'da', 'es', 'it', 'ja', 'ko', 'nl', 'pl', 'ru', 'zh',],
+          searchStrings: [
+            SEARCHSTRING_COMMON_CHECK_DIGITS,
+            SEARCHSTRING_DE_CHECK_DIGITS,
+            SEARCHSTRING_EN_CHECK_DIGITS,
+            SEARCHSTRING_FR_CHECK_DIGITS,
+            SEARCHSTRING_COMMON_CHECK_DIGITS_DETAXID,
+            SEARCHSTRING_DE_CHECK_DIGITS_DETAXID,
+            SEARCHSTRING_EN_CHECK_DIGITS_DETAXID,
+            SEARCHSTRING_FR_CHECK_DIGITS_DETAXID,
+          ]),
+
+      //CheckDigits IBAN Selection *****************************************************************************************
+      GCWTool(
+          tool: CheckDigitsIBANCheckNumber(),
+          i18nPrefix: 'checkdigits_checknumber',
+          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
+          missingHelpLocales: ['cs', 'da', 'es', 'it', 'ja', 'ko', 'nl', 'pl', 'ru', 'zh',],
+          searchStrings: [
+            SEARCHSTRING_COMMON_CHECK_DIGITS,
+            SEARCHSTRING_DE_CHECK_DIGITS,
+            SEARCHSTRING_EN_CHECK_DIGITS,
+            SEARCHSTRING_FR_CHECK_DIGITS,
+            SEARCHSTRING_COMMON_CHECK_DIGITS_IBAN,
+            SEARCHSTRING_DE_CHECK_DIGITS_IBAN,
+            SEARCHSTRING_EN_CHECK_DIGITS_IBAN,
+            SEARCHSTRING_FR_CHECK_DIGITS_IBAN,
+          ]),
+      GCWTool(
+          tool: CheckDigitsIBANCalculateCheckDigit(),
+          i18nPrefix: 'checkdigits_calculate_digit',
+          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
+          missingHelpLocales: ['cs', 'da', 'es', 'it', 'ja', 'ko', 'nl', 'pl', 'ru', 'zh',],
+          searchStrings: [
+            SEARCHSTRING_COMMON_CHECK_DIGITS,
+            SEARCHSTRING_DE_CHECK_DIGITS,
+            SEARCHSTRING_EN_CHECK_DIGITS,
+            SEARCHSTRING_FR_CHECK_DIGITS,
+            SEARCHSTRING_COMMON_CHECK_DIGITS_IBAN,
+            SEARCHSTRING_DE_CHECK_DIGITS_IBAN,
+            SEARCHSTRING_EN_CHECK_DIGITS_IBAN,
+            SEARCHSTRING_FR_CHECK_DIGITS_IBAN,
+          ]),
+      GCWTool(
+          tool: CheckDigitsIBANCalculateMissingDigit(),
+          i18nPrefix: 'checkdigits_calculate_number',
+          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
+          missingHelpLocales: ['cs', 'da', 'es', 'it', 'ja', 'ko', 'nl', 'pl', 'ru', 'zh',],
+          searchStrings: [
+            SEARCHSTRING_COMMON_CHECK_DIGITS,
+            SEARCHSTRING_DE_CHECK_DIGITS,
+            SEARCHSTRING_EN_CHECK_DIGITS,
+            SEARCHSTRING_FR_CHECK_DIGITS,
+            SEARCHSTRING_COMMON_CHECK_DIGITS_IBAN,
+            SEARCHSTRING_DE_CHECK_DIGITS_IBAN,
+            SEARCHSTRING_EN_CHECK_DIGITS_IBAN,
+            SEARCHSTRING_FR_CHECK_DIGITS_IBAN,
+          ]),
+
+      //CheckDigits IBAN Selection *****************************************************************************************
+      GCWTool(
+          tool: CheckDigitsIMEICheckNumber(),
+          i18nPrefix: 'checkdigits_checknumber',
+          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
+          missingHelpLocales: ['cs', 'da', 'es', 'it', 'ja', 'ko', 'nl', 'pl', 'ru', 'zh',],
+          searchStrings: [
+            SEARCHSTRING_COMMON_CHECK_DIGITS,
+            SEARCHSTRING_DE_CHECK_DIGITS,
+            SEARCHSTRING_EN_CHECK_DIGITS,
+            SEARCHSTRING_FR_CHECK_DIGITS,
+            SEARCHSTRING_COMMON_CHECK_DIGITS_IMEI,
+            SEARCHSTRING_DE_CHECK_DIGITS_IMEI,
+            SEARCHSTRING_EN_CHECK_DIGITS_IMEI,
+            SEARCHSTRING_FR_CHECK_DIGITS_IMEI,
+          ]),
+      GCWTool(
+          tool: CheckDigitsIMEICalculateCheckDigit(),
+          i18nPrefix: 'checkdigits_calculate_digit',
+          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
+          missingHelpLocales: ['cs', 'da', 'es', 'it', 'ja', 'ko', 'nl', 'pl', 'ru', 'zh',],
+          searchStrings: [
+            SEARCHSTRING_COMMON_CHECK_DIGITS,
+            SEARCHSTRING_DE_CHECK_DIGITS,
+            SEARCHSTRING_EN_CHECK_DIGITS,
+            SEARCHSTRING_FR_CHECK_DIGITS,
+            SEARCHSTRING_COMMON_CHECK_DIGITS_IMEI,
+            SEARCHSTRING_DE_CHECK_DIGITS_IMEI,
+            SEARCHSTRING_EN_CHECK_DIGITS_IMEI,
+            SEARCHSTRING_FR_CHECK_DIGITS_IMEI,
+          ]),
+      GCWTool(
+          tool: CheckDigitsIMEICalculateMissingDigit(),
+          i18nPrefix: 'checkdigits_calculate_number',
+          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
+          missingHelpLocales: ['cs', 'da', 'es', 'it', 'ja', 'ko', 'nl', 'pl', 'ru', 'zh',],
+          searchStrings: [
+            SEARCHSTRING_COMMON_CHECK_DIGITS,
+            SEARCHSTRING_DE_CHECK_DIGITS,
+            SEARCHSTRING_EN_CHECK_DIGITS,
+            SEARCHSTRING_FR_CHECK_DIGITS,
+            SEARCHSTRING_COMMON_CHECK_DIGITS_IMEI,
+            SEARCHSTRING_DE_CHECK_DIGITS_IMEI,
+            SEARCHSTRING_EN_CHECK_DIGITS_IMEI,
+            SEARCHSTRING_FR_CHECK_DIGITS_IMEI,
+          ]),
+
+      //CheckDigits ISBN Selection *****************************************************************************************
+      GCWTool(
+          tool: CheckDigitsISBNCheckNumber(),
+          i18nPrefix: 'checkdigits_checknumber',
+          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
+          missingHelpLocales: ['cs', 'da', 'es', 'it', 'ja', 'ko', 'nl', 'pl', 'ru', 'zh',],
+          searchStrings: [
+            SEARCHSTRING_COMMON_CHECK_DIGITS,
+            SEARCHSTRING_DE_CHECK_DIGITS,
+            SEARCHSTRING_EN_CHECK_DIGITS,
+            SEARCHSTRING_FR_CHECK_DIGITS,
+            SEARCHSTRING_COMMON_CHECK_DIGITS_ISBN,
+            SEARCHSTRING_DE_CHECK_DIGITS_ISBN,
+            SEARCHSTRING_EN_CHECK_DIGITS_ISBN,
+            SEARCHSTRING_FR_CHECK_DIGITS_ISBN,
+          ]),
+      GCWTool(
+          tool: CheckDigitsISBNCalculateCheckDigit(),
+          i18nPrefix: 'checkdigits_calculate_digit',
+          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
+          missingHelpLocales: ['cs', 'da', 'es', 'it', 'ja', 'ko', 'nl', 'pl', 'ru', 'zh',],
+          searchStrings: [
+            SEARCHSTRING_COMMON_CHECK_DIGITS,
+            SEARCHSTRING_DE_CHECK_DIGITS,
+            SEARCHSTRING_EN_CHECK_DIGITS,
+            SEARCHSTRING_FR_CHECK_DIGITS,
+            SEARCHSTRING_COMMON_CHECK_DIGITS_ISBN,
+            SEARCHSTRING_DE_CHECK_DIGITS_ISBN,
+            SEARCHSTRING_EN_CHECK_DIGITS_ISBN,
+            SEARCHSTRING_FR_CHECK_DIGITS_ISBN,
+          ]),
+      GCWTool(
+          tool: CheckDigitsISBNCalculateMissingDigit(),
+          i18nPrefix: 'checkdigits_calculate_number',
+          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
+          missingHelpLocales: ['cs', 'da', 'es', 'it', 'ja', 'ko', 'nl', 'pl', 'ru', 'zh',],
+          searchStrings: [
+            SEARCHSTRING_COMMON_CHECK_DIGITS,
+            SEARCHSTRING_DE_CHECK_DIGITS,
+            SEARCHSTRING_EN_CHECK_DIGITS,
+            SEARCHSTRING_FR_CHECK_DIGITS,
+            SEARCHSTRING_COMMON_CHECK_DIGITS_ISBN,
+            SEARCHSTRING_DE_CHECK_DIGITS_ISBN,
+            SEARCHSTRING_EN_CHECK_DIGITS_ISBN,
+            SEARCHSTRING_FR_CHECK_DIGITS_ISBN,
+          ]),
 
       //Cistercian Selection *****************************************************************************************
       GCWTool(
