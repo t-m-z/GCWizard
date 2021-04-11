@@ -551,7 +551,7 @@ class Registry {
           tool: CheckDigitsSelection(),
           i18nPrefix: 'checkdigits_selection',
           category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-          missingHelpLocales: ['cs', 'da', 'es', 'it', 'ja', 'ko', 'nl', 'pl', 'ru', 'zh',],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_CHECK_DIGITS,
             SEARCHSTRING_DE_CHECK_DIGITS,
@@ -1768,8 +1768,7 @@ class Registry {
       GCWTool(
           tool: CheckDigitsEANSelection(),
           i18nPrefix: 'checkdigits_ean_selection',
-          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-          missingHelpLocales: ['cs', 'da', 'es', 'it', 'ja', 'ko', 'nl', 'pl', 'ru', 'zh',],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_CHECK_DIGITS,
             SEARCHSTRING_DE_CHECK_DIGITS,
@@ -1783,8 +1782,7 @@ class Registry {
       GCWTool(
           tool: CheckDigitsIBANSelection(),
           i18nPrefix: 'checkdigits_iban_selection',
-          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-          missingHelpLocales: ['cs', 'da', 'es', 'it', 'ja', 'ko', 'nl', 'pl', 'ru', 'zh',],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_CHECK_DIGITS,
             SEARCHSTRING_DE_CHECK_DIGITS,
@@ -1798,8 +1796,7 @@ class Registry {
       GCWTool(
           tool: CheckDigitsIMEISelection(),
           i18nPrefix: 'checkdigits_imei_selection',
-          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-          missingHelpLocales: ['cs', 'da', 'es', 'it', 'ja', 'ko', 'nl', 'pl', 'ru', 'zh',],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_CHECK_DIGITS,
             SEARCHSTRING_DE_CHECK_DIGITS,
@@ -1813,8 +1810,7 @@ class Registry {
       GCWTool(
           tool: CheckDigitsISBNSelection(),
           i18nPrefix: 'checkdigits_isbn_selection',
-          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-          missingHelpLocales: ['cs', 'da', 'es', 'it', 'ja', 'ko', 'nl', 'pl', 'ru', 'zh',],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_CHECK_DIGITS,
             SEARCHSTRING_DE_CHECK_DIGITS,
@@ -1827,9 +1823,8 @@ class Registry {
           ]),
       GCWTool(
           tool: CheckDigitsDEPersIDSelection(),
-          i18nPrefix: 'checkdigits_persid_selection',
-          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-          missingHelpLocales: ['cs', 'da', 'es', 'it', 'ja', 'ko', 'nl', 'pl', 'ru', 'zh',],
+          i18nPrefix: 'checkdigits_de_persid_selection',
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_CHECK_DIGITS,
             SEARCHSTRING_DE_CHECK_DIGITS,
@@ -1842,9 +1837,8 @@ class Registry {
           ]),
       GCWTool(
           tool: CheckDigitsDETaxIDSelection(),
-          i18nPrefix: 'checkdigits_taxid_selection',
-          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-          missingHelpLocales: ['cs', 'da', 'es', 'it', 'ja', 'ko', 'nl', 'pl', 'ru', 'zh',],
+          i18nPrefix: 'checkdigits_de_taxid_selection',
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_CHECK_DIGITS,
             SEARCHSTRING_DE_CHECK_DIGITS,
@@ -1860,8 +1854,7 @@ class Registry {
       GCWTool(
           tool: CheckDigitsEANCheckNumber(),
           i18nPrefix: 'checkdigits_checknumber',
-          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-          missingHelpLocales: ['cs', 'da', 'es', 'it', 'ja', 'ko', 'nl', 'pl', 'ru', 'zh',],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_CHECK_DIGITS,
             SEARCHSTRING_DE_CHECK_DIGITS,
@@ -1875,8 +1868,7 @@ class Registry {
       GCWTool(
           tool: CheckDigitsEANCalculateCheckDigit(),
           i18nPrefix: 'checkdigits_calculate_digit',
-          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-          missingHelpLocales: ['cs', 'da', 'es', 'it', 'ja', 'ko', 'nl', 'pl', 'ru', 'zh',],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_CHECK_DIGITS,
             SEARCHSTRING_DE_CHECK_DIGITS,
@@ -1890,8 +1882,7 @@ class Registry {
       GCWTool(
           tool: CheckDigitsEANCalculateMissingDigit(),
           i18nPrefix: 'checkdigits_calculate_number',
-          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-          missingHelpLocales: ['cs', 'da', 'es', 'it', 'ja', 'ko', 'nl', 'pl', 'ru', 'zh',],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_CHECK_DIGITS,
             SEARCHSTRING_DE_CHECK_DIGITS,
@@ -1907,8 +1898,7 @@ class Registry {
       GCWTool(
           tool: CheckDigitsDEPersIDCheckNumber(),
           i18nPrefix: 'checkdigits_checknumber',
-          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-          missingHelpLocales: ['cs', 'da', 'es', 'it', 'ja', 'ko', 'nl', 'pl', 'ru', 'zh',],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_CHECK_DIGITS,
             SEARCHSTRING_DE_CHECK_DIGITS,
@@ -1922,8 +1912,7 @@ class Registry {
       GCWTool(
           tool: CheckDigitsDEPersIDCalculateCheckDigit(),
           i18nPrefix: 'checkdigits_calculate_digit',
-          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-          missingHelpLocales: ['cs', 'da', 'es', 'it', 'ja', 'ko', 'nl', 'pl', 'ru', 'zh',],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_CHECK_DIGITS,
             SEARCHSTRING_DE_CHECK_DIGITS,
@@ -1937,8 +1926,7 @@ class Registry {
       GCWTool(
           tool: CheckDigitsDEPersIDCalculateMissingDigit(),
           i18nPrefix: 'checkdigits_calculate_number',
-          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-          missingHelpLocales: ['cs', 'da', 'es', 'it', 'ja', 'ko', 'nl', 'pl', 'ru', 'zh',],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_CHECK_DIGITS,
             SEARCHSTRING_DE_CHECK_DIGITS,
@@ -1954,8 +1942,7 @@ class Registry {
       GCWTool(
           tool: CheckDigitsDETaxIDCheckNumber(),
           i18nPrefix: 'checkdigits_checknumber',
-          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-          missingHelpLocales: ['cs', 'da', 'es', 'it', 'ja', 'ko', 'nl', 'pl', 'ru', 'zh',],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_CHECK_DIGITS,
             SEARCHSTRING_DE_CHECK_DIGITS,
@@ -1969,8 +1956,7 @@ class Registry {
       GCWTool(
           tool: CheckDigitsDEPersIDCalculateCheckDigit(),
           i18nPrefix: 'checkdigits_calculate_digit',
-          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-          missingHelpLocales: ['cs', 'da', 'es', 'it', 'ja', 'ko', 'nl', 'pl', 'ru', 'zh',],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_CHECK_DIGITS,
             SEARCHSTRING_DE_CHECK_DIGITS,
@@ -1984,8 +1970,7 @@ class Registry {
       GCWTool(
           tool: CheckDigitsDEPersIDCalculateMissingDigit(),
           i18nPrefix: 'checkdigits_calculate_number',
-          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-          missingHelpLocales: ['cs', 'da', 'es', 'it', 'ja', 'ko', 'nl', 'pl', 'ru', 'zh',],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_CHECK_DIGITS,
             SEARCHSTRING_DE_CHECK_DIGITS,
@@ -2001,8 +1986,7 @@ class Registry {
       GCWTool(
           tool: CheckDigitsIBANCheckNumber(),
           i18nPrefix: 'checkdigits_checknumber',
-          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-          missingHelpLocales: ['cs', 'da', 'es', 'it', 'ja', 'ko', 'nl', 'pl', 'ru', 'zh',],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_CHECK_DIGITS,
             SEARCHSTRING_DE_CHECK_DIGITS,
@@ -2016,8 +2000,7 @@ class Registry {
       GCWTool(
           tool: CheckDigitsIBANCalculateCheckDigit(),
           i18nPrefix: 'checkdigits_calculate_digit',
-          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-          missingHelpLocales: ['cs', 'da', 'es', 'it', 'ja', 'ko', 'nl', 'pl', 'ru', 'zh',],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_CHECK_DIGITS,
             SEARCHSTRING_DE_CHECK_DIGITS,
@@ -2031,8 +2014,7 @@ class Registry {
       GCWTool(
           tool: CheckDigitsIBANCalculateMissingDigit(),
           i18nPrefix: 'checkdigits_calculate_number',
-          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-          missingHelpLocales: ['cs', 'da', 'es', 'it', 'ja', 'ko', 'nl', 'pl', 'ru', 'zh',],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_CHECK_DIGITS,
             SEARCHSTRING_DE_CHECK_DIGITS,
@@ -2048,8 +2030,7 @@ class Registry {
       GCWTool(
           tool: CheckDigitsIMEICheckNumber(),
           i18nPrefix: 'checkdigits_checknumber',
-          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-          missingHelpLocales: ['cs', 'da', 'es', 'it', 'ja', 'ko', 'nl', 'pl', 'ru', 'zh',],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_CHECK_DIGITS,
             SEARCHSTRING_DE_CHECK_DIGITS,
@@ -2063,8 +2044,7 @@ class Registry {
       GCWTool(
           tool: CheckDigitsIMEICalculateCheckDigit(),
           i18nPrefix: 'checkdigits_calculate_digit',
-          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-          missingHelpLocales: ['cs', 'da', 'es', 'it', 'ja', 'ko', 'nl', 'pl', 'ru', 'zh',],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_CHECK_DIGITS,
             SEARCHSTRING_DE_CHECK_DIGITS,
@@ -2078,8 +2058,7 @@ class Registry {
       GCWTool(
           tool: CheckDigitsIMEICalculateMissingDigit(),
           i18nPrefix: 'checkdigits_calculate_number',
-          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-          missingHelpLocales: ['cs', 'da', 'es', 'it', 'ja', 'ko', 'nl', 'pl', 'ru', 'zh',],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_CHECK_DIGITS,
             SEARCHSTRING_DE_CHECK_DIGITS,
@@ -2095,8 +2074,7 @@ class Registry {
       GCWTool(
           tool: CheckDigitsISBNCheckNumber(),
           i18nPrefix: 'checkdigits_checknumber',
-          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-          missingHelpLocales: ['cs', 'da', 'es', 'it', 'ja', 'ko', 'nl', 'pl', 'ru', 'zh',],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_CHECK_DIGITS,
             SEARCHSTRING_DE_CHECK_DIGITS,
@@ -2110,8 +2088,7 @@ class Registry {
       GCWTool(
           tool: CheckDigitsISBNCalculateCheckDigit(),
           i18nPrefix: 'checkdigits_calculate_digit',
-          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-          missingHelpLocales: ['cs', 'da', 'es', 'it', 'ja', 'ko', 'nl', 'pl', 'ru', 'zh',],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_CHECK_DIGITS,
             SEARCHSTRING_DE_CHECK_DIGITS,
@@ -2125,8 +2102,7 @@ class Registry {
       GCWTool(
           tool: CheckDigitsISBNCalculateMissingDigit(),
           i18nPrefix: 'checkdigits_calculate_number',
-          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-          missingHelpLocales: ['cs', 'da', 'es', 'it', 'ja', 'ko', 'nl', 'pl', 'ru', 'zh',],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_CHECK_DIGITS,
             SEARCHSTRING_DE_CHECK_DIGITS,

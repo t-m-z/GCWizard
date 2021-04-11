@@ -3,6 +3,7 @@ import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/check_digits/base/check_digits.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
+import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 
 class CheckDigitsCheckNumber extends StatefulWidget {
@@ -58,19 +59,29 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
     }
 
     Map output = new Map();
-    output[i18n(context, 'checkdigits_checknumber_correct_yes')] = '';
-    output[i18n(context, 'checkdigits_checknumber_correct_number')] = '';
-    output[i18n(context, 'checkdigits_checknumber_correct_assume_number')] = '';
-    output['digit'] = checked.correctDigit;
-    output[i18n(context, 'checkdigits_checknumber_correct_assume_check')] = '';
     for (int i = 0; i < checked.correctNumbers.length; i++)
-      output['number.' + i.toString()] = checked.correctNumbers[i];
+      output[(i + 1).toString()+'.'] = checked.correctNumbers[i];
 
-    return columnedMultiLineOutput(
-        context,
-        output.entries.map((entry) {
-          return [entry.key, entry.value];
-        }).toList(),
-        flexValues: [1]);
+    return Column(
+      children: [
+        GCWDefaultOutput(
+          child: i18n(context, 'checkdigits_checknumber_correct_no'),
+          suppressCopyButton: true,
+        ),
+        GCWOutput(
+          title: i18n(context, 'checkdigits_checknumber_correct_number'),
+          child: checked.correctDigit,
+        ),
+        GCWDefaultOutput(
+          child: Column(
+                    children: columnedMultiLineOutput(
+                    context,
+                    output.entries.map((entry) {
+                      return [entry.key, entry.value];
+                    }).toList(),
+                    )
+                 )
+      )
+      ]);
   }
 }
