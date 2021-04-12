@@ -1954,7 +1954,7 @@ class Registry {
             SEARCHSTRING_FR_CHECK_DIGITS_DETAXID,
           ]),
       GCWTool(
-          tool: CheckDigitsDEPersIDCalculateCheckDigit(),
+          tool: CheckDigitsDETaxIDCalculateCheckDigit(),
           i18nPrefix: 'checkdigits_calculate_digit',
           missingHelpLocales: [],
           searchStrings: [
@@ -1968,7 +1968,7 @@ class Registry {
             SEARCHSTRING_FR_CHECK_DIGITS_DETAXID,
           ]),
       GCWTool(
-          tool: CheckDigitsDEPersIDCalculateMissingDigit(),
+          tool: CheckDigitsDETaxIDCalculateMissingDigit(),
           i18nPrefix: 'checkdigits_calculate_number',
           missingHelpLocales: [],
           searchStrings: [

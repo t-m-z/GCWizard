@@ -38,7 +38,7 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        (widget.mode == CheckDigitsMode.EAN || widget.mode == CheckDigitsMode.DETAXID || widget.mode == CheckDigitsMode.IMEI || widget.mode == CheckDigitsMode.ISBN)
+        (widget.mode == CheckDigitsMode.EAN || widget.mode == CheckDigitsMode.DETAXID || widget.mode == CheckDigitsMode.IMEI)
             ? GCWIntegerSpinner(
                 min: 0,
                 max: maxInt[widget.mode],
@@ -69,6 +69,7 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
       case CheckDigitsMode.IMEI:
       case CheckDigitsMode.ISBN:
       case CheckDigitsMode.EAN:
+      case CheckDigitsMode.IBAN:
         CheckDigitOutput checked =
             checkDigitsCheckNumber(widget.mode, _currentInputNString);
 

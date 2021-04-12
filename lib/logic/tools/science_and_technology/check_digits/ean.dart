@@ -13,27 +13,20 @@ CheckDigitOutput checkDigitsEANCheckNumber(String number){
 
       // Calculate new Check Digit
       String checkDigit = '';
-      for (int i = 0; i < length - 1; i++)
-        checkDigit = checkDigit + number[i];
-      checkDigit = checkDigitsEANCalculateNumber(checkDigit);
+      checkDigit = checkDigitsEANCalculateNumber(number.substring(0, number.length - 1));
 
       // test length-1 digits to fix the error
       List<String> result = new List<String>();
-      String testEAN = '';
-      String testEANleft = '';
-      String testEANright = '';
-      for (int index = 0; index < length - 1; index ++) {
-        testEANleft = '';
-        testEANright = '';
-        for (int j = 0; j < index; j++)
-          testEANleft = testEANleft + number[j];
-        for (int j = index + 1; j < length; j++)
-          testEANright = testEANright + number[j];
-
+      String test = '';
+      String testLeft = '';
+      String testRight = '';
+      for (int index = 1; index < length; index ++) {
+        testLeft = number.substring(0, index - 1);
+        testRight = number.substring(index);
         for (int testDigit = 0; testDigit <= 9; testDigit++) {
-          testEAN = testEANleft + testDigit.toString() + testEANright;
-          if (_checkEAN(testEAN, length))
-            result.add(testEAN);
+          test = testLeft + testDigit.toString() + testRight;
+          if (_checkEAN(test, length))
+            result.add(test);
         } // for testDigit
       } // for index
       return CheckDigitOutput(false, checkDigit, result);
@@ -42,44 +35,11 @@ CheckDigitOutput checkDigitsEANCheckNumber(String number){
   return CheckDigitOutput(false, '', ['']);
 }
 
-
-bool _checkEAN(String number, int length) {
-  if (number.length == length) {
-    int sum = 0;
-    for (int i = 0; i < length - 1; i++) {
-      if (i % 2 == 0)
-        sum = sum + 1 * int.parse(number[i]);
-      else
-        sum = sum + 3 * int.parse(number[i]);
-    }
-    if (sum >= 100)
-      sum = sum % 100;
-    sum = sum % 10;
-    sum = 10 - sum;
-
-    return (sum.toString() == number[length - 1]);
-  } else
-    return false;
-}
-
-
 String checkDigitsEANCalculateNumber(String number){
   if (number.length == 7 || number.length == 12 || number.length == 13 || number.length == 17) {
-    int sum = 0;
-    for (int i = 0; i < number.length; i++) {
-      if (i % 2 == 0)
-        sum = sum + 1 * int.parse(number[i]);
-      else
-        sum = sum + 3 * int.parse(number[i]);
-    }
-    if (sum >= 100)
-      sum = sum % 100;
-    sum = sum % 10;
-    sum = 10 - sum;
-
-    return number + sum.toString();
+    return number + _calculateEANCheckDigit(number);
   }
-  return '44';
+  return '';
 }
 
 List<String> checkDigitsEANCalculateDigits(String number){
@@ -89,7 +49,7 @@ List<String> checkDigitsEANCalculateDigits(String number){
     int len = 0;
     String maxNumber = '';
     int index = 0;
-    String checkEAN = '';
+    String checkNumber = '';
     for (int i = 0; i < number.length; i++)
       if (int.tryParse(number[i]) == null) {
         maxNumber = maxNumber + '9';
@@ -97,30 +57,45 @@ List<String> checkDigitsEANCalculateDigits(String number){
 
     len = maxNumber.length;
     maxDigits = int.parse(maxNumber);
-    print('checkDigitsEANCalculateDigits');
-    print('ean       '+number);
-    print('maxnumber '+maxNumber);
-    print('maxdigits '+maxDigits.toString());
-    print('len       '+len.toString());
     for (int i = 0; i < maxDigits; i++) {
       maxNumber = i.toString();
       maxNumber = maxNumber.padLeft(len, '0');
-      print('maxnumber '+maxNumber);
       index = 0;
-      checkEAN = '';
+      checkNumber = '';
       for (int i = 0; i < number.length; i++) {
         if (int.tryParse(number[i]) == null) {
-          checkEAN = checkEAN + maxNumber[index];
+          checkNumber = checkNumber + maxNumber[index];
           index++;
         } else {
-          checkEAN = checkEAN + number[i];
+          checkNumber = checkNumber + number[i];
         }
       }
-      print('checkEAN '+checkEAN);
-      if (_checkEAN(checkEAN, number.length))
-        result.add(checkEAN);
+      if (_checkEAN(checkNumber, number.length))
+        result.add(checkNumber);
     }
     return result;
   } else
     return [''];
+}
+
+bool _checkEAN(String number, int length) {
+  if (number.length == length) {
+    return (number[length] == _calculateEANCheckDigit(number.substring(0, number.length - 1)));
+  } else
+    return false;
+}
+
+String  _calculateEANCheckDigit(String number) {
+  int sum = 0;
+  for (int i = 0; i < number.length; i++) {
+    if (i % 2 == 0)
+      sum = sum + 1 * int.parse(number[i]);
+    else
+      sum = sum + 3 * int.parse(number[i]);
+  }
+  if (sum >= 100)
+    sum = sum % 100;
+  sum = sum % 10;
+  sum = 10 - sum;
+  return sum.toString();
 }

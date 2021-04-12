@@ -34,7 +34,7 @@ class CheckDigitsCalculateCheckDigitState extends State<CheckDigitsCalculateChec
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        (widget.mode == CheckDigitsMode.EAN || widget.mode == CheckDigitsMode.DETAXID || widget.mode == CheckDigitsMode.IMEI || widget.mode == CheckDigitsMode.ISBN)
+        (widget.mode == CheckDigitsMode.EAN || widget.mode == CheckDigitsMode.DETAXID || widget.mode == CheckDigitsMode.IMEI)
             ? GCWIntegerSpinner(
                 min: 0,
                 max: maxInt[widget.mode] ~/ 10,
