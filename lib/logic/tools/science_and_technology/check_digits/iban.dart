@@ -65,9 +65,8 @@ final Map IBAN_LENGTH = {
 
 CheckDigitOutput checkDigitsIBANCheckNumber(String number){
   number = number.toUpperCase();
-  if (number == null || number == '')
+  if (number == null || number == '' || number.length < 2)
     return CheckDigitOutput(false, '', ['']);
-
   if (number.length == IBAN_LENGTH[number[0] + number[1]]) {
     if (_checkIBAN(number))
       return CheckDigitOutput(true, '', ['']);

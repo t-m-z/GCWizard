@@ -4,9 +4,9 @@ import 'package:gc_wizard/logic/tools/science_and_technology/check_digits/base/c
 // https://www.activebarcode.de/codes/checkdigit/modulo10.html
 
 CheckDigitOutput checkDigitsEANCheckNumber(String number){
+  number = number.replaceAll('#', '');
   if (number.length == 8 || number.length == 13 || number.length == 14 || number.length == 18) {
-
-    if (_checkEAN(number, 8) || _checkEAN(number, 13) || _checkEAN(number, 14) || _checkEAN(number, 18))
+    if (checkEAN(number))
       return CheckDigitOutput(true, '', ['']);
     else {
       int length = number.length;
@@ -25,7 +25,7 @@ CheckDigitOutput checkDigitsEANCheckNumber(String number){
         testRight = number.substring(index);
         for (int testDigit = 0; testDigit <= 9; testDigit++) {
           test = testLeft + testDigit.toString() + testRight;
-          if (_checkEAN(test, length))
+          if (checkEAN(test))
             result.add(test);
         } // for testDigit
       } // for index
@@ -37,7 +37,7 @@ CheckDigitOutput checkDigitsEANCheckNumber(String number){
 
 String checkDigitsEANCalculateNumber(String number){
   if (number.length == 7 || number.length == 12 || number.length == 13 || number.length == 17) {
-    return number + _calculateEANCheckDigit(number);
+    return number + calculateEANCheckDigit(number);
   }
   return '';
 }
@@ -70,7 +70,7 @@ List<String> checkDigitsEANCalculateDigits(String number){
           checkNumber = checkNumber + number[i];
         }
       }
-      if (_checkEAN(checkNumber, number.length))
+      if (checkEAN(checkNumber))
         result.add(checkNumber);
     }
     return result;
@@ -78,14 +78,11 @@ List<String> checkDigitsEANCalculateDigits(String number){
     return [''];
 }
 
-bool _checkEAN(String number, int length) {
-  if (number.length == length) {
-    return (number[length] == _calculateEANCheckDigit(number.substring(0, number.length - 1)));
-  } else
-    return false;
+bool checkEAN(String number) {
+  return (number[number.length - 1] == calculateEANCheckDigit(number.substring(0, number.length - 1)));
 }
 
-String  _calculateEANCheckDigit(String number) {
+String  calculateEANCheckDigit(String number) {
   int sum = 0;
   for (int i = 0; i < number.length; i++) {
     if (i % 2 == 0)

@@ -23,6 +23,7 @@ import 'package:gc_wizard/widgets/selector_lists/checkdigits/checkdigits_selecti
 import 'package:gc_wizard/widgets/selector_lists/checkdigits/checkdigits_de_taxid_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/checkdigits/checkdigits_de_persid_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/checkdigits/checkdigits_ean_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/checkdigits/checkdigits_euro_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/checkdigits/checkdigits_iban_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/checkdigits/checkdigits_imei_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/checkdigits/checkdigits_isbn_selection.dart';
@@ -218,6 +219,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/binary.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/check_digits/de_persid.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/check_digits/de_taxid.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/check_digits/ean.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/check_digits/euro.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/check_digits/iban.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/check_digits/imei.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/check_digits/isbn.dart';
@@ -1822,6 +1824,20 @@ class Registry {
             SEARCHSTRING_FR_CHECK_DIGITS_ISBN,
           ]),
       GCWTool(
+          tool: CheckDigitsEUROSelection(),
+          i18nPrefix: 'checkdigits_euro_selection',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_CHECK_DIGITS,
+            SEARCHSTRING_DE_CHECK_DIGITS,
+            SEARCHSTRING_EN_CHECK_DIGITS,
+            SEARCHSTRING_FR_CHECK_DIGITS,
+            SEARCHSTRING_COMMON_CHECK_DIGITS_EURO,
+            SEARCHSTRING_DE_CHECK_DIGITS_EURO,
+            SEARCHSTRING_EN_CHECK_DIGITS_EURO,
+            SEARCHSTRING_FR_CHECK_DIGITS_EURO,
+          ]),
+      GCWTool(
           tool: CheckDigitsDEPersIDSelection(),
           i18nPrefix: 'checkdigits_de_persid_selection',
           missingHelpLocales: [],
@@ -1982,6 +1998,50 @@ class Registry {
             SEARCHSTRING_FR_CHECK_DIGITS_DETAXID,
           ]),
 
+      //CheckDigits ISBN Selection *****************************************************************************************
+      GCWTool(
+          tool: CheckDigitsEUROCheckNumber(),
+          i18nPrefix: 'checkdigits_checknumber',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_CHECK_DIGITS,
+            SEARCHSTRING_DE_CHECK_DIGITS,
+            SEARCHSTRING_EN_CHECK_DIGITS,
+            SEARCHSTRING_FR_CHECK_DIGITS,
+            SEARCHSTRING_COMMON_CHECK_DIGITS_EURO,
+            SEARCHSTRING_DE_CHECK_DIGITS_EURO,
+            SEARCHSTRING_EN_CHECK_DIGITS_EURO,
+            SEARCHSTRING_FR_CHECK_DIGITS_EURO,
+          ]),
+      GCWTool(
+          tool: CheckDigitsEUROCalculateCheckDigit(),
+          i18nPrefix: 'checkdigits_calculate_digit',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_CHECK_DIGITS,
+            SEARCHSTRING_DE_CHECK_DIGITS,
+            SEARCHSTRING_EN_CHECK_DIGITS,
+            SEARCHSTRING_FR_CHECK_DIGITS,
+            SEARCHSTRING_COMMON_CHECK_DIGITS_EURO,
+            SEARCHSTRING_DE_CHECK_DIGITS_EURO,
+            SEARCHSTRING_EN_CHECK_DIGITS_EURO,
+            SEARCHSTRING_FR_CHECK_DIGITS_EURO,
+          ]),
+      GCWTool(
+          tool: CheckDigitsEUROCalculateMissingDigit(),
+          i18nPrefix: 'checkdigits_calculate_number',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_CHECK_DIGITS,
+            SEARCHSTRING_DE_CHECK_DIGITS,
+            SEARCHSTRING_EN_CHECK_DIGITS,
+            SEARCHSTRING_FR_CHECK_DIGITS,
+            SEARCHSTRING_COMMON_CHECK_DIGITS_EURO,
+            SEARCHSTRING_DE_CHECK_DIGITS_EURO,
+            SEARCHSTRING_EN_CHECK_DIGITS_EURO,
+            SEARCHSTRING_FR_CHECK_DIGITS_EURO,
+          ]),
+
       //CheckDigits IBAN Selection *****************************************************************************************
       GCWTool(
           tool: CheckDigitsIBANCheckNumber(),
@@ -2026,7 +2086,7 @@ class Registry {
             SEARCHSTRING_FR_CHECK_DIGITS_IBAN,
           ]),
 
-      //CheckDigits IBAN Selection *****************************************************************************************
+      //CheckDigits IMEI Selection *****************************************************************************************
       GCWTool(
           tool: CheckDigitsIMEICheckNumber(),
           i18nPrefix: 'checkdigits_checknumber',

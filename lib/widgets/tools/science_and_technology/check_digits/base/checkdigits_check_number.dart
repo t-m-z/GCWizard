@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/check_digits/base/check_digits.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
@@ -50,8 +51,10 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
                   });
                 },
               )
-            : GCWTextField(
+            : GCWTextField( // CheckDigitsMode.ISBN, CheckDigitsMode.IBAN, CheckDigitsMode.EURO, CheckDigitsMode.DEPERSID
                 controller: currentInputController,
+                inputFormatters: [INPUTFORMATTERS[widget.mode]],
+                hintText: INPUTFORMATTERS_HINT[widget.mode],
                 onChanged: (text) {
                   setState(() {
                     _currentInputNString = text;
@@ -64,12 +67,6 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
   }
 
   _buildOutput() {
-    switch (widget.mode) {
-      case CheckDigitsMode.DETAXID:
-      case CheckDigitsMode.IMEI:
-      case CheckDigitsMode.ISBN:
-      case CheckDigitsMode.EAN:
-      case CheckDigitsMode.IBAN:
         CheckDigitOutput checked =
             checkDigitsCheckNumber(widget.mode, _currentInputNString);
 
@@ -83,6 +80,13 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
         for (int i = 0; i < checked.correctNumbers.length; i++)
           output[(i + 1).toString() + '.'] = checked.correctNumbers[i];
 
+        String title = i18n(context, 'checkdigits_checknumber_correct_assume_check');
+        if (output.length == 0)
+          title = title + '\n' +
+              i18n(context, 'checkdigits_checknumber_correct_no_number');
+        else
+          title = title + '\n' +
+              i18n(context, 'checkdigits_checknumber_correct_number');
         return Column(children: [
           GCWDefaultOutput(
             child: i18n(context, 'checkdigits_checknumber_correct_no'),
@@ -96,21 +100,19 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
             child: checked.correctDigit,
           ),
           GCWOutput(
-              title: i18n(
-                      context, 'checkdigits_checknumber_correct_assume_check') +
-                  '\n' +
-                  i18n(context, 'checkdigits_checknumber_correct_number'),
+              title: title,
               child: Column(
                   children: columnedMultiLineOutput(
                 context,
                 output.entries.map((entry) {
                   return [entry.key, entry.value];
                 }).toList(),
-              )))
+                      flexValues: [1,5]
+              ),
+              ))
         ]);
-        break;
-      default:
-        return Container();
-    }
   }
 }
+
+
+

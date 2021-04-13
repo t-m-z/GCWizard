@@ -6,6 +6,7 @@ import 'package:gc_wizard/widgets/selector_lists/gcw_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/checkdigits/checkdigits_de_persid_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/checkdigits/checkdigits_de_taxid_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/checkdigits/checkdigits_ean_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/checkdigits/checkdigits_euro_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/checkdigits/checkdigits_iban_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/checkdigits/checkdigits_imei_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/checkdigits/checkdigits_isbn_selection.dart';
@@ -20,6 +21,7 @@ class CheckDigitsSelection extends GCWSelection {
         className(CheckDigitsIBANSelection()),
         className(CheckDigitsIMEISelection()),
         className(CheckDigitsEANSelection()),
+        className(CheckDigitsEUROSelection()),
         className(CheckDigitsDEPersIDSelection()),
         className(CheckDigitsDETaxIDSelection()),
       ].contains(className(element.tool));
