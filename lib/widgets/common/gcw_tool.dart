@@ -25,6 +25,9 @@ final _SEARCH_BLACKLIST = {
   'chiffre',
   'cipher',
   'chiffrement',
+  'schlüssel',
+  'calculator',
+  'checker',
   'der',
   'die',
   'das',
@@ -62,11 +65,7 @@ final _SEARCH_BLACKLIST = {
   'ou',
 };
 
-final _SEARCH_WHITELIST = {
-  'd ni': "d'ni",
-  'd or': "d'or",
-  'mando a': "mando'a",
-};
+final _SEARCH_WHITELIST = {'d ni': "d'ni", 'd or': "d'or", 'mando a': "mando'a", 'kenny s': "kenny's"};
 
 const HELP_BASE_URL = 'https://blog.gcwizard.net/manual/';
 
@@ -90,6 +89,7 @@ class GCWTool extends StatefulWidget {
   final List<String> searchStrings;
   final List<GCWToolActionButtonsEntry> buttonList;
   final List<String> missingHelpLocales;
+  final bool suppressHelpButton;
 
   var icon;
   var _id = '';
@@ -111,7 +111,8 @@ class GCWTool extends StatefulWidget {
       this.iconPath,
       this.searchStrings,
       this.buttonList,
-      this.missingHelpLocales})
+      this.missingHelpLocales,
+      this.suppressHelpButton: false})
       : super(key: key) {
     this._id = className(tool) + '_' + (i18nPrefix ?? '');
     this._isFavorite = Prefs.getStringList('favorites').contains('$_id');
@@ -173,7 +174,12 @@ class _GCWToolState extends State<GCWTool> {
         .replaceAll(RegExp(r'\s+'), ' ')
         .replaceAll('**', '')
         .replaceAll('/', ' ')
-        .replaceAll(RegExp(r"\([a-zA-Z0-9\s.]+\)"), ''); //remove e.g. (128 bits) in hashes-toolname
+        .replaceAll(' - ', ' ')
+        .replaceAll(':', '')
+        .replaceAll('bit)', '')
+        .replaceAll('(', '')
+        .replaceAll(')', '');
+    //.replaceAll(RegExp(r"\([a-zA-Z0-9\s.]+\)"), ''); //remove e.g. (128 bits) in hashes-toolname
     text = substitution(text, _SEARCH_WHITELIST);
     text = text.split(' ').where((word) => !_SEARCH_BLACKLIST.contains(word)).join(' ');
     return text;
@@ -185,6 +191,8 @@ class _GCWToolState extends State<GCWTool> {
   }
 
   Widget _buildHelpButton() {
+    if (widget.suppressHelpButton) return null;
+
     // add button with url for searching knowledge base with toolName
     final Locale appLocale = Localizations.localeOf(context);
 

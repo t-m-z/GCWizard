@@ -451,7 +451,7 @@ const SEARCHSTRING_EN_SYMBOL_TENGWAR_CLASSIC =
     'thelordoftherings elves elvish middleearth thirdera classices classic classical';
 const SEARCHSTRING_EN_SYMBOL_TENGWAR_GENERAL = 'thelordoftherings elves elvish middleearth thirdera generale';
 const SEARCHSTRING_EN_SYMBOL_TERZI = 'square dots points eyeless relief tactiles';
-const SEARCHSTRING_EN_SYMBOL_THEBAN = 'witches witchalphabet angels';
+const SEARCHSTRING_EN_SYMBOL_THEBAN = 'witches witchalphabet angels magical magic wizard magician witchers';
 const SEARCHSTRING_EN_SYMBOL_THREE_SQUARES = 'threesquares points dots';
 const SEARCHSTRING_EN_SYMBOL_TINES = 'crook language tines prong traveling people tramp';
 const SEARCHSTRING_EN_SYMBOL_TRAFFICSIGNS_GERMANY = 'trafficsigns germany roadsigns';
@@ -484,7 +484,7 @@ const SEARCHSTRING_EN_TRITHEMIUS = '';
 const SEARCHSTRING_EN_UNITCONVERTER =
     'units converter lengths speeds velocity velocities energies energy force power times areas volumes denisities density masses bathtubs pressures angles temperatures degrees soccerfields';
 const SEARCHSTRING_EN_VANITY = 'telephone keys buttons numbers keypad sms mobile cellphone phoneword';
-const SEARCHSTRING_EN_VANITYMULTIPLENUMBERS = '';
+const SEARCHSTRING_EN_VANITYMULTIPLENUMBERS = 'multitap';
 const SEARCHSTRING_EN_VANITYSINGLENUMBERS = '';
 const SEARCHSTRING_EN_VIGENERE = '';
 const SEARCHSTRING_EN_VIGENEREBREAKER = '';
