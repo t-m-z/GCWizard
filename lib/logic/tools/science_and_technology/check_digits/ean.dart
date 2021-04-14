@@ -3,77 +3,28 @@ import 'package:gc_wizard/logic/tools/science_and_technology/check_digits/base/c
 // https://de.wikipedia.org/wiki/Pr%C3%BCfziffer#:~:text=Berechnung%20der%20Pr%C3%BCfziffer%3A%201%20Von%20links%20nach%20rechts,unmittelbar%20nach%20der%20Produktbildung%20erfolgen.%20Weitere%20Artikel...%20
 // https://www.activebarcode.de/codes/checkdigit/modulo10.html
 
-CheckDigitOutput checkDigitsEANCheckNumber(String number){
+CheckDigitOutput CheckEANNumber(String number){
   number = number.replaceAll('#', '');
   if (number.length == 8 || number.length == 13 || number.length == 14 || number.length == 18) {
-    if (checkEAN(number))
+    if (checkNumber(number, checkEAN))
       return CheckDigitOutput(true, '', ['']);
     else {
-      int length = number.length;
-
-      // Calculate new Check Digit
-      String checkDigit = '';
-      checkDigit = checkDigitsEANCalculateNumber(number.substring(0, number.length - 1));
-
-      // test length-1 digits to fix the error
-      List<String> result = new List<String>();
-      String test = '';
-      String testLeft = '';
-      String testRight = '';
-      for (int index = 1; index < length; index ++) {
-        testLeft = number.substring(0, index - 1);
-        testRight = number.substring(index);
-        for (int testDigit = 0; testDigit <= 9; testDigit++) {
-          test = testLeft + testDigit.toString() + testRight;
-          if (checkEAN(test))
-            result.add(test);
-        } // for testDigit
-      } // for index
-      return CheckDigitOutput(false, checkDigit, result);
+      return CheckDigitOutput(false, CalculateNumber(number.substring(0, number.length - 1), CalculateEANNumber), CalculateGlitch(number, checkEAN));
     }
   }
   return CheckDigitOutput(false, '', ['']);
 }
 
-String checkDigitsEANCalculateNumber(String number){
+String CalculateEANNumber(String number){
   if (number.length == 7 || number.length == 12 || number.length == 13 || number.length == 17) {
-    return number + calculateEANCheckDigit(number);
+    return number + calculateCheckDigit(number, calculateEANCheckDigit);
   }
   return '';
 }
 
-List<String> checkDigitsEANCalculateDigits(String number){
+List<String> CalculateEANDigits(String number){
   if (number.length == 8 || number.length == 13 || number.length == 14 || number.length == 18 && int.tryParse(number[number.length - 1]) != null) {
-    List<String> result = new List<String>();
-    int maxDigits = 0;
-    int len = 0;
-    String maxNumber = '';
-    int index = 0;
-    String checkNumber = '';
-    for (int i = 0; i < number.length; i++)
-      if (int.tryParse(number[i]) == null) {
-        maxNumber = maxNumber + '9';
-      }
-
-    len = maxNumber.length;
-    maxDigits = int.parse(maxNumber);
-    for (int i = 0; i < maxDigits; i++) {
-      maxNumber = i.toString();
-      maxNumber = maxNumber.padLeft(len, '0');
-      index = 0;
-      checkNumber = '';
-      for (int i = 0; i < number.length; i++) {
-        if (int.tryParse(number[i]) == null) {
-          checkNumber = checkNumber + maxNumber[index];
-          index++;
-        } else {
-          checkNumber = checkNumber + number[i];
-        }
-      }
-      if (checkEAN(checkNumber))
-        result.add(checkNumber);
-    }
-    return result;
+    return CalculateDigits(number, checkEAN);
   } else
     return [''];
 }

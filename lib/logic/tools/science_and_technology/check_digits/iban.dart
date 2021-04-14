@@ -63,53 +63,34 @@ final Map IBAN_LENGTH = {
   'CY' : 28,
 };
 
-CheckDigitOutput checkDigitsIBANCheckNumber(String number){
+CheckDigitOutput CheckIBANNumber(String number){
   number = number.toUpperCase();
   if (number == null || number == '' || number.length < 2)
     return CheckDigitOutput(false, '', ['']);
   if (number.length == IBAN_LENGTH[number[0] + number[1]]) {
-    if (_checkIBAN(number))
+    if (checkNumber(number, checkIBAN))
       return CheckDigitOutput(true, '', ['']);
     else {
-      // Calculate new Check Digit
-      String checkDigit = '';
-      checkDigit = checkDigitsIBANCalculateNumber(number);
-
-      // test length-1 digits to fix the error
-      List<String> result = new List<String>();
-      String test = '';
-      String testLeft = '';
-      String testRight = '';
-      for (int index = 4; index < IBAN_LENGTH[number.substring(0,2)]; index ++) {
-        testLeft = number.substring(0, index - 1);
-        testRight = number.substring(index);
-
-        for (int testDigit = 0; testDigit <= 9; testDigit++) {
-          test = testLeft + testDigit.toString() + testRight;
-          if (_checkIBAN(test))
-            result.add(test);
-        } // for testDigit
-      } // for index
-      return CheckDigitOutput(false, checkDigit, result);
+      return CheckDigitOutput(false, CalculateNumber(number, CalculateIBANNumber), CalculateGlitch(number, checkIBAN));
     }
   }
   return CheckDigitOutput(false, '', ['']);
 }
 
-String checkDigitsIBANCalculateNumber(String number){
-  return number.substring(0,2) + _calculateIBANCheckDigit(number) + number.substring(4);
+String CalculateIBANNumber(String number){
+  return number.substring(0,2) + calculateIBANCheckDigit(number) + number.substring(4);
 }
 
-List<String> checkDigitsIBANCalculateDigits(String number){
+List<String> CalculateIBANDigits(String number){
 
   return [''];
 }
 
-bool _checkIBAN(String number) {
-  return (number.substring(2,4) == _calculateIBANCheckDigit(number));
+bool checkIBAN(String number) {
+  return (number.substring(2,4) == calculateIBANCheckDigit(number));
 }
 
-String _calculateIBANCheckDigit(String number) {
+String calculateIBANCheckDigit(String number) {
   number = number.substring(4) + IBAN_COUNTRYCODE[number[0]] + IBAN_COUNTRYCODE[number[1]] + '00';
   BigInt checkDigit = BigInt.from(98) - BigInt.parse(number) % BigInt.from(97);
   if (checkDigit < BigInt.from(10))

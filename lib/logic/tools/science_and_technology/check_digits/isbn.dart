@@ -1,87 +1,37 @@
 import 'package:gc_wizard/logic/tools/science_and_technology/check_digits/base/check_digits.dart';
-
 import 'ean.dart';
 
 
-CheckDigitOutput checkDigitsISBNCheckNumber(String number){
+CheckDigitOutput CheckISBNNumber(String number){
   number = number.replaceAll('#', '');
   number = number.toUpperCase();
   if (number.length == 10 || (number.length == 13 && number[9] != 'X')) {
-    if (checkISBN(number))
+    if (checkNumber(number, checkISBN))
       return CheckDigitOutput(true, '', ['']);
     else {
-      int length = number.length;
-
-      // Calculate new Check Digit
-      String checkDigit = '';
-      checkDigit = checkDigitsISBNCalculateNumber(number.substring(0, number.length - 1));
-
-      // test length-1 digits to fix the error
-      List<String> result = new List<String>();
-      String test = '';
-      String testLeft = '';
-      String testRight = '';
-      for (int index = 1; index < length; index ++) {
-        testLeft = number.substring(0, index - 1);
-        testRight = number.substring(index);
-        for (int testDigit = 0; testDigit <= 9; testDigit++) {
-          test = testLeft + testDigit.toString() + testRight;
-          if (checkISBN(test))
-            result.add(test);
-        } // for testDigit
-      } // for index
-      return CheckDigitOutput(false, checkDigit, result);
+      return CheckDigitOutput(false, CalculateNumber(number.substring(0, number.length - 1), CalculateISBNNumber), CalculateGlitch(number, checkISBN));
     }
   }
   return CheckDigitOutput(false, '', ['']);
 }
 
-String checkDigitsISBNCalculateNumber(String number){
-  if (number.length == 9 || number.length == 12 ) {
-    return number + calculateEANCheckDigit(number);
-  }
-  return '';
+String CalculateISBNNumber(String number){
+  if (number.length == 9)
+    return number + calculateCheckDigit(number, calculateISBNCheckDigit);
+  else
+    return number + calculateCheckDigit(number, calculateEANCheckDigit);
 }
 
-List<String> checkDigitsISBNCalculateDigits(String number){
+List<String> CalculateISBNDigits(String number){
   if (number.length == 10 || number.length == 13 && (int.tryParse(number[number.length - 1]) != null || number[number.length - 1] == 'X')) {
-    List<String> result = new List<String>();
-    int maxDigits = 0;
-    int len = 0;
-    String maxNumber = '';
-    int index = 0;
-    String checkNumber = '';
-    for (int i = 0; i < number.length; i++)
-      if (int.tryParse(number[i]) == null) {
-        maxNumber = maxNumber + '9';
-      }
-
-    len = maxNumber.length;
-    maxDigits = int.parse(maxNumber);
-    for (int i = 0; i < maxDigits; i++) {
-      maxNumber = i.toString();
-      maxNumber = maxNumber.padLeft(len, '0');
-      index = 0;
-      checkNumber = '';
-      for (int i = 0; i < number.length; i++) {
-        if (int.tryParse(number[i]) == null) {
-          checkNumber = checkNumber + maxNumber[index];
-          index++;
-        } else {
-          checkNumber = checkNumber + number[i];
-        }
-      }
-      if (checkISBN(checkNumber))
-        result.add(checkNumber);
-    }
-    return result;
+    return CalculateDigits(number, checkISBN);
   } else
     return [''];
 }
 
 
 bool checkISBN(String number) {
-  return (number[number.length - 1] == calculateEANCheckDigit(number.substring(0, number.length - 1)));
+  return (number[number.length - 1] == calculateCheckDigit(number.substring(0, number.length - 1), calculateISBNCheckDigit));
 }
 
 String  calculateISBNCheckDigit(String number) {
@@ -100,6 +50,6 @@ String  calculateISBNCheckDigit(String number) {
     sum = sum % 10;
     sum = 10 - sum;
   } else {
-    return calculateISBNCheckDigit(number);
+    return calculateCheckDigit(number, calculateEANCheckDigit);
   }
 }

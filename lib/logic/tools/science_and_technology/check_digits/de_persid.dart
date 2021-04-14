@@ -1,17 +1,17 @@
 import 'package:gc_wizard/logic/tools/science_and_technology/check_digits/base/check_digits.dart';
 
 
-CheckDigitOutput checkDigitsDEPersIDCheckNumber(String number){
+CheckDigitOutput CheckDEPersIDNumber(String number){
 
       return CheckDigitOutput(false, '', ['']);
   }
 
-String checkDigitsDEPersIDCalculateNumber(String number){
+String CalculateDEPersIDNumber(String number){
 
   return '';
 }
 
-List<String> checkDigitsDEPersIDCalculateDigits(String number){
+List<String> CalculateDEPersIDDigits(String number){
 
   return [''];
 }

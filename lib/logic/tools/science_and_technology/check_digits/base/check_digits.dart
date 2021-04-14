@@ -57,19 +57,19 @@ class CheckDigitOutput{
 CheckDigitOutput checkDigitsCheckNumber(CheckDigitsMode mode, String number){
   switch(mode) {
     case CheckDigitsMode.EAN:
-      return checkDigitsEANCheckNumber(number);
+      return CheckEANNumber(number);
     case CheckDigitsMode.DEPERSID:
-      return checkDigitsDEPersIDCheckNumber(number);
+      return CheckDEPersIDNumber(number);
     case CheckDigitsMode.DETAXID:
-      return checkDigitsDETaxIDCheckNumber(number);
+      return CheckDETaxIDNumber(number);
     case CheckDigitsMode.EURO:
-      return checkDigitsEUROCheckNumber(number);
+      return CheckEURONumber(number);
     case CheckDigitsMode.IBAN:
-      return checkDigitsIBANCheckNumber(number);
+      return CheckIBANNumber(number);
     case CheckDigitsMode.IMEI:
-      return checkDigitsIMEICheckNumber(number);
+      return CheckIMEINumber(number);
     case CheckDigitsMode.ISBN:
-      return checkDigitsISBNCheckNumber(number);
+      return CheckISBNNumber(number);
     default:
       return CheckDigitOutput(false, '', ['']);
   }
@@ -78,19 +78,19 @@ CheckDigitOutput checkDigitsCheckNumber(CheckDigitsMode mode, String number){
 String checkDigitsCalculateNumber(CheckDigitsMode mode, String number){
   switch(mode) {
     case CheckDigitsMode.EAN:
-      return checkDigitsEANCalculateNumber(number);
+      return CalculateNumber(number, CalculateEANNumber);
     case CheckDigitsMode.DEPERSID:
-      return checkDigitsDEPersIDCalculateNumber(number);
+      return CalculateNumber(number, CalculateDEPersIDNumber);
     case CheckDigitsMode.DETAXID:
-      return checkDigitsDETaxIDCalculateNumber(number);
+      return CalculateNumber(number, CalculateDETaxIDNumber);
     case CheckDigitsMode.EURO:
-      return checkDigitsEUROCalculateNumber(number);
+      return CalculateNumber(number, CalculateEURONumber);
     case CheckDigitsMode.IBAN:
-      return checkDigitsIBANCalculateNumber(number);
+      return CalculateNumber(number, CalculateIBANNumber);
     case CheckDigitsMode.IMEI:
-      return checkDigitsIMEICalculateNumber(number);
+      return CalculateNumber(number, CalculateIMEINumber);
     case CheckDigitsMode.ISBN:
-      return checkDigitsISBNCalculateNumber(number);
+      return CalculateNumber(number, CalculateISBNNumber);
     default:
       return '';
   }
@@ -99,20 +99,82 @@ String checkDigitsCalculateNumber(CheckDigitsMode mode, String number){
 List<String> checkDigitsCalculateDigits(CheckDigitsMode mode, String number){
   switch(mode) {
     case CheckDigitsMode.EAN:
-      return checkDigitsEANCalculateDigits(number);
+      return CalculateEANDigits(number);
     case CheckDigitsMode.DEPERSID:
-      return checkDigitsDEPersIDCalculateDigits(number);
+      return CalculateDEPersIDDigits(number);
     case CheckDigitsMode.DETAXID:
-      return checkDigitsDETaxIDCalculateDigits(number);
+      return CalculateDETaxIDDigits(number);
     case CheckDigitsMode.EURO:
-      return checkDigitsIBANCalculateDigits(number);
+      return CalculateIBANDigits(number);
     case CheckDigitsMode.IBAN:
-      return checkDigitsIBANCalculateDigits(number);
+      return CalculateIBANDigits(number);
     case CheckDigitsMode.IMEI:
-      return checkDigitsIMEICalculateDigits(number);
+      return CalculateIMEIDigits(number);
     case CheckDigitsMode.ISBN:
-      return checkDigitsISBNCalculateDigits(number);
+      return CalculateISBNDigits(number);
     default:
       return [''];
   }
+}
+
+bool checkNumber(String number, Function f){
+  return f(number);
+}
+
+String  calculateCheckDigit(String number, Function f) {
+  return f(number);
+}
+
+String CalculateNumber(String number, Function f){
+  return f(number);
+}
+
+List<String> CalculateGlitch(String number, Function f) {
+  List<String> result = new List<String>();
+  String test = '';
+  String testLeft = '';
+  String testRight = '';
+  for (int index = 1; index < number.length; index ++) {
+    testLeft = number.substring(0, index - 1);
+    testRight = number.substring(index);
+    for (int testDigit = 0; testDigit <= 9; testDigit++) {
+      test = testLeft + testDigit.toString() + testRight;
+      if (checkNumber(test, checkEURO))
+        result.add(test);
+    } // for testDigit
+  } // for index
+  return result;
+}
+
+List<String> CalculateDigits(String number, Function f){
+  List<String> result = new List<String>();
+  int maxDigits = 0;
+  int len = 0;
+  String maxNumber = '';
+  int index = 0;
+  String numberToCheck = '';
+  for (int i = 0; i < number.length; i++)
+    if (int.tryParse(number[i]) == null) {
+      maxNumber = maxNumber + '9';
+    }
+
+  len = maxNumber.length;
+  maxDigits = int.parse(maxNumber);
+  for (int i = 0; i < maxDigits; i++) {
+    maxNumber = i.toString();
+    maxNumber = maxNumber.padLeft(len, '0');
+    index = 0;
+    numberToCheck = '';
+    for (int i = 0; i < number.length; i++) {
+      if (int.tryParse(number[i]) == null) {
+        numberToCheck = numberToCheck + maxNumber[index];
+        index++;
+      } else {
+        numberToCheck = numberToCheck + number[i];
+      }
+    }
+    if (checkNumber(numberToCheck, f))
+      result.add(numberToCheck);
+  }
+  return result;
 }
