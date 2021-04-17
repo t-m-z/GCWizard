@@ -46,12 +46,7 @@ class Container {
   String serve() {
     String result = "";
     for (int i = _contents.length; i > 0; i--) {
-      if (_contents[i - 1].getDataType() == DataType.DOUBLE) {
-        result = result + _contents[i - 1].getValue().toString() + '';
-      } else {
-        // return charCodes
-        result = result + String.fromCharCode(_contents[i - 1].getValue().toInt());
-      }
+      result = result + _contents[i - 1].getValue(_contents[i - 1].getDataType()).toString() + '';
     }
     return result;
   }
@@ -59,7 +54,7 @@ class Container {
   List<String> getContent() {
     List<String> out = new List<String>();
     for (int i = _contents.length - 1; i >= 0; i--) {
-      out.add(_contents[i].getValue().toString());
+      out.add(_contents[i].getValue(_contents[i].getDataType()).toString());
     }
     return out;
   }

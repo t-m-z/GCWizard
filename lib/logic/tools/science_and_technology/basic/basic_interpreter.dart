@@ -21,12 +21,12 @@ List<String> interpretBasic(String program, input) {
   return decodeBasic(program, input);
 }
 
-List<String> decodeBasic(String program, additionalIngredients) {
+List<String> decodeBasic(String program, input) {
   Basic interpreter = Basic(program);
   if (interpreter.valid) {
-    interpreter.interpret(additionalIngredients);
+    interpreter.interpret(input);
     if (interpreter.valid)
-      return interpreter.meal;
+      return interpreter.output;
     else // runtime error
       return interpreter.error;
   } else {
@@ -40,10 +40,10 @@ class Basic {
   Program mainprogram;
   List<String> error;
   bool valid;
-  List<String> meal;
+  List<String> output;
 
   Basic(String program) {
-    this.meal = new List<String>();
+    this.output = new List<String>();
     valid = true;
     error = new List<String>();
     programs = new Map<String, Program>();
@@ -71,7 +71,9 @@ print('for each: analyse '+element);
           return '';
         }
         progress = 3;
+        print('progress = 3');
         r.setVariables(line);
+        print('variables set done');
         variablesFound = true;
         if (r.error) {
           this.error.addAll(r.errorList);
@@ -265,13 +267,13 @@ print('for each: analyse '+element);
     return output;
   }
 
-  void interpret(additionalIngredients) {
+  void interpret(input) {
     Computer k = new Computer(this.programs, this.mainprogram, null, null);
     if (k.valid) {
-      k.run(additionalIngredients, 1);
+      k.run(input, 1);
     }
     this.valid = k.valid;
-    this.meal = k.meal;
+    this.output = k.output;
     this.error = k.error;
   }
 }

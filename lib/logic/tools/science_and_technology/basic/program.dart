@@ -21,6 +21,7 @@ class Program {
   }
 
   void setVariables(String Input) {
+    print('inside setVariables');
     var f = new NumberFormat('###');
     this.variables = Map<String, Variable>();
     var i = 0;
@@ -28,7 +29,9 @@ class Program {
     variablesInput.forEach((variableLine) {
       //Clearing the 'Ingredients.' header
       if (i > 0) {
+        print('set '+variableLine);
         Variable ing = new Variable(variableLine);
+        print('res '+ing.toString());
         if (ing.getName() == 'INVALID') {
           error = true;
           this.errorList.add('basic_interpreter_error_syntax');
@@ -51,12 +54,10 @@ class Program {
   }
 
   void setCommands(String command) {
-    print('inside r.setcommands');
     var f = new NumberFormat('###');
     this.commands = List<Command>();
     List<String> commandList =
         command.replaceAll("\n", " ").replaceAll(". ", ".").split('.');
-    print(commandList);
     for (int i = 1; i < commandList.length - 1; i++) {
       var m = new Command(commandList[i], i);
       if (m.type == Type.INVALID) {
@@ -92,13 +93,13 @@ class Program {
     return title;
   }
 
-  double getVariableValue(String s) {
-    return variables[s].getValue();
-  }
+// double getVariableValue(String s) {
+//    return variables[s].getValue();
+//  }
 
-  void setVariableValue(String s, double n) {
-    variables[s].setValue(n);
-  }
+//  void setVariableValue(String s, double n) {
+//    variables[s].setValue(n);
+//  }
 
   Command getCommand(int i) {
     return commands[i];

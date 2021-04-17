@@ -19,12 +19,26 @@ enum Type {
   VerbUntil,
   BREAK,
   GOSUB,
-  Refrigerate,
-  Remember,
+  HALT,
+  PRINT,
   INVALID,
+  MATHPLUS,
+  MATHMINUS,
+  MATHMULT,
+  MATHDIV,
+  MATHINTDIV,
+  MATHMOD,
+  MATHSIN,
+  MATHCOS,
+  MATHTAN,
+  MATHSQRT,
+  MATHLN,
+  MATHLOG,
+  MATHPOW,
 }
 
-final List<RegExp> matchersENG = [
+final List<RegExp> matchers = [
+  // 0 -9
   RegExp(r'^input ([a-z0-9]+)$'),
   RegExp(r'^(push|pop) ([a-z0-9]+)(( to| from)?( (\d+)(nd|rd|th|st))? stack)?$'),
   RegExp(r'^(add|subtract|mult|divide)( the)? ([a-z0-9 ]+?)( (to|into|from)( the)?( (\d+)(nd|rd|th|st))? stack)?$'),
@@ -35,15 +49,17 @@ final List<RegExp> matchersENG = [
   RegExp(r'^mix( ((\d+)(nd|rd|th|st) )?stack)?( well)?$'),
   RegExp(r'^clear( (\d+)(nd|rd|th|st))? stack( well)?$'),
   RegExp(r'^write( (\d+)(nd|rd|th|st))? stack to( (\d+)(nd|rd|th|st))? output$'),
+  // 10 - 14
   RegExp(r'^break$'),
   RegExp(r'^halt( (\d+))?$'),
   RegExp(r'^gosub ([a-z0-9]+)$'),
-  RegExp(r'^suggestion: (.*)$'),
   RegExp(r'^loop( ([a-z0-9]+))? until looped$'),
-  RegExp(r'^loop ([a-z0-9]+)$')
+  RegExp(r'^loop ([a-z0-9]+)$'),
+  RegExp(r'^print ([a-z0-9]+)$'),
+  // 16
+  RegExp(r'^([a-z0-9]+)([ ]*)=([ ]*)([a-z0-9]+)([ ]*)(\+|-|\*|\/|mod|div)([ ]*)([a-z0-9]+)$'),
+  RegExp(r'^([a-z0-9]+)([ ]*)=([ ]*)(sin|cos|tan|sqrt|ln|log)([ ]*)([a-z0-9]+)$'),
+  RegExp(r'^([a-z0-9]+)([ ]*)=([ ]*)(pow)([ ]*)([a-z0-9]+)([ ]*)([a-z0-9]+)$'),
 ];
 
-final RegExp DataTypeDouble = RegExp(r'^double$');
-final RegExp DataTypeInt = RegExp(r'^int$');
-final RegExp DataTypeBool = RegExp(r'^bool');
-final RegExp DataTypeChar = RegExp(r'^char$');
+final RegExp matchesVariable = RegExp(r'^(double|int|char|bool) ([0-9a-z]*) ([0-9a-z\.]*)$');

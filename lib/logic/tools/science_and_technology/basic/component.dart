@@ -2,27 +2,27 @@ import 'package:gc_wizard/logic/tools/science_and_technology/basic/variables.dar
 
 class Component {
   DataType _dataType;
-  double _value;
+  Map<DataType, dynamic> _value = new Map();
   String _name;
 
-  Component(double n, DataType s, String name) {
+  Component(Map<DataType, dynamic> n, DataType s, String name) {
     _value = n;
     _dataType = s;
     _name = name;
   }
 
   Component.Contructor1(Variable variable) {
-    _value = variable.getValue();
+    _value = variable.getData();
     _dataType = variable.getDataType();
     _name = variable.getName();
   }
 
-  double getValue() {
-    return _value;
+  getValue(DataType type) {
+    return _value[type];
   }
 
-  void setValue(double n) {
-    _value = n;
+  void setValue(DataType type, var n) {
+    _value[type] = n;
   }
 
   DataType getDataType() {

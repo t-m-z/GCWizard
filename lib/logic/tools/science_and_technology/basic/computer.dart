@@ -14,17 +14,18 @@ class Computer {
   bool valid;
   bool exception;
   List<String> error;
-  List<String> meal;
+  List<String> output;
 
   Computer(Map<String, Program> programs, Program mainprogram, List<Container> mbowls, List<Container> bdishes) {
     this.valid = true;
     this.exception = false;
-    this.meal = new List<String>();
+    this.output = new List<String>();
     this.error = new List<String>();
     this.programs = programs;
     //start with at least 1 mixing bowl.
     int maxbowl = 0, maxdish = -1;
     this.program = mainprogram;
+
     if (this.program.getCommands() != null) {
       this.program.getCommands().forEach((m) {
         if (m.output != null && m.output > maxdish) maxdish = m.output;
@@ -57,9 +58,9 @@ class Computer {
     }
   }
 
-  Container run(String additionalVariables, int depth) {
-    int ingredientIndex = 0;
-    List<String> input = additionalVariables.split(' ');
+  Container run(String input, int depth) {
+    int inputIndex = 0;
+    List<String> inputData = input.split(' ');
 
     Map<String, Variable> variables = program.getVariables();
     List<Command> commands = program.getCommands();
@@ -71,6 +72,7 @@ class Computer {
     methodloop:
     while (i < commands.length && !deepfrozen && !exceptionArose) {
       Command m = commands[i];
+      print('run '+i.toString()+' '+m.type.toString());
       switch (m.type) {
         case Type.INVALID:
           valid = false;
@@ -83,6 +85,7 @@ class Computer {
           return null;
           break;
         case Type.INPUT:
+        case Type.PRINT:
         case Type.PUSH:
         case Type.POP:
         case Type.ADD:
@@ -104,12 +107,119 @@ class Computer {
             ]);
             return null;
           }
+          break;
+        case Type.MATHPLUS:
+        case Type.MATHMINUS:
+        case Type.MATHMULT:
+        case Type.MATHDIV:
+        case Type.MATHINTDIV:
+        case Type.MATHMOD:
+        case Type.MATHPOW:
+        if (variables[m.variable] == null || variables[m.variableOp1] == null || variables[m.variableOp2] == null) {
+          valid = false;
+          error.addAll([
+            'basic_interpreter_error_runtime',
+            'basic_interpreter_error_runtime_method_step',
+            m.n.toString() + ' : ' + m.type.toString(),
+            'basic_interpreter_error_runtime_ingredient_not_found',
+            m.variable,
+            ''
+          ]);
+          return null;
+        }
+        break;
+        case Type.MATHSIN:
+        case Type.MATHCOS:
+        case Type.MATHTAN:
+        case Type.MATHSQRT:
+        case Type.MATHLN:
+        case Type.MATHLOG:
+          if (variables[m.variable] == null || variables[m.variableOp1] == null) {
+            valid = false;
+            error.addAll([
+              'basic_interpreter_error_runtime',
+              'basic_interpreter_error_runtime_method_step',
+              m.n.toString() + ' : ' + m.type.toString(),
+              'basic_interpreter_error_runtime_ingredient_not_found',
+              m.variable,
+              ''
+            ]);
+            return null;
+          }
+          break;
       }
       switch (m.type) {
+        case Type.MATHPLUS:
+          variables[m.variable].setValue(variables[m.variable].getDataType(), variables[m.variableOp1].getValue(variables[m.variableOp1].getDataType()) + variables[m.variableOp2].getValue(variables[m.variableOp2].getDataType()));
+          break;
+
+        case Type.MATHMINUS:
+          variables[m.variable].setValue(variables[m.variable].getDataType(), variables[m.variableOp1].getValue(variables[m.variableOp1].getDataType()) - variables[m.variableOp2].getValue(variables[m.variableOp2].getDataType()));
+          break;
+
+        case Type.MATHMULT:
+          variables[m.variable].setValue(variables[m.variable].getDataType(), variables[m.variableOp1].getValue(variables[m.variableOp1].getDataType()) * variables[m.variableOp2].getValue(variables[m.variableOp2].getDataType()));
+          break;
+
+        case Type.MATHDIV:
+          variables[m.variable].setValue(variables[m.variable].getDataType(), variables[m.variableOp1].getValue(variables[m.variableOp1].getDataType()) / variables[m.variableOp2].getValue(variables[m.variableOp2].getDataType()));
+          break;
+
+        case Type.MATHINTDIV:
+          variables[m.variable].setValue(variables[m.variable].getDataType(), variables[m.variableOp1].getValue(variables[m.variableOp1].getDataType()) ~/ variables[m.variableOp2].getValue(variables[m.variableOp2].getDataType()));
+          break;
+
+        case Type.MATHMOD:
+          variables[m.variable].setValue(variables[m.variable].getDataType(), variables[m.variableOp1].getValue(variables[m.variableOp1].getDataType()) % variables[m.variableOp2].getValue(variables[m.variableOp2].getDataType()));
+          break;
+
+        case Type.MATHPOW:
+          variables[m.variable].setValue(variables[m.variable].getDataType(), pow(variables[m.variableOp1].getValue(variables[m.variableOp1].getDataType()), variables[m.variableOp2].getValue(variables[m.variableOp2].getDataType())));
+          break;
+
+        case Type.MATHSIN:
+          variables[m.variable].setValue(variables[m.variable].getDataType(), sin(180 / pi * variables[m.variableOp1].getValue(variables[m.variableOp1].getDataType())));
+          break;
+
+        case Type.MATHCOS:
+          variables[m.variable].setValue(variables[m.variable].getDataType(), cos(180 / pi * variables[m.variableOp1].getValue(variables[m.variableOp1].getDataType())));
+          break;
+
+        case Type.MATHTAN:
+          variables[m.variable].setValue(variables[m.variable].getDataType(), tan(180 / pi * variables[m.variableOp1].getValue(variables[m.variableOp1].getDataType())));
+          break;
+
+        case Type.MATHSQRT:
+          variables[m.variable].setValue(variables[m.variable].getDataType(), sqrt(variables[m.variableOp1].getValue(variables[m.variableOp1].getDataType())));
+          break;
+
+        case Type.MATHLOG:
+          variables[m.variable].setValue(variables[m.variable].getDataType(), log(variables[m.variableOp1].getValue(variables[m.variableOp1].getDataType())));
+          break;
+
+        case Type.MATHLN:
+          variables[m.variable].setValue(variables[m.variable].getDataType(), ln10 * log(variables[m.variableOp1].getValue(variables[m.variableOp1].getDataType())));
+          break;
+
+        case Type.PRINT:
+          print('print '+variables[m.variable].getValue(variables[m.variable].getDataType()).toString());
+          output.add(variables[m.variable].getValue(variables[m.variable].getDataType()).toString());
+          break;
+
         case Type.INPUT:
-          if ((input.join('') != '') && (ingredientIndex <= input.length - 1)) {
-            variables[m.variable].setValue(double.parse(input[ingredientIndex]));
-            ingredientIndex++;
+          if (inputIndex < inputData.length) {
+            switch (variables[m.variable].getDataType()){
+              case DataType.DOUBLE:
+                variables[m.variable].setValue(DataType.DOUBLE, double.parse(inputData[inputIndex]));
+                break;
+              case DataType.INT:
+                variables[m.variable].setValue(DataType.INT, int.parse(inputData[inputIndex]));
+                break;
+              case DataType.STRING:
+                variables[m.variable].setValue(DataType.STRING, inputData[inputIndex]);
+                break;
+            }
+            inputIndex++;
           } else {
             valid = false;
             error.addAll(
@@ -135,7 +245,7 @@ class Computer {
             return null;
           }
           c = stacks[m.stack].pop();
-          variables[m.variable].setValue(c.getValue());
+          variables[m.variable].setValue(variables[m.variable].getDataType(), c.getValue(variables[m.variable].getDataType()));
           variables[m.variable].setDataType(c.getDataType());
           break;
 
@@ -152,7 +262,7 @@ class Computer {
             return null;
           }
           c = stacks[m.stack].peek();
-          c.setValue(c.getValue() + variables[m.variable].getValue());
+          c.setValue(variables[m.variable].getDataType(), c.getValue(variables[m.variable].getDataType()) + variables[m.variable].getValue(variables[m.variable].getDataType()));
           break;
 
         case Type.SUB: // ingredient.amount from mixingbowl
@@ -168,7 +278,7 @@ class Computer {
             return null;
           }
           c = stacks[m.stack].peek(); // returns top of m.mixingbowl
-          c.setValue(c.getValue() - variables[m.variable].getValue());
+          c.setValue(variables[m.variable].getDataType(), c.getValue(variables[m.variable].getDataType()) - variables[m.variable].getValue(variables[m.variable].getDataType()));
           break;
 
         case Type.MULT:
@@ -184,7 +294,7 @@ class Computer {
             return null;
           }
           c = stacks[m.stack].peek();
-          c.setValue(c.getValue() * variables[m.variable].getValue());
+          c.setValue(variables[m.variable].getDataType(), c.getValue(variables[m.variable].getDataType()) * variables[m.variable].getValue(variables[m.variable].getDataType()));
           break;
 
         case Type.DIV:
@@ -199,15 +309,7 @@ class Computer {
             return null;
           }
           c = stacks[m.stack].peek();
-          c.setValue((c.getValue() / variables[m.variable].getValue()));
-          break;
-
-        case Type.AddDry:
-          double sum = 0;
-          variables.forEach((key, value) {
-            if (value.getDataType() == DataType.DOUBLE) sum += value.getValue();
-          });
-          stacks[m.stack].push(new Component(sum, DataType.DOUBLE, ''));
+          c.setValue(variables[m.variable].getDataType(), (c.getValue(variables[m.variable].getDataType()) / variables[m.variable].getValue(variables[m.variable].getDataType())));
           break;
 
         case Type.TOCHAR:
@@ -243,7 +345,7 @@ class Computer {
             ]);
             return null;
           }
-          stacks[m.stack].stir(variables[m.variable].getValue().round());
+          stacks[m.stack].stir(variables[m.variable].getValue(variables[m.variable].getDataType()).round());
           break;
 
         case Type.Mix:
@@ -285,7 +387,7 @@ class Computer {
             ]);
             return null;
           }
-          if (variables[m.variable].getValue() <= 0) {
+          if (variables[m.variable].getValue(variables[m.variable].getDataType()) <= 0) {
             i = end + 1;
             continue methodloop;
           } else
@@ -303,7 +405,7 @@ class Computer {
             return null;
           }
           if (variables[m.variable] != null)
-            variables[m.variable].setValue((variables[m.variable].getValue() - 1) * 1.0);
+            variables[m.variable].setValue(variables[m.variable].getDataType(), (variables[m.variable].getValue(variables[m.variable].getDataType()) - 1) * 1.0);
           i = loops[0].from;
           loops.removeAt(0);
           continue methodloop;
@@ -336,7 +438,7 @@ class Computer {
           }
           try {
             Computer k = new Computer(programs, programs[m.auxprogram.toLowerCase()], stacks, ouputs);
-            Container con = k.run(additionalVariables, depth + 1);
+            Container con = k.run(input, depth + 1);
             if (k.exception) {
               valid = false;
               exception = true;
@@ -370,15 +472,13 @@ class Computer {
           }
           break;
 
-        case Type.Refrigerate:
+        case Type.HALT:
           if (m.time > 0) {
             _serve(m.time);
           }
           deepfrozen = true;
           break;
 
-        case Type.Remember:
-          break;
         default:
           {
             valid = false;
@@ -417,7 +517,7 @@ class Computer {
 
   void _serve(int n) {
     for (int i = 0; i < n && i < ouputs.length; i++) {
-      meal.add(ouputs[i].serve());
+      output.add(ouputs[i].serve());
     }
   }
 }
