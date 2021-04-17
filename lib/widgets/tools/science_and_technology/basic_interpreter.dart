@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/logic/tools/science_and_technology/basic_interpreter.dart';
+import 'package:gc_wizard/logic/tools/science_and_technology/basic/basic_interpreter.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 
@@ -41,7 +41,7 @@ class BasicInterpreterState extends State<BasicInterpreter> {
           children: <Widget>[
             GCWTextField(
               controller: _programmController,
-              hintText: i18n(context, 'basicinterpreter_hint_program'),
+              hintText: i18n(context, 'basic_interpreter_hint_program'),
               onChanged: (text) {
                 setState(() {
                   _currentProgram = text;
@@ -50,7 +50,7 @@ class BasicInterpreterState extends State<BasicInterpreter> {
             ),
             GCWTextField(
               controller: _inputController,
-              hintText: i18n(context, 'basicinterpreter_hint_input'),
+              hintText: i18n(context, 'basic_interpreter_hint_input'),
               onChanged: (text) {
                 setState(() {
                   _currentInput = text;
@@ -64,16 +64,37 @@ class BasicInterpreterState extends State<BasicInterpreter> {
     );
   }
 
+  
+
   Widget _buildOutput(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        GCWDefaultOutput(
-          child: GCWOutputText(
-            text: interpretBasic(_currentProgram, _currentInput)
-          ),
-        ),
-      ],
+    String output = '';
+
+      // interpret chef
+      if (isValid(_currentInput)) {
+        try {
+          output = buildOutputText(
+              interpretBasic(_currentProgram.toLowerCase().replaceAll('  ', ' '), _currentInput));
+        } catch (e) {
+          output = buildOutputText(
+              ['basic_interpreter_error_runtime', 'basic_interpreter_error_runtime_exception', 'basic_interpreter_error_structure_recipe_missing_title']);
+        }
+      } else
+        output = buildOutputText(['basic_interpreter_error_runtime', 'basic_interpreter_error_runtime_invalid_input']);
+    return GCWOutputText(
+      text: output.trim(),
+      isMonotype: true,
     );
+  }
+
+  String buildOutputText(List<String> outputList) {
+    String output = '';
+    outputList.forEach((element) {
+      if (element != null) if (element.startsWith('basic_interpreter')) {
+        output = output + i18n(context, element) + '\n';
+      } else
+        output = output + element + '\n';
+    });
+    return output;
   }
 
 }
