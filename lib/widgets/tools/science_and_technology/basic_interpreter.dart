@@ -70,16 +70,14 @@ class BasicInterpreterState extends State<BasicInterpreter> {
     String output = '';
 
       // interpret chef
-      if (isValid(_currentInput)) {
         try {
           output = buildOutputText(
-              interpretBasic(_currentProgram.toLowerCase().replaceAll('  ', ' '), _currentInput));
+//              interpretBasic(_currentProgram.toLowerCase().replaceAll('  ', ' '), _currentInput));
+          interpretMiniBasic(_currentProgram.toUpperCase().replaceAll('  ', ' '), _currentInput));
         } catch (e) {
           output = buildOutputText(
               ['basic_interpreter_error_runtime', 'basic_interpreter_error_runtime_exception', 'basic_interpreter_error_structure_recipe_missing_title']);
         }
-      } else
-        output = buildOutputText(['basic_interpreter_error_runtime', 'basic_interpreter_error_runtime_invalid_input']);
     return GCWOutputText(
       text: output.trim(),
       isMonotype: true,
