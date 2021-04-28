@@ -9,6 +9,7 @@ import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_output.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_outputformat.dart';
 import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
+import 'package:prefs/prefs.dart';
 
 class FormatConverter extends StatefulWidget {
   @override
@@ -18,7 +19,8 @@ class FormatConverter extends StatefulWidget {
 class FormatConverterState extends State<FormatConverter> {
   var _currentCoords = defaultCoordinate;
   var _currentCoordsFormat = defaultCoordFormat();
-  var _APIKeymissing = false;
+  bool _APIKeymissing = false;
+  bool _W3W = false;
 
   Map<String, String> _currentOutputFormat = {'format': keyCoordsDEC};
   List<String> _currentOutput = [];
@@ -30,6 +32,11 @@ class FormatConverterState extends State<FormatConverter> {
 
   @override
   Widget build(BuildContext context) {
+    String _APIKey = Prefs.getString('coord_default_w3w_apikey');
+    if (_APIKey == null || _APIKey == '')
+      _APIKeymissing = true;
+    else
+      _APIKeymissing = false;
     return Column(
       children: <Widget>[
         GCWCoords(
@@ -47,7 +54,7 @@ class FormatConverterState extends State<FormatConverter> {
           onChanged: (value) {
             setState(() {
               _currentOutputFormat = value;
-              _calculateOutput(context);
+              _W3W = (value['format'] == 'coords_what3words');
             });
           },
         ),
@@ -58,7 +65,7 @@ class FormatConverterState extends State<FormatConverter> {
             });
           },
         ),
-        (_APIKeymissing)
+        (_APIKeymissing && _W3W)
             ? GCWOutput(
                 title: i18n(context, 'coords_formatconverter_w3w_error'),
                 child: i18n(context, 'coords_formatconverter_w3w_no_apikey'),
@@ -75,6 +82,7 @@ class FormatConverterState extends State<FormatConverter> {
 
   _calculateOutput(BuildContext context) {
     _currentOutput = [formatCoordOutput(_currentCoords, _currentOutputFormat, defaultEllipsoid())];
-    _APIKeymissing = (_currentOutput == ['ERROR']);
+    print('widget '+_currentOutput.toString());
+    _APIKeymissing = (_currentOutput.join('') == 'ERROR');
   }
 }
