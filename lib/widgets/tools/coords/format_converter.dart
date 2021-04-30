@@ -82,7 +82,6 @@ class FormatConverterState extends State<FormatConverter> {
 
   _calculateOutput(BuildContext context) {
     _currentOutput = [formatCoordOutput(_currentCoords, _currentOutputFormat, defaultEllipsoid())];
-    print('widget '+_currentOutput.toString());
     _APIKeymissing = (_currentOutput.join('') == 'ERROR');
   }
 }
