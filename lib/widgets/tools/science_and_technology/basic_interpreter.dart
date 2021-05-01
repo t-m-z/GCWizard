@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/basic/basic_interpreter.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
-import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 
 class BasicInterpreter extends StatefulWidget {
   @override
@@ -37,7 +35,6 @@ class BasicInterpreterState extends State<BasicInterpreter> {
     return Column(
       children: <Widget>[
          Column(
-          // interpret Beatnik-programm
           children: <Widget>[
             GCWTextField(
               controller: _programmController,
@@ -68,19 +65,9 @@ class BasicInterpreterState extends State<BasicInterpreter> {
   
 
   Widget _buildOutput(BuildContext context) {
-    String output = '';
-
-      // interpret chef
-        try {
-          output = buildOutputText(
-//              interpretBasic(_currentProgram.toLowerCase().replaceAll('  ', ' '), _currentInput));
-          interpretMiniBasic(_currentProgram.toUpperCase().replaceAll('  ', ' '), _currentInput));
-        } catch (e) {
-          output = buildOutputText(
-              ['basic_interpreter_error_runtime', 'basic_interpreter_error_runtime_exception', 'basic_interpreter_error_structure_recipe_missing_title']);
-        }
     return GCWOutputText(
-      text: output.trim(),
+      text: buildOutputText(
+          interpretMiniBasic(_currentProgram.toUpperCase().replaceAll('  ', ' '), _currentInput)).trim(),
       isMonotype: true,
     );
   }
