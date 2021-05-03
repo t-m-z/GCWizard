@@ -139,7 +139,7 @@ List<String> CalculateGlitch(String number, Function f) {
     testRight = number.substring(index);
     for (int testDigit = 0; testDigit <= 9; testDigit++) {
       test = testLeft + testDigit.toString() + testRight;
-      if (checkNumber(test, checkEURO))
+      if (checkNumber(test, f))
         result.add(test);
     } // for testDigit
   } // for index
@@ -160,21 +160,25 @@ List<String> CalculateDigits(String number, Function f){
 
   len = maxNumber.length;
   maxDigits = int.parse(maxNumber);
-  for (int i = 0; i < maxDigits; i++) {
-    maxNumber = i.toString();
-    maxNumber = maxNumber.padLeft(len, '0');
-    index = 0;
-    numberToCheck = '';
-    for (int i = 0; i < number.length; i++) {
-      if (int.tryParse(number[i]) == null) {
-        numberToCheck = numberToCheck + maxNumber[index];
-        index++;
-      } else {
-        numberToCheck = numberToCheck + number[i];
+  if (f == checkIBAN) {
+
+  } else {
+    for (int i = 0; i < maxDigits; i++) {
+      maxNumber = i.toString();
+      maxNumber = maxNumber.padLeft(len, '0');
+      index = 0;
+      numberToCheck = '';
+      for (int i = 0; i < number.length; i++) {
+        if (int.tryParse(number[i]) == null) {
+          numberToCheck = numberToCheck + maxNumber[index];
+          index++;
+        } else {
+          numberToCheck = numberToCheck + number[i];
+        }
       }
+      if (checkNumber(numberToCheck, f))
+        result.add(numberToCheck);
     }
-    if (checkNumber(numberToCheck, f))
-      result.add(numberToCheck);
   }
   return result;
 }

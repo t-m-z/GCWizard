@@ -12,7 +12,7 @@ CheckDigitOutput CheckEANNumber(String number){
       return CheckDigitOutput(false, CalculateNumber(number.substring(0, number.length - 1), CalculateEANNumber), CalculateGlitch(number, checkEAN));
     }
   }
-  return CheckDigitOutput(false, '', ['']);
+  return CheckDigitOutput(false, 'checkdigits_invalid_length', ['']);
 }
 
 String CalculateEANNumber(String number){
@@ -26,7 +26,7 @@ List<String> CalculateEANDigits(String number){
   if (number.length == 8 || number.length == 13 || number.length == 14 || number.length == 18 && int.tryParse(number[number.length - 1]) != null) {
     return CalculateDigits(number, checkEAN);
   } else
-    return [''];
+    return ['checkdigits_invalid_length'];
 }
 
 bool checkEAN(String number) {

@@ -76,6 +76,11 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
           );
         }
 
+        if (checked.correctDigit.startsWith('check'))
+          return GCWDefaultOutput(
+            child: i18n(context, checked.correctDigit),
+          );
+
         Map output = new Map();
         for (int i = 0; i < checked.correctNumbers.length; i++)
           output[(i + 1).toString() + '.'] = checked.correctNumbers[i];
@@ -96,7 +101,7 @@ class CheckDigitsCheckNumberState extends State<CheckDigitsCheckNumber> {
             title:
                 i18n(context, 'checkdigits_checknumber_correct_assume_number') +
                     '\n' +
-                    i18n(context, 'checkdigits_checknumber_correct_number'),
+                    i18n(context, 'checkdigits_checknumber_correct_check'),
             child: checked.correctDigit,
           ),
           GCWOutput(

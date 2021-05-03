@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/check_digits/base/check_digits.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
@@ -56,6 +57,11 @@ class CheckDigitsCalculateMissingDigitsState extends State<CheckDigitsCalculateM
   }
 
   _buildOutput() {
+
+    if (_numbers.length == 1)
+      return GCWDefaultOutput(
+        child: i18n(context, _numbers.join('')),
+      );
 
     Map output = new Map();
     for (int i = 0; i < _numbers.length; i++)

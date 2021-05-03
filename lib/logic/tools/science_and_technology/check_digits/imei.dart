@@ -9,21 +9,23 @@ CheckDigitOutput CheckIMEINumber(String number){
       return CheckDigitOutput(false, CalculateNumber(number.substring(0, number.length - 1), CalculateIMEINumber), CalculateGlitch(number, checkIMEI));
     }
   }
-  return CheckDigitOutput(false, '', ['']);
+  return CheckDigitOutput(false, 'checkdigits_invalid_length', ['']);
 }
 
 String CalculateIMEINumber(String number){
   if (number.length == 14) {
     return number + calculateIMEICheckDigit(number);
   }
-  return '';
+  return 'checkdigits_invalid_length';
 }
 
 List<String> CalculateIMEIDigits(String number){
-  if (number.length == 14 && int.tryParse(number[number.length - 1]) != null) {
+  print('calc imei missing digits');
+  if (number.length == 15 && int.tryParse(number[number.length - 1]) != null) {
+    print('clac '+number);
     return CalculateDigits(number, checkIMEI);
   } else
-    return [''];
+    return ['checkdigits_invalid_length'];
 }
 
 

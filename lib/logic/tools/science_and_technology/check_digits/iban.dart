@@ -1,6 +1,9 @@
 import 'package:gc_wizard/logic/tools/science_and_technology/check_digits/base/check_digits.dart';
 
 // http://www.pruefziffernberechnung.de/I/IBAN.shtml
+// GC7DCXZ => calculate checkDigit
+//         => calculate Number
+// GC4TKB5 => calculate checkDigit
 
 
 final Map IBAN_COUNTRYCODE = {
@@ -66,7 +69,7 @@ final Map IBAN_LENGTH = {
 CheckDigitOutput CheckIBANNumber(String number){
   number = number.toUpperCase();
   if (number == null || number == '' || number.length < 2)
-    return CheckDigitOutput(false, '', ['']);
+    return CheckDigitOutput(false, 'checkdigits_invalid_length', ['']);
   if (number.length == IBAN_LENGTH[number[0] + number[1]]) {
     if (checkNumber(number, checkIBAN))
       return CheckDigitOutput(true, '', ['']);
@@ -74,7 +77,7 @@ CheckDigitOutput CheckIBANNumber(String number){
       return CheckDigitOutput(false, CalculateNumber(number, CalculateIBANNumber), CalculateGlitch(number, checkIBAN));
     }
   }
-  return CheckDigitOutput(false, '', ['']);
+  return CheckDigitOutput(false, 'checkdigits_invalid_length', ['']);
 }
 
 String CalculateIBANNumber(String number){
@@ -82,8 +85,10 @@ String CalculateIBANNumber(String number){
 }
 
 List<String> CalculateIBANDigits(String number){
-
-  return [''];
+  if (number.length == IBAN_LENGTH[number[0] + number[1]]) {
+    return CalculateDigits(number, checkIBAN);
+  } else
+    return ['checkdigits_invalid_length'];
 }
 
 bool checkIBAN(String number) {
