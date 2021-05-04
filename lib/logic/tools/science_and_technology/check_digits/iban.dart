@@ -1,6 +1,10 @@
 import 'package:gc_wizard/logic/tools/science_and_technology/check_digits/base/check_digits.dart';
 
 // http://www.pruefziffernberechnung.de/I/IBAN.shtml
+// https://de.wikipedia.org/wiki/Internationale_Bankkontonummer
+// https://en.wikipedia.org/wiki/International_Bank_Account_Number
+// https://web.archive.org/web/20171220203336/http://www.europebanks.info/ibanguide.php#5
+
 // GC7DCXZ => calculate checkDigit
 //         => calculate Number
 // GC4TKB5 => calculate checkDigit
@@ -35,64 +39,33 @@ final Map IBAN_COUNTRYCODE = {
   'Z' : '35',
 };
 
-final Map IBAN_LENGTH = {
-  'AD' : 24,
-  'BE' : 16,
-  'DK' : 18,
-  'DE' : 22,
-  'EE' : 20,
-  'FI' : 18,
-  'FR' : 27,
-  'GI' : 23,
-  'GR' : 27,
-  'IE' : 22,
-  'IS' : 26,
-  'IT' : 27,
-  'LV' : 21,
-  'LT' : 20,
-  'LU' : 20,
-  'NL' : 18,
-  'NO' : 15,
-  'AT' : 20,
-  'PL' : 28,
-  'PT' : 25,
-  'SE' : 24,
-  'CH' : 21,
-  'SK' : 24,
-  'SI' : 19,
-  'ES' : 24,
-  'CZ' : 24,
-  'HU' : 28,
-  'CY' : 28,
-};
 
 CheckDigitOutput CheckIBANNumber(String number){
   number = number.toUpperCase();
-  if (number == null || number == '' || number.length < 2)
+  if (number == null || number == '' || number.length < 5)
     return CheckDigitOutput(false, 'checkdigits_invalid_length', ['']);
-  if (number.length == IBAN_LENGTH[number[0] + number[1]]) {
-    if (checkNumber(number, checkIBAN))
-      return CheckDigitOutput(true, '', ['']);
-    else {
-      return CheckDigitOutput(false, CalculateNumber(number, CalculateIBANNumber), CalculateGlitch(number, checkIBAN));
-    }
+  if (checkNumber(number, checkIBAN))
+    return CheckDigitOutput(true, '', ['']);
+  else {
+    return CheckDigitOutput(false, CalculateNumber(number, CalculateIBANNumber), CalculateGlitch(number, checkIBAN));
   }
-  return CheckDigitOutput(false, 'checkdigits_invalid_length', ['']);
 }
 
 String CalculateIBANNumber(String number){
-  return number.substring(0,2) + calculateIBANCheckDigit(number) + number.substring(4);
+  if (number.length < 5)
+    return ('checkdigits_invalid_length');
+  else
+    return number.substring(0,2) + calculateIBANCheckDigit(number) + number.substring(4);
 }
 
 List<String> CalculateIBANDigits(String number){
-  if (number.length == IBAN_LENGTH[number[0] + number[1]]) {
     return CalculateDigits(number, checkIBAN);
-  } else
-    return ['checkdigits_invalid_length'];
 }
 
 bool checkIBAN(String number) {
-  return (number.substring(2,4) == calculateIBANCheckDigit(number));
+  print('checkiban '+number+' '+number.substring(4)+' '+IBAN_COUNTRYCODE[number[0]]+' '+IBAN_COUNTRYCODE[number[1]]+' '+number[2]+' '+number[3]);
+  number = number.substring(4) + IBAN_COUNTRYCODE[number[0]] + IBAN_COUNTRYCODE[number[1]] + number[2] + number[3];
+  return (BigInt.parse(number) % BigInt.from(97) == BigInt.one);
 }
 
 String calculateIBANCheckDigit(String number) {

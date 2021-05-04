@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/check_digits/base/check_digits.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
@@ -46,23 +47,27 @@ class CheckDigitsCalculateCheckDigitState extends State<CheckDigitsCalculateChec
                   });
                 },
               )
-            : GCWTextField(
-              controller: currentInputController,
-              onChanged: (text) {
-                setState(() {
-                  _currentInputNString = text;
-                });
-              },
-            ),
+            : GCWTextField( // CheckDigitsMode.ISBN, CheckDigitsMode.IBAN, CheckDigitsMode.EURO, CheckDigitsMode.DEPERSID
+                controller: currentInputController,
+                inputFormatters: [INPUTFORMATTERS[widget.mode]],
+                hintText: INPUTFORMATTERS_HINT[widget.mode],
+                onChanged: (text) {
+                  setState(() {
+                    _currentInputNString = text;
+                  });
+                },
+              ),
         _buildOutput()
       ],
     );
   }
 
   _buildOutput() {
-      return GCWDefaultOutput(
-        child: checkDigitsCalculateNumber(widget.mode, _currentInputNString),
+    String output = checkDigitsCalculateNumber(widget.mode, _currentInputNString);
+    if (output.startsWith('check'))
+      output = i18n(context, output);
+    return GCWDefaultOutput(
+        child: output,
       );
     }
-
 }

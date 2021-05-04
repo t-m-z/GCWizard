@@ -23,6 +23,8 @@ String CalculateISBNNumber(String number){
         return 'checkdigits_invalid_format';
       else
         return number + calculateCheckDigit(number, calculateEANCheckDigit);
+    else
+      return 'checkdigits_invalid_length';
 }
 
 List<String> CalculateISBNDigits(String number){

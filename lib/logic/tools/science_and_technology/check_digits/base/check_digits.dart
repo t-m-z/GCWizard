@@ -18,10 +18,10 @@ enum CheckDigitsMode {
   ISBN
 }
 
-final MASKINPUTFORMATTER_EURO = MaskTextInputFormatter(mask: "@########", filter: {"@": RegExp(r'[AB]'), "#": RegExp(r'[0-9]')});
-final MASKINPUTFORMATTER_IBAN = MaskTextInputFormatter(mask: "@@################################", filter: {"@": RegExp(r'[A-Za-z]'), "#": RegExp(r'[0-9]')});
-final MASKINPUTFORMATTER_ISBN = MaskTextInputFormatter(mask: "#########@###", filter: {"@": RegExp(r'[A-Za-z0-9]'), "#": RegExp(r'[0-9]')});
-final MASKINPUTFORMATTER_DEPERSID = MaskTextInputFormatter(mask: "##########@<<#######<#######<<<<<<<#", filter: {"@": RegExp(r'[A-Za-z]'), "#": RegExp(r'[0-9]')});
+final MASKINPUTFORMATTER_EURO = MaskTextInputFormatter(mask: "@########", filter: {"@": RegExp(r'[AB?]'), "#": RegExp(r'[0-9?]')});
+final MASKINPUTFORMATTER_IBAN = MaskTextInputFormatter(mask: "@@################################", filter: {"@": RegExp(r'[A-Za-z?]'), "#": RegExp(r'[0-9?]')});
+final MASKINPUTFORMATTER_ISBN = MaskTextInputFormatter(mask: "#########@###", filter: {"@": RegExp(r'[A-Za-z0-9?]'), "#": RegExp(r'[0-9?]')});
+final MASKINPUTFORMATTER_DEPERSID = MaskTextInputFormatter(mask: "##########@<<#######<#######<<<<<<<#", filter: {"@": RegExp(r'[A-Za-z?]'), "#": RegExp(r'[0-9?]')});
 final MASKINPUTFORMATTER_DETAXID = MaskTextInputFormatter(mask: "###########");
 final MASKINPUTFORMATTER_IMEI = MaskTextInputFormatter(mask: "###############");
 final MASKINPUTFORMATTER_EAN = MaskTextInputFormatter(mask: "##################");
@@ -55,6 +55,7 @@ class CheckDigitOutput{
 }
 
 CheckDigitOutput checkDigitsCheckNumber(CheckDigitsMode mode, String number){
+  number = number.toUpperCase();
   switch(mode) {
     case CheckDigitsMode.EAN:
       return CheckEANNumber(number);
@@ -76,6 +77,7 @@ CheckDigitOutput checkDigitsCheckNumber(CheckDigitsMode mode, String number){
 }
 
 String checkDigitsCalculateNumber(CheckDigitsMode mode, String number){
+  number = number.toUpperCase();
   switch(mode) {
     case CheckDigitsMode.EAN:
       return CalculateNumber(number, CalculateEANNumber);
@@ -97,6 +99,7 @@ String checkDigitsCalculateNumber(CheckDigitsMode mode, String number){
 }
 
 List<String> checkDigitsCalculateDigits(CheckDigitsMode mode, String number){
+  number = number.toUpperCase();
   switch(mode) {
     case CheckDigitsMode.EAN:
       return CalculateEANDigits(number);
@@ -134,7 +137,10 @@ List<String> CalculateGlitch(String number, Function f) {
   String test = '';
   String testLeft = '';
   String testRight = '';
-  for (int index = 1; index < number.length; index ++) {
+  int startIndex = 1;
+  if (f == checkIBAN)
+    startIndex = 4;
+  for (int index = startIndex; index < number.length; index ++) {
     testLeft = number.substring(0, index - 1);
     testRight = number.substring(index);
     for (int testDigit = 0; testDigit <= 9; testDigit++) {
@@ -153,16 +159,24 @@ List<String> CalculateDigits(String number, Function f){
   String maxNumber = '';
   int index = 0;
   String numberToCheck = '';
-  for (int i = 0; i < number.length; i++)
-    if (int.tryParse(number[i]) == null) {
-      maxNumber = maxNumber + '9';
-    }
-
-  len = maxNumber.length;
-  maxDigits = int.parse(maxNumber);
   if (f == checkIBAN) {
+    for (int i = 0 ; i < number.length; i++){
+      if (number[i] == '?')
+        if (i < 2)
+          maxNumber = maxNumber + 'Z';
+        else
+          maxNumber = maxNumber + '9';
+    }
+    len = maxNumber.length;
 
   } else {
+    for (int i = 0; i < number.length; i++)
+      if (int.tryParse(number[i]) == null) {
+        maxNumber = maxNumber + '9';
+      }
+
+    len = maxNumber.length;
+    maxDigits = int.parse(maxNumber);
     for (int i = 0; i < maxDigits; i++) {
       maxNumber = i.toString();
       maxNumber = maxNumber.padLeft(len, '0');

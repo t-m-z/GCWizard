@@ -19,7 +19,8 @@ String CalculateEANNumber(String number){
   if (number.length == 7 || number.length == 12 || number.length == 13 || number.length == 17) {
     return number + calculateCheckDigit(number, calculateEANCheckDigit);
   }
-  return '';
+  else
+    return 'checkdigits_invalid_length';
 }
 
 List<String> CalculateEANDigits(String number){
