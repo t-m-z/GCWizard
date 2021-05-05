@@ -74,6 +74,7 @@ class CheckDigitsCalculateMissingDigitsState extends State<CheckDigitsCalculateM
               output.entries.map((entry) {
                 return [entry.key, entry.value];
               }).toList(),
+              flexValues: [1,4]
             )
         )
     );

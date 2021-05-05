@@ -1,4 +1,3 @@
-import 'package:flutter/services.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/check_digits/ean.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/check_digits/de_persid.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/check_digits/de_taxid.dart';
@@ -156,6 +155,7 @@ List<String> CalculateDigits(String number, Function f){
   List<String> result = new List<String>();
   int maxDigits = 0;
   int len = 0;
+  int letters = 0;
   String maxNumber = '';
   int index = 0;
   String numberToCheck = '';
@@ -167,32 +167,105 @@ List<String> CalculateDigits(String number, Function f){
         else
           maxNumber = maxNumber + '9';
     }
-    len = maxNumber.length;
-
-  } else {
-    for (int i = 0; i < number.length; i++)
-      if (int.tryParse(number[i]) == null) {
-        maxNumber = maxNumber + '9';
-      }
-
+    if (maxNumber.startsWith('ZZ')){
+      letters = 2;
+      maxNumber = maxNumber.substring(2);
+    }
+    else
+    if (maxNumber.startsWith('Z')){
+      letters = 1;
+      maxNumber = maxNumber.substring(1);
+    }
+    else {
+      letters = 0;
+    }
     len = maxNumber.length;
     maxDigits = int.parse(maxNumber);
-    for (int i = 0; i < maxDigits; i++) {
-      maxNumber = i.toString();
-      maxNumber = maxNumber.padLeft(len, '0');
-      index = 0;
-      numberToCheck = '';
-      for (int i = 0; i < number.length; i++) {
-        if (int.tryParse(number[i]) == null) {
-          numberToCheck = numberToCheck + maxNumber[index];
-          index++;
-        } else {
-          numberToCheck = numberToCheck + number[i];
+
+    if (letters == 0) {
+      for (int i = 0; i < maxDigits; i++) {
+        maxNumber = i.toString();
+        maxNumber = maxNumber.padLeft(len, '0');
+        index = 0;
+        numberToCheck = number.substring(0,2);
+        print('check ' + number + ' ' + maxNumber);
+        for (int i = 2; i < number.length; i++) {
+          if (int.tryParse(number[i]) == null) {
+            numberToCheck = numberToCheck + maxNumber[index];
+            index++;
+          } else {
+            numberToCheck = numberToCheck + number[i];
+          }
         }
+        if (checkNumber(numberToCheck, f))
+          result.add(numberToCheck);
       }
-      if (checkNumber(numberToCheck, f))
-        result.add(numberToCheck);
+    }else
+      for (int l1 = 65; l1 < 92; l1++){
+        numberToCheck = String.fromCharCode(l1);
+        if (letters == 2)
+          for (int l2 = 65; l2 < 92; l2++) {
+            numberToCheck = numberToCheck + String.fromCharCode(l2);
+            for (int i = 0; i < maxDigits; i++) {
+              maxNumber = i.toString();
+              maxNumber = maxNumber.padLeft(len, '0');
+              index = 0;
+              numberToCheck = '';
+              for (int i = 0; i < number.length; i++) {
+                if (int.tryParse(number[i]) == null) {
+                  numberToCheck = numberToCheck + maxNumber[index];
+                  index++;
+                } else {
+                  numberToCheck = numberToCheck + number[i];
+                }
+              }
+              if (checkNumber(numberToCheck, f))
+                result.add(numberToCheck);
+            }
+          }
+        else
+          for (int i = 0; i < maxDigits; i++) {
+            maxNumber = i.toString();
+            maxNumber = maxNumber.padLeft(len, '0');
+            index = 0;
+            numberToCheck = '';
+            for (int i = 0; i < number.length; i++) {
+              if (int.tryParse(number[i]) == null) {
+                numberToCheck = numberToCheck + maxNumber[index];
+                index++;
+              } else {
+                numberToCheck = numberToCheck + number[i];
+              }
+            }
+            if (checkNumber(numberToCheck, f))
+              result.add(numberToCheck);
+          }
+      }
+
+    } else {
+      for (int i = 0; i < number.length; i++)
+        if (int.tryParse(number[i]) == null) {
+          maxNumber = maxNumber + '9';
+        }
+
+      len = maxNumber.length;
+      maxDigits = int.parse(maxNumber);
+      for (int i = 0; i < maxDigits; i++) {
+        maxNumber = i.toString();
+        maxNumber = maxNumber.padLeft(len, '0');
+        index = 0;
+        numberToCheck = '';
+        for (int i = 0; i < number.length; i++) {
+          if (int.tryParse(number[i]) == null) {
+            numberToCheck = numberToCheck + maxNumber[index];
+            index++;
+          } else {
+            numberToCheck = numberToCheck + number[i];
+          }
+        }
+        if (checkNumber(numberToCheck, f))
+          result.add(numberToCheck);
+      }
     }
-  }
   return result;
 }
