@@ -349,7 +349,9 @@ const _PHONE_MODEL_KEY_SAMSUNG = 'Samsung'; //tested  GT-E1200I
 const _PHONE_MODEL_KEY_SIEMENS = 'Siemens'; //tested ME45
 const _PHONE_MODEL_KEY_SIEMENS_ME45 = 'Siemens ME45';
 
-final SIEMENS_ME45 = PhoneModel(_PHONE_MODEL_KEY_SIEMENS_ME45, PhoneKeySpace.SPACE_ON_KEY_1);
+final SIEMENS_ME45 = PhoneModel(_PHONE_MODEL_KEY_SIEMENS_ME45, PhoneKeySpace.SPACE_ON_KEY_1, _ModeSwitch('*', [PhoneInputMode.FIRST_CAPITAL, PhoneInputMode.SMALL, PhoneInputMode.NUMBERS],
+    {PhoneInputMode.SMALL: ' ', PhoneInputMode.FIRST_CAPITAL: '.?!'}));
+
 
 final PHONE_MODELS = [SIEMENS_ME45];
 
@@ -360,6 +362,7 @@ final NOKIA = PhoneModel(
         '#',
         [PhoneInputMode.FIRST_CAPITAL, PhoneInputMode.SMALL, PhoneInputMode.CAPITAL, PhoneInputMode.NUMBERS],
         {PhoneInputMode.SMALL: ' ', PhoneInputMode.FIRST_CAPITAL: '.?!'}));
+
 final SAMSUNG = PhoneModel(
     _PHONE_MODEL_KEY_SAMSUNG,
     PhoneKeySpace.SPACE_ON_KEY_0,
@@ -367,6 +370,7 @@ final SAMSUNG = PhoneModel(
         '#',
         [PhoneInputMode.FIRST_CAPITAL, PhoneInputMode.SMALL, PhoneInputMode.CAPITAL, PhoneInputMode.NUMBERS],
         {PhoneInputMode.SMALL: ' ', PhoneInputMode.FIRST_CAPITAL: '.?!'}));
+
 final SIEMENS = PhoneModel(
     _PHONE_MODEL_KEY_SIEMENS,
     PhoneKeySpace.SPACE_ON_KEY_1,
