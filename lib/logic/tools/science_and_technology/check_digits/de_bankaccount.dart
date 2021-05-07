@@ -15,7 +15,7 @@ final Map BANK_ACCOUNT_CHECKDIGITS = {
   '10' : {'mod' : 11, 'weight' : [2,3,4,5,6,7,8,9,10]},
   '11' : {'mod' : 11, 'weight' : [2,3,4,5,6,7,8,9,10]},
   '13' : {'mod' : 10, 'weight' : [2,1,2,1,2,1]},
-  '16' : {'mod' : 10, 'weight' : []},
+  '16' : {'mod' : 11, 'weight' : [2,3,4,5,6,7,2,3,4]},
   '17' : {'mod' : 10, 'weight' : []},
   '18' : {'mod' : 10, 'weight' : []},
   '19' : {'mod' : 10, 'weight' : []},
