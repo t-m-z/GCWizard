@@ -28,7 +28,7 @@ import 'package:gc_wizard/widgets/selector_lists/crosssum_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/cryptography_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/dates_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/dna_selection.dart';
-import 'package:gc_wizard/widgets/selector_lists/ds_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/silverratio_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/e_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/easter_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/esoteric_programminglanguages_selection.dart';
@@ -199,6 +199,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/trithemius.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/vigenere.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/z22.dart';
 import 'package:gc_wizard/widgets/tools/formula_solver/formula_solver_formulagroups.dart';
+import 'package:gc_wizard/widgets/tools/games/catan.dart';
 import 'package:gc_wizard/widgets/tools/games/scrabble.dart';
 import 'package:gc_wizard/widgets/tools/games/sudoku/sudoku_solver.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/heat_index.dart';
@@ -236,7 +237,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/dna/dna_nucleicac
 import 'package:gc_wizard/widgets/tools/science_and_technology/dtmf.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/hexadecimal.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/icecodes.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/ds.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/silver_ratio.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/e.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/phi.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/pi.dart';
@@ -524,6 +525,12 @@ class Registry {
             SEARCHSTRING_EN_CAESAR,
             SEARCHSTRING_FR_CAESAR
           ]),
+      GCWTool(tool: Catan(), i18nPrefix: 'catan', category: ToolCategory.GAMES, missingHelpLocales: [], searchStrings: [
+        SEARCHSTRING_COMMON_CATAN,
+        SEARCHSTRING_DE_CATAN,
+        SEARCHSTRING_EN_CATAN,
+        SEARCHSTRING_FR_CATAN
+      ]),
       GCWTool(
           tool: CCITT1Selection(),
           i18nPrefix: 'ccitt1_selection',
@@ -686,15 +693,15 @@ class Registry {
           missingHelpLocales: [],
           searchStrings: [SEARCHSTRING_COMMON_DNA, SEARCHSTRING_DE_DNA, SEARCHSTRING_EN_DNA, SEARCHSTRING_FR_DNA]),
       GCWTool(
-          tool: DSSelection(),
+          tool: SilverRatioSelection(),
           i18nPrefix: 'silverratio_selection',
           category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
           missingHelpLocales: [],
           searchStrings: [
-            SEARCHSTRING_COMMON_DS,
-            SEARCHSTRING_DE_DS,
-            SEARCHSTRING_EN_DS,
-            SEARCHSTRING_FR_DS,
+            SEARCHSTRING_COMMON_SILVERRATIO,
+            SEARCHSTRING_DE_SILVERRATIO,
+            SEARCHSTRING_EN_SILVERRATIO,
+            SEARCHSTRING_FR_SILVERRATIO,
             SEARCHSTRING_COMMON_IRRATIONALNUMBERS,
             SEARCHSTRING_DE_IRRATIONALNUMBERS,
             SEARCHSTRING_EN_IRRATIONALNUMBERS,
@@ -1570,10 +1577,6 @@ class Registry {
         SEARCHSTRING_DE_BCD,
         SEARCHSTRING_EN_BCD,
         SEARCHSTRING_FR_BCD,
-        SEARCHSTRING_COMMON_BINARY,
-        SEARCHSTRING_DE_BINARY,
-        SEARCHSTRING_EN_BINARY,
-        SEARCHSTRING_FR_BINARY,
         SEARCHSTRING_COMMON_BCDORIGINAL,
         SEARCHSTRING_DE_BCDORIGINAL,
         SEARCHSTRING_EN_BCDORIGINAL,
@@ -1584,10 +1587,6 @@ class Registry {
         SEARCHSTRING_DE_BCD,
         SEARCHSTRING_EN_BCD,
         SEARCHSTRING_FR_BCD,
-        SEARCHSTRING_COMMON_BINARY,
-        SEARCHSTRING_DE_BINARY,
-        SEARCHSTRING_EN_BINARY,
-        SEARCHSTRING_FR_BINARY,
         SEARCHSTRING_COMMON_BCDAIKEN,
         SEARCHSTRING_DE_BCDAIKEN,
         SEARCHSTRING_EN_BCDAIKEN,
@@ -1598,10 +1597,6 @@ class Registry {
         SEARCHSTRING_DE_BCD,
         SEARCHSTRING_EN_BCD,
         SEARCHSTRING_FR_BCD,
-        SEARCHSTRING_COMMON_BINARY,
-        SEARCHSTRING_DE_BINARY,
-        SEARCHSTRING_EN_BINARY,
-        SEARCHSTRING_FR_BINARY,
         SEARCHSTRING_COMMON_BCDGLIXON,
         SEARCHSTRING_DE_BCDGLIXON,
         SEARCHSTRING_EN_BCDGLIXON,
@@ -1612,10 +1607,6 @@ class Registry {
         SEARCHSTRING_DE_BCD,
         SEARCHSTRING_EN_BCD,
         SEARCHSTRING_FR_BCD,
-        SEARCHSTRING_COMMON_BINARY,
-        SEARCHSTRING_DE_BINARY,
-        SEARCHSTRING_EN_BINARY,
-        SEARCHSTRING_FR_BINARY,
         SEARCHSTRING_COMMON_BCDGRAY,
         SEARCHSTRING_DE_BCDGRAY,
         SEARCHSTRING_EN_BCDGRAY,
@@ -1626,10 +1617,6 @@ class Registry {
         SEARCHSTRING_DE_BCD,
         SEARCHSTRING_EN_BCD,
         SEARCHSTRING_FR_BCD,
-        SEARCHSTRING_COMMON_BINARY,
-        SEARCHSTRING_DE_BINARY,
-        SEARCHSTRING_EN_BINARY,
-        SEARCHSTRING_FR_BINARY,
         SEARCHSTRING_COMMON_BCDLIBAWCRAIG,
         SEARCHSTRING_DE_BCDLIBAWCRAIG,
         SEARCHSTRING_EN_BCDLIBAWCRAIG,
@@ -1640,10 +1627,6 @@ class Registry {
         SEARCHSTRING_DE_BCD,
         SEARCHSTRING_EN_BCD,
         SEARCHSTRING_FR_BCD,
-        SEARCHSTRING_COMMON_BINARY,
-        SEARCHSTRING_DE_BINARY,
-        SEARCHSTRING_EN_BINARY,
-        SEARCHSTRING_FR_BINARY,
         SEARCHSTRING_COMMON_BCDOBRIEN,
         SEARCHSTRING_DE_BCDOBRIEN,
         SEARCHSTRING_EN_BCDOBRIEN,
@@ -1654,10 +1637,6 @@ class Registry {
         SEARCHSTRING_DE_BCD,
         SEARCHSTRING_EN_BCD,
         SEARCHSTRING_FR_BCD,
-        SEARCHSTRING_COMMON_BINARY,
-        SEARCHSTRING_DE_BINARY,
-        SEARCHSTRING_EN_BINARY,
-        SEARCHSTRING_FR_BINARY,
         SEARCHSTRING_COMMON_BCDPETHERICK,
         SEARCHSTRING_DE_BCDPETHERICK,
         SEARCHSTRING_EN_BCDPETHERICK,
@@ -1668,10 +1647,6 @@ class Registry {
         SEARCHSTRING_DE_BCD,
         SEARCHSTRING_EN_BCD,
         SEARCHSTRING_FR_BCD,
-        SEARCHSTRING_COMMON_BINARY,
-        SEARCHSTRING_DE_BINARY,
-        SEARCHSTRING_EN_BINARY,
-        SEARCHSTRING_FR_BINARY,
         SEARCHSTRING_COMMON_BCDSTIBITZ,
         SEARCHSTRING_DE_BCDSTIBITZ,
         SEARCHSTRING_EN_BCDSTIBITZ,
@@ -1682,10 +1657,6 @@ class Registry {
         SEARCHSTRING_DE_BCD,
         SEARCHSTRING_EN_BCD,
         SEARCHSTRING_FR_BCD,
-        SEARCHSTRING_COMMON_BINARY,
-        SEARCHSTRING_DE_BINARY,
-        SEARCHSTRING_EN_BINARY,
-        SEARCHSTRING_FR_BINARY,
         SEARCHSTRING_COMMON_BCDTOMPKINS,
         SEARCHSTRING_DE_BCDTOMPKINS,
         SEARCHSTRING_EN_BCDTOMPKINS,
@@ -1696,10 +1667,6 @@ class Registry {
         SEARCHSTRING_DE_BCD,
         SEARCHSTRING_EN_BCD,
         SEARCHSTRING_FR_BCD,
-        SEARCHSTRING_COMMON_BINARY,
-        SEARCHSTRING_DE_BINARY,
-        SEARCHSTRING_EN_BINARY,
-        SEARCHSTRING_FR_BINARY,
         SEARCHSTRING_COMMON_BCDHAMMING,
         SEARCHSTRING_DE_BCDHAMMING,
         SEARCHSTRING_EN_BCDHAMMING,
@@ -1710,10 +1677,6 @@ class Registry {
         SEARCHSTRING_DE_BCD,
         SEARCHSTRING_EN_BCD,
         SEARCHSTRING_FR_BCD,
-        SEARCHSTRING_COMMON_BINARY,
-        SEARCHSTRING_DE_BINARY,
-        SEARCHSTRING_EN_BINARY,
-        SEARCHSTRING_FR_BINARY,
         SEARCHSTRING_COMMON_BCD2OF5,
         SEARCHSTRING_DE_BCD2OF5,
         SEARCHSTRING_EN_BCD2OF5,
@@ -1728,10 +1691,6 @@ class Registry {
         SEARCHSTRING_DE_BCD,
         SEARCHSTRING_EN_BCD,
         SEARCHSTRING_FR_BCD,
-        SEARCHSTRING_COMMON_BINARY,
-        SEARCHSTRING_DE_BINARY,
-        SEARCHSTRING_EN_BINARY,
-        SEARCHSTRING_FR_BINARY,
         SEARCHSTRING_COMMON_BCD2OF5,
         SEARCHSTRING_DE_BCD2OF5,
         SEARCHSTRING_EN_BCD2OF5,
@@ -1746,10 +1705,6 @@ class Registry {
         SEARCHSTRING_DE_BCD,
         SEARCHSTRING_EN_BCD,
         SEARCHSTRING_FR_BCD,
-        SEARCHSTRING_COMMON_BINARY,
-        SEARCHSTRING_DE_BINARY,
-        SEARCHSTRING_EN_BINARY,
-        SEARCHSTRING_FR_BINARY,
         SEARCHSTRING_COMMON_BCD2OF5,
         SEARCHSTRING_DE_BCD2OF5,
         SEARCHSTRING_EN_BCD2OF5,
@@ -1764,10 +1719,6 @@ class Registry {
         SEARCHSTRING_DE_BCD,
         SEARCHSTRING_EN_BCD,
         SEARCHSTRING_FR_BCD,
-        SEARCHSTRING_COMMON_BINARY,
-        SEARCHSTRING_DE_BINARY,
-        SEARCHSTRING_EN_BINARY,
-        SEARCHSTRING_FR_BINARY,
         SEARCHSTRING_COMMON_BCD2OF5,
         SEARCHSTRING_DE_BCD2OF5,
         SEARCHSTRING_EN_BCD2OF5,
@@ -1778,10 +1729,6 @@ class Registry {
         SEARCHSTRING_DE_BCD,
         SEARCHSTRING_EN_BCD,
         SEARCHSTRING_FR_BCD,
-        SEARCHSTRING_COMMON_BINARY,
-        SEARCHSTRING_DE_BINARY,
-        SEARCHSTRING_EN_BINARY,
-        SEARCHSTRING_FR_BINARY,
         SEARCHSTRING_COMMON_BCD1OF10,
         SEARCHSTRING_DE_BCD1OF10,
         SEARCHSTRING_EN_BCD1OF10,
@@ -1792,10 +1739,6 @@ class Registry {
         SEARCHSTRING_DE_BCD,
         SEARCHSTRING_EN_BCD,
         SEARCHSTRING_FR_BCD,
-        SEARCHSTRING_COMMON_BINARY,
-        SEARCHSTRING_DE_BINARY,
-        SEARCHSTRING_EN_BINARY,
-        SEARCHSTRING_FR_BINARY,
         SEARCHSTRING_COMMON_BCDGRAYEXCESS,
         SEARCHSTRING_DE_BCDGRAYEXCESS,
         SEARCHSTRING_EN_BCDGRAYEXCESS,
@@ -2385,51 +2328,39 @@ class Registry {
         SEARCHSTRING_FR_DNAAMONOACIDSTABLE
       ]),
 
-      //DS Selection **********************************************************************************************
-      GCWTool(tool: DSNthDecimal(), i18nPrefix: 'irrationalnumbers_nthdecimal', missingHelpLocales: [
+      //Silver Ratio Selection **********************************************************************************************
+      GCWTool(tool: SilverRatioNthDecimal(), i18nPrefix: 'irrationalnumbers_nthdecimal', missingHelpLocales: [
       ], searchStrings: [
-        SEARCHSTRING_COMMON_IRRATIONALNUMBERS,
-        SEARCHSTRING_DE_IRRATIONALNUMBERS,
-        SEARCHSTRING_EN_IRRATIONALNUMBERS,
-        SEARCHSTRING_FR_IRRATIONALNUMBERS,
-        SEARCHSTRING_COMMON_DS,
-        SEARCHSTRING_DE_DS,
-        SEARCHSTRING_EN_DS,
-        SEARCHSTRING_FR_DS,
-        SEARCHSTRING_COMMON_DSDECIMALRANGE,
-        SEARCHSTRING_DE_DSDECIMALRANGE,
-        SEARCHSTRING_EN_DSDECIMALRANGE,
-        SEARCHSTRING_FR_DSDECIMALRANGE
+        SEARCHSTRING_COMMON_SILVERRATIO,
+        SEARCHSTRING_DE_SILVERRATIO,
+        SEARCHSTRING_EN_SILVERRATIO,
+        SEARCHSTRING_FR_SILVERRATIO,
+        SEARCHSTRING_COMMON_SILVERRATIODECIMALRANGE,
+        SEARCHSTRING_DE_SILVERRATIODECIMALRANGE,
+        SEARCHSTRING_EN_SILVERRATIODECIMALRANGE,
+        SEARCHSTRING_FR_SILVERRATIODECIMALRANGE
       ]),
-      GCWTool(tool: DSDecimalRange(), i18nPrefix: 'irrationalnumbers_decimalrange', missingHelpLocales: [
+      GCWTool(tool: SilverRatioDecimalRange(), i18nPrefix: 'irrationalnumbers_decimalrange', missingHelpLocales: [
       ], searchStrings: [
-        SEARCHSTRING_COMMON_IRRATIONALNUMBERS,
-        SEARCHSTRING_DE_IRRATIONALNUMBERS,
-        SEARCHSTRING_EN_IRRATIONALNUMBERS,
-        SEARCHSTRING_FR_IRRATIONALNUMBERS,
-        SEARCHSTRING_COMMON_DS,
-        SEARCHSTRING_DE_DS,
-        SEARCHSTRING_EN_DS,
-        SEARCHSTRING_FR_DS,
-        SEARCHSTRING_COMMON_DSDECIMALRANGE,
-        SEARCHSTRING_DE_DSDECIMALRANGE,
-        SEARCHSTRING_EN_DSDECIMALRANGE,
-        SEARCHSTRING_FR_DSDECIMALRANGE
+        SEARCHSTRING_COMMON_SILVERRATIO,
+        SEARCHSTRING_DE_SILVERRATIO,
+        SEARCHSTRING_EN_SILVERRATIO,
+        SEARCHSTRING_FR_SILVERRATIO,
+        SEARCHSTRING_COMMON_SILVERRATIODECIMALRANGE,
+        SEARCHSTRING_DE_SILVERRATIODECIMALRANGE,
+        SEARCHSTRING_EN_SILVERRATIODECIMALRANGE,
+        SEARCHSTRING_FR_SILVERRATIODECIMALRANGE
       ]),
-      GCWTool(tool: DSSearch(), i18nPrefix: 'irrationalnumbers_search', missingHelpLocales: [
+      GCWTool(tool: SilverRatioSearch(), i18nPrefix: 'irrationalnumbers_search', missingHelpLocales: [
       ], searchStrings: [
-        SEARCHSTRING_COMMON_IRRATIONALNUMBERS,
-        SEARCHSTRING_DE_IRRATIONALNUMBERS,
-        SEARCHSTRING_EN_IRRATIONALNUMBERS,
-        SEARCHSTRING_FR_IRRATIONALNUMBERS,
-        SEARCHSTRING_COMMON_DS,
-        SEARCHSTRING_DE_DS,
-        SEARCHSTRING_EN_DS,
-        SEARCHSTRING_FR_DS,
-        SEARCHSTRING_COMMON_DSSEARCH,
-        SEARCHSTRING_DE_DSSEARCH,
-        SEARCHSTRING_EN_DSSEARCH,
-        SEARCHSTRING_FR_DSSEARCH
+        SEARCHSTRING_COMMON_SILVERRATIO,
+        SEARCHSTRING_DE_SILVERRATIO,
+        SEARCHSTRING_EN_SILVERRATIO,
+        SEARCHSTRING_FR_SILVERRATIO,
+        SEARCHSTRING_COMMON_SILVERRATIOSEARCH,
+        SEARCHSTRING_DE_SILVERRATIOSEARCH,
+        SEARCHSTRING_EN_SILVERRATIOSEARCH,
+        SEARCHSTRING_FR_SILVERRATIOSEARCH
       ]),
 
       //E Selection *************************************************************************************************
@@ -6027,10 +5958,28 @@ class Registry {
         SEARCHSTRING_FR_RESISTOR_COLORCODE
       ]),
       GCWSymbolTableTool(symbolKey: 'rhesus_a', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_RHESUS_A,
-        SEARCHSTRING_DE_SYMBOL_RHESUS_A,
-        SEARCHSTRING_EN_SYMBOL_RHESUS_A,
-        SEARCHSTRING_FR_SYMBOL_RHESUS_A
+        SEARCHSTRING_COMMON_SYMBOL_RHESUS,
+        SEARCHSTRING_DE_SYMBOL_RHESUS,
+        SEARCHSTRING_EN_SYMBOL_RHESUS,
+        SEARCHSTRING_FR_SYMBOL_RHESUS
+      ]),
+      GCWSymbolTableTool(symbolKey: 'rhesus_b', symbolSearchStrings: [
+        SEARCHSTRING_COMMON_SYMBOL_RHESUS,
+        SEARCHSTRING_DE_SYMBOL_RHESUS,
+        SEARCHSTRING_EN_SYMBOL_RHESUS,
+        SEARCHSTRING_FR_SYMBOL_RHESUS
+      ]),
+      GCWSymbolTableTool(symbolKey: 'rhesus_c1', symbolSearchStrings: [
+        SEARCHSTRING_COMMON_SYMBOL_RHESUS,
+        SEARCHSTRING_DE_SYMBOL_RHESUS,
+        SEARCHSTRING_EN_SYMBOL_RHESUS,
+        SEARCHSTRING_FR_SYMBOL_RHESUS
+      ]),
+      GCWSymbolTableTool(symbolKey: 'rhesus_c2', symbolSearchStrings: [
+        SEARCHSTRING_COMMON_SYMBOL_RHESUS,
+        SEARCHSTRING_DE_SYMBOL_RHESUS,
+        SEARCHSTRING_EN_SYMBOL_RHESUS,
+        SEARCHSTRING_FR_SYMBOL_RHESUS
       ]),
       GCWSymbolTableTool(symbolKey: 'rm4scc', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_BARCODES,
