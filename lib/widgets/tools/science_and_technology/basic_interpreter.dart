@@ -67,7 +67,7 @@ class BasicInterpreterState extends State<BasicInterpreter> {
   Widget _buildOutput(BuildContext context) {
     return GCWOutputText(
       text: buildOutputText(
-          interpretMiniBasic(_currentProgram.toUpperCase().replaceAll('  ', ' '), _currentInput)).trim(),
+          interpretBasic(_currentProgram.toUpperCase().replaceAll('  ', ' '), _currentInput)).trim(),
       isMonotype: true,
     );
   }
