@@ -72,15 +72,11 @@ class BasicInterpreterState extends State<BasicInterpreter> {
     );
   }
 
-  String buildOutputText(List<String> outputList) {
-    String output = '';
-    outputList.forEach((element) {
-      if (element != null) if (element.startsWith('basic_interpreter')) {
-        output = output + i18n(context, element) + '\n';
-      } else
-        output = output + element + '\n';
-    });
-    return output;
+  String buildOutputText(BASICOutput output) {
+    if (output.Error != '')
+      return i18n(context, output.Error);
+    else
+      return output.STDOUT;
   }
 
 }

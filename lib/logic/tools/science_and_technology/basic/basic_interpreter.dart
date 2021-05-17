@@ -2,325 +2,243 @@
 //
 // Small Basic Interpreter from Herbert Schildt's The Art of Java
 
-
-// Exception class for interpreter errors.
 import 'dart:core';
+import 'package:gc_wizard/logic/tools/science_and_technology/basic/stack_for.dart';
+import 'package:gc_wizard/logic/tools/science_and_technology/basic/stack_gosub.dart';
+
+class BASICOutput {
+  String STDOUT;
+  String Error;
+
+  BASICOutput(this.STDOUT, this.Error);
+}
 
 // The Small Basic interpreter.
-  final int PROG_SIZE = 10000; // maximum program size
+final int PROG_SIZE = 10000; // maximum program size
 
-  // These are the token types.
-  const int NONE = 0;
-  const int DELIMITER = 1;
-  const int VARIABLE = 2;
-  const int NUMBER = 3;
-  const int COMMAND = 4;
-  const int QUOTEDSTR = 5;
+// These are the token types.
+const int NONE = 0;
+const int DELIMITER = 1;
+const int VARIABLE = 2;
+const int NUMBER = 3;
+const int COMMAND = 4;
+const int QUOTEDSTR = 5;
 
-  // These are the types of errors.
-  const int SYNTAX = 0;
-  const int UNBALPARENS = 1;
-  const int NOEXP = 2;
-  const int DIVBYZERO = 3;
-  const int EQUALEXPECTED = 4;
-  const int NOTVAR = 5;
-  const int LABELTABLEFULL = 6;
-  const int DUPLABEL = 7;
-  const int UNDEFLABEL = 8;
-  const int THENEXPECTED = 9;
-  const int TOEXPECTED = 10;
-  const int NEXTWITHOUTFOR = 11;
-  const int RETURNWITHOUTGOSUB = 12;
-  const int MISSINGQUOTE = 13;
-  const int FILENOTFOUND = 14;
-  const int FILEIOERROR = 15;
-  const int INPUTIOERROR = 16;
+// These are the types of errors.
+const int SYNTAX = 0;
+const int UNBALPARENS = 1;
+const int NOEXP = 2;
+const int DIVBYZERO = 3;
+const int EQUALEXPECTED = 4;
+const int NOTVAR = 5;
+const int LABELTABLEFULL = 6;
+const int DUPLABEL = 7;
+const int UNDEFLABEL = 8;
+const int THENEXPECTED = 9;
+const int TOEXPECTED = 10;
+const int NEXTWITHOUTFOR = 11;
+const int RETURNWITHOUTGOSUB = 12;
+const int MISSINGQUOTE = 13;
+const int FILENOTFOUND = 14;
+const int FILEIOERROR = 15;
+const int INPUTIOERROR = 16;
 
-  // Internal representation of the Small Basic keywords.
-  const int UNKNCOM = 0;
-  const int PRINT = 1;
-  const int INPUT = 2;
-  const int IF = 3;
-  const int THEN = 4;
-  const int FOR = 5;
-  const int NEXT = 6;
-  const int TO = 7;
-  const int GOTO = 8;
-  const int GOSUB = 9;
-  const int RETURN = 10;
-  const int END = 11;
-  const int EOL = 12;
+// Internal representation of the Small Basic keywords.
+const int UNKNCOM = 0;
+const int PRINT = 1;
+const int INPUT = 2;
+const int IF = 3;
+const int THEN = 4;
+const int FOR = 5;
+const int NEXT = 6;
+const int TO = 7;
+const int GOTO = 8;
+const int GOSUB = 9;
+const int RETURN = 10;
+const int END = 11;
+const int EOL = 12;
 
-  // This token indicates end-of-program.
-  const String EOP = "\0";
+// This token indicates end-of-program.
+const String EOP = "\0";
 
-  // Codes for double-operators, such as <=.
-  const String LE = '1';
-  const String GE = '2';
-  const String NE = '3';
+// Codes for double-operators, such as <=.
+const String LE = '1';
+const String GE = '2';
+const String NE = '3';
 
-  // Array for variables.
-  List<double> vars = <double>[];
+// Exceptions
+final List<String> err = [
+  "basic_interpreter_syntax_error",
+  "basic_interpreter_unbalanced_parentheses",
+  "basic_interpreter_no_expression_present",
+  "basic_interpreter_division_by_zero",
+  "basic_interpreter_equal_sign_expected",
+  "basic_interpreter_not_a_variable",
+  "basic_interpreter_label_table_full",
+  "basic_interpreter_duplicate_label",
+  "basic_interpreter_undefined_label",
+  "basic_interpreter_then_expected",
+  "basic_interpreter_to expected",
+  "basic_interpreter_next_without_for",
+  "basic_interpreter_return_without_gosub",
+  "basic_interpreter_closing_quotes_needed",
+  "basic_interpreter_file_not_found",
+  "basic_interpreter_io_error_while_loading_file",
+  "basic_interpreter_io_error_on_input_statement"
+];
 
-  // This class links keywords with their keyword tokens.
-  class Keyword {
-    String keyword; // string form
-    int keywordTok; // internal representation
+// Array for variables.
+List<double> vars = <double>[];
 
-    Keyword(String str, int t) {keyword = str; keywordTok = t;}
+// Output
+String STDOUT = '';
+
+// Error
+String Error = '';
+bool Exception = false;
+
+// This class links keywords with their keyword tokens.
+class Keyword {
+  String keyword; // string form
+  int keywordTok; // internal representation
+
+  Keyword(String str, int t) {keyword = str; keywordTok = t;}
+}
+
+// Table of keywords with their internal representation. All keywords must be entered lowercase.
+List<Keyword> kwTable = [
+  Keyword("print", PRINT), // in this table.
+  Keyword("input", INPUT),
+  Keyword("if", IF),
+  Keyword("then", THEN),
+  Keyword("goto", GOTO),
+  Keyword("for", FOR),
+  Keyword("next", NEXT),
+  Keyword("to", TO),
+  Keyword("gosub", GOSUB),
+  Keyword("return", RETURN),
+  Keyword("end", END)
+];
+
+String prog; // refers to program array
+int progIdx; // current index into program
+
+String token; // holds current token
+int tokType;  // holds token's type
+
+int kwToken; // internal representation of a keyword
+
+// Stack for FOR loops.
+StackForInfo fStack;
+
+// Defines label table entries.
+class Label {
+  String name; // label
+  int loc; // index of label's location in source file
+  Label(String n, int i) {name = n; loc = i;}
+}
+
+// A map for labels.
+TreeMap labelTable;
+
+// Stack for gosubs.
+StackGosub gStack;
+
+// Relational operators.
+List<String> rops = [GE, NE, LE, '<', '>', '='];
+
+// Create a string containing the relational operators in order to make checking for them more convenient.
+String relops = rops.join('');
+
+
+bool isCharacter(String c){
+  return (65 <= c.toUpperCase().codeUnitAt(0) && 91 <= c.toUpperCase().codeUnitAt(0));
+}
+
+bool isDigit(String c){
+  return (int.tryParse(c) != null);
+}
+
+// Assign a variable a value.
+void assignment(){
+  int variable;
+  double value;
+  String vname;
+
+  // Get the variable name.
+  getToken();
+  vname = token[0];
+
+  if (!isCharacter(vname)) {
+    handleErr(NOTVAR);
+    return;
   }
 
-  /* Table of keywords with their internal representation.
-     All keywords must be entered lowercase. */
-  List<Keyword> kwTable = [
-   Keyword("print", PRINT), // in this table.
-   Keyword("input", INPUT),
-   Keyword("if", IF),
-   Keyword("then", THEN),
-   Keyword("goto", GOTO),
-   Keyword("for", FOR),
-   Keyword("next", NEXT),
-   Keyword("to", TO),
-   Keyword("gosub", GOSUB),
-   Keyword("return", RETURN),
-   Keyword("end", END)
-  ];
+  // Convert to index into variable table.
+  variable = vname.toUpperCase().codeUnitAt(0) - 65;
 
-  String prog; // refers to program array
-  int progIdx; // current index into program
-
-  String token; // holds current token
-  int tokType;  // holds token's type
-
-  int kwToken; // internal representation of a keyword
-
-  // Support for FOR loops.
-  class ForInfo {
-    int variable; // counter variable
-    double target; // target value
-    int loc; // index in source code to loop to
+  // Get the equal sign.
+  getToken();
+  if (token != "=") {
+    handleErr(EQUALEXPECTED);
+    return;
   }
 
-  // Stack for FOR loops.
-  Stack fStack;
+  // Get the value to assign.
+  value = evaluate();
 
-  // Defines label table entries.
-  class Label {
-    String name; // label
-    int loc; // index of label's location in source file
-    Label(String n, int i) {name = n; loc = i;}
-  }
+  // Assign the value.
+ vars[variable] = value;
+}
 
-  // A map for labels.
-  TreeMap labelTable;
-
-  // Stack for gosubs.
-  Stack gStack;
-
-  // Relational operators.
-  String rops[] = {
-  GE, NE, LE, '<', '>', '=', 0
-  };
-
-  /* Create a string containing the relational
-     operators in order to make checking for
-     them more convenient. */
-  String relops = new String(rops);
-
-  // Constructor for Small Basic.
-  SBasic(String progName) {
-
-    String tempbuf[] = new char[PROG_SIZE];
-    int size;
-
-    // Load the program to execute.
-    size = loadProgram(tempbuf, progName);
-
-    if (size != -1) {
-    // Create a properly sized array to hold the program.
-    prog = new char[size];
-
-    // Copy the program into program array.
-    System.arraycopy(tempbuf, 0, prog, 0, size);
-    }
-  }
-
-  // Load a program.
-  int loadProgram(char[] p, String fname){
-  int size = 0;
-
-  
-  FileReader fr = new FileReader(fname);
-
-  BufferedReader br = new BufferedReader(fr);
-
-  size = br.read(p, 0, PROG_SIZE);
-
-  fr.close();
-  
-
-  // If file ends with an EOF mark, backup.
-  if (p[size-1] == (char) 26) size--;
-
-  return size; // return size of program
-  }
-
-  // Execute the program.
-  void run() {
-  
-    // Initialize for new program run.
-    vars = new double[26];
-    fStack = new Stack();
-    labelTable = new TreeMap();
-    gStack = new Stack();
-    progIdx = 0;
-    
-    scanLabels(); // find the labels in the program
-    sbInterp(); // execute
-  }
-
-  // Entry point for the Small Basic interpreter.
-  void sbInterp(){
-  
-    // This is the interpreter's main loop.
-    do {
-      getToken();
-      // Check for assignment statement.
-      if (tokType==VARIABLE) {
-        putBack(); // return the var to the input stream
-        assignment(); // handle assignment statement
-      } else // is keyword
-        switch(kwToken) {
-          case PRINT:  print();     break;
-          case GOTO:   execGoto();  break;
-          case IF:     execif ();    break;
-          case FOR:    execFor();   break;
-          case NEXT:   next();      break;
-          case INPUT:  input();     break;
-          case GOSUB:  gosub();     break;
-          case RETURN: greturn();   break;
-          case END:    return;
-        }
-    } while (token != EOP);
-  }
-
-  // Find all labels.
-  void scanLabels(){
-    int i;
-    Object result;
-  
-    // See if the first token in the file is a label.
-    getToken();
-    if (tokType==NUMBER)
-      labelTable.put(token, new int(progIdx));
-  
-    findEOL();
-  
-    do {
-      getToken();
-      if (tokType==NUMBER) {// must be a line number
-        result = labelTable.put(token, new int(progIdx));
-        if (result != null)
-          handleErr(DUPLABEL);
-      }
-    
-      // If not on a blank line, find next line.
-      if (kwToken != EOL) 
-        findEOL();
-    } while(!token.equals(EOP));
-    progIdx = 0; // reset index to start of program
-  }
-
-  // Find the start of the next line.
-  void findEOL() {
-    while(progIdx < prog.length && prog[progIdx] != '\n')
-      ++progIdx;
-    if (progIdx < prog.length) 
-      progIdx++;
-  }
-
-  // Assign a variable a value.
-  void assignment(){
-    int variable;
-    double value;
-    String vname;
-  
-    // Get the variable name.
-    getToken();
-    vname = token[0];
-  
-    if (!Character.isLetter(vname)) {
-      handleErr(NOTVAR);
-      return;
-    }
-  
-    // Convert to index into variable table.
-    var = (int) Character.toUpperCase(vname) - 'A';
-  
-    // Get the equal sign.
-    getToken();
-    if (!token.equals("=")) {
-      handleErr(EQUALEXPECTED);
-      return;
-    }
-  
-    // Get the value to assign.
-    value = evaluate();
-  
-    // Assign the value.
-   vars[variable] = value;
-  }
-
-  // Execute a simple version of the PRINT statement.
-  void print(){
+// Execute a simple version of the PRINT statement.
+void print(){
   double result;
   int len=0, spaces;
   String lastDelim = "";
 
   do {
-  getToken(); // get next list item
-  if (kwToken==EOL || token.equals(EOP)) break;
+    getToken(); // get next list item
+    if (kwToken==EOL || token == EOP) break;
 
-  if (tokType==QUOTEDSTR) { // is string
-    System.out.print(token);
-    len += token.length();
-    getToken();
-  } else { // is expression
-  putBack();
-  result = evaluate();
-  getToken();
-  System.out.print(result);
+    if (tokType==QUOTEDSTR) { // is string
+      STDOUT = STDOUT + token;
+      len += token.length;
+      getToken();
+    } else { // is expression
+      putBack();
+      result = evaluate();
+      getToken();
+      STDOUT = STDOUT + result.toString();
 
-  // Add length of output to running total.
-  Double t = new Double(result);
-  len += t.toString().length(); // save length
-  }
-  lastDelim = token;
+      // Add length of output to running total.
+      double t = new double(result);
+      len += t.toString().length; // save length
+    }
+    lastDelim = token;
 
-  // If comma, move to next tab stop.
-  if (lastDelim.equals(",")) {
-  // compute number of spaces to move to next tab
-  spaces = 8 - (len % 8);
-  len += spaces; // add in the tabbing position
-  while(spaces != 0) {
-  System.out.print(" ");
-  spaces--;
-  }
-  }
-  else if (token.equals(";")) {
-  System.out.print(" ");
-  len++;
-  }
-  else if (kwToken != EOL && !token.equals(EOP))
-  handleErr(SYNTAX);
-  } while (lastDelim.equals(";") || lastDelim.equals(","));
+    // If comma, move to next tab stop.
+    if (lastDelim == ",") {
+      // compute number of spaces to move to next tab
+      spaces = 8 - (len % 8);
+      len += spaces; // add in the tabbing position
+      while(spaces != 0) {
+        STDOUT = STDOUT + " ";
+        spaces--;
+      }
+    } else if (token == ";") {
+      STDOUT = STDOUT + " ";
+      len++;
+    } else if (kwToken != EOL && token != EOP)
+      handleErr(SYNTAX);
+  } while (lastDelim == ";" || lastDelim == ",");
 
-  if (kwToken==EOL || token.equals(EOP)) {
-  if (!lastDelim.equals(";") && !lastDelim.equals(","))
-  System.out.println();
-  }
-  else handleErr(SYNTAX);
-  }
+  if (kwToken==EOL || token == EOP) {
+    if (lastDelim != ";" && lastDelim != ",")
+      STDOUT = STDOUT + '\n';
+  } else
+    handleErr(SYNTAX);
+}
 
   // Execute a GOTO statement.
   void execGoto(){
@@ -356,31 +274,31 @@ import 'dart:core';
   else findEOL(); // find start of next line
   }
 
-  // Execute a FOR loop.
-  void execFor(){
+// Execute a FOR loop.
+void execFor(){
   ForInfo stckvar = new ForInfo();
   double value;
   String vname;
 
   getToken(); // read the control variable
-  vname = token.charAt(0);
-  if (!Character.isLetter(vname)) {
-  handleErr(NOTVAR);
-  return;
+  vname = token[0];
+  if (!isCharacter(vname)) {
+    handleErr(NOTVAR);
+    return;
   }
 
   // Save index of control var.
-  stckvar.var = Character.toUpperCase(vname) - 'A';
+  stckvar.variable = vname.toUpperCase().codeUnitAt(0) - 65;
 
   getToken(); // read the equal sign
-  if (token.charAt(0) != '=') {
+  if (token[0] != '=') {
   handleErr(EQUALEXPECTED);
   return;
   }
 
   value = evaluate(); // get initial value
 
-  vars[stckvar.var] = value;
+  vars[stckvar.variable] = value;
 
   getToken(); // read and discard the TO
   if (kwToken != TO) handleErr(TOEXPECTED);
@@ -389,7 +307,7 @@ import 'dart:core';
 
   /* If loop can execute at least once,
        push info on stack. */
-  if (value >= vars[stckvar.var]) {
+  if (value >= vars[stckvar.variable]) {
   stckvar.loc = progIdx;
   fStack.push(stckvar);
   }
@@ -403,11 +321,11 @@ import 'dart:core';
 
   try {
   // Retrieve info for this For loop.
-  stckvar = (ForInfo) fStack.pop();
-  vars[stckvar.var]++; // increment control var
+  stckvar = fStack.pop();
+  vars[stckvar.variable]++; // increment control var
 
   // If done, return.
-  if (vars[stckvar.var] > stckvar.target) return;
+  if (vars[stckvar.variable] > stckvar.target) return;
 
   // Otherwise, restore the info.
   fStack.push(stckvar);
@@ -417,9 +335,9 @@ import 'dart:core';
   }
   }
 
-  // Execute a simple form of INPUT.
-  void input(){
-  int var;
+// Execute a simple form of INPUT.
+void input(){
+  int variable;
   double val = 0.0;
   String str;
 
@@ -437,11 +355,11 @@ import 'dart:core';
   else System.out.print("? "); // otherwise, prompt with ?
 
   // get the input var
-  var =  Character.toUpperCase(token.charAt(0)) - 'A';
+  variable =  token.toUpperCase().codeUnitAt(0) - 65;
 
   try {
   str = br.readLine();
-  val = Double.parseDouble(str); // read the value
+  val = double.parse(str); // read the value
   } catch (IOException exc) {
   handleErr(INPUTIOERROR);
   } catch (NumberFormatException exc) {
@@ -452,10 +370,10 @@ import 'dart:core';
   }
 
   vars[variable] = val; // store it
-  }
+}
 
-  // Execute a GOSUB.
-  void gosub(){
+// Execute a GOSUB.
+void gosub(){
   int loc;
 
   getToken();
@@ -472,31 +390,31 @@ import 'dart:core';
   // Start program running at that loc.
   progIdx = loc.intValue();
   }
-  }
+}
 
-  // Return from GOSUB.
-  void greturn(){
+// Return from GOSUB.
+void greturn(){
   int t;
 
   try {
   // Restore program index.
-  t = (int) gStack.pop();
+  t = gStack.pop();
   progIdx = t.intValue();
   } catch(EmptyStackException exc) {
   handleErr(RETURNWITHOUTGOSUB);
   }
 
-  }
+}
 
-  // **************** Expression Parser ****************
+// **************** Expression Parser ****************
 
-  // Parser entry point.
-  double evaluate(){
+// Parser entry point.
+double evaluate(){
   double result = 0.0;
 
   getToken();
-  if (token.equals(EOP))
-  handleErr(NOEXP); // no expression present
+  if (token == EOP)
+    handleErr(NOEXP); // no expression present
 
   // Parse and evaluate the expression.
   result = evalExp1();
@@ -504,18 +422,18 @@ import 'dart:core';
   putBack();
 
   return result;
-  }
+}
 
-  // Process relational operators.
-  double evalExp1() {
+// Process relational operators.
+double evalExp1() {
   double l_temp, r_temp, result;
   String op;
 
   result = evalExp2();
   // If at end of program, return.
-  if (token.equals(EOP)) return result;
+  if (token == EOP) return result;
 
-  op = token.charAt(0);
+  op = token[0];
 
   if (isRelop(op)) {
     l_temp = result;
@@ -549,185 +467,162 @@ import 'dart:core';
     }
   }
   return result;
-  }
+}
 
-  // Add or subtract two terms.
-  double evalExp2(){
+// Add or subtract two terms.
+double evalExp2(){
   String op;
   double result;
   double partialResult;
 
   result = evalExp3();
 
-  while((op = token.charAt(0)) == '+' || op == '-') {
-  getToken();
-  partialResult = evalExp3();
-  switch(op) {
-  case '-':
-  result = result - partialResult;
-  break;
-  case '+':
-  result = result + partialResult;
-  break;
-  }
+  while((op = token[0]) == '+' || op == '-') {
+    getToken();
+    partialResult = evalExp3();
+    switch(op) {
+      case '-':
+        result = result - partialResult;
+        break;
+      case '+':
+        result = result + partialResult;
+        break;
+    }
   }
   return result;
-  }
+}
 
-  // Multiply or divide two factors.
-  double evalExp3(){
+// Multiply or divide two factors.
+double evalExp3(){
   String op;
   double result;
   double partialResult;
 
   result = evalExp4();
 
-  while((op = token.charAt(0)) == '*' ||
-  op == '/' || op == '%') {
-  getToken();
-  partialResult = evalExp4();
-  switch(op) {
-  case '*':
-  result = result * partialResult;
-  break;
-  case '/':
-  if (partialResult == 0.0)
-  handleErr(DIVBYZERO);
-  result = result / partialResult;
-  break;
-  case '%':
-  if (partialResult == 0.0)
-  handleErr(DIVBYZERO);
-  result = result % partialResult;
-  break;
-  }
+  while((op = token[0]) == '*' ||  op == '/' || op == '%') {
+    getToken();
+    partialResult = evalExp4();
+    switch(op) {
+      case '*':
+        result = result * partialResult;
+        break;
+      case '/':
+        if (partialResult == 0.0)
+          handleErr(DIVBYZERO);
+        result = result / partialResult;
+        break;
+      case '%':
+        if (partialResult == 0.0)
+          handleErr(DIVBYZERO);
+        result = result % partialResult;
+      break;
+    }
   }
   return result;
-  }
+}
 
-  // Process an exponent.
-  double evalExp4(){
-    double result;
-    double partialResult;
-    double ex;
-    int t;
+// Process an exponent.
+double evalExp4(){
+  double result;
+  double partialResult;
+  double ex;
+  int t;
 
-    result = evalExp5();
+  result = evalExp5();
 
-    if (token.equals("^")) {
-      getToken();
-      partialResult = evalExp4();
-      ex = result;
-      if (partialResult == 0.0) {
-        result = 1.0;
-      } else
-        for(t=(int)partialResult-1; t > 0; t--)
-          result = result * ex;
-    }
-    return result;
-  }
-
-  // Evaluate a unary + or -.
-  double evalExp5(){
-    double result;
-    String  op;
-
-    op = "";
-    if ((tokType == DELIMITER) && token.equals("+") || token.equals("-")) {
-      op = token;
-      getToken();
-    }
-    result = evalExp6();
-
-    if (op.equals("-"))
-      result = -result;
-
-    return result;
-  }
-
-  // Process a parenthesized expression.
-  double evalExp6(){
-    double result;
-
-    if (token.equals("(")) {
-      getToken();
-      result = evalExp2();
-      if (!token.equals(")"))
-        handleErr(UNBALPARENS);
-      getToken();
+  if (token == "^") {
+    getToken();
+    partialResult = evalExp4();
+    ex = result;
+    if (partialResult == 0.0) {
+      result = 1.0;
     } else
-      result = atom();
-
-    return result;
+      for(t=(int)partialResult-1; t > 0; t--)
+        result = result * ex;
   }
+  return result;
+}
 
-  // Get the value of a number or variable.
-  double atom(){
-    double result = 0.0;
+// Evaluate a unary + or -.
+double evalExp5(){
+  double result;
+  String  op;
 
-    switch(tokType) {
-      case NUMBER:
-        try {
-          result = Double.parseDouble(token);
-        } catch (NumberFormatException exc) {
-          handleErr(SYNTAX);
-        }
-        getToken();
-        break;
-      case VARIABLE:
-        result = findVar(token);
-        getToken();
-        break;
-      default:
+  op = "";
+  if ((tokType == DELIMITER) && token == "+" || token == "-") {
+    op = token;
+    getToken();
+  }
+  result = evalExp6();
+
+  if (op == "-")
+    result = -result;
+
+  return result;
+}
+
+// Process a parenthesized expression.
+double evalExp6(){
+  double result;
+
+  if (token == "(") {
+    getToken();
+    result = evalExp2();
+    if (token != ")")
+       handleErr(UNBALPARENS);
+    getToken();
+  } else
+    result = atom();
+
+  return result;
+}
+
+// Get the value of a number or variable.
+double atom(){
+  double result = 0.0;
+
+  switch(tokType) {
+    case NUMBER:
+      if (double.tryParse(token) == null)
         handleErr(SYNTAX);
-        break;
-    }
-    return result;
-  }
-
-  // Return the value of a variable.
-  double findVar(String vname){
-    if (!Character.isLetter(vname.charAt(0))){
+      else
+        result = double.parse(token);
+      getToken();
+      break;
+    case VARIABLE:
+      result = findVar(token);
+      getToken();
+      break;
+    default:
       handleErr(SYNTAX);
-      return 0.0;
-    }
-    return vars[Character.toUpperCase(vname.charAt(0))-'A'];
+      break;
   }
+  return result;
+}
 
-  // Return a token to the input stream.
-  void putBack(){
-    if (token == EOP)
-      return;
-    for(int i=0; i < token.length(); i++)
-      progIdx--;
+// Return the value of a variable.
+double findVar(String vname){
+  if (!isCharacter(vname[0])){
+    handleErr(SYNTAX);
+    return 0.0;
   }
+  return vars[vname[0].toUpperCase().codeUnitAt(0) - 65];
+}
 
-  // Handle an error.
-  void handleErr(int error)
-  throws InterpreterException
-  {
-  String[] err = {
-  "Syntax Error",
-  "Unbalanced Parentheses",
-  "No Expression Present",
-  "Division by Zero",
-  "Equal sign expected",
-  "Not a variable",
-  "Label table full",
-  "Duplicate label",
-  "Undefined label",
-  "THEN expected",
-  "TO expected",
-  "NEXT without FOR",
-  "RETURN without GOSUB",
-  "Closing quotes needed",
-  "File not found",
-  "I/O error while loading file",
-  "I/O error on INPUT statement"
-  };
+// Return a token to the input stream.
+void putBack(){
+  if (token == EOP)
+    return;
+  for(int i=0; i < token.length; i++)
+    progIdx--;
+}
 
-  throw new InterpreterException(err[error]);
-  }
+// Handle an error.
+void handleErr(int error) {
+  Error = err[error];
+  Exception = true;
+}
 
   // Obtain the next token.
   void getToken(){
@@ -769,11 +664,11 @@ import 'dart:core';
       switch(ch) {
         case '<':
           if (prog[progIdx+1] == '>') {
-            progIdx += 2;;
-            token = String.valueOf(NE);
+            progIdx += 2;
+            token = NE;
           } else if (prog[progIdx+1] == '=') {
             progIdx += 2;
-            token = String.valueOf(LE);
+            token = LE;
           } else {
             progIdx++;
             token = "<";
@@ -781,8 +676,8 @@ import 'dart:core';
           break;
         case '>':
           if (prog[progIdx+1] == '=') {
-            progIdx += 2;;
-            token = String.valueOf(GE);
+            progIdx += 2;
+            token = GE;
           } else {
             progIdx++;
             token = ">";
@@ -798,7 +693,7 @@ import 'dart:core';
       token += prog[progIdx];
       progIdx++;
       tokType = DELIMITER;
-    } else if (Character.isLetter(prog[progIdx])) {
+    } else if (isCharacter(prog[progIdx])) {
       // Is a variable or keyword.
       while(!isDelim(prog[progIdx])) {
         token += prog[progIdx];
@@ -812,7 +707,7 @@ import 'dart:core';
         tokType = VARIABLE;
       else
         tokType = COMMAND;
-    } else if (Character.isDigit(prog[progIdx])) {
+    } else if (isDigit(prog[progIdx])) {
       // Is a number.
       while(!isDelim(prog[progIdx])) {
         token += prog[progIdx];
@@ -840,46 +735,105 @@ import 'dart:core';
     }
   }
 
-  // Return true if c is a delimiter.
-  bool isDelim(String c){
-    if ((" \r,;<>+-/*%^=()".indexOf(c) != -1))
-      return true;
-    else
-      return false;
-  }
+// Return true if c is a delimiter.
+bool isDelim(String c){
+  if ((" \r,;<>+-/*%^=()".indexOf(c) != -1))
+    return true;
+  else
+    return false;
+}
 
-  // Return true if c is a space or a tab.
-  bool isSpaceOrTab(String c){
-    if (c == ' ' || c =='\t')
-      return true;
-    else
-      return false;
-  }
+// Return true if c is a space or a tab.
+bool isSpaceOrTab(String c){
+  if (c == ' ' || c =='\t')
+    return true;
+  else
+    return false;
+}
 
-  // Return true if c is a relational operator.
-  bool isRelop(String c) {
-    if (relops.indexOf(c) != -1)
-      return true;
-    else
-      return false;
-  }
+// Return true if c is a relational operator.
+bool isRelop(String c) {
+  if (relops.indexOf(c) != -1)
+    return true;
+  else
+    return false;
+}
 
-  /* Look up a token's internal representation in the
-     token table. */
-  int lookUp(String s){
-    int i;
+// Look up a token's internal representation in the token table.
+int lookUp(String s){
+  int i;
 
-    // Convert to lowercase.
-    s = s.toLowerCase();
+  // Convert to lowercase.
+  s = s.toLowerCase();
 
-    // See if token is in table.
-    for(i=0; i < kwTable.length; i++)
-    if (kwTable[i].keyword.equals(s))
-    return kwTable[i].keywordTok;
-    return UNKNCOM; // unknown keyword
-  }
+  // See if token is in table.
+  for(i=0; i < kwTable.length; i++)
+    if (kwTable[i].keyword == s)
+      return kwTable[i].keywordTok;
+  return UNKNCOM; // unknown keyword
+}
 
+// Find the start of the next line.
+void findEOL() {
+  while(progIdx < prog.length && prog[progIdx] != '\n')
+    ++progIdx;
+  if (progIdx < prog.length)
+    progIdx++;
+}
 
-List<String> interpretBasic(String program, STDIN){
-  return [];
+BASICOutput interpretBasic(String program, STDIN){
+  // Initialize for new program run.
+  vars = new double[26];
+  fStack = new StackForInfo();
+  labelTable = new TreeMap();
+  gStack = new StackGosub();
+  progIdx = 0;
+
+  // find all labels
+  int i;
+  Object result;
+
+  // See if the first token in the file is a label.
+  getToken();
+  if (tokType == NUMBER)
+    labelTable.put(token, new int(progIdx));
+
+  findEOL();
+
+  do {
+    getToken();
+    if (tokType == NUMBER) {// must be a line number
+      result = labelTable.put(token, new int(progIdx));
+      if (result != null)
+        handleErr(DUPLABEL);
+    }
+
+    // If not on a blank line, find next line.
+    if (kwToken != EOL)
+      findEOL();
+  } while(token != EOP);
+  progIdx = 0; // reset index to start of program
+
+  // execute - this is the interpreter's main loop.
+    do {
+      getToken();
+      // Check for assignment statement.
+      if (tokType == VARIABLE) {
+        putBack(); // return the var to the input stream
+        assignment(); // handle assignment statement
+      } else // is keyword
+        switch(kwToken) {
+          case PRINT:  print();     break;
+          case GOTO:   execGoto();  break;
+          case IF:     execif ();   break;
+          case FOR:    execFor();   break;
+          case NEXT:   next();      break;
+          case INPUT:  input();     break;
+          case GOSUB:  gosub();     break;
+          case RETURN: greturn();   break;
+          case END:    token = EOP; break;
+        }
+    } while (token != EOP || !Exception);
+
+  return BASICOutput(STDOUT, Error);
 }
