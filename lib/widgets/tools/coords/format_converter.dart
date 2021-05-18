@@ -16,7 +16,12 @@ class FormatConverter extends StatefulWidget {
 }
 
 class FormatConverterState extends State<FormatConverter> {
+<<<<<<< HEAD
   var _currentCoords = defaultCoordinate;
+=======
+  BaseCoordinates _currentCoords = DEC(defaultCoordinate.latitude, defaultCoordinate.longitude);
+
+>>>>>>> 4b47786f48b4656027a8fb2552bbe93caca85bb9
   var _currentCoordsFormat = defaultCoordFormat();
   var _APIKeymissing = false;
 
@@ -58,6 +63,7 @@ class FormatConverterState extends State<FormatConverter> {
             });
           },
         ),
+<<<<<<< HEAD
         (_APIKeymissing)
             ? GCWOutput(
                 title: i18n(context, 'coords_formatconverter_w3w_error'),
@@ -69,12 +75,24 @@ class FormatConverterState extends State<FormatConverter> {
                   GCWMapPoint(point: _currentCoords, coordinateFormat: _currentOutputFormat),
                 ],
               ),
+=======
+        GCWCoordsOutput(
+          outputs: _currentOutput,
+          points: [
+            GCWMapPoint(point: _currentCoords.toLatLng(), coordinateFormat: _currentOutputFormat),
+          ],
+        ),
+>>>>>>> 4b47786f48b4656027a8fb2552bbe93caca85bb9
       ],
     );
   }
 
   _calculateOutput(BuildContext context) {
+<<<<<<< HEAD
     _currentOutput = [formatCoordOutput(_currentCoords, _currentOutputFormat, defaultEllipsoid())];
     _APIKeymissing = (_currentOutput == ['ERROR']);
+=======
+    _currentOutput = [formatCoordOutput(_currentCoords.toLatLng(), _currentOutputFormat, defaultEllipsoid())];
+>>>>>>> 4b47786f48b4656027a8fb2552bbe93caca85bb9
   }
 }

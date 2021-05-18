@@ -6,6 +6,189 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/numeral_words.dart';
 
 enum PhoneKeySpace { SPACE_ON_KEY_0, SPACE_ON_KEY_1 }
 
+class _ModeSwitch {
+  String switchKey;
+  List<PhoneInputMode> switchOrder;
+  Map<PhoneInputMode, String> switchCharacters;
+
+  _ModeSwitch(this.switchKey, this.switchOrder, this.switchCharacters);
+
+  String codeSwitch(PhoneInputMode from, PhoneInputMode to) {
+    var indexFrom = switchOrder.indexOf(from);
+    var indexTo = switchOrder.indexOf(to);
+
+    if (indexFrom < indexTo) return switchKey * (indexTo - indexFrom) + ' ';
+
+    return switchKey * (indexTo + switchOrder.length - indexFrom) + ' ';
+  }
+}
+
+class PhoneModel {
+  String name;
+  PhoneKeySpace keySpace;
+  _ModeSwitch modeSwitch;
+
+  PhoneModel(this.name, this.keySpace, this.modeSwitch);
+
+  @override
+  String toString() {
+    return this.name;
+  }
+}
+
+const _PHONE_MODEL_KEY_NOKIA = 'Nokia'; //tested 105,1661,6030,6303i,
+const _PHONE_MODEL_KEY_SAMSUNG = 'Samsung'; //tested  GT-E1200I
+const _PHONE_MODEL_KEY_SIEMENS = 'Siemens'; //tested ME45
+
+final NOKIA = PhoneModel(
+    _PHONE_MODEL_KEY_NOKIA,
+    PhoneKeySpace.SPACE_ON_KEY_0,
+    _ModeSwitch(
+        '#',
+        [PhoneInputMode.FIRST_CAPITAL, PhoneInputMode.SMALL, PhoneInputMode.CAPITAL, PhoneInputMode.NUMBERS],
+        {PhoneInputMode.SMALL: ' ', PhoneInputMode.FIRST_CAPITAL: '.?!'}));
+final SAMSUNG = PhoneModel(
+    _PHONE_MODEL_KEY_SAMSUNG,
+    PhoneKeySpace.SPACE_ON_KEY_0,
+    _ModeSwitch(
+        '#',
+        [PhoneInputMode.FIRST_CAPITAL, PhoneInputMode.SMALL, PhoneInputMode.CAPITAL, PhoneInputMode.NUMBERS],
+        {PhoneInputMode.SMALL: ' ', PhoneInputMode.FIRST_CAPITAL: '.?!'}));
+final SIEMENS = PhoneModel(
+    _PHONE_MODEL_KEY_SIEMENS,
+    PhoneKeySpace.SPACE_ON_KEY_1,
+    _ModeSwitch('*', [PhoneInputMode.FIRST_CAPITAL, PhoneInputMode.SMALL, PhoneInputMode.NUMBERS],
+        {PhoneInputMode.SMALL: ' ', PhoneInputMode.FIRST_CAPITAL: '.?!'}));
+
+final PHONE_MODELS = [NOKIA, SAMSUNG, SIEMENS];
+
+PhoneModel getPhoneModelByName(String name) {
+  return PHONE_MODELS.firstWhere((model) => model.name == name);
+}
+
+final Map<String, String> _vanityNokiaSmall = {
+  '1': '.,?!\'"1-()@/:_',
+  '2': 'abc2äàáãâåæç',
+  '3': 'def3èéëêð',
+  '4': 'ghi4ìíîï',
+  '5': 'jkl5£',
+  '6': 'mno6öòóôõøñ',
+  '7': 'pqrs7ß\$',
+  '8': 'tuv8üùúû',
+  '9': 'wxyz9ýϷ',
+  '0': ' 0\n',
+  '*': '.,\'?!"-()@/:_;+&%*=<>£€\$¥¤[]{}\~^`¡¿§#| \n',
+};
+
+final Map<String, String> _vanityNokiaCapital = {
+  '1': '.,?!\'"1-()@/:_',
+  '2': 'ABC2ÄÀÁÃÂÅÆÇ',
+  '3': 'DEF3ÈÉËÊÐ',
+  '4': 'GHI4ÌÍÎÏ',
+  '5': 'JKL5£',
+  '6': 'MNO6ÖÒÓÔÕØÑ',
+  '7': 'PQRS7\$',
+  '8': 'TUV8ÜÙÚÛ',
+  '9': 'WXYZ9Ýϸ',
+  '0': ' 0\n',
+  '*': '.,\'?!"-()@/:_;+&%*=<>£€\$¥¤[]{}\~^`¡¿§#| \n',
+};
+
+final Map<String, String> _vanityNokiaNumbers = {
+  '1': '1',
+  '2': '2',
+  '3': '3',
+  '4': '4',
+  '5': '5',
+  '6': '6',
+  '7': '7',
+  '8': '8',
+  '9': '9',
+  '0': '0'
+};
+
+final Map<String, String> _vanitySamsungSmall = {
+  '1': '.,?!1@\'"-()/:_;',
+  '2': 'abcäàåæΓ2',
+  '3': 'defèéΦ3',
+  '4': 'ghiìΨ4',
+  '5': 'jklΛ5',
+  '6': 'mnoñöòø6',
+  '7': 'pqrsßΣΞ7',
+  '8': 'tuvüù8',
+  '9': 'wxyzΩ9',
+  '0': ' 0\n',
+  '*': '.,-!?@~_\n\/&"\';^|:()<{}>[]=€\$£§%¥*+#¿¡¤'
+};
+
+final Map<String, String> _vanitySamsungCapital = {
+  '1': '.,?!1@\'"-()/:_;',
+  '2': 'ABCÄÅÆÇΓ2',
+  '3': 'DEFÉΔΦ3',
+  '4': 'GHIΘΨ4',
+  '5': 'JKLΛ5',
+  '6': 'MNOÑÖØ6',
+  '7': 'PQRSΠΣΞ7',
+  '8': 'TUVÜ8',
+  '9': 'WXYZΩ9',
+  '0': ' 0\n',
+  '*': '.,-!?@~_\n\/&"\';^|:()<{}>[]=€\$£§%¥*+#¿¡¤',
+};
+
+final Map<String, String> _vanitySamsungNumbers = {
+  '1': '1',
+  '2': '2',
+  '3': '3',
+  '4': '4',
+  '5': '5',
+  '6': '6',
+  '7': '7',
+  '8': '8',
+  '9': '9',
+  '0': '0'
+};
+
+final Map<String, String> _vanitySiemensSmall = {
+  '0': '.,?!0+-:¿¡"\'_',
+  '1': ' 1€£\$¥¤',
+  '2': 'abc2äàçæå',
+  '3': 'def3éè',
+  '4': 'ghi4ì',
+  '5': 'jkl5',
+  '6': 'mno6öñòø',
+  '7': 'pqrs7ß',
+  '8': 'tuv8üù',
+  '9': 'wxyz9'
+};
+final Map<String, String> _vanitySiemensCapital = {
+  '0': '.,?!0+-:¿¡"\'_',
+  '1': ' 1€£\$¥¤',
+  '2': 'ABC2ÄÆÅ',
+  '3': 'DEF3É',
+  '4': 'GHI4',
+  '5': 'JKL5',
+  '6': 'MNO6ÖÑØ',
+  '7': 'PQRS7',
+  '8': 'TUV8Ü',
+  '9': 'WXYZ9'
+};
+
+final Map<String, String> _vanitySiemensNumbers = {
+  '1': '1',
+  '2': '2',
+  '3': '3',
+  '4': '4',
+  '5': '5',
+  '6': '6',
+  '7': '7',
+  '8': '8',
+  '9': '9',
+  '0': '0',
+  '#': '#'
+};
+
+enum PhoneInputMode { SMALL, CAPITAL, FIRST_CAPITAL, NUMBERS }
+
 class VanityWordsDecodeOutput {
   final String number;
   final String numWord;
@@ -22,6 +205,7 @@ final VanityToDEU = {
   '7334' : 'DREI',
   '8437' : 'VIER',
   '38363' : 'FUENF',
+  '3863' : 'FÜNF',
   '73247' : 'SECHS',
   '743236' : 'SIEBEN',
   '2248' : 'ACHT',
@@ -261,6 +445,7 @@ Map<NumeralWordsLanguage, String> VANITYWORDS_LANGUAGES = {
   NumeralWordsLanguage.LAT: 'common_language_latin'
 };
 
+
 class _ModeSwitch {
   String switchKey;
   List<PhoneInputMode> switchOrder;
@@ -278,20 +463,10 @@ class _ModeSwitch {
   }
 }
 
-class PhoneModel {
-  String name;
-  PhoneKeySpace keySpace;
-  _ModeSwitch modeSwitch;
 
-  PhoneModel(this.name, this.keySpace, this.modeSwitch);
-
-  @override
-  String toString() {
-    return this.name;
-  }
-}
 
 const DEFAULT_NUMBER_FOR_SPACE = '1';
+
 
 List<VanityWordsDecodeOutput> decodeVanityWords(String text, NumeralWordsLanguage language){
   List<VanityWordsDecodeOutput> output = new List<VanityWordsDecodeOutput>();
@@ -344,43 +519,13 @@ List<VanityWordsDecodeOutput> decodeVanityWords(String text, NumeralWordsLanguag
 }
 
 
-const _PHONE_MODEL_KEY_NOKIA = 'Nokia'; //tested 105,1661,6030,6303i,
-const _PHONE_MODEL_KEY_SAMSUNG = 'Samsung'; //tested  GT-E1200I
-const _PHONE_MODEL_KEY_SIEMENS = 'Siemens'; //tested ME45
 const _PHONE_MODEL_KEY_SIEMENS_ME45 = 'Siemens ME45';
 
 final SIEMENS_ME45 = PhoneModel(_PHONE_MODEL_KEY_SIEMENS_ME45, PhoneKeySpace.SPACE_ON_KEY_1, _ModeSwitch('*', [PhoneInputMode.FIRST_CAPITAL, PhoneInputMode.SMALL, PhoneInputMode.NUMBERS],
     {PhoneInputMode.SMALL: ' ', PhoneInputMode.FIRST_CAPITAL: '.?!'}));
 
 
-final PHONE_MODELS = [SIEMENS_ME45];
 
-final NOKIA = PhoneModel(
-    _PHONE_MODEL_KEY_NOKIA,
-    PhoneKeySpace.SPACE_ON_KEY_0,
-    _ModeSwitch(
-        '#',
-        [PhoneInputMode.FIRST_CAPITAL, PhoneInputMode.SMALL, PhoneInputMode.CAPITAL, PhoneInputMode.NUMBERS],
-        {PhoneInputMode.SMALL: ' ', PhoneInputMode.FIRST_CAPITAL: '.?!'}));
-
-final SAMSUNG = PhoneModel(
-    _PHONE_MODEL_KEY_SAMSUNG,
-    PhoneKeySpace.SPACE_ON_KEY_0,
-    _ModeSwitch(
-        '#',
-        [PhoneInputMode.FIRST_CAPITAL, PhoneInputMode.SMALL, PhoneInputMode.CAPITAL, PhoneInputMode.NUMBERS],
-        {PhoneInputMode.SMALL: ' ', PhoneInputMode.FIRST_CAPITAL: '.?!'}));
-
-final SIEMENS = PhoneModel(
-    _PHONE_MODEL_KEY_SIEMENS,
-    PhoneKeySpace.SPACE_ON_KEY_1,
-    _ModeSwitch('*', [PhoneInputMode.FIRST_CAPITAL, PhoneInputMode.SMALL, PhoneInputMode.NUMBERS],
-        {PhoneInputMode.SMALL: ' ', PhoneInputMode.FIRST_CAPITAL: '.?!'}));
-
-
-PhoneModel getPhoneModelByName(String name) {
-  return PHONE_MODELS.firstWhere((model) => model.name == name);
-}
 
 final Map<String, String> _vanityNokiaSmall = {
   '1': '.,?!\'"1-()@/:_',
@@ -396,113 +541,6 @@ final Map<String, String> _vanityNokiaSmall = {
   '*': '.,\'?!"-()@/:_;+&%*=<>£€\$¥¤[]{}\~^`¡¿§#| \n',
 };
 
-final Map<String, String> _vanityNokiaCapital = {
-  '1': '.,?!\'"1-()@/:_',
-  '2': 'ABC2ÄÀÁÃÂÅÆÇ',
-  '3': 'DEF3ÈÉËÊÐ',
-  '4': 'GHI4ÌÍÎÏ',
-  '5': 'JKL5£',
-  '6': 'MNO6ÖÒÓÔÕØÑ',
-  '7': 'PQRS7\$',
-  '8': 'TUV8ÜÙÚÛ',
-  '9': 'WXYZ9Ýϸ',
-  '0': ' 0\n',
-  '*': '.,\'?!"-()@/:_;+&%*=<>£€\$¥¤[]{}\~^`¡¿§#| \n',
-};
-
-final Map<String, String> _vanityNokiaNumbers = {
-  '1': '1',
-  '2': '2',
-  '3': '3',
-  '4': '4',
-  '5': '5',
-  '6': '6',
-  '7': '7',
-  '8': '8',
-  '9': '9',
-  '0': '0'
-};
-
-final Map<String, String> _vanitySamsungSmall = {
-  '1': '.,?!1@\'"-()/:_;',
-  '2': 'abcäàåæΓ2',
-  '3': 'defèéΦ3',
-  '4': 'ghiìΨ4',
-  '5': 'jklΛ5',
-  '6': 'mnoñöòø6',
-  '7': 'pqrsßΣΞ7',
-  '8': 'tuvüù8',
-  '9': 'wxyzΩ9',
-  '0': ' 0\n',
-  '*': '.,-!?@~_\n\/&"\';^|:()<{}>[]=€\$£§%¥*+#¿¡¤'
-};
-
-final Map<String, String> _vanitySamsungCapital = {
-  '1': '.,?!1@\'"-()/:_;',
-  '2': 'ABCÄÅÆÇΓ2',
-  '3': 'DEFÉΔΦ3',
-  '4': 'GHIΘΨ4',
-  '5': 'JKLΛ5',
-  '6': 'MNOÑÖØ6',
-  '7': 'PQRSΠΣΞ7',
-  '8': 'TUVÜ8',
-  '9': 'WXYZΩ9',
-  '0': ' 0\n',
-  '*': '.,-!?@~_\n\/&"\';^|:()<{}>[]=€\$£§%¥*+#¿¡¤',
-};
-
-final Map<String, String> _vanitySamsungNumbers = {
-  '1': '1',
-  '2': '2',
-  '3': '3',
-  '4': '4',
-  '5': '5',
-  '6': '6',
-  '7': '7',
-  '8': '8',
-  '9': '9',
-  '0': '0'
-};
-
-final Map<String, String> _vanitySiemensSmall = {
-  '0': '.,?!0+-:¿¡"\'_',
-  '1': ' 1€£\$¥¤',
-  '2': 'abc2äàçæå',
-  '3': 'def3éè',
-  '4': 'ghi4ì',
-  '5': 'jkl5',
-  '6': 'mno6öñòø',
-  '7': 'pqrs7ß',
-  '8': 'tuv8üù',
-  '9': 'wxyz9'
-};
-
-final Map<String, String> _vanitySiemensCapital = {
-  '0': '.,?!0+-:¿¡"\'_',
-  '1': ' 1€£\$¥¤',
-  '2': 'ABC2ÄÆÅ',
-  '3': 'DEF3É',
-  '4': 'GHI4',
-  '5': 'JKL5',
-  '6': 'MNO6ÖÑØ',
-  '7': 'PQRS7',
-  '8': 'TUV8Ü',
-  '9': 'WXYZ9'
-};
-
-final Map<String, String> _vanitySiemensNumbers = {
-  '1': '1',
-  '2': '2',
-  '3': '3',
-  '4': '4',
-  '5': '5',
-  '6': '6',
-  '7': '7',
-  '8': '8',
-  '9': '9',
-  '0': '0',
-  '#': '#'
-};
 
 final Map<int, String> _vanitySiemensME45 = {
   0: '.,?!0+-:¿¡"\'_',
@@ -518,6 +556,8 @@ final Map<int, String> _vanitySiemensME45 = {
 
 enum PhoneInputMode { SMALL, CAPITAL, FIRST_CAPITAL, NUMBERS }
 
+=======
+>>>>>>> 4b47786f48b4656027a8fb2552bbe93caca85bb9
 String encodeVanitySingleNumbers(String input, PhoneModel model) {
   return _encodeVanity(input, model, false).map((code) => code[0]).join();
 }
