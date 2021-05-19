@@ -13,6 +13,10 @@ class StackGosub {
     if (element != null) _contents.add(element);
   }
 
+  void clear(){
+    _contents.clear();
+  }
+
   int pop(){
     if (_contents.length != 0) {
       var element = _contents.removeAt(_contents.length - 1);

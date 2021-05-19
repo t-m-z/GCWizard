@@ -5,6 +5,7 @@
 import 'dart:core';
 import 'package:gc_wizard/logic/tools/science_and_technology/basic/stack_for.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/basic/stack_gosub.dart';
+import 'package:gc_wizard/logic/tools/science_and_technology/basic/table_label.dart';
 
 class BASICOutput {
   String STDOUT;
@@ -88,10 +89,14 @@ final List<String> err = [
 ];
 
 // Array for variables.
-List<double> vars = <double>[];
+List<double> vars = new List<double>(26);
 
 // Output
 String STDOUT = '';
+
+// Input
+List<String> STDIN = new List<String>();
+int inputIdx = 0;
 
 // Error
 String Error = '';
@@ -129,20 +134,13 @@ int tokType;  // holds token's type
 int kwToken; // internal representation of a keyword
 
 // Stack for FOR loops.
-StackForInfo fStack;
-
-// Defines label table entries.
-class Label {
-  String name; // label
-  int loc; // index of label's location in source file
-  Label(String n, int i) {name = n; loc = i;}
-}
+StackForInfo fStack = new StackForInfo();
 
 // A map for labels.
-TreeMap labelTable;
+TreeMap labelTable = new TreeMap();
 
 // Stack for gosubs.
-StackGosub gStack;
+StackGosub gStack = new StackGosub();
 
 // Relational operators.
 List<String> rops = [GE, NE, LE, '<', '>', '='];
@@ -212,7 +210,7 @@ void print(){
       STDOUT = STDOUT + result.toString();
 
       // Add length of output to running total.
-      double t = new double(result);
+      double t = result;
       len += t.toString().length; // save length
     }
     lastDelim = token;
@@ -240,23 +238,23 @@ void print(){
     handleErr(SYNTAX);
 }
 
-  // Execute a GOTO statement.
-  void execGoto(){
+// Execute a GOTO statement.
+void execGoto(){
   int loc;
 
   getToken(); // get label to go to
 
   // Find the location of the label.
-  loc = (int) labelTable.get(token);
+  loc = labelTable.get(token);
 
   if (loc == null)
-  handleErr(UNDEFLABEL); // label not defined
+    handleErr(UNDEFLABEL); // label not defined
   else // start program running at that loc
-  progIdx = loc.intValue();
-  }
+    progIdx = labelTable.get(token);
+}
 
-  // Execute an IF statement.
-  void execif (){
+// Execute an IF statement.
+void execif (){
   double result;
 
   result = evaluate(); // get value of expression
@@ -265,14 +263,14 @@ void print(){
        process target of IF. Otherwise move on
        to next line in the program. */
   if (result != 0.0) {
-  getToken();
-  if (kwToken != THEN) {
-  handleErr(THENEXPECTED);
-  return;
-  } // else, target statement will be executed
-  }
-  else findEOL(); // find start of next line
-  }
+    getToken();
+    if (kwToken != THEN) {
+      handleErr(THENEXPECTED);
+      return;
+   } // else, target statement will be executed
+  } else
+    findEOL(); // find start of next line
+}
 
 // Execute a FOR loop.
 void execFor(){
@@ -315,13 +313,15 @@ void execFor(){
   while(kwToken != NEXT) getToken();
   }
 
-  // Execute a NEXT statement.
-  void next(){
+// Execute a NEXT statement.
+void next(){
   ForInfo stckvar;
 
-  try {
   // Retrieve info for this For loop.
   stckvar = fStack.pop();
+  if (stckvar == null)
+    handleErr(NEXTWITHOUTFOR);
+
   vars[stckvar.variable]++; // increment control var
 
   // If done, return.
@@ -330,10 +330,7 @@ void execFor(){
   // Otherwise, restore the info.
   fStack.push(stckvar);
   progIdx = stckvar.loc;  // loop
-  } catch(EmptyStackException exc) {
-  handleErr(NEXTWITHOUTFOR);
-  }
-  }
+}
 
 // Execute a simple form of INPUT.
 void input(){
@@ -341,33 +338,26 @@ void input(){
   double val = 0.0;
   String str;
 
-  BufferedReader br = new
-  BufferedReader(new InputStreamReader(System.in));
-
   getToken(); // see if prompt string is present
   if (tokType == QUOTEDSTR) {
   // if so, print it and check for comma
-  System.out.print(token);
-  getToken();
-  if (!token.equals(",")) handleErr(SYNTAX);
-  getToken();
+//  System.out.print(token);
+    getToken();
+    if (token !=",")
+      handleErr(SYNTAX);
+    getToken();
   }
-  else System.out.print("? "); // otherwise, prompt with ?
+  //else System.out.print("? "); // otherwise, prompt with ?
 
   // get the input var
   variable =  token.toUpperCase().codeUnitAt(0) - 65;
 
-  try {
-  str = br.readLine();
-  val = double.parse(str); // read the value
-  } catch (IOException exc) {
-  handleErr(INPUTIOERROR);
-  } catch (NumberFormatException exc) {
-  /* You might want to handle this error
-         differently than the other interpreter
-         errors. */
-  System.out.println("Invalid input.");
-  }
+  str = STDIN[inputIdx];
+  inputIdx++;
+  if (double.tryParse(str) == null) // read the value
+    handleErr(INPUTIOERROR);
+  else
+    val = double.parse(str);
 
   vars[variable] = val; // store it
 }
@@ -379,16 +369,16 @@ void gosub(){
   getToken();
 
   // Find the label to call.
-  loc = (int) labelTable.get(token);
+  loc = labelTable.get(token);
 
   if (loc == null)
-  handleErr(UNDEFLABEL); // label not defined
+    handleErr(UNDEFLABEL); // label not defined
   else {
   // Save place to return to.
-  gStack.push(new int(progIdx));
+    gStack.push(progIdx);
 
   // Start program running at that loc.
-  progIdx = loc.intValue();
+    progIdx = labelTable.get(token);
   }
 }
 
@@ -396,14 +386,12 @@ void gosub(){
 void greturn(){
   int t;
 
-  try {
   // Restore program index.
   t = gStack.pop();
-  progIdx = t.intValue();
-  } catch(EmptyStackException exc) {
-  handleErr(RETURNWITHOUTGOSUB);
-  }
-
+  if (t = null)
+    handleErr(RETURNWITHOUTGOSUB);
+  else
+    progIdx = t;
 }
 
 // **************** Expression Parser ****************
@@ -538,7 +526,7 @@ double evalExp4(){
     if (partialResult == 0.0) {
       result = 1.0;
     } else
-      for(t=(int)partialResult-1; t > 0; t--)
+      for (int t=partialResult.toInt() - 1; t > 0; t--)
         result = result * ex;
   }
   return result;
@@ -781,13 +769,15 @@ void findEOL() {
     progIdx++;
 }
 
-BASICOutput interpretBasic(String program, STDIN){
+BASICOutput interpretBasic(String program, input){
   // Initialize for new program run.
-  vars = new double[26];
-  fStack = new StackForInfo();
-  labelTable = new TreeMap();
-  gStack = new StackGosub();
+
+  fStack.clear();
+  labelTable.clear();
+  gStack.clear();
   progIdx = 0;
+  STDIN = input.split(' ');
+  inputIdx = 0;
 
   // find all labels
   int i;
@@ -796,14 +786,14 @@ BASICOutput interpretBasic(String program, STDIN){
   // See if the first token in the file is a label.
   getToken();
   if (tokType == NUMBER)
-    labelTable.put(token, new int(progIdx));
+    labelTable.put(token, progIdx);
 
   findEOL();
 
   do {
     getToken();
     if (tokType == NUMBER) {// must be a line number
-      result = labelTable.put(token, new int(progIdx));
+      result = labelTable.put(token, progIdx);
       if (result != null)
         handleErr(DUPLABEL);
     }

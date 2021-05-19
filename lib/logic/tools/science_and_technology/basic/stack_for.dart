@@ -18,6 +18,10 @@ class StackForInfo {
     if (element != null) _contents.add(element);
   }
 
+  void clear(){
+    _contents.clear();
+  }
+
   ForInfo pop(){
     if (_contents.length != 0) {
       var element = _contents.removeAt(_contents.length - 1);
