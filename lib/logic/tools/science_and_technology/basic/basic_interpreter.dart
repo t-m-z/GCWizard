@@ -612,8 +612,8 @@ void handleErr(int error) {
   Exception = true;
 }
 
-  // Obtain the next token.
-  void getToken(){
+// Obtain the next token.
+void getToken(){
     String ch;
 
     tokType = NONE;
@@ -721,7 +721,7 @@ void handleErr(int error) {
       token = EOP;
       return;
     }
-  }
+}
 
 // Return true if c is a delimiter.
 bool isDelim(String c){
@@ -770,8 +770,11 @@ void findEOL() {
 }
 
 BASICOutput interpretBasic(String program, input){
+  if (program == null || program == '')
+    return BASICOutput('', '');
   // Initialize for new program run.
 
+  prog = program;
   fStack.clear();
   labelTable.clear();
   gStack.clear();
