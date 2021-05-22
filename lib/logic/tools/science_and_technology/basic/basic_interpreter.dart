@@ -102,28 +102,20 @@ int inputIdx = 0;
 String Error = '';
 bool Exception = false;
 
-// This class links keywords with their keyword tokens.
-class Keyword {
-  String keyword; // string form
-  int keywordTok; // internal representation
-
-  Keyword(String str, int t) {keyword = str; keywordTok = t;}
-}
-
-// Table of keywords with their internal representation. All keywords must be entered lowercase.
-List<Keyword> kwTable = [
-  Keyword("print", PRINT), // in this table.
-  Keyword("input", INPUT),
-  Keyword("if", IF),
-  Keyword("then", THEN),
-  Keyword("goto", GOTO),
-  Keyword("for", FOR),
-  Keyword("next", NEXT),
-  Keyword("to", TO),
-  Keyword("gosub", GOSUB),
-  Keyword("return", RETURN),
-  Keyword("end", END)
-];
+// Map of keywords with their internal representation. All keywords must be entered lowercase.
+Map<String, int> kwTable = {
+    "print": PRINT, // in this table.
+    "input": INPUT,
+    "if": IF,
+    "then": THEN,
+    "goto": GOTO,
+    "for": FOR,
+    "next": NEXT,
+    "to": TO,
+    "gosub": GOSUB,
+    "return": RETURN,
+    "end": END
+  };
 
 String program; // refers to program array
 int programIdx; // current index into program
@@ -148,14 +140,6 @@ List<String> rops = [GE, NE, LE, '<', '>', '='];
 // Create a string containing the relational operators in order to make checking for them more convenient.
 String relops = rops.join('');
 
-
-bool isCharacter(String c){
-  return (65 <= c.toUpperCase().codeUnitAt(0) && 91 <= c.toUpperCase().codeUnitAt(0));
-}
-
-bool isDigit(String c){
-  return (int.tryParse(c) != null);
-}
 
 // Assign a variable a value.
 void assignment(){
@@ -191,13 +175,15 @@ void assignment(){
 
 // Execute a simple version of the PRINT statement.
 void printf(){
+  print('void print');
   double result;
   int len=0, spaces;
   String lastDelim = "";
 
   do {
     getToken(); // get next list item
-    if (kwToken==EOL || token == EOP) break;
+    if (kwToken==EOL || token == EOP)
+      return;
 
     if (tokType==QUOTEDSTR) { // is string
       STDOUT = STDOUT + token;
@@ -620,6 +606,7 @@ void getToken() {
     token = EOP;
     return;
   } else {
+    print('search token');
     String ch;
 
     tokType = NONE;
@@ -627,23 +614,30 @@ void getToken() {
     kwToken = UNKNCOM;
 
     // Check for end of program.
-    if (programIdx >= program.length - 1) {
+    print('check for end');
+    if (programIdx >= program.length) {
       token = EOP;
       return;
     }
 
     // Skip over white space.
+    print('skip white space');
     while (programIdx < program.length && isSpaceOrTab(program[programIdx]))
       programIdx++;
 
     // Trailing whitespace ends program.
-    if (programIdx >= program.length - 1) {
+    print('trailing spaces');
+    if (programIdx >= program.length) {
       token = EOP;
       tokType = DELIMITER;
       return;
     }
 
-    if (program[programIdx] == '\r') { // handle crlf
+    ch = program[programIdx];
+    print('analyse ' + ch);
+    // check for linefeed
+    print('check linefeed ');
+    if (ch == '\r' || ch == '\n') { // handle crlf
       programIdx += 2;
       kwToken = EOL;
       token = "\r\n";
@@ -651,9 +645,9 @@ void getToken() {
     }
 
     // Check for relational operator.
-    ch = program[programIdx];
+    print('Check for relational operator');
     if (ch == '<' || ch == '>') {
-      if (programIdx + 1 == program.length) handleErr(SYNTAX);
+      if (programIdx + 1 >= program.length) handleErr(SYNTAX);
 
       switch (ch) {
         case '<':
@@ -682,57 +676,82 @@ void getToken() {
       return;
     }
 
-    if (isDelim(program[programIdx])) {
+    if (isDelim(program[programIdx])) { // \r,;<>+-/*%^=()
       // Is an operator.
       token += program[programIdx];
       programIdx++;
       tokType = DELIMITER;
-    } else if (isCharacter(program[programIdx])) {
+      return;
+    }
+
+    // Check for character
+    print('check for character');
+    if (isCharacter(program[programIdx])) { //
       // Is a variable or keyword.
-      while (!isDelim(program[programIdx])) {
+//      while (!isDelim(program[programIdx])) {
+      while (isCharacter(program[programIdx])) {
+        print('get more char');
         token += program[programIdx];
         programIdx++;
         if (programIdx >= program.length) {
           token = EOP;
-          break;
+          //break;
+          return;
         }
       }
-
+print(token+' '+programIdx.toString());
       kwToken = lookUp(token);
-      if (kwToken == UNKNCOM)
+      if (kwToken == UNKNCOM){
         tokType = VARIABLE;
-      else
+      } else {
         tokType = COMMAND;
-    } else if (isDigit(program[programIdx])) {
+      }
+      print(token+' '+kwToken.toString()+' '+tokType.toString());
+      return;
+    }
+
+    // check for digit
+    print('check for digit');
+    if (isDigit(program[programIdx])) {
       // Is a number.
       print('digit ' + program[programIdx]);
-      while (!isDelim(program[programIdx])) {
+//      while (!isDelim(program[programIdx])) {
+      while (isDigit(program[programIdx])) {
         token += program[programIdx];
         programIdx++;
         if (programIdx >= program.length - 1) {
           token = EOP;
-          break;
+          //break;
+          return;
         }
       }
       print('found digit '+token);
       tokType = NUMBER;
-    } else if (program[programIdx] == '"') {
+      return;
+    }
+
+    // check for quoted string
+    print('check for quoted string');
+    if (program[programIdx] == '"') {
       // Is a quoted string.
       programIdx++;
       ch = program[programIdx];
-      while (ch != '"' && ch != '\r') {
+      while (ch != '"' && ch != '\r' || ch != '\n') {
         token += ch;
         programIdx++;
         ch = program[programIdx];
       }
-      if (ch == '\r')
+      if (ch == '\r' || ch == '\n')
         handleErr(MISSINGQUOTE);
       programIdx++;
       tokType = QUOTEDSTR;
-    } else { // unknown character terminates program
-      token = EOP;
       return;
     }
+
+     // unknown character terminates program
+    print('unknown EOP');
+    token = EOP;
+    return;
   }
 }
 
@@ -743,6 +762,22 @@ bool isDelim(String c){
   else
     return false;
 }
+
+// Return true if c is a char A-Z.
+bool isCharacter(String c){
+  int code = c.toUpperCase().codeUnitAt(0);
+  print('isChar '+c+' '+code.toString());
+  if (code >= 65 && code <= 91)
+    return true;
+  else
+    return false;
+}
+
+// Return true if c is a digit 0 - 9.
+bool isDigit(String c){
+  return (int.tryParse(c) != null);
+}
+
 
 // Return true if c is a space or a tab.
 bool isSpaceOrTab(String c){
@@ -762,16 +797,11 @@ bool isRelop(String c) {
 
 // Look up a token's internal representation in the token table.
 int lookUp(String s){
-  int i;
-
-  // Convert to lowercase.
-  s = s.toLowerCase();
-
-  // See if token is in table.
-  for(i=0; i < kwTable.length; i++)
-    if (kwTable[i].keyword == s)
-      return kwTable[i].keywordTok;
-  return UNKNCOM; // unknown keyword
+  print('lookup '+s+' => '+kwTable[s.toLowerCase()].toString());
+  if (kwTable[s.toLowerCase()] == null)
+    return UNKNCOM;
+  else
+    return kwTable[s.toLowerCase()];
 }
 
 // Find the start of the next line.
@@ -829,12 +859,14 @@ print('execute program');
   // execute - this is the interpreter's main loop.
     do {
       getToken();
-      print('main loop '+token);
+      print('main loop '+token+' '+programIdx.toString());
       // Check for assignment statement.
+      print('main loop check tokType '+tokType.toString()+' '+kwToken.toString());
       if (tokType == VARIABLE) {
         putBack(); // return the var to the input stream
         assignment(); // handle assignment statement
-      } else // is keyword
+      } else {// is keyword
+        print('found keyword');
         switch(kwToken) {
           case PRINT:  printf();    break;
           case GOTO:   execGoto();  break;
@@ -846,6 +878,7 @@ print('execute program');
           case RETURN: greturn();   break;
           case END:    token = EOP; break;
         }
+      }
     } while (token != EOP || !Exception);
 
   return BASICOutput(STDOUT, Error);
