@@ -63,7 +63,6 @@ List<String> CalculateIBANDigits(String number){
 }
 
 bool checkIBAN(String number) {
-  print('checkiban '+number+' '+number.substring(4)+' '+IBAN_COUNTRYCODE[number[0]]+' '+IBAN_COUNTRYCODE[number[1]]+' '+number[2]+' '+number[3]);
   number = number.substring(4) + IBAN_COUNTRYCODE[number[0]] + IBAN_COUNTRYCODE[number[1]] + number[2] + number[3];
   return (BigInt.parse(number) % BigInt.from(97) == BigInt.one);
 }
