@@ -23,6 +23,7 @@ import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_quadtree.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_reversewhereigo_waldmeister.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_slippymap.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_swissgrid.dart';
+import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_swissgridplus.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_utm.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_xyz.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
@@ -55,9 +56,9 @@ class GCWCoords extends StatefulWidget {
 
 class GCWCoordsState extends State<GCWCoords> {
   Map<String, String> _currentCoordsFormat;
-  LatLng _currentValue;
+  BaseCoordinates _currentValue;
 
-  LatLng _pastedCoords;
+  BaseCoordinates _pastedCoords;
 
   var _currentWidget;
 
@@ -70,7 +71,7 @@ class GCWCoordsState extends State<GCWCoords> {
 
     _currentCoordsFormat = widget.coordsFormat ?? defaultCoordFormat();
     _setPastedCoordsFormat();
-    _currentValue = widget.coordinates ?? defaultCoordinate;
+    _currentValue = widget.coordinates ?? DEC(defaultCoordinate.latitude, defaultCoordinate.longitude);
     _pastedCoords = _currentValue;
   }
 
@@ -156,7 +157,7 @@ class GCWCoordsState extends State<GCWCoords> {
       },
       {
         'coordFormat': getCoordinateFormatByKey(keyCoordsSwissGridPlus),
-        'widget': GCWCoordsSwissGrid(
+        'widget': GCWCoordsSwissGridPlus(
           coordinates: _pastedCoords,
           onChanged: (newValue) {
             setState(() {
@@ -328,14 +329,13 @@ class GCWCoordsState extends State<GCWCoords> {
       format: _currentCoordsFormat,
       onChanged: (newValue) {
         setState(() {
-          var formatChanged = _currentCoordsFormat['format'] != newValue['format'];
-          var subtypeChanged = _currentCoordsFormat["subtype"] != newValue["subtype"];
-          if (formatChanged || subtypeChanged) {
+          if (_currentCoordsFormat != newValue) {
             if (widget.restoreCoordinates)
               _pastedCoords = _currentValue;
-            else {
-              if (!subtypeChanged) _currentValue = defaultCoordinate;
-            }
+            else if (subtypeChanged(_currentCoordsFormat, newValue))
+              ;
+            else
+              _currentValue = DEC(defaultCoordinate.latitude, defaultCoordinate.longitude);
 
             _currentCoordsFormat = newValue;
             _setCurrentValueAndEmitOnChange();
@@ -368,18 +368,18 @@ class GCWCoordsState extends State<GCWCoords> {
     );
   }
 
-  _setCurrentValueAndEmitOnChange([LatLng newValue]) {
+  _setCurrentValueAndEmitOnChange([BaseCoordinates newValue]) {
     widget.onChanged({'coordsFormat': _currentCoordsFormat, 'value': newValue ?? _currentValue});
   }
 
-  _setCoords(Map<String, LatLng> pastedCoords) {
+  _setCoords(List<BaseCoordinates> pastedCoords) {
     if (pastedCoords == null || pastedCoords.length == 0) return;
 
-    if (pastedCoords.keys.contains(_currentCoordsFormat['format'].toString())) {
-      _pastedCoords = pastedCoords[_currentCoordsFormat['format']];
+    if (pastedCoords.any((coords) => coords.key == _currentCoordsFormat['format'].toString())) {
+      _pastedCoords = pastedCoords.where((coords) => coords.key == _currentCoordsFormat['format'].toString()).first;
     } else {
-      _pastedCoords = pastedCoords.values.elementAt(0);
-      _currentCoordsFormat = {'format': pastedCoords.keys.elementAt(0)};
+      _pastedCoords = pastedCoords.elementAt(0);
+      _currentCoordsFormat = {'format': pastedCoords.elementAt(0).key};
     }
 
     _setPastedCoordsFormat();
@@ -455,7 +455,7 @@ class GCWCoordsState extends State<GCWCoords> {
           showToast(i18n(context, 'coords_common_location_lowaccuracy',
               parameters: [NumberFormat('0.0').format(locationData.accuracy)]));
 
-        _pastedCoords = LatLng(locationData.latitude, locationData.longitude);
+        _pastedCoords = DEC(locationData.latitude, locationData.longitude);
         _currentValue = _pastedCoords;
         _setPastedCoordsFormat();
 

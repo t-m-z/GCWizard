@@ -9,21 +9,21 @@ CheckDigitOutput CheckDETaxIDNumber(String number){
       return CheckDigitOutput(false, CalculateNumber(number.substring(0, number.length - 1), CalculateDETaxIDNumber), CalculateGlitch(number, checkDETaxID));
     }
   }
-  return CheckDigitOutput(false, '', ['']);
+  return CheckDigitOutput(false, 'checkdigits_invalid_length', ['']);
 }
 
 String CalculateDETaxIDNumber(String number){
   if (number.length == 10) {
     return number + calculateDETaxIDCheckDigit(number);
   }
-  return '';
+  return 'checkdigits_invalid_length';
 }
 
 List<String> CalculateDETaxIDDigits(String number){
-  if (number.length == 11 && int.tryParse(number[number.length - 1]) != null) {
+  if (number.length == 11) {
     return CalculateDigits(number, checkDETaxID);
   } else
-    return [''];
+    return ['checkdigits_invalid_length'];
 }
 
 

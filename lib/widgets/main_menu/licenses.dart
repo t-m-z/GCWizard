@@ -57,6 +57,7 @@ class LicensesState extends State<Licenses> {
           ['@chsii (geohex4j), @sa2da (geohex.org)', 'GeoHex Code', 'MIT License'],
           ['lscheffer.com, Matthias Ernst', 'Malbolge Code', 'CC0, Public Domain'],
           ['Jens Guballa (guballa.de)', 'Substitution Breaker', 'MIT License'],
+          ['Peter Norvig (norvig.com), \'dartist\'', 'Sudoku Solver', 'MIT License'],
           ['Jens Guballa (guballa.de)', 'Vigenère Breaker', null],
         ]),
       ),
@@ -67,6 +68,7 @@ class LicensesState extends State<Licenses> {
           ['Wikipedia', 'several'],
           ['www.steinerverlag.de', 'Eurythmy'],
           ['www.breitkopf.de', 'Solmisation'],
+          ['game-icons.net (CC BY 3.0)\npixabay.com\nwww.clker.com (CC-0)', 'Geocache Attributes'],
         ]),
       ),
     ]);
