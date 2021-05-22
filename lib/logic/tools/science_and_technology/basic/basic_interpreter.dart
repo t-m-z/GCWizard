@@ -614,8 +614,12 @@ void handleErr(int error) {
 }
 
 // Obtain the next token.
-void getToken(){
-  print('get token, starting at '+programIdx.toString());
+void getToken() {
+  print('get token, starting at ' + programIdx.toString());
+  if (programIdx >= program.length - 1) {
+    token = EOP;
+    return;
+  } else {
     String ch;
 
     tokType = NONE;
@@ -623,17 +627,17 @@ void getToken(){
     kwToken = UNKNCOM;
 
     // Check for end of program.
-    if (programIdx == program.length) {
+    if (programIdx >= program.length - 1) {
       token = EOP;
       return;
     }
 
     // Skip over white space.
-    while(programIdx < program.length && isSpaceOrTab(program[programIdx]))
+    while (programIdx < program.length && isSpaceOrTab(program[programIdx]))
       programIdx++;
 
     // Trailing whitespace ends program.
-    if (programIdx == program.length) {
+    if (programIdx >= program.length - 1) {
       token = EOP;
       tokType = DELIMITER;
       return;
@@ -651,7 +655,7 @@ void getToken(){
     if (ch == '<' || ch == '>') {
       if (programIdx + 1 == program.length) handleErr(SYNTAX);
 
-      switch(ch) {
+      switch (ch) {
         case '<':
           if (program[programIdx + 1] == '>') {
             programIdx += 2;
@@ -695,27 +699,28 @@ void getToken(){
       }
 
       kwToken = lookUp(token);
-      if (kwToken==UNKNCOM)
+      if (kwToken == UNKNCOM)
         tokType = VARIABLE;
       else
         tokType = COMMAND;
     } else if (isDigit(program[programIdx])) {
       // Is a number.
-      print('digit '+program[programIdx]);
-      while(!isDelim(program[programIdx])) {
+      print('digit ' + program[programIdx]);
+      while (!isDelim(program[programIdx])) {
         token += program[programIdx];
         programIdx++;
-        if (programIdx >= program.length){
+        if (programIdx >= program.length - 1) {
           token = EOP;
           break;
         }
       }
+      print('found digit '+token);
       tokType = NUMBER;
     } else if (program[programIdx] == '"') {
       // Is a quoted string.
       programIdx++;
       ch = program[programIdx];
-      while(ch !='"' && ch != '\r') {
+      while (ch != '"' && ch != '\r') {
         token += ch;
         programIdx++;
         ch = program[programIdx];
@@ -728,6 +733,7 @@ void getToken(){
       token = EOP;
       return;
     }
+  }
 }
 
 // Return true if c is a delimiter.
@@ -791,6 +797,7 @@ BASICOutput interpretBasic(String code, input){
   inputIdx = 0;
 
 print(program);
+print('find labels');
   // find all labels
   int i;
   Object result;
@@ -798,7 +805,7 @@ print(program);
   // See if the first token in the file is a label.
   getToken();
   if (tokType == NUMBER) {
-    print(token);
+    print('found token '+token);
     labelTable.put(token, programIdx);
   }
   findEOL();
@@ -816,18 +823,20 @@ print(program);
     if (kwToken != EOL)
       findEOL();
   } while(token != EOP);
+print('execute program');
   programIdx = 0; // reset index to start of program
 
   // execute - this is the interpreter's main loop.
     do {
       getToken();
+      print('main loop '+token);
       // Check for assignment statement.
       if (tokType == VARIABLE) {
         putBack(); // return the var to the input stream
         assignment(); // handle assignment statement
       } else // is keyword
         switch(kwToken) {
-          case PRINT:  printf();     break;
+          case PRINT:  printf();    break;
           case GOTO:   execGoto();  break;
           case IF:     execif ();   break;
           case FOR:    execFor();   break;
