@@ -125,8 +125,8 @@ List<Keyword> kwTable = [
   Keyword("end", END)
 ];
 
-String prog; // refers to program array
-int progIdx; // current index into program
+String program; // refers to program array
+int programIdx; // current index into program
 
 String token; // holds current token
 int tokType;  // holds token's type
@@ -190,7 +190,7 @@ void assignment(){
 }
 
 // Execute a simple version of the PRINT statement.
-void print(){
+void printf(){
   double result;
   int len=0, spaces;
   String lastDelim = "";
@@ -250,7 +250,7 @@ void execGoto(){
   if (loc == null)
     handleErr(UNDEFLABEL); // label not defined
   else // start program running at that loc
-    progIdx = labelTable.get(token);
+    programIdx = labelTable.get(token);
 }
 
 // Execute an IF statement.
@@ -306,7 +306,7 @@ void execFor(){
   /* If loop can execute at least once,
        push info on stack. */
   if (value >= vars[stckvar.variable]) {
-  stckvar.loc = progIdx;
+  stckvar.loc = programIdx;
   fStack.push(stckvar);
   }
   else // otherwise, skip loop code altogether
@@ -329,7 +329,7 @@ void next(){
 
   // Otherwise, restore the info.
   fStack.push(stckvar);
-  progIdx = stckvar.loc;  // loop
+  programIdx = stckvar.loc;  // loop
 }
 
 // Execute a simple form of INPUT.
@@ -375,10 +375,10 @@ void gosub(){
     handleErr(UNDEFLABEL); // label not defined
   else {
   // Save place to return to.
-    gStack.push(progIdx);
+    gStack.push(programIdx);
 
   // Start program running at that loc.
-    progIdx = labelTable.get(token);
+    programIdx = labelTable.get(token);
   }
 }
 
@@ -391,7 +391,7 @@ void greturn(){
   if (t = null)
     handleErr(RETURNWITHOUTGOSUB);
   else
-    progIdx = t;
+    programIdx = t;
 }
 
 // **************** Expression Parser ****************
@@ -603,17 +603,19 @@ void putBack(){
   if (token == EOP)
     return;
   for(int i=0; i < token.length; i++)
-    progIdx--;
+    programIdx--;
 }
 
 // Handle an error.
 void handleErr(int error) {
   Error = err[error];
   Exception = true;
+  token = EOP;
 }
 
 // Obtain the next token.
 void getToken(){
+  print('get token, starting at '+programIdx.toString());
     String ch;
 
     tokType = NONE;
@@ -621,53 +623,53 @@ void getToken(){
     kwToken = UNKNCOM;
 
     // Check for end of program.
-    if (progIdx == prog.length) {
+    if (programIdx == program.length) {
       token = EOP;
       return;
     }
 
     // Skip over white space.
-    while(progIdx < prog.length && isSpaceOrTab(prog[progIdx]))
-      progIdx++;
+    while(programIdx < program.length && isSpaceOrTab(program[programIdx]))
+      programIdx++;
 
     // Trailing whitespace ends program.
-    if (progIdx == prog.length) {
+    if (programIdx == program.length) {
       token = EOP;
       tokType = DELIMITER;
       return;
     }
 
-    if (prog[progIdx] == '\r') { // handle crlf
-      progIdx += 2;
+    if (program[programIdx] == '\r') { // handle crlf
+      programIdx += 2;
       kwToken = EOL;
       token = "\r\n";
       return;
     }
 
     // Check for relational operator.
-    ch = prog[progIdx];
+    ch = program[programIdx];
     if (ch == '<' || ch == '>') {
-      if (progIdx+1 == prog.length) handleErr(SYNTAX);
+      if (programIdx + 1 == program.length) handleErr(SYNTAX);
 
       switch(ch) {
         case '<':
-          if (prog[progIdx+1] == '>') {
-            progIdx += 2;
+          if (program[programIdx + 1] == '>') {
+            programIdx += 2;
             token = NE;
-          } else if (prog[progIdx+1] == '=') {
-            progIdx += 2;
+          } else if (program[programIdx + 1] == '=') {
+            programIdx += 2;
             token = LE;
           } else {
-            progIdx++;
+            programIdx++;
             token = "<";
           }
           break;
         case '>':
-          if (prog[progIdx+1] == '=') {
-            progIdx += 2;
+          if (program[programIdx + 1] == '=') {
+            programIdx += 2;
             token = GE;
           } else {
-            progIdx++;
+            programIdx++;
             token = ">";
           }
           break;
@@ -676,18 +678,20 @@ void getToken(){
       return;
     }
 
-    if (isDelim(prog[progIdx])) {
+    if (isDelim(program[programIdx])) {
       // Is an operator.
-      token += prog[progIdx];
-      progIdx++;
+      token += program[programIdx];
+      programIdx++;
       tokType = DELIMITER;
-    } else if (isCharacter(prog[progIdx])) {
+    } else if (isCharacter(program[programIdx])) {
       // Is a variable or keyword.
-      while(!isDelim(prog[progIdx])) {
-        token += prog[progIdx];
-        progIdx++;
-        if (progIdx >= prog.length)
+      while (!isDelim(program[programIdx])) {
+        token += program[programIdx];
+        programIdx++;
+        if (programIdx >= program.length) {
+          token = EOP;
           break;
+        }
       }
 
       kwToken = lookUp(token);
@@ -695,27 +699,30 @@ void getToken(){
         tokType = VARIABLE;
       else
         tokType = COMMAND;
-    } else if (isDigit(prog[progIdx])) {
+    } else if (isDigit(program[programIdx])) {
       // Is a number.
-      while(!isDelim(prog[progIdx])) {
-        token += prog[progIdx];
-        progIdx++;
-        if (progIdx >= prog.length)
+      print('digit '+program[programIdx]);
+      while(!isDelim(program[programIdx])) {
+        token += program[programIdx];
+        programIdx++;
+        if (programIdx >= program.length){
+          token = EOP;
           break;
+        }
       }
       tokType = NUMBER;
-    } else if (prog[progIdx] == '"') {
+    } else if (program[programIdx] == '"') {
       // Is a quoted string.
-      progIdx++;
-      ch = prog[progIdx];
+      programIdx++;
+      ch = program[programIdx];
       while(ch !='"' && ch != '\r') {
         token += ch;
-        progIdx++;
-        ch = prog[progIdx];
+        programIdx++;
+        ch = program[programIdx];
       }
       if (ch == '\r')
         handleErr(MISSINGQUOTE);
-      progIdx++;
+      programIdx++;
       tokType = QUOTEDSTR;
     } else { // unknown character terminates program
       token = EOP;
@@ -763,40 +770,44 @@ int lookUp(String s){
 
 // Find the start of the next line.
 void findEOL() {
-  while(progIdx < prog.length && prog[progIdx] != '\n')
-    ++progIdx;
-  if (progIdx < prog.length)
-    progIdx++;
+  while(programIdx < program.length && program[programIdx] != '\n')
+    ++programIdx;
+  if (programIdx < program.length)
+    programIdx++;
 }
 
-BASICOutput interpretBasic(String program, input){
-  if (program == null || program == '')
+BASICOutput interpretBasic(String code, input){
+  if (code == null || code == '')
     return BASICOutput('', '');
+
   // Initialize for new program run.
 
-  prog = program;
+  program = code;
   fStack.clear();
   labelTable.clear();
   gStack.clear();
-  progIdx = 0;
+  programIdx = 0;
   STDIN = input.split(' ');
   inputIdx = 0;
 
+print(program);
   // find all labels
   int i;
   Object result;
 
   // See if the first token in the file is a label.
   getToken();
-  if (tokType == NUMBER)
-    labelTable.put(token, progIdx);
-
+  if (tokType == NUMBER) {
+    print(token);
+    labelTable.put(token, programIdx);
+  }
   findEOL();
 
   do {
     getToken();
     if (tokType == NUMBER) {// must be a line number
-      result = labelTable.put(token, progIdx);
+      print(token);
+      result = labelTable.put(token, programIdx);
       if (result != null)
         handleErr(DUPLABEL);
     }
@@ -805,7 +816,7 @@ BASICOutput interpretBasic(String program, input){
     if (kwToken != EOL)
       findEOL();
   } while(token != EOP);
-  progIdx = 0; // reset index to start of program
+  programIdx = 0; // reset index to start of program
 
   // execute - this is the interpreter's main loop.
     do {
@@ -816,7 +827,7 @@ BASICOutput interpretBasic(String program, input){
         assignment(); // handle assignment statement
       } else // is keyword
         switch(kwToken) {
-          case PRINT:  print();     break;
+          case PRINT:  printf();     break;
           case GOTO:   execGoto();  break;
           case IF:     execif ();   break;
           case FOR:    execFor();   break;
