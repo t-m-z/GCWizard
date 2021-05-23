@@ -5,39 +5,13 @@ import 'package:gc_wizard/logic/tools/science_and_technology/check_digits/base/c
 // https://en.wikipedia.org/wiki/International_Bank_Account_Number
 // https://web.archive.org/web/20171220203336/http://www.europebanks.info/ibanguide.php#5
 
+// https://www.bundesbank.de/de/aufgaben/unbarer-zahlungsverkehr/serviceangebot/pruefzifferberechnung/pruefzifferberechnung-fuer-kontonummern-603282
+// https://www.bundesbank.de/resource/blob/603320/16a80c739bbbae592ca575905975c2d0/mL/pruefzifferberechnungsmethoden-data.pdf
+// https://www.bundesbank.de/de/aufgaben/unbarer-zahlungsverkehr/serviceangebot/bankleitzahlen/download-bankleitzahlen-602592
+
 // GC7DCXZ => calculate checkDigit
 //         => calculate Number
 // GC4TKB5 => calculate checkDigit
-
-
-final Map IBAN_COUNTRYCODE = {
-  'A' : '10',
-  'B' : '11',
-  'C' : '12',
-  'D' : '13',
-  'E' : '14',
-  'F' : '15',
-  'G' : '16',
-  'H' : '17',
-  'I' : '18',
-  'J' : '19',
-  'K' : '20',
-  'L' : '21',
-  'M' : '22',
-  'N' : '23',
-  'O' : '24',
-  'P' : '25',
-  'Q' : '26',
-  'R' : '27',
-  'S' : '28',
-  'T' : '29',
-  'U' : '30',
-  'V' : '31',
-  'W' : '32',
-  'X' : '33',
-  'Y' : '34',
-  'Z' : '35',
-};
 
 
 CheckDigitOutput CheckIBANNumber(String number){
@@ -63,12 +37,12 @@ List<String> CalculateIBANDigits(String number){
 }
 
 bool checkIBAN(String number) {
-  number = number.substring(4) + IBAN_COUNTRYCODE[number[0]] + IBAN_COUNTRYCODE[number[1]] + number[2] + number[3];
+  number = number.substring(4) + ID_LETTERCODE[number[0]] + ID_LETTERCODE[number[1]] + number[2] + number[3];
   return (BigInt.parse(number) % BigInt.from(97) == BigInt.one);
 }
 
 String calculateIBANCheckDigit(String number) {
-  number = number.substring(4) + IBAN_COUNTRYCODE[number[0]] + IBAN_COUNTRYCODE[number[1]] + '00';
+  number = number.substring(4) + ID_LETTERCODE[number[0]] + ID_LETTERCODE[number[1]] + '00';
   BigInt checkDigit = BigInt.from(98) - BigInt.parse(number) % BigInt.from(97);
   if (checkDigit < BigInt.from(10))
     number =  '0' + checkDigit.toString();

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/check_digits/base/check_digits.dart';
+import 'package:gc_wizard/logic/tools/science_and_technology/check_digits/de_bank_number.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
@@ -59,6 +60,10 @@ class CheckDigitsCalculateMissingDigitsState extends State<CheckDigitsCalculateM
   }
 
   _buildOutput() {
+    if (_numbers.join('') == '')
+      return  GCWDefaultOutput(
+        child: '',
+      );
 
     if (_numbers[0].startsWith('checkdigits_invalid_length'))
       return  GCWDefaultOutput(
@@ -92,7 +97,8 @@ class CheckDigitsCalculateMissingDigitsState extends State<CheckDigitsCalculateM
             title: i18n(context, 'checkdigits_hint'),
             suppressCopyButton: true,
             child: i18n(context, 'checkdigits_iban_hint'),
-          )
+          ),
+          _showInvalidBankNumbers(),
         ],
       );
     else
@@ -108,4 +114,27 @@ class CheckDigitsCalculateMissingDigitsState extends State<CheckDigitsCalculateM
         )
     );
   }
+
+
+  _showInvalidBankNumbers(){
+    Map output = new Map();
+    int count = 1;
+    for (int i = 0; i < _numbers.length; i++) {
+      if (BANK_NUMBERS_ACCOUNT_METHODS[_numbers[i].substring(4,12)] == null)
+        output[count.toString()+'.'] = _numbers[i];
+    }
+    
+    return GCWOutput(
+        title: i18n(context, 'checkdigits_iban_invalid_banknumbers'),
+        child: Column(
+            children: columnedMultiLineOutput(
+                context,
+                output.entries.map((entry) {
+                  return [entry.key, entry.value];
+                }).toList(),
+                flexValues: [1,4]
+            )
+        ));
+  }
+
 }

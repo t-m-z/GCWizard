@@ -7,6 +7,35 @@ import 'package:gc_wizard/logic/tools/science_and_technology/check_digits/isbn.d
 import 'package:gc_wizard/logic/tools/science_and_technology/check_digits/euro.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
+final Map ID_LETTERCODE = {
+  'A' : '10',
+  'B' : '11',
+  'C' : '12',
+  'D' : '13',
+  'E' : '14',
+  'F' : '15',
+  'G' : '16',
+  'H' : '17',
+  'I' : '18',
+  'J' : '19',
+  'K' : '20',
+  'L' : '21',
+  'M' : '22',
+  'N' : '23',
+  'O' : '24',
+  'P' : '25',
+  'Q' : '26',
+  'R' : '27',
+  'S' : '28',
+  'T' : '29',
+  'U' : '30',
+  'V' : '31',
+  'W' : '32',
+  'X' : '33',
+  'Y' : '34',
+  'Z' : '35',
+};
+
 enum CheckDigitsMode {
   EAN,
   DEPERSID,
@@ -20,8 +49,10 @@ enum CheckDigitsMode {
 final MASKINPUTFORMATTER_EURO = MaskTextInputFormatter(mask: "@########", filter: {"@": RegExp(r'[AB?]'), "#": RegExp(r'[0-9?]')});
 final MASKINPUTFORMATTER_IBAN = MaskTextInputFormatter(mask: "@@################################", filter: {"@": RegExp(r'[A-Za-z?]'), "#": RegExp(r'[0-9?]')});
 final MASKINPUTFORMATTER_ISBN = MaskTextInputFormatter(mask: "#########@###", filter: {"@": RegExp(r'[A-Za-z0-9?]'), "#": RegExp(r'[0-9?]')});
-final MASKINPUTFORMATTER_DEPERSID = MaskTextInputFormatter(mask: "##########@<<#######<#######<<<<<<<#", filter: {"@": RegExp(r'[A-Za-z?]'), "#": RegExp(r'[0-9?]')});
-final MASKINPUTFORMATTER_DETAXID = MaskTextInputFormatter(mask: "###########");
+final MASKINPUTFORMATTER_DEPERSID = MaskTextInputFormatter(mask: "@#########@<<#######<#######<<<<<<<#", filter: {"@": RegExp(r'[A-Za-z?]'), "#": RegExp(r'[0-9?]')});
+final MASKINPUTFORMATTER_DEPERSID_SERIAL = MaskTextInputFormatter(mask: "@@@@@@@@@@", filter: {"@": RegExp(r'[A-Za-z0-9?]')});
+final MASKINPUTFORMATTER_DEPERSID_DATE = MaskTextInputFormatter(mask: "#######", filter: {"#": RegExp(r'[0-9?]')});
+final MASKINPUTFORMATTER_DEPERSID_DIGIT = MaskTextInputFormatter(mask: "#", filter: {"#": RegExp(r'[0-9?]')});
 final MASKINPUTFORMATTER_IMEI = MaskTextInputFormatter(mask: "###############");
 final MASKINPUTFORMATTER_EAN = MaskTextInputFormatter(mask: "##################");
 
