@@ -1724,6 +1724,7 @@
   "icecodes_system_sigrid_99": "Unknown",
   "image_colorcorrections_title": "Color Corrections",
   "image_colorcorrections_description": "Adjust color values of an image",
+  "image_colorcorrections_file_title": "Filepicker Demo",
   "imagesandfiles_selection_title": "Images and Files",
   "imagesandfiles_selection_description": "Tools for analyzing images and other file types",
   "imageview_fullscreen_title": "Image View: Fullscreen",

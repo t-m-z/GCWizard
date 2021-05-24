@@ -5,7 +5,10 @@ import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/gcw_imageview.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
-import 'package:gc_wizard/widgets/utils/file_picker.dart';
+//import 'package:gc_wizard/widgets/utils/file_picker.dart';
+import 'package:gc_wizard/widgets/utils/file_picker_tmz.dart';
+import 'package:gc_wizard/widgets/utils/file_utils.dart';
+
 
 class ImageColorCorrections extends StatefulWidget {
   @override
@@ -17,6 +20,8 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
   Uint8List _originalData;
 
   var _currentSaturation = 0.5;
+
+  var _filePicker = new FilePickerDemo();
 
   GCWSwitchPosition _currentMode = GCWSwitchPosition.left;
 
@@ -38,10 +43,18 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
           text: i18n(context, 'common_exportfile_openfile'),
           onPressed: () {
             setState(() {
-              openFileExplorer(context).then((file) {
+//    openFileExplorer(context).then((file) {
+              _filePicker.openFileExplorer().then((file) {
                 if (file != null) {
-                  _currentData = file.bytes;
-                  _originalData = file.bytes;
+                  print('open '+file.substring(1, file.length - 1));
+                  readByteDataFromFile(file.substring(1, file.length - 1)).then((data)
+                  {if (data != null)
+                    _currentData = data;
+                    _originalData = data;
+                  });
+                  //          _originalData = file.bytes;
+                  //          _currentData = file.bytes;
+                  //          _originalData = file.bytes;
                   setState(() {});
                 }
               });

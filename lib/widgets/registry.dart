@@ -296,6 +296,8 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/vanity_words_list
 import 'package:gc_wizard/widgets/tools/science_and_technology/vanity_words_search.dart';
 import 'package:gc_wizard/widgets/tools/symbol_tables/gcw_symbol_table_tool.dart';
 
+import 'package:gc_wizard/widgets/utils/file_picker_tmz.dart';
+
 class Registry {
   // List of all available tools
   static List<GCWTool> toolList;
@@ -859,6 +861,14 @@ class Registry {
             SEARCHSTRING_EN_IMAGESANDFILESSELECTION,
             SEARCHSTRING_FR_IMAGESANDFILESSELECTION
           ]),
+      GCWTool(
+          tool: FilePickerDemo(),
+          autoScroll: false,
+          category: ToolCategory.IMAGES_AND_FILES,
+          i18nPrefix: 'image_colorcorrections_file',
+          missingHelpLocales: [],
+          searchStrings:[]
+      ),
       GCWTool(
           tool: ImageColorCorrections(),
           autoScroll: false,
