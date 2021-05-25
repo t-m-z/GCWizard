@@ -117,23 +117,23 @@ Map<String, dynamic> encodeMayaCalendar(int input) {
     'displays': vigesimal.split('').map((digit) {
       return _numbersToSegments[int.tryParse(convertBase(digit, 20, 10))];
     }).toList(),
-    'numbers': _longCountToList(input),
+    'numbers': MayaDayCountToMayaLongCount(input),
     'vigesimal': vigesimal
   };
 }
 
-List<int> _longCountToList(int numberDec) {
-  if (numberDec == 0) return [0];
+List<int> MayaDayCountToMayaLongCount(int mayaDayCount) {
+  if (mayaDayCount == 0) return [0];
 
   List<int> result = <int>[];
 
   int start = 0;
-  while (numberDec < mayaCalendarSystem[mayaCalendarSystem.length - 1 - start]) start++;
+  while (mayaDayCount < mayaCalendarSystem[mayaCalendarSystem.length - 1 - start]) start++;
   for (int position = mayaCalendarSystem.length - start; position > 0; position--) {
     int value = 0;
-    while (numberDec >= mayaCalendarSystem[position - 1]) {
+    while (mayaDayCount >= mayaCalendarSystem[position - 1]) {
       value++;
-      numberDec = numberDec - mayaCalendarSystem[position - 1];
+      mayaDayCount = mayaDayCount - mayaCalendarSystem[position - 1];
     }
     result.add(value);
   }
@@ -207,7 +207,7 @@ String convertDecToMayaCalendar(String input) {
   return result;
 }
 
-String MayaDayCountToTzolkin(List<int> longCount) {
+String MayaLongCountToTzolkin(List<int> longCount) {
   int dayCount = MayaLongCountToMayaDayCount(longCount);
   if (dayCount == 0) return '4 Ahau';
 
@@ -216,7 +216,7 @@ String MayaDayCountToTzolkin(List<int> longCount) {
   return (1 + (dayCount - 1) % 13).toString() + ' ' + _maya_tzolkin[1 + (dayCount - 1) % 20];
 }
 
-String MayaDayCountToHaab(List<int> longCount) {
+String MayaLongCountToHaab(List<int> longCount) {
   int dayCount = MayaLongCountToMayaDayCount(longCount);
   if (dayCount == 0) return '8 Cumhu';
 
@@ -255,6 +255,13 @@ int MayaDayCountToJulianDate(int mayaDayCount){
     return (mayaDayCount + _CORRELATION_NUMBER[THOMPSON]);
   else
     return (mayaDayCount + _CORRELATION_NUMBER[Prefs.getString('mayacalendar_correlation')]);
+}
+
+int JulianDate2MayaDayCount(int julianDayCount){
+  if (Prefs.getString('mayacalendar_correlation') == null || Prefs.getString('mayacalendar_correlation') == '')
+    return (julianDayCount - _CORRELATION_NUMBER[THOMPSON]);
+  else
+    return (julianDayCount - _CORRELATION_NUMBER[Prefs.getString('mayacalendar_correlation')]);
 }
 
 

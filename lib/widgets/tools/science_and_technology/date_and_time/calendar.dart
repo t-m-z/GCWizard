@@ -2,13 +2,18 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/date_and_time/calendar.dart';
+import 'package:gc_wizard/logic/tools/science_and_technology/maya_calendar.dart';
 import 'package:gc_wizard/logic/common/date_utils.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_date_picker.dart';
 import 'package:gc_wizard/widgets/common/gcw_double_spinner.dart';
+import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
+import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
-import 'package:intl/intl.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+
 
 class Calendar extends StatefulWidget {
   @override
@@ -19,17 +24,28 @@ class CalendarState extends State<Calendar> {
   CalendarSystem _currentCalendarSystem = CalendarSystem.JULIANDATE;
   double _currentJulianDate = 0.0;
   DateTime _currentDate;
+  
+  var _currentMayaMode = GCWSwitchPosition.left;
+  int _currentMayaDayCount = 0;
+  String _currentMayaLongCount = '';
+  TextEditingController _MayaLongCountController;
+
+  final MASKINPUTFORMATTER_MAYALONGCOUNT = MaskTextInputFormatter(mask: "##.##.##.##.##.##.##.##.##", filter: {"#": RegExp(r'[0-9?]')});
 
   @override
   void initState() {
     DateTime now = DateTime.now();
     _currentDate = DateTime(now.year, now.month, now.day);
     _currentJulianDate = GregorianCalendarToJulianDate(_currentDate);
+    _currentMayaDayCount = JulianDate2MayaDayCount((_currentJulianDate + 0.5).floor());  //(jd + 0.5).floor();
+    _currentMayaLongCount = MayaLongCount(MayaDayCountToMayaLongCount(JulianDate2MayaDayCount((_currentJulianDate + 0.5).floor())));
+    _MayaLongCountController = TextEditingController(text: _currentMayaLongCount);
     super.initState();
   }
 
   @override
   void dispose() {
+    _MayaLongCountController.dispose();
     super.dispose();
   }
 
@@ -72,6 +88,39 @@ class CalendarState extends State<Calendar> {
               });
             },
           ),
+        if (_currentCalendarSystem == CalendarSystem.MAYACALENDAR)
+          Column(
+            children: <Widget>[
+              GCWTwoOptionsSwitch(
+                leftValue: i18n(context, 'mayacalendar_system_longcount'),
+                rightValue: i18n(context, 'mayacalendar_daycount'),
+                value: _currentMayaMode,
+                onChanged: (value) {
+                  setState(() {
+                    _currentMayaMode = value;
+                  });
+                }
+              ),
+              _currentMayaMode == GCWSwitchPosition.left
+              ? GCWTextField(
+                  controller: _MayaLongCountController,
+                  inputFormatters: [MASKINPUTFORMATTER_MAYALONGCOUNT],
+                  onChanged: (text) {
+                    setState(() {
+                      _currentMayaLongCount = text;
+                    });
+                  },
+              )
+              : GCWIntegerSpinner(
+                  value: _currentMayaDayCount,
+                  onChanged: (value) {
+                    setState(() {
+                      _currentMayaDayCount = value;
+                    });
+                  }                
+              )    
+            ],
+          ),
         _buildOutput()
       ],
     );
@@ -113,6 +162,19 @@ class CalendarState extends State<Calendar> {
         jd = CopticCalendarToJulianDate(_currentDate);
         output['dates_weekday_title'] = i18n(context, WEEKDAY[Weekday(jd)]);
         break;
+      case CalendarSystem.MAYACALENDAR:
+        if (_currentMayaMode == GCWSwitchPosition.left) {
+          List<int> _lc = <int>[];
+          if (_currentMayaLongCount == null || _currentMayaLongCount == '')
+            _currentMayaLongCount = '0';
+          for (var value in _currentMayaLongCount.split('.')) {
+            _lc.add(int.parse(value));
+          }
+          jd = MayaDayCountToJulianDate(MayaLongCountToMayaDayCount(_lc)).toDouble();
+        }else
+          jd = MayaDayCountToJulianDate(_currentMayaDayCount).toDouble();
+        output['dates_weekday_title'] = i18n(context, WEEKDAY[Weekday(jd)]);
+        break;
     }
     output['dates_calendar_system_juliandate'] = (jd + 0.5).floor();
     output['dates_calendar_system_juliancalendar'] = _DateOutputToString(context, JulianDateToJulianCalendar(jd, true), CalendarSystem.JULIANCALENDAR);
@@ -122,6 +184,9 @@ class CalendarState extends State<Calendar> {
     output['dates_calendar_system_hebrewcalendar'] = _HebrewDateToString(JulianDateToHebrewCalendar(jd), jd);
     output['dates_calendar_system_persiancalendar'] = _DateOutputToString(context, JulianDateToPersianYazdegardCalendar(jd), CalendarSystem.PERSIANYAZDEGARDCALENDAR);
     output['dates_calendar_system_copticcalendar'] = _DateOutputToString(context, JulianDateToCopticCalendar(jd), CalendarSystem.COPTICCALENDAR);
+    output['mayacalendar_title'] = MayaLongCount(MayaDayCountToMayaLongCount(JulianDate2MayaDayCount(jd.toInt()))) + '\n' +
+                                   MayaLongCountToTzolkin(MayaDayCountToMayaLongCount(JulianDate2MayaDayCount(jd.toInt()))) + '     ' + MayaLongCountToHaab(MayaDayCountToMayaLongCount(JulianDate2MayaDayCount(jd.toInt())))  + '\n' +
+                                   JulianDate2MayaDayCount(jd.toInt()).toString();
     return GCWDefaultOutput(
         child: Column(
           children: columnedMultiLineOutput(
