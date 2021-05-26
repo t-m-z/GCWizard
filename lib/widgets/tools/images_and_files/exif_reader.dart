@@ -18,6 +18,7 @@ import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/utils/file_picker.dart';
+import 'package:gc_wizard/widgets/utils/file_picker_tmz.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:gc_wizard/widgets/utils/platform_file.dart';
 import 'package:image/image.dart' as Image;
@@ -41,6 +42,8 @@ class _ExifReaderState extends State<ExifReader> {
   LatLng point;
   GCWImageViewData thumbnail;
   ImageWrapper imageWrapper;
+
+  var _filePicker = new FilePickerDemo();
 
   @override
   initState() {
@@ -66,6 +69,10 @@ class _ExifReaderState extends State<ExifReader> {
   }
 
   Future<void> _readFileFromPicker() async {
+    _filePicker.openFileExplorer().then((file) {
+      
+    });
+
     var file =
         await openFileExplorer(context, allowedExtensions: ['.jpg', '.jpeg', '.tiff', '.png', '.bmp', '.gif', '.webp']);
     if (file != null) {
