@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:typed_data';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_divider.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
@@ -15,9 +16,10 @@ import 'package:gc_wizard/widgets/common/gcw_exported_file_dialog.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
+import 'package:gc_wizard/widgets/utils/file_picker_tmz.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:gc_wizard/widgets/utils/file_picker.dart';
-import 'package:gc_wizard/widgets/utils/platform_file.dart';
+//import 'package:gc_wizard/widgets/utils/platform_file.dart';
 import 'package:intl/intl.dart';
 
 class AnimatedImage extends StatefulWidget {
@@ -34,6 +36,7 @@ class AnimatedImageState extends State<AnimatedImage> {
   PlatformFile _platformFile;
   GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
   bool _play = false;
+  var _filePicker = new FilePickerDemo();
 
   @override
   Widget build(BuildContext context) {
@@ -47,9 +50,11 @@ class AnimatedImageState extends State<AnimatedImage> {
           text: i18n(context, 'common_exportfile_openfile'),
           onPressed: () {
             setState(() {
-              openFileExplorer(context, rootDirectory: Directory('storage'), allowedExtensions: ['.gif', '.png', '.webp']).then((file) {
+              //openFileExplorer(context, rootDirectory: Directory('storage'), allowedExtensions: ['.gif', '.png', '.webp']).then((file) {
+             _filePicker.openFileExplorer().then((file){
                 if (file != null) {
-                  _platformFile = file;
+                  _platformFile = file[0];
+
                   _analysePlatformFileAsync();
                 }
                 ;
