@@ -862,14 +862,14 @@ class Registry {
             SEARCHSTRING_EN_IMAGESANDFILESSELECTION,
             SEARCHSTRING_FR_IMAGESANDFILESSELECTION
           ]),
-      GCWTool(
-          tool: FilePickerDemo(),
-          autoScroll: false,
-          category: ToolCategory.IMAGES_AND_FILES,
-          i18nPrefix: 'image_colorcorrections_file',
-          missingHelpLocales: [],
-          searchStrings:[]
-      ),
+ //     GCWTool(
+ //         tool: FilePickerDemo(),
+ //         autoScroll: false,
+ //         category: ToolCategory.IMAGES_AND_FILES,
+ //         i18nPrefix: 'image_colorcorrections_file',
+ //         missingHelpLocales: [],
+ //         searchStrings:[]
+ //     ),
       GCWTool(
           tool: ImageColorCorrections(),
           autoScroll: false,

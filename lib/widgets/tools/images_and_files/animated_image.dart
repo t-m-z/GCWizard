@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_divider.dart';
@@ -46,7 +47,7 @@ class AnimatedImageState extends State<AnimatedImage> {
           text: i18n(context, 'common_exportfile_openfile'),
           onPressed: () {
             setState(() {
-              openFileExplorer(context, allowedExtensions: ['.gif', '.png', '.webp']).then((file) {
+              openFileExplorer(context, rootDirectory: Directory('storage'), allowedExtensions: ['.gif', '.png', '.webp']).then((file) {
                 if (file != null) {
                   _platformFile = file;
                   _analysePlatformFileAsync();

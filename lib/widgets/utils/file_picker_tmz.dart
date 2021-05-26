@@ -3,7 +3,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class FilePickerDemo extends StatefulWidget {
+class FilePickerDemo {//}extends StatefulWidget {
   String _fileName;
   String _directoryPath;
   List<PlatformFile> _paths;
@@ -12,7 +12,7 @@ class FilePickerDemo extends StatefulWidget {
   String _extension;
 
   @override
-  FilePickerDemoState createState() => FilePickerDemoState();
+  //FilePickerDemoState createState() => FilePickerDemoState();
 
   Future<String> openFileExplorer() async {
     try {
@@ -37,7 +37,7 @@ class FilePickerDemo extends StatefulWidget {
     return (_paths != null ? _paths.map((e) => e.path).toString() : '...');
   }
 }
-
+/*
 class FilePickerDemoState extends State<FilePickerDemo> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   String _fileName;
@@ -255,5 +255,5 @@ class FilePickerDemoState extends State<FilePickerDemo> {
       ),
     );
   }
-}
+}*/
 

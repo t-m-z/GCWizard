@@ -19,6 +19,7 @@ import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart'
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/utils/file_picker.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
+import 'package:gc_wizard/widgets/utils/platform_file.dart';
 import 'package:image/image.dart' as Image;
 // import 'package:image_size_getter/file_input.dart';
 // import 'package:image_size_getter/image_size_getter.dart';
@@ -258,6 +259,9 @@ class _ExifReaderState extends State<ExifReader> {
     return (datetime == null) ? '' : DateFormat().format(datetime);
     // return DateFormat.yMMMd().add_jm().format(datetime);
   }
+}
+
+getFileData(PlatformFile file) {
 }
 
 class ImageWrapper {

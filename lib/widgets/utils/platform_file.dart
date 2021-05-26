@@ -19,4 +19,6 @@ class PlatformFile {
 
   /// File extension for this file.
   String get extension => name?.split('.').last;
+
+  get size => null;
 }
