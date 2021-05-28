@@ -51,9 +51,12 @@ class AnimatedImageState extends State<AnimatedImage> {
           onPressed: () {
             setState(() {
               //openFileExplorer(context, rootDirectory: Directory('storage'), allowedExtensions: ['.gif', '.png', '.webp']).then((file) {
-             _filePicker.openFileExplorer().then((file){
+             _filePicker.openFileExplorer(FileType.custom, false, 'gif, png, webp').then((file){
                 if (file != null) {
                   _platformFile = file[0];
+print(_platformFile.path);
+print(_platformFile.name);
+print(_platformFile.bytes.toString());
 
                   _analysePlatformFileAsync();
                 }

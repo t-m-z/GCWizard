@@ -4,13 +4,10 @@ import 'package:flutter/services.dart';
 
 class FilePickerDemo {
   List<PlatformFile> _files;
-  FileType _pickingType = FileType.any;
-  bool _multiPick = false;
-  String _extension;
 
   @override
 
-  Future<List<PlatformFile>> openFileExplorer() async {
+  Future<List<PlatformFile>> openFileExplorer(FileType _pickingType, bool _multiPick, String _extension ) async {
     try {
       _files = (await FilePicker.platform.pickFiles(
                 type: _pickingType,

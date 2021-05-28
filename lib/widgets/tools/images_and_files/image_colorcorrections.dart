@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
@@ -42,7 +43,7 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
           text: i18n(context, 'common_exportfile_openfile'),
           onPressed: () {
             setState(() {
-             _filePicker.openFileExplorer().then((file) {
+             _filePicker.openFileExplorer(FileType.any, false, '').then((file) {
                 if (file != null) {
                   readByteDataFromFile(file[0].path).then((data)
                   {if (data != null)
