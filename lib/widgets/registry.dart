@@ -257,6 +257,7 @@ import 'package:gc_wizard/widgets/tools/games/game_of_life/game_of_life.dart';
 import 'package:gc_wizard/widgets/tools/games/scrabble.dart';
 import 'package:gc_wizard/widgets/tools/games/sudoku/sudoku_solver.dart';
 import 'package:gc_wizard/widgets/tools/general_tools/grid_generator/grid.dart';
+import 'package:gc_wizard/widgets/tools/images_and_files/adventure_labs.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/animated_image.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/animated_image_morse_code.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/binary2image.dart';
@@ -391,6 +392,11 @@ initializeRegistry(BuildContext context) {
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: [
       'adfgvx',
+    ]),
+    GCWTool(tool: AdventureLabs(), i18nPrefix: 'adventure_labs', categories: [
+      ToolCategory.IMAGES_AND_FILES
+    ], searchKeys: [
+      'adventure_labs',
     ]),
     GCWTool(tool: Affine(), i18nPrefix: 'affine', categories: [
       ToolCategory.CRYPTOGRAPHY
