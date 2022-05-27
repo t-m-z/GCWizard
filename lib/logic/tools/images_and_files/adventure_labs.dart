@@ -53,6 +53,9 @@ class AdventureData {
   final String RatingsTotalCount;
   final String Latitude;
   final String Longitude;
+  final String AdventureThemes;
+  final String OwnerUsername;
+  final String OwnerId;
   final List<AdventureStages> Stages;
   AdventureData(
       {
@@ -67,17 +70,45 @@ class AdventureData {
         this.RatingsTotalCount = '',
         this.Latitude = '',
         this.Longitude = '',
+        this.AdventureThemes = '',
+        this.OwnerUsername,
+        this.OwnerId,
         this.Stages,
   });
 }
 
 class AdventureStages {
-  final String ID;
+  final String Id;
+  final String Title;
+  final String Description;
+  final String KeyImageUrl;
+  final String Latitude;
+  final String Longitude;
+  final String AwardImageUrl;
+  final String AwardVideoYouTubeId;
+  final String CompletionAwardMessage;
+  final String GeofencingRadius;
+  final String Question;
+  final String CompletionCode;
+  final String MultiChoiceOptions;
+  final String KeyImage;
 
   AdventureStages({
-    this.ID = '',
-
-});
+    this.Id = '',
+    this.Title = '',
+    this.Description = '',
+    this.KeyImageUrl = '',
+    this.Latitude = '',
+    this.Longitude = '',
+    this.AwardImageUrl = '',
+    this.AwardVideoYouTubeId = '',
+    this.CompletionAwardMessage = '',
+    this.GeofencingRadius = '',
+    this.Question = '',
+    this.CompletionCode = '',
+    this.MultiChoiceOptions = '',
+    this.KeyImage = '',
+  });
 
 }
 
@@ -97,13 +128,13 @@ Future<Map<String, dynamic>> getAdventureData(LatLng coordinate, int radius, {Se
   var out = Map<String, dynamic>();
 
   String httpCode = '';
+  String httpCodeStages = '';
   String httpMessage = '';
+  String httpMessageStages = '';
+
+  List<AdventureStages> Stages = [];
 
   try {
-    print('TRY getAdventureData(coordinate, radius)');
-    print(coordinate.latitude);
-    print(coordinate.longitude);
-    print(radius);
     final response = await http.get(
       Uri.parse(
         SEARCH_ADDRESSV3 +
@@ -113,42 +144,83 @@ Future<Map<String, dynamic>> getAdventureData(LatLng coordinate, int radius, {Se
       headers: HEADERS,
     );
     final Map<String, dynamic> responseJson = json.decode(response.body) as Map<String, dynamic>;
-print(response.statusCode.toString());
-print(response.reasonPhrase);
-print(responseJson);
-print('----------------------------------------------------------------------------------------------------------');
     httpCode = response.statusCode.toString();
     httpMessage = response.reasonPhrase;
 
-    if (response.statusCode == 200) {
+    if (httpCode == '200') {
       List<AdventureData> AdventureList = [];
       int totalCount = responseJson["TotalCount"];
-      String id = '';
-      print(totalCount);
-      print( responseJson["Items"]);
-      print( responseJson["Items"][0]);
-      print( responseJson["Items"][1]);
-      print( responseJson["Items"][2]);
+      List<dynamic> responseItems = responseJson["Items"];
       for (int i = 0; i < totalCount; i++) {
-        print('######################################################################################################');
-        print( responseJson["Items"][i]);
-        id = responseJson["Items"][i]["Id"];
+        Map<String, dynamic> item = responseItems[i];
+        print(item);
+        var AdventureGuid = item["AdventureGuid"].toString();
+        var Id = item["Id"].toString();
+        var Title = item["Title"].toString();
+        var Description = item["Description"].toString();
+        var KeyImageUrl = item["KeyImageUrl"].toString();
+        var DeepLink = item["DeepLink"].toString();
+        var OwnerPublicGuid = item["OwnerPublicGuid"].toString();
+        var RatingsAverage = item["RatingsAverage"].toString();
+        var RatingsTotalCount = item["RatingsTotalCount"].toString();
+        var Latitude = item["Location"]["Latitude"].toString();
+        var Longitude = item["Location"]["Longitude"].toString();
+        var AdventureThemes = item["AdventureThemes"].join(', ');
+        var OwnerUsername = '';
+        var OwnerId = '';
+
         // get Details for LabCache with ID
+        final responseStages = await http.get(
+          Uri.parse(DETAIL_ADDRESS + Id),
+          headers: HEADERS,
+        );
+        final Map<String, dynamic> responseJsonStages = json.decode(responseStages.body) as Map<String, dynamic>;
+        httpCodeStages = responseStages.statusCode.toString();
+        httpMessageStages = responseStages.reasonPhrase;
+print(responseJsonStages);
+        if (httpCodeStages == '200') {
+          Description = responseJsonStages["Description"].toString();
+          OwnerUsername = responseJsonStages["OwnerUsername"].toString();
+          OwnerId = responseJsonStages["OwnerId"].toString();
+
+          responseJsonStages["GeocacheSummaries"].forEach((stage) {
+            print(stage);
+            Stages.add(
+                AdventureStages(
+                  Id: stage["Id"].toString(),
+                  Title: stage["Title"].toString(),
+                  AwardImageUrl: stage["AwardImageUrl"].toString(),
+                  AwardVideoYouTubeId: stage["AwardVideoYouTubeId"].toString(),
+                  CompletionAwardMessage: stage["CompletionAwardMessage"].toString(),
+                  CompletionCode: stage["CompletionCode"].toString(),
+                  GeofencingRadius: stage["GeofencingRadius"].toString(),
+                  KeyImage: stage["KeyImage"].toString(),
+                  KeyImageUrl: stage["KeyImageUrl"].toString(),
+                  Latitude: stage["Location"]["Latitude"].toString(),
+                  Longitude: stage["Location"]["Longitude"].toString(),
+                  MultiChoiceOptions: stage["MultiChoiceOptions"].toString(),
+                )
+            );
+          });
+        }
 
         AdventureList.add(
           AdventureData(
-            AdventureGuid: responseJson["Items"][i]["AdventureGuid"],
-            Id: responseJson["Items"][i]["Id"],
-            Title: responseJson["Items"][i]["Title"],
-            KeyImageUrl: responseJson["Items"][i]["KeyImageUrl"],
-            DeepLink: responseJson["Items"][i]["DeepLink"],
-            Description: responseJson["Items"][i]["Description"],
-            OwnerPublicGuid: responseJson["Items"][i]["OwnerPublicGuid"],
-            RatingsAverage: responseJson["Items"][i]["RatingsAverage"],
-            RatingsTotalCount: responseJson["Items"][i]["RatingsTotalCount"],
-            Latitude: responseJson["Items"][i]["Latitude"],
-            Longitude: responseJson["Items"][i]["Longitude"],
-            Stages: [],
+            AdventureGuid: AdventureGuid,
+            Id: Id,
+            Title: Title,
+            KeyImageUrl: KeyImageUrl,
+            DeepLink: DeepLink,
+            Description: Description,
+            OwnerPublicGuid: OwnerPublicGuid,
+            RatingsAverage: RatingsAverage,
+            RatingsTotalCount: RatingsTotalCount,
+            Latitude: Latitude,
+            Longitude: Longitude,
+            AdventureThemes: AdventureThemes,
+            OwnerId: OwnerId,
+            OwnerUsername: OwnerUsername,
+            Stages: Stages,
           )
         );
       }
@@ -177,8 +249,5 @@ print('-------------------------------------------------------------------------
           httpMessage: httpMessage)
     });
   } // end catch exception
-  print(out);
-  print(out['adventures']);
-  print(out['adventures'].AdventureList);
   return out;
 }
