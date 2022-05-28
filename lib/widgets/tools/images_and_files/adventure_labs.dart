@@ -121,7 +121,7 @@ class AdventureLabsState extends State<AdventureLabs> {
     });
   }
 
-  List<List<dynamic>> _outputAdventure(AdventureData adventure){
+  List<List<dynamic>> _outputAdventureData(AdventureData adventure){
     List<List<dynamic>> result = [
       [i18n(context, 'adventure_labs_lab_adventureguid'), adventure.AdventureGuid],
       [i18n(context, 'adventure_labs_lab_id'), adventure.Id],
@@ -147,7 +147,7 @@ class AdventureLabsState extends State<AdventureLabs> {
     return result;
   }
 
-  List<List<dynamic>> _outputAdventureStage(AdventureStages stage){
+  List<List<dynamic>> _outputAdventureStageData(AdventureStages stage){
     List<List<dynamic>> result = [
       [i18n(context, 'adventure_labs_lab_stages'), stage.Title],
       [i18n(context, 'adventure_labs_lab_id'), stage.Id],
@@ -171,7 +171,7 @@ class AdventureLabsState extends State<AdventureLabs> {
     return result;
   }
 
-  _buildOutputStages(List<AdventureStages> stages){
+  _buildOutputAdventureStages(List<AdventureStages> stages){
     List<Widget> result = [];
     stages.forEach((stage) {
       result.add(
@@ -180,7 +180,7 @@ class AdventureLabsState extends State<AdventureLabs> {
           text: stage.Title,
           child: Column(
               children: columnedMultiLineOutput(
-                  context, _outputAdventureStage(stage),
+                  context, _outputAdventureStageData(stage),
                   flexValues: [1, 3]),),
         ),
       );
@@ -190,11 +190,11 @@ class AdventureLabsState extends State<AdventureLabs> {
     );
   }
 
-  _buildOutputDetails(AdventureData adventure){
+  _buildOutputAdventureDetails(AdventureData adventure){
     return Column(
       children:
         columnedMultiLineOutput(
-            context, _outputAdventure(adventure),
+            context, _outputAdventureData(adventure),
             flexValues: [1, 3]),
     );
 
@@ -215,8 +215,8 @@ class AdventureLabsState extends State<AdventureLabs> {
                   });
                 },
               ),
-              _buildOutputDetails(_adventureList[_currentAdventure]),
-              _buildOutputStages(_adventureList[_currentAdventure].Stages),
+              _buildOutputAdventureDetails(_adventureList[_currentAdventure]),
+              _buildOutputAdventureStages(_adventureList[_currentAdventure].Stages),
             ]
           )
         else
