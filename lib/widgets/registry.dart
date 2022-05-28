@@ -393,7 +393,7 @@ initializeRegistry(BuildContext context) {
     ], searchKeys: [
       'adfgvx',
     ]),
-    GCWTool(tool: AdventureLabs(), i18nPrefix: 'adventure_labs', categories: [
+    GCWTool(tool: AdventureLabs(), i18nPrefix: 'adventure_labs', isBeta: true, categories: [
       ToolCategory.IMAGES_AND_FILES
     ], searchKeys: [
       'adventure_labs',

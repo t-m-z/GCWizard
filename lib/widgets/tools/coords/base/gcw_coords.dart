@@ -5,6 +5,7 @@ import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
+import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_dec.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_dmm.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_dms.dart';
@@ -28,6 +29,7 @@ import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_swissgridplus.dar
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_utm.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_xyz.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
+import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_mapview.dart';
 import 'package:gc_wizard/widgets/tools/coords/utils/user_location.dart';
 import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
@@ -40,6 +42,7 @@ class GCWCoords extends StatefulWidget {
   final String title;
   final bool notitle;
   final bool restoreCoordinates;
+  final bool showMap;
 
   const GCWCoords(
       {Key key,
@@ -48,7 +51,8 @@ class GCWCoords extends StatefulWidget {
       this.onChanged,
       this.coordsFormat,
       this.notitle: false,
-      this.restoreCoordinates: false})
+      this.restoreCoordinates: false,
+      this.showMap: false})
       : super(key: key);
 
   @override
@@ -315,7 +319,7 @@ class GCWCoordsState extends State<GCWCoords> {
             children: [
               Expanded(child: _buildInputFormatSelector()),
               Container(
-                  child: _buildTrailingButtons(IconButtonSize.NORMAL),
+                  child: _buildTrailingButtons(IconButtonSize.NORMAL, showMap: widget.showMap),
                   padding: EdgeInsets.only(left: 2 * DEFAULT_MARGIN))
             ],
           )
@@ -324,7 +328,7 @@ class GCWCoordsState extends State<GCWCoords> {
     } else {
       _widget = Column(
         children: <Widget>[
-          GCWTextDivider(text: widget.title, bottom: 0.0, trailing: _buildTrailingButtons(IconButtonSize.SMALL)),
+          GCWTextDivider(text: widget.title, bottom: 0.0, trailing: _buildTrailingButtons(IconButtonSize.SMALL, showMap: widget.showMap)),
           _buildInputFormatSelector()
         ],
       );
@@ -364,9 +368,30 @@ class GCWCoordsState extends State<GCWCoords> {
     return currentValue["subtype"] != newValue["subtype"];
   }
 
-  _buildTrailingButtons(IconButtonSize size) {
+  _buildTrailingButtons(IconButtonSize size, {bool showMap}) {
     return Row(
       children: [
+        if (showMap == true)
+          Container(
+            child: GCWIconButton(
+              icon: Icons.my_location,
+              size: size,
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => GCWTool(
+                            tool: GCWMapView(
+                              isEditable: true, // false: open in Map
+                              // true:  open in FreeMap
+                            ),
+                            i18nPrefix: 'coords_map_view',
+                            autoScroll: false,
+                            suppressToolMargin: true)));
+                },
+            ),
+            padding: EdgeInsets.only(right: DEFAULT_MARGIN),
+          ),
         Container(
           child: GCWIconButton(
             icon: _isOnLocationAccess ? Icons.refresh : Icons.location_on,

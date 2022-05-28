@@ -11,11 +11,8 @@ import 'package:latlong2/latlong.dart';
 enum ANALYSE_RESULT_STATUS { OK, ERROR_HTTP, NONE}
 final Map<String, String> HTTP_STATUS = {
   '200': 'wherigo_http_code_200', // ok
-  '400': 'wherigo_http_code_400',
   '401': 'wherigo_http_code_401', // Unauthorized
   '404': 'wherigo_http_code_404', // Not found
-  '413': 'wherigo_http_code_413',
-  '500': 'wherigo_http_code_500',
   '503': 'wherigo_http_code_503',
 };
 
@@ -133,7 +130,6 @@ Future<Map<String, dynamic>> getAdventureData(LatLng coordinate, int radius, {Se
   String httpMessageStages = '';
 
   List<AdventureStages> Stages = [];
-
   try {
     final response = await http.get(
       Uri.parse(
@@ -146,14 +142,13 @@ Future<Map<String, dynamic>> getAdventureData(LatLng coordinate, int radius, {Se
     final Map<String, dynamic> responseJson = json.decode(response.body) as Map<String, dynamic>;
     httpCode = response.statusCode.toString();
     httpMessage = response.reasonPhrase;
-
     if (httpCode == '200') {
       List<AdventureData> AdventureList = [];
       int totalCount = responseJson["TotalCount"];
       List<dynamic> responseItems = responseJson["Items"];
       for (int i = 0; i < totalCount; i++) {
         Map<String, dynamic> item = responseItems[i];
-        print(item);
+
         var AdventureGuid = item["AdventureGuid"].toString();
         var Id = item["Id"].toString();
         var Title = item["Title"].toString();
@@ -177,23 +172,25 @@ Future<Map<String, dynamic>> getAdventureData(LatLng coordinate, int radius, {Se
         final Map<String, dynamic> responseJsonStages = json.decode(responseStages.body) as Map<String, dynamic>;
         httpCodeStages = responseStages.statusCode.toString();
         httpMessageStages = responseStages.reasonPhrase;
-print(responseJsonStages);
+
         if (httpCodeStages == '200') {
           Description = responseJsonStages["Description"].toString();
           OwnerUsername = responseJsonStages["OwnerUsername"].toString();
           OwnerId = responseJsonStages["OwnerId"].toString();
 
+          Stages = [];
           responseJsonStages["GeocacheSummaries"].forEach((stage) {
-            print(stage);
             Stages.add(
                 AdventureStages(
                   Id: stage["Id"].toString(),
                   Title: stage["Title"].toString(),
+                  Description: stage["Description"].toString(),
                   AwardImageUrl: stage["AwardImageUrl"].toString(),
                   AwardVideoYouTubeId: stage["AwardVideoYouTubeId"].toString(),
                   CompletionAwardMessage: stage["CompletionAwardMessage"].toString(),
                   CompletionCode: stage["CompletionCode"].toString(),
                   GeofencingRadius: stage["GeofencingRadius"].toString(),
+                  Question: stage["Question"].toString(),
                   KeyImage: stage["KeyImage"].toString(),
                   KeyImageUrl: stage["KeyImageUrl"].toString(),
                   Latitude: stage["Location"]["Latitude"].toString(),
@@ -224,30 +221,29 @@ print(responseJsonStages);
           )
         );
       }
-      out.addAll({
+      return {
         'adventures': Adventures(
             AdventureList: AdventureList,
             httpCode: httpCode,
             httpMessage: httpMessage)
-      });
+      };
     }
     else {
-      out.addAll({
+      return {
         'adventures': Adventures(
             AdventureList: [],
             httpCode: httpCode,
             httpMessage: httpMessage)
-      });
+      };
     }
   } catch (exception) {
     httpCode = '503';
     httpMessage = exception.toString();
-    out.addAll({
+    return {
       'adventures': Adventures(
           AdventureList: [],
           httpCode: httpCode,
           httpMessage: httpMessage)
-    });
+    };
   } // end catch exception
-  return out;
 }
