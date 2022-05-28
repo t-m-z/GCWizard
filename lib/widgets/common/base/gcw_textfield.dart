@@ -126,7 +126,7 @@ class _GCWTextFieldState extends State<GCWTextField> {
             style: TextStyle(
                 fontSize: widget.fontSize ?? defaultFontSize(),
                 color: widget.filled ? colors.textFieldFillText() : colors.mainFont()),
-            maxLengthEnforced: true,
+            maxLengthEnforcement: MaxLengthEnforcement.enforced, //https://docs.flutter.dev/release/breaking-changes/use-maxLengthEnforcement-instead-of-maxLengthEnforced
             maxLength: widget.maxLength,
             selectionControls: GCWTextSelectionControls(),
           );
