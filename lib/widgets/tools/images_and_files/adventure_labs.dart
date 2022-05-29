@@ -12,7 +12,6 @@ import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_export_dialog.dart';
 import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart';
 import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_mapview.dart';
-import 'package:gc_wizard/widgets/utils/gcw_file.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
@@ -134,89 +133,6 @@ class AdventureLabsState extends State<AdventureLabs> {
     });
   }
 
-  List<List<dynamic>> _outputAdventureData(AdventureData adventure){
-    List<List<dynamic>> result = [
-      [i18n(context, 'adventure_labs_lab_id'), adventure.Id],
-      [i18n(context, 'adventure_labs_lab_keyImageUrl'), adventure.KeyImageUrl],
-      [i18n(context, 'adventure_labs_lab_deeplink'), adventure.DeepLink],
-      [i18n(context, 'adventure_labs_lab_description'), adventure.Description],
-      [i18n(context, 'adventure_labs_lab_ownerusername'), adventure.OwnerUsername],
-      [i18n(context, 'adventure_labs_lab_ratingsaverage'), adventure.RatingsAverage],
-      [i18n(context, 'adventure_labs_lab_ratingstotalcount'), adventure.RatingsTotalCount],
-      [i18n(context, 'adventure_labs_lab_location'),
-        formatCoordOutput(
-          LatLng(double.parse(adventure.Latitude), double.parse(adventure.Longitude)),
-          {'format': Prefs.get('coord_default_format')},
-          defaultEllipsoid())
-      ],
-      [i18n(context, 'adventure_labs_lab_adventurethemes'), adventure.AdventureThemes],
-    ];
-
-    return result;
-  }
-
-  List<List<dynamic>> _outputAdventureStageData(AdventureStages stage){
-    List<List<dynamic>> result = [
-      [i18n(context, 'adventure_labs_lab_id'), stage.Id],
-      [i18n(context, 'adventure_labs_lab_description'), stage.Description],
-      [i18n(context, 'adventure_labs_lab_location'),
-        formatCoordOutput(
-            LatLng(double.parse(stage.Latitude), double.parse(stage.Longitude)),
-            {'format': Prefs.get('coord_default_format')},
-            defaultEllipsoid())
-      ],
-      [i18n(context, 'adventure_labs_lab_stages_question'), stage.Question],
-      [i18n(context, 'adventure_labs_lab_stages_completionawardmessage'), stage.CompletionAwardMessage],
-      [i18n(context, 'adventure_labs_lab_stages_awardimageurl'), stage.AwardImageUrl],
-      [i18n(context, 'adventure_labs_lab_stages_awardvideoyoutubeid'), stage.AwardVideoYouTubeId],
-      [i18n(context, 'adventure_labs_lab_stages_geofencingradius'), stage.GeofencingRadius],
-      [i18n(context, 'adventure_labs_lab_stages_completioncode'), stage.CompletionCode],
-      [i18n(context, 'adventure_labs_lab_stages_multichoiceoptions'), stage.MultiChoiceOptions],
-      [i18n(context, 'adventure_labs_lab_stages_keyimage'), stage.KeyImage],
-      [i18n(context, 'adventure_labs_lab_keyImageUrl'), stage.KeyImageUrl],
-    ];
-    return result;
-  }
-
-  Widget _buildOutputAdventureStages(List<AdventureStages> stages){
-    List<Widget> result = [];
-    result.add(
-        GCWTextDivider(
-          text: i18n(context, 'adventure_labs_lab_stages'),
-        ));
-    stages.forEach((stage) {
-      result.add(
-        GCWExpandableTextDivider(
-          expanded: false,
-          text: stage.Title,
-          child: Column(
-              children: _buildOutputAdventureStagesData(stage)
-          ),
-        ),
-      );
-    });
-    return Column(
-      children: result,
-    );
-  }
-
-  List<Widget> _buildOutputAdventureStagesData(AdventureStages stage){
-    List<Widget> result = [];
-    if (stage.KeyImageUrl != 'null')
-      result.add(
-        Image.network(
-          stage.KeyImageUrl,
-          fit: BoxFit.cover,
-        ),
-      );
-    result.addAll(
-      columnedMultiLineOutput(
-          context, _outputAdventureStageData(stage),
-          flexValues: [1, 3]),
-    );
-    return result;
-  }
-
   _openInMap(List<GCWMapPoint> points) {
     Navigator.push(
         context,
@@ -230,6 +146,10 @@ class AdventureLabsState extends State<AdventureLabs> {
                 i18nPrefix: 'coords_map_view',
                 autoScroll: false,
                 suppressToolMargin: true)));
+  }
+
+  Future<bool> _exportCoordinates(BuildContext context, List<GCWMapPoint> points) async {
+    showCoordinatesExportDialog(context, points, []);
   }
 
   List<GCWMapPoint> _getPoints(AdventureData adventure){
@@ -254,10 +174,6 @@ class AdventureLabsState extends State<AdventureLabs> {
     return result;
   }
 
-  Future<bool> _exportCoordinates(BuildContext context, List<GCWMapPoint> points) async {
-    showCoordinatesExportDialog(context, points, []);
-  }
-
   List<GCWMapPoint> _getAllPoints(List<AdventureData> adventures){
     List<GCWMapPoint> result = [];
     adventures.forEach((adventure) {
@@ -280,6 +196,118 @@ class AdventureLabsState extends State<AdventureLabs> {
     });
 
     return result;
+  }
+
+  List<List<dynamic>> _outputAdventureData(AdventureData adventure){
+    List<List<dynamic>> result = [
+      [i18n(context, 'adventure_labs_lab_id'), adventure.Id],
+      [i18n(context, 'adventure_labs_lab_keyImageUrl'), adventure.KeyImageUrl],
+      [i18n(context, 'adventure_labs_lab_deeplink'), adventure.DeepLink],
+      [i18n(context, 'adventure_labs_lab_description'), adventure.Description],
+      [i18n(context, 'adventure_labs_lab_ownerusername'), adventure.OwnerUsername],
+      [i18n(context, 'adventure_labs_lab_ratingsaverage'), adventure.RatingsAverage],
+      [i18n(context, 'adventure_labs_lab_ratingstotalcount'), adventure.RatingsTotalCount],
+      [i18n(context, 'adventure_labs_lab_location'),
+        formatCoordOutput(
+          LatLng(double.parse(adventure.Latitude), double.parse(adventure.Longitude)),
+          {'format': Prefs.get('coord_default_format')},
+          defaultEllipsoid())
+      ],
+      [i18n(context, 'adventure_labs_lab_adventurethemes'), adventure.AdventureThemes],
+    ];
+
+    return result;
+  }
+
+  List<List<dynamic>> _outputAdventureStageCompletionData(AdventureStages stage){
+    List<List<dynamic>> result = [
+      [i18n(context, 'adventure_labs_lab_stages_awardvideoyoutubeid'), stage.AwardVideoYouTubeId],
+      [i18n(context, 'adventure_labs_lab_stages_completioncode'), stage.CompletionCode],
+    ];
+    return result;
+  }
+
+  List<List<dynamic>> _outputAdventureStageExpertData(AdventureStages stage){
+    List<List<dynamic>> result = [
+      [i18n(context, 'adventure_labs_lab_id'), stage.Id],
+      [i18n(context, 'adventure_labs_lab_stages_awardimageurl'), stage.AwardImageUrl],
+      [i18n(context, 'adventure_labs_lab_stages_multichoiceoptions'), stage.MultiChoiceOptions],
+      [i18n(context, 'adventure_labs_lab_stages_keyimage'), stage.KeyImage],
+      [i18n(context, 'adventure_labs_lab_keyImageUrl'), stage.KeyImageUrl],
+    ];
+    return result;
+  }
+
+  List<List<dynamic>> _outputAdventureStageData(AdventureStages stage){
+    List<List<dynamic>> result = [
+      [i18n(context, 'adventure_labs_lab_description'), stage.Description],
+      [i18n(context, 'adventure_labs_lab_location'),
+        formatCoordOutput(
+            LatLng(double.parse(stage.Latitude), double.parse(stage.Longitude)),
+            {'format': Prefs.get('coord_default_format')},
+            defaultEllipsoid())
+      ],
+      [i18n(context, 'adventure_labs_lab_stages_geofencingradius'), stage.GeofencingRadius],
+      [i18n(context, 'adventure_labs_lab_stages_question'), stage.Question],
+      [i18n(context, 'adventure_labs_lab_stages_completionawardmessage'), stage.CompletionAwardMessage],
+    ];
+    return result;
+  }
+
+  List<Widget> _buildOutputAdventureStagesData(AdventureStages stage){
+    List<Widget> result = [];
+    if (stage.KeyImageUrl != 'null')
+      result.add(
+        Image.network(
+          stage.KeyImageUrl,
+          fit: BoxFit.cover,
+        ),
+      );
+    result.addAll(
+      columnedMultiLineOutput(
+          context, _outputAdventureStageData(stage),
+          flexValues: [1, 3]),
+    );
+    if (stage.AwardImageUrl != 'null')
+      result.add(
+        Image.network(
+          stage.AwardImageUrl,
+          fit: BoxFit.cover,
+        ),
+      );
+    result.addAll(
+      columnedMultiLineOutput(
+          context, _outputAdventureStageCompletionData(stage),
+          flexValues: [1, 3]),
+    );
+    // result.addAll(
+    //   columnedMultiLineOutput(
+    //       context, _outputAdventureStageExpertData(stage),
+    //       flexValues: [1, 3]),
+    // );
+    return result;
+  }
+
+  Widget _buildOutputAdventureStages(List<AdventureStages> stages){
+    List<Widget> result = [];
+    result.add(
+        GCWTextDivider(
+          text: i18n(context, 'adventure_labs_lab_stages'),
+        ));
+    stages.forEach((stage) {
+      result.add(
+        GCWExpandableTextDivider(
+          expanded: false,
+          text: stage.Title,
+          child: Column(
+              children: _buildOutputAdventureStagesData(stage)
+          ),
+        ),
+      );
+    });
+    return Column(
+      children: result,
+    );
   }
 
   Widget _buildOutputAdventureMain(AdventureData adventure){
