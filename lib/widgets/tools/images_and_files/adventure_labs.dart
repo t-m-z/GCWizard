@@ -1,12 +1,18 @@
+import 'dart:math';
+import 'dart:typed_data';
+import 'package:http/http.dart' as http;
+
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/gcw_expandable.dart';
+import 'package:gc_wizard/widgets/common/gcw_imageview.dart';
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_export_dialog.dart';
 import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart';
 import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_mapview.dart';
+import 'package:gc_wizard/widgets/utils/gcw_file.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
@@ -15,7 +21,6 @@ import 'package:gc_wizard/logic/tools/images_and_files/adventure_labs.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 import 'package:gc_wizard/widgets/common/gcw_async_executer.dart';
-import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_dropdown_spinner.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
@@ -34,7 +39,7 @@ class AdventureLabsState extends State<AdventureLabs> {
   var _currentCoordsFormat = defaultCoordFormat();
   var _currentRadius = 1000;
   List<AdventureData> _adventureList = [];
-  var _currentAdventure = 0;
+  var _currentAdventureIndex = 0;
   var _currentAdventureList = [];
 
   Map<String, dynamic> _outData;
@@ -76,7 +81,6 @@ class AdventureLabsState extends State<AdventureLabs> {
             });
           },
         ),
-        GCWDefaultOutput(),
         _buildOutput(),
       ],
     );
@@ -186,15 +190,31 @@ class AdventureLabsState extends State<AdventureLabs> {
           expanded: false,
           text: stage.Title,
           child: Column(
-              children: columnedMultiLineOutput(
-                  context, _outputAdventureStageData(stage),
-                  flexValues: [1, 3]),),
+              children: _buildOutputAdventureStagesData(stage)
+          ),
         ),
       );
     });
     return Column(
       children: result,
     );
+  }
+
+  List<Widget> _buildOutputAdventureStagesData(AdventureStages stage){
+    List<Widget> result = [];
+    if (stage.KeyImageUrl != 'null')
+      result.add(
+        Image.network(
+          stage.KeyImageUrl,
+          fit: BoxFit.cover,
+        ),
+      );
+    result.addAll(
+      columnedMultiLineOutput(
+          context, _outputAdventureStageData(stage),
+          flexValues: [1, 3]),
+    );
+    return result;
   }
 
   _openInMap(List<GCWMapPoint> points) {
@@ -225,7 +245,7 @@ class AdventureLabsState extends State<AdventureLabs> {
       result.add(
           GCWMapPoint(
               uuid: 'StagePoint',
-              markerText: stage.Title,
+              markerText: adventure.Title + '\n' + stage.Title,
               point: LatLng(double.parse(stage.Latitude), double.parse(stage.Longitude)),
               color: Colors.black)
       );
@@ -236,6 +256,30 @@ class AdventureLabsState extends State<AdventureLabs> {
 
   Future<bool> _exportCoordinates(BuildContext context, List<GCWMapPoint> points) async {
     showCoordinatesExportDialog(context, points, []);
+  }
+
+  List<GCWMapPoint> _getAllPoints(List<AdventureData> adventures){
+    List<GCWMapPoint> result = [];
+    adventures.forEach((adventure) {
+      result.add(
+          GCWMapPoint(
+              uuid: 'OriginalPoint',
+              markerText: adventure.Title,
+              point: LatLng(double.parse(adventure.Latitude), double.parse(adventure.Longitude)),
+              color: Colors.red)
+      );
+      adventure.Stages.forEach((stage) {
+        result.add(
+            GCWMapPoint(
+                uuid: 'StagePoint',
+                markerText: (adventure.Title.length > 27 ? adventure.Title.substring(0,27) : adventure.Title) + '\n' + stage.Title,
+                point: LatLng(double.parse(stage.Latitude), double.parse(stage.Longitude)),
+                color: Colors.black)
+        );
+      });
+    });
+
+    return result;
   }
 
   Widget _buildOutputAdventureMain(AdventureData adventure){
@@ -266,9 +310,8 @@ class AdventureLabsState extends State<AdventureLabs> {
         expanded: false,
         text: i18n(context, 'adventure_labs_lab'),
         child: Column(
-          children: columnedMultiLineOutput(
-              context, _outputAdventureData(adventure),
-              flexValues: [1, 3]),),
+          children: _buildOutputAdventureMainData(adventure)
+        ),
       ),
     );
 
@@ -278,23 +321,62 @@ class AdventureLabsState extends State<AdventureLabs> {
     );
   }
 
+  List<Widget> _buildOutputAdventureMainData(AdventureData adventure){
+    List<Widget> result = [];
+    if (adventure.KeyImageUrl != 'null')
+      result.add(
+          Image.network(
+            adventure.KeyImageUrl,
+            fit: BoxFit.cover,
+          ),
+      );
+    result.addAll(
+      columnedMultiLineOutput(
+          context, _outputAdventureData(adventure),
+          flexValues: [1, 3]),
+    );
+    return result;
+  }
+
   _buildOutput(){
     return Column(
       children: [
         if (_currentAdventureList.isNotEmpty)
           Column(
             children: <Widget>[
+              GCWTextDivider(
+                text: i18n(context, 'adventure_labs_lab_all_location'),
+                trailing: Row(children: <Widget>[
+                    GCWIconButton(
+                      icon: Icons.my_location,
+                      size: IconButtonSize.SMALL,
+                      iconColor: themeColors().mainFont(),
+                      onPressed: () {
+                        _openInMap(_getAllPoints(_adventureList));
+                      },
+                    ),
+                    GCWIconButton(
+                      icon: Icons.save,
+                      size: IconButtonSize.SMALL,
+                      iconColor: themeColors().mainFont(),
+                      onPressed: () {
+                        _exportCoordinates(context, _getAllPoints(_adventureList));
+                      },
+                    ),
+                  ]
+                ),
+              ),
               GCWDropDownSpinner(
-                index: _currentAdventure,
+                index: _currentAdventureIndex,
                 items: _currentAdventureList.map((item) => Text(item.toString(), style: gcwTextStyle())).toList(),
                 onChanged: (value) {
                   setState(() {
-                    _currentAdventure = value;
+                    _currentAdventureIndex = value;
                   });
                 },
               ),
-              _buildOutputAdventureMain(_adventureList[_currentAdventure]),
-              _buildOutputAdventureStages(_adventureList[_currentAdventure].Stages),
+              _buildOutputAdventureMain(_adventureList[_currentAdventureIndex]),
+              _buildOutputAdventureStages(_adventureList[_currentAdventureIndex].Stages),
             ]
           )
         else
