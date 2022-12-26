@@ -26,26 +26,26 @@ class GCWTextField extends StatefulWidget {
   final String title;
   final TextStyle style;
 
-  const GCWTextField(
-      {Key key,
-      this.onChanged,
-      this.controller,
-      this.validate,
-      this.inputFormatters,
-      this.keyboardType,
-      this.hintText,
-      this.hintColor,
-      this.labelText,
-      this.focusNode,
-      this.autofocus,
-      this.icon,
-      this.filled: false,
-      this.maxLength,
-      this.maxLines,
-      this.title,
-      this.fontSize,
-      this.style,})
-      : super(key: key);
+  const GCWTextField({
+    Key key,
+    this.onChanged,
+    this.controller,
+    this.validate,
+    this.inputFormatters,
+    this.keyboardType,
+    this.hintText,
+    this.hintColor,
+    this.labelText,
+    this.focusNode,
+    this.autofocus,
+    this.icon,
+    this.filled: false,
+    this.maxLength,
+    this.maxLines,
+    this.title,
+    this.fontSize,
+    this.style,
+  }) : super(key: key);
 
   @override
   _GCWTextFieldState createState() => _GCWTextFieldState();
@@ -59,9 +59,9 @@ class _GCWTextFieldState extends State<GCWTextField> {
     super.initState();
 
     if (widget.focusNode != null && widget.controller != null) {
-      widget.focusNode.addListener(() {
-        if (widget.focusNode.hasFocus) {
-          widget.controller.selection = TextSelection(baseOffset: 0, extentOffset: widget.controller.text.length);
+      widget.focusNode?.addListener(() {
+        if (widget.focusNode?.hasFocus) {
+          widget?.controller?.selection = TextSelection(baseOffset: 0, extentOffset: widget?.controller?.text.length);
         }
       });
     }
