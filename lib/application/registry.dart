@@ -278,6 +278,7 @@ import 'package:gc_wizard/tools/science_and_technology/alcohol_mass/widget/alcoh
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/heat_index/widget/heat_index.dart';
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/humidex/widget/humidex.dart';
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/summer_simmer/widget/summer_simmer.dart';
+import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/utci/widget/utci.dart';
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/wet_bulb_temperature/widget/wet_bulb_temperature.dart';
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/windchill/widget/windchill.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/iau_constellation/widget/iau_constellation.dart';
@@ -434,7 +435,7 @@ import 'package:gc_wizard/tools/wherigo/earwigo_text_deobfuscation/widget/earwig
 import 'package:gc_wizard/tools/wherigo/urwigo_hashbreaker/widget/urwigo_hashbreaker.dart';
 import 'package:gc_wizard/tools/wherigo/urwigo_text_deobfuscation/widget/urwigo_text_deobfuscation.dart';
 import 'package:gc_wizard/tools/wherigo/wherigo_analyze/widget/wherigo_analyze.dart';
-
+import '../tools/science_and_technology/apparent_temperature/utci/widget/utci.dart';
 
 List<GCWTool> registeredTools = [];
 
@@ -1320,6 +1321,10 @@ void initializeRegistry(BuildContext context) {
     GCWTool(tool: const SummerSimmerIndex(), id: 'summersimmerindex', searchKeys: const [
       'apparenttemperature',
       'apparenttemperature_summersimmerindex',
+    ]),
+    GCWTool(tool: const UTCI(), id: 'utci', searchKeys: const [
+      'apparenttemperature',
+      'apparenttemperature_utci',
     ]),
     GCWTool(tool: const Windchill(), id: 'windchill', searchKeys: const [
       'apparenttemperature',
