@@ -566,11 +566,8 @@ void _initStaticToolList() {
       className(const Gade()),
       className(const GaussWeberTelegraph()),
       className(const GCCode()),
-<<<<<<< HEAD
       className(const GCDLCM()),
-=======
       className(const GCWizardScript()),
->>>>>>> 7ff4e3e1f5e82b0b4a274f64a727e52968de7ce5
       className(const Gray()),
       className(const Gronsfeld()),
       className(const HeatIndex()),

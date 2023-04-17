@@ -511,7 +511,7 @@ void initializeRegistry(BuildContext context) {
     ], searchKeys: const [
       'atbash',
     ]),
-    GCWTool(tool: const AveMaria(), id: 'avemaria', categories: [
+    GCWTool(tool: const AveMaria(), id: 'avemaria', categories: const [
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: const [
       'avemaria',
@@ -765,9 +765,9 @@ void initializeRegistry(BuildContext context) {
     ], searchKeys: const [
       'gccode',
     ]),
-    GCWTool(tool: const GCDLCM(), id: 'gcd_lcm', categories: [
+    GCWTool(tool: const GCDLCM(), id: 'gcd_lcm', categories: const [
       ToolCategory.SCIENCE_AND_TECHNOLOGY
-    ], searchKeys: [
+    ], searchKeys: const [
       'gcd_lcm',
     ]),
     GCWTool(tool: const GeneralCodebreakersSelection(), id: 'generalcodebreakers_selection', searchKeys: const [
