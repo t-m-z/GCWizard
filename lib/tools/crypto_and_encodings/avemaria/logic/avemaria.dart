@@ -84,7 +84,7 @@ String decodeAveMaria(String chiffre) {
   List<String> result = [];
   List<String> code = chiffre.toLowerCase().split('  ');
 
-  code.forEach((word) {
+  for (var word in code) {
     word.split(' ').forEach((letter) {
       if (_AVE_MARIA_DECODE[letter] == null) {
         result.add(' ');
@@ -92,7 +92,7 @@ String decodeAveMaria(String chiffre) {
         result.add(_AVE_MARIA_DECODE[letter]!);
       }
     });
-  });
+  }
   return result.join('');
 }
 

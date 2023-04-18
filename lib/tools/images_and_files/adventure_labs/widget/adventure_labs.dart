@@ -110,9 +110,9 @@ class AdventureLabsState extends State<AdventureLabs> {
 
     _adventureList = _outData.AdventureList;
     _currentAdventureList.clear();
-    _adventureList.forEach((element) {
+    for (var element in _adventureList) {
       _currentAdventureList.add(element.Title);
-    });
+    }
     // outData != null
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -146,34 +146,34 @@ class AdventureLabsState extends State<AdventureLabs> {
         markerText: adventure.Title,
         point: LatLng(double.parse(adventure.Latitude), double.parse(adventure.Longitude)),
         color: Colors.red));
-    adventure.Stages.forEach((stage) {
+    for (var stage in adventure.Stages) {
       result.add(GCWMapPoint(
           uuid: 'StagePoint',
           markerText: adventure.Title + '\n' + stage.Title,
           point: LatLng(double.parse(stage.Latitude), double.parse(stage.Longitude)),
           color: Colors.black));
-    });
+    }
 
     return result;
   }
 
   List<GCWMapPoint> _getAllPoints(List<AdventureData> adventures) {
     List<GCWMapPoint> result = [];
-    adventures.forEach((adventure) {
+    for (var adventure in adventures) {
       result.add(GCWMapPoint(
           uuid: 'OriginalPoint',
           markerText: adventure.Title,
           point: LatLng(double.parse(adventure.Latitude), double.parse(adventure.Longitude)),
           color: Colors.red));
-      adventure.Stages.forEach((stage) {
+      for (var stage in adventure.Stages) {
         result.add(GCWMapPoint(
             uuid: 'StagePoint',
             markerText:
                 (adventure.Title.length > 27 ? adventure.Title.substring(0, 27) : adventure.Title) + '\n' + stage.Title,
             point: LatLng(double.parse(stage.Latitude), double.parse(stage.Longitude)),
             color: Colors.black));
-      });
-    });
+      }
+    }
 
     return result;
   }
@@ -269,7 +269,7 @@ class AdventureLabsState extends State<AdventureLabs> {
     result.add(GCWTextDivider(
       text: i18n(context, 'adventure_labs_lab_stages'),
     ));
-    stages.forEach((stage) {
+    for (var stage in stages) {
       result.add(
         GCWExpandableTextDivider(
           expanded: false,
@@ -277,7 +277,7 @@ class AdventureLabsState extends State<AdventureLabs> {
           child: Column(children: _buildOutputAdventureStagesData(stage)),
         ),
       );
-    });
+    }
     return Column(
       children: result,
     );
@@ -375,7 +375,7 @@ class AdventureLabsState extends State<AdventureLabs> {
 
   Widget _buildOutputError() {
     return Column(children: <Widget>[
-      GCWTextDivider(
+      const GCWTextDivider(
         text: 'Error',
       ),
       GCWColumnedMultilineOutput(

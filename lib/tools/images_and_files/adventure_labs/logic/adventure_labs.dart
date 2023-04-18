@@ -31,7 +31,7 @@ Future<Adventures> getAdventureData(LatLng? coordinate, int radius, {required Se
   String httpCode = '';
   String httpCodeStages = '';
   String httpMessage = '';
-  var httpMessageStages = '';
+  String httpMessageStages = '';
 
   List<AdventureStages> Stages = [];
   try {
