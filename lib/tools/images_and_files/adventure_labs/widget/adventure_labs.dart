@@ -38,7 +38,7 @@ class AdventureLabsState extends State<AdventureLabs> {
   var _currentAdventureIndex = 0;
   var _currentAdventureList = [];
 
-  late Adventures _outData;
+  Adventures _outData = Adventures(AdventureList: [], httpCode: '', httpMessage: '', );
 
   @override
   Widget build(BuildContext context) {
