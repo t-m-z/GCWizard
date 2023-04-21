@@ -1,6 +1,5 @@
 import 'package:code_text_field/code_text_field.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:gc_wizard/application/i18n/app_localizations.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
@@ -85,9 +84,6 @@ class BattleshipState extends State<Battleship> {
               _currentEncryptMode == GCWSwitchPosition.left // text
                   ? GCWTextField(
                       controller: _encodeTextController,
-                      inputFormatters: [
-                        FilteringTextInputFormatter.allow(RegExp(r'[0-9 a-zA-Z^°!"§$%&/()=?\{}[]<>|,;.:-_#+~]')),
-                      ],
                       onChanged: (text) {
                         setState(() {
                           _currentTextEncode = text;
