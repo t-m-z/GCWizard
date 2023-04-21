@@ -11,10 +11,11 @@ import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/gcw_expandable.dart';
 import 'package:gc_wizard/common_widgets/gcw_tool.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_output_text.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_dropdown_spinner.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
-import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_text_formatter.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
 import 'package:gc_wizard/tools/coords/map_view/widget/gcw_mapview.dart';
@@ -22,7 +23,6 @@ import 'package:gc_wizard/tools/images_and_files/adventure_labs/logic/adventure_
 
 import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:prefs/prefs.dart';
 
 class AdventureLabs extends StatefulWidget {
   const AdventureLabs({Key? key}) : super(key: key);
@@ -32,13 +32,14 @@ class AdventureLabs extends StatefulWidget {
 }
 
 class AdventureLabsState extends State<AdventureLabs> {
-  var _currentCoords = defaultBaseCoordinate;
-  var _currentRadius = 1000;
+  BaseCoordinate _currentCoords = defaultBaseCoordinate;
+  int _currentRadius = 1000;
   List<AdventureData> _adventureList = [];
-  var _currentAdventureIndex = 0;
-  var _currentAdventureList = [];
+  int _currentAdventureIndex = 0;
+  final List<String> _currentAdventureList = [];
 
-  Adventures _outData = Adventures(AdventureList: [], httpCode: '', httpMessage: '', );
+  Adventures _outData = Adventures(
+      AdventureList: [], resultCode: ANALYSE_RESULT_STATUS.NONE, httpCode: '', httpMessage: '', httpBody: '');
 
   @override
   Widget build(BuildContext context) {
@@ -190,7 +191,7 @@ class AdventureLabsState extends State<AdventureLabs> {
       [
         i18n(context, 'adventure_labs_lab_location'),
         formatCoordOutput(LatLng(double.parse(adventure.Latitude), double.parse(adventure.Longitude)),
-            {'format': Prefs.get('coord_default_format')} as CoordinateFormat, defaultEllipsoid)
+            _currentCoords.format, defaultEllipsoid)
       ],
       [i18n(context, 'adventure_labs_lab_adventurethemes'), adventure.AdventureThemes],
     ];
@@ -222,8 +223,8 @@ class AdventureLabsState extends State<AdventureLabs> {
       [i18n(context, 'adventure_labs_lab_description'), stage.Description],
       [
         i18n(context, 'adventure_labs_lab_location'),
-        formatCoordOutput(LatLng(double.parse(stage.Latitude), double.parse(stage.Longitude)),
-            {'format': Prefs.get('coord_default_format')} as CoordinateFormat, defaultEllipsoid)
+        formatCoordOutput(LatLng(double.parse(stage.Latitude), double.parse(stage.Longitude)), _currentCoords.format,
+            defaultEllipsoid)
       ],
       [i18n(context, 'adventure_labs_lab_stages_geofencingradius'), stage.GeofencingRadius],
       [i18n(context, 'adventure_labs_lab_stages_question'), stage.Question],
@@ -359,6 +360,10 @@ class AdventureLabsState extends State<AdventureLabs> {
           ),
         ]),
       ),
+      GCWOutputText(
+        text: i18n(context, 'adventure_labs_lab_number') + ': '+ _outData.AdventureList.length.toString(),
+        suppressCopyButton: true,
+      ),
       GCWDropDownSpinner(
         index: _currentAdventureIndex,
         items: _currentAdventureList.map((item) => Text(item.toString(), style: gcwTextStyle())).toList(),
@@ -373,15 +378,32 @@ class AdventureLabsState extends State<AdventureLabs> {
     ]);
   }
 
-  Widget _buildOutputError() {
+  Widget _buildOutputErrorHTTP() {
     return Column(children: <Widget>[
-      const GCWTextDivider(
-        text: 'Error',
+      GCWTextDivider(
+        text: i18n(context, 'adventure_labs_lab_error'),
       ),
       GCWColumnedMultilineOutput(
         data: [
-          ['httpCode', _outData.httpCode],
-          ['httpMessage', _outData.httpMessage],
+          [i18n(context, 'adventure_labs_lab_http_code'), _outData.httpCode],
+          [i18n(context, 'adventure_labs_lab_http_message'), _outData.httpMessage],
+          [i18n(context, 'adventure_labs_lab_http_body'), _outData.httpBody],
+        ],
+        flexValues: const [2, 3],
+      )
+    ]);
+  }
+
+  Widget _buildOutputErrorOTHER() {
+    return Column(children: <Widget>[
+      GCWTextDivider(
+        text: i18n(context, 'adventure_labs_lab_error'),
+      ),
+      GCWColumnedMultilineOutput(
+        data: [
+          [i18n(context, 'adventure_labs_lab_other_code'), i18n(context, _outData.httpCode)],
+          [i18n(context, 'adventure_labs_lab_other_message'), _outData.httpMessage],
+          [i18n(context, 'adventure_labs_lab_other_body'), _outData.httpBody],
         ],
         flexValues: const [2, 3],
       )
@@ -389,10 +411,25 @@ class AdventureLabsState extends State<AdventureLabs> {
   }
 
   Widget _buildOutput() {
-    if (_currentAdventureList.isNotEmpty) {
-      return _buildOutputAdventure();
-    } else {
-      return _buildOutputError();
+    late Widget result;
+    switch (_outData.resultCode) {
+      case ANALYSE_RESULT_STATUS.NONE:
+        result = Container();
+        break;
+      case ANALYSE_RESULT_STATUS.OK:
+        if (_currentAdventureList.isNotEmpty) {
+          result =  _buildOutputAdventure();
+        } else {
+          result = Container();
+        }
+        break;
+      case ANALYSE_RESULT_STATUS.ERROR_HTTP:
+        result = _buildOutputErrorHTTP();
+        break;
+      case ANALYSE_RESULT_STATUS.ERROR_OTHER:
+        result = _buildOutputErrorOTHER();
+        break;
     }
+    return result;
   }
 }
