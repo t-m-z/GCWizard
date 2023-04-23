@@ -106,6 +106,12 @@ class ShadowLengthState extends State<ShadowLength> {
       copyText: _currentFormattedLength == null ? null : _currentLength.toString(),
     );
 
+    Widget outputShadowBearing = GCWOutput(
+      title: i18n(context, 'shadowlength_bearing'),
+      child: format.format(_getShadowBearing(shadowLen.sunPosition.azimuth)) + '°',
+      copyText: format.format(_getShadowBearing(shadowLen.sunPosition.azimuth)),
+    );
+
     var _currentMapPoints = [
       GCWMapPoint(
           point: _startCoords,
@@ -137,6 +143,14 @@ class ShadowLengthState extends State<ShadowLength> {
     Widget rowsSunData = GCWColumnedMultilineOutput(
         firstRows: [GCWTextDivider(text: i18n(context, 'astronomy_sunposition_title'))], data: outputsSun);
 
-    return Column(children: [outputShadow, outputLocation, rowsSunData]);
+    return Column(children: [outputShadow, outputShadowBearing, outputLocation, rowsSunData]);
+  }
+
+  double _getShadowBearing(double sunAzimuth) {
+    if (sunAzimuth <= 180) {
+      return 180 + sunAzimuth;
+    } else {
+      return sunAzimuth - 180;
+    }
   }
 }
