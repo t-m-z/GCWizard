@@ -23,6 +23,7 @@ import 'package:gc_wizard/tools/coords/format_converter/logic/reverse_wherigo_wa
 import 'package:gc_wizard/tools/coords/format_converter/logic/slippy_map.dart';
 import 'package:gc_wizard/tools/coords/format_converter/logic/swissgrid.dart';
 import 'package:gc_wizard/tools/coords/format_converter/logic/utm.dart';
+import 'package:gc_wizard/tools/coords/format_converter/logic/what3words.dart';
 import 'package:gc_wizard/tools/coords/format_converter/logic/xyz.dart';
 import 'package:gc_wizard/tools/coords/format_converter/logic/gc8k7rc.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
@@ -958,6 +959,7 @@ class GC8K7RC extends BaseCoordinate {
 
   @override
   LatLng toLatLng() {
+
     return GC8K7RCToLatLon(this);
   }
 
@@ -972,10 +974,45 @@ class GC8K7RC extends BaseCoordinate {
   @override
   String toString() {
     return '$velocity\n$distance';
+    }
+  }
+
+class What3Words extends BaseCoordinate {
+  String word1;
+  String word2;
+  String word3;
+  CoordinateFormatKey language;
+
+  static const String _ERROR_INVALID_SUBTYPE = 'No valid What3Words subtype given.';
+
+  What3Words(this.word1, this.word2, this.word3, this.language) {
+    _format = CoordinateFormat(CoordinateFormatKey.WHAT3WORDS);
+  }
+
+  @override
+  LatLng toLatLng() {
+    return What3WordsToLatLon(this);
+  }
+
+  static What3Words? parse(String input) {
+    return parseWhat3Words(input);
+  }
+
+
+  static What3Words fromLatLon(LatLng coord, CoordinateFormatKey subtype ) {
+    if (!isSubtypeOfCoordinateFormat(CoordinateFormatKey.WHAT3WORDS, subtype)) {
+      throw Exception(_ERROR_INVALID_SUBTYPE);
+    }
+    return latLonToWhat3Words(coord, );
+  }
+
+  @override
+  String toString() {
+    return word1 + '.' + word2 + '.' + word3;
   }
 }
 
-BaseCoordinate buildUninitializedCoordinateByFormat(CoordinateFormat format) {
+    BaseCoordinate buildUninitializedCoordinateByFormat(CoordinateFormat format) {
   if (isCoordinateFormatWithSubtype(format.type)) {
     if (format.subtype == null || !isSubtypeOfCoordinateFormat(format.type, format.subtype!)) {
       format.subtype = defaultCoordinateFormatSubtypeForFormat(format.type);
@@ -1031,7 +1068,8 @@ BaseCoordinate buildUninitializedCoordinateByFormat(CoordinateFormat format) {
       return ReverseWherigoDay1976('00000','00000');
     case CoordinateFormatKey.GC8K7RC:
       return GC8K7RC(0,0,);
-
+    case CoordinateFormatKey.WHAT3WORDS:
+      return What3Words('','', '', CoordinateFormatKey.WHAT3WORDS_DE);
     default:
       return buildDefaultCoordinateByCoordinates(defaultCoordinate);
   }
@@ -1099,6 +1137,8 @@ BaseCoordinate buildCoordinate(CoordinateFormat format, LatLng coords, [Ellipsoi
       return ReverseWherigoDay1976.fromLatLon(coords);
     case CoordinateFormatKey.GC8K7RC:
       return GC8K7RC.fromLatLon(coords);
+    case CoordinateFormatKey.WHAT3WORDS:
+      return What3Words.fromLatLon(coords, format.subtype!,);
     default:
       return buildDefaultCoordinateByCoordinates(coords);
   }
