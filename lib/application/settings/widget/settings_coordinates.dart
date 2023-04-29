@@ -36,6 +36,7 @@ class CoordinatesSettingsState extends State<CoordinatesSettings> {
   var _currentDefaultHemisphereLatitude = Prefs.getString(PREFERENCE_COORD_DEFAULT_HEMISPHERE_LATITUDE);
   var _currentDefaultHemisphereLongitude = Prefs.getString(PREFERENCE_COORD_DEFAULT_HEMISPHERE_LONGITUDE);
   Ellipsoid _currentDefaultEllipsoid = defaultEllipsoid;
+  GCWSwitchPosition _currentGC8K7RCEllipsoid = (Prefs.getString(PREFERENCE_COORD_GC8K7RC_USE_DEFAULT_ELLIPSOID) == 'left') ? GCWSwitchPosition.left : GCWSwitchPosition.right;
 
   late TextEditingController _controllerAPIKey;
 
@@ -152,6 +153,24 @@ class CoordinatesSettingsState extends State<CoordinatesSettings> {
             setState(() {
               _currentAPIKey = value;
               Prefs.setString(PREFERENCE_COORD_DEFAULT_W3W_APIKEY, value);
+            });
+          },
+        ),
+        GCWTextDivider(
+          text: i18n(context, 'settings_coordinates_gc8k7rc'),
+        ),
+        GCWTwoOptionsSwitch(
+          leftValue: i18n(context, 'settings_coordinates_gc8k7rc_default_ellipsoid'),
+          rightValue: i18n(context, 'settings_coordinates_gc8k7rc_listing'),
+          value: _currentGC8K7RCEllipsoid,
+          onChanged: (value) {
+            if (value == GCWSwitchPosition.left){
+              Prefs.setString(PREFERENCE_COORD_GC8K7RC_USE_DEFAULT_ELLIPSOID, 'left');
+            } else {
+              Prefs.setString(PREFERENCE_COORD_GC8K7RC_USE_DEFAULT_ELLIPSOID, 'right');
+            }
+            setState(() {
+              _currentGC8K7RCEllipsoid = value;
             });
           },
         ),
