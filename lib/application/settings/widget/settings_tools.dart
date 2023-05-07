@@ -23,12 +23,12 @@ class ToolSettingsState extends State<ToolSettings> {
   late TextEditingController _inputControllerMail;
   late TextEditingController _inputControllerGreyNoise;
 
-  String _currentInputMail = Prefs.get(PREFERENCE_WTF_MAIL) as String;
-  String _currentInputSHODAN = Prefs.get(PREFERENCE_WTF_SHODAN) as String;
-  String _currentInputPT = Prefs.get(PREFERENCE_WTF_PT) as String;
-  String _currentInputVT = Prefs.get(PREFERENCE_WTF_VT) as String;
-  String _currentInputWhoIs = Prefs.get(PREFERENCE_WTF_WHOIS) as String;
-  String _currentInputGreyNoise = Prefs.get(PREFERENCE_WTF_GREYNOISE) as String;
+  String _currentInputMail = Prefs.get(PREFERENCE_WTF_MAIL).toString();
+  String _currentInputSHODAN = Prefs.get(PREFERENCE_WTF_SHODAN).toString();
+  String _currentInputPT = Prefs.get(PREFERENCE_WTF_PT).toString();
+  String _currentInputVT = Prefs.get(PREFERENCE_WTF_VT).toString();
+  String _currentInputWhoIs = Prefs.get(PREFERENCE_WTF_WHOIS).toString();
+  String _currentInputGreyNoise = Prefs.get(PREFERENCE_WTF_GREYNOISE).toString();
 
   @override
   void initState() {
