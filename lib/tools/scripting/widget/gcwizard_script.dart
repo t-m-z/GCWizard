@@ -2,6 +2,8 @@ import 'dart:typed_data';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer.dart';
+import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
 import 'package:gc_wizard/common_widgets/gcw_tool.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
@@ -11,7 +13,6 @@ import 'package:intl/intl.dart';
 
 import 'package:gc_wizard/application/i18n/app_localizations.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
-import 'package:gc_wizard/application/theme/theme_colors.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart';
@@ -44,7 +45,7 @@ class GCWizardScriptState extends State<GCWizardScript> {
   String _currentScriptOutput = '';
 
   GCWizardScriptOutput _currentOutput =
-      GCWizardScriptOutput(STDOUT: '', Graphic: [], Points: [], ErrorMessage: '', ErrorPosition: 0);
+      GCWizardScriptOutput(STDOUT: '', Graphic: [], Points: [], ErrorMessage: '', ErrorPosition: 0, VariableDump: '');
 
   Uint8List _outGraphicData = Uint8List.fromList([]);
   bool _loadFile = false;
@@ -126,9 +127,8 @@ class GCWizardScriptState extends State<GCWizardScript> {
             GCWButton(
               text: i18n(context, 'gcwizard_script_interpret'),
               onPressed: () {
+                _interpretGCWScriptAsync();
                 setState(() {
-                  _currentOutput = interpretScript(_currentProgram.toUpperCase().replaceAll('  ', ' '), _currentInput);
-                  _currentScriptOutput = _buildOutputText(_currentOutput);
                   if (GCWizardScriptScreenMode == GCWizardSCript_SCREENMODE.GRAPHIC ||
                       GCWizardScriptScreenMode == GCWizardSCript_SCREENMODE.TEXTGRAPHIC) {
                     _createImage(_currentOutput.Graphic).then((value) {
@@ -158,6 +158,7 @@ class GCWizardScriptState extends State<GCWizardScript> {
               text: i18n(context, 'gcwizard_script_clear'),
               onPressed: () {
                 setState(() {
+                  _currentOutput = GCWizardScriptOutput(STDOUT: '', Graphic: [], Points: [], ErrorMessage: '', ErrorPosition: 0, VariableDump: '');
                   _currentScriptOutput = '';
                 });
               },
@@ -172,6 +173,15 @@ class GCWizardScriptState extends State<GCWizardScript> {
             ),
           ],
         ),
+        _buildOutput(context),
+
+      ],
+    );
+  }
+
+  Widget _buildOutput(BuildContext context) {
+    return Column(
+      children: <Widget>[
         if (GCWizardScriptScreenMode == GCWizardSCript_SCREENMODE.GRAPHIC ||
             GCWizardScriptScreenMode == GCWizardSCript_SCREENMODE.TEXTGRAPHIC)
           GCWDefaultOutput(
@@ -190,7 +200,6 @@ class GCWizardScriptState extends State<GCWizardScript> {
             trailing: GCWIconButton(
               icon: Icons.save,
               size: IconButtonSize.SMALL,
-              iconColor: themeColors().inActive(),
               onPressed: () {
                 _exportFile(context, Uint8List.fromList(_currentScriptOutput.codeUnits), GCWizardScriptFileType.OUTPUT);
               },
@@ -208,7 +217,6 @@ class GCWizardScriptState extends State<GCWizardScript> {
                 GCWIconButton(
                   icon: Icons.my_location,
                   size: IconButtonSize.SMALL,
-                  iconColor: themeColors().mainFont(),
                   onPressed: () {
                     _openInMap(_currentOutput.Points);
                   },
@@ -216,7 +224,6 @@ class GCWizardScriptState extends State<GCWizardScript> {
                 GCWIconButton(
                   icon: Icons.save,
                   size: IconButtonSize.SMALL,
-                  iconColor: themeColors().mainFont(),
                   onPressed: () {
                     _exportCoordinates(context, _currentOutput.Points);
                   },
@@ -244,10 +251,48 @@ class GCWizardScriptState extends State<GCWizardScript> {
           output.ErrorPosition.toString() +
           '\n' +
           '=> ' +
-          _printFaultyProgram(_currentProgram, output.ErrorPosition);
+          _printFaultyProgram(_currentProgram, output.ErrorPosition) +
+          '\n' +
+          '\n' +
+          output.VariableDump;
     } else {
       return output.STDOUT;
     }
+  }
+
+  Future<GCWAsyncExecuterParameters?> _buildInterpreterJobData() async {
+    return GCWAsyncExecuterParameters(InterpreterJobData(
+        jobDataScript: _currentProgram, jobDataInput: _currentInput,));
+  }
+
+  void _showInterpreterOutputGWC(GCWizardScriptOutput output) {
+    _currentOutput = output;
+    _currentScriptOutput = _buildOutputText(_currentOutput);
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      setState(() {});
+    });
+  }
+
+  void _interpretGCWScriptAsync() async {
+    await showDialog<bool>(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return Center(
+          child: SizedBox(
+            height: 220,
+            width: 150,
+            child: GCWAsyncExecuter<GCWizardScriptOutput>(
+              isolatedFunction: interpretGCWScriptAsync,
+              parameter: _buildInterpreterJobData,
+              onReady: (data) => _showInterpreterOutputGWC(data),
+              isOverlay: true,
+            ),
+          ),
+        );
+      },
+    );
   }
 
   String _printFaultyProgram(String program, int position) {
