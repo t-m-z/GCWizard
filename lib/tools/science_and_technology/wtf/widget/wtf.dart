@@ -27,12 +27,12 @@ class WTFIsState extends State<WTFIs> {
   var _currentInputAddress = '';
   var _currentMode = WTFmode.NULL;
 
-  var _outputSHODAN = [[]];
-  var _outputPT = [[]];
-  var _outputVT = [[]];
-  var _outputWhoIs = [[]];
-  var _outputIPWhoIs = [[]];
-  var _outputGreyNoise = [[]];
+  var _outputSHODAN = <List<Object>>[[]];
+  var _outputPT = <List<Object>>[[]];
+  var _outputVT = <List<Object>>[[]];
+  var _outputWhoIs = <List<Object>>[[]];
+  var _outputIPWhoIs = <List<Object>>[[]];
+  var _outputGreyNoise = <List<Object>>[[]];
 
   bool _getDataSHODAN = false;
   bool _getDataPT = false;
@@ -216,12 +216,12 @@ class WTFIsState extends State<WTFIs> {
                     });
                   }
                 } else {
-                  _outputSHODAN.add(['    ' + key, value]);
+                  _outputSHODAN.add(['    ' + key, value as Object]);
                 }
               });
             });
           } else {
-            _outputSHODAN.add([key, value]);
+            _outputSHODAN.add([key, value as Object]);
           }
         });
         break;
@@ -245,7 +245,7 @@ class WTFIsState extends State<WTFIs> {
         _getDataVT = true;
         _outputVT = [];
         output.data.forEach((key, value) {
-          _outputVT.add([key, value]);
+          _outputVT.add([key, value as Object]);
         });
         break;
       case WTFstatus.ERROR:
@@ -266,7 +266,7 @@ class WTFIsState extends State<WTFIs> {
         _getDataPT = true;
         _outputPT = [];
         output.data.forEach((key, value) {
-          _outputPT.add([key, value]);
+          _outputPT.add([key, value as Object]);
         });
         break;
       case WTFstatus.ERROR:
@@ -291,11 +291,11 @@ class WTFIsState extends State<WTFIs> {
             _outputWhoIs.add(['contacts', '']);
             value.forEach((Map<String, dynamic> element) {
               element.forEach((key, value) {
-                _outputWhoIs.add([key, value]);
+                _outputWhoIs.add([key, value as Object]);
               });
             });
           } else {
-            _outputWhoIs.add([key, value]);
+            _outputWhoIs.add([key, value as Object]);
           }
         });
         break;
@@ -324,7 +324,7 @@ class WTFIsState extends State<WTFIs> {
               _outputIPWhoIs.add(['', key, value]);
             });
           } else {
-            _outputIPWhoIs.add([key, value, '']);
+            _outputIPWhoIs.add([key, value as Object, '']);
           }
         });
         break;
@@ -349,7 +349,7 @@ class WTFIsState extends State<WTFIs> {
         _getDataGreyNoise = true;
         _outputGreyNoise = [];
         output.data.forEach((key, value) {
-          _outputGreyNoise.add([key, value]);
+          _outputGreyNoise.add([key, value as Object]);
         });
         break;
 
