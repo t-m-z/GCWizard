@@ -18,7 +18,7 @@ String _fileDescription(GCWFile file) {
 
   output += (file.name ?? '') + ', ';
   var fileType = file.fileType;
-  output += fileType.name + ', ';
+  output += fileType.toString() + ', ';
   output += file.bytes.length.toString() + ' bytes, ';
 
   return output;
@@ -42,6 +42,8 @@ String? _fileStructureToString(List<GCWFile>? structure, {int offset = 0}) {
 }
 
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
+
   group("hidden_data.hiddenData:", () {
     List<Map<String, Object?>> _inputsToExpected = [
 
