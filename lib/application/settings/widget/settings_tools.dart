@@ -14,7 +14,7 @@ class ToolSettings extends StatefulWidget {
   _ToolSettingsState createState() => _ToolSettingsState();
 }
 
-class ToolSettingsState extends State<ToolSettings> {
+class _ToolSettingsState extends State<ToolSettings> {
 
   late TextEditingController _inputControllerSHODAN;
   late TextEditingController _inputControllerWhoIs;
