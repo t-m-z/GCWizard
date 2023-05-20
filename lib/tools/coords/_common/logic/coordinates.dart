@@ -228,7 +228,7 @@ class DMM extends BaseCoordinate {
   }
 
   @override
-  String toString([int precision = 10]) {
+  String toString([int precision = 6]) {
     return '${latitude.format(precision)}\n${longitude.format(precision)}';
   }
 }
@@ -344,7 +344,7 @@ class DMS extends BaseCoordinate {
   }
 
   @override
-  String toString([int precision = 10]) {
+  String toString([int precision = 6]) {
     return '${latitude.format(precision)}\n${longitude.format(precision)}';
   }
 }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/category_views/selector_lists/scripting_selection.dart';
 import 'package:gc_wizard/application/i18n/app_localizations.dart';
 import 'package:gc_wizard/application/main_menu/about.dart';
 import 'package:gc_wizard/application/main_menu/call_for_contribution.dart';
@@ -81,6 +80,8 @@ import 'package:gc_wizard/application/category_views/selector_lists/rotation_sel
 import 'package:gc_wizard/application/category_views/selector_lists/rsa_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/scienceandtechnology_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/scrabble_selection.dart';
+import 'package:gc_wizard/application/category_views/selector_lists/scripting_selection.dart';
+import 'package:gc_wizard/application/category_views/selector_lists/spelling_alphabets_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/segmentdisplay_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/shadoks_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/silverratio_selection.dart';
@@ -396,7 +397,8 @@ import 'package:gc_wizard/tools/science_and_technology/resistor/resistor_eia96/w
 import 'package:gc_wizard/tools/science_and_technology/segment_display/14_segment_display/widget/fourteen_segments.dart';
 import 'package:gc_wizard/tools/science_and_technology/segment_display/16_segment_display/widget/sixteen_segments.dart';
 import 'package:gc_wizard/tools/science_and_technology/segment_display/7_segment_display/widget/seven_segments.dart';
-import 'package:gc_wizard/tools/science_and_technology/spelling_alphabets/widget/spelling_alphabets.dart';
+import 'package:gc_wizard/tools/science_and_technology/spelling_alphabets/spelling_alphabets_list/widget/spelling_alphabets_list.dart';
+import 'package:gc_wizard/tools/science_and_technology/spelling_alphabets/spelling_alphabets_crypt/widget/spelling_alphabets_crypt.dart';
 import 'package:gc_wizard/tools/science_and_technology/telegraphs/chappe/widget/chappe.dart';
 import 'package:gc_wizard/tools/science_and_technology/telegraphs/edelcrantz/widget/edelcrantz.dart';
 import 'package:gc_wizard/tools/science_and_technology/telegraphs/gauss_weber_telegraph/widget/gauss_weber_telegraph.dart';
@@ -1137,7 +1139,7 @@ void initializeRegistry(BuildContext context) {
     ], searchKeys: const [
       'solitaire',
     ]),
-    GCWTool(tool: const SpellingAlphabets(), id: 'spelling_alphabets', categories: const [
+    GCWTool(tool: const SpellingAlphabetsSelection(), id: 'spelling_alphabets_selection', categories: const [
       ToolCategory.SCIENCE_AND_TECHNOLOGY
     ], searchKeys: const [
       'spelling_alphabets',
@@ -3350,6 +3352,14 @@ void initializeRegistry(BuildContext context) {
     ]),
     GCWTool(tool: const SQRT5Search(), id: 'irrationalnumbers_search', searchKeys: const [
       '',
+    ]),
+
+    //Spelling Alphabets Selection **********************************************************************************************
+    GCWTool(tool: const SpellingAlphabetsCrypt(), id: 'spelling_alphabets_crypt', searchKeys: const [
+      'spelling_alphabets',
+    ]),
+    GCWTool(tool: const SpellingAlphabetsList(), id: 'spelling_alphabets_list', searchKeys: const [
+      'spelling_alphabets',
     ]),
 
     //Symbol Tables **********************************************************************************************
