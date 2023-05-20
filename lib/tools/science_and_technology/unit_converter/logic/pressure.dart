@@ -45,7 +45,7 @@ final List<Pressure> pressures = [
   _PRESSURE_TECHNICALATMOSPHERE,
   _PRESSURE_MILLIMETEROFMERCURY,
   _PRESSURE_INCHOFMERCURY,
-  _PRESSURE_TORR
+  _PRESSURE_TORR,
 ];
 
 List<Unit> allPressures() {
