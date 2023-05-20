@@ -11,7 +11,7 @@ import 'package:gc_wizard/common_widgets/gcw_tool.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/common_widget_utils.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
-const _ABOUT_MAINTAINER = 'Mark \'S-Man42\' Lorenz';
+const _ABOUT_MAINTAINER = 'Mark \'S-Man42\' Lorenz\nThomas \'TMZ\' Zimmermann';
 const _ABOUT_PACKAGE_INFO_UNKNOWN = 'unknown';
 
 class About extends StatefulWidget {
