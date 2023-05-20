@@ -5,7 +5,8 @@ class _GCWCoordsMakaney extends StatefulWidget {
   final Makaney coordinates;
   final bool isDefault;
 
-  const _GCWCoordsMakaney({Key? key, required this.onChanged, required this.coordinates, this.isDefault = true}) : super(key: key);
+  const _GCWCoordsMakaney({Key? key, required this.onChanged, required this.coordinates, this.isDefault = true})
+      : super(key: key);
 
   @override
   _GCWCoordsMakaneyState createState() => _GCWCoordsMakaneyState();

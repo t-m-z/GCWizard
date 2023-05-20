@@ -643,7 +643,10 @@ void initializeRegistry(BuildContext context) {
       'cipherwheel',
     ]),
     GCWTool(
-        tool: const CheckDigitsSelection(), id: 'checkdigits_selection', categories: const [ToolCategory.SCIENCE_AND_TECHNOLOGY], searchKeys: const []),
+        tool: const CheckDigitsSelection(),
+        id: 'checkdigits_selection',
+        categories: const [ToolCategory.SCIENCE_AND_TECHNOLOGY],
+        searchKeys: const []),
     GCWTool(
         tool: const CistercianNumbersSelection(),
         id: 'cistercian_selection',
@@ -1109,10 +1112,7 @@ void initializeRegistry(BuildContext context) {
         id: 'scrabble_selection',
         categories: const [ToolCategory.GAMES],
         searchKeys: const ['games']),
-    GCWTool(
-        tool: const ScriptingSelection(),
-        id: 'scripting_selection',
-        searchKeys: const []),
+    GCWTool(tool: const ScriptingSelection(), id: 'scripting_selection', searchKeys: const []),
     GCWTool(
         tool: const SegmentDisplaySelection(),
         id: 'segmentdisplay_selection',
@@ -1586,14 +1586,20 @@ void initializeRegistry(BuildContext context) {
       'checkdigits',
       'checkdigits_de_tin',
     ]),
-    GCWTool(tool: const CheckDigitsDETaxIDCalculateCheckDigit(), id: 'checkdigits_de_taxid_calculate_digit', searchKeys: const [
-      'checkdigits',
-      'checkdigits_ean',
-    ]),
-    GCWTool(tool: const CheckDigitsDETaxIDCalculateMissingDigit(), id: 'checkdigits_de_taxid_calculate_number', searchKeys: const [
-      'checkdigits',
-      'checkdigits_ean',
-    ]),
+    GCWTool(
+        tool: const CheckDigitsDETaxIDCalculateCheckDigit(),
+        id: 'checkdigits_de_taxid_calculate_digit',
+        searchKeys: const [
+          'checkdigits',
+          'checkdigits_ean',
+        ]),
+    GCWTool(
+        tool: const CheckDigitsDETaxIDCalculateMissingDigit(),
+        id: 'checkdigits_de_taxid_calculate_number',
+        searchKeys: const [
+          'checkdigits',
+          'checkdigits_ean',
+        ]),
 
     //CheckDigitsEANSelection  ********************************************************************************************
     GCWTool(tool: const CheckDigitsEANCheckNumber(), id: 'checkdigits_ean_checknumber', searchKeys: const [
@@ -1604,52 +1610,73 @@ void initializeRegistry(BuildContext context) {
       'checkdigits',
       'checkdigits_ean',
     ]),
-    GCWTool(tool: const CheckDigitsEANCalculateMissingDigit(), id: 'checkdigits_ean_calculate_number', searchKeys: const [
-      'checkdigits',
-      'checkdigits_ean',
-    ]),
+    GCWTool(
+        tool: const CheckDigitsEANCalculateMissingDigit(),
+        id: 'checkdigits_ean_calculate_number',
+        searchKeys: const [
+          'checkdigits',
+          'checkdigits_ean',
+        ]),
 
     //CheckDigitsIBANSelection  ********************************************************************************************
     GCWTool(tool: const CheckDigitsIBANCheckNumber(), id: 'checkdigits_iban_checknumber', searchKeys: const [
       'checkdigits',
       'checkdigits_iban',
     ]),
-    GCWTool(tool: const CheckDigitsIBANCalculateCheckDigit(), id: 'checkdigits_iban_calculate_digit', searchKeys: const [
-      'checkdigits',
-      'checkdigits_iban',
-    ]),
-    GCWTool(tool: const CheckDigitsIBANCalculateMissingDigit(), id: 'checkdigits_iban_calculate_number', searchKeys: const [
-      'checkdigits',
-      'checkdigits_iban',
-    ]),
+    GCWTool(
+        tool: const CheckDigitsIBANCalculateCheckDigit(),
+        id: 'checkdigits_iban_calculate_digit',
+        searchKeys: const [
+          'checkdigits',
+          'checkdigits_iban',
+        ]),
+    GCWTool(
+        tool: const CheckDigitsIBANCalculateMissingDigit(),
+        id: 'checkdigits_iban_calculate_number',
+        searchKeys: const [
+          'checkdigits',
+          'checkdigits_iban',
+        ]),
 
     //CheckDigitsIMEISelection  ********************************************************************************************
     GCWTool(tool: const CheckDigitsIMEICheckNumber(), id: 'checkdigits_imei_checknumber', searchKeys: const [
       'checkdigits',
       'checkdigits_imei',
     ]),
-    GCWTool(tool: const CheckDigitsIMEICalculateCheckDigit(), id: 'checkdigits_imei_calculate_digit', searchKeys: const [
-      'checkdigits',
-      'checkdigits_imei',
-    ]),
-    GCWTool(tool: const CheckDigitsIMEICalculateMissingDigit(), id: 'checkdigits_imei_calculate_number', searchKeys: const [
-      'checkdigits',
-      'checkdigits_imei',
-    ]),
+    GCWTool(
+        tool: const CheckDigitsIMEICalculateCheckDigit(),
+        id: 'checkdigits_imei_calculate_digit',
+        searchKeys: const [
+          'checkdigits',
+          'checkdigits_imei',
+        ]),
+    GCWTool(
+        tool: const CheckDigitsIMEICalculateMissingDigit(),
+        id: 'checkdigits_imei_calculate_number',
+        searchKeys: const [
+          'checkdigits',
+          'checkdigits_imei',
+        ]),
 
     //CheckDigitsISBNSelection  ********************************************************************************************
     GCWTool(tool: const CheckDigitsISBNCheckNumber(), id: 'checkdigits_isbn_checknumber', searchKeys: const [
       'checkdigits',
       'checkdigits_isbn',
     ]),
-    GCWTool(tool: const CheckDigitsISBNCalculateCheckDigit(), id: 'checkdigits_isbn_calculate_digit', searchKeys: const [
-      'checkdigits',
-      'checkdigits_isbn',
-    ]),
-    GCWTool(tool: const CheckDigitsISBNCalculateMissingDigit(), id: 'checkdigits_isbn_calculate_number', searchKeys: const [
-      'checkdigits',
-      'checkdigits_isbn',
-    ]),
+    GCWTool(
+        tool: const CheckDigitsISBNCalculateCheckDigit(),
+        id: 'checkdigits_isbn_calculate_digit',
+        searchKeys: const [
+          'checkdigits',
+          'checkdigits_isbn',
+        ]),
+    GCWTool(
+        tool: const CheckDigitsISBNCalculateMissingDigit(),
+        id: 'checkdigits_isbn_calculate_number',
+        searchKeys: const [
+          'checkdigits',
+          'checkdigits_isbn',
+        ]),
 
     //Cistercian Selection *****************************************************************************************
     GCWTool(tool: const CistercianNumbers(), id: 'cistercian', searchKeys: const [
@@ -3273,9 +3300,9 @@ void initializeRegistry(BuildContext context) {
 
     //Scripting Selection *****************************************************************************************
 
-    GCWTool(tool: const GCWizardScript(), id: 'gcwizard_script',
-        categories: const [ToolCategory.SCRIPTING],
-        searchKeys: const [
+    GCWTool(tool: const GCWizardScript(), id: 'gcwizard_script', categories: const [
+      ToolCategory.SCRIPTING
+    ], searchKeys: const [
       'gcwizard_script',
     ]),
 

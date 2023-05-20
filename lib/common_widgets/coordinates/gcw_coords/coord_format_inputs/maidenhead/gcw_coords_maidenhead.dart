@@ -5,7 +5,8 @@ class _GCWCoordsMaidenhead extends StatefulWidget {
   final Maidenhead coordinates;
   final bool isDefault;
 
-  const _GCWCoordsMaidenhead({Key? key, required this.onChanged, required this.coordinates, this.isDefault = true}) : super(key: key);
+  const _GCWCoordsMaidenhead({Key? key, required this.onChanged, required this.coordinates, this.isDefault = true})
+      : super(key: key);
 
   @override
   _GCWCoordsMaidenheadState createState() => _GCWCoordsMaidenheadState();

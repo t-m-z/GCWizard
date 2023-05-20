@@ -52,7 +52,6 @@ void setUntypedPref(String key, Object value) {
       if (value is bool) Prefs.setBool(key, value);
       break;
     case PrefType.STRINGLIST:
-
       if (value is List<String> || value is List<Object>) {
         var saveList = <String>[];
         if (value is List<String>) {

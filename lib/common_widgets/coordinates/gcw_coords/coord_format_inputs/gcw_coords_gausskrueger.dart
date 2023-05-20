@@ -89,4 +89,3 @@ class _GCWCoordsGaussKruegerState extends State<_GCWCoordsGaussKrueger> {
     widget.onChanged(gaussKrueger);
   }
 }
-

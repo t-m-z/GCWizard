@@ -17,7 +17,7 @@ class GameOfLife extends StatefulWidget {
   const GameOfLife({Key? key}) : super(key: key);
 
   @override
- _GameOfLifeState createState() => _GameOfLifeState();
+  _GameOfLifeState createState() => _GameOfLifeState();
 }
 
 const _KEY_CUSTOM_RULES = 'gameoflife_custom';
@@ -37,7 +37,8 @@ class _GameOfLifeState extends State<GameOfLife> {
   late TextEditingController _currentCustomBirthController;
   var _currentCustomInverse = false;
 
-  final _maskInputFormatter = WrapperForMaskTextInputFormatter(mask: '*********', filter: {"*": RegExp(r'[012345678]')});
+  final _maskInputFormatter =
+      WrapperForMaskTextInputFormatter(mask: '*********', filter: {"*": RegExp(r'[012345678]')});
 
   @override
   void initState() {

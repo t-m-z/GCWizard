@@ -2,22 +2,22 @@ import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 part 'package:gc_wizard/tools/science_and_technology/checkdigits/logic/checkdigits_datatypes.dart';
 part 'package:gc_wizard/tools/science_and_technology/checkdigits/logic/checkdigits_de_banknumber_data.dart';
-part 'package:gc_wizard/tools/science_and_technology/checkdigits/logic/checkdigits_ean.dart';
 part 'package:gc_wizard/tools/science_and_technology/checkdigits/logic/checkdigits_de_persid.dart';
 part 'package:gc_wizard/tools/science_and_technology/checkdigits/logic/checkdigits_de_taxid.dart';
+part 'package:gc_wizard/tools/science_and_technology/checkdigits/logic/checkdigits_ean.dart';
+part 'package:gc_wizard/tools/science_and_technology/checkdigits/logic/checkdigits_euro.dart';
 part 'package:gc_wizard/tools/science_and_technology/checkdigits/logic/checkdigits_iban.dart';
 part 'package:gc_wizard/tools/science_and_technology/checkdigits/logic/checkdigits_imei.dart';
 part 'package:gc_wizard/tools/science_and_technology/checkdigits/logic/checkdigits_isbn.dart';
-part 'package:gc_wizard/tools/science_and_technology/checkdigits/logic/checkdigits_euro.dart';
 part 'package:gc_wizard/tools/science_and_technology/checkdigits/logic/checkdigits_uic.dart';
 
-CheckDigitOutput checkDigitsCheckNumber(CheckDigitsMode mode, String number){
+CheckDigitOutput checkDigitsCheckNumber(CheckDigitsMode mode, String number) {
   if (number == '') {
     return CheckDigitOutput(false, 'checkdigits_invalid_length', ['']);
   }
 
   number = number.toUpperCase();
-  switch(mode) {
+  switch (mode) {
     case CheckDigitsMode.EAN:
       return CheckEANNumber(number);
     case CheckDigitsMode.DEPERSID:
@@ -39,13 +39,13 @@ CheckDigitOutput checkDigitsCheckNumber(CheckDigitsMode mode, String number){
   }
 }
 
-String checkDigitsCalculateNumber(CheckDigitsMode mode, String number){
+String checkDigitsCalculateNumber(CheckDigitsMode mode, String number) {
   if (number == '') {
     return 'checkdigits_invalid_length';
   }
 
   number = number.toUpperCase();
-  switch(mode) {
+  switch (mode) {
     case CheckDigitsMode.EAN:
       return CalculateNumber(number, CalculateEANNumber);
     case CheckDigitsMode.DEPERSID:
@@ -67,13 +67,13 @@ String checkDigitsCalculateNumber(CheckDigitsMode mode, String number){
   }
 }
 
-List<String> checkDigitsCalculateDigits(CheckDigitsMode mode, String number){
+List<String> checkDigitsCalculateDigits(CheckDigitsMode mode, String number) {
   if (number == '') {
     return ['checkdigits_invalid_length'];
   }
 
   number = number.toUpperCase();
-  switch(mode) {
+  switch (mode) {
     case CheckDigitsMode.EAN:
       return CalculateEANDigits(number);
     case CheckDigitsMode.DEPERSID:
@@ -95,15 +95,15 @@ List<String> checkDigitsCalculateDigits(CheckDigitsMode mode, String number){
   }
 }
 
-bool checkNumber(String number, Function f){
+bool checkNumber(String number, Function f) {
   return f(number) as bool;
 }
 
-String  calculateCheckDigit(String number, Function f) {
+String calculateCheckDigit(String number, Function f) {
   return f(number) as String;
 }
 
-String CalculateNumber(String number, Function f){
+String CalculateNumber(String number, Function f) {
   return f(number) as String;
 }
 
@@ -116,7 +116,7 @@ List<String> CalculateGlitch(String number, Function f) {
   if (f == checkIBAN) {
     startIndex = 4;
   }
-  for (int index = startIndex; index < number.length; index ++) {
+  for (int index = startIndex; index < number.length; index++) {
     testLeft = number.substring(0, index - 1);
     testRight = number.substring(index);
     for (int testDigit = 0; testDigit <= 9; testDigit++) {
@@ -130,7 +130,7 @@ List<String> CalculateGlitch(String number, Function f) {
   return result;
 }
 
-List<String> CalculateDigits(String number, Function f){
+List<String> CalculateDigits(String number, Function f) {
   List<String> result = <String>[];
   int maxDigits = 0;
   int len = 0;
@@ -139,7 +139,7 @@ List<String> CalculateDigits(String number, Function f){
   int index = 0;
   String numberToCheck = '';
   if (f == checkIBAN) {
-    for (int i = 0 ; i < number.length; i++){
+    for (int i = 0; i < number.length; i++) {
       if (number[i] == '?') {
         if (i < 2) {
           maxNumber = maxNumber + 'Z';
@@ -148,16 +148,13 @@ List<String> CalculateDigits(String number, Function f){
         }
       }
     }
-    if (maxNumber.startsWith('ZZ')){
+    if (maxNumber.startsWith('ZZ')) {
       letters = 2;
       maxNumber = maxNumber.substring(2);
-    }
-    else
-    if (maxNumber.startsWith('Z')){
+    } else if (maxNumber.startsWith('Z')) {
       letters = 1;
       maxNumber = maxNumber.substring(1);
-    }
-    else {
+    } else {
       letters = 0;
     }
     len = maxNumber.length;
@@ -168,7 +165,7 @@ List<String> CalculateDigits(String number, Function f){
         maxNumber = i.toString();
         maxNumber = maxNumber.padLeft(len, '0');
         index = 0;
-        numberToCheck = number.substring(0,2);
+        numberToCheck = number.substring(0, 2);
         for (int i = 2; i < number.length; i++) {
           if (int.tryParse(number[i]) == null) {
             numberToCheck = numberToCheck + maxNumber[index];
@@ -181,7 +178,7 @@ List<String> CalculateDigits(String number, Function f){
           result.add(numberToCheck);
         }
       }
-    }else {
+    } else {
       for (int l1 = 65; l1 < 92; l1++) {
         numberToCheck = String.fromCharCode(l1);
         if (letters == 2) {

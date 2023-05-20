@@ -9,19 +9,19 @@ const MDT_INTERNALNAMES_BASE = 'multidecoder_tool_base_title';
 const MDT_BASE_OPTION_BASEFUNCTION = 'multidecoder_tool_base_option_basefunction';
 
 class MultiDecoderToolBase extends AbstractMultiDecoderTool {
-  MultiDecoderToolBase({
-    Key? key,
-    required int id,
-    required String name,
-    required Map<String, Object?> options,
-    required BuildContext context})
+  MultiDecoderToolBase(
+      {Key? key,
+      required int id,
+      required String name,
+      required Map<String, Object?> options,
+      required BuildContext context})
       : super(
             key: key,
             id: id,
             name: name,
             internalToolName: MDT_INTERNALNAMES_BASE,
             onDecode: (String input, String key) {
-              var function =  BASE_FUNCTIONS[_getBaseKey(options, MDT_BASE_OPTION_BASEFUNCTION)];
+              var function = BASE_FUNCTIONS[_getBaseKey(options, MDT_BASE_OPTION_BASEFUNCTION)];
               return function == null ? null : function(input);
             },
             options: options);
@@ -32,15 +32,13 @@ class MultiDecoderToolBase extends AbstractMultiDecoderTool {
 class _MultiDecoderToolBaseState extends State<MultiDecoderToolBase> {
   @override
   Widget build(BuildContext context) {
-    return createMultiDecoderToolConfiguration(
-        context, {
+    return createMultiDecoderToolConfiguration(context, {
       MDT_BASE_OPTION_BASEFUNCTION: GCWDropDown<String>(
         value: _getBaseKey(widget.options, MDT_BASE_OPTION_BASEFUNCTION),
         onChanged: (newValue) {
           setState(() {
             widget.options[MDT_BASE_OPTION_BASEFUNCTION] = newValue;
           });
-
         },
         items: BASE_FUNCTIONS.entries.map((baseFunction) {
           return GCWDropDownMenuItem(
@@ -49,8 +47,7 @@ class _MultiDecoderToolBaseState extends State<MultiDecoderToolBase> {
           );
         }).toList(),
       ),
-    }
-    );
+    });
   }
 }
 

@@ -55,7 +55,7 @@ DateTime JulianDateToIslamicCalendar(double jd) {
   int d = l - intPart((709 * m) / 24);
   int y = 30 * n + j - 30;
 
-  return DateTime(y, m , d);
+  return DateTime(y, m, d);
 }
 
 double IslamicCalendarToJulianDate(DateTime date) {
@@ -339,7 +339,7 @@ double CopticCalendarToJulianDate(DateTime date) {
   return (c + d + cop_d_bar - 124).toDouble();
 }
 
-class PotrzebieCalendarOutput{
+class PotrzebieCalendarOutput {
   DateTime date;
   String suffix;
 

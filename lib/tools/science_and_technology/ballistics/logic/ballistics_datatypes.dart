@@ -1,6 +1,6 @@
 part of 'package:gc_wizard/tools/science_and_technology/ballistics/logic/ballistics.dart';
 
-enum AIR_RESISTANCE {NONE, STOKES, NEWTON}
+enum AIR_RESISTANCE { NONE, STOKES, NEWTON }
 
 Map<AIR_RESISTANCE, String> AIR_RESISTANCE_LIST = {
   AIR_RESISTANCE.NONE: 'ballistics_drag_none',
@@ -16,4 +16,3 @@ class OutputBallistics {
 
   OutputBallistics({required this.Time, required this.Distance, required this.Height, required this.maxSpeed});
 }
-

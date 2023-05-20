@@ -51,22 +51,22 @@ class AdventureLabsState extends State<AdventureLabs> {
           await showDialog<bool>(
               context: context,
               builder: (_) => AlertDialog(
-                title: Text(i18n(context, 'adventure_labs_exit_title')),
-                titleTextStyle: const TextStyle(color: Colors.black, fontSize: 16.0, fontWeight: FontWeight.bold),
-                content: Text(i18n(context, 'adventure_labs_exit_message')),
-                contentTextStyle: const TextStyle(color: Colors.black, fontSize: 16.0),
-                backgroundColor: themeColors().dialog(),
-                actions: [
-                  TextButton(
-                      onPressed: () {
-                        willLeave = true;
-                        Navigator.of(context).pop();
-                      },
-                      child: Text(i18n(context, 'common_yes'))),
-                  ElevatedButton(
-                      onPressed: () => Navigator.of(context).pop(), child: Text(i18n(context, 'common_no')))
-                ],
-              ));
+                    title: Text(i18n(context, 'adventure_labs_exit_title')),
+                    titleTextStyle: const TextStyle(color: Colors.black, fontSize: 16.0, fontWeight: FontWeight.bold),
+                    content: Text(i18n(context, 'adventure_labs_exit_message')),
+                    contentTextStyle: const TextStyle(color: Colors.black, fontSize: 16.0),
+                    backgroundColor: themeColors().dialog(),
+                    actions: [
+                      TextButton(
+                          onPressed: () {
+                            willLeave = true;
+                            Navigator.of(context).pop();
+                          },
+                          child: Text(i18n(context, 'common_yes'))),
+                      ElevatedButton(
+                          onPressed: () => Navigator.of(context).pop(), child: Text(i18n(context, 'common_no')))
+                    ],
+                  ));
           return willLeave;
         },
         child: Column(
@@ -387,7 +387,7 @@ class AdventureLabsState extends State<AdventureLabs> {
         ]),
       ),
       GCWOutputText(
-        text: i18n(context, 'adventure_labs_lab_number') + ': '+ _outData.AdventureList.length.toString(),
+        text: i18n(context, 'adventure_labs_lab_number') + ': ' + _outData.AdventureList.length.toString(),
         suppressCopyButton: true,
       ),
       GCWDropDownSpinner(
@@ -444,7 +444,7 @@ class AdventureLabsState extends State<AdventureLabs> {
         break;
       case ANALYSE_RESULT_STATUS.OK:
         if (_currentAdventureList.isNotEmpty) {
-          result =  _buildOutputAdventure();
+          result = _buildOutputAdventure();
         } else {
           result = Container();
         }

@@ -5,7 +5,6 @@ import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
 import 'package:gc_wizard/tools/science_and_technology/gcd_lcm/logic/GCD_LCM.dart';
 
-
 class GCDLCM extends StatefulWidget {
   const GCDLCM({Key? key}) : super(key: key);
 
@@ -59,7 +58,8 @@ class GCDLCMState extends State<GCDLCM> {
       child: GCWColumnedMultilineOutput(
         data: [
           [i18n(context, 'gcd_lcm_gcd'), gcd(_currentInputA, _currentInputB).toString()],
-          [i18n(context, 'gcd_lcm_lcm'), lcm(_currentInputA, _currentInputB).toString()]],
+          [i18n(context, 'gcd_lcm_lcm'), lcm(_currentInputA, _currentInputB).toString()]
+        ],
       ),
     );
   }

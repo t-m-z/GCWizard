@@ -5,7 +5,8 @@ class _GCWCoordsGeo3x3 extends StatefulWidget {
   final Geo3x3 coordinates;
   final bool isDefault;
 
-  const _GCWCoordsGeo3x3({Key? key, required this.onChanged, required this.coordinates, this.isDefault = true}) : super(key: key);
+  const _GCWCoordsGeo3x3({Key? key, required this.onChanged, required this.coordinates, this.isDefault = true})
+      : super(key: key);
 
   @override
   _GCWCoordsGeo3x3State createState() => _GCWCoordsGeo3x3State();

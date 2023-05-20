@@ -1,47 +1,45 @@
 import 'dart:core';
+import 'dart:io';
 import 'dart:isolate';
 import 'dart:math';
-import 'dart:io';
 
-import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
-import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
-import 'package:gc_wizard/utils/complex_return_types.dart';
-
-import 'package:stack/stack.dart' as datastack;
-import 'package:latlong2/latlong.dart';
-
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
 import 'package:gc_wizard/tools/coords/centerpoint/logic/centerpoint.dart';
 import 'package:gc_wizard/tools/coords/centroid/centroid_arithmetic_mean/logic/centroid_arithmetic_mean.dart';
 import 'package:gc_wizard/tools/coords/centroid/centroid_center_of_gravity/logic/centroid_center_of_gravity.dart';
 import 'package:gc_wizard/tools/coords/distance_and_bearing/logic/distance_and_bearing.dart';
+import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
 import 'package:gc_wizard/tools/coords/waypoint_projection/logic/projection.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/alphabet_values/logic/alphabet_values.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/base/_common/logic/base.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/hashes/logic/hashes.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/roman_numbers/roman_numbers/logic/roman_numbers.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/rotation/logic/rotator.dart';
 import 'package:gc_wizard/tools/science_and_technology/cross_sums/logic/crosstotals.dart';
 import 'package:gc_wizard/tools/science_and_technology/numeral_bases/logic/numeral_bases.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/base/_common/logic/base.dart';
-import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
+import 'package:gc_wizard/utils/complex_return_types.dart';
+import 'package:latlong2/latlong.dart';
+import 'package:stack/stack.dart' as datastack;
 
-part 'package:gc_wizard/tools/scripting/logic/gcwizard_script_test_datatypes.dart';
 part 'package:gc_wizard/tools/scripting/logic/gcwizard_script_classes.dart';
 part 'package:gc_wizard/tools/scripting/logic/gcwizard_script_enums.dart';
-part 'package:gc_wizard/tools/scripting/logic/gcwizard_script_variables.dart';
 part 'package:gc_wizard/tools/scripting/logic/gcwizard_script_error_handling.dart';
-part 'package:gc_wizard/tools/scripting/logic/gcwizard_script_functions_definitions.dart';
-part 'package:gc_wizard/tools/scripting/logic/gcwizard_script_functions_datetime.dart';
-part 'package:gc_wizard/tools/scripting/logic/gcwizard_script_functions_geocaching.dart';
-part 'package:gc_wizard/tools/scripting/logic/gcwizard_script_functions_math.dart';
-part 'package:gc_wizard/tools/scripting/logic/gcwizard_script_functions_string.dart';
-part 'package:gc_wizard/tools/scripting/logic/gcwizard_script_functions_waypoints.dart';
-part 'package:gc_wizard/tools/scripting/logic/gcwizard_script_functions_graphic.dart';
 part 'package:gc_wizard/tools/scripting/logic/gcwizard_script_functions_codes_base.dart';
 part 'package:gc_wizard/tools/scripting/logic/gcwizard_script_functions_codes_hash.dart';
 part 'package:gc_wizard/tools/scripting/logic/gcwizard_script_functions_coordinates.dart';
+part 'package:gc_wizard/tools/scripting/logic/gcwizard_script_functions_datetime.dart';
+part 'package:gc_wizard/tools/scripting/logic/gcwizard_script_functions_definitions.dart';
+part 'package:gc_wizard/tools/scripting/logic/gcwizard_script_functions_geocaching.dart';
+part 'package:gc_wizard/tools/scripting/logic/gcwizard_script_functions_graphic.dart';
+part 'package:gc_wizard/tools/scripting/logic/gcwizard_script_functions_math.dart';
+part 'package:gc_wizard/tools/scripting/logic/gcwizard_script_functions_string.dart';
+part 'package:gc_wizard/tools/scripting/logic/gcwizard_script_functions_waypoints.dart';
+part 'package:gc_wizard/tools/scripting/logic/gcwizard_script_test_datatypes.dart';
+part 'package:gc_wizard/tools/scripting/logic/gcwizard_script_variables.dart';
 
 //  uses lessons from Herbert Schildt's book "C, power user's guide" P.247ff
 //  McGraw Hill has no objection according to their letter dated from 18. Januar 2023
@@ -336,7 +334,6 @@ class GCWizardSCriptInterpreter {
       if (sendAsyncPort != null && iterations % PROGRESS_STEP == 0) {
         sendAsyncPort?.send(DoubleText(PROGRESS, (iterations / MAXITERATIONS)));
       }
-
     } while (token != EOP && !_halt && iterations < MAXITERATIONS);
 
     if (iterations == MAXITERATIONS) _handleError(INFINITELOOP);

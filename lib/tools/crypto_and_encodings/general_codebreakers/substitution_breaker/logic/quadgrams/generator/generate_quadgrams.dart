@@ -41,11 +41,8 @@ Future<bool> generate_quadgram() async {
     filePath = current + "/assets/quadgrams/";
     var fileAsset = File(normalizePath(filePath + (elem['assetName'] as String)));
 
-    var _actual =
-        await generateQuadgrams(fileIn, fileOut, fileAsset,
-            elem['className'] as String,
-            elem['assetName'] as String,
-            elem['alphabet'] as String);
+    var _actual = await generateQuadgrams(fileIn, fileOut, fileAsset, elem['className'] as String,
+        elem['assetName'] as String, elem['alphabet'] as String);
 
     result = result && (_actual.errorCode == BreakerErrorCode.OK);
   }

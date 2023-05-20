@@ -13,7 +13,7 @@ class Gade extends StatefulWidget {
   const Gade({Key? key}) : super(key: key);
 
   @override
- _GadeState createState() => _GadeState();
+  _GadeState createState() => _GadeState();
 }
 
 class _GadeState extends State<Gade> {
@@ -79,19 +79,15 @@ class _GadeState extends State<Gade> {
       children: [
         GCWOutput(
             title: i18n(context, 'common_input'),
-            child: GCWColumnedMultilineOutput(
-            data: [
-                    [i18n(context, 'gade_parsed'), _input],
-                    [i18n(context, 'gade_sorted'), sortedStr]
-                  ]
-            )
-        ),
+            child: GCWColumnedMultilineOutput(data: [
+              [i18n(context, 'gade_parsed'), _input],
+              [i18n(context, 'gade_sorted'), sortedStr]
+            ])),
         GCWDefaultOutput(
           child: GCWColumnedMultilineOutput(
               data: buildGade(_input).entries.map((entry) {
-                            return [entry.key, entry.value];
-                          }).toList()
-          ),
+            return [entry.key, entry.value];
+          }).toList()),
         )
       ],
     );

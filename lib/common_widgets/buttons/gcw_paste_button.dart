@@ -38,7 +38,7 @@ class GCWPasteButton extends StatefulWidget {
       : super(key: key);
 
   @override
- _GCWPasteButtonState createState() => _GCWPasteButtonState();
+  _GCWPasteButtonState createState() => _GCWPasteButtonState();
 }
 
 class _GCWPasteButtonState extends State<GCWPasteButton> {
@@ -85,7 +85,8 @@ class _GCWPasteButtonState extends State<GCWPasteButton> {
               iconColor: themeColors().dialogText(),
               onPressed: () => _openClipboardEditor(),
             ),
-            text: '', // TODO: A GCWTextDivider without any text is a simple GCWDivider, but the GCWDivider currently does not support 'suppressTopSpace' and 'trailing'; Move both attributes to GCWDivider
+            text:
+                '', // TODO: A GCWTextDivider without any text is a simple GCWDivider, but the GCWDivider currently does not support 'suppressTopSpace' and 'trailing'; Move both attributes to GCWDivider
           ),
           action: (index) {
             _openClipboardEditor();
@@ -142,7 +143,8 @@ class _GCWPasteButtonState extends State<GCWPasteButton> {
                 widget.onSelected(item.text);
                 insertIntoGCWClipboard(context, item.text, useGlobalClipboard: false);
               });
-        }).toList();
+        })
+        .toList();
 
     menuItems.addAll(gcwClipboard);
     return menuItems;

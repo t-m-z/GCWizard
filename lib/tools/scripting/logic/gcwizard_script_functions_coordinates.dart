@@ -45,21 +45,25 @@ double _distance(dynamic x1, dynamic y1, dynamic x2, dynamic y2) {
   if (_isString(x1) || _isString(y1) || _isString(x2) || _isString(y2)) {
     _handleError(INVALIDTYPECAST);
   }
-  return distanceBearing(LatLng(x1 as double, y1 as double), LatLng(x2 as double, y2 as double), const Ellipsoid(ELLIPSOID_NAME_WGS84, 6378137.0, 298.257223563)).distance;
+  return distanceBearing(LatLng(x1 as double, y1 as double), LatLng(x2 as double, y2 as double),
+          const Ellipsoid(ELLIPSOID_NAME_WGS84, 6378137.0, 298.257223563))
+      .distance;
 }
 
 double _bearing(dynamic x1, dynamic y1, dynamic x2, dynamic y2) {
   if (_isString(x1) || _isString(y1) || _isString(x2) || _isString(y2)) {
     _handleError(INVALIDTYPECAST);
   }
-  return distanceBearing(LatLng(x1 as double, y1 as double), LatLng(x2 as double, y2 as double), defaultEllipsoid).bearingAToB;
+  return distanceBearing(LatLng(x1 as double, y1 as double), LatLng(x2 as double, y2 as double), defaultEllipsoid)
+      .bearingAToB;
 }
 
 void _projection(dynamic x1, dynamic y1, dynamic dist, dynamic angle) {
   if (_isString(x1) || _isString(y1) || _isString(dist) || _isString(angle)) {
     _handleError(INVALIDTYPECAST);
   }
-  LatLng _currentValues = projection(LatLng(x1 as double, y1 as double), angle as double, dist as double, defaultEllipsoid);
+  LatLng _currentValues =
+      projection(LatLng(x1 as double, y1 as double), angle as double, dist as double, defaultEllipsoid);
   GCWizardScript_LAT = _currentValues.latitude;
   GCWizardScript_LON = _currentValues.longitude;
 }
@@ -78,8 +82,9 @@ void _centerthreepoints(dynamic lat1, dynamic lon1, dynamic lat2, dynamic lon2, 
   double aSlope = yDelta_a / xDelta_a;
   double bSlope = yDelta_b / xDelta_b;
 
-  GCWizardScript_LON = (aSlope * bSlope * (lat1 - lat3) + bSlope*(lon1 + lon2) - aSlope * (lon2 + lon3) ) / (2 * (bSlope - aSlope));
-  GCWizardScript_LAT = -1 * (GCWizardScript_LON - (lon1 + lon2) / 2) / aSlope +  (lat1 + lat2)/2;
+  GCWizardScript_LON =
+      (aSlope * bSlope * (lat1 - lat3) + bSlope * (lon1 + lon2) - aSlope * (lon2 + lon3)) / (2 * (bSlope - aSlope));
+  GCWizardScript_LAT = -1 * (GCWizardScript_LON - (lon1 + lon2) / 2) / aSlope + (lat1 + lat2) / 2;
 }
 
 void _centertwopoints(dynamic lat1, dynamic lon1, dynamic lat2, dynamic lon2) {
@@ -88,10 +93,8 @@ void _centertwopoints(dynamic lat1, dynamic lon1, dynamic lat2, dynamic lon2) {
     return;
   }
   Map<String, dynamic> coord = centerPointTwoPoints(
-      LatLng(lat1 as double, lon1 as double),
-      LatLng(lat2 as double, lon2 as double),
-      defaultEllipsoid) as Map<String, dynamic>;
+          LatLng(lat1 as double, lon1 as double), LatLng(lat2 as double, lon2 as double), defaultEllipsoid)
+      as Map<String, dynamic>;
   GCWizardScript_LAT = coord['centerPoint'].latitude as double;
   GCWizardScript_LON = coord['centerPoint'].longitude as double;
 }
-

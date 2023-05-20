@@ -31,7 +31,7 @@ class AlphabetValues extends StatefulWidget {
   const AlphabetValues({Key? key}) : super(key: key);
 
   @override
- _AlphabetValuesState createState() => _AlphabetValuesState();
+  _AlphabetValuesState createState() => _AlphabetValuesState();
 }
 
 class _AlphabetValuesState extends State<AlphabetValues> {
@@ -72,8 +72,7 @@ class _AlphabetValuesState extends State<AlphabetValues> {
           key: toStringOrDefault(alphabet['key'], ''),
           name: toStringOrNull(alphabet['name']),
           type: AlphabetType.CUSTOM,
-          alphabet: toStringMapOrNull(asJsonMapOrNull(alphabet['alphabet'])) ?? {}
-      );
+          alphabet: toStringMapOrNull(asJsonMapOrNull(alphabet['alphabet'])) ?? {});
     }).toList());
 
     _currentAlphabetKey = Prefs.getString(PREFERENCE_ALPHABET_DEFAULT_ALPHABET);
@@ -111,10 +110,8 @@ class _AlphabetValuesState extends State<AlphabetValues> {
     var firstValue = _setValueOffset(firstEntry.value);
     var lastValue = _setValueOffset(lastEntry.value);
 
-    _reverseSwitchTitleLeft =
-        firstEntry.key + '-' + lastEntry.key + ' \u2192 ' + firstValue + '-' + lastValue;
-    _reverseSwitchTitleRight =
-        lastEntry.key + '-' + firstEntry.key + ' \u2192 ' + firstValue + '-' + lastValue;
+    _reverseSwitchTitleLeft = firstEntry.key + '-' + lastEntry.key + ' \u2192 ' + firstValue + '-' + lastValue;
+    _reverseSwitchTitleRight = lastEntry.key + '-' + firstEntry.key + ' \u2192 ' + firstValue + '-' + lastValue;
   }
 
   String _setValueOffset(String value) {
@@ -267,7 +264,9 @@ class _AlphabetValuesState extends State<AlphabetValues> {
                     items: _alphabets.map((Alphabet alphabet) {
                       return GCWDropDownMenuItem(
                           value: alphabet.key,
-                          child: (alphabet.type == AlphabetType.STANDARD ? i18n(context, alphabet.key) : alphabet.name) ?? '',
+                          child:
+                              (alphabet.type == AlphabetType.STANDARD ? i18n(context, alphabet.key) : alphabet.name) ??
+                                  '',
                           subtitle: _generateItemDescription(alphabet));
                     }).toList(),
                     onChanged: (value) {
@@ -529,11 +528,11 @@ class _AlphabetValuesState extends State<AlphabetValues> {
     var alphabet = _getFinalAlphabet();
 
     if (_currentMode == GCWSwitchPosition.left) {
-      var alphabetValues = logic.AlphabetValues(alphabet: alphabet).textToValues(_currentEncodeInput, keepNumbers: true);
+      var alphabetValues =
+          logic.AlphabetValues(alphabet: alphabet).textToValues(_currentEncodeInput, keepNumbers: true);
 
       return CrosstotalOutput(
-          text: _currentEncodeInput,
-          values: List<int>.from(alphabetValues.where((value) => value != null)));
+          text: _currentEncodeInput, values: List<int>.from(alphabetValues.where((value) => value != null)));
     } else {
       var text = logic.AlphabetValues(alphabet: alphabet).valuesToText(_currentDecodeInput.value);
       return CrosstotalOutput(text: text, values: _currentDecodeInput.value);

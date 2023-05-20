@@ -78,22 +78,18 @@ class GCWizardScriptVariable {
   GCWizardScriptVariableType variableType;
   Object variableValue;
 
-  GCWizardScriptVariable({
-    required this.variableName,
-    required this.variableType,
-    required this.variableValue});
+  GCWizardScriptVariable({required this.variableName, required this.variableType, required this.variableValue});
 
-  void toInt(){}
+  void toInt() {}
 
-  void toDouble(){}
+  void toDouble() {}
 
   @override
-  String toString(){
+  String toString() {
     return variableValue.toString();
   }
 
-  int length(){
+  int length() {
     return 0;
   }
-
 }

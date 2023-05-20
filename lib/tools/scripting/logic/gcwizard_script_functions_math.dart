@@ -272,4 +272,3 @@ String _convert(dynamic value, dynamic startBase, dynamic destinationBase) {
   }
   return convertBase(value as String, startBase as int, destinationBase as int);
 }
-

@@ -13,8 +13,7 @@ part of 'package:gc_wizard/tools/science_and_technology/checkdigits/logic/checkd
 //         => calculate Number
 // GC4TKB5 => calculate checkDigit
 
-
-CheckDigitOutput CheckIBANNumber(String number){
+CheckDigitOutput CheckIBANNumber(String number) {
   number = number.toUpperCase();
   if (number == '' || number.length < 5) {
     return CheckDigitOutput(false, 'checkdigits_invalid_length', ['']);
@@ -26,7 +25,7 @@ CheckDigitOutput CheckIBANNumber(String number){
   }
 }
 
-String CalculateIBANNumber(String number){
+String CalculateIBANNumber(String number) {
   if (number.length < 5) {
     return ('checkdigits_invalid_length');
   } else {
@@ -34,12 +33,16 @@ String CalculateIBANNumber(String number){
   }
 }
 
-List<String> CalculateIBANDigits(String number){
+List<String> CalculateIBANDigits(String number) {
   return CalculateDigits(number, checkIBAN);
 }
 
 bool checkIBAN(String number) {
-  number = number.substring(4) + ID_LETTERCODE[number[0]].toString() + ID_LETTERCODE[number[1]].toString() + number[2] + number[3];
+  number = number.substring(4) +
+      ID_LETTERCODE[number[0]].toString() +
+      ID_LETTERCODE[number[1]].toString() +
+      number[2] +
+      number[3];
   return (BigInt.parse(number) % BigInt.from(97) == BigInt.one);
 }
 

@@ -12,7 +12,7 @@ class Windchill extends StatefulWidget {
   const Windchill({Key? key}) : super(key: key);
 
   @override
- _WindchillState createState() => _WindchillState();
+  _WindchillState createState() => _WindchillState();
 }
 
 class _WindchillState extends State<Windchill> {
@@ -72,7 +72,7 @@ class _WindchillState extends State<Windchill> {
   }
 
   String _buildOutput() {
-    double? windchill =   0.0;
+    double? windchill = 0.0;
     late Temperature temperature;
 
     if (_isMetric) {

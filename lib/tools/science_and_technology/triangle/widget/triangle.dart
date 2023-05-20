@@ -14,7 +14,6 @@ import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/utils/file_utils/gcw_file.dart';
 import 'package:gc_wizard/tools/science_and_technology/triangle/logic/triangle.dart';
 
-
 class Triangle extends StatefulWidget {
   const Triangle({Key? key}) : super(key: key);
 
@@ -23,7 +22,6 @@ class Triangle extends StatefulWidget {
 }
 
 class TriangleState extends State<Triangle> {
-
   GCWSwitchPosition _currentMode = GCWSwitchPosition.left;
 
   late TextEditingController _AxController;
@@ -46,7 +44,7 @@ class TriangleState extends State<Triangle> {
   late List<List<Object?>> _outputPoints;
   late List<List<Object?>> _outputCircles;
 
-  late Angles _angles ;
+  late Angles _angles;
   late Sides _sides;
   late Sides _medians;
   late Sides _altitudes;
@@ -95,226 +93,201 @@ class TriangleState extends State<Triangle> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-        children: <Widget>[
-          GCWTwoOptionsSwitch(
-            leftValue: i18n(context, 'triangle_mode_plane'),
-            rightValue: i18n(context, 'triangle_mode_sphere'),
-            value: _currentMode,
-            onChanged: (value) {
-              setState(() {
-                _currentMode = value;
-              });
-            },
-          ),
-          Row(
-            children: [
-              Expanded(
-                  child: Container(
-                    padding: const EdgeInsets.only(right: DEFAULT_MARGIN),
-                    child: const GCWText(
-                      text: 'A',
-                    ),
-                  )
-              ),
-              Expanded(
-                  child: Container(
-                    padding: const EdgeInsets.only(left: DEFAULT_MARGIN, right: DEFAULT_MARGIN),
-                    child: GCWTextField(
-                      hintText: 'X',
-                      controller: _AxController,
-                      inputFormatters: [FilteringTextInputFormatter.allow(RegExp('[0-9.-]')),],
-                      onChanged: (text) {
-                        setState(() {
-                          _currentAxInput = text;
-                          if (_allBasicDataAvailable()) {
-                            _createAdditionalData();
-                            _createGraphicOutput();
-                          }
-                        });
-                      },
-                    ),
-                  )
-              ),
-              Expanded(
-                  child: Container(
-                    padding: const EdgeInsets.only(left: DEFAULT_MARGIN),
-                    child: GCWTextField(
-                      hintText: 'Y',
-                      inputFormatters: [FilteringTextInputFormatter.allow(RegExp('[0-9.-]')),],
-                      controller: _AyController,
-                      onChanged: (text) {
-                        setState(() {
-                          _currentAyInput = text;
-                          if (_allBasicDataAvailable()) {
-                            _createAdditionalData();
-                            _createGraphicOutput();
-                          }
-                        });
-                      },
-                    ),
-                  )
-              ),
-            ],
-          ),
-          Row(
-            children: [
-              Expanded(
-                  child: Container(
-                    padding: const EdgeInsets.only(right: DEFAULT_MARGIN),
-                    child: const GCWText(
-                      text: 'B',
-                    ),
-                  )
-              ),
-              Expanded(
-                  child: Container(
-                    padding: const EdgeInsets.only(left: DEFAULT_MARGIN, right: DEFAULT_MARGIN),
-                    child: GCWTextField(
-                      hintText: 'X',
-                      controller: _BxController,
-                      inputFormatters: [FilteringTextInputFormatter.allow(RegExp('[0-9.-]')),],
-                      onChanged: (text) {
-                        setState(() {
-                          _currentBxInput = text;
-                          if (_allBasicDataAvailable()) {
-                            _createAdditionalData();
-                            _createGraphicOutput();
-                          }
-                        });
-                      },
-                    ),
-                  )
-              ),
-              Expanded(
-                  child: Container(
-                    padding: const EdgeInsets.only(left: DEFAULT_MARGIN),
-                    child: GCWTextField(
-                      hintText: 'Y',
-                      controller: _ByController,
-                      inputFormatters: [FilteringTextInputFormatter.allow(RegExp('[0-9.-]')),],
-                      onChanged: (text) {
-                        setState(() {
-                          _currentByInput = text;
-                          if (_allBasicDataAvailable()) {
-                            _createAdditionalData();
-                            _createGraphicOutput();
-                          }
-                        });
-                      },
-                    ),
-                  )
-              ),
-            ],
-          ),
-          Row(
-            children: [
-              Expanded(
-                  child: Container(
-                    padding: const EdgeInsets.only(right: DEFAULT_MARGIN),
-                    child: const GCWText(
-                      text: 'C',
-                    ),
-                  )
-              ),
-              Expanded(
-                  child: Container(
-                    padding: const EdgeInsets.only(left: DEFAULT_MARGIN, right: DEFAULT_MARGIN),
-                    child: GCWTextField(
-                      hintText: 'X',
-                      inputFormatters: [FilteringTextInputFormatter.allow(RegExp('[0-9.-]')),],
-                      controller: _CxController,
-                      onChanged: (text) {
-                        setState(() {
-                          _currentCxInput = text;
-                          if (_allBasicDataAvailable()) {
-                            _createAdditionalData();
-                            _createGraphicOutput();
-                          }
-                        });
-                      },
-                    ),
-                  )
-              ),
-              Expanded(
-                  child: Container(
-                    padding: const EdgeInsets.only(left: DEFAULT_MARGIN),
-                    child: GCWTextField(
-                      hintText: 'Y',
-                      controller: _CyController,
-                      inputFormatters: [FilteringTextInputFormatter.allow(RegExp('[0-9.-]')),],
-                      onChanged: (text) {
-                        setState(() {
-                          _currentCyInput = text;
-                          if (_allBasicDataAvailable()) {
-                            _createAdditionalData();
-                            _createGraphicOutput();
-                          }
-                        });
-                      },
-                    ),
-                  )
-              ),
-            ],
-          ),
-          GCWTextDivider(text: i18n(context, 'common_output')),
-          _buildOutput(context)
-        ]
-    );
+    return Column(children: <Widget>[
+      GCWTwoOptionsSwitch(
+        leftValue: i18n(context, 'triangle_mode_plane'),
+        rightValue: i18n(context, 'triangle_mode_sphere'),
+        value: _currentMode,
+        onChanged: (value) {
+          setState(() {
+            _currentMode = value;
+          });
+        },
+      ),
+      Row(
+        children: [
+          Expanded(
+              child: Container(
+            padding: const EdgeInsets.only(right: DEFAULT_MARGIN),
+            child: const GCWText(
+              text: 'A',
+            ),
+          )),
+          Expanded(
+              child: Container(
+            padding: const EdgeInsets.only(left: DEFAULT_MARGIN, right: DEFAULT_MARGIN),
+            child: GCWTextField(
+              hintText: 'X',
+              controller: _AxController,
+              inputFormatters: [
+                FilteringTextInputFormatter.allow(RegExp('[0-9.-]')),
+              ],
+              onChanged: (text) {
+                setState(() {
+                  _currentAxInput = text;
+                  if (_allBasicDataAvailable()) {
+                    _createAdditionalData();
+                    _createGraphicOutput();
+                  }
+                });
+              },
+            ),
+          )),
+          Expanded(
+              child: Container(
+            padding: const EdgeInsets.only(left: DEFAULT_MARGIN),
+            child: GCWTextField(
+              hintText: 'Y',
+              inputFormatters: [
+                FilteringTextInputFormatter.allow(RegExp('[0-9.-]')),
+              ],
+              controller: _AyController,
+              onChanged: (text) {
+                setState(() {
+                  _currentAyInput = text;
+                  if (_allBasicDataAvailable()) {
+                    _createAdditionalData();
+                    _createGraphicOutput();
+                  }
+                });
+              },
+            ),
+          )),
+        ],
+      ),
+      Row(
+        children: [
+          Expanded(
+              child: Container(
+            padding: const EdgeInsets.only(right: DEFAULT_MARGIN),
+            child: const GCWText(
+              text: 'B',
+            ),
+          )),
+          Expanded(
+              child: Container(
+            padding: const EdgeInsets.only(left: DEFAULT_MARGIN, right: DEFAULT_MARGIN),
+            child: GCWTextField(
+              hintText: 'X',
+              controller: _BxController,
+              inputFormatters: [
+                FilteringTextInputFormatter.allow(RegExp('[0-9.-]')),
+              ],
+              onChanged: (text) {
+                setState(() {
+                  _currentBxInput = text;
+                  if (_allBasicDataAvailable()) {
+                    _createAdditionalData();
+                    _createGraphicOutput();
+                  }
+                });
+              },
+            ),
+          )),
+          Expanded(
+              child: Container(
+            padding: const EdgeInsets.only(left: DEFAULT_MARGIN),
+            child: GCWTextField(
+              hintText: 'Y',
+              controller: _ByController,
+              inputFormatters: [
+                FilteringTextInputFormatter.allow(RegExp('[0-9.-]')),
+              ],
+              onChanged: (text) {
+                setState(() {
+                  _currentByInput = text;
+                  if (_allBasicDataAvailable()) {
+                    _createAdditionalData();
+                    _createGraphicOutput();
+                  }
+                });
+              },
+            ),
+          )),
+        ],
+      ),
+      Row(
+        children: [
+          Expanded(
+              child: Container(
+            padding: const EdgeInsets.only(right: DEFAULT_MARGIN),
+            child: const GCWText(
+              text: 'C',
+            ),
+          )),
+          Expanded(
+              child: Container(
+            padding: const EdgeInsets.only(left: DEFAULT_MARGIN, right: DEFAULT_MARGIN),
+            child: GCWTextField(
+              hintText: 'X',
+              inputFormatters: [
+                FilteringTextInputFormatter.allow(RegExp('[0-9.-]')),
+              ],
+              controller: _CxController,
+              onChanged: (text) {
+                setState(() {
+                  _currentCxInput = text;
+                  if (_allBasicDataAvailable()) {
+                    _createAdditionalData();
+                    _createGraphicOutput();
+                  }
+                });
+              },
+            ),
+          )),
+          Expanded(
+              child: Container(
+            padding: const EdgeInsets.only(left: DEFAULT_MARGIN),
+            child: GCWTextField(
+              hintText: 'Y',
+              controller: _CyController,
+              inputFormatters: [
+                FilteringTextInputFormatter.allow(RegExp('[0-9.-]')),
+              ],
+              onChanged: (text) {
+                setState(() {
+                  _currentCyInput = text;
+                  if (_allBasicDataAvailable()) {
+                    _createAdditionalData();
+                    _createGraphicOutput();
+                  }
+                });
+              },
+            ),
+          )),
+        ],
+      ),
+      GCWTextDivider(text: i18n(context, 'common_output')),
+      _buildOutput(context)
+    ]);
   }
 
   Widget _buildOutput(BuildContext context) {
     if (_allBasicDataAvailable()) {
-      return Column(
+      return Column(children: <Widget>[
+        Column(
           children: <Widget>[
-            Column(
-              children: <Widget>[
-                GCWColumnedMultilineOutput(
-                    data: _outputBasicData,
-                    flexValues: const [2, 1, 1, 1],
-                    copyAll: true
-                ),
-                GCWTextDivider(
-                    suppressTopSpace: false,
-                    text: i18n(context, 'triangle_output_sidesmidpoint')
-                ),
-                GCWColumnedMultilineOutput(
-                    data: _outputDataPointsSidesMidPoint,
-                    flexValues: const [2, 1, 1, 1],
-                    copyAll: true
-                ),
-                GCWTextDivider(
-                    suppressTopSpace: false,
-                    text: i18n(context, 'triangle_output_altitudesbasepoint')
-                ),
-                GCWColumnedMultilineOutput(
-                    data: _outputDataPointsAltitudeBasePoints,
-                    flexValues: const [2, 1, 1, 1],
-                    copyAll: true
-                ),
-              ],
-            ),
-            GCWExpandableTextDivider(
-              text: i18n(context, 'triangle_output_points'),
-              suppressTopSpace: false,
-              child: GCWColumnedMultilineOutput(
-                  data: _outputPoints,
-                  flexValues: const [2, 1, 1, 1],
-                  copyAll: true
-              ),
-            ),
-            GCWExpandableTextDivider(
-              text: i18n(context, 'triangle_output_circles'),
-              suppressTopSpace: false,
-              child: GCWColumnedMultilineOutput(
-                  data: _outputCircles,
-                  flexValues: const [2, 1, 1, 1],
-                  copyAll: true
-              ),
-            ),
-            _buildGraphicOutput(),
-          ]
-      );
+            GCWColumnedMultilineOutput(data: _outputBasicData, flexValues: const [2, 1, 1, 1], copyAll: true),
+            GCWTextDivider(suppressTopSpace: false, text: i18n(context, 'triangle_output_sidesmidpoint')),
+            GCWColumnedMultilineOutput(
+                data: _outputDataPointsSidesMidPoint, flexValues: const [2, 1, 1, 1], copyAll: true),
+            GCWTextDivider(suppressTopSpace: false, text: i18n(context, 'triangle_output_altitudesbasepoint')),
+            GCWColumnedMultilineOutput(
+                data: _outputDataPointsAltitudeBasePoints, flexValues: const [2, 1, 1, 1], copyAll: true),
+          ],
+        ),
+        GCWExpandableTextDivider(
+          text: i18n(context, 'triangle_output_points'),
+          suppressTopSpace: false,
+          child: GCWColumnedMultilineOutput(data: _outputPoints, flexValues: const [2, 1, 1, 1], copyAll: true),
+        ),
+        GCWExpandableTextDivider(
+          text: i18n(context, 'triangle_output_circles'),
+          suppressTopSpace: false,
+          child: GCWColumnedMultilineOutput(data: _outputCircles, flexValues: const [2, 1, 1, 1], copyAll: true),
+        ),
+        _buildGraphicOutput(),
+      ]);
     } else {
       return GCWOutputText(
         text: i18n(context, 'triangle_hint_data_missing'),
@@ -322,18 +295,16 @@ class TriangleState extends State<Triangle> {
     }
   }
 
-  bool _allBasicDataAvailable(){
-    return (
-        double.tryParse(_currentAxInput) != null &&
-            double.tryParse(_currentAyInput) != null &&
-            double.tryParse(_currentBxInput) != null &&
-            double.tryParse(_currentByInput) != null &&
-            double.tryParse(_currentCxInput) != null &&
-            double.tryParse(_currentCyInput) != null
-    );
+  bool _allBasicDataAvailable() {
+    return (double.tryParse(_currentAxInput) != null &&
+        double.tryParse(_currentAyInput) != null &&
+        double.tryParse(_currentBxInput) != null &&
+        double.tryParse(_currentByInput) != null &&
+        double.tryParse(_currentCxInput) != null &&
+        double.tryParse(_currentCyInput) != null);
   }
 
-  void _createAdditionalData(){
+  void _createAdditionalData() {
     _A = XYPoint(
       x: double.parse(_currentAxInput),
       y: double.parse(_currentAyInput),
@@ -367,130 +338,160 @@ class TriangleState extends State<Triangle> {
     _sidesMidPoint = triangleSidesMidPoints(_A, _B, _C);
     _altitudesBasePoint = triangleAltitudesBasePoints(_A, _B, _C);
 
-
     _outputBasicData = [
-      [i18n(context, 'triangle_output_sides'),
+      [
+        i18n(context, 'triangle_output_sides'),
         _sides.a.toStringAsFixed(3),
         _sides.b.toStringAsFixed(3),
-        _sides.c.toStringAsFixed(3)],
-      [i18n(context, 'triangle_output_angles'),
+        _sides.c.toStringAsFixed(3)
+      ],
+      [
+        i18n(context, 'triangle_output_angles'),
         _angles.alpha.toStringAsFixed(3),
         _angles.beta.toStringAsFixed(3),
-        _angles.gamma.toStringAsFixed(3)],
-      [i18n(context, 'triangle_output_altitudes'),
+        _angles.gamma.toStringAsFixed(3)
+      ],
+      [
+        i18n(context, 'triangle_output_altitudes'),
         _altitudes.a.toStringAsFixed(3),
         _altitudes.b.toStringAsFixed(3),
-        _altitudes.c.toStringAsFixed(3)],
-      [i18n(context, 'triangle_output_medians'),
+        _altitudes.c.toStringAsFixed(3)
+      ],
+      [
+        i18n(context, 'triangle_output_medians'),
         _medians.a.toStringAsFixed(3),
         _medians.b.toStringAsFixed(3),
-        _medians.c.toStringAsFixed(3)],
-      [i18n(context, 'triangle_output_anglebisector'),
+        _medians.c.toStringAsFixed(3)
+      ],
+      [
+        i18n(context, 'triangle_output_anglebisector'),
         _anglebisector.a.toStringAsFixed(3),
         _anglebisector.b.toStringAsFixed(3),
-        _anglebisector.c.toStringAsFixed(3)],
-      [i18n(context, 'triangle_output_circumference'), triangleCircumference(_A, _B, _C).toStringAsFixed(3), null, null],
+        _anglebisector.c.toStringAsFixed(3)
+      ],
+      [
+        i18n(context, 'triangle_output_circumference'),
+        triangleCircumference(_A, _B, _C).toStringAsFixed(3),
+        null,
+        null
+      ],
       [i18n(context, 'triangle_output_area'), triangleArea(_A, _B, _C).toStringAsFixed(3), null, null],
     ];
     _outputDataPointsSidesMidPoint = [
-      ['a\nx, y',
+      [
+        'a\nx, y',
         _sidesMidPoint[0].x.toStringAsFixed(3),
         _sidesMidPoint[0].y.toStringAsFixed(3),
-        null,],
-      ['b\nx, y',
+        null,
+      ],
+      [
+        'b\nx, y',
         _sidesMidPoint[1].x.toStringAsFixed(3),
         _sidesMidPoint[1].y.toStringAsFixed(3),
-        null,],
-      ['c\nx, y',
+        null,
+      ],
+      [
+        'c\nx, y',
         _sidesMidPoint[2].x.toStringAsFixed(3),
         _sidesMidPoint[2].y.toStringAsFixed(3),
-        null,],
+        null,
+      ],
     ];
     _outputDataPointsAltitudeBasePoints = [
-      ['a\nx, y',
+      [
+        'a\nx, y',
         _altitudesBasePoint[0].x.toStringAsFixed(3),
         _altitudesBasePoint[0].y.toStringAsFixed(3),
-        null,],
-      ['b\nx, y',
+        null,
+      ],
+      [
+        'b\nx, y',
         _altitudesBasePoint[1].x.toStringAsFixed(3),
         _altitudesBasePoint[1].y.toStringAsFixed(3),
-        null,],
-      ['c\nx, y',
+        null,
+      ],
+      [
+        'c\nx, y',
         _altitudesBasePoint[2].x.toStringAsFixed(3),
         _altitudesBasePoint[2].y.toStringAsFixed(3),
-        null,],
+        null,
+      ],
     ];
     _outputPoints = [
-      [i18n(context, 'triangle_output_incenter'),
+      [
+        i18n(context, 'triangle_output_incenter'),
         _innercircle.x.toStringAsFixed(3),
         _innercircle.y.toStringAsFixed(3),
-        null],
-      [i18n(context, 'triangle_output_centroid'),
-        _centroid.x.toStringAsFixed(3),
-        _centroid.y.toStringAsFixed(3),
-        null],
-      [i18n(context, 'triangle_output_circumcenter'),
+        null
+      ],
+      [i18n(context, 'triangle_output_centroid'), _centroid.x.toStringAsFixed(3), _centroid.y.toStringAsFixed(3), null],
+      [
+        i18n(context, 'triangle_output_circumcenter'),
         _outercircle.x.toStringAsFixed(3),
         _outercircle.y.toStringAsFixed(3),
-        null],
-      [i18n(context, 'triangle_output_altitude'),
+        null
+      ],
+      [
+        i18n(context, 'triangle_output_altitude'),
         _orthocenter.x.toStringAsFixed(3),
         _orthocenter.y.toStringAsFixed(3),
-        null],
-      [i18n(context, 'triangle_output_feuerbachcircle'),
+        null
+      ],
+      [
+        i18n(context, 'triangle_output_feuerbachcircle'),
         _feuerbachcircle.x.toStringAsFixed(3),
         _feuerbachcircle.y.toStringAsFixed(3),
-        null,],
-      [i18n(context, 'triangle_output_lemoine'),
-        _lemoine.x.toStringAsFixed(3),
-        _lemoine.y.toStringAsFixed(3),
-        null],
-      [i18n(context, 'triangle_output_gergonne'),
-        _gergonne.x.toStringAsFixed(3),
-        _gergonne.y.toStringAsFixed(3),
-        null],
-      [i18n(context, 'triangle_output_nagel'),
-        _nagel.x.toStringAsFixed(3),
-        _nagel.y.toStringAsFixed(3),
-        null],
-      [i18n(context, 'triangle_output_mitten'),
-        _mitten.x.toStringAsFixed(3),
-        _mitten.y.toStringAsFixed(3),
-        null],
-      [i18n(context, 'triangle_output_spieker'),
-        _spieker.x.toStringAsFixed(3),
-        _spieker.y.toStringAsFixed(3),
-        null],
-      [i18n(context, 'triangle_output_feuerbach'),
+        null,
+      ],
+      [i18n(context, 'triangle_output_lemoine'), _lemoine.x.toStringAsFixed(3), _lemoine.y.toStringAsFixed(3), null],
+      [i18n(context, 'triangle_output_gergonne'), _gergonne.x.toStringAsFixed(3), _gergonne.y.toStringAsFixed(3), null],
+      [i18n(context, 'triangle_output_nagel'), _nagel.x.toStringAsFixed(3), _nagel.y.toStringAsFixed(3), null],
+      [i18n(context, 'triangle_output_mitten'), _mitten.x.toStringAsFixed(3), _mitten.y.toStringAsFixed(3), null],
+      [i18n(context, 'triangle_output_spieker'), _spieker.x.toStringAsFixed(3), _spieker.y.toStringAsFixed(3), null],
+      [
+        i18n(context, 'triangle_output_feuerbach'),
         _feuerbach.x.toStringAsFixed(3),
         _feuerbach.y.toStringAsFixed(3),
-        null],
+        null
+      ],
     ];
     _outputCircles = [
-      [i18n(context, 'triangle_output_incircle'),
+      [
+        i18n(context, 'triangle_output_incircle'),
         _innercircle.x.toStringAsFixed(3),
         _innercircle.y.toStringAsFixed(3),
-        _innercircle.r.toStringAsFixed(3),],
-      [i18n(context, 'triangle_output_circumscribedcircle'),
+        _innercircle.r.toStringAsFixed(3),
+      ],
+      [
+        i18n(context, 'triangle_output_circumscribedcircle'),
         _outercircle.x.toStringAsFixed(3),
         _outercircle.y.toStringAsFixed(3),
-        _outercircle.r.toStringAsFixed(3),],
-      [i18n(context, 'triangle_output_feuerbachcircle'),
+        _outercircle.r.toStringAsFixed(3),
+      ],
+      [
+        i18n(context, 'triangle_output_feuerbachcircle'),
         _feuerbachcircle.x.toStringAsFixed(3),
         _feuerbachcircle.y.toStringAsFixed(3),
-        _feuerbachcircle.r.toStringAsFixed(3),],
-      [i18n(context, 'triangle_output_excircle').replaceAll('\$1', 'a'),
+        _feuerbachcircle.r.toStringAsFixed(3),
+      ],
+      [
+        i18n(context, 'triangle_output_excircle').replaceAll('\$1', 'a'),
         _exCircle[0].x.toStringAsFixed(3),
         _exCircle[0].y.toStringAsFixed(3),
-        _exCircle[0].r.toStringAsFixed(3),],
-      [i18n(context, 'triangle_output_excircle').replaceAll('\$1', 'b'),
+        _exCircle[0].r.toStringAsFixed(3),
+      ],
+      [
+        i18n(context, 'triangle_output_excircle').replaceAll('\$1', 'b'),
         _exCircle[1].x.toStringAsFixed(3),
         _exCircle[1].y.toStringAsFixed(3),
-        _exCircle[1].r.toStringAsFixed(3),],
-      [i18n(context, 'triangle_output_excircle').replaceAll('\$1', 'c'),
+        _exCircle[1].r.toStringAsFixed(3),
+      ],
+      [
+        i18n(context, 'triangle_output_excircle').replaceAll('\$1', 'c'),
         _exCircle[2].x.toStringAsFixed(3),
         _exCircle[2].y.toStringAsFixed(3),
-        _exCircle[2].r.toStringAsFixed(3),],
+        _exCircle[2].r.toStringAsFixed(3),
+      ],
     ];
   }
 

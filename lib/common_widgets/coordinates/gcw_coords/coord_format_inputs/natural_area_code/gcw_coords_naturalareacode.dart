@@ -5,7 +5,8 @@ class _GCWCoordsNaturalAreaCode extends StatefulWidget {
   final NaturalAreaCode coordinates;
   final bool isDefault;
 
-  const _GCWCoordsNaturalAreaCode({Key? key, required this.onChanged, required this.coordinates, this.isDefault = true}) : super(key: key);
+  const _GCWCoordsNaturalAreaCode({Key? key, required this.onChanged, required this.coordinates, this.isDefault = true})
+      : super(key: key);
 
   @override
   _GCWCoordsNaturalAreaCodeState createState() => _GCWCoordsNaturalAreaCodeState();

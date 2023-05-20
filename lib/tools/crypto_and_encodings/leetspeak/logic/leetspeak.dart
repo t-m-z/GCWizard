@@ -6,26 +6,26 @@
 // [-_/¯¯|¯=?|2[]=32[]<][[\]<|[)36®3§/][/V°|(_)/\/\/¯|¯3©]|\|0./\/\1|V(_)73$?7$!}{¢?[\]7[)|)(/\/\][1_[_![-/V\3_/-
 
 import 'dart:math';
+
 import 'package:gc_wizard/utils/constants.dart';
 
-part 'package:gc_wizard/tools/crypto_and_encodings/leetspeak/logic/leetspeak_data.dart';
 part 'package:gc_wizard/tools/crypto_and_encodings/leetspeak/logic/leetspeak_classes.dart';
+part 'package:gc_wizard/tools/crypto_and_encodings/leetspeak/logic/leetspeak_data.dart';
 
-LeetFoundOutput _searchLeet(Map<String, String> decodeMap, String chiffre, int length){
+LeetFoundOutput _searchLeet(Map<String, String> decodeMap, String chiffre, int length) {
   String check = chiffre.substring(0, length);
   bool resultFound = false;
   String resultValue = '';
   decodeMap.forEach((key, value) {
     if (key == check) {
       resultFound = true;
-      resultValue= value;
+      resultValue = value;
     }
   });
   return LeetFoundOutput(found: resultFound, value: resultValue);
 }
 
-String decodeLeetSpeak(String chiffre){
-
+String decodeLeetSpeak(String chiffre) {
   String plain = '';
   LeetFoundOutput result;
   bool found;
@@ -33,8 +33,7 @@ String decodeLeetSpeak(String chiffre){
     if (chiffre[0] == ' ') {
       plain = plain + ' ';
       chiffre = chiffre.substring(1);
-    }
-    else {
+    } else {
       found = false;
       if (chiffre.length >= 5) {
         for (int i = 5; i > 0; i--) {
@@ -105,13 +104,17 @@ String decodeLeetSpeak(String chiffre){
   return plain;
 }
 
-String encodeLeetSpeak(String plain){
-
-  return plain.toUpperCase().split('').map((letter) {
-    if (LEET_SPEAK_ENCODE[letter] == null) {
+String encodeLeetSpeak(String plain) {
+  return plain
+      .toUpperCase()
+      .split('')
+      .map((letter) {
+        if (LEET_SPEAK_ENCODE[letter] == null) {
           return '';
         } else {
           return LEET_SPEAK_ENCODE[letter]![Random().nextInt(LEET_SPEAK_ENCODE[letter]!.length)];
         }
-      }).toList().join('');
+      })
+      .toList()
+      .join('');
 }

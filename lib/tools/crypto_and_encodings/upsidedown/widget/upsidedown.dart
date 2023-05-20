@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
-
 import 'package:gc_wizard/tools/crypto_and_encodings/upsidedown/logic/upsidedown.dart';
 
 class UpsideDown extends StatefulWidget {
@@ -50,19 +48,19 @@ class UpsideDownState extends State<UpsideDown> {
         ),
         _currentMode == GCWSwitchPosition.right
             ? GCWTextField(
-            controller: _inputControllerDecode,
-            onChanged: (text) {
-              setState(() {
-                _currentInputDecode = text;
-              });
-            })
+                controller: _inputControllerDecode,
+                onChanged: (text) {
+                  setState(() {
+                    _currentInputDecode = text;
+                  });
+                })
             : GCWTextField(
-            controller: _inputControllerEncode,
-            onChanged: (text) {
-              setState(() {
-                _currentInputEncode = text;
-              });
-            }),
+                controller: _inputControllerEncode,
+                onChanged: (text) {
+                  setState(() {
+                    _currentInputEncode = text;
+                  });
+                }),
         _buildOutput(),
       ],
     );

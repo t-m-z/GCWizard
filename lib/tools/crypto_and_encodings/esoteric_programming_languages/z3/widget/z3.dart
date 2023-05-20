@@ -24,7 +24,6 @@ class Z3State extends State<Z3> {
 
   bool _currentShowDebug = false;
 
-
   @override
   void initState() {
     super.initState();
@@ -99,43 +98,43 @@ class Z3State extends State<Z3> {
             ),
             _currentShowDebug == true
                 ? Column(children: <Widget>[
-              Row(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
-                Expanded(
-                    flex: 1,
-                    child: Align(
-                      alignment: Alignment.topCenter,
-                      child: Container(
-                        padding: const EdgeInsets.only(right: DEFAULT_MARGIN),
-                        child: Column(
-                          children: <Widget>[
-                            GCWTextDivider(text: i18n(context, 'z3_hint_code_assembler')),
-                            GCWOutputText(
-                              text: _output.assembler.join('\n'),
-                              isMonotype: true,
+                    Row(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
+                      Expanded(
+                          flex: 1,
+                          child: Align(
+                            alignment: Alignment.topCenter,
+                            child: Container(
+                              padding: const EdgeInsets.only(right: DEFAULT_MARGIN),
+                              child: Column(
+                                children: <Widget>[
+                                  GCWTextDivider(text: i18n(context, 'z3_hint_code_assembler')),
+                                  GCWOutputText(
+                                    text: _output.assembler.join('\n'),
+                                    isMonotype: true,
+                                  ),
+                                ],
+                              ),
                             ),
-                          ],
-                        ),
-                      ),
-                    )),
-                Expanded(
-                    flex: 1,
-                    child: Align(
-                      alignment: Alignment.topCenter,
-                      child: Container(
-                        padding: const EdgeInsets.only(left: DEFAULT_MARGIN),
-                        child: Column(
-                          children: <Widget>[
-                            GCWTextDivider(text: i18n(context, 'z3_hint_code_mnemonic')),
-                            GCWOutputText(
-                              text: _output.mnemonic.join('\n'),
-                              isMonotype: true,
+                          )),
+                      Expanded(
+                          flex: 1,
+                          child: Align(
+                            alignment: Alignment.topCenter,
+                            child: Container(
+                              padding: const EdgeInsets.only(left: DEFAULT_MARGIN),
+                              child: Column(
+                                children: <Widget>[
+                                  GCWTextDivider(text: i18n(context, 'z3_hint_code_mnemonic')),
+                                  GCWOutputText(
+                                    text: _output.mnemonic.join('\n'),
+                                    isMonotype: true,
+                                  ),
+                                ],
+                              ),
                             ),
-                          ],
-                        ),
-                      ),
-                    )),
-              ]),
-            ])
+                          )),
+                    ]),
+                  ])
                 : Container(),
           ],
         )

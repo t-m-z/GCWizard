@@ -5,7 +5,8 @@ class _GCWCoordsUTM extends StatefulWidget {
   final BaseCoordinate coordinates;
   final bool isDefault;
 
-  const _GCWCoordsUTM({Key? key, required this.onChanged, required this.coordinates, this.isDefault = true}) : super(key: key);
+  const _GCWCoordsUTM({Key? key, required this.onChanged, required this.coordinates, this.isDefault = true})
+      : super(key: key);
 
   @override
   _GCWCoordsUTMState createState() => _GCWCoordsUTMState();

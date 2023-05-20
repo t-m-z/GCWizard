@@ -4,7 +4,6 @@ import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/leetspeak/logic/leetspeak.dart';
 
-
 class LeetSpeak extends StatefulWidget {
   const LeetSpeak({Key? key}) : super(key: key);
 
@@ -49,19 +48,19 @@ class LeetSpeakState extends State<LeetSpeak> {
         ),
         _currentMode == GCWSwitchPosition.right
             ? GCWTextField(
-            controller: _inputControllerDecode,
-            onChanged: (text) {
-              setState(() {
-                _currentInputDecode = text;
-              });
-            })
+                controller: _inputControllerDecode,
+                onChanged: (text) {
+                  setState(() {
+                    _currentInputDecode = text;
+                  });
+                })
             : GCWTextField(
-            controller: _inputControllerEncode,
-            onChanged: (text) {
-              setState(() {
-                _currentInputEncode = text;
-              });
-            }),
+                controller: _inputControllerEncode,
+                onChanged: (text) {
+                  setState(() {
+                    _currentInputEncode = text;
+                  });
+                }),
         _buildOutput(),
       ],
     );

@@ -11,7 +11,7 @@ class Tapir extends StatefulWidget {
   const Tapir({Key? key}) : super(key: key);
 
   @override
- _TapirState createState() => _TapirState();
+  _TapirState createState() => _TapirState();
 }
 
 class _TapirState extends State<Tapir> {

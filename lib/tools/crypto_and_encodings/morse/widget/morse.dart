@@ -19,7 +19,7 @@ class Morse extends StatefulWidget {
   const Morse({Key? key}) : super(key: key);
 
   @override
- _MorseState createState() => _MorseState();
+  _MorseState createState() => _MorseState();
 }
 
 class _MorseState extends State<Morse> {
@@ -30,7 +30,9 @@ class _MorseState extends State<Morse> {
   var _currentDecodeInput = '';
   GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
 
-  var player = AudioPlayer(playerId: const Uuid().v4(),);
+  var player = AudioPlayer(
+    playerId: const Uuid().v4(),
+  );
 
   String _playlist = '';
   int _index = 0;
@@ -42,7 +44,9 @@ class _MorseState extends State<Morse> {
         StreamSubscription<void> subscription = player.onPlayerComplete.listen((event) => 0);
         subscription = player.onPlayerComplete.listen((event) {
           index++;
-          playSound(index,);
+          playSound(
+            index,
+          );
           subscription.cancel();
         });
       }
@@ -210,9 +214,9 @@ class _MorseState extends State<Morse> {
     );
   }
 
-  String _buildMorseCode(String code){
+  String _buildMorseCode(String code) {
     List<String> result = [];
-    for (int i = 0; i < code.length; i++){
+    for (int i = 0; i < code.length; i++) {
       result.add(code[i]);
       if ((code[i] == '.' || code[i] == '-') && (i + 1 < code.length) && ((code[i + 1] == '.' || code[i + 1] == '-'))) {
         result.add(',');

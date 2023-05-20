@@ -23,7 +23,7 @@ class WASD extends StatefulWidget {
   const WASD({Key? key}) : super(key: key);
 
   @override
- _WASDState createState() => _WASDState();
+  _WASDState createState() => _WASDState();
 }
 
 class _WASDState extends State<WASD> {

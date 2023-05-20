@@ -45,7 +45,6 @@ class FormulaGroup {
     }
   }
 
-
   @override
   String toString() {
     return toMap().toString();
@@ -111,10 +110,10 @@ class FormulaValue {
   FormulaValueType? type;
 
   FormulaValue(this.key, this.value, {this.type});
-  
+
   FormulaValue.fromJson(Map<String, Object?> json)
       : id = toIntOrNull(json['id']),
-        key = toStringOrNull(json['key']) ?? '',  // TODO Proper default types if key is not in map
+        key = toStringOrNull(json['key']) ?? '', // TODO Proper default types if key is not in map
         value = toStringOrNull(json['value']) ?? '',
         type = _readType(json['type'] as String?);
 

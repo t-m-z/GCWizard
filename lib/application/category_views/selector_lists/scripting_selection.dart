@@ -9,9 +9,8 @@ class ScriptingSelection extends GCWSelection {
 
   @override
   Widget build(BuildContext context) {
-    final List<GCWTool> _toolList = registeredTools
-        .where((element) => element.categories.contains(ToolCategory.SCRIPTING))
-        .toList();
+    final List<GCWTool> _toolList =
+        registeredTools.where((element) => element.categories.contains(ToolCategory.SCRIPTING)).toList();
     _toolList.sort((a, b) => sortToolList(a, b));
 
     return GCWToolList(toolList: _toolList);

@@ -10,40 +10,52 @@
 
 import 'dart:core';
 import 'dart:math';
-import 'package:latlong2/latlong.dart';
+
+import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
+import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/wet_bulb_globe_temperature/logic/liljegren.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/_common/logic/julian_date.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/sun_position/logic/sun_position.dart' as sunposition;
-import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/wet_bulb_globe_temperature/logic/liljegren.dart';
 import 'package:gc_wizard/utils/complex_return_types.dart';
-import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
+import 'package:latlong2/latlong.dart';
 
-
-enum CLOUD_COVER {CLEAR_0, FEW_1, FEW_2, SCATTERED_3, SCATTERED_4, BROKEN_5, BROKEN_6, BROKEN_7, OVERCAST_8, OBSCURED_9, NULL}
+enum CLOUD_COVER {
+  CLEAR_0,
+  FEW_1,
+  FEW_2,
+  SCATTERED_3,
+  SCATTERED_4,
+  BROKEN_5,
+  BROKEN_6,
+  BROKEN_7,
+  OVERCAST_8,
+  OBSCURED_9,
+  NULL
+}
 
 Map<CLOUD_COVER, String> CLOUD_COVER_LIST = {
-  CLOUD_COVER.CLEAR_0 : 'weathersymbols_n_0',
-  CLOUD_COVER.FEW_1 : 'weathersymbols_n_1',
-  CLOUD_COVER.FEW_2 : 'weathersymbols_n_2',
-  CLOUD_COVER.SCATTERED_3 : 'weathersymbols_n_3',
-  CLOUD_COVER.SCATTERED_4 : 'weathersymbols_n_4',
-  CLOUD_COVER.BROKEN_5 : 'weathersymbols_n_5',
-  CLOUD_COVER.BROKEN_6 : 'weathersymbols_n_6',
-  CLOUD_COVER.BROKEN_7 : 'weathersymbols_n_7',
-  CLOUD_COVER.OVERCAST_8 : 'weathersymbols_n_8',
-  CLOUD_COVER.OBSCURED_9 : 'weathersymbols_n_9',
+  CLOUD_COVER.CLEAR_0: 'weathersymbols_n_0',
+  CLOUD_COVER.FEW_1: 'weathersymbols_n_1',
+  CLOUD_COVER.FEW_2: 'weathersymbols_n_2',
+  CLOUD_COVER.SCATTERED_3: 'weathersymbols_n_3',
+  CLOUD_COVER.SCATTERED_4: 'weathersymbols_n_4',
+  CLOUD_COVER.BROKEN_5: 'weathersymbols_n_5',
+  CLOUD_COVER.BROKEN_6: 'weathersymbols_n_6',
+  CLOUD_COVER.BROKEN_7: 'weathersymbols_n_7',
+  CLOUD_COVER.OVERCAST_8: 'weathersymbols_n_8',
+  CLOUD_COVER.OBSCURED_9: 'weathersymbols_n_9',
 };
 
 Map<CLOUD_COVER, double> CLOUD_COVER_VALUE = {
-  CLOUD_COVER.CLEAR_0 : 0.0,
-  CLOUD_COVER.FEW_1 : 0.05,
-  CLOUD_COVER.FEW_2 : 0.10,
-  CLOUD_COVER.SCATTERED_3 : 0.25,
-  CLOUD_COVER.SCATTERED_4 : 0.40,
-  CLOUD_COVER.BROKEN_5 : 0.50,
-  CLOUD_COVER.BROKEN_6 : 0.65,
-  CLOUD_COVER.BROKEN_7 : 0.80,
-  CLOUD_COVER.OVERCAST_8 : 1.0,
-  CLOUD_COVER.OBSCURED_9 : 1.0,
+  CLOUD_COVER.CLEAR_0: 0.0,
+  CLOUD_COVER.FEW_1: 0.05,
+  CLOUD_COVER.FEW_2: 0.10,
+  CLOUD_COVER.SCATTERED_3: 0.25,
+  CLOUD_COVER.SCATTERED_4: 0.40,
+  CLOUD_COVER.BROKEN_5: 0.50,
+  CLOUD_COVER.BROKEN_6: 0.65,
+  CLOUD_COVER.BROKEN_7: 0.80,
+  CLOUD_COVER.OVERCAST_8: 1.0,
+  CLOUD_COVER.OBSCURED_9: 1.0,
 };
 
 enum WBGT_HEATSTRESS_CONDITION { WHITE, GREEN, YELLOW, RED, BLACK }
@@ -65,7 +77,15 @@ class WBGTOutput {
   final double Tdew;
   final sunposition.SunPosition SunPos;
 
-  WBGTOutput({this.Status = 0, this.Solar = 0.0, this.Tg = 0.0, this.Tnwb = 0.0, this.Tpsy = 0.0, this.Twbg = 0.0, this.Tdew = 0.0, required this.SunPos});
+  WBGTOutput(
+      {this.Status = 0,
+      this.Solar = 0.0,
+      this.Tg = 0.0,
+      this.Tnwb = 0.0,
+      this.Tpsy = 0.0,
+      this.Twbg = 0.0,
+      this.Tdew = 0.0,
+      required this.SunPos});
 }
 
 double calc_solar_irradiance({double solarElevationAngle = 0.0, required CLOUD_COVER cloudcover}) {
@@ -74,16 +94,20 @@ double calc_solar_irradiance({double solarElevationAngle = 0.0, required CLOUD_C
   return R0 * (1.0 - 0.75 * pow(cloudCoverFraction, 3.4));
 }
 
-WBGTOutput calculateWetBulbGlobeTemperature(DateTimeTimezone dateTime, LatLng coords, double windSpeed, double windSpeedHeight, double temperature, double humidity, double airPressure, bool urban, CLOUD_COVER cloudcover) {
+WBGTOutput calculateWetBulbGlobeTemperature(
+    DateTimeTimezone dateTime,
+    LatLng coords,
+    double windSpeed,
+    double windSpeedHeight,
+    double temperature,
+    double humidity,
+    double airPressure,
+    bool urban,
+    CLOUD_COVER cloudcover) {
+  var sunPosition = sunposition.SunPosition(LatLng(coords.latitude, coords.longitude), JulianDate(dateTime),
+      const Ellipsoid(ELLIPSOID_NAME_WGS84, 6378137.0, 298.257223563));
 
-  var sunPosition = sunposition.SunPosition(
-      LatLng(coords.latitude, coords.longitude),
-      JulianDate(dateTime),
-      const Ellipsoid(ELLIPSOID_NAME_WGS84, 6378137.0, 298.257223563)
-  );
-
-  double solar = calc_solar_irradiance(solarElevationAngle: sunPosition.altitude, cloudcover: cloudcover
-  );
+  double solar = calc_solar_irradiance(solarElevationAngle: sunPosition.altitude, cloudcover: cloudcover);
 
   liljegrenOutputWBGT WBGT = calc_wbgt(
     year: dateTime.datetime.year,

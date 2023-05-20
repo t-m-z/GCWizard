@@ -52,7 +52,7 @@ class FormulaSolverFormulaGroups extends StatefulWidget {
   const FormulaSolverFormulaGroups({Key? key}) : super(key: key);
 
   @override
- _FormulaSolverFormulaGroupsState createState() => _FormulaSolverFormulaGroupsState();
+  _FormulaSolverFormulaGroupsState createState() => _FormulaSolverFormulaGroupsState();
 }
 
 class _FormulaSolverFormulaGroupsState extends State<FormulaSolverFormulaGroups> {
@@ -201,14 +201,16 @@ class _FormulaSolverFormulaGroupsState extends State<FormulaSolverFormulaGroups>
     var odd = true;
     var rows = formulaGroups.map((group) {
       var formulaTool = GCWTool(
-          tool: _FormulaSolverFormulas(group: group),
-          toolName: '${group.name} - ${i18n(context, 'formulasolver_formulas')}',
-          helpSearchString: 'formulasolver_formulas',
-          defaultLanguageToolName:
-              '${group.name} - ${i18n(context, 'formulasolver_formulas', useDefaultLanguage: true)}', id: '',);
+        tool: _FormulaSolverFormulas(group: group),
+        toolName: '${group.name} - ${i18n(context, 'formulasolver_formulas')}',
+        helpSearchString: 'formulasolver_formulas',
+        defaultLanguageToolName: '${group.name} - ${i18n(context, 'formulasolver_formulas', useDefaultLanguage: true)}',
+        id: '',
+      );
 
       Future<void> _navigateToSubPage(BuildContext context) async {
-        Navigator.push(context, NoAnimationMaterialPageRoute<GCWTool>(builder: (context) => formulaTool)).whenComplete(() {
+        Navigator.push(context, NoAnimationMaterialPageRoute<GCWTool>(builder: (context) => formulaTool))
+            .whenComplete(() {
           setState(() {});
         });
       }

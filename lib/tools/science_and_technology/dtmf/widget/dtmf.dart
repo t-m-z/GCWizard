@@ -1,6 +1,6 @@
 import 'dart:async';
+
 import 'package:audioplayers/audioplayers.dart';
-import 'package:uuid/uuid.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/app_localizations.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
@@ -13,12 +13,13 @@ import 'package:gc_wizard/common_widgets/text_input_formatters/wrapper_for_maskt
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/science_and_technology/dtmf/logic/dtmf.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/text_widget_utils.dart';
+import 'package:uuid/uuid.dart';
 
 class DTMF extends StatefulWidget {
   const DTMF({Key? key}) : super(key: key);
 
   @override
- _DTMFState createState() => _DTMFState();
+  _DTMFState createState() => _DTMFState();
 }
 
 class _DTMFState extends State<DTMF> {
@@ -36,7 +37,9 @@ class _DTMFState extends State<DTMF> {
   final _maskInputFormatter =
       WrapperForMaskTextInputFormatter(mask: '#' * 10000, filter: {"#": RegExp(r'[0-9\*\#a-dA-D]')});
 
-  var player = AudioPlayer(playerId: Uuid().v4(),);
+  var player = AudioPlayer(
+    playerId: const Uuid().v4(),
+  );
   int _index = 0;
   String _playlist = '';
 
@@ -79,7 +82,9 @@ class _DTMFState extends State<DTMF> {
         StreamSubscription<void> subscription = player.onPlayerComplete.listen((event) => 0);
         subscription = player.onPlayerComplete.listen((event) {
           index++;
-          playSound(index,);
+          playSound(
+            index,
+          );
           subscription.cancel();
         });
       }

@@ -5,9 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
-import 'package:gc_wizard/tools/symbol_tables/_common/logic/symbol_table_data.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/iau_constellation/logic/iau_constellation.dart';
-
+import 'package:gc_wizard/tools/symbol_tables/_common/logic/symbol_table_data.dart';
 
 class IAUConstellations extends StatefulWidget {
   const IAUConstellations({Key? key}) : super(key: key);
@@ -49,9 +48,7 @@ class IAUConstellationsState extends State<IAUConstellations> {
       return {key: SymbolData(path: file.name, bytes: data)};
     }).toList();
 
-    setState(() {
-
-    });
+    setState(() {});
   }
 
   @override
@@ -66,56 +63,35 @@ class IAUConstellationsState extends State<IAUConstellations> {
           title: i18n(context, 'iau_constellation_sort'),
           value: _currentSort,
           items: IAU_SORT.entries.map((mode) {
-            return GCWDropDownMenuItem(
-                value: mode.key,
-                child: i18n(context, mode.value)
-            );
+            return GCWDropDownMenuItem(value: mode.key, child: i18n(context, mode.value));
           }).toList(),
           onChanged: (newValue) {
             setState(() {
               _currentSort = newValue as IAU_CONSTELLATION_SORT;
-              switch (_currentSort){
-                case IAU_CONSTELLATION_SORT.CONSTELLATION :
-                  IAU_CONSTELLATION = Map.fromEntries(
-                      IAU_CONSTELLATION.entries.toList()..sort(
-                              (e1, e2) => e1.value['constellation']!.compareTo(e2.value['constellation']!)
-                      )
-                  );
+              switch (_currentSort) {
+                case IAU_CONSTELLATION_SORT.CONSTELLATION:
+                  IAU_CONSTELLATION = Map.fromEntries(IAU_CONSTELLATION.entries.toList()
+                    ..sort((e1, e2) => e1.value['constellation']!.compareTo(e2.value['constellation']!)));
                   break;
-                case IAU_CONSTELLATION_SORT.NAME :
-                  IAU_CONSTELLATION = Map.fromEntries(
-                      IAU_CONSTELLATION.entries.toList()..sort(
-                              (e1, e2) => i18n(context, e1.value['name']!).compareTo(i18n(context, e2.value['name']!))
-                      )
-                  );
+                case IAU_CONSTELLATION_SORT.NAME:
+                  IAU_CONSTELLATION = Map.fromEntries(IAU_CONSTELLATION.entries.toList()
+                    ..sort((e1, e2) => i18n(context, e1.value['name']!).compareTo(i18n(context, e2.value['name']!))));
                   break;
-                case IAU_CONSTELLATION_SORT.STAR :
-                  IAU_CONSTELLATION = Map.fromEntries(
-                      IAU_CONSTELLATION.entries.toList()..sort(
-                              (e1, e2) => e1.value['brightest_star']!.compareTo(e2.value['brightest_star']!)
-                      )
-                  );
+                case IAU_CONSTELLATION_SORT.STAR:
+                  IAU_CONSTELLATION = Map.fromEntries(IAU_CONSTELLATION.entries.toList()
+                    ..sort((e1, e2) => e1.value['brightest_star']!.compareTo(e2.value['brightest_star']!)));
                   break;
-                case IAU_CONSTELLATION_SORT.AREA :
-                  IAU_CONSTELLATION = Map.fromEntries(
-                      IAU_CONSTELLATION.entries.toList()..sort(
-                              (e1, e2) => e1.value['area']!.compareTo(e2.value['area']!)
-                      )
-                  );
+                case IAU_CONSTELLATION_SORT.AREA:
+                  IAU_CONSTELLATION = Map.fromEntries(IAU_CONSTELLATION.entries.toList()
+                    ..sort((e1, e2) => e1.value['area']!.compareTo(e2.value['area']!)));
                   break;
-                case IAU_CONSTELLATION_SORT.VISIBILIY :
-                  IAU_CONSTELLATION = Map.fromEntries(
-                      IAU_CONSTELLATION.entries.toList()..sort(
-                              (e1, e2) => e1.value['visibility']!.compareTo(e2.value['visibility']!)
-                      )
-                  );
+                case IAU_CONSTELLATION_SORT.VISIBILIY:
+                  IAU_CONSTELLATION = Map.fromEntries(IAU_CONSTELLATION.entries.toList()
+                    ..sort((e1, e2) => e1.value['visibility']!.compareTo(e2.value['visibility']!)));
                   break;
-                case IAU_CONSTELLATION_SORT.MAGNITUDO :
-                  IAU_CONSTELLATION = Map.fromEntries(
-                      IAU_CONSTELLATION.entries.toList()..sort(
-                              (e1, e2) => e1.value['magnitudo']!.compareTo(e2.value['magnitudo']!)
-                      )
-                  );
+                case IAU_CONSTELLATION_SORT.MAGNITUDO:
+                  IAU_CONSTELLATION = Map.fromEntries(IAU_CONSTELLATION.entries.toList()
+                    ..sort((e1, e2) => e1.value['magnitudo']!.compareTo(e2.value['magnitudo']!)));
                   break;
               }
               _createConstellationDropDown();
@@ -137,7 +113,7 @@ class IAUConstellationsState extends State<IAUConstellations> {
     );
   }
 
-  Widget _buildOutput(){
+  Widget _buildOutput() {
     List<List<dynamic>> data = [];
     if (_currentSort == IAU_CONSTELLATION_SORT.NAME) {
       data.add([i18n(context, 'iau_constellation_iauname'), _currentConstellationData['constellation']]);
@@ -152,22 +128,22 @@ class IAUConstellationsState extends State<IAUConstellations> {
     data.add([i18n(context, 'iau_constellation_star'), _currentConstellationData['brightest_star']]);
     data.add([i18n(context, 'iau_constellation_magnitudo'), _currentConstellationData['magnitudo']]);
 
-    return Column(
-        children: <Widget>[
-          GCWColumnedMultilineOutput(
-              data: data,
-              flexValues: const [3, 2],
-              copyColumn: 1),
-          Container(
-            padding: const EdgeInsets.only(top: 20),
-            child:
-            Image.memory(_images.firstWhere((element) => element.keys.first.toLowerCase() == _currentConstellationData['constellation']!.replaceAll(' ', '_').toLowerCase().replaceAll('ö', 'o')).values.first.bytes),
-          ),
-        ]
-    );
+    return Column(children: <Widget>[
+      GCWColumnedMultilineOutput(data: data, flexValues: const [3, 2], copyColumn: 1),
+      Container(
+        padding: const EdgeInsets.only(top: 20),
+        child: Image.memory(_images
+            .firstWhere((element) =>
+                element.keys.first.toLowerCase() ==
+                _currentConstellationData['constellation']!.replaceAll(' ', '_').toLowerCase().replaceAll('ö', 'o'))
+            .values
+            .first
+            .bytes),
+      ),
+    ]);
   }
 
-  void _createConstellationDropDown(){
+  void _createConstellationDropDown() {
     _constellationList = [];
     IAU_CONSTELLATION.forEach((key, value) {
       if (_currentSort == IAU_CONSTELLATION_SORT.NAME) {

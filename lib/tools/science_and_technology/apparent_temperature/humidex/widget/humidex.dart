@@ -12,7 +12,7 @@ class Humidex extends StatefulWidget {
   const Humidex({Key? key}) : super(key: key);
 
   @override
- _HumidexState createState() => _HumidexState();
+  _HumidexState createState() => _HumidexState();
 }
 
 class _HumidexState extends State<Humidex> {

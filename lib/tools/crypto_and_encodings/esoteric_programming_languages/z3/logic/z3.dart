@@ -13,7 +13,7 @@ class Z3Output {
   Z3Output(this.output, this.assembler, this.mnemonic);
 }
 
-Z3Output interpretZ3(String sourcecode, String inputData){
+Z3Output interpretZ3(String sourcecode, String inputData) {
   if (sourcecode == '') {
     return Z3Output([''], [''], ['']);
   }
@@ -48,8 +48,9 @@ Z3Output interpretZ3(String sourcecode, String inputData){
   }
 
   for (String command in program) {
-    if (!runtimeError){
-      if (command == '01110000' || command == 'Lu') { // read keyboard - Lu
+    if (!runtimeError) {
+      if (command == '01110000' || command == 'Lu') {
+        // read keyboard - Lu
         mnemonic.add('Lu');
         assembler.add('01110000');
         if (inputCounter < input.length) {
@@ -70,8 +71,8 @@ Z3Output interpretZ3(String sourcecode, String inputData){
           runtimeError = true;
           output.add('z3_runtimeerror_input_missing');
         }
-
-      } else if (command == '01111000'  || command == 'Ld') { // display result - Ld
+      } else if (command == '01111000' || command == 'Ld') {
+        // display result - Ld
         mnemonic.add('Ld');
         assembler.add('01111000');
         if (_isInt(r1!)) {
@@ -81,14 +82,14 @@ Z3Output interpretZ3(String sourcecode, String inputData){
         }
         r1 = 0.0;
         r1Loaded = false;
-
-      } else if (command == '01001000'  || command == 'Lm') { // multiplication - Lm
+      } else if (command == '01001000' || command == 'Lm') {
+        // multiplication - Lm
         mnemonic.add('Lm');
         assembler.add('01001000');
         r1 = r1! * r2!;
         r2 = 0.0;
-
-      } else if (command == '01010000' || command == 'Li') { // division - Li
+      } else if (command == '01010000' || command == 'Li') {
+        // division - Li
         mnemonic.add('Li');
         assembler.add('01010000');
         if (r2 == 0) {
@@ -98,8 +99,8 @@ Z3Output interpretZ3(String sourcecode, String inputData){
           r1 = r1! / r2!;
           r2 = 0.0;
         }
-
-      } else if (command == '01011000' || command == 'Lw') { // square root - Lw
+      } else if (command == '01011000' || command == 'Lw') {
+        // square root - Lw
         mnemonic.add('Lw');
         assembler.add('01011000');
         if (r1! < 0) {
@@ -109,20 +110,20 @@ Z3Output interpretZ3(String sourcecode, String inputData){
           r1 = sqrt(r1);
           r2 = 0.0;
         }
-
-      } else if (command == '01100000' || command == 'La') { // addition - Ls1
+      } else if (command == '01100000' || command == 'La') {
+        // addition - Ls1
         mnemonic.add('La');
         assembler.add('01100000');
         r1 = r1! + r2!;
         r2 = 0.0;
-
-      } else if (command == '01101000' || command == 'Ls') { // subtraction - Ls2
+      } else if (command == '01101000' || command == 'Ls') {
+        // subtraction - Ls2
         mnemonic.add('Ls');
         assembler.add('01101000');
         r1 = r1! - r2!;
         r2 = 0.0;
-
-      } else if (command.startsWith('11') || command.startsWith('Pr')) { // load address - Pr z
+      } else if (command.startsWith('11') || command.startsWith('Pr')) {
+        // load address - Pr z
         if (_isBinary(command.substring(2))) {
           storageCell = int.parse(convertBase(command.substring(2), 2, 10));
           mnemonic.add('Pr ' + command.substring(2));
@@ -141,8 +142,7 @@ Z3Output interpretZ3(String sourcecode, String inputData){
               output.add('z3_runtimeerror_illegal_storage_access');
             }
           }
-        }
-        else if (int.tryParse(command.substring(2)) != null){
+        } else if (int.tryParse(command.substring(2)) != null) {
           storageCell = int.parse(command.substring(2));
           mnemonic.add('Pr ' + command.substring(2));
           assembler.add('11' + convertBase(command.substring(2), 10, 2));
@@ -160,13 +160,12 @@ Z3Output interpretZ3(String sourcecode, String inputData){
               output.add('z3_runtimeerror_illegal_storage_access');
             }
           }
-        }
-        else {
+        } else {
           runtimeError = true;
           output.add('z3_runtimeerror_illegal_storage_access');
         }
-
-      } else if (command.startsWith('10') || command.startsWith('Ps')) { // store address - Ps z
+      } else if (command.startsWith('10') || command.startsWith('Ps')) {
+        // store address - Ps z
         if (_isBinary(command.substring(2))) {
           storageCell = int.parse(convertBase(command.substring(2), 2, 10));
           storage[storageCell] = r1!;
@@ -174,20 +173,19 @@ Z3Output interpretZ3(String sourcecode, String inputData){
           r1Loaded = false;
           mnemonic.add('Ps ' + command.substring(2));
           assembler.add('10' + command.substring(2));
-        }
-        else if (int.tryParse(command.substring(2)) != null){
+        } else if (int.tryParse(command.substring(2)) != null) {
           storageCell = int.parse(command.substring(2));
           storage[storageCell] = r1!;
           r1 = 0.0;
           r1Loaded = false;
           mnemonic.add('Ps ' + command.substring(2));
           assembler.add('10' + convertBase(command.substring(2), 10, 2));
-        }
-        else {
+        } else {
           runtimeError = true;
           output.add('z3_runtimeerror_illegal_storage_access');
         }
-      } else {// invalid command
+      } else {
+        // invalid command
         runtimeError = true;
         output.add('z3_runtimeerror_invalid_command');
       }
@@ -196,10 +194,10 @@ Z3Output interpretZ3(String sourcecode, String inputData){
   return Z3Output(output, assembler, mnemonic);
 }
 
-bool _isInt(double number){
+bool _isInt(double number) {
   return (number - number.toInt() * 1.0 == 0);
 }
 
-bool _isBinary(String x){
+bool _isBinary(String x) {
   return (x.replaceAll('0', '').replaceAll('1', '').replaceAll(' ', '') == '');
 }

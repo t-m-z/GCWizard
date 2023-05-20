@@ -231,16 +231,36 @@ String decodeWASDGraphic(String input, List<String> controlSet) {
 
   var comingFrom = WASD_DIRECTION.START;
 
-  _setXYDirection(){
-    switch (comingFrom){
-      case WASD_DIRECTION.UP:        y++;      break;
-      case WASD_DIRECTION.DOWN:      y--; break;
-      case WASD_DIRECTION.LEFT:      x--; break;
-      case WASD_DIRECTION.RIGHT:     x++; break;
-      case WASD_DIRECTION.UPLEFT:    x--; y--; break;
-      case WASD_DIRECTION.UPRIGHT:   x++; y--; break;
-      case WASD_DIRECTION.DOWNLEFT:  x--; y++; break;
-      case WASD_DIRECTION.DOWNRIGHT: x++; y++; break;
+  _setXYDirection() {
+    switch (comingFrom) {
+      case WASD_DIRECTION.UP:
+        y++;
+        break;
+      case WASD_DIRECTION.DOWN:
+        y--;
+        break;
+      case WASD_DIRECTION.LEFT:
+        x--;
+        break;
+      case WASD_DIRECTION.RIGHT:
+        x++;
+        break;
+      case WASD_DIRECTION.UPLEFT:
+        x--;
+        y--;
+        break;
+      case WASD_DIRECTION.UPRIGHT:
+        x++;
+        y--;
+        break;
+      case WASD_DIRECTION.DOWNLEFT:
+        x--;
+        y++;
+        break;
+      case WASD_DIRECTION.DOWNRIGHT:
+        x++;
+        y++;
+        break;
       default:
     }
   }
@@ -257,7 +277,7 @@ String decodeWASDGraphic(String input, List<String> controlSet) {
     minLetterX = 0;
     minLetterY = 0;
 
-    comingFrom  = WASD_DIRECTION.START;
+    comingFrom = WASD_DIRECTION.START;
 
     Map<String, String> letter = {};
 

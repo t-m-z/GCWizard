@@ -133,5 +133,4 @@ class _GCWCoordsWhat3WordsState extends State<_GCWCoordsWhat3Words> {
   void _setCurrentValueAndEmitOnChange() {
     widget.onChanged(What3Words(_currentW1, _currentW2, _currentW3, _currentSubtype));
   }
-
 }

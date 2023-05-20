@@ -100,10 +100,12 @@ String decodeBase85(String input) {
 
 const List<String> _INVALID_BASE85_LETTERS = ['"', "'", ",", ".", "/", ":", "[", "\\", "]"];
 
-bool _invalidBase85(String base85){
+bool _invalidBase85(String base85) {
   bool result = false;
   base85.split('').forEach((letter) {
-    if (letter.codeUnitAt(0) > 127 || letter.codeUnitAt(0) < 32 || _INVALID_BASE85_LETTERS.contains(letter)) result = true;
+    if (letter.codeUnitAt(0) > 127 || letter.codeUnitAt(0) < 32 || _INVALID_BASE85_LETTERS.contains(letter)) {
+      result = true;
+    }
   });
   return result;
 }

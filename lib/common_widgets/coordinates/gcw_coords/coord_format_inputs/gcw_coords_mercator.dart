@@ -5,7 +5,8 @@ class _GCWCoordsMercator extends StatefulWidget {
   final Mercator coordinates;
   final bool isDefault;
 
-  const _GCWCoordsMercator({Key? key, required this.onChanged, required this.coordinates, this.isDefault = true}) : super(key: key);
+  const _GCWCoordsMercator({Key? key, required this.onChanged, required this.coordinates, this.isDefault = true})
+      : super(key: key);
 
   @override
   _GCWCoordsMercatorState createState() => _GCWCoordsMercatorState();

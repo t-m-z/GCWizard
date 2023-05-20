@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:gc_wizard/application/i18n/app_localizations.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
@@ -8,12 +7,11 @@ import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
 import 'package:gc_wizard/common_widgets/units/gcw_unit_dropdown.dart';
 import 'package:gc_wizard/common_widgets/units/gcw_unit_input.dart';
+import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/utci/logic/utci.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/humidity.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/temperature.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit_category.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/velocity.dart';
-import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/utci/logic/utci.dart';
-
 
 class UTCI extends StatefulWidget {
   const UTCI({Key? key}) : super(key: key);
@@ -50,7 +48,7 @@ class UTCIState extends State<UTCI> {
           title: i18n(context, 'common_measure_humidity'),
           initialUnit: HUMIDITY,
           min: 0.0,
-          max:100.0,
+          max: 100.0,
           unitList: humidity,
           onChanged: (value) {
             setState(() {
@@ -63,7 +61,7 @@ class UTCIState extends State<UTCI> {
           title: i18n(context, 'common_measure_windspeed'),
           initialUnit: VELOCITY_MS,
           min: 0.0,
-          max:100.0,
+          max: 100.0,
           unitList: velocities,
           onChanged: (value) {
             setState(() {
@@ -101,20 +99,18 @@ class UTCIState extends State<UTCI> {
 
     return Column(
       children: [
-        GCWDefaultOutput(
-            child: output.toStringAsFixed(2) + ' ' + unit,
-            copyText: output.toString()
-        ),
+        GCWDefaultOutput(child: output.toStringAsFixed(2) + ' ' + unit, copyText: output.toString()),
         Row(
           children: [
             Container(
-                width: 50,
-                padding: const EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN),
-                child: GCWIconButton(
-                    icon: Icons.wb_sunny,
-                    iconColor: _colorUTCI(output),
-                    backgroundColor: const Color(0xFF4d4d4d), onPressed: () {  },
-                ),
+              width: 50,
+              padding: const EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN),
+              child: GCWIconButton(
+                icon: Icons.wb_sunny,
+                iconColor: _colorUTCI(output),
+                backgroundColor: const Color(0xFF4d4d4d),
+                onPressed: () {},
+              ),
             ),
             Expanded(
               child: GCWOutput(
@@ -123,12 +119,11 @@ class UTCIState extends State<UTCI> {
             )
           ],
         )
-
       ],
     );
   }
 
-  String _calculateHintUTCI(double UTCI){
+  String _calculateHintUTCI(double UTCI) {
     if (UTCI > UTCI_HEAT_STRESS[UTCI_HEATSTRESS_CONDITION.BLUE_ACCENT]!) {
       if (UTCI > UTCI_HEAT_STRESS[UTCI_HEATSTRESS_CONDITION.BLUE]!) {
         if (UTCI > UTCI_HEAT_STRESS[UTCI_HEATSTRESS_CONDITION.LIGHT_BLUE]!) {
@@ -179,44 +174,32 @@ class UTCIState extends State<UTCI> {
                   if (UTCI > UTCI_HEAT_STRESS[UTCI_HEATSTRESS_CONDITION.RED_ACCENT]!) {
                     if (UTCI > UTCI_HEAT_STRESS[UTCI_HEATSTRESS_CONDITION.DARK_RED]!) {
                       return Colors.red.shade900;
-                    }
-                    else {
+                    } else {
                       return Colors.red.shade600;
                     }
-                  }
-                  else {
+                  } else {
                     return Colors.red;
                   }
-                }
-                else {
+                } else {
                   return Colors.orange;
                 }
-              }
-              else {
+              } else {
                 return Colors.green;
               }
-            }
-            else {
+            } else {
               return Colors.lightBlue.shade200;
             }
-          }
-          else {
+          } else {
             return Colors.lightBlue.shade400;
           }
-        }
-        else {
+        } else {
           return Colors.blue;
         }
-      }
-      else {
+      } else {
         return Colors.blue.shade700;
       }
-    }
-    else {
+    } else {
       return Colors.blue.shade900;
     }
   }
-
-
-
 }

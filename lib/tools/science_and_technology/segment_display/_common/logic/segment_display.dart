@@ -567,8 +567,7 @@ class Segments {
 class SegmentsText extends Segments {
   final String text;
 
-  SegmentsText({required List<List<String>> displays, required this.text})
-    : super(displays: displays);
+  SegmentsText({required List<List<String>> displays, required this.text}) : super(displays: displays);
 }
 
 class SegmentsCodpoints extends SegmentsText {
@@ -581,8 +580,7 @@ class SegmentsCodpoints extends SegmentsText {
 class SegmentsChars extends Segments {
   final List<String> chars;
 
-  SegmentsChars({required List<List<String>> displays, required this.chars})
-      : super(displays: displays);
+  SegmentsChars({required List<List<String>> displays, required this.chars}) : super(displays: displays);
 }
 
 class SegmentsVigesimal extends Segments {
@@ -600,8 +598,6 @@ class SegmentsSexagesimal extends Segments {
   SegmentsSexagesimal({required List<List<String>> displays, required this.numbers, required this.sexagesimal})
       : super(displays: displays);
 }
-
-
 
 Segments encodeSegment(String input, SegmentDisplayType segmentType) {
   if (input.isEmpty) return Segments.Empty();

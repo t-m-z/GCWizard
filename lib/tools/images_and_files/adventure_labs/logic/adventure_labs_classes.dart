@@ -47,37 +47,37 @@ class AdventureData {
   final String StagesTotalCount;
   final List<AdventureStages> Stages;
 
-  AdventureData(
-      { this.CreatedUtc = '',
-        this.PublishedUtc = '',
-        this.IsArchived = 'false',
-        this.AdventureType = '0',
-        this.IsTest = 'false',
-        this.IsComplete = 'false',
-        this.AdventureGuid = '',
-        this.Id = '',
-        this.Title = '',
-        this.KeyImageUrl = '',
-        this.SmartLink = '',
-        this.DeepLink = '',
-        this.FirebaseDynamicLink = '',
-        this.MedianTimeToComplete = '',
-        this.Description = '',
-        this.OwnerPublicGuid = '',
-        this.RatingsAverage = '',
-        this.RatingsTotalCount = '',
-        this.Latitude = '',
-        this.Longitude = '',
-        this.AdventureThemes = '',
-        this.OwnerUsername = '',
-        this.OwnerId = '',
-        this.Visibility = '',
-        this.IanaTimezoneId = '',
-        this.IsFeatured = 'false',
-        this.CompletionStatus = '0',
-        this.StagesTotalCount = '0',
-        required this.Stages,
-      });
+  AdventureData({
+    this.CreatedUtc = '',
+    this.PublishedUtc = '',
+    this.IsArchived = 'false',
+    this.AdventureType = '0',
+    this.IsTest = 'false',
+    this.IsComplete = 'false',
+    this.AdventureGuid = '',
+    this.Id = '',
+    this.Title = '',
+    this.KeyImageUrl = '',
+    this.SmartLink = '',
+    this.DeepLink = '',
+    this.FirebaseDynamicLink = '',
+    this.MedianTimeToComplete = '',
+    this.Description = '',
+    this.OwnerPublicGuid = '',
+    this.RatingsAverage = '',
+    this.RatingsTotalCount = '',
+    this.Latitude = '',
+    this.Longitude = '',
+    this.AdventureThemes = '',
+    this.OwnerUsername = '',
+    this.OwnerId = '',
+    this.Visibility = '',
+    this.IanaTimezoneId = '',
+    this.IsFeatured = 'false',
+    this.CompletionStatus = '0',
+    this.StagesTotalCount = '0',
+    required this.Stages,
+  });
 }
 
 class AdventureStages {
@@ -106,7 +106,6 @@ class AdventureStages {
   final String AwardImageAsBase64String;
   final String KeyImageAsBase64String;
   final String DeleteAwardImage;
-
 
   AdventureStages({
     this.Id = '',
@@ -146,4 +145,3 @@ class AdventureLabJobData {
     required this.jobDataRadius,
   });
 }
-

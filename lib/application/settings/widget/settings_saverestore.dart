@@ -25,7 +25,7 @@ class SaveRestoreSettings extends StatefulWidget {
   const SaveRestoreSettings({Key? key}) : super(key: key);
 
   @override
- _SaveRestoreSettingsState createState() => _SaveRestoreSettingsState();
+  _SaveRestoreSettingsState createState() => _SaveRestoreSettingsState();
 }
 
 class _SaveRestoreSettingsState extends State<SaveRestoreSettings> {
@@ -61,8 +61,8 @@ class _SaveRestoreSettingsState extends State<SaveRestoreSettings> {
             showGCWAlertDialog(
               context,
               i18n(context, 'settings_saverestore_restore_warning_title'),
-              i18n(context, 'settings_saverestore_restore_warning_text'), () {
-
+              i18n(context, 'settings_saverestore_restore_warning_text'),
+              () {
                 showOpenFileDialog(context, [FileType.GCW], (GCWFile file) {
                   try {
                     var jsonString = String.fromCharCodes(file.bytes);
@@ -72,7 +72,7 @@ class _SaveRestoreSettingsState extends State<SaveRestoreSettings> {
                     initDefaultSettings(PreferencesInitMode.REINIT_ALL);
                     for (var entry in prefsMap.entries) {
                       if (entry.value == null) continue;
-                      
+
                       setUntypedPref(entry.key, entry.value!);
                     }
 
@@ -82,7 +82,7 @@ class _SaveRestoreSettingsState extends State<SaveRestoreSettings> {
                     });
 
                     showToast(i18n(context, 'settings_saverestore_restore_success'));
-                  } catch(e) {
+                  } catch (e) {
                     showToast(i18n(context, 'settings_saverestore_restore_failed'));
                   }
                   return false;
@@ -95,9 +95,7 @@ class _SaveRestoreSettingsState extends State<SaveRestoreSettings> {
             padding: const EdgeInsets.symmetric(horizontal: 15),
             child: GCWText(
                 text: i18n(context, 'settings_saverestore_restore_restart'),
-                style: gcwTextStyle().copyWith(fontSize: defaultFontSize() - 2)
-            )
-        ),
+                style: gcwTextStyle().copyWith(fontSize: defaultFontSize() - 2))),
       ],
     );
   }

@@ -30,7 +30,14 @@ class WaveForm extends StatefulWidget {
 class WaveFormState extends State<WaveForm> {
   Uint8List _bytes = Uint8List.fromList([]);
   Uint8List _soundfileImage = Uint8List.fromList([]);
-  SoundfileData _soundfileData = SoundfileData(PCMformat: 0, bits: 0, channels: 0, sampleRate: 0, structure: [], duration: 0.0, amplitudesData: Uint8List.fromList([]));
+  SoundfileData _soundfileData = SoundfileData(
+      PCMformat: 0,
+      bits: 0,
+      channels: 0,
+      sampleRate: 0,
+      structure: [],
+      duration: 0.0,
+      amplitudesData: Uint8List.fromList([]));
   AmplitudeData _amplitudesData = AmplitudeData(maxAmplitude: 0.0, Amplitudes: []);
   MorseCodeOutput? _decodedMorse = MorseCodeOutput('', '');
   List<bool> _soundfileMorsecode = [];
@@ -68,11 +75,8 @@ class WaveFormState extends State<WaveForm> {
               showToast(i18n(context, 'common_loadfile_exception_notloaded'));
               return;
             }
-print('file loaded ----------------------------------------------------------');
-            print(_file.bytes);
             _setData(_file.bytes);
             _soundfileData = getSoundfileData(_bytes);
-            print('calculate aamplitudes -----------------------------------------');
             _amplitudesData = calculateRMSAmplitudes(
                 PCMformat: _soundfileData.PCMformat,
                 bits: _soundfileData.bits,
@@ -81,7 +85,6 @@ print('file loaded ----------------------------------------------------------');
                 PCMamplitudesData: _soundfileData.amplitudesData,
                 blocksize: _blocksizes[_currentBlocksize],
                 vScalefactor: _currentVScalefactor * 1000);
-            print('PCMamplitudes2Image -----------------------------------------');
             PCMamplitudes2Image(
                     duration: _soundfileData.duration,
                     RMSperPoint: _amplitudesData.Amplitudes,
@@ -351,7 +354,7 @@ print('file loaded ----------------------------------------------------------');
           i18n(context, 'waveform_output_value'),
         ]
       ];
-      for (var element in section.SectionContent){
+      for (var element in section.SectionContent) {
         content.add([i18n(context, 'waveform_output_' + element.Meaning), element.Bytes, element.Value]);
       }
       result.add(GCWExpandableTextDivider(

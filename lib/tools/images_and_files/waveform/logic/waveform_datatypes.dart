@@ -15,7 +15,14 @@ class SoundfileData {
   final double duration;
   final Uint8List amplitudesData;
 
-  SoundfileData({required this.PCMformat, required this.bits, required this.channels, required this.sampleRate, required this.structure, required this.duration, required this.amplitudesData});
+  SoundfileData(
+      {required this.PCMformat,
+      required this.bits,
+      required this.channels,
+      required this.sampleRate,
+      required this.structure,
+      required this.duration,
+      required this.amplitudesData});
 }
 
 class SoundfileDataSection {

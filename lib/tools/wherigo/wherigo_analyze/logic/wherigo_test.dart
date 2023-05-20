@@ -1,6 +1,6 @@
 part of 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/wherigo_analyze.dart';
 
-WherigoTest wherigoTest(dynamic dataToTest, WHERIGO_OBJECT typeOfTest){
+WherigoTest wherigoTest(dynamic dataToTest, WHERIGO_OBJECT typeOfTest) {
   WherigoTest result = WherigoTest(
     cartridgeGWC: _WHERIGO_EMPTYCARTRIDGE_GWC,
     cartridgeTestTask: WHERIGO_EMPTYTESTTASK_LUA,
@@ -14,7 +14,7 @@ WherigoTest wherigoTest(dynamic dataToTest, WHERIGO_OBJECT typeOfTest){
     cartridgeTestMessageDialog: [],
   );
 
-  switch (typeOfTest){
+  switch (typeOfTest) {
     case WHERIGO_OBJECT.GWCFILE:
       break;
     case WHERIGO_OBJECT.HEADER:

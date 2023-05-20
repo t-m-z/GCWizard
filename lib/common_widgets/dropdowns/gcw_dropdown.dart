@@ -66,10 +66,11 @@ class _GCWDropDownState<T> extends State<GCWDropDown<T>> {
                     size: 30,
                     color: widget.alternativeColor ? colors.dialogText() : colors.secondary(),
                   ),
-                  value: _currentValue,// ?? widget.items[0].value,
+                  value: _currentValue, // ?? widget.items[0].value,
                   items: widget.items.map((item) {
                     return DropdownMenuItem<T>(
-                        value: item._internalValue, child: item.child is Widget ? item.child as Widget : _buildMenuItemChild<T>(item));
+                        value: item._internalValue,
+                        child: item.child is Widget ? item.child as Widget : _buildMenuItemChild<T>(item));
                   }).toList(),
                   onChanged: (value) {
                     if (value != null) {

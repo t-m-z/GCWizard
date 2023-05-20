@@ -16,7 +16,7 @@ class Calendar extends StatefulWidget {
   const Calendar({Key? key}) : super(key: key);
 
   @override
- _CalendarState createState() => _CalendarState();
+  _CalendarState createState() => _CalendarState();
 }
 
 class _CalendarState extends State<Calendar> {
@@ -168,12 +168,11 @@ class _CalendarState extends State<Calendar> {
     output['dates_calendar_system_potrzebiecalendar'] = _PotrzebieToString(jd);
 
     return GCWDefaultOutput(
-        child: GCWColumnedMultilineOutput(
-            data: output.entries.map((entry) {
-                    return [i18n(context, entry.key), entry.value];
-                  }).toList(),
-            flexValues: const [1, 1]
-          ),
+      child: GCWColumnedMultilineOutput(
+          data: output.entries.map((entry) {
+            return [i18n(context, entry.key), entry.value];
+          }).toList(),
+          flexValues: const [1, 1]),
     );
   }
 
@@ -190,11 +189,11 @@ class _CalendarState extends State<Calendar> {
   String _HebrewDateToString(DateTime hebrewDate, double jd) {
     if (hebrewDate.year < 0) return i18n(context, 'dates_calendar_error');
 
-    var hebrewMonth =  MONTH_NAMES[CalendarSystem.HEBREWCALENDAR]![hebrewDate.month];
+    var hebrewMonth = MONTH_NAMES[CalendarSystem.HEBREWCALENDAR]![hebrewDate.month];
 
-    if (! typeOfJewYear(JewishYearLength(jd)).contains('embolistic')) {
+    if (!typeOfJewYear(JewishYearLength(jd)).contains('embolistic')) {
       if (hebrewDate.month > 6) {
-        hebrewMonth =  MONTH_NAMES[CalendarSystem.HEBREWCALENDAR]![hebrewDate.month + 1];
+        hebrewMonth = MONTH_NAMES[CalendarSystem.HEBREWCALENDAR]![hebrewDate.month + 1];
       }
     }
 

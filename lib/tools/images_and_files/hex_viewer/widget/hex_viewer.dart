@@ -23,7 +23,7 @@ class HexViewer extends StatefulWidget {
   const HexViewer({Key? key, this.file}) : super(key: key);
 
   @override
- _HexViewerState createState() => _HexViewerState();
+  _HexViewerState createState() => _HexViewerState();
 }
 
 class _HexViewerState extends State<HexViewer> {
@@ -141,7 +141,6 @@ class _HexViewerState extends State<HexViewer> {
 
     return Column(
       children: [
-
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
@@ -149,14 +148,14 @@ class _HexViewerState extends State<HexViewer> {
             Expanded(
               flex: 15,
               child: NotificationListener<ScrollNotification>(
-                  child: SingleChildScrollView(
-                      physics: const AlwaysScrollableScrollPhysics(),
-                      controller: _scrollControllerHex,
-                      scrollDirection: Axis.horizontal,
-                      child: GCWText(
-                        text: hexText,
-                        style: gcwMonotypeTextStyle(),
-                      ),
+                child: SingleChildScrollView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  controller: _scrollControllerHex,
+                  scrollDirection: Axis.horizontal,
+                  child: GCWText(
+                    text: hexText,
+                    style: gcwMonotypeTextStyle(),
+                  ),
                 ),
                 onNotification: (ScrollNotification scrollNotification) {
                   if (_isASCIIScrolling) return false;
@@ -215,6 +214,6 @@ void openInHexViewer(BuildContext context, GCWFile file) {
   Navigator.push(
       context,
       NoAnimationMaterialPageRoute<GCWTool>(
-          builder: (context) => GCWTool(
-              tool: HexViewer(file: file), toolName: i18n(context, 'hexviewer_title'), id: 'hexviewer')));
+          builder: (context) =>
+              GCWTool(tool: HexViewer(file: file), toolName: i18n(context, 'hexviewer_title'), id: 'hexviewer')));
 }

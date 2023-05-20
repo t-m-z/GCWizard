@@ -5,7 +5,8 @@ class _GCWCoordsGeoHex extends StatefulWidget {
   final GeoHex coordinates;
   final bool isDefault;
 
-  const _GCWCoordsGeoHex({Key? key, required this.onChanged, required this.coordinates, this.isDefault = true}) : super(key: key);
+  const _GCWCoordsGeoHex({Key? key, required this.onChanged, required this.coordinates, this.isDefault = true})
+      : super(key: key);
 
   @override
   _GCWCoordsGeoHexState createState() => _GCWCoordsGeoHexState();

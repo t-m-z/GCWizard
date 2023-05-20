@@ -1,31 +1,39 @@
 import 'dart:math';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
+
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/tools/science_and_technology/numeral_bases/logic/numeral_bases.dart';
 import 'package:gc_wizard/utils/collection_utils.dart';
 import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 
-part 'package:gc_wizard/tools/images_and_files/waveform/logic/waveform_datatypes.dart';
 part 'package:gc_wizard/tools/images_and_files/waveform/logic/waveform_data.dart';
+part 'package:gc_wizard/tools/images_and_files/waveform/logic/waveform_datatypes.dart';
 
-SoundfileData getSoundfileData(Uint8List bytes){
+SoundfileData getSoundfileData(Uint8List bytes) {
   switch (getFileType(bytes)) {
     case FileType.WAV:
     case FileType.WMV:
       return WAVContent(bytes);
-    default: return SoundfileData(
-        structure: [],
-        PCMformat: 0,
-        bits: 0,
-        channels: 0,
-        sampleRate: 0,
-        duration: 0.0,
-        amplitudesData: Uint8List.fromList([]));
+    default:
+      return SoundfileData(
+          structure: [],
+          PCMformat: 0,
+          bits: 0,
+          channels: 0,
+          sampleRate: 0,
+          duration: 0.0,
+          amplitudesData: Uint8List.fromList([]));
   }
 }
 
-Future<MorseData> PCMamplitudes2Image({required double duration, required List<double> RMSperPoint, required double maxAmplitude, required int pointsize, required int hScalefactor, required int volume}) async {
+Future<MorseData> PCMamplitudes2Image(
+    {required double duration,
+    required List<double> RMSperPoint,
+    required double maxAmplitude,
+    required int pointsize,
+    required int hScalefactor,
+    required int volume}) async {
   // https://planetcalc.com/8627/
   // PCM audio data is stored as a sequence of signal amplitude samples recorded at regular intervals.
   // One second of the low-quality 8kHz audio consists of 8000 amplitude samples.
@@ -75,33 +83,25 @@ Future<MorseData> PCMamplitudes2Image({required double duration, required List<d
 
   paint.color = Colors.white;
   paint.strokeWidth = pointsize.toDouble() * 2;
-  canvas.drawLine(
-      Offset(BOUNDS, height / 2),
-      Offset(BOUNDS + width * pointsize, height / 2),
-      paint);
+  canvas.drawLine(Offset(BOUNDS, height / 2), Offset(BOUNDS + width * pointsize, height / 2), paint);
 
   paint.color = Colors.orangeAccent;
   paint.strokeWidth = pointsize.toDouble();
   for (int column = 0; column < RMSperPoint.length; column++) {
-
     if (RMSperPoint[column] > threshhold) {
       morseCode.add(true);
     } else {
       morseCode.add(false);
     }
 
-    canvas.drawLine(
-        Offset(BOUNDS + 1 + column * hScalefactor, height / 2 - RMSperPoint[column] * durationScaleV),
-        Offset(BOUNDS + 1 + column * hScalefactor, height / 2 + RMSperPoint[column] * durationScaleV),
-        paint);
+    canvas.drawLine(Offset(BOUNDS + 1 + column * hScalefactor, height / 2 - RMSperPoint[column] * durationScaleV),
+        Offset(BOUNDS + 1 + column * hScalefactor, height / 2 + RMSperPoint[column] * durationScaleV), paint);
 
     if (column % durationScaleH == 0) {
       paint.color = Colors.red;
       paint.strokeWidth = pointsize.toDouble() * 2;
-      canvas.drawLine(
-          Offset(BOUNDS + 1 + column * hScalefactor, height / 2 - durationScaleV * 10),
-          Offset(BOUNDS + 1 + column * hScalefactor, height / 2 + durationScaleV * 10),
-          paint);
+      canvas.drawLine(Offset(BOUNDS + 1 + column * hScalefactor, height / 2 - durationScaleV * 10),
+          Offset(BOUNDS + 1 + column * hScalefactor, height / 2 + durationScaleV * 10), paint);
       paint.color = Colors.orangeAccent;
       paint.strokeWidth = pointsize.toDouble();
     }

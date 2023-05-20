@@ -119,7 +119,6 @@ SoundfileData WAVContent(Uint8List bytes) {
   // https://web.archive.org/web/20101207002408/http://www.it.fht-esslingen.de/~schmidt/vorlesungen/mm/seminar/ss00/HTML/node107.html
   // https://www.recordingblogs.com/wiki/wave-file-format
 
-  print('get wav content ---------------------------------------------------');
   List<SoundfileDataSection> WaveFormDataSectionList = [];
   SoundfileDataSection section;
   List<SoundfileDataSectionContent> sectionContentList = [];
@@ -133,13 +132,9 @@ SoundfileData WAVContent(Uint8List bytes) {
   Uint8List amplitudesData = Uint8List.fromList([]);
 
   int index = 0;
-  print(bytes.length);
   while (index < bytes.length) {
-    print('=> '+index.toString());
     if (index + 4 < bytes.length) {
-      print(index.toString()+'  '+String.fromCharCodes(bytes.sublist(index, index + 4)));
     } else {
-      print(index.toString()+'  '+String.fromCharCodes(bytes.sublist(index)));
     }
     switch (index + 4 < bytes.length
         ? String.fromCharCodes(bytes.sublist(index, index + 4))
@@ -257,7 +252,7 @@ SoundfileData WAVContent(Uint8List bytes) {
         index = index + 8 + dataSize;
         break;
       case 'LIST':
-      // https://www.recordingblogs.com/wiki/list-chunk-of-a-wave-file
+        // https://www.recordingblogs.com/wiki/list-chunk-of-a-wave-file
         sectionContentList = [];
         sectionContentList.add(SoundfileDataSectionContent(
             Meaning: 'sign',
@@ -288,7 +283,7 @@ SoundfileData WAVContent(Uint8List bytes) {
                 Meaning: 'size',
                 Bytes: bytes.sublist(listIndex + 4, listIndex + 8).join(' '),
                 Value:
-                ByteData.sublistView(bytes).getInt32(listIndex + 4, Endian.little).toString() + ' Byte')); // 4 Byte
+                    ByteData.sublistView(bytes).getInt32(listIndex + 4, Endian.little).toString() + ' Byte')); // 4 Byte
             int size = ByteData.sublistView(bytes).getInt32(listIndex + 4, Endian.little);
             sectionContentList.add(SoundfileDataSectionContent(
                 Meaning: 'data',
@@ -307,19 +302,16 @@ SoundfileData WAVContent(Uint8List bytes) {
         index = index + 8 + size;
         break;
       case 'id3 ':
-        print('section id3');
-      // https://id3.org/id3v2.3.0#Private_frame
+        // https://id3.org/id3v2.3.0#Private_frame
         sectionContentList = [];
         sectionContentList.add(SoundfileDataSectionContent(
             Meaning: 'sign',
             Bytes: bytes.sublist(index, index + 4).join(' '),
             Value: String.fromCharCodes(bytes.sublist(index, index + 4)))); // 4 Byte Big Endian
-        print('section added sign');
         sectionContentList.add(SoundfileDataSectionContent(
             Meaning: 'size',
             Bytes: bytes.sublist(index + 4, index + 8).join(' '),
             Value: ByteData.sublistView(bytes).getInt32(index + 4, Endian.little).toString() + ' Byte')); // 4 Byte
-        print('section added size');
         int size = ByteData.sublistView(bytes).getInt32(index + 4, Endian.little);
 //        sectionContentList.add(SoundfileDataSectionContent(Meaning: 'data', Bytes: bytes.sublist(index + 8, index + 8 + size).join(' '), Value: String.fromCharCodes(bytes.sublist(index + 8, index + 8 + size)))); // 4 Byte
         //sectionContentList.addAll(analyzeID3Chunk(bytes.sublist(index + 8, index + 8 + size)));
@@ -344,8 +336,13 @@ SoundfileData WAVContent(Uint8List bytes) {
 }
 
 AmplitudeData calculateRMSAmplitudes(
-    {required int PCMformat, required int bits, required int channels, required int sampleRate, required Uint8List PCMamplitudesData, required int blocksize, required int vScalefactor}) {
-
+    {required int PCMformat,
+    required int bits,
+    required int channels,
+    required int sampleRate,
+    required Uint8List PCMamplitudesData,
+    required int blocksize,
+    required int vScalefactor}) {
   List<double> RMSperPoint = [];
   double amplitude = 0.0;
   double RMS = 0.0;

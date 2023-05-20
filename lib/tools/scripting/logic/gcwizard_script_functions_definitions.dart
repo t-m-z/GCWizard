@@ -113,8 +113,14 @@ Map<String, GCWizardScriptClassFunctionDefinition> FUNCTIONS = {
   'WPTSADD': GCWizardScriptClassFunctionDefinition(_wptsadd, 2, functionReturn: false),
   'WPTSCLEAR': GCWizardScriptClassFunctionDefinition(_wptsclear, 0, functionReturn: false),
   'WPTSCOUNT': GCWizardScriptClassFunctionDefinition(_wptscount, 0, functionReturn: false),
-  'WPTSLON': GCWizardScriptClassFunctionDefinition(_wptslon, 1,),
-  'WPTSLAT': GCWizardScriptClassFunctionDefinition(_wptslat, 1,),
+  'WPTSLON': GCWizardScriptClassFunctionDefinition(
+    _wptslon,
+    1,
+  ),
+  'WPTSLAT': GCWizardScriptClassFunctionDefinition(
+    _wptslat,
+    1,
+  ),
   'WPTSCENTER': GCWizardScriptClassFunctionDefinition(_wptscenter, 1, functionReturn: false),
 
   // date, time
@@ -163,8 +169,14 @@ Map<String, GCWizardScriptClassFunctionDefinition> FUNCTIONS = {
   'MID': GCWizardScriptClassFunctionDefinition(_mid, 3),
 
   // geocaching
-  'DECTOROMAN': GCWizardScriptClassFunctionDefinition(_dectoroman, 1,),
-  'ROMANTODEC': GCWizardScriptClassFunctionDefinition(_romantodec, 1,),
+  'DECTOROMAN': GCWizardScriptClassFunctionDefinition(
+    _dectoroman,
+    1,
+  ),
+  'ROMANTODEC': GCWizardScriptClassFunctionDefinition(
+    _romantodec,
+    1,
+  ),
   'ROTX': GCWizardScriptClassFunctionDefinition(_rotx, 2),
   'BWW': GCWizardScriptClassFunctionDefinition(_bww, 3),
   'BASE': GCWizardScriptClassFunctionDefinition(_base, 3),

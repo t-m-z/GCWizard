@@ -236,7 +236,8 @@ class FormulaParser {
         case FormulaValueType.TEXT:
           textValues.putIfAbsent(value.key, () => value.value);
           break;
-        default: continue;
+        default:
+          continue;
       }
     }
 
@@ -291,19 +292,14 @@ class FormulaParser {
           results.add(
               FormulaSolverSingleResult(FormulaState.STATE_SINGLE_OK, result, variables: expandedFormula.variables));
         } catch (e) {
-          results.add(FormulaSolverSingleResult(
-            FormulaState.STATE_SINGLE_ERROR,
-            substitutedFormula,
-            variables: expandedFormula.variables
-          ));
+          results.add(FormulaSolverSingleResult(FormulaState.STATE_SINGLE_ERROR, substitutedFormula,
+              variables: expandedFormula.variables));
           hasError = true;
         }
       }
 
       return FormulaSolverMultiResult(
-        hasError ? FormulaState.STATE_EXPANDED_ERROR : FormulaState.STATE_EXPANDED_OK,
-        results
-      );
+          hasError ? FormulaState.STATE_EXPANDED_ERROR : FormulaState.STATE_EXPANDED_OK, results);
     } else {
       substitutedFormula = _reSubstituteFormula(substitutedFormula);
 
@@ -479,7 +475,8 @@ class FormulaParser {
 
               var out = FormulaSolverSingleResult(result.state, formatted, variables: result.variables);
 
-              var variables = result.variables.toString();  // TODO: Does this make sense here? variables is a map, why casting to String?
+              var variables = result.variables
+                  .toString(); // TODO: Does this make sense here? variables is a map, why casting to String?
               if (matchedVariables.containsKey(variables)) {
                 matchedVariables[variables]!.putIfAbsent(matchString, () => out);
               } else {
@@ -517,7 +514,7 @@ class FormulaParser {
       matchedResults.forEach((String matchedString, FormulaSolverSingleResult result) {
         variables ??= result.variables;
         if (result.state == FormulaState.STATE_SINGLE_ERROR) state = FormulaState.STATE_SINGLE_ERROR;
-        substitutions.putIfAbsent(matchedString, () => result .result);
+        substitutions.putIfAbsent(matchedString, () => result.result);
       });
 
       var backSubstituted = substitution(formula, substitutions);
@@ -563,7 +560,8 @@ abstract class _FormulaSolverResult {
 class FormulaSolverSingleResult extends _FormulaSolverResult {
   final String result;
 
-  FormulaSolverSingleResult(FormulaState state, this.result, {Map<String, String>? variables}): super(state, variables: variables);
+  FormulaSolverSingleResult(FormulaState state, this.result, {Map<String, String>? variables})
+      : super(state, variables: variables);
 
   @override
   String toString() {
@@ -574,7 +572,8 @@ class FormulaSolverSingleResult extends _FormulaSolverResult {
 class FormulaSolverMultiResult extends _FormulaSolverResult {
   final List<FormulaSolverSingleResult> results;
 
-  FormulaSolverMultiResult(FormulaState state, this.results, {Map<String, String>? variables}): super(state, variables: variables);
+  FormulaSolverMultiResult(FormulaState state, this.results, {Map<String, String>? variables})
+      : super(state, variables: variables);
 
   @override
   String toString() {

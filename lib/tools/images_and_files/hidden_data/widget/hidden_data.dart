@@ -27,7 +27,7 @@ class HiddenData extends StatefulWidget {
   const HiddenData({Key? key, this.file}) : super(key: key);
 
   @override
- _HiddenDataState createState() => _HiddenDataState();
+  _HiddenDataState createState() => _HiddenDataState();
 }
 
 class _HiddenDataState extends State<HiddenData> {
@@ -147,7 +147,9 @@ class _HiddenDataState extends State<HiddenData> {
             }
             _exportFile(
                 context,
-                data == null ? null : GCWFile(name: 'hidden_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()), bytes: data));
+                data == null
+                    ? null
+                    : GCWFile(name: 'hidden_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()), bytes: data));
           },
         )
       ],
@@ -215,7 +217,7 @@ class _HiddenDataState extends State<HiddenData> {
 
     await saveByteDataToFile(context, file.bytes, fileName).then((value) {
       var content = fileClass(file.fileType) == FileClass.IMAGE ? imageContent(context, file.bytes) : null;
-      if (value) showExportedFileDialog(context, contentWidget: content) ;
+      if (value) showExportedFileDialog(context, contentWidget: content);
     });
   }
 }
@@ -224,6 +226,6 @@ void openInHiddenData(BuildContext context, GCWFile file) {
   Navigator.push(
       context,
       NoAnimationMaterialPageRoute<GCWTool>(
-          builder: (context) => GCWTool(
-              tool: HiddenData(file: file), toolName: i18n(context, 'hiddendata_title'), id: 'hiddendata')));
+          builder: (context) =>
+              GCWTool(tool: HiddenData(file: file), toolName: i18n(context, 'hiddendata_title'), id: 'hiddendata')));
 }

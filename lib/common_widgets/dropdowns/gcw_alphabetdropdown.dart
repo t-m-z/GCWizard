@@ -32,7 +32,6 @@ class _GCWAlphabetDropDownState extends State<GCWAlphabetDropDown> {
 
   @override
   Widget build(BuildContext context) {
-
     return Column(children: <Widget>[
       GCWDropDown<Object>(
         value: widget.value,

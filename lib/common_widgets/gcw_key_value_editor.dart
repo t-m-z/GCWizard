@@ -200,52 +200,52 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
             ),
             widget.formulaValueList != null && !widget.varcoords
                 ? Expanded(
-                flex: 1,
-                child: Container(
-                    padding: const EdgeInsets.only(left: DEFAULT_MARGIN),
-                    child: GCWPopupMenu(
-                      iconData: _formulaValueTypeIcon(_currentFormulaValueTypeInput),
-                      rotateDegrees: _currentFormulaValueTypeInput == FormulaValueType.TEXT ? 0.0 : 90.0,
-                      menuItemBuilder: (context) => [
-                        GCWPopupMenuItem(
-                            child: iconedGCWPopupMenuItem(context, Icons.vertical_align_center_outlined,
-                                i18n(context, 'formulasolver_values_type_fixed'),
-                                rotateDegrees: 90.0),
-                            action: (index) => setState(() {
-                              _currentFormulaValueTypeInput = FormulaValueType.FIXED;
-                            })),
-                        GCWPopupMenuItem(
-                            child: iconedGCWPopupMenuItem(
-                                context, Icons.expand, i18n(context, 'formulasolver_values_type_interpolated'),
-                                rotateDegrees: 90.0),
-                            action: (index) => setState(() {
-                              _currentFormulaValueTypeInput = FormulaValueType.INTERPOLATED;
-                            })),
-                        GCWPopupMenuItem(
-                            child: iconedGCWPopupMenuItem(
-                                context, Icons.text_fields, i18n(context, 'formulasolver_values_type_text')),
-                            action: (index) => setState(() {
-                              _currentFormulaValueTypeInput = FormulaValueType.TEXT;
-                            })),
-                      ],
-                    )))
+                    flex: 1,
+                    child: Container(
+                        padding: const EdgeInsets.only(left: DEFAULT_MARGIN),
+                        child: GCWPopupMenu(
+                          iconData: _formulaValueTypeIcon(_currentFormulaValueTypeInput),
+                          rotateDegrees: _currentFormulaValueTypeInput == FormulaValueType.TEXT ? 0.0 : 90.0,
+                          menuItemBuilder: (context) => [
+                            GCWPopupMenuItem(
+                                child: iconedGCWPopupMenuItem(context, Icons.vertical_align_center_outlined,
+                                    i18n(context, 'formulasolver_values_type_fixed'),
+                                    rotateDegrees: 90.0),
+                                action: (index) => setState(() {
+                                      _currentFormulaValueTypeInput = FormulaValueType.FIXED;
+                                    })),
+                            GCWPopupMenuItem(
+                                child: iconedGCWPopupMenuItem(
+                                    context, Icons.expand, i18n(context, 'formulasolver_values_type_interpolated'),
+                                    rotateDegrees: 90.0),
+                                action: (index) => setState(() {
+                                      _currentFormulaValueTypeInput = FormulaValueType.INTERPOLATED;
+                                    })),
+                            GCWPopupMenuItem(
+                                child: iconedGCWPopupMenuItem(
+                                    context, Icons.text_fields, i18n(context, 'formulasolver_values_type_text')),
+                                action: (index) => setState(() {
+                                      _currentFormulaValueTypeInput = FormulaValueType.TEXT;
+                                    })),
+                          ],
+                        )))
                 : Container(),
             widget.alphabetInstertButtonLabel != null
                 ? _alphabetAddLetterButton()
                 : GCWIconButton(
-                icon: Icons.add,
-                onPressed: () {
-                  if (_currentFormulaValueTypeInput == FormulaValueType.INTERPOLATED) {
-                    if (!VARIABLESTRING.hasMatch(_currentValueInput.toLowerCase())) {
-                      showToast(i18n(context, 'formulasolver_values_novalidinterpolated'));
-                      return;
-                    }
-                  }
+                    icon: Icons.add,
+                    onPressed: () {
+                      if (_currentFormulaValueTypeInput == FormulaValueType.INTERPOLATED) {
+                        if (!VARIABLESTRING.hasMatch(_currentValueInput.toLowerCase())) {
+                          showToast(i18n(context, 'formulasolver_values_novalidinterpolated'));
+                          return;
+                        }
+                      }
 
-                  setState(() {
-                    _addEntry(_currentKeyInput, _currentValueInput, formulaType: _currentFormulaValueTypeInput);
-                  });
-                }),
+                      setState(() {
+                        _addEntry(_currentKeyInput, _currentValueInput, formulaType: _currentFormulaValueTypeInput);
+                      });
+                    }),
             widget.alphabetAddAndAdjustLetterButtonLabel != null ? _alphabetAddAndAdjustLetterButton() : Container()
           ],
         ),
@@ -273,17 +273,18 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
           text: widget.alphabetAddAndAdjustLetterButtonLabel ?? '',
           onPressed: () => _isAddAndAdjustEnabled()
               ? () {
-            setState(() {
-              if (widget.onAddEntry2 != null) widget.onAddEntry2!(_currentKeyInput, _currentValueInput, context);
+                  setState(() {
+                    if (widget.onAddEntry2 != null) widget.onAddEntry2!(_currentKeyInput, _currentValueInput, context);
 
-              _onNewEntryChanged(true);
-            });
-          }
+                    _onNewEntryChanged(true);
+                  });
+                }
               : null,
         ));
   }
 
-  void _addEntry(String key, String value, {bool clearInput = true, FormulaValueType formulaType = FormulaValueType.FIXED}) {
+  void _addEntry(String key, String value,
+      {bool clearInput = true, FormulaValueType formulaType = FormulaValueType.FIXED}) {
     if (widget.onAddEntry != null) {
       widget.onAddEntry!(key, value, formulaType, context);
     }
@@ -373,14 +374,14 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
             margin: const EdgeInsets.only(left: 10),
             child: _currentEditId == _getEntryId(entry)
                 ? GCWTextField(
-              controller: _editKeyController,
-              inputFormatters: widget.keyInputFormatters,
-              onChanged: (text) {
-                setState(() {
-                  _currentEditedKey = text;
-                });
-              },
-            )
+                    controller: _editKeyController,
+                    inputFormatters: widget.keyInputFormatters,
+                    onChanged: (text) {
+                      setState(() {
+                        _currentEditedKey = text;
+                      });
+                    },
+                  )
                 : GCWText(text: (_getEntryKey(entry)).toString()),
           ),
         ),
@@ -394,55 +395,55 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
               margin: const EdgeInsets.only(left: 10),
               child: _currentEditId == _getEntryId(entry)
                   ? GCWTextField(
-                controller: _editValueController,
-                focusNode: _focusNodeEditValue,
-                inputFormatters: widget.valueInputFormatters,
-                onChanged: (text) {
-                  setState(() {
-                    _currentEditedValue = text;
-                  });
-                },
-              )
+                      controller: _editValueController,
+                      focusNode: _focusNodeEditValue,
+                      inputFormatters: widget.valueInputFormatters,
+                      onChanged: (text) {
+                        setState(() {
+                          _currentEditedValue = text;
+                        });
+                      },
+                    )
                   : GCWText(text: _getEntryValue(entry).toString()),
             )),
         widget.formulaValueList != null && !widget.varcoords
             ? Expanded(
-            child: Container(
-                child: _currentEditId == _getEntryId(entry)
-                    ? Container(
-                    padding: const EdgeInsets.only(left: DEFAULT_MARGIN),
-                    child: GCWPopupMenu(
-                      iconData: _formulaValueTypeIcon(_currentEditedFormulaValueTypeInput),
-                      rotateDegrees: _currentEditedFormulaValueTypeInput == FormulaValueType.TEXT ? 0.0 : 90.0,
-                      menuItemBuilder: (context) => [
-                        GCWPopupMenuItem(
-                            child: iconedGCWPopupMenuItem(context, Icons.vertical_align_center_outlined,
-                                i18n(context, 'formulasolver_values_type_fixed'),
-                                rotateDegrees: 90.0),
-                            action: (index) => setState(() {
-                              _currentEditedFormulaValueTypeInput = FormulaValueType.FIXED;
-                            })),
-                        GCWPopupMenuItem(
-                            child: iconedGCWPopupMenuItem(
-                                context, Icons.expand, i18n(context, 'formulasolver_values_type_interpolated'),
-                                rotateDegrees: 90.0),
-                            action: (index) => setState(() {
-                              _currentEditedFormulaValueTypeInput = FormulaValueType.INTERPOLATED;
-                            })),
-                        GCWPopupMenuItem(
-                            child: iconedGCWPopupMenuItem(
-                                context, Icons.text_fields, i18n(context, 'formulasolver_values_type_text')),
-                            action: (index) => setState(() {
-                              _currentEditedFormulaValueTypeInput = FormulaValueType.TEXT;
-                            })),
-                      ],
-                    ))
-                    : Transform.rotate(
-                  // TODO Mike Check that entry is really of type FormulaValue and type is really not NULL
-                  angle: degreesToRadian((entry as FormulaValue).type == FormulaValueType.TEXT ? 0.0 : 90.0),
-                  // TODO Mike Check that entry is really of type FormulaValue and type is really not NULL
-                  child: Icon(_formulaValueTypeIcon((entry).type!), color: themeColors().mainFont()),
-                )))
+                child: Container(
+                    child: _currentEditId == _getEntryId(entry)
+                        ? Container(
+                            padding: const EdgeInsets.only(left: DEFAULT_MARGIN),
+                            child: GCWPopupMenu(
+                              iconData: _formulaValueTypeIcon(_currentEditedFormulaValueTypeInput),
+                              rotateDegrees: _currentEditedFormulaValueTypeInput == FormulaValueType.TEXT ? 0.0 : 90.0,
+                              menuItemBuilder: (context) => [
+                                GCWPopupMenuItem(
+                                    child: iconedGCWPopupMenuItem(context, Icons.vertical_align_center_outlined,
+                                        i18n(context, 'formulasolver_values_type_fixed'),
+                                        rotateDegrees: 90.0),
+                                    action: (index) => setState(() {
+                                          _currentEditedFormulaValueTypeInput = FormulaValueType.FIXED;
+                                        })),
+                                GCWPopupMenuItem(
+                                    child: iconedGCWPopupMenuItem(
+                                        context, Icons.expand, i18n(context, 'formulasolver_values_type_interpolated'),
+                                        rotateDegrees: 90.0),
+                                    action: (index) => setState(() {
+                                          _currentEditedFormulaValueTypeInput = FormulaValueType.INTERPOLATED;
+                                        })),
+                                GCWPopupMenuItem(
+                                    child: iconedGCWPopupMenuItem(
+                                        context, Icons.text_fields, i18n(context, 'formulasolver_values_type_text')),
+                                    action: (index) => setState(() {
+                                          _currentEditedFormulaValueTypeInput = FormulaValueType.TEXT;
+                                        })),
+                              ],
+                            ))
+                        : Transform.rotate(
+                            // TODO Mike Check that entry is really of type FormulaValue and type is really not NULL
+                            angle: degreesToRadian((entry as FormulaValue).type == FormulaValueType.TEXT ? 0.0 : 90.0),
+                            // TODO Mike Check that entry is really of type FormulaValue and type is really not NULL
+                            child: Icon(_formulaValueTypeIcon((entry).type!), color: themeColors().mainFont()),
+                          )))
             : Container(),
         _editButton(entry),
         GCWIconButton(
@@ -482,51 +483,53 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
 
     return _currentEditId == _getEntryId(entry)
         ? GCWIconButton(
-      icon: Icons.check,
-      onPressed: () {
-        if (widget.onUpdateEntry != null) {
-          if (widget.formulaValueList == null && _currentEditId != null) {
-            widget.onUpdateEntry!(_currentEditId!, _currentEditedKey, _currentEditedValue, _currentEditedFormulaValueTypeInput);
-          } else {
-            if (_currentEditedFormulaValueTypeInput == FormulaValueType.INTERPOLATED) {
-              if (!VARIABLESTRING.hasMatch(_currentEditedValue.toLowerCase())) {
-                showToast(i18n(context, 'formulasolver_values_novalidinterpolated'));
-                return;
+            icon: Icons.check,
+            onPressed: () {
+              if (widget.onUpdateEntry != null) {
+                if (widget.formulaValueList == null && _currentEditId != null) {
+                  widget.onUpdateEntry!(
+                      _currentEditId!, _currentEditedKey, _currentEditedValue, _currentEditedFormulaValueTypeInput);
+                } else {
+                  if (_currentEditedFormulaValueTypeInput == FormulaValueType.INTERPOLATED) {
+                    if (!VARIABLESTRING.hasMatch(_currentEditedValue.toLowerCase())) {
+                      showToast(i18n(context, 'formulasolver_values_novalidinterpolated'));
+                      return;
+                    }
+                  }
+                  if (_currentEditId != null) {
+                    widget.onUpdateEntry!(
+                        _currentEditId!, _currentEditedKey, _currentEditedValue, _currentEditedFormulaValueTypeInput);
+                  }
+                }
               }
-            }
-            if (_currentEditId != null) {
-              widget.onUpdateEntry!(
-                _currentEditId!, _currentEditedKey, _currentEditedValue, _currentEditedFormulaValueTypeInput);
-            }
-          }
-        }
 
-        setState(() {
-          _currentEditId = null;
-          _editKeyController.clear();
-          _editValueController.clear();
-        });
-      },
-    )
+              setState(() {
+                _currentEditId = null;
+                _editKeyController.clear();
+                _editValueController.clear();
+              });
+            },
+          )
         : GCWIconButton(
-      icon: Icons.edit,
-      onPressed: () {
-        setState(() {
-          FocusScope.of(context).requestFocus(_focusNodeEditValue);
+            icon: Icons.edit,
+            onPressed: () {
+              setState(() {
+                FocusScope.of(context).requestFocus(_focusNodeEditValue);
 
-          _currentEditId = _getEntryId(entry);
-          _editKeyController.text = _getEntryKey(entry);
-          _editValueController.text = _getEntryValue(entry);
-          _currentEditedKey = _getEntryKey(entry);
-          _currentEditedValue = _getEntryValue(entry);
+                _currentEditId = _getEntryId(entry);
+                _editKeyController.text = _getEntryKey(entry);
+                _editValueController.text = _getEntryValue(entry);
+                _currentEditedKey = _getEntryKey(entry);
+                _currentEditedValue = _getEntryValue(entry);
 
-          if (widget.formulaValueList != null) {
-            _currentEditedFormulaValueTypeInput =
-                widget.formulaValueList!.firstWhere((element) => element.id == _currentEditId).type ?? FormulaValueType.FIXED;
-          }
-        });
-      },
-    );
+                if (widget.formulaValueList != null) {
+                  _currentEditedFormulaValueTypeInput =
+                      widget.formulaValueList!.firstWhere((element) => element.id == _currentEditId).type ??
+                          FormulaValueType.FIXED;
+                }
+              });
+            },
+          );
   }
 
   Object _getEntryId(Object entry) {

@@ -74,4 +74,3 @@ dynamic _val(dynamic x) {
   _handleError(INVALIDTYPECAST);
   return 0.0;
 }
-

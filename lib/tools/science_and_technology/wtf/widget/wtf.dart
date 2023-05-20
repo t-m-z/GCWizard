@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:gc_wizard/application/i18n/app_localizations.dart';
 import 'package:gc_wizard/application/settings/logic/preferences.dart';
 import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer.dart';
@@ -11,7 +10,6 @@ import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.d
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/science_and_technology/wtf/logic/wtf.dart';
-
 import 'package:prefs/prefs.dart';
 
 class WTFIs extends StatefulWidget {
@@ -137,17 +135,15 @@ class WTFIsState extends State<WTFIs> {
   }
 
   Future<GCWAsyncExecuterParameters> _buildWTFJobData() async {
-    return GCWAsyncExecuterParameters(
-        WTFjobData(
-          WTFjobDataAdress: _currentInputAddress,
-           WTFjobDataMode: WTFmodeToString(_currentMode),
-           WTFjobDataShodan_api_key: SHODAN_API_KEY,
-           WTFjobDataVt_api_key: VT_API_KEY,
-           WTFjobDataPt_api_key: PT_API_KEY,
-           WTFjobDataWhois_api_key: WHOIS_API_KEY,
-           WTFjobDataGreynoise_api_key: GREYNOISE_API_KEY,
-        )
-    );
+    return GCWAsyncExecuterParameters(WTFjobData(
+      WTFjobDataAdress: _currentInputAddress,
+      WTFjobDataMode: WTFmodeToString(_currentMode),
+      WTFjobDataShodan_api_key: SHODAN_API_KEY,
+      WTFjobDataVt_api_key: VT_API_KEY,
+      WTFjobDataPt_api_key: PT_API_KEY,
+      WTFjobDataWhois_api_key: WHOIS_API_KEY,
+      WTFjobDataGreynoise_api_key: GREYNOISE_API_KEY,
+    ));
   }
 
   void _analyseWTFAsync() async {
@@ -172,7 +168,6 @@ class WTFIsState extends State<WTFIs> {
   }
 
   void _showWTFOutput(WTFoutput output) {
-
     if (output.result == WTFstatus.OK) {
       showToast(i18n(context, 'wtf_result_ok'));
 
@@ -202,7 +197,7 @@ class WTFIsState extends State<WTFIs> {
             value.forEach((Map<String, dynamic> element) {
               element.forEach((key, value) {
                 if (['_shodan', 'location', 'dns', 'opts', 'http', 'ssl', 'favicon', 'redirects'].contains(key)) {
-                  _outputSHODAN.add(['    ' + key , '']);
+                  _outputSHODAN.add(['    ' + key, '']);
                   if ((value as Map<String, String>).isNotEmpty) {
                     value.forEach((String key, String value) {
                       if (['favicon', 'redirects', 'ssl'].contains(key)) {

@@ -2,7 +2,7 @@ import 'dart:math';
 
 part 'package:gc_wizard/tools/science_and_technology/ballistics/logic/ballistics_datatypes.dart';
 
-OutputBallistics calculateBallisticsNoDrag(double velocity, double angle, double acceleration, double startHeight){
+OutputBallistics calculateBallisticsNoDrag(double velocity, double angle, double acceleration, double startHeight) {
   // https://de.wikipedia.org/wiki/Wurfparabel
   // http://www.dsemmler.de/Software/OnlineApps/SchieferWurf.php
 
@@ -19,12 +19,13 @@ OutputBallistics calculateBallisticsNoDrag(double velocity, double angle, double
   maxHeight = startHeight + height;
   time = sqrt(2 * height / acceleration) + sqrt(2 * maxHeight / acceleration);
   distance = time * v0x;
-  maxSpeed  = sqrt(2 * acceleration * maxHeight + v0x*v0x);
+  maxSpeed = sqrt(2 * acceleration * maxHeight + v0x * v0x);
 
   return OutputBallistics(Time: time, Height: maxHeight, Distance: distance, maxSpeed: maxSpeed);
 }
 
-OutputBallistics calculateBallisticsStokes(double velocity, double angle, double acceleration, double startHeight,  double mass, double diameter, double drag, double density){
+OutputBallistics calculateBallisticsStokes(double velocity, double angle, double acceleration, double startHeight,
+    double mass, double diameter, double drag, double density) {
 // https://www.geogebra.org/m/tEypsSwj#material/sPGWKHD2
 // Stokes    https://matheplanet.com/matheplanet/nuke/html/article.php?sid=497
 
@@ -36,7 +37,8 @@ OutputBallistics calculateBallisticsStokes(double velocity, double angle, double
   return OutputBallistics(Time: time, Height: maxHeight, Distance: distance, maxSpeed: maxSpeed);
 }
 
-OutputBallistics calculateBallisticsNewton(double V0, double Winkel, double g, double startHeight, double Masse, double a, double cw, double rho) {
+OutputBallistics calculateBallisticsNewton(
+    double V0, double Winkel, double g, double startHeight, double Masse, double a, double cw, double rho) {
 // Newton    https://matheplanet.com/default3.html?call=article.php%3fsid=735&ref=http://www.google.ch/search%3fhlX=de%2526qX=Schiefer+wurf+F+%253D+k+*+v%255E2%2526metaX=
 // https://www.geogebra.org/m/tEypsSwj#material/UCbRqoGb
 // https://www.geogebra.org/m/tEypsSwj#material/sPGWKHD2
@@ -154,24 +156,24 @@ OutputBallistics calculateBallisticsNewton(double V0, double Winkel, double g, d
   double Voo = 0.0; // V unendlich
   double Vxo = 0.0; // Vx Start
   double Vyo = 0.0; // Vx Start
-  double Tu  = 0.0; // Zeit bis Scheitel
+  double Tu = 0.0; // Zeit bis Scheitel
 
   // iteratinswerte
-  double  T1, T2, Tm, H1, H2, Hm;
+  double T1, T2, Tm, H1, H2, Hm;
 
   double ln(double x) {
     return log(x) / log(e);
   }
 
-  double XofT(double T){
+  double XofT(double T) {
     return Voo * Voo / g * ln(1 + Vxo * g * T / Voo / Voo);
   }
 
-  double YofTup(double T){
+  double YofTup(double T) {
     return Voo * Voo / g * (ln(cos(g * (Tu - T) / Voo)) - ln(cos(g * Tu / Voo)));
   }
 
-  double YofTdown(double T)  {
+  double YofTdown(double T) {
     return Voo * Voo / g * (-g * (T - Tu) / Voo - ln((1 + exp(-2 * g * (T - Tu) / Voo)) / 2 * cos(g * Tu / Voo)));
   }
 
@@ -199,7 +201,7 @@ OutputBallistics calculateBallisticsNewton(double V0, double Winkel, double g, d
   }
 
   do {
-    Tm = (T1 + T2)/2;
+    Tm = (T1 + T2) / 2;
     Hm = YofTdown(Tm);
     if (Hm > 0) {
       T1 = Tm;

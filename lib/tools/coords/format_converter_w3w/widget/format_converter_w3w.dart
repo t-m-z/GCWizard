@@ -26,7 +26,6 @@ import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:prefs/prefs.dart';
 
-
 class FormatConverterW3W extends StatefulWidget {
   const FormatConverterW3W({Key? key}) : super(key: key);
 
@@ -308,12 +307,13 @@ class FormatConverterW3WState extends State<FormatConverterW3W> {
     return GCWAsyncExecuterParameters(LatLngFromW3WJobData(_currentW1 + '.' + _currentW2 + '.' + _currentW3, _APIKey));
   }
 
-
   void _showLatLon(LatLng output) {
     _currentCoordsLatLng = output;
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      setState(() {_calculateOutput(context);});
+      setState(() {
+        _calculateOutput(context);
+      });
     });
   }
 
@@ -346,10 +346,11 @@ class FormatConverterW3WState extends State<FormatConverterW3W> {
     _currentCoordsW3W = output;
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      setState(() {_calculateOutput(context);});
+      setState(() {
+        _calculateOutput(context);
+      });
     });
   }
-
 }
 
 class _GCWCoordsFormatSelectorAll extends GCWCoordsFormatSelector {

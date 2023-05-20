@@ -20,7 +20,7 @@ class CoordinateAveraging extends StatefulWidget {
   const CoordinateAveraging({Key? key}) : super(key: key);
 
   @override
- _CoordinateAveragingState createState() => _CoordinateAveragingState();
+  _CoordinateAveragingState createState() => _CoordinateAveragingState();
 }
 
 class _CoordinateAveragingState extends State<CoordinateAveraging> {
@@ -96,7 +96,7 @@ class _CoordinateAveragingState extends State<CoordinateAveraging> {
           },
         ),
         GCWDefaultOutput(
-            child: GCWColumnedMultilineOutput(
+          child: GCWColumnedMultilineOutput(
               data: [
                     <dynamic>[
                       null,
@@ -118,8 +118,7 @@ class _CoordinateAveragingState extends State<CoordinateAveraging> {
                       .toList(),
               flexValues: const [1, 6, 4],
               copyColumn: 1,
-              hasHeader: true
-            ),
+              hasHeader: true),
         ),
       ],
     );
@@ -174,10 +173,7 @@ class _CoordinateAveragingState extends State<CoordinateAveraging> {
    */
   //TODO Extract logic from widget
   void _addAveragedLocation(LocationData location) {
-    if (location.accuracy == null
-      || location.latitude == null
-      || location.longitude == null
-    ) return;
+    if (location.accuracy == null || location.latitude == null || location.longitude == null) return;
 
     final double invertedAccuracy = 1 / (location.accuracy! == 0 ? 1 : location.accuracy!);
     weightedLatSum += location.latitude! * invertedAccuracy;

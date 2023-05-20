@@ -37,7 +37,8 @@ String decodeBattleship(String text) {
     }
   });
 
-  List<List<String>> binaryWorld = List.generate(maxColumn, (y) => List.generate(maxRow, (x) => ' ', growable: false), growable: false);
+  List<List<String>> binaryWorld =
+      List.generate(maxColumn, (y) => List.generate(maxRow, (x) => ' ', growable: false), growable: false);
   world.forEach((key, value) {
     column = int.parse(key.split('|')[0]) - 1;
     row = int.parse(key.split('|')[1]) - 1;
@@ -49,7 +50,7 @@ String decodeBattleship(String text) {
   for (int y = 0; y < maxRow; y++) {
     outputLine = '';
     for (int x = 0; x < maxColumn; x++) {
-        outputLine = outputLine + binaryWorld[x][y];
+      outputLine = outputLine + binaryWorld[x][y];
     }
     output.add(outputLine);
   }
@@ -79,11 +80,11 @@ String encodeBattleship(String text, bool textmode) {
   return result.join(', ');
 }
 
-String _convertTextToGraphic(String text){
+String _convertTextToGraphic(String text) {
   List<String> result = [];
 
   while (text.length > 10) {
-    result.add(_convertLineToGraphic(text.substring(0,10)));
+    result.add(_convertLineToGraphic(text.substring(0, 10)));
     result.add(BATTLESHIP_EMPTY_LINE);
     text = text.substring(10);
   }
@@ -91,16 +92,16 @@ String _convertTextToGraphic(String text){
   return result.join('\n');
 }
 
-String _convertLineToGraphic(String textLine){
+String _convertLineToGraphic(String textLine) {
   List<String> result = [];
   List<String> lines = [' ', ' ', ' ', ' ', ' ', ' ', ' '];
 
-  for (int i = 0; i < textLine.length; i++){
-    for (int j = 0; j < 7; j++){
+  for (int i = 0; i < textLine.length; i++) {
+    for (int j = 0; j < 7; j++) {
       lines[j] = lines[j] + BATTLESHIP_ALPHABET[textLine[i]]![j] + ' ';
     }
   }
-  for (int j = 0; j < 7; j++){
+  for (int j = 0; j < 7; j++) {
     result.add(lines[j]);
   }
 

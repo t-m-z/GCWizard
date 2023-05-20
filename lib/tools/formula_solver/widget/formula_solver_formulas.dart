@@ -55,14 +55,17 @@ class _FormulaSolverFormulasState extends State<_FormulaSolverFormulas> {
     _foundCoordinates = {};
 
     var formulaTool = GCWTool(
-        tool: _FormulaSolverFormulaValues(group: widget.group),
-        toolName: '${widget.group.name} - ${i18n(context, 'formulasolver_values')}',
-        helpSearchString: 'formulasolver_values',
-        defaultLanguageToolName:
-            '${widget.group.name} - ${i18n(context, 'formulasolver_values', useDefaultLanguage: true)}', id: '',);
+      tool: _FormulaSolverFormulaValues(group: widget.group),
+      toolName: '${widget.group.name} - ${i18n(context, 'formulasolver_values')}',
+      helpSearchString: 'formulasolver_values',
+      defaultLanguageToolName:
+          '${widget.group.name} - ${i18n(context, 'formulasolver_values', useDefaultLanguage: true)}',
+      id: '',
+    );
 
     Future<void> _navigateToSubPage(BuildContext context) async {
-      Navigator.push(context, NoAnimationMaterialPageRoute<GCWTool>(builder: (context) => formulaTool)).whenComplete(() {
+      Navigator.push(context, NoAnimationMaterialPageRoute<GCWTool>(builder: (context) => formulaTool))
+          .whenComplete(() {
         setState(() {});
       });
     }
@@ -162,8 +165,7 @@ class _FormulaSolverFormulasState extends State<_FormulaSolverFormulas> {
                 tool: VariableCoordinate(formula: formula),
                 toolName: '${formula.name} - ${i18n(context, 'coords_variablecoordinate_title')}',
                 helpSearchString: 'coords_variablecoordinate_title',
-                id:
-                    '${formula.name} - ${i18n(context, 'coords_variablecoordinate_title', useDefaultLanguage: true)}')));
+                id: '${formula.name} - ${i18n(context, 'coords_variablecoordinate_title', useDefaultLanguage: true)}')));
   }
 
   String _removeOuterSquareBrackets(String formula) {
@@ -221,12 +223,8 @@ class _FormulaSolverFormulasState extends State<_FormulaSolverFormulas> {
             if (_foundFormulaCoordinate != null && _foundFormulaCoordinate.toLatLng() != null) {
               _foundFormulaCoordinates.putIfAbsent(
                   idx + 1,
-                  () => _ParsedCoordinate(
-                        _foundFormulaCoordinate,
-                        resultType,
-                        '${formula.id}' + (calculated.results.length > 1 ? '.${idx + 1}' : '')
-                  )
-              );
+                  () => _ParsedCoordinate(_foundFormulaCoordinate, resultType,
+                      '${formula.id}' + (calculated.results.length > 1 ? '.${idx + 1}' : '')));
             }
           });
           if (_foundFormulaCoordinates.isNotEmpty) {
@@ -362,7 +360,8 @@ class _FormulaSolverFormulasState extends State<_FormulaSolverFormulas> {
                                   child: iconedGCWPopupMenuItem(
                                       context, Icons.edit, 'formulasolver_formulas_modifyformula'),
                                   action: (index) => setState(() {
-                                        _showFormulaReplaceDialog(context, [formula], onOkPressed: (List<Formula> value) {
+                                        _showFormulaReplaceDialog(context, [formula],
+                                            onOkPressed: (List<Formula> value) {
                                           if (formula.formula == value.first.formula) return;
 
                                           formula.formula = value.first.formula;
@@ -476,7 +475,8 @@ class _FormulaSolverFormulasState extends State<_FormulaSolverFormulas> {
                               child:
                                   iconedGCWPopupMenuItem(context, Icons.edit, 'formulasolver_formulas_modifyformulas'),
                               action: (index) => setState(() {
-                                    _showFormulaReplaceDialog(context, widget.group.formulas, onOkPressed: (List<Formula> value) {
+                                    _showFormulaReplaceDialog(context, widget.group.formulas,
+                                        onOkPressed: (List<Formula> value) {
                                       for (int i = 0; i < widget.group.formulas.length; i++) {
                                         if (widget.group.formulas[i].formula != value[i].formula) {
                                           var formula = widget.group.formulas[i];
@@ -560,12 +560,14 @@ class _FormulaSolverFormulasState extends State<_FormulaSolverFormulas> {
                                         GCWText(text: result.result),
                                         Container(height: DOUBLE_DEFAULT_MARGIN),
                                         GCWText(
-                                          text: result.variables == null ? '' : result.variables!
-                                              .map((key, value) {
-                                                return MapEntry(key, '$key: $value');
-                                              })
-                                              .values
-                                              .join(', '),
+                                          text: result.variables == null
+                                              ? ''
+                                              : result.variables!
+                                                  .map((key, value) {
+                                                    return MapEntry(key, '$key: $value');
+                                                  })
+                                                  .values
+                                                  .join(', '),
                                           style: gcwTextStyle().copyWith(fontSize: fontSizeSmall()),
                                         )
                                       ],

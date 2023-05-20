@@ -14,7 +14,7 @@ class ResistorColorCodeCalculator extends StatefulWidget {
   const ResistorColorCodeCalculator({Key? key}) : super(key: key);
 
   @override
- _ResistorColorCodeCalculatorState createState() => _ResistorColorCodeCalculatorState();
+  _ResistorColorCodeCalculatorState createState() => _ResistorColorCodeCalculatorState();
 }
 
 // TODO:
@@ -272,9 +272,6 @@ class _ResistorColorCodeCalculatorState extends State<ResistorColorCodeCalculato
     }
 
     return GCWColumnedMultilineOutput(
-        firstRows: [GCWTextDivider(text: i18n(context, 'common_output'))],
-        data: outputs,
-        flexValues: const [2, 3]
-    );
+        firstRows: [GCWTextDivider(text: i18n(context, 'common_output'))], data: outputs, flexValues: const [2, 3]);
   }
 }

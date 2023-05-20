@@ -1,12 +1,12 @@
 part of 'package:gc_wizard/tools/science_and_technology/wtf/logic/wtf.dart';
 
 Map<String, String> WTF_GREYNOISE_RESULT_CODES = {
-  '200' : "wtf_result_greynoise_200",
-  '400' : "wtf_result_greynoise_400",
-  '401' : "wtf_result_greynoise_401",
-  '404' : "wtf_result_greynoise_404",
-  '429' : "wtf_result_greynoise_429",
-  '500' : "wtf_result_greynoise_500",
+  '200': "wtf_result_greynoise_200",
+  '400': "wtf_result_greynoise_400",
+  '401': "wtf_result_greynoise_401",
+  '404': "wtf_result_greynoise_404",
+  '429': "wtf_result_greynoise_429",
+  '500': "wtf_result_greynoise_500",
 };
 
 class WTFGreyNoise200 {
@@ -19,15 +19,15 @@ class WTFGreyNoise200 {
   late String lastSeen;
   late String message;
 
-  WTFGreyNoise200({
-    required this.ip,
-    required this.noise,
-    required this.riot,
-    required this.classification,
-    required this.name,
-    required this.link,
-    required this.lastSeen,
-    required this.message});
+  WTFGreyNoise200(
+      {required this.ip,
+      required this.noise,
+      required this.riot,
+      required this.classification,
+      required this.name,
+      required this.link,
+      required this.lastSeen,
+      required this.message});
 
   WTFGreyNoise200.fromJson(Map<String, dynamic> json) {
     ip = json['ip'].toString();
@@ -60,11 +60,7 @@ class WTFGreyNoise404 {
   late bool riot;
   late String message;
 
-  WTFGreyNoise404({
-    required this.ip,
-    required this.noise,
-    required this.riot,
-    required this.message});
+  WTFGreyNoise404({required this.ip, required this.noise, required this.riot, required this.message});
 
   WTFGreyNoise404.fromJson(Map<String, dynamic> json) {
     ip = json['ip'].toString();
@@ -89,11 +85,7 @@ class WTFGreyNoise429 {
   late String planUrl;
   late String message;
 
-  WTFGreyNoise429({
-    required this.plan,
-    required this.rateLimit,
-    required this.planUrl,
-    required this.message});
+  WTFGreyNoise429({required this.plan, required this.rateLimit, required this.planUrl, required this.message});
 
   WTFGreyNoise429.fromJson(Map<String, dynamic> json) {
     plan = json['plan'].toString();

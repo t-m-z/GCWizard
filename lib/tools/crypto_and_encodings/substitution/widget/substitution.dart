@@ -14,7 +14,7 @@ class Substitution extends StatefulWidget {
   const Substitution({Key? key, this.input, this.substitutions}) : super(key: key);
 
   @override
- _SubstitutionState createState() => _SubstitutionState();
+  _SubstitutionState createState() => _SubstitutionState();
 }
 
 class _SubstitutionState extends State<Substitution> {

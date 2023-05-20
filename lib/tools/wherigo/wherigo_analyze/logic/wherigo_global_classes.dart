@@ -31,12 +31,12 @@ class WherigoObjectData {
   final WHERIGO_OBJECT_TYPE ObjectType;
 
   WherigoObjectData(
-      this.ObjectID,
-      this.ObjectIndex,
-      this.ObjectName,
-      this.ObjectMedia,
-      this.ObjectType,
-      );
+    this.ObjectID,
+    this.ObjectIndex,
+    this.ObjectName,
+    this.ObjectMedia,
+    this.ObjectType,
+  );
 }
 
 class WherigoZonePoint {
@@ -100,19 +100,20 @@ class WherigoCharacterData {
   final String CharacterGender;
   final String CharacterType;
 
-  const WherigoCharacterData(
-      {required this.CharacterLUAName,
-        required this.CharacterID,
-        required this.CharacterName,
-        required this.CharacterDescription,
-        required this.CharacterVisible,
-        required this.CharacterMediaName,
-        required this.CharacterIconName,
-        required this.CharacterLocation,
-        required this.CharacterZonepoint,
-        required this.CharacterContainer,
-        required this.CharacterGender,
-        required this.CharacterType,});
+  const WherigoCharacterData({
+    required this.CharacterLUAName,
+    required this.CharacterID,
+    required this.CharacterName,
+    required this.CharacterDescription,
+    required this.CharacterVisible,
+    required this.CharacterMediaName,
+    required this.CharacterIconName,
+    required this.CharacterLocation,
+    required this.CharacterZonepoint,
+    required this.CharacterContainer,
+    required this.CharacterGender,
+    required this.CharacterType,
+  });
 }
 
 class WherigoInputData {
@@ -129,19 +130,20 @@ class WherigoInputData {
   final List<String> InputChoices;
   final List<WherigoAnswerData> InputAnswers;
 
-  const WherigoInputData(
-      {required this.InputLUAName,
-        required this.InputID,
-        required this.InputVariableID,
-        required this.InputName,
-        required this.InputDescription,
-        required this.InputVisible,
-        required this.InputMedia,
-        required this.InputIcon,
-        required this.InputType,
-        required this.InputText,
-        required this.InputChoices,
-        required this.InputAnswers,});
+  const WherigoInputData({
+    required this.InputLUAName,
+    required this.InputID,
+    required this.InputVariableID,
+    required this.InputName,
+    required this.InputDescription,
+    required this.InputVisible,
+    required this.InputMedia,
+    required this.InputIcon,
+    required this.InputType,
+    required this.InputText,
+    required this.InputChoices,
+    required this.InputAnswers,
+  });
 }
 
 class WherigoAnswer {
@@ -188,17 +190,18 @@ class WherigoTaskData {
   final String TaskComplete;
   final String TaskCorrectstate;
 
-  const WherigoTaskData(
-      {required this.TaskLUAName,
-        required this.TaskID,
-        required this.TaskName,
-        required this.TaskDescription,
-        required this.TaskVisible,
-        required this.TaskMedia,
-        required this.TaskIcon,
-        required this.TaskActive,
-        required this.TaskComplete,
-        required this.TaskCorrectstate,});
+  const WherigoTaskData({
+    required this.TaskLUAName,
+    required this.TaskID,
+    required this.TaskName,
+    required this.TaskDescription,
+    required this.TaskVisible,
+    required this.TaskMedia,
+    required this.TaskIcon,
+    required this.TaskActive,
+    required this.TaskComplete,
+    required this.TaskCorrectstate,
+  });
 }
 
 class WherigoMediaData {
@@ -210,14 +213,15 @@ class WherigoMediaData {
   final String MediaType;
   final String MediaFilename;
 
-  const WherigoMediaData(
-      {required this.MediaLUAName,
-        required this.MediaID,
-        required this.MediaName,
-        required this.MediaDescription,
-        required this.MediaAltText,
-        required this.MediaType,
-        required this.MediaFilename,});
+  const WherigoMediaData({
+    required this.MediaLUAName,
+    required this.MediaID,
+    required this.MediaName,
+    required this.MediaDescription,
+    required this.MediaAltText,
+    required this.MediaType,
+    required this.MediaFilename,
+  });
 }
 
 class WherigoVariableData {
@@ -248,19 +252,20 @@ class WherigoItemData {
   final String ItemLocked;
   final String ItemOpened;
 
-  const WherigoItemData(
-      {required this.ItemLUAName,
-        required this.ItemID,
-        required this.ItemName,
-        required this.ItemDescription,
-        required this.ItemVisible,
-        required this.ItemMedia,
-        required this.ItemIcon,
-        required this.ItemLocation,
-      required this.ItemZonepoint,
-        required this.ItemContainer,
-        required this.ItemLocked,
-        required this.ItemOpened,});
+  const WherigoItemData({
+    required this.ItemLUAName,
+    required this.ItemID,
+    required this.ItemName,
+    required this.ItemDescription,
+    required this.ItemVisible,
+    required this.ItemMedia,
+    required this.ItemIcon,
+    required this.ItemLocation,
+    required this.ItemZonepoint,
+    required this.ItemContainer,
+    required this.ItemLocked,
+    required this.ItemOpened,
+  });
 }
 
 class WherigoTimerData {
@@ -272,14 +277,15 @@ class WherigoTimerData {
   final String TimerDuration;
   final String TimerType;
 
-  const WherigoTimerData(
-      {required this.TimerLUAName,
-        required this.TimerID,
-        required this.TimerName,
-        required this.TimerDescription,
-        required this.TimerVisible,
-        required this.TimerDuration,
-        required this.TimerType,});
+  const WherigoTimerData({
+    required this.TimerLUAName,
+    required this.TimerID,
+    required this.TimerName,
+    required this.TimerDescription,
+    required this.TimerVisible,
+    required this.TimerDuration,
+    required this.TimerType,
+  });
 }
 
 class WherigoCartridgeGWC {
@@ -371,36 +377,37 @@ class WherigoCartridgeLUA {
   final int httpCode;
   final String httpMessage;
 
-  const WherigoCartridgeLUA(
-      {required this.LUAFile,
-        required this.CartridgeLUAName,
-        required this.CartridgeGUID,
-        required this.ObfuscatorTable,
-        required this.ObfuscatorFunction,
-        required this.Characters,
-        required this.Items,
-        required this.Tasks,
-        required this.Inputs,
-        required this.Zones,
-        required this.Timers,
-        required this.Media,
-        required this.Messages,
-        required this.Variables,
-        required this.NameToObject,
-        required this.ResultStatus,
-        required this.ResultsLUA,
-        required this.Builder,
-        required this.BuilderVersion,
-        required this.TargetDeviceVersion,
-        required this.CountryID,
-        required this.StateID,
-        required this.UseLogging,
-        required this.CreateDate,
-        required this.PublishDate,
-        required this.UpdateDate,
-        required this.LastPlayedDate,
-        required this.httpCode,
-        required this.httpMessage,});
+  const WherigoCartridgeLUA({
+    required this.LUAFile,
+    required this.CartridgeLUAName,
+    required this.CartridgeGUID,
+    required this.ObfuscatorTable,
+    required this.ObfuscatorFunction,
+    required this.Characters,
+    required this.Items,
+    required this.Tasks,
+    required this.Inputs,
+    required this.Zones,
+    required this.Timers,
+    required this.Media,
+    required this.Messages,
+    required this.Variables,
+    required this.NameToObject,
+    required this.ResultStatus,
+    required this.ResultsLUA,
+    required this.Builder,
+    required this.BuilderVersion,
+    required this.TargetDeviceVersion,
+    required this.CountryID,
+    required this.StateID,
+    required this.UseLogging,
+    required this.CreateDate,
+    required this.PublishDate,
+    required this.UpdateDate,
+    required this.LastPlayedDate,
+    required this.httpCode,
+    required this.httpMessage,
+  });
 }
 
 class WherigoCartridge {
@@ -422,7 +429,7 @@ class WherigoJobData {
   });
 }
 
-class WherigoTest{
+class WherigoTest {
   final WherigoCartridgeGWC cartridgeGWC;
   final WherigoTaskData cartridgeTestTask;
   final WherigoTimerData cartridgeTestTimer;
@@ -445,5 +452,5 @@ class WherigoTest{
     required this.cartridgeTestObfuscation,
     required this.cartridgeTestVariable,
     required this.cartridgeTestMessageDialog,
-});
+  });
 }

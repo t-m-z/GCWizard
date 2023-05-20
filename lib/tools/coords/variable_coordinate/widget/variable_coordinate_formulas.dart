@@ -16,7 +16,7 @@ class VariableCoordinateFormulas extends StatefulWidget {
   const VariableCoordinateFormulas({Key? key}) : super(key: key);
 
   @override
- _VariableCoordinateFormulasState createState() => _VariableCoordinateFormulasState();
+  _VariableCoordinateFormulasState createState() => _VariableCoordinateFormulasState();
 }
 
 class _VariableCoordinateFormulasState extends State<VariableCoordinateFormulas> {
@@ -112,7 +112,8 @@ class _VariableCoordinateFormulasState extends State<VariableCoordinateFormulas>
           id: 'coords_variablecoordinate');
 
       Future<void> _navigateToSubPage(BuildContext context) async {
-        Navigator.push(context, NoAnimationMaterialPageRoute<GCWTool>(builder: (context) => formulaTool)).whenComplete(() {
+        Navigator.push(context, NoAnimationMaterialPageRoute<GCWTool>(builder: (context) => formulaTool))
+            .whenComplete(() {
           setState(() {});
         });
       }

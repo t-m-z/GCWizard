@@ -12,7 +12,7 @@ class Countries extends StatefulWidget {
   const Countries({Key? key, required this.fields}) : super(key: key);
 
   @override
- _CountriesState createState() => _CountriesState();
+  _CountriesState createState() => _CountriesState();
 }
 
 class _CountriesState extends State<Countries> {
@@ -67,7 +67,6 @@ class _CountriesState extends State<Countries> {
   }
 
   Widget _buildOutput() {
-
     var field = _currentSort == 0 ? widget.fields[0] : widget.fields[_currentSort - 1];
     var flexValues = List<int>.generate(widget.fields.length, (index) => 1);
 
@@ -98,10 +97,6 @@ class _CountriesState extends State<Countries> {
       return a[1].compareTo(b[1]);
     });
 
-    return GCWColumnedMultilineOutput(
-      data: data,
-      flexValues: flexValues,
-      copyColumn: 1
-    );
+    return GCWColumnedMultilineOutput(data: data, flexValues: flexValues, copyColumn: 1);
   }
 }

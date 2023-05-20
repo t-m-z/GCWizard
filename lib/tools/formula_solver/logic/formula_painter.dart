@@ -292,7 +292,7 @@ class FormulaPainter {
 
   String _coloredFormulaReference(String result, List<String> parts) {
     result = _replaceRange(result, 0, parts[0].length, 'b');
-    if ((int.tryParse(parts[1]) ?? 9999999 )< _formulaId) {
+    if ((int.tryParse(parts[1]) ?? 9999999) < _formulaId) {
       result = _replaceRange(result, _calcOffset(parts, count: 1), parts[1].length, 'b');
     } else {
       result = _replaceRange(result, _calcOffset(parts, count: 1), parts[1].length, 'B');
@@ -595,7 +595,7 @@ class FormulaPainter {
   }
 
   String _replaceRange(String string, int start, int? length, String replacement) {
-    try  {
+    try {
       if (length == null) {
         return string.replaceRange(start, start + replacement.length, replacement);
       } else {

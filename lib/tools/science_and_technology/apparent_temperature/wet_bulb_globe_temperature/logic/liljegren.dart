@@ -783,7 +783,8 @@ liljegrenOutputSolarPosition solarposition(
                        *   [degrees.fraction, East positive] */
   double ap_ra = 0.0; /* Apparent solar right ascension.
                         *   [hours; 0.0 <= *ap_ra < 24.0] */
-  double ap_dec = 0.0; /* Apparent solar declination.
+  double ap_dec =
+      0.0; /* Apparent solar declination.
                         *   [degrees; -90.0 <= *ap_dec <= 90.0] */
   double altitude =
       0.0; /* Solar altitude, uncorrected for refraction.

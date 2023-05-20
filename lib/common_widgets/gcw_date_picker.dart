@@ -7,15 +7,16 @@ import 'package:gc_wizard/tools/science_and_technology/date_and_time/calendar/lo
 import 'package:gc_wizard/tools/science_and_technology/date_and_time/calendar/logic/calendar_constants.dart';
 
 class GCWDatePicker extends StatefulWidget {
-  final void Function (DateTime) onChanged;
+  final void Function(DateTime) onChanged;
   final DateTime date;
   final CalendarSystem type;
 
-  const GCWDatePicker({Key? key, required this.onChanged, required this.date, this.type = CalendarSystem.GREGORIANCALENDAR})
+  const GCWDatePicker(
+      {Key? key, required this.onChanged, required this.date, this.type = CalendarSystem.GREGORIANCALENDAR})
       : super(key: key);
 
   @override
- _GCWDatePickerState createState() => _GCWDatePickerState();
+  _GCWDatePickerState createState() => _GCWDatePickerState();
 }
 
 class _GCWDatePickerState extends State<GCWDatePicker> {
@@ -69,7 +70,8 @@ class _GCWDatePickerState extends State<GCWDatePicker> {
                 },
               )),
         ),
-        Expanded(child: Padding(padding: const EdgeInsets.only(left: 2, right: 2), child: _buildMonthSpinner(widget.type))),
+        Expanded(
+            child: Padding(padding: const EdgeInsets.only(left: 2, right: 2), child: _buildMonthSpinner(widget.type))),
         Expanded(
             child: Padding(
           padding: const EdgeInsets.only(left: 2),

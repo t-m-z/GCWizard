@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
-
 import 'package:gc_wizard/application/i18n/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
-
 import 'package:gc_wizard/tools/science_and_technology/checkdigits/logic/checkdigits.dart';
 
 class CheckDigitsCheckNumber extends StatefulWidget {
   final CheckDigitsMode mode;
 
-  const CheckDigitsCheckNumber({Key? key, required this.mode,}) : super(key: key);
+  const CheckDigitsCheckNumber({
+    Key? key,
+    required this.mode,
+  }) : super(key: key);
 
   @override
   CheckDigitsCheckNumberState createState() => CheckDigitsCheckNumberState();

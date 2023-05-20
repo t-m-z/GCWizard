@@ -5,7 +5,9 @@ class _GCWCoordsOpenLocationCode extends StatefulWidget {
   final OpenLocationCode coordinates;
   final bool isDefault;
 
-  const _GCWCoordsOpenLocationCode({Key? key, required this.onChanged, required this.coordinates, this.isDefault = true}) : super(key: key);
+  const _GCWCoordsOpenLocationCode(
+      {Key? key, required this.onChanged, required this.coordinates, this.isDefault = true})
+      : super(key: key);
 
   @override
   _GCWCoordsOpenLocationCodeState createState() => _GCWCoordsOpenLocationCodeState();

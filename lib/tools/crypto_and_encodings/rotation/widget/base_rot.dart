@@ -8,7 +8,7 @@ abstract class AbstractRotation extends StatefulWidget {
   const AbstractRotation({Key? key, required this.rotate}) : super(key: key);
 
   @override
- _AbstractRotationState createState() => _AbstractRotationState();
+  _AbstractRotationState createState() => _AbstractRotationState();
 }
 
 class _AbstractRotationState extends State<AbstractRotation> {

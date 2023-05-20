@@ -1,19 +1,20 @@
-import 'dart:typed_data';
 import 'dart:io' as io;
-import 'package:path/path.dart' as path;
+import 'dart:typed_data';
 
 import "package:flutter_test/flutter_test.dart";
 import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/wherigo_analyze.dart';
+import 'package:path/path.dart' as path;
+
+import 'wherigo_analyze_test_resources_character.dart';
+import 'wherigo_analyze_test_resources_input.dart';
+import 'wherigo_analyze_test_resources_item.dart';
+import 'wherigo_analyze_test_resources_lua_source.dart';
+import 'wherigo_analyze_test_resources_media.dart';
+import 'wherigo_analyze_test_resources_messages.dart';
 import 'wherigo_analyze_test_resources_task.dart';
 import 'wherigo_analyze_test_resources_timer.dart';
-import 'wherigo_analyze_test_resources_zone.dart';
-import 'wherigo_analyze_test_resources_input.dart';
-import 'wherigo_analyze_test_resources_media.dart';
-import 'wherigo_analyze_test_resources_character.dart';
-import 'wherigo_analyze_test_resources_messages.dart';
-import 'wherigo_analyze_test_resources_item.dart';
 import 'wherigo_analyze_test_resources_variable.dart';
-import 'wherigo_analyze_test_resources_lua_source.dart';
+import 'wherigo_analyze_test_resources_zone.dart';
 
 String testDirPath = 'test/tools/wherigo/wherigo_analyze/resources/';
 

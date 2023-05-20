@@ -4,10 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/app_localizations.dart';
 import 'package:gc_wizard/application/settings/logic/default_settings.dart';
 import 'package:gc_wizard/application/settings/logic/preferences.dart';
-import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
-import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format.dart';
-import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_metadata.dart';
-import 'package:gc_wizard/utils/complex_return_types.dart';
 import 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords_formatselector.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
@@ -16,9 +12,13 @@ import 'package:gc_wizard/common_widgets/gcw_text.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_double_textfield.dart';
+import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_metadata.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
+import 'package:gc_wizard/utils/complex_return_types.dart';
 import 'package:gc_wizard/utils/constants.dart';
 import 'package:prefs/prefs.dart';
 
@@ -28,7 +28,7 @@ class CoordinatesSettings extends StatefulWidget {
   const CoordinatesSettings({Key? key}) : super(key: key);
 
   @override
- _CoordinatesSettingsState createState() => _CoordinatesSettingsState();
+  _CoordinatesSettingsState createState() => _CoordinatesSettingsState();
 }
 
 class _CoordinatesSettingsState extends State<CoordinatesSettings> {
@@ -36,7 +36,10 @@ class _CoordinatesSettingsState extends State<CoordinatesSettings> {
   var _currentDefaultHemisphereLatitude = Prefs.getString(PREFERENCE_COORD_DEFAULT_HEMISPHERE_LATITUDE);
   var _currentDefaultHemisphereLongitude = Prefs.getString(PREFERENCE_COORD_DEFAULT_HEMISPHERE_LONGITUDE);
   Ellipsoid _currentDefaultEllipsoid = defaultEllipsoid;
-  GCWSwitchPosition _currentGC8K7RCEllipsoid = (Prefs.getString(PREFERENCE_COORD_GC8K7RC_USE_DEFAULT_ELLIPSOID) == 'left') ? GCWSwitchPosition.left : GCWSwitchPosition.right;
+  GCWSwitchPosition _currentGC8K7RCEllipsoid =
+      (Prefs.getString(PREFERENCE_COORD_GC8K7RC_USE_DEFAULT_ELLIPSOID) == 'left')
+          ? GCWSwitchPosition.left
+          : GCWSwitchPosition.right;
 
   late TextEditingController _controllerAPIKey;
 
@@ -72,9 +75,10 @@ class _CoordinatesSettingsState extends State<CoordinatesSettings> {
 
               var typePersistenceKey = persistenceKeyByCoordinateFormatKey(_currentDefaultFormat.type);
               Prefs.setString(PREFERENCE_COORD_DEFAULT_FORMAT, typePersistenceKey);
-              
+
               if (_currentDefaultFormat.subtype == null) {
-                initDefaultSettings(PreferencesInitMode.REINIT_SINGLE, reinitSinglePreference: PREFERENCE_COORD_DEFAULT_FORMAT_SUBTYPE);
+                initDefaultSettings(PreferencesInitMode.REINIT_SINGLE,
+                    reinitSinglePreference: PREFERENCE_COORD_DEFAULT_FORMAT_SUBTYPE);
               } else {
                 var subtypePersistenceKey = persistenceKeyByCoordinateFormatKey(_currentDefaultFormat.subtype!);
                 Prefs.setString(PREFERENCE_COORD_DEFAULT_FORMAT_SUBTYPE, subtypePersistenceKey);
@@ -164,7 +168,7 @@ class _CoordinatesSettingsState extends State<CoordinatesSettings> {
           rightValue: i18n(context, 'settings_coordinates_gc8k7rc_listing'),
           value: _currentGC8K7RCEllipsoid,
           onChanged: (value) {
-            if (value == GCWSwitchPosition.left){
+            if (value == GCWSwitchPosition.left) {
               Prefs.setString(PREFERENCE_COORD_GC8K7RC_USE_DEFAULT_ELLIPSOID, 'left');
             } else {
               Prefs.setString(PREFERENCE_COORD_GC8K7RC_USE_DEFAULT_ELLIPSOID, 'right');

@@ -2,17 +2,10 @@ import 'dart:typed_data';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer.dart';
-import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
-import 'package:gc_wizard/common_widgets/gcw_tool.dart';
-import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
-import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
-import 'package:gc_wizard/tools/coords/map_view/widget/gcw_mapview.dart';
-import 'package:gc_wizard/utils/file_utils/gcw_file.dart';
-import 'package:intl/intl.dart';
-
 import 'package:gc_wizard/application/i18n/app_localizations.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
+import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer.dart';
+import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart';
@@ -20,14 +13,19 @@ import 'package:gc_wizard/common_widgets/coordinates/gcw_coords_export_dialog.da
 import 'package:gc_wizard/common_widgets/dialogs/gcw_exported_file_dialog.dart';
 import 'package:gc_wizard/common_widgets/gcw_openfile.dart';
 import 'package:gc_wizard/common_widgets/gcw_toast.dart';
+import 'package:gc_wizard/common_widgets/gcw_tool.dart';
 import 'package:gc_wizard/common_widgets/image_viewers/gcw_imageview.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output_text.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
-import 'package:gc_wizard/utils/collection_utils.dart';
-import 'package:gc_wizard/utils/ui_dependent_utils/file_widget_utils.dart';
-
+import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
+import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
+import 'package:gc_wizard/tools/coords/map_view/widget/gcw_mapview.dart';
 import 'package:gc_wizard/tools/scripting/logic/gcwizard_script.dart';
+import 'package:gc_wizard/utils/collection_utils.dart';
+import 'package:gc_wizard/utils/file_utils/gcw_file.dart';
+import 'package:gc_wizard/utils/ui_dependent_utils/file_widget_utils.dart';
+import 'package:intl/intl.dart';
 
 class GCWizardScript extends StatefulWidget {
   const GCWizardScript({Key? key}) : super(key: key);
@@ -158,7 +156,8 @@ class GCWizardScriptState extends State<GCWizardScript> {
               text: i18n(context, 'gcwizard_script_clear'),
               onPressed: () {
                 setState(() {
-                  _currentOutput = GCWizardScriptOutput(STDOUT: '', Graphic: [], Points: [], ErrorMessage: '', ErrorPosition: 0, VariableDump: '');
+                  _currentOutput = GCWizardScriptOutput(
+                      STDOUT: '', Graphic: [], Points: [], ErrorMessage: '', ErrorPosition: 0, VariableDump: '');
                   _currentScriptOutput = '';
                 });
               },
@@ -174,7 +173,6 @@ class GCWizardScriptState extends State<GCWizardScript> {
           ],
         ),
         _buildOutput(context),
-
       ],
     );
   }
@@ -262,7 +260,9 @@ class GCWizardScriptState extends State<GCWizardScript> {
 
   Future<GCWAsyncExecuterParameters?> _buildInterpreterJobData() async {
     return GCWAsyncExecuterParameters(InterpreterJobData(
-        jobDataScript: _currentProgram, jobDataInput: _currentInput,));
+      jobDataScript: _currentProgram,
+      jobDataInput: _currentInput,
+    ));
   }
 
   void _showInterpreterOutputGWC(GCWizardScriptOutput output) {
@@ -335,7 +335,9 @@ class GCWizardScriptState extends State<GCWizardScript> {
     return false;
   }
 
-  void _openInMap(List<GCWMapPoint> points,) {
+  void _openInMap(
+    List<GCWMapPoint> points,
+  ) {
     Navigator.push(
         context,
         MaterialPageRoute<GCWTool>(

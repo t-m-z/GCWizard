@@ -1,13 +1,4 @@
-enum CountryProperties {
-  name,
-  callingcode,
-  vehiclecode,
-  iso3166_1_2,
-  iso3166_1_3,
-  iso3166_1_n,
-  iso3166_2,
-  ioccode
-}
+enum CountryProperties { name, callingcode, vehiclecode, iso3166_1_2, iso3166_1_3, iso3166_1_n, iso3166_2, ioccode }
 
 class Country {
   final String name;
@@ -19,16 +10,15 @@ class Country {
   final String iso3166_2;
   final String ioccode;
 
-  const Country({
-    required this.name,
-    required this.callingcode,
-    required this.vehiclecode,
-    required this.iso3166_1_2,
-    required this.iso3166_1_3,
-    required this.iso3166_1_n,
-    required this.iso3166_2,
-    required this.ioccode
-  });
+  const Country(
+      {required this.name,
+      required this.callingcode,
+      required this.vehiclecode,
+      required this.iso3166_1_2,
+      required this.iso3166_1_3,
+      required this.iso3166_1_n,
+      required this.iso3166_2,
+      required this.ioccode});
 
   String getProperty(CountryProperties property) {
     switch (property) {
@@ -434,15 +424,14 @@ const Map<String, Country> COUNTRIES = {
     ioccode: "BHU",
   ),
   "BouvetIsland": Country(
-    name: "common_country_BouvetIsland",
-    callingcode: "",
-    vehiclecode: "",
-    iso3166_1_2: "BV",
-    iso3166_1_3: "BVT",
-    iso3166_1_n: "074",
-    iso3166_2: "BV",
-    ioccode: ""
-  ),
+      name: "common_country_BouvetIsland",
+      callingcode: "",
+      vehiclecode: "",
+      iso3166_1_2: "BV",
+      iso3166_1_3: "BVT",
+      iso3166_1_n: "074",
+      iso3166_2: "BV",
+      ioccode: ""),
   "Botswana": Country(
     name: "common_country_Botswana",
     callingcode: "+267",
@@ -1064,15 +1053,14 @@ const Map<String, Country> COUNTRIES = {
     ioccode: "HKG",
   ),
   "HeardIslandandMcDonaldIslands": Country(
-    name: "common_country_HeardIslandandMcDonaldIslands",
-    callingcode: "",
-    vehiclecode: "",
-    iso3166_1_2: "HM",
-    iso3166_1_3: "HMD",
-    iso3166_1_n: "334",
-    iso3166_2: "HM",
-    ioccode: ""
-  ),
+      name: "common_country_HeardIslandandMcDonaldIslands",
+      callingcode: "",
+      vehiclecode: "",
+      iso3166_1_2: "HM",
+      iso3166_1_3: "HMD",
+      iso3166_1_n: "334",
+      iso3166_2: "HM",
+      ioccode: ""),
   "Honduras": Country(
     name: "common_country_Honduras",
     callingcode: "+504",
@@ -1524,15 +1512,14 @@ const Map<String, Country> COUNTRIES = {
     ioccode: "MNE",
   ),
   "CollectivityofSaintMartin": Country(
-    name: "common_country_CollectivityofSaintMartin",
-    callingcode: "+590",
-    vehiclecode: "",
-    iso3166_1_2: "MF",
-    iso3166_1_3: "MAF",
-    iso3166_1_n: "663",
-    iso3166_2: "MF",
-    ioccode: ""
-  ),
+      name: "common_country_CollectivityofSaintMartin",
+      callingcode: "+590",
+      vehiclecode: "",
+      iso3166_1_2: "MF",
+      iso3166_1_3: "MAF",
+      iso3166_1_n: "663",
+      iso3166_2: "MF",
+      ioccode: ""),
   "Madagascar": Country(
     name: "common_country_Madagascar",
     callingcode: "+261",
@@ -2024,15 +2011,14 @@ const Map<String, Country> COUNTRIES = {
     ioccode: "QAT",
   ),
   "Réunion": Country(
-    name: "common_country_Reunion",
-    callingcode: "+262",
-    vehiclecode: "",
-    iso3166_1_2: "RE",
-    iso3166_1_3: "REU",
-    iso3166_1_n: "638",
-    iso3166_2: "RE",
-    ioccode: ""
-  ),
+      name: "common_country_Reunion",
+      callingcode: "+262",
+      vehiclecode: "",
+      iso3166_1_2: "RE",
+      iso3166_1_3: "REU",
+      iso3166_1_n: "638",
+      iso3166_2: "RE",
+      ioccode: ""),
   "Romania": Country(
     name: "common_country_Romania",
     callingcode: "+40",
@@ -2174,15 +2160,14 @@ const Map<String, Country> COUNTRIES = {
     ioccode: "SLO",
   ),
   "SvalbardandJanMayen": Country(
-    name: "common_country_SvalbardandJanMayen",
-    callingcode: "",
-    vehiclecode: "",
-    iso3166_1_2: "SJ",
-    iso3166_1_3: "SJM",
-    iso3166_1_n: "744",
-    iso3166_2: "SJ",
-    ioccode: ""
-  ),
+      name: "common_country_SvalbardandJanMayen",
+      callingcode: "",
+      vehiclecode: "",
+      iso3166_1_2: "SJ",
+      iso3166_1_3: "SJM",
+      iso3166_1_n: "744",
+      iso3166_2: "SJ",
+      ioccode: ""),
   "Slovakia": Country(
     name: "common_country_Slovakia",
     callingcode: "+421",
@@ -2504,15 +2489,14 @@ const Map<String, Country> COUNTRIES = {
     ioccode: "",
   ),
   "UnitedStatesMinorOutlyingIslands": Country(
-    name: "common_country_UnitedStatesMinorOutlyingIslands",
-    callingcode: "",
-    vehiclecode: "USA",
-    iso3166_1_2: "UM",
-    iso3166_1_3: "UMI",
-    iso3166_1_n: "581",
-    iso3166_2: "UM",
-    ioccode: ""
-  ),
+      name: "common_country_UnitedStatesMinorOutlyingIslands",
+      callingcode: "",
+      vehiclecode: "USA",
+      iso3166_1_2: "UM",
+      iso3166_1_3: "UMI",
+      iso3166_1_n: "581",
+      iso3166_2: "UM",
+      ioccode: ""),
   "USA": Country(
     name: "common_country_USA",
     callingcode: "+1",
@@ -2664,15 +2648,14 @@ const Map<String, Country> COUNTRIES = {
     ioccode: "YEM",
   ),
   "Mayotte": Country(
-    name: "common_country_Mayotte",
-    callingcode: "+262",
-    vehiclecode: "",
-    iso3166_1_2: "YT",
-    iso3166_1_3: "MYT",
-    iso3166_1_n: "175",
-    iso3166_2: "YT",
-    ioccode: ""
-  ),
+      name: "common_country_Mayotte",
+      callingcode: "+262",
+      vehiclecode: "",
+      iso3166_1_2: "YT",
+      iso3166_1_3: "MYT",
+      iso3166_1_n: "175",
+      iso3166_2: "YT",
+      ioccode: ""),
   "SouthAfrica": Country(
     name: "common_country_SouthAfrica",
     callingcode: "+27",

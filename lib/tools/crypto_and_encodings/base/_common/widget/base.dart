@@ -11,7 +11,7 @@ abstract class AbstractBase extends StatefulWidget {
   const AbstractBase({Key? key, required this.encode, required this.decode}) : super(key: key);
 
   @override
- _AbstractBaseState createState() => _AbstractBaseState();
+  _AbstractBaseState createState() => _AbstractBaseState();
 }
 
 class _AbstractBaseState extends State<AbstractBase> {

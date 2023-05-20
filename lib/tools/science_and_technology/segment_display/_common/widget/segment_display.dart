@@ -21,7 +21,7 @@ class SegmentDisplay extends StatefulWidget {
   const SegmentDisplay({Key? key, required this.type}) : super(key: key);
 
   @override
- _SegmentDisplayState createState() => _SegmentDisplayState();
+  _SegmentDisplayState createState() => _SegmentDisplayState();
 }
 
 class _SegmentDisplayState extends State<SegmentDisplay> {
@@ -185,10 +185,11 @@ class _SegmentDisplayState extends State<SegmentDisplay> {
         GCWTextDivider(text: i18n(context, 'segmentdisplay_encodemode_visualsegments_input')),
         GCWText(
             text: decodeSegment(
-                _currentDisplays.displays.map((character) {
-                  return character.join();
-                }).join(' '),
-                widget.type).text)
+                    _currentDisplays.displays.map((character) {
+                      return character.join();
+                    }).join(' '),
+                    widget.type)
+                .text)
       ],
     );
   }

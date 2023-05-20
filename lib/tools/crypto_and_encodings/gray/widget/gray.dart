@@ -11,7 +11,7 @@ class Gray extends StatefulWidget {
   const Gray({Key? key}) : super(key: key);
 
   @override
- _GrayState createState() => _GrayState();
+  _GrayState createState() => _GrayState();
 }
 
 class _GrayState extends State<Gray> {

@@ -22,7 +22,7 @@ class SettingsPreferences extends StatefulWidget {
   const SettingsPreferences({Key? key}) : super(key: key);
 
   @override
- _SettingsPreferencesState createState() => _SettingsPreferencesState();
+  _SettingsPreferencesState createState() => _SettingsPreferencesState();
 }
 
 class _SettingsPreferencesState extends State<SettingsPreferences> {
@@ -122,20 +122,20 @@ class _SettingsPreferencesState extends State<SettingsPreferences> {
                       ),
                       prefValue.length > _PREF_VALUE_MAX_LENGTH
                           ? Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            GCWIconButton(
-                              icon: _expandedValues.contains(key) ? Icons.arrow_drop_up : Icons.more_horiz,
-                              size: IconButtonSize.SMALL,
-                              onPressed: () {
-                                setState(() {
-                                  _expandedValues.contains(key)
-                                      ? _expandedValues.remove(key)
-                                      : _expandedValues.add(key);
-                                });
-                              },
-                            )
-                          ],
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                GCWIconButton(
+                                  icon: _expandedValues.contains(key) ? Icons.arrow_drop_up : Icons.more_horiz,
+                                  size: IconButtonSize.SMALL,
+                                  onPressed: () {
+                                    setState(() {
+                                      _expandedValues.contains(key)
+                                          ? _expandedValues.remove(key)
+                                          : _expandedValues.add(key);
+                                    });
+                                  },
+                                )
+                              ],
                             )
                           : Container()
                     ],
@@ -229,7 +229,8 @@ class _SettingsPreferencesState extends State<SettingsPreferences> {
                 }
               });
             });
-      default: return Container();
+      default:
+        return Container();
     }
   }
 
@@ -397,6 +398,4 @@ class _SettingsPreferencesState extends State<SettingsPreferences> {
         );
     }
   }
-
-
 }

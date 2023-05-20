@@ -110,7 +110,8 @@ void _text(dynamic t, dynamic x, dynamic y, dynamic s) {
     return;
   }
   t = t.replaceAll(' ', '⟳');
-  _graphics.add('TEXT ' + (t as String) + ' ' + x.toInt().toString() + ' ' + y.toInt().toString() + ' ' + s.toInt().toString());
+  _graphics.add(
+      'TEXT ' + (t as String) + ' ' + x.toInt().toString() + ' ' + y.toInt().toString() + ' ' + s.toInt().toString());
 }
 
 void _oval(dynamic x1, dynamic y1, dynamic x2, dynamic y2) {

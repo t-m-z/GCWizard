@@ -12,7 +12,7 @@ class SummerSimmerIndex extends StatefulWidget {
   const SummerSimmerIndex({Key? key}) : super(key: key);
 
   @override
- _SummerSimmerIndexState createState() => _SummerSimmerIndexState();
+  _SummerSimmerIndexState createState() => _SummerSimmerIndexState();
 }
 
 class _SummerSimmerIndexState extends State<SummerSimmerIndex> {

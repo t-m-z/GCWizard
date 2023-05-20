@@ -27,9 +27,7 @@ class _GridConfiguration {
   _GridBoxEnumerationBehaviour? enumerationBehaviour;
 
   _GridConfiguration(this.type, this.width, this.height,
-      {this.enumeration,
-      this.columnEnumeration,
-      this.rowEnumeration});
+      {this.enumeration, this.columnEnumeration, this.rowEnumeration});
 }
 
 const _GRID_CUSTOM_KEY = 'grid_custom';
@@ -109,7 +107,7 @@ class Grid extends StatefulWidget {
   const Grid({Key? key}) : super(key: key);
 
   @override
- _GridState createState() => _GridState();
+  _GridState createState() => _GridState();
 }
 
 class _GridState extends State<Grid> {
@@ -210,16 +208,21 @@ class _GridState extends State<Grid> {
                     _currentConfigRows = _GRID_CONFIGURATIONS[_currentGridConfiguration]?.height ?? 10;
                     _currentConfigBoxEnumeration = _GRID_CONFIGURATIONS[_currentGridConfiguration]?.enumeration ?? '';
                     _boxEnumerationController.text = _currentConfigBoxEnumeration ?? '';
-                    _currentConfigColumnEnumeration = _GRID_CONFIGURATIONS[_currentGridConfiguration]?.columnEnumeration ?? '';
+                    _currentConfigColumnEnumeration =
+                        _GRID_CONFIGURATIONS[_currentGridConfiguration]?.columnEnumeration ?? '';
                     _columnEnumerationController.text = _currentConfigColumnEnumeration ?? '';
-                    _currentConfigRowEnumeration = _GRID_CONFIGURATIONS[_currentGridConfiguration]?.rowEnumeration ?? '';
+                    _currentConfigRowEnumeration =
+                        _GRID_CONFIGURATIONS[_currentGridConfiguration]?.rowEnumeration ?? '';
                     _rowEnumerationController.text = _currentConfigRowEnumeration ?? '';
                     _currentConfigBoxEnumerationStart =
-                        _GRID_CONFIGURATIONS[_currentGridConfiguration]?.enumerationStart ?? _GridEnumerationStart.TOP_LEFT;
+                        _GRID_CONFIGURATIONS[_currentGridConfiguration]?.enumerationStart ??
+                            _GridEnumerationStart.TOP_LEFT;
                     _currentConfigBoxEnumerationStartDirection =
-                        _GRID_CONFIGURATIONS[_currentGridConfiguration]?.enumerationStartDirection ?? _GridBoxEnumerationStartDirection.RIGHT;
+                        _GRID_CONFIGURATIONS[_currentGridConfiguration]?.enumerationStartDirection ??
+                            _GridBoxEnumerationStartDirection.RIGHT;
                     _currentConfigBoxEnumerationBehaviour =
-                        _GRID_CONFIGURATIONS[_currentGridConfiguration]?.enumerationBehaviour ?? _GridBoxEnumerationBehaviour.ALIGNED;
+                        _GRID_CONFIGURATIONS[_currentGridConfiguration]?.enumerationBehaviour ??
+                            _GridBoxEnumerationBehaviour.ALIGNED;
 
                     if (_currentGridConfiguration == _GRID_CUSTOM_KEY) _isConfiguration = true;
                   });
@@ -385,7 +388,8 @@ class _GridState extends State<Grid> {
         GCWDropDown<_GridBoxEnumerationStartDirection>(
           title: i18n(context, 'grid_boxes_startdirection_title'),
           value: _currentConfigBoxEnumerationStartDirection,
-          items: _currentConfigBoxEnumerationStartDirections.map<GCWDropDownMenuItem<_GridBoxEnumerationStartDirection>>((direction) {
+          items: _currentConfigBoxEnumerationStartDirections
+              .map<GCWDropDownMenuItem<_GridBoxEnumerationStartDirection>>((direction) {
             String name;
             switch (direction) {
               case _GridBoxEnumerationStartDirection.RIGHT:
@@ -522,8 +526,11 @@ class _GridState extends State<Grid> {
 
   BoxDecoration _getColorDecoration(_GridPaintColor color) {
     return _currentColor == color
-        ? BoxDecoration(color: (_GRID_COLORS[color]?['color'] ?? Colors.black), border: Border.all(color: themeColors().secondary(), width: 5))
+        ? BoxDecoration(
+            color: (_GRID_COLORS[color]?['color'] ?? Colors.black),
+            border: Border.all(color: themeColors().secondary(), width: 5))
         : BoxDecoration(
-            color: (_GRID_COLORS[color]?['color'] ?? Colors.black), border: Border.all(color: themeColors().mainFont(), width: 1.0));
+            color: (_GRID_COLORS[color]?['color'] ?? Colors.black),
+            border: Border.all(color: themeColors().mainFont(), width: 1.0));
   }
 }

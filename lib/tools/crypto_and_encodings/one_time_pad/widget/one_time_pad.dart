@@ -11,7 +11,7 @@ class OneTimePad extends StatefulWidget {
   const OneTimePad({Key? key}) : super(key: key);
 
   @override
- _OneTimePadState createState() => _OneTimePadState();
+  _OneTimePadState createState() => _OneTimePadState();
 }
 
 class _OneTimePadState extends State<OneTimePad> {

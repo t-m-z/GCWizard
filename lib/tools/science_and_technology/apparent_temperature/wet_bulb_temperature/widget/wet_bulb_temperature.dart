@@ -17,7 +17,7 @@ class WetBulbTemperature extends StatefulWidget {
   const WetBulbTemperature({Key? key}) : super(key: key);
 
   @override
- _WetBulbTemperatureState createState() => _WetBulbTemperatureState();
+  _WetBulbTemperatureState createState() => _WetBulbTemperatureState();
 }
 
 class _WetBulbTemperatureState extends State<WetBulbTemperature> {
@@ -93,12 +93,14 @@ class _WetBulbTemperatureState extends State<WetBulbTemperature> {
         Row(
           children: [
             Container(
-                width: 50,
-                padding: const EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN),
-                child: GCWIconButton(
-                    icon: Icons.wb_sunny, iconColor: _colorWBT(WBT_C), backgroundColor: const Color(0xFF4d4d4d),
-                    onPressed: () {  },
-                ),
+              width: 50,
+              padding: const EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN),
+              child: GCWIconButton(
+                icon: Icons.wb_sunny,
+                iconColor: _colorWBT(WBT_C),
+                backgroundColor: const Color(0xFF4d4d4d),
+                onPressed: () {},
+              ),
             ),
             Expanded(
               child: GCWOutput(

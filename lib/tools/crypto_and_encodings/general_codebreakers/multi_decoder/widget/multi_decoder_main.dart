@@ -4,7 +4,7 @@ class MultiDecoder extends StatefulWidget {
   const MultiDecoder({Key? key}) : super(key: key);
 
   @override
- _MultiDecoderState createState() => _MultiDecoderState();
+  _MultiDecoderState createState() => _MultiDecoderState();
 }
 
 class _MultiDecoderState extends State<MultiDecoder> {
@@ -158,8 +158,7 @@ class _MultiDecoderState extends State<MultiDecoder> {
         if (_currentInput.isEmpty) {
           return GCWOutput(title: _toolTitle(tool), child: Container());
         } else if (!tool.optionalKey &&
-            ((tool.requiresKey && _currentKey.isEmpty) ||
-            (!tool.requiresKey && _currentKey.isNotEmpty))) {
+            ((tool.requiresKey && _currentKey.isEmpty) || (!tool.requiresKey && _currentKey.isNotEmpty))) {
           return Container();
         } else {
           result = tool.onDecode(_currentInput, _currentKey);
@@ -209,7 +208,7 @@ class _MultiDecoderState extends State<MultiDecoder> {
                     title: _toolTitle(tool),
                     child: GCWImageView(
                         imageData:
-                        GCWImageViewData(GCWFile(bytes: (snapshot.data as Uint8List), name: _toolTitle(tool)))));
+                            GCWImageViewData(GCWFile(bytes: (snapshot.data as Uint8List), name: _toolTitle(tool)))));
               } else {
                 return Container();
               }

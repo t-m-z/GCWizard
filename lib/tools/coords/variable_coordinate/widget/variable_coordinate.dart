@@ -20,9 +20,9 @@ import 'package:gc_wizard/common_widgets/units/gcw_unit_dropdown.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_text_formatter.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
-import 'package:gc_wizard/tools/coords/variable_coordinate/logic/variable_latlon.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
+import 'package:gc_wizard/tools/coords/variable_coordinate/logic/variable_latlon.dart';
 import 'package:gc_wizard/tools/coords/variable_coordinate/persistence/json_provider.dart';
 import 'package:gc_wizard/tools/coords/variable_coordinate/persistence/model.dart';
 import 'package:gc_wizard/tools/formula_solver/persistence/model.dart' as formula_base;
@@ -43,7 +43,7 @@ class VariableCoordinate extends StatefulWidget {
   const VariableCoordinate({Key? key, required this.formula}) : super(key: key);
 
   @override
- _VariableCoordinateState createState() => _VariableCoordinateState();
+  _VariableCoordinateState createState() => _VariableCoordinateState();
 }
 
 class _VariableCoordinateState extends State<VariableCoordinate> {
@@ -103,7 +103,8 @@ class _VariableCoordinateState extends State<VariableCoordinate> {
     updateFormulaValue(value, widget.formula);
   }
 
-  void _addEntry(String currentFromInput, String currentToInput, formula_base.FormulaValueType type, BuildContext context) {
+  void _addEntry(
+      String currentFromInput, String currentToInput, formula_base.FormulaValueType type, BuildContext context) {
     if (currentFromInput.isNotEmpty) {
       insertFormulaValue(
           formula_base.FormulaValue(currentFromInput, currentToInput, type: formula_base.FormulaValueType.INTERPOLATED),
@@ -339,8 +340,7 @@ class _VariableCoordinateState extends State<VariableCoordinate> {
       _substitutions.putIfAbsent(value.key, () => value.value);
     }
 
-    if (_currentFromInput.isNotEmpty &&
-        _currentToInput.isNotEmpty) {
+    if (_currentFromInput.isNotEmpty && _currentToInput.isNotEmpty) {
       _substitutions.putIfAbsent(_currentFromInput, () => _currentToInput);
     }
 
@@ -381,27 +381,26 @@ class _VariableCoordinateState extends State<VariableCoordinate> {
 
     var hasLeftPaddedCoords = leftPaddedCoords.isNotEmpty;
 
-    _currentOutput =
-        (_currentCoordMode == GCWSwitchPosition.left ? normalCoords : leftPaddedCoords)
-          .map((VariableCoordinateSingleResult varCoordResult) {
-            var formattedCoordinate = formatCoordOutput(varCoordResult.coordinate, _currentOutputFormat, defaultEllipsoid);
-            return Column(
-              children: [
-                GCWOutputText(text: formattedCoordinate),
-                GCWText(text: _formatVariables(varCoordResult.variables), style: gcwTextStyle().copyWith(fontSize: fontSizeSmall()))
-              ],
-            );
-          })
-          .toList();
+    _currentOutput = (_currentCoordMode == GCWSwitchPosition.left ? normalCoords : leftPaddedCoords)
+        .map((VariableCoordinateSingleResult varCoordResult) {
+      var formattedCoordinate = formatCoordOutput(varCoordResult.coordinate, _currentOutputFormat, defaultEllipsoid);
+      return Column(
+        children: [
+          GCWOutputText(text: formattedCoordinate),
+          GCWText(
+              text: _formatVariables(varCoordResult.variables),
+              style: gcwTextStyle().copyWith(fontSize: fontSizeSmall()))
+        ],
+      );
+    }).toList();
 
     _currentMapPoints = (_currentCoordMode == GCWSwitchPosition.left ? normalCoords : leftPaddedCoords)
-      .map((VariableCoordinateSingleResult varCoordResult) {
-        return GCWMapPoint(
-            point: varCoordResult.coordinate,
-            markerText: _formatVariables(varCoordResult.variables),
-            coordinateFormat: _currentOutputFormat);
-      })
-      .toList();
+        .map((VariableCoordinateSingleResult varCoordResult) {
+      return GCWMapPoint(
+          point: varCoordResult.coordinate,
+          markerText: _formatVariables(varCoordResult.variables),
+          coordinateFormat: _currentOutputFormat);
+    }).toList();
 
     if (_currentOutput.isEmpty) {
       _currentOutput = [i18n(context, 'coords_variablecoordinate_nooutputs')];

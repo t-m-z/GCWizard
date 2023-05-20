@@ -26,7 +26,8 @@ class ProjectionData {
 
   ProjectionData.fromJson(Map<String, Object?> json)
       : distance = toStringOrNull(json['distance']) ?? '',
-        distanceUnit = getUnitByName<Length>(allLengths(), toStringOrNull(json['distanceUnit']) ?? '') ?? defaultLengthUnit,
+        distanceUnit =
+            getUnitByName<Length>(allLengths(), toStringOrNull(json['distanceUnit']) ?? '') ?? defaultLengthUnit,
         bearing = toStringOrNull(json['bearing']) ?? '',
         reverse = toBoolOrNull(json['reverse']) ?? false;
 

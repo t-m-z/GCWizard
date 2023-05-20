@@ -278,7 +278,6 @@ import 'package:gc_wizard/utils/string_utils.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/common_widget_utils.dart';
 import 'package:prefs/prefs.dart';
 
-
 class MainView extends StatefulWidget {
   const MainView({Key? key}) : super(key: key);
 
@@ -332,8 +331,8 @@ class _MainViewState extends State<MainView> {
                   Navigator.push(
                       context,
                       NoAnimationMaterialPageRoute<GCWTool>(
-                          builder: (context) =>
-                              registeredTools.firstWhere((tool) => className(tool.tool) == className(const Changelog()))));
+                          builder: (context) => registeredTools
+                              .firstWhere((tool) => className(tool.tool) == className(const Changelog()))));
                 }),
             GCWDialogButton(text: i18n(context, 'common_ok'))
           ],
@@ -631,7 +630,9 @@ void _initStaticToolList() {
       className(const PasleyTelegraph()),
       className(const PophamTelegraph()),
       className(const PeriodicTable()),
-      className(const PeriodicTableDataView(atomicNumber: 1,)),
+      className(const PeriodicTableDataView(
+        atomicNumber: 1,
+      )),
       className(const Permutation()),
       className(const PhiSelection()),
       className(const PhysicalConstants()),

@@ -1,6 +1,6 @@
 part of 'package:gc_wizard/tools/crypto_and_encodings/leetspeak/logic/leetspeak.dart';
 
-class LeetFoundOutput{
+class LeetFoundOutput {
   final bool found;
   final String value;
 

@@ -82,17 +82,16 @@ class WTFjobData {
 
 Future<WTFoutput> WTFgetInformationAsync(GCWAsyncExecuterParameters? jobData) async {
   if (jobData?.parameters is! WTFjobData) {
-    return Future.value(
-      WTFoutput(
-          result: WTFstatus.NULL,
-          httpCode: '',
-          httpMessage: '',
-          dataSHODAN: WTFDetailedOutput(result: WTFstatus.NULL, httpCode: '', httpMessage: '', data: {}),
-          dataPassiveTotal: WTFDetailedOutput(result: WTFstatus.NULL, httpCode: '', httpMessage: '', data: {}),
-          dataVirusTotal: WTFDetailedOutput(result: WTFstatus.NULL, httpCode: '', httpMessage: '', data: {}),
-          dataWhoIs: WTFDetailedOutput(result: WTFstatus.NULL, httpCode: '', httpMessage: '', data: {}),
-          dataIPWhoIs: WTFDetailedOutput(result: WTFstatus.NULL, httpCode: '', httpMessage: '', data: {}),
-          dataGreyNoise: WTFDetailedOutput(result: WTFstatus.NULL, httpCode: '', httpMessage: '', data: {})));
+    return Future.value(WTFoutput(
+        result: WTFstatus.NULL,
+        httpCode: '',
+        httpMessage: '',
+        dataSHODAN: WTFDetailedOutput(result: WTFstatus.NULL, httpCode: '', httpMessage: '', data: {}),
+        dataPassiveTotal: WTFDetailedOutput(result: WTFstatus.NULL, httpCode: '', httpMessage: '', data: {}),
+        dataVirusTotal: WTFDetailedOutput(result: WTFstatus.NULL, httpCode: '', httpMessage: '', data: {}),
+        dataWhoIs: WTFDetailedOutput(result: WTFstatus.NULL, httpCode: '', httpMessage: '', data: {}),
+        dataIPWhoIs: WTFDetailedOutput(result: WTFstatus.NULL, httpCode: '', httpMessage: '', data: {}),
+        dataGreyNoise: WTFDetailedOutput(result: WTFstatus.NULL, httpCode: '', httpMessage: '', data: {})));
   }
   var WTFjob = jobData!.parameters as WTFjobData;
   WTFoutput output = await getWTFInformation(
@@ -196,7 +195,10 @@ Future<WTFoutput> getWTFInformation(String address, WTFmode mode, String SHODAN_
       httpMessage = response.reasonPhrase as String;
       if (response.statusCode == 200) {
         detailsVT = WTFDetailedOutput(
-            result: WTFstatus.OK, httpCode: httpCode, httpMessage: httpMessage, data: json.decode(response.body) as Map<String, dynamic>);
+            result: WTFstatus.OK,
+            httpCode: httpCode,
+            httpMessage: httpMessage,
+            data: json.decode(response.body) as Map<String, dynamic>);
       } else {
         detailsVT = WTFDetailedOutput(result: WTFstatus.ERROR, httpCode: httpCode, httpMessage: httpMessage, data: {});
       }
@@ -213,9 +215,13 @@ Future<WTFoutput> getWTFInformation(String address, WTFmode mode, String SHODAN_
       httpMessage = response.reasonPhrase as String;
       if (response.statusCode == 200) {
         detailsSHODAN = WTFDetailedOutput(
-            result: WTFstatus.OK, httpCode: httpCode, httpMessage: httpMessage, data: json.decode(response.body) as Map<String, dynamic>);
+            result: WTFstatus.OK,
+            httpCode: httpCode,
+            httpMessage: httpMessage,
+            data: json.decode(response.body) as Map<String, dynamic>);
       } else {
-        detailsSHODAN = WTFDetailedOutput(result: WTFstatus.ERROR, httpCode: httpCode, httpMessage: httpMessage, data: {});
+        detailsSHODAN =
+            WTFDetailedOutput(result: WTFstatus.ERROR, httpCode: httpCode, httpMessage: httpMessage, data: {});
       }
     } else {
       detailsSHODAN = WTFDetailedOutput(result: WTFstatus.NULL, httpCode: '', httpMessage: '', data: {});
@@ -243,9 +249,13 @@ Future<WTFoutput> getWTFInformation(String address, WTFmode mode, String SHODAN_
       //httpMessage = response.status_desc;
       if (response.statusCode == 200) {
         detailsWhoIs = WTFDetailedOutput(
-            result: WTFstatus.OK, httpCode: httpCode, httpMessage: httpMessage, data: json.decode(response.body) as Map<String, dynamic>);
+            result: WTFstatus.OK,
+            httpCode: httpCode,
+            httpMessage: httpMessage,
+            data: json.decode(response.body) as Map<String, dynamic>);
       } else {
-        detailsWhoIs = WTFDetailedOutput(result: WTFstatus.ERROR, httpCode: httpCode, httpMessage: httpMessage, data: {});
+        detailsWhoIs =
+            WTFDetailedOutput(result: WTFstatus.ERROR, httpCode: httpCode, httpMessage: httpMessage, data: {});
       }
     } else {
       detailsWhoIs = WTFDetailedOutput(result: WTFstatus.NULL, httpCode: '', httpMessage: '', data: {});
@@ -259,9 +269,13 @@ Future<WTFoutput> getWTFInformation(String address, WTFmode mode, String SHODAN_
       httpCode = response.statusCode.toString();
       if (response.statusCode == 200) {
         detailsIPWhoIs = WTFDetailedOutput(
-            result: WTFstatus.OK, httpCode: httpCode, httpMessage: httpMessage, data: json.decode(response.body) as Map<String, dynamic>);
+            result: WTFstatus.OK,
+            httpCode: httpCode,
+            httpMessage: httpMessage,
+            data: json.decode(response.body) as Map<String, dynamic>);
       } else {
-        detailsIPWhoIs = WTFDetailedOutput(result: WTFstatus.ERROR, httpCode: httpCode, httpMessage: httpMessage, data: {});
+        detailsIPWhoIs =
+            WTFDetailedOutput(result: WTFstatus.ERROR, httpCode: httpCode, httpMessage: httpMessage, data: {});
       }
     } else {
       detailsIPWhoIs = WTFDetailedOutput(result: WTFstatus.NULL, httpCode: '', httpMessage: '', data: {});
@@ -283,7 +297,10 @@ Future<WTFoutput> getWTFInformation(String address, WTFmode mode, String SHODAN_
       httpMessage = response.reasonPhrase as String;
       if (response.statusCode == 200) {
         detailsPT = WTFDetailedOutput(
-            result: WTFstatus.OK, httpCode: httpCode, httpMessage: httpMessage, data: json.decode(response.body) as Map<String, dynamic>);
+            result: WTFstatus.OK,
+            httpCode: httpCode,
+            httpMessage: httpMessage,
+            data: json.decode(response.body) as Map<String, dynamic>);
       } else {
         detailsPT = WTFDetailedOutput(result: WTFstatus.ERROR, httpCode: httpCode, httpMessage: httpMessage, data: {});
       }

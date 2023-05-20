@@ -14,7 +14,7 @@ int gcd(int a, int b) {
   return a.abs();
 }
 
-int lcm(int a, int b){
+int lcm(int a, int b) {
   if (gcd(a, b) == 00) return 0;
   return (a * b).abs() ~/ gcd(a, b);
 }

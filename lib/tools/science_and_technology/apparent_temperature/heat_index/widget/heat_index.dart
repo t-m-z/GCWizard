@@ -12,7 +12,7 @@ class HeatIndex extends StatefulWidget {
   const HeatIndex({Key? key}) : super(key: key);
 
   @override
- _HeatIndexState createState() => _HeatIndexState();
+  _HeatIndexState createState() => _HeatIndexState();
 }
 
 class _HeatIndexState extends State<HeatIndex> {

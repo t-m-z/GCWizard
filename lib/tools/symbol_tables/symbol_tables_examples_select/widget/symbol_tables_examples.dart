@@ -17,7 +17,7 @@ class SymbolTableExamples extends StatefulWidget {
   const SymbolTableExamples({Key? key, required this.symbolKeys}) : super(key: key);
 
   @override
- _SymbolTableExamplesState createState() => _SymbolTableExamplesState();
+  _SymbolTableExamplesState createState() => _SymbolTableExamplesState();
 }
 
 class _SymbolTableExamplesState extends State<SymbolTableExamples> {
@@ -131,11 +131,6 @@ class _SymbolTableExamplesState extends State<SymbolTableExamples> {
     }).toList();
 
     return SingleChildScrollView(
-        physics: const AlwaysScrollableScrollPhysics(),
-        primary: true,
-        child: Column(
-            children: symbols
-        )
-    );
+        physics: const AlwaysScrollableScrollPhysics(), primary: true, child: Column(children: symbols));
   }
 }

@@ -11,7 +11,7 @@ class Playfair extends StatefulWidget {
   const Playfair({Key? key}) : super(key: key);
 
   @override
- _PlayfairState createState() => _PlayfairState();
+  _PlayfairState createState() => _PlayfairState();
 }
 
 class _PlayfairState extends State<Playfair> {

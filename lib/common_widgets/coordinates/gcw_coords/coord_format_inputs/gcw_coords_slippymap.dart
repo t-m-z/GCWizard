@@ -5,7 +5,8 @@ class _GCWCoordsSlippyMap extends StatefulWidget {
   final SlippyMap coordinates;
   final bool isDefault;
 
-  const _GCWCoordsSlippyMap({Key? key, required this.onChanged, required this.coordinates, this.isDefault = true}) : super(key: key);
+  const _GCWCoordsSlippyMap({Key? key, required this.onChanged, required this.coordinates, this.isDefault = true})
+      : super(key: key);
 
   @override
   _GCWCoordsSlippyMapState createState() => _GCWCoordsSlippyMapState();

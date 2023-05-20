@@ -13,7 +13,18 @@ import 'dart:math';
 
 final sigma = 5.670374419 * pow(10, -8); // Stefan-Boltzmann const
 
-enum UTCI_HEATSTRESS_CONDITION { DARK_BLUE, BLUE_ACCENT, BLUE, LIGHT_BLUE, LIGHT_BLUE_ACCENT, GREEN, ORANGE, RED, RED_ACCENT, DARK_RED }
+enum UTCI_HEATSTRESS_CONDITION {
+  DARK_BLUE,
+  BLUE_ACCENT,
+  BLUE,
+  LIGHT_BLUE,
+  LIGHT_BLUE_ACCENT,
+  GREEN,
+  ORANGE,
+  RED,
+  RED_ACCENT,
+  DARK_RED
+}
 
 final Map<UTCI_HEATSTRESS_CONDITION, double> UTCI_HEAT_STRESS = {
   UTCI_HEATSTRESS_CONDITION.BLUE_ACCENT: -40.0,
@@ -26,8 +37,6 @@ final Map<UTCI_HEATSTRESS_CONDITION, double> UTCI_HEAT_STRESS = {
   UTCI_HEATSTRESS_CONDITION.RED_ACCENT: 38.0,
   UTCI_HEATSTRESS_CONDITION.DARK_RED: 46.0,
 };
-
-
 
 double calculateUTCI(double Ta, double RH, double va) {
   // http://james-ramsden.com/calculate-utci-c-code/
@@ -85,15 +94,17 @@ double calculateUTCI(double Ta, double RH, double va) {
   return UTCI;
 }
 
-double _calcTDewpoint(double HR, double Ta){
+double _calcTDewpoint(double HR, double Ta) {
   // https://www.vcalc.com/wiki/rklarsen/Calculating+Dew+Point+Temperature+from+Relative+Humidity
   double B1 = 243.04;
   double A1 = 17.625;
 
-  return (HR != 0.0) ? (B1 * (log(HR / 100) / log(e) + (A1 * Ta) / (B1 + Ta)))/(A1 - log(HR/100) / log(e) - A1 * Ta / (B1 + Ta)) : 0.0;
+  return (HR != 0.0)
+      ? (B1 * (log(HR / 100) / log(e) + (A1 * Ta) / (B1 + Ta))) / (A1 - log(HR / 100) / log(e) - A1 * Ta / (B1 + Ta))
+      : 0.0;
 }
 
-double _calcTmrt(double Ta, double va, double Tg){
+double _calcTmrt(double Ta, double va, double Tg) {
   // https://www.novalynx.com/manuals/210-4417-manual.pdf
   //   mrt (°C) = tg + 2.42V (tg - ta)
   //     V: air current cm/sec
@@ -102,7 +113,7 @@ double _calcTmrt(double Ta, double va, double Tg){
   return Tg + 2.42 * va / 100 * (Tg - Ta);
 }
 
-double _calcGT(double Ta, double va, double Tdew){
+double _calcGT(double Ta, double va, double Tdew) {
   // Estimation of Black Globe Temperature for Calculation of the WBGT Index
   // https://www.weather.gov/media/tsa/pdf/WBGTpaper2.pdf
   double P = 1013.0; // Barometric pressure
@@ -111,8 +122,9 @@ double _calcGT(double Ta, double va, double Tdew){
   double fdif = 1049.7859; // diffuse  radiation from the sun solpos etr tilt 1049.7859
   double z = 39.2665 * pi / 180; // zenith angle in radian - 89°
 
-  double ea = exp(17.67 * (Tdew - Ta) / (Tdew + 243.5)) * (1.0007 + 0.00000346 * P) * 6.112 * exp(17.502 * Ta / (240.97 + Ta));
-  double epsilona = 0.575 * pow(ea, 1/7);
+  double ea =
+      exp(17.67 * (Tdew - Ta) / (Tdew + 243.5)) * (1.0007 + 0.00000346 * P) * 6.112 * exp(17.502 * Ta / (240.97 + Ta));
+  double epsilona = 0.575 * pow(ea, 1 / 7);
 
   double B = S * (fdb / 4 / sigma / cos(z) + 1.2 / sigma * fdif) + epsilona * pow(Ta, 4);
   double C = 0.315 * pow(va, 0.58) / (5.3865 * pow(10, -8));
@@ -120,10 +132,10 @@ double _calcGT(double Ta, double va, double Tdew){
   return (B + C * Ta + 7680000) / (C + 256000);
 }
 
-double _calcUTCI(double Ta, double va, double Tmrt, double RH){
+double _calcUTCI(double Ta, double va, double Tmrt, double RH) {
   double ehPa = es(Ta) * (RH / 100.0);
   double D_Tmrt = Tmrt - Ta;
-  double Pa = ehPa / 10.0;//  convert vapour pressure to kPa
+  double Pa = ehPa / 10.0; //  convert vapour pressure to kPa
 
   double UTCI_approx = Ta +
       (0.607562052) +
@@ -340,17 +352,25 @@ double _calcUTCI(double Ta, double va, double Tmrt, double RH){
   return UTCI_approx;
 }
 
-double es(double ta){
+double es(double ta) {
   // calculates saturation vapour pressure over water in hPa for input air temperature (ta) in celsius according to:
   // Hardy, R.; ITS-90 Formulations for Vapor Pressure, Frostpoint Temperature, Dewpoint Temperature and Enhancement Factors in the Range -100 to 100 °C;
   // Proceedings of Third International Symposium on Humidity and Moisture; edited by National Physical Laboratory (NPL), London, 1998, pp. 214-221
   // http://www.thunderscientific.com/tech_info/reflibrary/its90formulas.pdf (retrieved 2008-10-01)
 
-  List<double> g =  [-2836.5744, -6028.076559, 19.54263612, -0.02737830188, 0.000016261698, 7.0229056 * pow(10, -10), -1.8680009 * pow(10, -13)] ;
+  List<double> g = [
+    -2836.5744,
+    -6028.076559,
+    19.54263612,
+    -0.02737830188,
+    0.000016261698,
+    7.0229056 * pow(10, -10),
+    -1.8680009 * pow(10, -13)
+  ];
   double tk = ta + 273.15;
   double es = 2.7150305 * log(tk);
   //for count, i in enumerate(g):
-  for (int count = 0; count < g.length; count++){
+  for (int count = 0; count < g.length; count++) {
     double i = g[count];
     es = es + (i * pow(tk, (count - 2)));
   }

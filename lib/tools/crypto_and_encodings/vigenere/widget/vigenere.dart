@@ -11,7 +11,7 @@ class Vigenere extends StatefulWidget {
   const Vigenere({Key? key}) : super(key: key);
 
   @override
- _VigenereState createState() => _VigenereState();
+  _VigenereState createState() => _VigenereState();
 }
 
 class _VigenereState extends State<Vigenere> {

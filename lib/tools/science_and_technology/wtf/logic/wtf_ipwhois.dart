@@ -63,8 +63,8 @@ class WTFIPWhoIs {
   late WTFIPWhoIsConnection connection;
   late WTFIPWhoIsTimezone timezone;
 
-  WTFIPWhoIs({
-    required this.ip,
+  WTFIPWhoIs(
+      {required this.ip,
       required this.success,
       required this.type,
       required this.continent,
@@ -104,8 +104,11 @@ class WTFIPWhoIs {
     capital = json['capital'].toString();
     borders = json['borders'].toString();
     flag = (json['flag'] != null ? WTFIPWhoIsFlag.fromJson(json['flag'] as Map<String, dynamic>) : null)!;
-    connection = (json['connection'] != null ? WTFIPWhoIsConnection.fromJson(json['connection'] as Map<String, dynamic>) : null)!;
-    timezone = (json['timezone'] != null ? WTFIPWhoIsTimezone.fromJson(json['timezone'] as Map<String, dynamic>) : null)!;
+    connection = (json['connection'] != null
+        ? WTFIPWhoIsConnection.fromJson(json['connection'] as Map<String, dynamic>)
+        : null)!;
+    timezone =
+        (json['timezone'] != null ? WTFIPWhoIsTimezone.fromJson(json['timezone'] as Map<String, dynamic>) : null)!;
   }
 
   Map<String, dynamic> toJson() {

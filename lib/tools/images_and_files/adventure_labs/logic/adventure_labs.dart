@@ -2,9 +2,10 @@
 // https://labs-api.geocaching.com/swagger/ui/index#!/Adventures/Adventures_SearchV3
 // https://github.com/mirsch/lab2gpx/blob/master/index.php
 
+import 'dart:async';
 import 'dart:convert';
 import 'dart:isolate';
-import 'dart:async';
+
 import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:http/http.dart' as http;
@@ -202,7 +203,6 @@ Future<Adventures> getAdventureData(LatLng? coordinate, int radius, {required Se
               OwnerUsername: OwnerUsername,
               Stages: Stages,
             );
-
           }
         } catch (exception) {
           httpCode = 'adventure_labs_lab_other_exception_stage';

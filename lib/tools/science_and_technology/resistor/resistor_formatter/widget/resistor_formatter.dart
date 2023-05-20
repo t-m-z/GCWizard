@@ -9,8 +9,7 @@ String formatResistorValue(double value) {
 
 String formatResistorTolerancedValueInterval(List<double> valueInterval) {
   var formatter = NumberFormat('0.############');
-  return formatter.format(valueInterval[0]) + ' \u03A9 - ' +
-      formatter.format(valueInterval[1]) + ' \u03A9';
+  return formatter.format(valueInterval[0]) + ' \u03A9 - ' + formatter.format(valueInterval[1]) + ' \u03A9';
 }
 
 String formatResistorTolerance(double tolerance) {

@@ -10,9 +10,9 @@ import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/gcw_tool.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_onoff_switch.dart';
 import 'package:gc_wizard/tools/symbol_tables/_common/logic/symbol_table_data.dart';
-import 'package:gc_wizard/tools/symbol_tables/symbol_replacer/widget/symbol_replacer.dart';
 import 'package:gc_wizard/tools/symbol_tables/_common/widget/gcw_symbol_container.dart';
 import 'package:gc_wizard/tools/symbol_tables/_common/widget/gcw_symbol_table_zoom_buttons.dart';
+import 'package:gc_wizard/tools/symbol_tables/symbol_replacer/widget/symbol_replacer.dart';
 
 class GCWSymbolTableSymbolMatrix extends StatefulWidget {
   final int countColumns;
@@ -39,7 +39,7 @@ class GCWSymbolTableSymbolMatrix extends StatefulWidget {
       : super(key: key);
 
   @override
- _GCWSymbolTableSymbolMatrixState createState() => _GCWSymbolTableSymbolMatrixState();
+  _GCWSymbolTableSymbolMatrixState createState() => _GCWSymbolTableSymbolMatrixState();
 }
 
 class _GCWSymbolTableSymbolMatrixState extends State<GCWSymbolTableSymbolMatrix> {
@@ -82,10 +82,10 @@ class _GCWSymbolTableSymbolMatrixState extends State<GCWSymbolTableSymbolMatrix>
           widget.symbolKey.isEmpty
               ? Container(width: 20)
               : GCWIconButton(
-              icon: Icons.app_registration,
-              onPressed: () {
-                openInSymbolReplacer(context, widget.symbolKey);
-              }),
+                  icon: Icons.app_registration,
+                  onPressed: () {
+                    openInSymbolReplacer(context, widget.symbolKey);
+                  }),
           Container(width: 15),
           GCWSymbolTableZoomButtons(
               countColumns: widget.countColumns, mediaQueryData: widget.mediaQueryData, onChanged: widget.onChanged)

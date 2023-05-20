@@ -1,8 +1,8 @@
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit.dart';
 
 class Drag extends Unit {
-  late double Function (double) toDrag;
-  late double Function (double) fromDrag;
+  late double Function(double) toDrag;
+  late double Function(double) fromDrag;
 
   Drag({
     required String name,
@@ -16,8 +16,6 @@ class Drag extends Unit {
 }
 
 final DRAG = Drag(name: 'common_unit_drag', symbol: '', isReference: true);
-
-
 
 final List<Drag> drags = [
   DRAG,
