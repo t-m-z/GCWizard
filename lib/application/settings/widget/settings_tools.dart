@@ -21,6 +21,7 @@ class _ToolSettingsState extends State<ToolSettings> {
   late TextEditingController _inputControllerVT;
   late TextEditingController _inputControllerMail;
   late TextEditingController _inputControllerGreyNoise;
+  late TextEditingController _inputControllerW3WApiKey;
 
   String _currentInputMail = Prefs.get(PREFERENCE_WTF_MAIL).toString();
   String _currentInputSHODAN = Prefs.get(PREFERENCE_WTF_SHODAN).toString();
@@ -28,6 +29,7 @@ class _ToolSettingsState extends State<ToolSettings> {
   String _currentInputVT = Prefs.get(PREFERENCE_WTF_VT).toString();
   String _currentInputWhoIs = Prefs.get(PREFERENCE_WTF_WHOIS).toString();
   String _currentInputGreyNoise = Prefs.get(PREFERENCE_WTF_GREYNOISE).toString();
+  String _currentInputW3WApiKey = Prefs.get(PREFERENCE_COORD_DEFAULT_W3W_APIKEY).toString();
 
   @override
   void initState() {
@@ -38,6 +40,7 @@ class _ToolSettingsState extends State<ToolSettings> {
     _inputControllerPT = TextEditingController(text: _currentInputPT);
     _inputControllerMail = TextEditingController(text: _currentInputMail);
     _inputControllerGreyNoise = TextEditingController(text: _currentInputGreyNoise);
+    _inputControllerW3WApiKey = TextEditingController(text: _currentInputW3WApiKey);
   }
 
   @override
@@ -48,6 +51,7 @@ class _ToolSettingsState extends State<ToolSettings> {
     _inputControllerPT.dispose();
     _inputControllerMail.dispose();
     _inputControllerGreyNoise.dispose();
+    _inputControllerW3WApiKey.dispose();
     super.dispose();
   }
 
@@ -137,6 +141,19 @@ class _ToolSettingsState extends State<ToolSettings> {
             setState(() {
               _currentInputGreyNoise = text;
               Prefs.setString(PREFERENCE_WTF_GREYNOISE, text);
+            });
+          },
+        ),
+        GCWTextDivider(
+          text: i18n(context, 'settings_coordinates_defaultw3wapikey'),
+        ),
+        GCWTextField(
+          title: i18n(context, 'settings_coordinates_defaultw3wapikey'),
+          controller: _inputControllerW3WApiKey,
+          onChanged: (text) {
+            setState(() {
+              _currentInputW3WApiKey = text;
+              Prefs.setString(PREFERENCE_COORD_DEFAULT_W3W_APIKEY, text);
             });
           },
         ),
