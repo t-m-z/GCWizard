@@ -4,6 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/app_localizations.dart';
 import 'package:gc_wizard/application/settings/logic/default_settings.dart';
 import 'package:gc_wizard/application/settings/logic/preferences.dart';
+<<<<<<< HEAD
+=======
+import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_metadata.dart';
+import 'package:gc_wizard/utils/complex_return_types.dart';
+>>>>>>> 05ad593f1ef25550d7cffee8a14d8c1246eab8e2
 import 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords_formatselector.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
@@ -77,8 +85,12 @@ class _CoordinatesSettingsState extends State<CoordinatesSettings> {
               Prefs.setString(PREFERENCE_COORD_DEFAULT_FORMAT, typePersistenceKey);
 
               if (_currentDefaultFormat.subtype == null) {
+<<<<<<< HEAD
                 initDefaultSettings(PreferencesInitMode.REINIT_SINGLE,
                     reinitSinglePreference: PREFERENCE_COORD_DEFAULT_FORMAT_SUBTYPE);
+=======
+                restoreSingleDefaultPreference(PREFERENCE_COORD_DEFAULT_FORMAT_SUBTYPE);
+>>>>>>> 05ad593f1ef25550d7cffee8a14d8c1246eab8e2
               } else {
                 var subtypePersistenceKey = persistenceKeyByCoordinateFormatKey(_currentDefaultFormat.subtype!);
                 Prefs.setString(PREFERENCE_COORD_DEFAULT_FORMAT_SUBTYPE, subtypePersistenceKey);
@@ -89,45 +101,43 @@ class _CoordinatesSettingsState extends State<CoordinatesSettings> {
         GCWTextDivider(
           text: i18n(context, 'settings_coordinates_defaulthemispheres'),
         ),
-        Row(children: <Widget>[
-          Expanded(
-              flex: 1,
-              child: GCWText(
-                text: i18n(context, 'coords_common_latitude'),
-              )),
-          Expanded(
-              flex: 4,
-              child: GCWSignDropDown(
-                  itemList: [i18n(context, 'coords_common_north'), i18n(context, 'coords_common_south')],
-                  value: _currentDefaultHemisphereLatitude == HemisphereLatitude.North.toString() ? 1 : -1,
-                  onChanged: (value) {
-                    setState(() {
-                      _currentDefaultHemisphereLatitude =
-                          value > 0 ? HemisphereLatitude.North.toString() : HemisphereLatitude.South.toString();
-                      Prefs.setString(PREFERENCE_COORD_DEFAULT_HEMISPHERE_LATITUDE, _currentDefaultHemisphereLatitude);
-                    });
-                  }))
-        ]),
-        Row(children: <Widget>[
-          Expanded(
-              flex: 1,
-              child: GCWText(
-                text: i18n(context, 'coords_common_longitude'),
-              )),
-          Expanded(
-              flex: 4,
-              child: GCWSignDropDown(
-                  itemList: [i18n(context, 'coords_common_east'), i18n(context, 'coords_common_west')],
-                  value: _currentDefaultHemisphereLongitude == HemisphereLongitude.East.toString() ? 1 : -1,
-                  onChanged: (value) {
-                    setState(() {
-                      _currentDefaultHemisphereLongitude =
-                          value > 0 ? HemisphereLongitude.East.toString() : HemisphereLongitude.West.toString();
-                      Prefs.setString(
-                          PREFERENCE_COORD_DEFAULT_HEMISPHERE_LONGITUDE, _currentDefaultHemisphereLongitude);
-                    });
-                  }))
-        ]),
+        GCWSignDropDown(
+            title: i18n(context, 'coords_common_latitude'),
+            itemList: [i18n(context, 'coords_common_north'), i18n(context, 'coords_common_south')],
+            value: _currentDefaultHemisphereLatitude == HemisphereLatitude.North.toString() ? 1 : -1,
+            onChanged: (value) {
+              setState(() {
+                _currentDefaultHemisphereLatitude =
+                value > 0 ? HemisphereLatitude.North.toString() : HemisphereLatitude.South.toString();
+                Prefs.setString(PREFERENCE_COORD_DEFAULT_HEMISPHERE_LATITUDE, _currentDefaultHemisphereLatitude);
+              });
+        }),
+        GCWSignDropDown(
+            title: i18n(context, 'coords_common_longitude'),
+            itemList: [i18n(context, 'coords_common_east'), i18n(context, 'coords_common_west')],
+            value: _currentDefaultHemisphereLongitude == HemisphereLongitude.East.toString() ? 1 : -1,
+            onChanged: (value) {
+              setState(() {
+                _currentDefaultHemisphereLongitude =
+                value > 0 ? HemisphereLongitude.East.toString() : HemisphereLongitude.West.toString();
+                Prefs.setString(
+                    PREFERENCE_COORD_DEFAULT_HEMISPHERE_LONGITUDE, _currentDefaultHemisphereLongitude);
+              });
+            }),
+        GCWTextDivider(
+          text: i18n(context, 'settings_coordinates_precision'),
+        ),
+        GCWIntegerSpinner(
+          title: CoordinateFormatKey.DMM.toString().split('.')[1],
+          value: Prefs.getInt(PREFERENCE_COORD_PRECISION_DMM),
+          min: 1,
+          max: 20,
+          onChanged: (int value) {
+            setState(() {
+              Prefs.setInt(PREFERENCE_COORD_PRECISION_DMM, value);
+            });
+          },
+        ),
         GCWTextDivider(
           text: i18n(context, 'settings_coordinates_defaultrotationellipsoid'),
         ),

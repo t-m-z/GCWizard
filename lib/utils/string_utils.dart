@@ -168,3 +168,20 @@ List<String> allCharacters() {
 String enumName(String fullName) {
   return fullName.split('.').last;
 }
+<<<<<<< HEAD
+=======
+
+String formatStringForDecimals({int integerPrecision = 2, int decimalPrecision = 6, int minDecimalPrecision = 3}) {
+  var formatString = '0' * max(1, integerPrecision) + '.';
+  if (decimalPrecision < 1) decimalPrecision = 1;
+  if (minDecimalPrecision < 1) minDecimalPrecision = 1;
+
+  if (decimalPrecision <= minDecimalPrecision) {
+    formatString += '0' * decimalPrecision;
+  } else {
+    formatString += '0' * minDecimalPrecision + '#' * (decimalPrecision - minDecimalPrecision);
+  }
+
+  return formatString;
+}
+>>>>>>> 05ad593f1ef25550d7cffee8a14d8c1246eab8e2

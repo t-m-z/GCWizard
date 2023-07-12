@@ -222,6 +222,24 @@ class WherigoMediaData {
     required this.MediaType,
     required this.MediaFilename,
   });
+<<<<<<< HEAD
+=======
+}
+
+class WherigoBuilderVariableData {
+  final String BuilderVariableID;
+  final String BuilderVariableName;
+  final String BuilderVariableType;
+  final String BuilderVariableData;
+  final String BuilderVariableDescription;
+
+  const WherigoBuilderVariableData(
+      {required this.BuilderVariableID,
+      required this.BuilderVariableName,
+      required this.BuilderVariableType,
+      required this.BuilderVariableData,
+      required this.BuilderVariableDescription});
+>>>>>>> 05ad593f1ef25550d7cffee8a14d8c1246eab8e2
 }
 
 class WherigoVariableData {
@@ -361,6 +379,7 @@ class WherigoCartridgeLUA {
   final List<WherigoMediaData> Media;
   final List<List<WherigoActionMessageElementData>> Messages;
   final List<WherigoVariableData> Variables;
+  final List<WherigoBuilderVariableData> BuilderVariables;
   final Map<String, WherigoObjectData> NameToObject;
   final WHERIGO_ANALYSE_RESULT_STATUS ResultStatus;
   final List<String> ResultsLUA;
@@ -392,6 +411,10 @@ class WherigoCartridgeLUA {
     required this.Media,
     required this.Messages,
     required this.Variables,
+<<<<<<< HEAD
+=======
+    required this.BuilderVariables,
+>>>>>>> 05ad593f1ef25550d7cffee8a14d8c1246eab8e2
     required this.NameToObject,
     required this.ResultStatus,
     required this.ResultsLUA,
@@ -437,9 +460,12 @@ class WherigoTest {
   final WherigoCharacterData cartridgeTestCharacter;
   final WherigoItemData cartridgeTestItem;
   final WherigoInputData cartridgeTestInput;
+  final WherigoMediaData cartridgeTestMedia;
   final WherigoObfuscationData cartridgeTestObfuscation;
   final List<WherigoVariableData> cartridgeTestVariable;
+  final List<WherigoBuilderVariableData> cartridgeTestBuilderVariable;
   final List<List<WherigoActionMessageElementData>> cartridgeTestMessageDialog;
+  final WherigoAnswer cartridgeTestAnswers;
 
   WherigoTest({
     required this.cartridgeGWC,
@@ -449,8 +475,14 @@ class WherigoTest {
     required this.cartridgeTestCharacter,
     required this.cartridgeTestItem,
     required this.cartridgeTestInput,
+    required this.cartridgeTestMedia,
     required this.cartridgeTestObfuscation,
     required this.cartridgeTestVariable,
+    required this.cartridgeTestBuilderVariable,
     required this.cartridgeTestMessageDialog,
+<<<<<<< HEAD
+=======
+    required this.cartridgeTestAnswers,
+>>>>>>> 05ad593f1ef25550d7cffee8a14d8c1246eab8e2
   });
 }

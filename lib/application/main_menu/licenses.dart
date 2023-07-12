@@ -102,6 +102,7 @@ class _LicensesState extends State<Licenses> {
         ['Wherigo Analyzer', 'WFoundation\ngithub.com/WFoundation', ''],
       ]),
       GCWTextDivider(text: i18n(context, 'licenses_symboltablesources')),
+<<<<<<< HEAD
       GCWColumnedMultilineOutput(data: [
         const ['several', 'myGeoTools'],
         const ['several', 'Wikipedia'],
@@ -126,6 +127,42 @@ class _LicensesState extends State<Licenses> {
         [
           i18n(context, 'symboltables_ninjargon_title'),
           'Ninjago™ is a trademark of the LEGO Group of companies which does not sponsor, authorize or endorse this tool. (Personal Use)'
+=======
+      GCWColumnedMultilineOutput(
+        data: [
+          const ['several', 'myGeoTools'],
+          const ['several', 'Wikipedia'],
+          [i18n(context, 'symboltables_alien_mushrooms_title'), '(Personal Use)'],
+          [i18n(context, 'symboltables_cirth_erebor_title'), '(Personal Use)'],
+          [i18n(context, 'symboltables_christmas_title'), 'StudioMIES (Personal Use)'],
+          [i18n(context, 'symboltables_dragon_language_title'), '(Personal Use)'],
+          [i18n(context, 'symboltables_eurythmy_title'), 'www.steinerverlag.de (Non-Commercial Use)'],
+          [i18n(context, 'symboltables_face_it_title'), '(Personal Use)'],
+          [i18n(context, 'symboltables_futurama_2_title'), 'Leandor Pardini (onlinewebfonts.com) (CC BY-SA 3.0)'],
+          [
+            i18n(context, 'symboltables_gc_attributes_ids_title'),
+            'game-icons.net (CC BY 3.0)\npixabay.com\nclker.com (CC-0)'
+          ],
+          [i18n(context, 'symboltables_iokharic_title'), '(Personal Use)'],
+          [i18n(context, 'symboltables_kabouter_abc_title'), 'Pascalvanboxel, Egel (scoutpedia.nl) (CC BY-NC-SA 4.0)'],
+          [
+            i18n(context, 'symboltables_matoran_title'),
+            'Matoran is part of the Bionicle™ world. Bionicle™ is a trademark of the LEGO Group of companies which does not sponsor, authorize or endorse this tool. (Personal Use)'
+          ],
+          [i18n(context, 'symboltables_murray_title'), 'Japiejo (geocachingtoolbox.com)'],
+          [
+            i18n(context, 'symboltables_ninjargon_title'),
+            'Ninjago™ is a trademark of the LEGO Group of companies which does not sponsor, authorize or endorse this tool. (Personal Use)'
+          ],
+          [i18n(context, 'symboltables_oak_island_money_pit_extended_title'), 'oakislandmystery.com (Personal Use)'],
+          [i18n(context, 'symboltables_prosyl_title'), '(Personal Use)'],
+          [i18n(context, 'symboltables_puzzle_2_title'), 'Roci (fontspace.com) (Personal Use)'],
+          [i18n(context, 'telegraph_prussia_title'), 'Museumsstiftung Post und Telekommunikation (CC BY-SA)'],
+          [i18n(context, 'symboltables_sanluca_title'), 'Leadermassimo (wikimafia.it) (CC BY-SA 4.0)'],
+          [i18n(context, 'symboltables_solmisation_title'), 'www.breitkopf.de (Personal Use)'],
+          [i18n(context, 'symboltables_sprykski_title'), '(Personal Use)'],
+          [i18n(context, 'symboltables_vulcanian_title'), '(Personal Use)'],
+>>>>>>> 05ad593f1ef25550d7cffee8a14d8c1246eab8e2
         ],
         [i18n(context, 'symboltables_prosyl_title'), '(Personal Use)'],
         [i18n(context, 'symboltables_puzzle_2_title'), 'Roci (fontspace.com) (Personal Use)'],
@@ -138,6 +175,7 @@ class _LicensesState extends State<Licenses> {
         2
       ]),
       GCWTextDivider(text: i18n(context, 'licenses_telegraphs')),
+<<<<<<< HEAD
       GCWColumnedMultilineOutput(data: [
         [
           i18n(context, 'telegraph_edelcrantz_title'),
@@ -162,6 +200,40 @@ class _LicensesState extends State<Licenses> {
         ],
         [i18n(context, 'telegraph_schillingcanstatt_title'), 'Volker Aschoff'],
       ]),
+=======
+      GCWColumnedMultilineOutput(
+        data: [
+          [
+            i18n(context, 'telegraph_edelcrantz_title'),
+            'Gerard Holzmann,\nSilvia Rubio Hernández\nAnders Lindeberg-Lindvet, Curator Tekniskamuseet Stockholm\nErika Tanhua-Piiroinen, Tampere University Finland'
+          ],
+          [
+            i18n(context, 'telegraph_murray_title'),
+            'Helmar Fischer,\nJohn Buckledee, Chairman, Dunstable and District Local History Society on behalf of Mrs Omer Roucoux'
+          ],
+          [i18n(context, 'telegraph_ohlsen_title'), 'Anne Solberg\nNorsk Teknisk Museum, Oslo'],
+          [
+            i18n(context, 'telegraph_pasley_title'),
+            'Wrixon, Fred B.: Geheimsprachen. Könemann, 2006. ISBN 978-3-8331-2562-1. Seite 450'
+          ],
+          [
+            i18n(context, 'telegraph_popham_title'),
+            'Wrixon, Fred B.: Geheimsprachen. Könemann, 2006. ISBN 978-3-8331-2562-1. Seite 446'
+          ],
+          [
+            i18n(context, 'telegraph_prussia_title'),
+            'Bilddatenbank der Museumsstiftung Post und Telekommunikation (CC BY-SA)'
+          ],
+          [i18n(context, 'telegraph_schillingcanstatt_title'), 'Volker Aschoff'],
+        ]
+      ),
+      GCWTextDivider(text: i18n(context, 'licenses_images')),
+      GCWColumnedMultilineOutput(
+          data: [
+            [i18n(context, 'iau_constellation_title'), 'Torsten Bronger', 'GNU FDL, Version 1.2/CC BY-SA 3.0']
+          ],
+      ),
+>>>>>>> 05ad593f1ef25550d7cffee8a14d8c1246eab8e2
     ]);
 
     return MainMenuEntryStub(content: content);

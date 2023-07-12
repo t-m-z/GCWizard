@@ -52,7 +52,6 @@ class _GridPainter extends StatefulWidget {
 }
 
 class _GridPainterState extends State<_GridPainter> {
-  Map<int, Map<int, _GridPaintColor>>? gridState;
   List<String>? _boxEnumeration;
   List<String>? _originalBoxEnumeration;
 
@@ -268,15 +267,15 @@ class _GridPainterState extends State<_GridPainter> {
                               _boxEnumeration ?? [],
                               widget.columnEnumeration,
                               widget.rowEnumeration,
-                              gridState ?? {}, (int i, int j, int countRows, int countColumns, _TapMode mode) {
+                              _gridState ?? {}, (int i, int j, int countRows, int countColumns, _TapMode mode) {
                         setState(() {
-                          gridState ??= <int, Map<int, _GridPaintColor>>{};
+                          _gridState ??= <int, Map<int, _GridPaintColor>>{};
 
-                          if (gridState![i] == null) {
-                            gridState![i] = <int, _GridPaintColor>{};
+                          if (_gridState![i] == null) {
+                            _gridState![i] = <int, _GridPaintColor>{};
                           }
 
-                          var delete = gridState![i]![j] == widget.tapColor;
+                          var delete = _gridState![i]![j] == widget.tapColor;
 
                           switch (mode) {
                             case _TapMode.ALL:
@@ -306,16 +305,20 @@ class _GridPainterState extends State<_GridPainter> {
     );
   }
 
-  void _setColor(int i, int j, bool delete) {
-    if (gridState == null) return;
-    if (gridState![i] == null) {
-      gridState![i] = <int, _GridPaintColor>{};
+  void _removeColor(int i, int j) {
+    if (_gridState == null) return;
+    if (_gridState![i] == null) {
+      _gridState![i] = <int, _GridPaintColor>{};
     }
 
-    gridState![i]!.remove(j);
+    _gridState![i]!.remove(j);
+  }
+
+  void _setColor(int i, int j, bool delete) {
+    _removeColor(i, j);
 
     if (!delete) {
-      gridState![i]!.putIfAbsent(j, () => widget.tapColor);
+      _gridState![i]!.putIfAbsent(j, () => widget.tapColor);
     }
   }
 }

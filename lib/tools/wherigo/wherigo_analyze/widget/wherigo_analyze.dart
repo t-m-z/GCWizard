@@ -52,6 +52,11 @@ part 'package:gc_wizard/tools/wherigo/wherigo_analyze/widget/wherigo_widget_outp
 part 'package:gc_wizard/tools/wherigo/wherigo_analyze/widget/wherigo_widget_output_inputs.dart';
 part 'package:gc_wizard/tools/wherigo/wherigo_analyze/widget/wherigo_widget_output_items.dart';
 part 'package:gc_wizard/tools/wherigo/wherigo_analyze/widget/wherigo_widget_output_messages.dart';
+<<<<<<< HEAD
+=======
+part 'package:gc_wizard/tools/wherigo/wherigo_analyze/widget/wherigo_widget_output_variables.dart';
+part 'package:gc_wizard/tools/wherigo/wherigo_analyze/widget/wherigo_widget_output_builder_variables.dart';
+>>>>>>> 05ad593f1ef25550d7cffee8a14d8c1246eab8e2
 part 'package:gc_wizard/tools/wherigo/wherigo_analyze/widget/wherigo_widget_output_tasks.dart';
 part 'package:gc_wizard/tools/wherigo/wherigo_analyze/widget/wherigo_widget_output_timers.dart';
 part 'package:gc_wizard/tools/wherigo/wherigo_analyze/widget/wherigo_widget_output_variables.dart';
@@ -101,6 +106,7 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
   int _messageIndex = 1;
   int _answerIndex = 1;
   int _identifierIndex = 1;
+  int _builderIdentifierIndex = 1;
 
   @override
   void initState() {
@@ -288,6 +294,7 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
                   _displayedCartridgeData == WHERIGO_OBJECT.TASKS ||
                   _displayedCartridgeData == WHERIGO_OBJECT.TIMERS ||
                   _displayedCartridgeData == WHERIGO_OBJECT.VARIABLES ||
+                  _displayedCartridgeData == WHERIGO_OBJECT.BUILDERVARIABLES ||
                   _displayedCartridgeData == WHERIGO_OBJECT.RESULTS_GWC ||
                   _displayedCartridgeData == WHERIGO_OBJECT.RESULTS_LUA) {
                 _displayedCartridgeData = WHERIGO_OBJECT.HEADER;
@@ -402,6 +409,7 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
     _messageIndex = 1;
     _answerIndex = 1;
     _identifierIndex = 1;
+    _builderIdentifierIndex = 1;
   }
 
   Widget _buildOutput(BuildContext context) {
@@ -461,6 +469,9 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
 
       case WHERIGO_OBJECT.VARIABLES:
         return _buildWidgetToDisplayIdentifierData(context);
+
+      case WHERIGO_OBJECT.BUILDERVARIABLES:
+        return _buildWidgetToDisplayBuilderIdentifierData(context);
 
       default:
         return Container();
@@ -1368,6 +1379,49 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
     ]);
   }
 
+  Widget _buildWidgetToDisplayBuilderIdentifierData(BuildContext context) {
+    if (WherigoCartridgeLUAData.BuilderVariables.isEmpty) {
+      return GCWDefaultOutput(
+        child: i18n(context, 'wherigo_data_nodata'),
+        suppressCopyButton: true,
+      );
+    }
+
+    return Column(children: <Widget>[
+      const GCWDefaultOutput(),
+      Row(
+        children: <Widget>[
+          GCWIconButton(
+            icon: Icons.arrow_back_ios,
+            onPressed: () {
+              setState(() {
+                _builderIdentifierIndex--;
+                if (_builderIdentifierIndex < 1) _builderIdentifierIndex = WherigoCartridgeLUAData.BuilderVariables.length;
+              });
+            },
+          ),
+          Expanded(
+            child: GCWText(
+              align: Alignment.center,
+              text: _builderIdentifierIndex.toString() + ' / ' + (WherigoCartridgeLUAData.BuilderVariables.length).toString(),
+            ),
+          ),
+          GCWIconButton(
+            icon: Icons.arrow_forward_ios,
+            onPressed: () {
+              setState(() {
+                _builderIdentifierIndex++;
+                if (_builderIdentifierIndex > WherigoCartridgeLUAData.BuilderVariables.length) _builderIdentifierIndex = 1;
+              });
+            },
+          ),
+        ],
+      ),
+      GCWColumnedMultilineOutput(
+          data: _buildOutputListOfBuilderVariables(context, WherigoCartridgeLUAData.BuilderVariables[_builderIdentifierIndex - 1])),
+    ]);
+  }
+
   Future<void> _exportFile(BuildContext context, Uint8List data, String name, FileType fileType) async {
     await saveByteDataToFile(context, data, buildFileNameWithDate(name, fileType)).then((value) {
       var content = fileClass(fileType) == FileClass.IMAGE ? imageContent(context, data) : null;
@@ -1541,6 +1595,7 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
           Media: [],
           Messages: [],
           Variables: [],
+          BuilderVariables: [],
           NameToObject: {},
           Builder: WHERIGO_BUILDER.UNKNOWN,
           BuilderVersion: '',

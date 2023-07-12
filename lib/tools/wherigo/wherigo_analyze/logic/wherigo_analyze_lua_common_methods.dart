@@ -164,6 +164,7 @@ WherigoCartridgeLUA _faultyWherigoCartridgeLUA(String _LUAFile, WHERIGO_ANALYSE_
       Media: [],
       Messages: [],
       Variables: [],
+      BuilderVariables: [],
       NameToObject: {},
       ResultStatus: resultStatus,
       ResultsLUA: _http_code_http,

@@ -1,6 +1,7 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:gc_wizard/utils/collection_utils.dart';
 
+<<<<<<< HEAD
 final Map<String, AssetSource> MORSE_TONE = {
   '.': AssetSource('audio/morseSymbolDit.mp3'), // 1 dit
   '-': AssetSource('audio/morseSymbolDah.mp3'), // 1 dah = 3 dit
@@ -10,6 +11,9 @@ final Map<String, AssetSource> MORSE_TONE = {
 };
 
 const Map<String, String> AZToMorse = {
+=======
+const Map<String, String> _AZToMorse = {
+>>>>>>> 05ad593f1ef25550d7cffee8a14d8c1246eab8e2
   'A': '.-', 'B': '-...', 'C': '-.-.', 'D': '-..', 'E': '.', 'F': '..-.', 'G': '--.', 'H': '....', 'I': '..',
   'J': '.---', 'K': '-.-', 'L': '.-..', 'M': '--',
   'N': '-.', 'O': '---', 'P': '.--.', 'Q': '--.-', 'R': '.-.', 'S': '...', 'T': '-', 'U': '..-', 'V': '...-',
@@ -31,7 +35,7 @@ const Map<String, String> AZToMorse = {
 };
 
 // Å has same code as À, so À replaces Å in mapping; Å will not occur in this map
-final MorseToAZ = switchMapKeyValue(AZToMorse);
+final _MorseToAZ = switchMapKeyValue(_AZToMorse);
 
 String encodeMorse(String input) {
   if (input.isEmpty) return '';
@@ -39,7 +43,7 @@ String encodeMorse(String input) {
   return input.toUpperCase().split('').map((character) {
     if (character == ' ') return '|';
 
-    var morse = AZToMorse[character];
+    var morse = _AZToMorse[character];
     return morse ?? '';
   }).join(String.fromCharCode(8195)); // using wide space
 }
@@ -50,7 +54,7 @@ String decodeMorse(String input) {
   return input.split(RegExp(r'[^\.\-/\|]')).map((morse) {
     if (morse == '|' || morse == '/') return ' ';
 
-    var character = MorseToAZ[morse];
+    var character = _MorseToAZ[morse];
     return character ?? '';
   }).join();
 }

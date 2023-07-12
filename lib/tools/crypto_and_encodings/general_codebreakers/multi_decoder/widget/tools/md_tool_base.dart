@@ -3,6 +3,7 @@ import 'package:gc_wizard/application/i18n/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/base/_common/logic/base.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/general_codebreakers/multi_decoder/widget/multi_decoder.dart';
+import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/utils/data_type_utils/object_type_utils.dart';
 
 const MDT_INTERNALNAMES_BASE = 'multidecoder_tool_base_title';
@@ -21,8 +22,16 @@ class MultiDecoderToolBase extends AbstractMultiDecoderTool {
             name: name,
             internalToolName: MDT_INTERNALNAMES_BASE,
             onDecode: (String input, String key) {
+<<<<<<< HEAD
               var function = BASE_FUNCTIONS[_getBaseKey(options, MDT_BASE_OPTION_BASEFUNCTION)];
               return function == null ? null : function(input);
+=======
+              var function =  BASE_FUNCTIONS[_getBaseKey(options, MDT_BASE_OPTION_BASEFUNCTION)];
+              if (function == null) return null;
+              var output = function(input);
+              var _output = output.replaceAll(UNKNOWN_ELEMENT, '');
+              return _output.trim().isEmpty ? null : output;
+>>>>>>> 05ad593f1ef25550d7cffee8a14d8c1246eab8e2
             },
             options: options);
   @override

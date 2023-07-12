@@ -141,9 +141,51 @@ class _HexViewerState extends State<HexViewer> {
 
     return Column(
       children: [
+<<<<<<< HEAD
+=======
+        if (_hexData!.length > _MAX_LINES)
+          Container(
+            padding: const EdgeInsets.only(bottom: 10),
+            child: Row(
+              children: [
+                GCWIconButton(
+                  icon: Icons.arrow_back_ios,
+                  onPressed: () {
+                    setState(() {
+                      _currentLines -= _MAX_LINES;
+                      if (_currentLines < 0) {
+                        _currentLines = (_hexDataLines!.floor() ~/ _MAX_LINES) * _MAX_LINES;
+                      }
+
+                      _resetScrollViews();
+                    });
+                  },
+                ),
+                Expanded(
+                  child: GCWText(
+                    text:
+                    '${i18n(context, 'hexviewer_lines')}: ${_currentLines + 1} - ${min(_currentLines + _MAX_LINES, _hexDataLines?.ceil() as int)} / ${_hexDataLines?.ceil()}',
+                    align: Alignment.center,
+                  ),
+                ),
+                GCWIconButton(
+                  icon: Icons.arrow_forward_ios,
+                  onPressed: () {
+                    setState(() {
+                      _currentLines += _MAX_LINES;
+                      if (_currentLines > _hexDataLines!) {
+                        _currentLines = 0;
+                      }
+
+                      _resetScrollViews();
+                    });
+                  },
+                )
+              ],
+            ),
+          ),
+>>>>>>> 05ad593f1ef25550d7cffee8a14d8c1246eab8e2
         Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Expanded(
               flex: 15,

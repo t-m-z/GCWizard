@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:core';
 import 'dart:io';
 import 'dart:math';
@@ -38,6 +39,7 @@ enum FileType {
   EXE,
   BMP,
   TXT,
+  JSON,
   GPX,
   KML,
   KMZ,
@@ -257,6 +259,7 @@ const Map<FileType, FileTypeInfo> _FILE_TYPES = {
     'application/octet-stream'
   ], file_class: FileClass.SOUND),
   FileType.TXT: FileTypeInfo(
+<<<<<<< HEAD
       extensions: ['txt'], magic_bytes: <List<int>>[], mime_types: ['text/plain'], file_class: FileClass.TEXT),
   FileType.PDF: FileTypeInfo(extensions: [
     'pdf'
@@ -274,6 +277,36 @@ const Map<FileType, FileTypeInfo> _FILE_TYPES = {
   ], mime_types: [
     'application/octet-stream'
   ], file_class: FileClass.DATA),
+=======
+    extensions: ['txt'],
+    magic_bytes: <List<int>>[],
+    mime_types: ['text/plain'],
+    file_class: FileClass.TEXT
+  ),
+  FileType.JSON: FileTypeInfo(
+      extensions: ['json'],
+      magic_bytes: <List<int>>[],
+      mime_types: ['text/plain'],
+      file_class: FileClass.TEXT
+  ),
+  FileType.PDF: FileTypeInfo(
+    extensions: ['pdf'],
+    magic_bytes: <List<int>>[
+      [0x25, 0x50, 0x44, 0x46]
+    ],
+    mime_types: ['application/pdf', 'application/octet-stream'],
+    file_class: FileClass.DATA
+  ),
+  FileType.EXE: FileTypeInfo(
+    extensions: ['exe'],
+    magic_bytes: <List<int>>[
+      [0x4D, 0x5A, 0x50, 0x00],
+      [0x4D, 0x5A, 0x90, 0x00]
+    ],
+    mime_types: ['application/octet-stream'],
+    file_class: FileClass.DATA
+  ),
+>>>>>>> 05ad593f1ef25550d7cffee8a14d8c1246eab8e2
   FileType.GPX: FileTypeInfo(
       extensions: ['gpx'],
       magic_bytes: <List<int>>[],
@@ -621,4 +654,12 @@ Future<List<GCWFile>> _extractRarArchive(GCWFile file, {String? password}) async
 Uint8List encodeTrimmedPng(Image.Image image) {
   var out = Image.encodePng(image);
   return trimNullBytes(Uint8List.fromList(out));
+}
+
+Uint8List convertStringToBytes(String text) {
+  return Uint8List.fromList(utf8.encode(text));
+}
+
+String convertBytesToString(Uint8List data) {
+  return utf8.decode(data);
 }

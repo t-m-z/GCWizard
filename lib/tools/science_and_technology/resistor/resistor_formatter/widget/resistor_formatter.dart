@@ -2,14 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/text_widget_utils.dart';
 import 'package:intl/intl.dart';
 
-String formatResistorValue(double value) {
+String formatResistorValue(double value, [String? prefix]) {
+  var _prefix = prefix ?? '';
+
   var formatter = NumberFormat('0.####');
-  return formatter.format(value) + ' \u03A9';
+  return formatter.format(value) + ' ' + _prefix + '\u03A9';
 }
 
-String formatResistorTolerancedValueInterval(List<double> valueInterval) {
+String formatResistorTolerancedValueInterval(List<double> valueInterval, [String? prefix]) {
+  var _prefix = prefix ?? '';
+
   var formatter = NumberFormat('0.############');
+<<<<<<< HEAD
   return formatter.format(valueInterval[0]) + ' \u03A9 - ' + formatter.format(valueInterval[1]) + ' \u03A9';
+=======
+  return formatter.format(valueInterval[0]) + ' ' + _prefix + '\u03A9 - ' +
+      formatter.format(valueInterval[1]) + ' ' + _prefix + '\u03A9';
+>>>>>>> 05ad593f1ef25550d7cffee8a14d8c1246eab8e2
 }
 
 String formatResistorTolerance(double tolerance) {

@@ -19,7 +19,7 @@ class MorseSelection extends GCWSelection {
       }
 
       return [
-        className(const Morse()),
+        className(Morse()),
       ].contains(className(element.tool));
     }).toList();
 

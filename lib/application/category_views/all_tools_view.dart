@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/app_localizations.dart';
 import 'package:gc_wizard/application/main_menu/changelog.dart';
+import 'package:gc_wizard/application/main_menu/deep_link.dart';
 import 'package:gc_wizard/application/main_menu/main_menu.dart';
 import 'package:gc_wizard/application/navigation/no_animation_material_page_route.dart';
 import 'package:gc_wizard/application/registry.dart';
@@ -52,6 +53,7 @@ import 'package:gc_wizard/application/category_views/selector_lists/wherigo_urwi
 import 'package:gc_wizard/common_widgets/dialogs/gcw_dialog.dart';
 import 'package:gc_wizard/common_widgets/gcw_tool.dart';
 import 'package:gc_wizard/common_widgets/gcw_toollist.dart';
+import 'package:gc_wizard/common_widgets/gcw_web_statefulwidget.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/coords/antipodes/widget/antipodes.dart';
 import 'package:gc_wizard/tools/coords/centerpoint/center_three_points/widget/center_three_points.dart';
@@ -187,7 +189,8 @@ import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/utci
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/wet_bulb_temperature/widget/wet_bulb_temperature.dart';
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/wet_bulb_globe_temperature/widget/wet_bulb_globe_temperature.dart';
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/windchill/widget/windchill.dart';
-import 'package:gc_wizard/tools/science_and_technology/astronomy/iau_constellation/widget/iau_constellation.dart';
+import 'package:gc_wizard/tools/science_and_technology/astronomy/iau_constellation/widget/iau_all_constellations.dart';
+import 'package:gc_wizard/tools/science_and_technology/astronomy/iau_constellation/widget/iau_single_constellations.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/moon_position/widget/moon_position.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/moon_rise_set/widget/moon_rise_set.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/right_ascension_to_degree/widget/right_ascension_to_degree.dart';
@@ -220,6 +223,7 @@ import 'package:gc_wizard/tools/science_and_technology/date_and_time/calendar/wi
 import 'package:gc_wizard/tools/science_and_technology/date_and_time/day_calculator/widget/day_calculator.dart';
 import 'package:gc_wizard/tools/science_and_technology/date_and_time/day_of_the_year/widget/day_of_the_year.dart';
 import 'package:gc_wizard/tools/science_and_technology/date_and_time/time_calculator/widget/time_calculator.dart';
+import 'package:gc_wizard/tools/science_and_technology/date_and_time/unix_time/widget/unix_time.dart';
 import 'package:gc_wizard/tools/science_and_technology/date_and_time/weekday/widget/weekday.dart';
 import 'package:gc_wizard/tools/science_and_technology/decabit/widget/decabit.dart';
 import 'package:gc_wizard/tools/science_and_technology/divisor/widget/divisor.dart';
@@ -227,7 +231,8 @@ import 'package:gc_wizard/tools/science_and_technology/dna/dna_aminoacids/widget
 import 'package:gc_wizard/tools/science_and_technology/dna/dna_aminoacids_table/widget/dna_aminoacids_table.dart';
 import 'package:gc_wizard/tools/science_and_technology/dna/dna_nucleicacidsequence/widget/dna_nucleicacidsequence.dart';
 import 'package:gc_wizard/tools/science_and_technology/dtmf/widget/dtmf.dart';
-import 'package:gc_wizard/tools/science_and_technology/gcd_lcm/widget/gcd_lcm.dart';
+import 'package:gc_wizard/tools/science_and_technology/gcd/widget/gcd.dart';
+import 'package:gc_wizard/tools/science_and_technology/lcm/widget/lcm.dart';
 import 'package:gc_wizard/tools/science_and_technology/hexadecimal/widget/hexadecimal.dart';
 import 'package:gc_wizard/tools/science_and_technology/iata_icao_search/widget/iata_icao_search.dart';
 import 'package:gc_wizard/tools/science_and_technology/ip_codes/widget/ip_codes.dart';
@@ -278,8 +283,14 @@ import 'package:gc_wizard/utils/string_utils.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/common_widget_utils.dart';
 import 'package:prefs/prefs.dart';
 
+<<<<<<< HEAD
 class MainView extends StatefulWidget {
   const MainView({Key? key}) : super(key: key);
+=======
+
+class MainView extends GCWWebStatefulWidget {
+  MainView({Key? key, Map<String, String>? webParameter}) : super(key: key, webParameter: webParameter, apiSpecification: null);
+>>>>>>> 05ad593f1ef25550d7cffee8a14d8c1246eab8e2
 
   @override
   _MainViewState createState() => _MainViewState();
@@ -369,11 +380,22 @@ class _MainViewState extends State<MainView> {
 
   @override
   Widget build(BuildContext context) {
-    if (registeredTools.isEmpty) initializeRegistry(context);
+    if (registeredTools.isEmpty) {
+      initializeRegistry(context);
+
+      var deepLink = checkDeepLink();
+      if (deepLink != null) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          Navigator.push(context, deepLink);
+        });
+        widget.webParameter = null;
+      }
+    }
     if (_mainToolList.isEmpty) _initStaticToolList();
     Favorites.initialize();
 
     var toolList = (_isSearching && _searchText.isNotEmpty) ? _getSearchedList() : null;
+
     return DefaultTabController(
       length: 3,
       initialIndex: Prefs.getBool(PREFERENCE_TABS_USE_DEFAULT_TAB)
@@ -405,6 +427,13 @@ class _MainViewState extends State<MainView> {
         ),
       ),
     );
+  }
+
+  NoAnimationMaterialPageRoute<GCWTool>? checkDeepLink() {
+    if (widget.hasWebParameter()) {
+      return createStartDeepLinkRoute(context, widget.webParameter!);
+    }
+    return null;
   }
 
   IconButton _buildSearchActionButton() {
@@ -481,7 +510,7 @@ void _initStaticToolList() {
       className(const Affine()),
       className(const AlcoholMass()),
       className(const ALGOL()),
-      className(const AlphabetValues()),
+      className(AlphabetValues()),
       className(const Amsco()),
       className(const AnimatedImage()),
       className(const AnimatedImageMorseCode()),
@@ -571,8 +600,12 @@ void _initStaticToolList() {
       className(const Gade()),
       className(const GaussWeberTelegraph()),
       className(const GCCode()),
+<<<<<<< HEAD
       className(const GCDLCM()),
       className(const GCWizardScript()),
+=======
+      className(const GCD()),
+>>>>>>> 05ad593f1ef25550d7cffee8a14d8c1246eab8e2
       className(const Gray()),
       className(const Gronsfeld()),
       className(const HeatIndex()),
@@ -587,7 +620,8 @@ void _initStaticToolList() {
       className(const Houdini()),
       className(const Humidex()),
       className(const IATAICAOSearch()),
-      className(const IAUConstellations()),
+      className(const IAUAllConstellations()),
+      className(const IAUSingleConstellation(ConstellationName: 'Andromeda',)),
       className(const IceCodesSelection()),
       className(const ILLIAC()),
       className(const ImageColorCorrections()),
@@ -605,7 +639,11 @@ void _initStaticToolList() {
       className(const KarolRobot()),
       className(const Kenny()),
       className(const KeyboardSelection()),
+<<<<<<< HEAD
       className(const LeetSpeak()),
+=======
+      className(const LCM()),
+>>>>>>> 05ad593f1ef25550d7cffee8a14d8c1246eab8e2
       className(const MagicEyeSolver()),
       className(const MathematicalConstants()),
       className(const Malbolge()),
@@ -620,7 +658,7 @@ void _initStaticToolList() {
       className(const MusicNotes()),
       className(const Navajo()),
       className(const NumberSequenceSelection()),
-      className(const MultiDecoder()),
+      className(MultiDecoder()),
       className(const NumeralBases()),
       className(const NumeralWordsSelection()),
       className(const OhlsenTelegraph()),
@@ -666,7 +704,7 @@ void _initStaticToolList() {
       className(Rot18()),
       className(Rot5()),
       className(Rot47()),
-      className(const RotationGeneral()),
+      className(RotationGeneral()),
       className(const RSASelection()),
       className(const SchillingCanstattTelegraph()),
       className(const ScrabbleSelection()),
@@ -706,7 +744,11 @@ void _initStaticToolList() {
       className(const Trithemius()),
       className(const TTS()),
       className(const UnitConverter()),
+<<<<<<< HEAD
       className(const UpsideDown()),
+=======
+      className(const UnixTime()),
+>>>>>>> 05ad593f1ef25550d7cffee8a14d8c1246eab8e2
       className(const UrwigoHashBreaker()),
       className(const UrwigoTextDeobfuscation()),
       className(const UTCI()),

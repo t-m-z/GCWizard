@@ -1,109 +1,53 @@
-// https://practice.nationalcybercup.org/cryptography/avemaria
-// https://www.dcode.fr/trithemius-ave-maria
-
 import 'dart:math';
 
-Map<String, List<String>> _AVE_MARIA_ENCODE = {
-  'A': ['deus', 'clemens'],
-  'B': ['creator', 'clementissimus'],
-  'C': ['conditor', 'pius'],
-  'D': ['opifex', 'piissimus'],
-  'E': ['dominus', 'magnus'],
-  'F': ['dominator', 'excelsus'],
-  'G': ['consolator', 'maximus'],
-  'H': ['arbiter', 'optimus'],
-  'I': ['iudex', 'sapientissimus'],
-  'J': ['iudex', 'sapientissimus'],
-  'K': ['illuminator', 'inuisibilis'],
-  'L': ['illustrator', 'immortalis'],
-  'M': ['rector', 'aeternus'],
-  'N': ['rex', 'sempiternus'],
-  'O': ['imperator', 'gloriosus'],
-  'P': ['gubernator', 'fortissimus'],
-  'Q': ['factor', 'sanctissimus'],
-  'R': ['fabricator', 'incompraehensibilis'],
-  'S': ['conseruator', 'omnipotens'],
-  'T': ['redemptor', 'pacificus'],
-  'U': ['auctor', 'misericors'],
-  'V': ['auctor', 'misericors'],
-  'W': ['auctor', 'misericors'],
-  'X': ['princeps', 'misericordissimus'],
-  'Y': ['pastor', 'conctipotens'],
-  'Z': ['moderator', 'magnificus'],
-};
-Map<String, String> _AVE_MARIA_DECODE = {
-  'deus': 'A',
-  'clemens': 'A',
-  'creator': 'B',
-  'clementissimus': 'B',
-  'conditor': 'C',
-  'pius': 'C',
-  'piissimus': 'D',
-  'opifex': 'D',
-  'magnus': 'E',
-  'dominus': 'E',
-  'excelsus': 'F',
-  'dominator': 'F',
-  'maximus': 'G',
-  'consolator': 'G',
-  'arbiter': 'H',
-  'optimus': 'H',
-  'iudex': 'I',
-  'sapientissimus': 'I',
-  'illuminator': 'K',
-  'inuisibilis': 'K',
-  'illustrator': 'L',
-  'immortalis': 'L',
-  'rector': 'M',
-  'aeternus': 'M',
-  'rex': 'N',
-  'sempiternus': 'N',
-  'imperator': 'O',
-  'gloriosus': 'O',
-  'gubernator': 'P',
-  'fortissimus': 'P',
-  'factor': 'Q',
-  'sanctissimus': 'Q',
-  'fabricator': 'R',
-  'incompraehensibilis': 'R',
-  'conseruator': 'S',
-  'omnipotens': 'S',
-  'redemptor': 'T',
-  'pacificus': 'T',
-  'auctor': 'U',
-  'misericors': 'U',
-  'princeps': 'X',
-  'misericordissimus': 'X',
-  'pastor': 'Y',
-  'conctipotens': 'Y',
-  'moderator': 'Z',
-  'magnificus': 'Z',
-};
+part 'package:gc_wizard/tools/crypto_and_encodings/avemaria/logic/avemaria_data.dart';
 
 String decodeAveMaria(String chiffre) {
   List<String> result = [];
   List<String> code = chiffre.toLowerCase().split('  ');
 
+<<<<<<< HEAD
   for (var word in code) {
     word.split(' ').forEach((letter) {
       if (_AVE_MARIA_DECODE[letter] == null) {
+=======
+  for (String word in code) {
+    for (String letter in word.split(' ')) {
+      if (_AVE_MARIA[letter] == null) {
+>>>>>>> 05ad593f1ef25550d7cffee8a14d8c1246eab8e2
         result.add(' ');
       } else {
-        result.add(_AVE_MARIA_DECODE[letter]!);
+        result.add(_AVE_MARIA[letter]!);
       }
+<<<<<<< HEAD
     });
+=======
+    }
+>>>>>>> 05ad593f1ef25550d7cffee8a14d8c1246eab8e2
   }
   return result.join('');
 }
 
 String encodeAveMaria(String plain) {
   List<String> result = [];
-  plain.toUpperCase().split('').forEach((element) {
-    if (element == ' ') {
-      result.add(' ');
-    } else {
-      result.add(_AVE_MARIA_ENCODE[element]![Random().nextInt(2)]);
+  List<String> code = plain.toUpperCase().split(' ');
+  var aveMaria = _AVE_MARIA.entries.toList();
+  aveMaria.addAll(_AVE_MARIA_ENCODE_EXTENSION);
+
+  for (String word in code) {
+    for (String letter in word.split('')) {
+      var results = aveMaria.where((entry) => entry.value == letter);
+      if (results.isNotEmpty) {
+        result.add(results.elementAt(Random().nextInt(results.length)).key);
+      }
     }
+<<<<<<< HEAD
   });
   return result.join(' ');
 }
+=======
+    result.add(' ');
+  }
+  return result.join(' ').trim();
+}
+>>>>>>> 05ad593f1ef25550d7cffee8a14d8c1246eab8e2

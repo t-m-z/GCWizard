@@ -17,12 +17,17 @@ class MultiDecoderToolNumeralBases extends AbstractMultiDecoderTool {
               return input
                   .split(RegExp(r'\s+'))
                   .where((element) => element.isNotEmpty)
+<<<<<<< HEAD
                   .map((element) => convertBase(
                       element,
                       checkIntFormatOrDefaultOption(
                           MDT_INTERNALNAMES_NUMERALBASES, options, MDT_NUMERALBASES_OPTION_FROM),
                       10))
                   .join(' ');
+=======
+                  .map((element) => convertBase(element, checkIntFormatOrDefaultOption(MDT_INTERNALNAMES_NUMERALBASES, options, MDT_NUMERALBASES_OPTION_FROM), 10))
+                  .join(' ').trim();
+>>>>>>> 05ad593f1ef25550d7cffee8a14d8c1246eab8e2
             },
             options: options);
   @override

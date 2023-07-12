@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:math';
 
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/app_localizations.dart';
 import 'package:gc_wizard/application/navigation/no_animation_material_page_route.dart';
@@ -18,16 +19,16 @@ import 'package:gc_wizard/common_widgets/dividers/gcw_divider.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/gcw_checkbox.dart';
 import 'package:gc_wizard/common_widgets/gcw_expandable.dart';
-import 'package:gc_wizard/common_widgets/gcw_key_value_editor.dart';
+import 'package:gc_wizard/common_widgets/gcw_formula_list_editor.dart';
 import 'package:gc_wizard/common_widgets/gcw_popup_menu.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
-import 'package:gc_wizard/common_widgets/gcw_text_export.dart';
 import 'package:gc_wizard/common_widgets/gcw_toast.dart';
 import 'package:gc_wizard/common_widgets/gcw_tool.dart';
+import 'package:gc_wizard/common_widgets/key_value_editor/gcw_key_value_editor.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
-import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_parser.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
 import 'package:gc_wizard/tools/coords/map_view/widget/gcw_mapview.dart';
 import 'package:gc_wizard/tools/coords/variable_coordinate/persistence/json_provider.dart' as var_coords_provider;
@@ -39,14 +40,19 @@ import 'package:gc_wizard/tools/formula_solver/logic/formula_parser.dart';
 import 'package:gc_wizard/tools/formula_solver/persistence/json_provider.dart';
 import 'package:gc_wizard/tools/formula_solver/persistence/model.dart';
 import 'package:gc_wizard/utils/alphabets.dart';
+import 'package:gc_wizard/utils/complex_return_types.dart';
 import 'package:gc_wizard/utils/json_utils.dart';
 import 'package:gc_wizard/utils/math_utils.dart';
+import 'package:gc_wizard/utils/persistence_utils.dart';
 import 'package:gc_wizard/utils/string_utils.dart';
+import 'package:gc_wizard/utils/variable_string_expander.dart';
 import 'package:prefs/prefs.dart';
 
 part 'package:gc_wizard/tools/formula_solver/widget/formula_replace_dialog.dart';
 part 'package:gc_wizard/tools/formula_solver/widget/formula_solver_formulas.dart';
 part 'package:gc_wizard/tools/formula_solver/widget/formula_solver_values.dart';
+part 'package:gc_wizard/tools/formula_solver/widget/formula_value_type_key_value_input.dart';
+part 'package:gc_wizard/tools/formula_solver/widget/formula_value_type_key_value_item.dart';
 
 class FormulaSolverFormulaGroups extends StatefulWidget {
   const FormulaSolverFormulaGroups({Key? key}) : super(key: key);
@@ -56,68 +62,31 @@ class FormulaSolverFormulaGroups extends StatefulWidget {
 }
 
 class _FormulaSolverFormulaGroupsState extends State<FormulaSolverFormulaGroups> {
-  late TextEditingController _newGroupController;
-  late TextEditingController _editGroupController;
-  var _currentNewName = '';
-  var _currentEditedName = '';
-  int? _currentEditId;
-
-  ThemeColors _themeColors = themeColors();
 
   @override
   void initState() {
     super.initState();
-    _newGroupController = TextEditingController(text: _currentNewName);
-    _editGroupController = TextEditingController(text: _currentEditedName);
 
     refreshFormulas();
   }
 
   @override
-  void dispose() {
-    _newGroupController.dispose();
-    _editGroupController.dispose();
-
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    _themeColors = themeColors();
 
     return Column(
       children: <Widget>[
         GCWTextDivider(
             text: i18n(context, 'formulasolver_groups_newgroup'),
             trailing: GCWPasteButton(iconSize: IconButtonSize.SMALL, onSelected: _importFromClipboard)),
-        Row(
-          children: <Widget>[
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.only(
-                  right: 2,
-                ),
-                child: GCWTextField(
-                  hintText: i18n(context, 'formulasolver_groups_newgroup_hint'),
-                  controller: _newGroupController,
-                  onChanged: (text) {
-                    setState(() {
-                      _currentNewName = text;
-                    });
-                  },
-                ),
-              ),
-            ),
-            GCWIconButton(
-              icon: Icons.add,
-              onPressed: () {
-                _addNewGroup();
-                setState(() {});
-              },
-            )
-          ],
+        GCWFormulaListEditor(
+          formulaList: formulaGroups,
+          buildGCWTool: (id) => _buildNavigateGCWTool(id),
+          onAddEntry: (name) => _addNewGroup(name),
+          onListChanged: () => updateFormulaGroups(),
+          newEntryHintText: i18n(context, 'formulasolver_groups_newgroup_hint'),
+          middleWidget: GCWTextDivider(text: i18n(context, 'formulasolver_groups_currentgroups')),
+          formulaGroups: true,
         ),
-        _buildGroupList(context)
       ],
     );
   }
@@ -151,16 +120,14 @@ class _FormulaSolverFormulaGroupsState extends State<FormulaSolverFormulaGroups>
     }
   }
 
-  void _addNewGroup() {
-    if (_currentNewName.isNotEmpty) {
-      var group = FormulaGroup(_currentNewName);
+  void _addNewGroup(String name) {
+    if (name.isNotEmpty) {
+      var group = FormulaGroup(name);
       insertGroup(group);
-
-      _newGroupController.clear();
-      _currentNewName = '';
     }
   }
 
+<<<<<<< HEAD
   void _updateGroup() {
     updateFormulaGroups();
   }
@@ -305,8 +272,21 @@ class _FormulaSolverFormulaGroupsState extends State<FormulaSolverFormulaGroups>
 
     if (rows.isNotEmpty) {
       rows.insert(0, GCWTextDivider(text: i18n(context, 'formulasolver_groups_currentgroups')));
-    }
+=======
+  GCWTool? _buildNavigateGCWTool(int id) {
+    var entry = formulaGroups.firstWhereOrNull((formula) => formula.id == id);
 
-    return Column(children: rows);
+    if (entry != null) {
+      return GCWTool(
+        tool: _FormulaSolverFormulas(group: entry),
+        toolName: '${entry.name} - ${i18n(context, 'formulasolver_formulas')}',
+        helpSearchString: 'formulasolver_formulas',
+        defaultLanguageToolName:
+        '${entry.name} - ${i18n(context, 'formulasolver_formulas', useDefaultLanguage: true)}',
+        id: '',);
+    } else {
+      return null;
+>>>>>>> 05ad593f1ef25550d7cffee8a14d8c1246eab8e2
+    }
   }
 }

@@ -13,13 +13,15 @@ import 'package:gc_wizard/common_widgets/gcw_tool.dart';
 import 'package:prefs/prefs.dart';
 import 'package:provider/provider.dart';
 
+import 'application/main_menu/deep_link.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Prefs.init();
   AppLanguage appLanguage = AppLanguage();
   await appLanguage.fetchLocale();
-  initDefaultSettings(PreferencesInitMode.STARTUP);
+  initializePreferences();
 
   runApp(App(
     appLanguage: appLanguage,
@@ -49,16 +51,28 @@ class App extends StatelessWidget {
               ],
               theme: buildTheme(),
               debugShowCheckedModeBanner: false,
+<<<<<<< HEAD
               //ignore: prefer_const_constructors
               home:
                   MainView(), // Warning says, it must be "const", but in that case theme changes (theme color or font size) will not set properly
+=======
+>>>>>>> 05ad593f1ef25550d7cffee8a14d8c1246eab8e2
               navigatorKey: NavigationService.instance.navigationKey,
               routes: {
                 // Required extra way because normal Navigator.of(context) way
                 // crashes because of some NULL problems on TextSelectionControls menu
+<<<<<<< HEAD
                 'clipboard_editor': (BuildContext context) =>
                     GCWTool(tool: const GCWClipboardEditor(), toolName: i18n(context, 'clipboardeditor_title'), id: '')
+=======
+                'clipboard_editor': (BuildContext context) => GCWTool(
+                    tool: const GCWClipboardEditor(), toolName: i18n(context, 'clipboardeditor_title'), id: ''),
+>>>>>>> 05ad593f1ef25550d7cffee8a14d8c1246eab8e2
               },
+              onGenerateInitialRoutes: (route) => startMainView(context, route),
+              onGenerateRoute: (RouteSettings settings) {
+                return createRoute(context, settings);
+              }
             );
           });
         }));
