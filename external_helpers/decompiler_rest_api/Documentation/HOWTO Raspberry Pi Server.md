@@ -1,6 +1,10 @@
 # **HOWTO Raspberry Pi Server**
 
-<img src="C:\Users\thoma\OneDrive - EDV-Beratung und Softwareentwicklung\HOWTO raspi-Dateien\raspi-final.jpg" style="zoom:80%;" />
+
+
+
+
+<img src="raspi-final.jpg" style="zoom:80%;" />
 
 
 
@@ -18,7 +22,7 @@
 
 Das Raspberry Pi 4 Model B ist mit einem Broadcom 2711, Quad-core CortexA72 64-bit SoC @ 1.5GHz sowie 8 GB SDRAM ausgestattet.
 
-<img src="C:\Users\thoma\OneDrive - EDV-Beratung und Softwareentwicklung\HOWTO raspi-Dateien\image003.png" style="zoom:75%;" />
+<img src="image003.png" style="zoom:75%;" />
 
 Weitere Details sind:
 
@@ -58,7 +62,7 @@ The Argon ONE M.2 Case ups the ante by providing the following:
 
 - Integrated M.2 SATA SSD support
 
-  ![](C:\Users\thoma\OneDrive - EDV-Beratung und Softwareentwicklung\HOWTO raspi-Dateien\image006.jpg)
+  ![](image006.jpg)
 
   Argon ONE M.2 Case extended support for M.2 SATA SSDs allows you to maximize the true potential speeds of your Raspberry Pi 4. You will now be able to boot via an M.2 SATA SSD for faster boot times and larger storage capacity compared to the traditional microSD Card.
 
@@ -123,13 +127,17 @@ To boot the Raspberry Pi via SSD, you must install an operating system, such as 
 
 ## Raspberry PI Imager
 
-<img src="C:\Users\thoma\OneDrive - EDV-Beratung und Softwareentwicklung\HOWTO raspi-Dateien\image007.png" style="zoom:50%;" />
+<img src="image007.png" style="zoom:50%;" />
 
 | Auswahlmöglichkeit |                                                              |
 | ------------------ | ------------------------------------------------------------ |
 | Betriebssystem     | RASPBERRY PI OS LITE (64-BIT)                                |
 | SD-Karte           | SSD-Karte                                                    |
 | Einstellungen      | WLAN aktivieren<br />SSH aktivieren<br />Passwort setzen<br />Tastaturlayout DE |
+
+
+
+
 
 
 
@@ -149,7 +157,7 @@ To boot the Raspberry Pi via SSD, you must install an operating system, such as 
 sudo raspi-config
 ```
 
-<img src="C:\Users\thoma\OneDrive - EDV-Beratung und Softwareentwicklung\HOWTO raspi-Dateien\image009.png" style="zoom:50%;" />
+<img src="image009.png" style="zoom:50%;" />
 
 Alternativ
 
@@ -169,6 +177,10 @@ sudo apt full-upgrade
 
 
 
+
+
+
+
 # Installation Midnight Commander
 
 ```
@@ -181,7 +193,13 @@ Hinweis: immer als root ausführen
 sudo mc
 ```
 
-<img src="C:\Users\thoma\OneDrive - EDV-Beratung und Softwareentwicklung\HOWTO raspi-Dateien\image011.png" style="zoom:50%;" />
+<img src="image011.png" style="zoom:50%;" />
+
+
+
+
+
+
 
 
 
@@ -219,6 +237,10 @@ sudo systemctl reload apache2
 
 
 
+
+
+
+
 # Installation nagios
 
 
@@ -240,7 +262,7 @@ This guide is based on SELinux being disabled or in permissive mode. SELinux is 
 sudo dpkg -l selinux*
 ```
 
-### **Prerequisites**
+### Prerequisites
 
 Perform these steps to install the pre-requisite packages.
 
@@ -252,7 +274,7 @@ sudo apt-get install openssl libssl-dev
 
  
 
-### **Downloading the Source**
+### Downloading the Source
 
 ```
 cd /tmp
@@ -262,7 +284,7 @@ tar xzf nagioscore.tar.gz
 
  
 
-### **Compile**
+### Compile
 
 ```
 cd /tmp/nagioscore-nagios-4.4.6/
@@ -272,7 +294,7 @@ sudo make all
 
  
 
-### **Create User And Group**
+### Create User And Group
 
 This creates the nagios user and group. The www-data user is also added to the nagios group.
 
@@ -289,7 +311,7 @@ sudo passwd nagios
 
 
 
-### **Install Binaries**
+### Install Binaries
 
 This step installs the binary files, CGIs, and HTML files.
 
@@ -299,7 +321,7 @@ sudo make install
 
  
 
-### **Install Service/Daemon**
+### Install Service/Daemon
 
 This installs the service or daemon files and also configures them to start on boot.
 
@@ -313,7 +335,7 @@ Information on starting and stopping services will be explained further on.
 
  
 
-### **Install Command Mode**
+### Install Command Mode
 
 This installs and configures the external command file.
 
@@ -323,7 +345,7 @@ sudo make install-commandmode
 
 
 
-### **Install Configuration Files**
+### Install Configuration Files
 
 This installs the *SAMPLE* configuration files. These are required as Nagios needs some configuration files to allow it to start.
 
@@ -333,7 +355,7 @@ sudo make install-config
 
  
 
-### **Install Apache Config Files**
+### Install Apache Config Files
 
 This installs the Apache web server configuration files and configures the Apache settings.
 
@@ -345,7 +367,7 @@ sudo a2enmod cgi
 
  
 
-### **Configure Firewall**
+### Configure Firewall
 
 You need to allow port 80 inbound traffic on the local firewall so you can reach the Nagios Core web interface.
 
@@ -358,7 +380,7 @@ Answer yes to saving existing rules
 
  
 
-### **Create nagiosadmin User Account**
+### Create nagiosadmin User Account
 
 You'll need to create an Apache user account to be able to log into Nagios.
 
@@ -374,7 +396,7 @@ When adding additional users in the future, you need to remove **-c** from the a
 
  
 
-### **Start Apache Web Server**
+### Start Apache Web Server
 
 Need to restart it because it is already running.
 
@@ -384,7 +406,7 @@ sudo systemctl restart apache2.service
 
  
 
-### **Start Service/Daemon**
+### Start Service/Daemon
 
 This command starts Nagios Core.
 
@@ -394,7 +416,7 @@ sudo systemctl start nagios.service
 
  
 
-### **Test Nagios**
+### Test Nagios
 
 Nagios is now running, to confirm this you need to log into the Nagios Web Interface.
 
@@ -416,7 +438,7 @@ These errors will be resolved once you install the Nagios Plugins, which is cove
 
  
 
-### **Installing The Nagios Plugins**
+### Installing The Nagios Plugins
 
 Nagios Core needs plugins to operate properly. The following steps will walk you through installing Nagios Plugins.
 
@@ -428,7 +450,7 @@ Please note that the following steps install most of the plugins that come in th
 
  
 
-#### **Prerequisites**
+#### Prerequisites
 
 Make sure that you have the following packages installed.
 
@@ -438,7 +460,7 @@ sudo apt-get install -y autoconf gcc libc6 libmcrypt-dev make libssl-dev wget bc
 
  
 
-#### **Downloading The Source**
+#### Downloading The Source
 
 ```
 cd /tmp
@@ -448,7 +470,7 @@ tar zxf nagios-plugins.tar.gz
 
  
 
-#### **Compile + Install**
+#### Compile + Install
 
 ```
 cd /tmp/nagios-plugins-release-2.3.3/
@@ -460,7 +482,7 @@ sudo make install
 
  
 
-#### **Test Plugins**
+#### Test Plugins
 
 Point your web browser to the ip address or FQDN of your Nagios Core server, for example: *`http://192.168.xxx.yyy/nagios`* or *`http://core-013.domain.local/nagios`*. 
 
@@ -468,7 +490,7 @@ Go to a host or service object and "Re-schedule the next check" under the Comman
 
  
 
-#### **Service/Daemon Commands**
+#### Service/Daemon Commands
 
 Different Linux distributions have different methods of starting / stopping / restarting / status Nagios.
 
@@ -1107,6 +1129,10 @@ curl -F file=@<path_to_luac_file> <server_url>
 
 
 
+
+
+
+
 # Installation python3
 
 
@@ -1201,11 +1227,119 @@ sudo pip install gpiozero --system
 
 
 
-# Install git
+# Installation git
 
 ```
 sudo apt install git
 ```
+
+
+
+
+
+
+
+# Installation Backup
+
+## Quellen
+
+[raspiBackup – Einfaches Backup für den Raspberry Pi – BangerTECH](https://bangertech.de/raspibackup-einfaches-backup-fuer-den-raspberry-pi/)
+
+https://www.youtube.com/watch?v=Jj7bv_9eUbI
+
+https://www.linux-tips-and-tricks.de/de/raspibackup
+
+https://www.linux-tips-and-tricks.de/de/raspberry/240-restore-eines-mit-raspibackup-sh-erstellten-backups
+
+
+
+## Mount Verzeichnis erstellen
+
+Um eine Festplatte zu mounten die an einen USB Anschluss des Rasperry Pi´s angeschlossen ist , ist zuerst ein neues Verzeichnis zu erstellen.
+
+`cd /home/pi`
+`sudo mkdir DRIVE` 
+`cd DRIVE` 
+`sudo mkdir share` 
+`cd ..`
+
+Dann überprüft Ihr ob bzw. welchen Namen die Festplatte zugewiesen bekommen hat mit
+
+`sudo lsblk`
+
+
+
+## USB Device mounten
+
+Dann wird die Festplatte gemounted mit
+
+`sudo mount /dev/sda /home/pi/DRIVE/share`
+
+
+
+Unter Umständen kann es zu Problemen und einer Fehlermeldung kommen: “*mount: /home/openhabian/DRIVE/share: wrong fs type, bad option, bad superblock on /dev/sda, missing codepage or helper program, or other error*”.
+
+Dann ist die Festplatte zu formatieren:  `mkfs.ntfs /dev/sda`
+
+
+
+## Automatischen Mount einrichten
+
+Damit die Festplatte bei einem Neustart automatisch eingebunden wird, ist die Datei fstab anzupassen.
+
+Die UUID bekommt Ihr mit `sudo blkid -o list -w /dev/null`
+
+Diese Zeile wird dann in /etc/fstab am Ende eingefügt
+
+`UUID=91980414-0f48-4759-9d0b-ddffdd1e216e /home/openhabian/DRIVE/share ntfs defaults 0`
+
+
+
+## raspi Backup Skript installieren
+
+Nun installieren wir das Programm bzw. das raspiBackup Skript mit:
+
+```
+curl -L https://raspibackup.linux-tips-and-tricks.de/install | sudo bash
+```
+
+Ihr bekommt dann ein Konfigurations bzw. InstallationsTool angezeigt. Beim ersten start bestätigt Ihr mit OK und kommt dann zum Wilkommens Screen:
+
+
+
+Hier könnt Ihr dann die Sprache ändern. Dann wählt Ihr Install components aus.
+
+
+
+Bei dieser Auswahl installiert Ihr zuerst I1 (Install raspiBackup using a default configuration & I2 Install and enable samle extension
+
+Nach der Installation geht Ihr mit Back zurück.
+
+
+
+Dann wählt Ihr Configure major options aus.
+
+
+
+
+
+
+
+
+
+
+
+## BACKUP
+
+
+
+## RESTORE
+
+### Quellen
+
+[Restore (linux-tips-and-tricks.de)](https://www.linux-tips-and-tricks.de/de/restore)
+
+
 
 
 
@@ -1518,9 +1652,9 @@ There a `#custom-embedders` channel on the [flutter discord](https://github.com/
 
 ## Hardware
 
-| Bild                                                         | Beschreibung                                                 |
-| ------------------------------------------------------------ | ------------------------------------------------------------ |
-| ![](C:\Users\thoma\OneDrive - EDV-Beratung und Softwareentwicklung\HOWTO raspi-Dateien\image020.jpg) | Note that the 8.4V interface is the charging port. You can plug the 8.4V/2A charger provided for charging the batteries.<br/> The switch is the power switch, you can turn it into ON/OFF to turn on/off Jetson Nano Developer Kit.<br/> WARNING LED are the indicators of batteries, they turn on if you reverse batteries.<br/> Note 1: Please check the WARNING LED when you install batteries, make sure that you set all the batteries in the correct way. Don't charge batteries if you reverse them.<br/> Note 2: The board may not work when you install the batteries for the first time, you need to charge the batteries for a while to activate them.<br/> Note 3: Please use the charger provided, the module may be destroyed by other unsuitable power adapters/chargers. |
+| Bild              | Beschreibung                                                 |
+| ----------------- | ------------------------------------------------------------ |
+| ![](image020.jpg) | Note that the 8.4V interface is the charging port. You can plug the 8.4V/2A charger provided for charging the batteries.<br/> The switch is the power switch, you can turn it into ON/OFF to turn on/off Jetson Nano Developer Kit.<br/> WARNING LED are the indicators of batteries, they turn on if you reverse batteries.<br/> Note 1: Please check the WARNING LED when you install batteries, make sure that you set all the batteries in the correct way. Don't charge batteries if you reverse them.<br/> Note 2: The board may not work when you install the batteries for the first time, you need to charge the batteries for a while to activate them.<br/> Note 3: Please use the charger provided, the module may be destroyed by other unsuitable power adapters/chargers. |
 
 
 
