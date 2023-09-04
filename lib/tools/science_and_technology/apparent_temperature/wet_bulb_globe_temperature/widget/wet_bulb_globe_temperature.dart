@@ -4,7 +4,7 @@ import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart';
-import 'package:gc_wizard/common_widgets/dividers/gcw_divider.dart';
+import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/common_widgets/gcw_datetime_picker.dart';
 import 'package:gc_wizard/common_widgets/gcw_expandable.dart';
@@ -35,7 +35,8 @@ class WetBulbGlobeTemperature extends StatefulWidget {
 }
 
 class WetBulbGlobeTemperatureState extends State<WetBulbGlobeTemperature> {
-  DateTimeTimezone _currentDateTime = DateTimeTimezone(datetime: DateTime.now(), timezone: DateTime.now().timeZoneOffset);
+  DateTimeTimezone _currentDateTime =
+      DateTimeTimezone(datetime: DateTime.now(), timezone: DateTime.now().timeZoneOffset);
   BaseCoordinate _currentCoords = defaultBaseCoordinate;
 
   double _currentTemperature = 0.0;
@@ -50,7 +51,6 @@ class WetBulbGlobeTemperatureState extends State<WetBulbGlobeTemperature> {
 
   @override
   Widget build(BuildContext context) {
-
     return Column(
       children: <Widget>[
         GCWExpandableTextDivider(
@@ -135,12 +135,12 @@ class WetBulbGlobeTemperatureState extends State<WetBulbGlobeTemperature> {
               _currentCloudCover = value;
             });
           },
-        items: CLOUD_COVER_LIST.entries.map((entry) {
-          return GCWDropDownMenuItem(
-            value: entry.key,
-            child: i18n(context, entry.value),
-          );
-        }).toList(),
+          items: CLOUD_COVER_LIST.entries.map((entry) {
+            return GCWDropDownMenuItem(
+              value: entry.key,
+              child: i18n(context, entry.value),
+            );
+          }).toList(),
         ),
         GCWTwoOptionsSwitch(
           title: i18n(context, 'wet_bulb_globe_temperature_area'),
@@ -195,58 +195,47 @@ class WetBulbGlobeTemperatureState extends State<WetBulbGlobeTemperature> {
       children: [
         GCWDefaultOutput(
             child: Row(children: <Widget>[
-              Expanded(
-                flex: 4,
-                child: Text(i18n(context, 'wet_bulb_globe_temperature_title')),
-              ),
-              Expanded(
-                flex: 2,
-                //child: Text(_currentOutputUnit.symbol),
-                child: Container(
-                    margin: const EdgeInsets.only(left: DEFAULT_MARGIN, right: DEFAULT_MARGIN),
-                    child: GCWUnitDropDown(
-                      value: _currentOutputUnit,
-                      onlyShowSymbols: true,
-                      unitList: temperatures,
-                      unitCategory: UNITCATEGORY_TEMPERATURE,
-                      onChanged: (value) {
-                        setState(() {
-                          _currentOutputUnit = value;
-                        });
-                      },
-                    )),
-              ),
-              Expanded(
-                flex: 2,
-                child: Container(
-                    margin: const EdgeInsets.only(left: DEFAULT_MARGIN),
-                    child: GCWOutput(child: NumberFormat('#.##').format(WBGT))),
-              ),
-            ])),
-        const GCWDivider(),
-        Row(
-          children: [
-            Container(
-              width: 50,
-              padding: const EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN),
-              child: GCWIconButton(
-                icon: Icons.wb_sunny,
-                iconColor: _colorWBGT(output.Twbg),
-                backgroundColor: const Color(0xFF4d4d4d),
-                onPressed: () {},
-              ),
+          Container(
+            width: 50,
+            padding: const EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN),
+            child: GCWIconButton(
+              icon: Icons.wb_sunny,
+              iconColor: _colorWBGT(output.Twbg),
+              backgroundColor: const Color(0xFF4d4d4d),
+              onPressed: () {},
             ),
-            Expanded(
-              child: GCWOutput(
-                child: i18n(context, hintWBGT),
-              ),
-            )
-          ],
+          ),
+          Expanded(
+            flex: 2,
+            //child: Text(_currentOutputUnit.symbol),
+            child: Container(
+                margin: const EdgeInsets.only(left: DEFAULT_MARGIN, right: 2 * DEFAULT_MARGIN),
+                child: GCWUnitDropDown(
+                  value: _currentOutputUnit,
+                  onlyShowSymbols: false,
+                  unitList: temperatures,
+                  unitCategory: UNITCATEGORY_TEMPERATURE,
+                  onChanged: (value) {
+                    setState(() {
+                      _currentOutputUnit = value;
+                    });
+                  },
+                )),
+          ),
+          Expanded(
+            flex: 2,
+            child: Container(
+                margin: const EdgeInsets.only(left: 2 * DEFAULT_MARGIN),
+                child: GCWOutput(child: NumberFormat('#.###').format(WBGT))),
+          ),
+        ])),
+        GCWTextDivider(text: i18n(context, 'heatindex_hint')),
+        GCWOutput(
+          child: i18n(context, hintWBGT),
         ),
         GCWExpandableTextDivider(
           expanded: false,
           text: i18n(context, 'common_further_information'),
-          //child: Column(children: columnedMultiLineOutput(context, _outputFurtherInformation)),
           child: GCWColumnedMultilineOutput(data: _outputFurtherInformation),
         )
       ],
