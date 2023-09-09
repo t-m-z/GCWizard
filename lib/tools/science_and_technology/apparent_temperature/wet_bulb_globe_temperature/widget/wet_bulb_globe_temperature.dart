@@ -190,7 +190,7 @@ class WetBulbGlobeTemperatureState extends State<WetBulbGlobeTemperature> {
         _currentAirPressure,
         _currentAreaUrban,
         _currentCloudCover);
-    if (output.Status == -1) {
+    if (output.Status == -1 || output.Twbg > 100.0 || output.Twbg < 50.0) {
       return Container();
     }
 
