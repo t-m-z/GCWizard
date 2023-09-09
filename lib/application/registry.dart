@@ -105,6 +105,7 @@ import 'package:gc_wizard/tools/coords/dmm_offset/widget/dmm_offset.dart';
 import 'package:gc_wizard/tools/coords/ellipsoid_transform/widget/ellipsoid_transform.dart';
 import 'package:gc_wizard/tools/coords/equilateral_triangle/widget/equilateral_triangle.dart';
 import 'package:gc_wizard/tools/coords/format_converter/widget/format_converter.dart';
+import 'package:gc_wizard/tools/coords/geohashing/widget/geohashing.dart';
 import 'package:gc_wizard/tools/coords/intersect_bearing_and_circle/widget/intersect_bearing_and_circle.dart';
 import 'package:gc_wizard/tools/coords/intersect_lines/intersect_bearings/widget/intersect_bearings.dart';
 import 'package:gc_wizard/tools/coords/intersect_lines/intersect_four_points/widget/intersect_four_points.dart';
@@ -411,6 +412,7 @@ import 'package:gc_wizard/tools/science_and_technology/teletypewriter/punchtape/
 import 'package:gc_wizard/tools/science_and_technology/teletypewriter/tts/widget/tts.dart';
 import 'package:gc_wizard/tools/science_and_technology/teletypewriter/z22/widget/z22.dart';
 import 'package:gc_wizard/tools/science_and_technology/teletypewriter/zc1/widget/zc1.dart';
+import 'package:gc_wizard/tools/science_and_technology/ufi/widget/ufi.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/widget/unit_converter.dart';
 import 'package:gc_wizard/tools/science_and_technology/vanity/vanity_multitap/widget/vanity_multitap.dart';
 import 'package:gc_wizard/tools/science_and_technology/vanity/vanity_singletap/widget/vanity_singletap.dart';
@@ -749,6 +751,11 @@ void initializeRegistry(BuildContext context) {
     ]),
     GCWTool(tool: const GeneralCodebreakersSelection(), id: 'generalcodebreakers_selection', searchKeys: const [
       'codebreaker',
+    ]),
+    GCWTool(tool: const Geohashing(), id: 'geohashing', categories: const [
+      ToolCategory.CRYPTOGRAPHY
+    ], searchKeys: const [
+      'geohashing',
     ]),
     GCWTool(tool: const Gray(), id: 'gray', categories: const [
       ToolCategory.CRYPTOGRAPHY
@@ -1222,6 +1229,11 @@ void initializeRegistry(BuildContext context) {
       ToolCategory.SCIENCE_AND_TECHNOLOGY
     ], searchKeys: const [
       'tts',
+    ]),
+    GCWTool(tool: const UFI(), id: 'ufi', categories: const [
+      ToolCategory.CRYPTOGRAPHY, ToolCategory.SCIENCE_AND_TECHNOLOGY
+    ], searchKeys: const [
+      'ufi',
     ]),
     GCWTool(tool: const UnitConverter(), id: 'unitconverter', categories: const [
       ToolCategory.SCIENCE_AND_TECHNOLOGY
@@ -3945,6 +3957,7 @@ void initializeRegistry(BuildContext context) {
     ]),
     GCWSymbolTableTool(symbolKey: 'siemens', symbolSearchStrings: const ['symbol_siemens', 'teletypewriter']),
     GCWSymbolTableTool(symbolKey: 'sign', symbolSearchStrings: const ['symbol_signlanguage']),
+    GCWSymbolTableTool(symbolKey: 'sith', symbolSearchStrings: const ['symbol_sith']),
     GCWSymbolTableTool(symbolKey: 'skullz', symbolSearchStrings: const [
       'symbol_skullz',
     ]),

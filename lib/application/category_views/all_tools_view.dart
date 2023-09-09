@@ -64,6 +64,7 @@ import 'package:gc_wizard/tools/coords/distance_and_bearing/widget/distance_and_
 import 'package:gc_wizard/tools/coords/ellipsoid_transform/widget/ellipsoid_transform.dart';
 import 'package:gc_wizard/tools/coords/equilateral_triangle/widget/equilateral_triangle.dart';
 import 'package:gc_wizard/tools/coords/format_converter/widget/format_converter.dart';
+import 'package:gc_wizard/tools/coords/geohashing/widget/geohashing.dart';
 import 'package:gc_wizard/tools/coords/intersect_bearing_and_circle/widget/intersect_bearing_and_circle.dart';
 import 'package:gc_wizard/tools/coords/intersect_lines/intersect_bearings/widget/intersect_bearings.dart';
 import 'package:gc_wizard/tools/coords/intersect_lines/intersect_four_points/widget/intersect_four_points.dart';
@@ -260,6 +261,7 @@ import 'package:gc_wizard/tools/science_and_technology/teletypewriter/punchtape/
 import 'package:gc_wizard/tools/science_and_technology/teletypewriter/tts/widget/tts.dart';
 import 'package:gc_wizard/tools/science_and_technology/teletypewriter/z22/widget/z22.dart';
 import 'package:gc_wizard/tools/science_and_technology/teletypewriter/zc1/widget/zc1.dart';
+import 'package:gc_wizard/tools/science_and_technology/ufi/widget/ufi.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/widget/unit_converter.dart';
 import 'package:gc_wizard/tools/science_and_technology/velocity_acceleration/widget/velocity_acceleration.dart';
 import 'package:gc_wizard/tools/symbol_tables/symbol_replacer/widget/symbol_replacer.dart';
@@ -581,6 +583,7 @@ void _initStaticToolList() {
       className(const GaussWeberTelegraph()),
       className(const GCCode()),
       className(const GCD()),
+      className(const Geohashing()),
       className(const Gray()),
       className(const Gronsfeld()),
       className(const HeatIndex()),
@@ -711,6 +714,7 @@ void _initStaticToolList() {
       className(const Trifid()),
       className(const Trithemius()),
       className(const TTS()),
+      className(const UFI()),
       className(const UnitConverter()),
       className(const UnixTime()),
       className(const UrwigoHashBreaker()),
