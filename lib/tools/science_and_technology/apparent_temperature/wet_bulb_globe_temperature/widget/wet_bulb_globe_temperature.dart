@@ -54,6 +54,7 @@ class WetBulbGlobeTemperatureState extends State<WetBulbGlobeTemperature> {
     return Column(
       children: <Widget>[
         GCWExpandableTextDivider(
+          suppressBottomSpace: false,
           text: i18n(context, 'common_location'),
           child: GCWCoords(
             title: i18n(context, 'common_location'),
@@ -66,6 +67,8 @@ class WetBulbGlobeTemperatureState extends State<WetBulbGlobeTemperature> {
           ),
         ),
         GCWExpandableTextDivider(
+          suppressTopSpace: false,
+          suppressBottomSpace: false,
           text: i18n(context, 'astronomy_postion_datetime'),
           child: GCWDateTimePicker(
             config: const {
@@ -81,77 +84,95 @@ class WetBulbGlobeTemperatureState extends State<WetBulbGlobeTemperature> {
             },
           ),
         ),
-        GCWUnitInput(
-          value: _currentTemperature,
-          title: i18n(context, 'common_measure_temperature'),
-          initialUnit: TEMPERATURE_CELSIUS,
-          min: 0.0,
-          unitList: temperatures,
-          onChanged: (value) {
-            setState(() {
-              _currentTemperature = TEMPERATURE_CELSIUS.fromKelvin(value);
-            });
-          },
+        Container(
+          padding: const EdgeInsets.only(top: 2 * DEFAULT_MARGIN, bottom: 2 * DEFAULT_MARGIN),
+          child: GCWUnitInput(
+            value: _currentTemperature,
+            title: i18n(context, 'common_measure_temperature'),
+            initialUnit: TEMPERATURE_CELSIUS,
+            min: 0.0,
+            unitList: temperatures,
+            onChanged: (value) {
+              setState(() {
+                _currentTemperature = TEMPERATURE_CELSIUS.fromKelvin(value);
+              });
+            },
+          ),
         ),
-        GCWUnitInput(
-          value: _currentHumidity,
-          title: i18n(context, 'common_measure_humidity'),
-          initialUnit: HUMIDITY,
-          min: 0.0,
-          unitList: humidity,
-          onChanged: (value) {
-            setState(() {
-              _currentHumidity = value;
-            });
-          },
+        Container(
+          padding: const EdgeInsets.only(top: 2 * DEFAULT_MARGIN, bottom: 2 * DEFAULT_MARGIN),
+          child: GCWUnitInput(
+            value: _currentHumidity,
+            title: i18n(context, 'common_measure_humidity'),
+            initialUnit: HUMIDITY,
+            min: 0.0,
+            unitList: humidity,
+            onChanged: (value) {
+              setState(() {
+                _currentHumidity = value;
+              });
+            },
+          ),
         ),
-        GCWUnitInput(
-          value: _currentAirPressure,
-          title: i18n(context, 'common_measure_airpressure'),
-          initialUnit: PRESSURE_MBAR,
-          unitList: allPressures(),
-          onChanged: (value) {
-            setState(() {
-              _currentAirPressure = PRESSURE_MBAR.fromPascal(value);
-            });
-          },
+        Container(
+          padding: const EdgeInsets.only(top: 2 * DEFAULT_MARGIN, bottom: 2 * DEFAULT_MARGIN),
+          child: GCWUnitInput(
+            value: _currentAirPressure,
+            title: i18n(context, 'common_measure_airpressure'),
+            initialUnit: PRESSURE_MBAR,
+            unitList: allPressures(),
+            onChanged: (value) {
+              setState(() {
+                _currentAirPressure = PRESSURE_MBAR.fromPascal(value);
+              });
+            },
+          ),
         ),
-        GCWUnitInput(
-          value: _currentWindSpeed,
-          title: i18n(context, 'common_measure_windspeed'),
-          initialUnit: VELOCITY_MS,
-          unitList: velocities,
-          onChanged: (value) {
-            setState(() {
-              _currentWindSpeed = value;
-            });
-          },
+        Container(
+          padding: const EdgeInsets.only(top: 2 * DEFAULT_MARGIN, bottom: 2 * DEFAULT_MARGIN),
+          child: GCWUnitInput(
+            value: _currentWindSpeed,
+            title: i18n(context, 'common_measure_windspeed'),
+            initialUnit: VELOCITY_MS,
+            unitList: velocities,
+            onChanged: (value) {
+              setState(() {
+                _currentWindSpeed = value;
+              });
+            },
+          ),
         ),
-        GCWDropDown(
-          title: i18n(context, 'wet_bulb_globe_temperature_cloud'),
-          value: _currentCloudCover,
-          onChanged: (value) {
-            setState(() {
-              _currentCloudCover = value;
-            });
-          },
-          items: CLOUD_COVER_LIST.entries.map((entry) {
-            return GCWDropDownMenuItem(
-              value: entry.key,
-              child: i18n(context, entry.value),
-            );
-          }).toList(),
+        Container(
+          padding: const EdgeInsets.only(top: 2 * DEFAULT_MARGIN, bottom: 2 * DEFAULT_MARGIN),
+          child: GCWDropDown(
+            title: i18n(context, 'wet_bulb_globe_temperature_cloud'),
+            value: _currentCloudCover,
+            onChanged: (value) {
+              setState(() {
+                _currentCloudCover = value;
+              });
+            },
+            items: CLOUD_COVER_LIST.entries.map((entry) {
+              return GCWDropDownMenuItem(
+                value: entry.key,
+                child: i18n(context, entry.value),
+              );
+            }).toList(),
+          ),
         ),
-        GCWTwoOptionsSwitch(
-          title: i18n(context, 'wet_bulb_globe_temperature_area'),
-          leftValue: i18n(context, 'wet_bulb_globe_temperature_area_urban'),
-          rightValue: i18n(context, 'wet_bulb_globe_temperature_area_rural'),
-          value: _currentAreaUrban ? GCWSwitchPosition.left : GCWSwitchPosition.right,
-          onChanged: (value) {
-            setState(() {
-              _currentAreaUrban = value == GCWSwitchPosition.left;
-            });
-          },
+        Container(
+          padding: const EdgeInsets.only(top: 2 * DEFAULT_MARGIN, bottom: 2 * DEFAULT_MARGIN),
+          child: GCWTwoOptionsSwitch(
+            title: i18n(context, 'wet_bulb_globe_temperature_area'),
+            leftValue: i18n(context, 'wet_bulb_globe_temperature_area_urban'),
+            rightValue: i18n(context, 'wet_bulb_globe_temperature_area_rural'),
+            value: _currentAreaUrban ? GCWSwitchPosition.left : GCWSwitchPosition.right,
+            onChanged: (value) {
+              setState(() {
+                _currentAreaUrban = value == GCWSwitchPosition.left;
+              });
+            },
+          ),
         ),
         _buildOutput(context)
       ],
