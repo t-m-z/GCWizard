@@ -8,6 +8,8 @@ Map<String, String> IMAGE_SIZE = {
   '256x256' : '256x256',
   '512x512' : '512x512',
   '1024x1024' : '1024x1024',
+  '1024x1792' : '1024x1792',
+  '1792x1024' : '1792x1024',
 };
 
 class ChatGPTimageOutput {
@@ -53,7 +55,7 @@ Future<ChatGPTimageOutput> _ChatGPTgetImageAsync(String APIkey, String model, St
     };
 
     final CHATGPT_IMAGE_BODY = {
-      //'model': 'model',
+      //'model': 'dall-e-3',
       'prompt': prompt,
       'n': 1,
       'size': size,

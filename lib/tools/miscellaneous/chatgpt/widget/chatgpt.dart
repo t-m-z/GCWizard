@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_email_sender/flutter_email_sender.dart';
 
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/settings/logic/preferences.dart';
@@ -263,7 +264,33 @@ class _ChatGPTState extends State<ChatGPT> {
     if (output.status == ChatGPTstatus.OK) {
       var outputMap = jsonDecode(output.textData);
       _currentOutput = outputMap['choices'][0]['text'] as String;
-      _outputWidget = GCWDefaultOutput(child: _currentOutput);
+      _outputWidget = GCWDefaultOutput(
+          child: _currentOutput,
+        trailing: GCWIconButton(
+          icon: Icons.email_outlined,
+          size: IconButtonSize.SMALL,
+          onPressed: () async {
+            final Email email = Email(
+              body: 'Model: ' + _currentModel + '\n' +
+                  'Prompt: ' + _currentPrompt + '\n' +
+                  'Temperature: ' + _currentTemperature.toString() + '\n' +
+                  _currentOutput,
+              subject: 'Invalid Content created',
+              recipients: ['thomas@familiezimmermann.de'],
+              //cc: ['cc@example.com'],
+              //bcc: ['bcc@example.com'],
+              //attachmentPaths: ['/path/to/attachment.zip'],
+              isHTML: false,
+            );
+            try {
+              await FlutterEmailSender.send(email);
+              showSnackBar('SUCCESS - e-Mail send', context);
+            } catch (error) {
+              showSnackBar(error.toString(), context);
+            }
+          },
+        ),
+      );
     }
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
