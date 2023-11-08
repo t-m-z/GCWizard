@@ -55,7 +55,7 @@ class _GCWExpandableTextDividerState extends State<GCWExpandableTextDivider> {
             style: widget.style,
             trailing: Row(
               children: <Widget>[
-                widget.trailing!,
+                widget.trailing == null ? Container() : widget.trailing!,
                 GCWIconButton(
                   icon: _currentExpanded! ? Icons.arrow_drop_up : Icons.arrow_drop_down,
                   size: IconButtonSize.TINY,
