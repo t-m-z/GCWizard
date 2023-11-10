@@ -1,6 +1,7 @@
 
 import 'dart:convert';
 import 'dart:isolate';
+import 'dart:typed_data';
 
 import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
 import 'package:http/http.dart' as http;
@@ -31,8 +32,9 @@ class OPENAIgetChatJobData {
   final double openai_speed;
   final String openai_voice;
   final OPENAI_TASK openai_task;
+  final Uint8List openai_audiofile;
 
-  OPENAIgetChatJobData({required this.openai_speed, required this.openai_voice, required this.openai_api_key, required this.openai_model, required this.openai_prompt, required this.openai_temperature, required this.openai_image_size, required this.openai_image_url, required this.openai_task});
+  OPENAIgetChatJobData({required this.openai_audiofile, required this.openai_speed, required this.openai_voice, required this.openai_api_key, required this.openai_model, required this.openai_prompt, required this.openai_temperature, required this.openai_image_size, required this.openai_image_url, required this.openai_task});
 }
 
 class OpenAItaskOutput {

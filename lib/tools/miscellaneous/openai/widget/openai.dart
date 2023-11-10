@@ -49,6 +49,7 @@ class _OpenAIState extends State<OpenAI> {
   String _currentModel = 'gpt-3.5-turbo-instruct';
   String _currentImageData = '';
   String _currentImageSize = '256x256';
+  Uint8List _currentAudioFile = Uint8List.fromList([]);
   OPENAI_TASK _currentTask = OPENAI_TASK.CHAT;
 
   bool _loadFile = false;
@@ -188,6 +189,16 @@ class _OpenAIState extends State<OpenAI> {
                       });
                     },
                     value: _currentSpeed),
+                GCWOpenFile(
+                  onLoaded: (_file) {
+                    if (_file == null) {
+                      showSnackBar(i18n(context, 'common_loadfile_exception_notloaded'), context);
+                      return;
+                    }
+                    _currentAudioFile = _file.bytes;
+                    setState(() {});
+                  },
+                ),
               ])
             : Container(),
         GCWTextDivider(
@@ -304,6 +315,7 @@ class _OpenAIState extends State<OpenAI> {
       openai_image_url: _currentImageMode == GCWSwitchPosition.left,
       openai_speed: _currentSpeed,
       openai_voice: _currentVoice,
+      openai_audiofile: _currentAudioFile,
       openai_task: _currentTask,
     ));
   }
