@@ -24,20 +24,20 @@ import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/base/_common/logic/base.dart';
 import 'package:gc_wizard/tools/images_and_files/hexstring2file/logic/hexstring2file.dart';
-import 'package:gc_wizard/tools/miscellaneous/chatgpt/logic/chatgpt.dart';
+import 'package:gc_wizard/tools/miscellaneous/openai/logic/openai.dart';
 import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:gc_wizard/utils/file_utils/gcw_file.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/file_widget_utils.dart';
 import 'package:prefs/prefs.dart';
 
-class ChatGPT extends StatefulWidget {
-  const ChatGPT({Key? key}) : super(key: key);
+class OpenAI extends StatefulWidget {
+  const OpenAI({Key? key}) : super(key: key);
 
   @override
-  _ChatGPTState createState() => _ChatGPTState();
+  _OpenAIState createState() => _OpenAIState();
 }
 
-class _ChatGPTState extends State<ChatGPT> {
+class _OpenAIState extends State<OpenAI> {
   late TextEditingController _promptController;
 
   String _currentPrompt = '';
@@ -82,6 +82,21 @@ class _ChatGPTState extends State<ChatGPT> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
+        GCWDropDown<String>(
+          title: i18n(context, 'chatgpt_task'),
+          value: _currentImageSize,
+          items: OPEN_AI_IMAGE_SIZE.entries.map((mode) {
+            return GCWDropDownMenuItem(
+              value: mode.key,
+              child: mode.value,
+            );
+          }).toList(),
+          onChanged: (value) {
+            setState(() {
+              _currentImageSize = value;
+            });
+          },
+        ),
         GCWDropDown<String>(
           value: _currentModel,
           items: _modelIDs.entries.map((mode) {
@@ -172,7 +187,7 @@ class _ChatGPTState extends State<ChatGPT> {
                 GCWDropDown<String>(
                   title: i18n(context, 'chatgpt_size'),
                   value: _currentImageSize,
-                  items: IMAGE_SIZE.entries.map((mode) {
+                  items: OPEN_AI_IMAGE_SIZE.entries.map((mode) {
                     return GCWDropDownMenuItem(
                       value: mode.key,
                       child: mode.value,
@@ -223,7 +238,7 @@ class _ChatGPTState extends State<ChatGPT> {
     Uint8List data,
   ) async {
     bool value = false;
-    String filename = buildFileNameWithDate('chatgpt.dart', null) + '.prompt';
+    String filename = buildFileNameWithDate('openai.dart', null) + '.prompt';
     value = await saveByteDataToFile(context, data, filename);
     if (value) showExportedFileDialog(context);
   }
@@ -237,8 +252,8 @@ class _ChatGPTState extends State<ChatGPT> {
           child: SizedBox(
             height: 220,
             width: 150,
-            child: GCWAsyncExecuter<ChatGPTtextOutput>(
-              isolatedFunction: ChatGPTgetTextAsync,
+            child: GCWAsyncExecuter<OpenAItaskOutput>(
+              isolatedFunction: OpenAIrunTaskAsync,
               parameter: _buildChatGPTgetJobData,
               onReady: (data) => _showChatGPTgetTextOutput(data),
               isOverlay: true,
@@ -250,18 +265,19 @@ class _ChatGPTState extends State<ChatGPT> {
   }
 
   Future<GCWAsyncExecuterParameters> _buildChatGPTgetJobData() async {
-    return GCWAsyncExecuterParameters(ChatGPTgetChatJobData(
+    return GCWAsyncExecuterParameters(OPENAIgetChatJobData(
       chatgpt_api_key: _currentAPIkey,
       chatgpt_model: _currentModel,
       chatgpt_prompt: _currentPrompt,
       chatgpt_temperature: _currentTemperature,
       chatgpt_image_size: _currentImageSize,
       chatgpt_image_url: _currentImageMode == GCWSwitchPosition.left,
+      task: OPENAI_TASK.CHAT,
     ));
   }
 
-  void _showChatGPTgetTextOutput(ChatGPTtextOutput output) {
-    if (output.status == ChatGPTstatus.OK) {
+  void _showChatGPTgetTextOutput(OpenAItaskOutput output) {
+    if (output.status == OPENAI_TASK_STATUS.OK) {
       var outputMap = jsonDecode(output.textData);
       _currentOutput = outputMap['choices'][0]['text'] as String;
       _outputWidget = GCWDefaultOutput(
@@ -295,7 +311,7 @@ class _ChatGPTState extends State<ChatGPT> {
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       setState(() {});
-      if (output.status == ChatGPTstatus.ERROR) {
+      if (output.status == OPENAI_TASK_STATUS.ERROR) {
         _currentOutput = i18n(context, 'chatgpt_error') +
             '\n' +
             output.httpCode +
@@ -316,8 +332,8 @@ class _ChatGPTState extends State<ChatGPT> {
           child: SizedBox(
             height: 220,
             width: 150,
-            child: GCWAsyncExecuter<ChatGPTimageOutput>(
-              isolatedFunction: ChatGPTgetImageAsync,
+            child: GCWAsyncExecuter<OpenAIimageOutput>(
+              isolatedFunction: OpenAIgetImageAsync,
               parameter: _buildChatGPTgetJobData,
               onReady: (data) => _showChatGPTgetImageOutput(data),
               isOverlay: true,
@@ -328,8 +344,8 @@ class _ChatGPTState extends State<ChatGPT> {
     );
   }
 
-  void _showChatGPTgetImageOutput(ChatGPTimageOutput output) {
-    if (output.status == ChatGPTstatus.OK) {
+  void _showChatGPTgetImageOutput(OpenAIimageOutput output) {
+    if (output.status == OPENAI_TASK_STATUS.OK) {
       var outputMap = jsonDecode(output.imageData);
       if (_currentImageMode == GCWSwitchPosition.left) {
         _currentOutput = outputMap['data'][0]['url'] as String;
@@ -356,7 +372,7 @@ class _ChatGPTState extends State<ChatGPT> {
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       setState(() {});
-      if (output.status == ChatGPTstatus.ERROR) {
+      if (output.status == OPENAI_TASK_STATUS.ERROR) {
         _currentOutput = i18n(context, 'chatgpt_error') +
             '\n' +
             output.httpCode +

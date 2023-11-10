@@ -1,4 +1,4 @@
-part of 'package:gc_wizard/tools/miscellaneous/chatgpt/logic/chatgpt.dart';
+part of 'package:gc_wizard/tools/miscellaneous/openai/logic/openai.dart';
 
 final BASE_URL_CHATGPT_CHAT_TEXT = 'https://api.openai.com/v1/chat/completions';
 final BASE_URL_CHATGPT_COMPLETIONS_TEXT = 'https://api.openai.com/v1/completions';
@@ -25,40 +25,13 @@ final Map<String, String> ENDPOINTS = {
   'davinci-002': BASE_URL_CHATGPT_COMPLETIONS_TEXT,
 };
 
-class ChatGPTtextOutput {
-  final ChatGPTstatus status;
-  final String httpCode;
-  final String httpMessage;
-  final String textData;
-
-  ChatGPTtextOutput({required this.status, required this.httpCode, required this.httpMessage, required this.textData,});
-}
-
-Future<ChatGPTtextOutput> ChatGPTgetTextAsync(GCWAsyncExecuterParameters? jobData) async {
-  if (jobData?.parameters is! ChatGPTgetChatJobData) {
-    return Future.value(
-        ChatGPTtextOutput(status: ChatGPTstatus.ERROR, httpCode: '', httpMessage: '', textData: '', ));
-  }
-  var ChatGPTgetChatJob = jobData!.parameters as ChatGPTgetChatJobData;
-  ChatGPTtextOutput output = await _ChatGPTgetTextAsync(
-      ChatGPTgetChatJob.chatgpt_api_key,
-      ChatGPTgetChatJob.chatgpt_model,
-      ChatGPTgetChatJob.chatgpt_prompt,
-      ChatGPTgetChatJob.chatgpt_temperature,
-      sendAsyncPort: jobData.sendAsyncPort);
-
-  jobData.sendAsyncPort?.send(output);
-
-  return output;
-}
-
-Future<ChatGPTtextOutput> _ChatGPTgetTextAsync(String APIkey, String model, String prompt, double temperature, {SendPort? sendAsyncPort}) async {
+Future<OpenAItaskOutput> _OpenAIgetTextAsync(String APIkey, String model, String prompt, double temperature, {SendPort? sendAsyncPort}) async {
   String httpCode = '';
   String httpMessage = '';
   String textData = '';
   String body = '';
   String uri = '';
-  ChatGPTstatus status = ChatGPTstatus.ERROR;
+  OPENAI_TASK_STATUS status = OPENAI_TASK_STATUS.ERROR;
 
   final Map<String, String> CHATGPT_MODEL_HEADERS = {
     'Content-Type': 'application/json',
@@ -102,7 +75,7 @@ Future<ChatGPTtextOutput> _ChatGPTgetTextAsync(String APIkey, String model, Stri
       print(httpMessage);
       print(textData);
     } else {
-      status = ChatGPTstatus.OK;
+      status = OPENAI_TASK_STATUS.OK;
       print('CORECT    ----------------------------------------------------------------');
       print(httpCode);
       print(httpMessage);
@@ -112,5 +85,5 @@ Future<ChatGPTtextOutput> _ChatGPTgetTextAsync(String APIkey, String model, Stri
     print(e.toString());
   }
 
-  return ChatGPTtextOutput(status: status, httpCode: httpCode, httpMessage: httpMessage, textData: textData, );
+  return OpenAItaskOutput(status: status, httpCode: httpCode, httpMessage: httpMessage, textData: textData, imageData: '', imageDataType: OPENAI_IMAGE_DATATYPE.NULL, task: OPENAI_TASK.NULL, );
 }

@@ -1,10 +1,10 @@
-part of 'package:gc_wizard/tools/miscellaneous/chatgpt/logic/chatgpt.dart';
+part of 'package:gc_wizard/tools/miscellaneous/openai/logic/openai.dart';
 
 final BASE_URL_CHATGPT_IMAGE = 'https://api.openai.com/v1/images/generations';
 
-enum ChatGPTimageDataType {URL, BASE64, NULL}
+enum OPENAI_IMAGE_DATATYPE {URL, BASE64, NULL}
 
-Map<String, String> IMAGE_SIZE = {
+Map<String, String> OPEN_AI_IMAGE_SIZE = {
   '256x256' : '256x256',
   '512x512' : '512x512',
   '1024x1024' : '1024x1024',
@@ -12,23 +12,23 @@ Map<String, String> IMAGE_SIZE = {
   '1792x1024' : '1792x1024',
 };
 
-class ChatGPTimageOutput {
-  final ChatGPTstatus status;
+class OpenAIimageOutput {
+  final OPENAI_TASK_STATUS status;
   final String httpCode;
   final String httpMessage;
   final String imageData;
-  final ChatGPTimageDataType imageDataType;
+  final OPENAI_IMAGE_DATATYPE imageDataType;
 
-  ChatGPTimageOutput({required this.status, required this.httpCode, required this.httpMessage, required this.imageData, required this.imageDataType,});
+  OpenAIimageOutput({required this.status, required this.httpCode, required this.httpMessage, required this.imageData, required this.imageDataType,});
 }
 
-Future<ChatGPTimageOutput> ChatGPTgetImageAsync(GCWAsyncExecuterParameters? jobData) async {
-  if (jobData?.parameters is! ChatGPTgetChatJobData) {
+Future<OpenAIimageOutput> OpenAIgetImageAsync(GCWAsyncExecuterParameters? jobData) async {
+  if (jobData?.parameters is! OPENAIgetChatJobData) {
     return Future.value(
-        ChatGPTimageOutput(status: ChatGPTstatus.ERROR, httpCode: '', httpMessage: '', imageData: '', imageDataType: ChatGPTimageDataType.NULL));
+        OpenAIimageOutput(status: OPENAI_TASK_STATUS.ERROR, httpCode: '', httpMessage: '', imageData: '', imageDataType: OPENAI_IMAGE_DATATYPE.NULL));
   }
-  var ChatGPTgetChatJob = jobData!.parameters as ChatGPTgetChatJobData;
-  ChatGPTimageOutput output = await _ChatGPTgetImageAsync(
+  var ChatGPTgetChatJob = jobData!.parameters as OPENAIgetChatJobData;
+  OpenAIimageOutput output = await _OpenAIgetImageAsync(
       ChatGPTgetChatJob.chatgpt_api_key,
       ChatGPTgetChatJob.chatgpt_model,
       ChatGPTgetChatJob.chatgpt_prompt,
@@ -42,11 +42,11 @@ Future<ChatGPTimageOutput> ChatGPTgetImageAsync(GCWAsyncExecuterParameters? jobD
   return output;
 }
 
-Future<ChatGPTimageOutput> _ChatGPTgetImageAsync(String APIkey, String model, String prompt, double temperature, String size, bool imageUrl, {SendPort? sendAsyncPort}) async {
+Future<OpenAIimageOutput> _OpenAIgetImageAsync(String APIkey, String model, String prompt, double temperature, String size, bool imageUrl, {SendPort? sendAsyncPort}) async {
   String httpCode = '';
   String httpMessage = '';
   String imageData = '';
-  ChatGPTstatus status = ChatGPTstatus.ERROR;
+  OPENAI_TASK_STATUS status = OPENAI_TASK_STATUS.ERROR;
 
   try {
     final Map<String, String> CHATGPT_MODEL_HEADERS = {
@@ -79,7 +79,7 @@ Future<ChatGPTimageOutput> _ChatGPTgetImageAsync(String APIkey, String model, St
       print(httpMessage);
       print(imageData);
     } else {
-      status = ChatGPTstatus.OK;
+      status = OPENAI_TASK_STATUS.OK;
       print('CORECT    ----------------------------------------------------------------');
       print(httpCode);
       print(httpMessage);
@@ -89,5 +89,5 @@ Future<ChatGPTimageOutput> _ChatGPTgetImageAsync(String APIkey, String model, St
     print(e.toString());
   }
 
-  return ChatGPTimageOutput(status: status, httpCode: httpCode, httpMessage: httpMessage, imageData: imageData, imageDataType: ChatGPTimageDataType.NULL);
+  return OpenAIimageOutput(status: status, httpCode: httpCode, httpMessage: httpMessage, imageData: imageData, imageDataType: OPENAI_IMAGE_DATATYPE.NULL);
 }
