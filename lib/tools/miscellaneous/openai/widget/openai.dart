@@ -43,10 +43,13 @@ class _OpenAIState extends State<OpenAI> {
   String _currentPrompt = '';
   String _currentAPIkey = Prefs.getString(PREFERENCE_CHATGPT_API_KEY);
   double _currentTemperature = 0.0;
+  double _currentSpeed = 1.0;
+  String _currentVoice = 'alloy';
   String _currentOutput = '';
   String _currentModel = 'gpt-3.5-turbo-instruct';
   String _currentImageData = '';
   String _currentImageSize = '256x256';
+  OPENAI_TASK _currentTask = OPENAI_TASK.CHAT;
 
   bool _loadFile = false;
 
@@ -54,7 +57,6 @@ class _OpenAIState extends State<OpenAI> {
 
   Map<String, String> _modelIDs = {};
 
-  GCWSwitchPosition _currentMode = GCWSwitchPosition.left;
   GCWSwitchPosition _currentImageMode = GCWSwitchPosition.left;
 
   @override
@@ -82,37 +84,114 @@ class _OpenAIState extends State<OpenAI> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        GCWDropDown<String>(
-          title: i18n(context, 'chatgpt_task'),
-          value: _currentImageSize,
-          items: OPEN_AI_IMAGE_SIZE.entries.map((mode) {
+        GCWDropDown<OPENAI_TASK>(
+          title: i18n(context, 'openai_task'),
+          value: _currentTask,
+          items: OPENAI_TASK_LIST.entries.map((mode) {
             return GCWDropDownMenuItem(
-              value: mode.key,
-              child: mode.value,
+              value: mode.value,
+              child: i18n(context, mode.key),
             );
           }).toList(),
           onChanged: (value) {
             setState(() {
-              _currentImageSize = value;
+              _currentTask = value;
             });
           },
         ),
-        GCWDropDown<String>(
-          value: _currentModel,
-          items: _modelIDs.entries.map((mode) {
-            return GCWDropDownMenuItem(
-              value: mode.key,
-              child: mode.value,
-            );
-          }).toList(),
-          onChanged: (value) {
-            setState(() {
-              _currentModel = value;
-            });
-          },
-        ),
+        _currentTask == OPENAI_TASK.CHAT
+            ? Column(
+                children: <Widget>[
+                  GCWDropDown<String>(
+                    title: i18n(context, 'openai_model'),
+                    value: _currentModel,
+                    items: _modelIDs.entries.map((mode) {
+                      return GCWDropDownMenuItem(
+                        value: mode.key,
+                        child: mode.value,
+                      );
+                    }).toList(),
+                    onChanged: (value) {
+                      setState(() {
+                        _currentModel = value;
+                      });
+                    },
+                  ),
+                  GCWDoubleSpinner(
+                      title: i18n(context, 'openai_temperature'),
+                      min: 0,
+                      max: 1,
+                      numberDecimalDigits: 6,
+                      onChanged: (value) {
+                        setState(() {
+                          _currentTemperature = value;
+                        });
+                      },
+                      value: _currentTemperature),
+                ],
+              )
+            : Container(),
+        _currentTask == OPENAI_TASK.IMAGE
+            ? Column(children: <Widget>[
+                GCWDropDown<String>(
+                  title: i18n(context, 'openai_size'),
+                  value: _currentImageSize,
+                  items: OPEN_AI_IMAGE_SIZE.entries.map((mode) {
+                    return GCWDropDownMenuItem(
+                      value: mode.key,
+                      child: mode.value,
+                    );
+                  }).toList(),
+                  onChanged: (value) {
+                    setState(() {
+                      _currentImageSize = value;
+                    });
+                  },
+                ),
+                GCWTwoOptionsSwitch(
+                  leftValue: i18n(context, 'openai_image_url'),
+                  rightValue: i18n(context, 'openai_image'),
+                  value: _currentImageMode,
+                  onChanged: (value) {
+                    setState(() {
+                      _currentImageMode = value;
+                    });
+                  },
+                ),
+              ])
+            : Container(),
+        _currentTask == OPENAI_TASK.SPEECH
+            ? Column(children: <Widget>[
+                GCWDropDown<String>(
+                  title: i18n(context, 'openai_voice'),
+                  value: _currentVoice,
+                  items: OPEN_AI_SPEECH_VOICE.entries.map((mode) {
+                    return GCWDropDownMenuItem(
+                      value: mode.key,
+                      child: mode.value,
+                    );
+                  }).toList(),
+                  onChanged: (value) {
+                    setState(() {
+                      _currentVoice = value;
+                    });
+                  },
+                ),
+                GCWDoubleSpinner(
+                    title: i18n(context, 'openai_speed'),
+                    min: 0.25,
+                    max: 4,
+                    numberDecimalDigits: 6,
+                    onChanged: (value) {
+                      setState(() {
+                        _currentSpeed = value;
+                      });
+                    },
+                    value: _currentSpeed),
+              ])
+            : Container(),
         GCWTextDivider(
-          text: i18n(context, 'chatgpt_prompt'),
+          text: i18n(context, 'openai_prompt'),
           suppressTopSpace: true,
           suppressBottomSpace: true,
           trailing: Row(
@@ -161,56 +240,6 @@ class _OpenAIState extends State<OpenAI> {
               setState(() {});
             },
           ),
-        GCWTextDivider(text: i18n(context, 'chatgpt_temperature')),
-        GCWDoubleSpinner(
-            min: 0,
-            max: 1,
-            numberDecimalDigits: 6,
-            onChanged: (value) {
-              setState(() {
-                _currentTemperature = value;
-              });
-            },
-            value: _currentTemperature),
-        GCWTwoOptionsSwitch(
-          leftValue: i18n(context, 'chatgpt_text'),
-          rightValue: i18n(context, 'chatgpt_image'),
-          value: _currentMode,
-          onChanged: (value) {
-            setState(() {
-              _currentMode = value;
-            });
-          },
-        ),
-        _currentMode == GCWSwitchPosition.right
-            ? Column(children: <Widget>[
-                GCWDropDown<String>(
-                  title: i18n(context, 'chatgpt_size'),
-                  value: _currentImageSize,
-                  items: OPEN_AI_IMAGE_SIZE.entries.map((mode) {
-                    return GCWDropDownMenuItem(
-                      value: mode.key,
-                      child: mode.value,
-                    );
-                  }).toList(),
-                  onChanged: (value) {
-                    setState(() {
-                      _currentImageSize = value;
-                    });
-                  },
-                ),
-                GCWTwoOptionsSwitch(
-                  leftValue: i18n(context, 'chatgpt_image_url'),
-                  rightValue: i18n(context, 'chatgpt_image'),
-                  value: _currentImageMode,
-                  onChanged: (value) {
-                    setState(() {
-                      _currentImageMode = value;
-                    });
-                  },
-                ),
-              ])
-            : Container(),
         GCWButton(
           text: i18n(context, 'common_start'),
           onPressed: () {
@@ -225,12 +254,13 @@ class _OpenAIState extends State<OpenAI> {
   }
 
   void _calcOutput() {
-    if (_currentMode == GCWSwitchPosition.left) {
-      _getChatGPTtext();
-      setState(() {});
-    } else {
-      _getChatGPTimage();
-    }
+    _getOpenAItask();
+    //if (_currentMode == GCWSwitchPosition.left) {
+    //  _getChatGPTtext();
+    //  setState(() {});
+    //} else {
+    //  _getChatGPTimage();
+    //}
   }
 
   void _exportFile(
@@ -243,7 +273,7 @@ class _OpenAIState extends State<OpenAI> {
     if (value) showExportedFileDialog(context);
   }
 
-  void _getChatGPTtext() async {
+  void _getOpenAItask() async {
     await showDialog<bool>(
       context: context,
       barrierDismissible: false,
@@ -255,7 +285,7 @@ class _OpenAIState extends State<OpenAI> {
             child: GCWAsyncExecuter<OpenAItaskOutput>(
               isolatedFunction: OpenAIrunTaskAsync,
               parameter: _buildChatGPTgetJobData,
-              onReady: (data) => _showChatGPTgetTextOutput(data),
+              onReady: (data) => _showOpenAIOutput(data),
               isOverlay: true,
             ),
           ),
@@ -266,120 +296,95 @@ class _OpenAIState extends State<OpenAI> {
 
   Future<GCWAsyncExecuterParameters> _buildChatGPTgetJobData() async {
     return GCWAsyncExecuterParameters(OPENAIgetChatJobData(
-      chatgpt_api_key: _currentAPIkey,
-      chatgpt_model: _currentModel,
-      chatgpt_prompt: _currentPrompt,
-      chatgpt_temperature: _currentTemperature,
-      chatgpt_image_size: _currentImageSize,
-      chatgpt_image_url: _currentImageMode == GCWSwitchPosition.left,
-      task: OPENAI_TASK.CHAT,
+      openai_api_key: _currentAPIkey,
+      openai_model: _currentModel,
+      openai_prompt: _currentPrompt,
+      openai_temperature: _currentTemperature,
+      openai_image_size: _currentImageSize,
+      openai_image_url: _currentImageMode == GCWSwitchPosition.left,
+      openai_speed: _currentSpeed,
+      openai_voice: _currentVoice,
+      openai_task: _currentTask,
     ));
   }
 
-  void _showChatGPTgetTextOutput(OpenAItaskOutput output) {
+  void _showOpenAIOutput(OpenAItaskOutput output) {
     if (output.status == OPENAI_TASK_STATUS.OK) {
-      var outputMap = jsonDecode(output.textData);
-      _currentOutput = outputMap['choices'][0]['text'] as String;
-      _outputWidget = GCWDefaultOutput(
-          child: _currentOutput,
-        trailing: GCWIconButton(
-          icon: Icons.email_outlined,
-          size: IconButtonSize.SMALL,
-          onPressed: () async {
-            final Email email = Email(
-              body: 'Model: ' + _currentModel + '\n' +
-                  'Prompt: ' + _currentPrompt + '\n' +
-                  'Temperature: ' + _currentTemperature.toString() + '\n' +
-                  _currentOutput,
-              subject: 'Invalid Content created',
-              recipients: ['thomas@familiezimmermann.de'],
-              //cc: ['cc@example.com'],
-              //bcc: ['bcc@example.com'],
-              //attachmentPaths: ['/path/to/attachment.zip'],
-              isHTML: false,
+      switch (_currentTask) {
+        case OPENAI_TASK.CHAT:
+          var outputMap = jsonDecode(output.textData);
+          _currentOutput = outputMap['choices'][0]['text'] as String;
+          _outputWidget = GCWDefaultOutput(
+            child: _currentOutput,
+            trailing: GCWIconButton(
+              icon: Icons.email_outlined,
+              size: IconButtonSize.SMALL,
+              onPressed: () async {
+                final Email email = Email(
+                  body: 'Model: ' +
+                      _currentModel +
+                      '\n' +
+                      'Prompt: ' +
+                      _currentPrompt +
+                      '\n' +
+                      'Temperature: ' +
+                      _currentTemperature.toString() +
+                      '\n' +
+                      _currentOutput,
+                  subject: 'Invalid Content created',
+                  recipients: ['thomas@familiezimmermann.de'],
+                  //cc: ['cc@example.com'],
+                  //bcc: ['bcc@example.com'],
+                  //attachmentPaths: ['/path/to/attachment.zip'],
+                  isHTML: false,
+                );
+                try {
+                  await FlutterEmailSender.send(email);
+                  showSnackBar('SUCCESS - e-Mail send', context);
+                } catch (error) {
+                  showSnackBar(error.toString(), context);
+                }
+              },
+            ),
+          );
+          break;
+        case OPENAI_TASK.IMAGE:
+          var outputMap = jsonDecode(output.imageData);
+          if (_currentImageMode == GCWSwitchPosition.left) {
+            _currentOutput = outputMap['data'][0]['url'] as String;
+            _outputWidget = GCWDefaultOutput(child: _currentOutput);
+          } else {
+            _currentOutput = outputMap['data'][0]['b64_json'] as String;
+            _currentImageData = decodeBase64(_currentOutput);
+            _currentImageData = asciiToHexString(_currentImageData);
+            var fileData = hexstring2file(_currentImageData);
+            _outputWidget = Column(
+              children: <Widget>[
+                GCWExpandableTextDivider(
+                    expanded: false,
+                    text: 'BASE64',
+                    child: GCWDefaultOutput(
+                      child: _currentOutput,
+                    )),
+                GCWImageView(imageData: GCWImageViewData(GCWFile(bytes: fileData!)))
+              ],
             );
-            try {
-              await FlutterEmailSender.send(email);
-              showSnackBar('SUCCESS - e-Mail send', context);
-            } catch (error) {
-              showSnackBar(error.toString(), context);
-            }
-          },
-        ),
-      );
-    }
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      setState(() {});
-      if (output.status == OPENAI_TASK_STATUS.ERROR) {
-        _currentOutput = i18n(context, 'chatgpt_error') +
-            '\n' +
-            output.httpCode +
-            '\n' +
-            output.httpMessage +
-            '\n' +
-            output.textData;
-      }
-    });
-  }
-
-  void _getChatGPTimage() async {
-    await showDialog<bool>(
-      context: context,
-      barrierDismissible: false,
-      builder: (context) {
-        return Center(
-          child: SizedBox(
-            height: 220,
-            width: 150,
-            child: GCWAsyncExecuter<OpenAIimageOutput>(
-              isolatedFunction: OpenAIgetImageAsync,
-              parameter: _buildChatGPTgetJobData,
-              onReady: (data) => _showChatGPTgetImageOutput(data),
-              isOverlay: true,
-            ),
-          ),
-        );
-      },
-    );
-  }
-
-  void _showChatGPTgetImageOutput(OpenAIimageOutput output) {
-    if (output.status == OPENAI_TASK_STATUS.OK) {
-      var outputMap = jsonDecode(output.imageData);
-      if (_currentImageMode == GCWSwitchPosition.left) {
-        _currentOutput = outputMap['data'][0]['url'] as String;
-        _outputWidget = GCWDefaultOutput(child: _currentOutput);
-      } else {
-        _currentOutput = outputMap['data'][0]['b64_json'] as String;
-        _currentImageData = decodeBase64(_currentOutput);
-        _currentImageData = asciiToHexString(_currentImageData);
-        var fileData = hexstring2file(_currentImageData);
-        _outputWidget = Column(
-          children: <Widget>[
-            GCWExpandableTextDivider(
-              expanded: false,
-              text: 'BASE64',
-              child: GCWDefaultOutput(
-                child: _currentOutput,
-              )
-            ),
-            GCWImageView(imageData: GCWImageViewData(GCWFile(bytes: fileData!)))
-          ],
-        );
+          }
+          break;
+        case OPENAI_TASK.SPEECH:
+          break;
+        case OPENAI_TASK.AUDIO_TRANSLATE:
+          break;
+        case OPENAI_TASK.AUDIO_TRANSCRIBE:
+          break;
       }
     }
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       setState(() {});
       if (output.status == OPENAI_TASK_STATUS.ERROR) {
-        _currentOutput = i18n(context, 'chatgpt_error') +
-            '\n' +
-            output.httpCode +
-            '\n' +
-            output.httpMessage +
-            '\n' +
-            output.imageData;
+        _currentOutput =
+            i18n(context, 'openai_error') + '\n' + output.httpCode + '\n' + output.httpMessage + '\n' + output.textData;
       }
     });
   }

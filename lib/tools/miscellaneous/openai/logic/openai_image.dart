@@ -1,6 +1,6 @@
 part of 'package:gc_wizard/tools/miscellaneous/openai/logic/openai.dart';
 
-final BASE_URL_CHATGPT_IMAGE = 'https://api.openai.com/v1/images/generations';
+final BASE_URL_OPENAI_IMAGE = 'https://api.openai.com/v1/images/generations';
 
 enum OPENAI_IMAGE_DATATYPE {URL, BASE64, NULL}
 
@@ -12,37 +12,7 @@ Map<String, String> OPEN_AI_IMAGE_SIZE = {
   '1792x1024' : '1792x1024',
 };
 
-class OpenAIimageOutput {
-  final OPENAI_TASK_STATUS status;
-  final String httpCode;
-  final String httpMessage;
-  final String imageData;
-  final OPENAI_IMAGE_DATATYPE imageDataType;
-
-  OpenAIimageOutput({required this.status, required this.httpCode, required this.httpMessage, required this.imageData, required this.imageDataType,});
-}
-
-Future<OpenAIimageOutput> OpenAIgetImageAsync(GCWAsyncExecuterParameters? jobData) async {
-  if (jobData?.parameters is! OPENAIgetChatJobData) {
-    return Future.value(
-        OpenAIimageOutput(status: OPENAI_TASK_STATUS.ERROR, httpCode: '', httpMessage: '', imageData: '', imageDataType: OPENAI_IMAGE_DATATYPE.NULL));
-  }
-  var ChatGPTgetChatJob = jobData!.parameters as OPENAIgetChatJobData;
-  OpenAIimageOutput output = await _OpenAIgetImageAsync(
-      ChatGPTgetChatJob.chatgpt_api_key,
-      ChatGPTgetChatJob.chatgpt_model,
-      ChatGPTgetChatJob.chatgpt_prompt,
-      ChatGPTgetChatJob.chatgpt_temperature,
-      ChatGPTgetChatJob.chatgpt_image_size,
-      ChatGPTgetChatJob.chatgpt_image_url,
-      sendAsyncPort: jobData.sendAsyncPort);
-
-  jobData.sendAsyncPort?.send(output);
-
-  return output;
-}
-
-Future<OpenAIimageOutput> _OpenAIgetImageAsync(String APIkey, String model, String prompt, double temperature, String size, bool imageUrl, {SendPort? sendAsyncPort}) async {
+Future<OpenAItaskOutput> _OpenAIgetImageAsync(String APIkey, String model, String prompt, double temperature, String size, bool imageUrl, {SendPort? sendAsyncPort}) async {
   String httpCode = '';
   String httpMessage = '';
   String imageData = '';
@@ -54,7 +24,7 @@ Future<OpenAIimageOutput> _OpenAIgetImageAsync(String APIkey, String model, Stri
       'Authorization' : 'Bearer '+APIkey,
     };
 
-    final CHATGPT_IMAGE_BODY = {
+    final OPENAI_IMAGE_BODY = {
       //'model': 'dall-e-3',
       'prompt': prompt,
       'n': 1,
@@ -62,9 +32,9 @@ Future<OpenAIimageOutput> _OpenAIgetImageAsync(String APIkey, String model, Stri
       'response_format': imageUrl ? 'url' : 'b64_json',
     };
 
-    final body = jsonEncode(CHATGPT_IMAGE_BODY);
+    final body = jsonEncode(OPENAI_IMAGE_BODY);
     print(body);
-    final uri = BASE_URL_CHATGPT_IMAGE;
+    final uri = BASE_URL_OPENAI_IMAGE;
     final http.Response responseImage = await http.post(
       Uri.parse(uri),
       headers: CHATGPT_MODEL_HEADERS,
@@ -89,5 +59,5 @@ Future<OpenAIimageOutput> _OpenAIgetImageAsync(String APIkey, String model, Stri
     print(e.toString());
   }
 
-  return OpenAIimageOutput(status: status, httpCode: httpCode, httpMessage: httpMessage, imageData: imageData, imageDataType: OPENAI_IMAGE_DATATYPE.NULL);
+  return OpenAItaskOutput(status: status, httpCode: httpCode, httpMessage: httpMessage, imageData: imageData, imageDataType: OPENAI_IMAGE_DATATYPE.NULL, textData: '');
 }

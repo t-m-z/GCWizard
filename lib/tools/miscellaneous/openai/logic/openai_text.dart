@@ -85,5 +85,5 @@ Future<OpenAItaskOutput> _OpenAIgetTextAsync(String APIkey, String model, String
     print(e.toString());
   }
 
-  return OpenAItaskOutput(status: status, httpCode: httpCode, httpMessage: httpMessage, textData: textData, imageData: '', imageDataType: OPENAI_IMAGE_DATATYPE.NULL, task: OPENAI_TASK.NULL, );
+  return OpenAItaskOutput(status: status, httpCode: httpCode, httpMessage: httpMessage, textData: textData, imageData: '', imageDataType: OPENAI_IMAGE_DATATYPE.NULL, );
 }
