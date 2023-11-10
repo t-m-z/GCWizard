@@ -189,55 +189,63 @@ class _OpenAIState extends State<OpenAI> {
                       });
                     },
                     value: _currentSpeed),
-                GCWOpenFile(
-                  onLoaded: (_file) {
-                    if (_file == null) {
-                      showSnackBar(i18n(context, 'common_loadfile_exception_notloaded'), context);
-                      return;
-                    }
-                    _currentAudioFile = _file.bytes;
-                    setState(() {});
+              ])
+            : Container(),
+        (_currentTask == OPENAI_TASK.AUDIO_TRANSCRIBE) || (_currentTask == OPENAI_TASK.AUDIO_TRANSLATE)
+            ? GCWOpenFile(
+                onLoaded: (_file) {
+                  if (_file == null) {
+                    showSnackBar(i18n(context, 'common_loadfile_exception_notloaded'), context);
+                    return;
+                  }
+                  _currentAudioFile = _file.bytes;
+                  setState(() {});
+                },
+              )
+            : Container(),
+        (_currentTask == OPENAI_TASK.CHAT) ||
+                (_currentTask == OPENAI_TASK.IMAGE) ||
+                (_currentTask == OPENAI_TASK.SPEECH)
+            ? Column(children: <Widget>[
+                GCWTextDivider(
+                  text: i18n(context, 'openai_prompt'),
+                  suppressTopSpace: true,
+                  suppressBottomSpace: true,
+                  trailing: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: <Widget>[
+                      GCWIconButton(
+                        icon: Icons.file_open,
+                        size: IconButtonSize.SMALL,
+                        onPressed: () {
+                          setState(() {
+                            _loadFile = !_loadFile;
+                          });
+                        },
+                      ),
+                      GCWIconButton(
+                        icon: Icons.save,
+                        size: IconButtonSize.SMALL,
+                        onPressed: () {
+                          _exportFile(
+                            context,
+                            Uint8List.fromList(_currentPrompt.codeUnits),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+                GCWTextField(
+                  controller: _promptController,
+                  onChanged: (text) {
+                    setState(() {
+                      _currentPrompt = text;
+                    });
                   },
                 ),
               ])
             : Container(),
-        GCWTextDivider(
-          text: i18n(context, 'openai_prompt'),
-          suppressTopSpace: true,
-          suppressBottomSpace: true,
-          trailing: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: <Widget>[
-              GCWIconButton(
-                icon: Icons.file_open,
-                size: IconButtonSize.SMALL,
-                onPressed: () {
-                  setState(() {
-                    _loadFile = !_loadFile;
-                  });
-                },
-              ),
-              GCWIconButton(
-                icon: Icons.save,
-                size: IconButtonSize.SMALL,
-                onPressed: () {
-                  _exportFile(
-                    context,
-                    Uint8List.fromList(_currentPrompt.codeUnits),
-                  );
-                },
-              ),
-            ],
-          ),
-        ),
-        GCWTextField(
-          controller: _promptController,
-          onChanged: (text) {
-            setState(() {
-              _currentPrompt = text;
-            });
-          },
-        ),
         if (_loadFile)
           GCWOpenFile(
             onLoaded: (_file) {

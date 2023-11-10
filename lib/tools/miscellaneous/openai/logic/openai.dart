@@ -18,7 +18,7 @@ Map<String, OPENAI_TASK> OPENAI_TASK_LIST = {
   'openai_text' : OPENAI_TASK.CHAT,
   'openai_image' : OPENAI_TASK.IMAGE,
   'openai_speech' : OPENAI_TASK.SPEECH,
-  'openai_transscribe' : OPENAI_TASK.AUDIO_TRANSCRIBE,
+  'openai_transcribe' : OPENAI_TASK.AUDIO_TRANSCRIBE,
   'openai_translate' : OPENAI_TASK.AUDIO_TRANSLATE,
 };
 
