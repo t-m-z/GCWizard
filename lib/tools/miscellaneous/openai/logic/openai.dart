@@ -16,6 +16,21 @@ part 'package:gc_wizard/tools/miscellaneous/openai/logic/openai_speech.dart';
 enum OPENAI_TASK {CHAT, IMAGE, AUDIO_TRANSCRIBE, AUDIO_TRANSLATE, SPEECH, NULL}
 enum OPENAI_TASK_STATUS {OK, ERROR}
 
+Map<OPENAI_TASK, String> OPENAI_FILENAME = {
+  OPENAI_TASK.CHAT : 'openai_chat',
+  OPENAI_TASK.IMAGE : 'openai_image',
+  OPENAI_TASK.AUDIO_TRANSLATE : 'openai_translate',
+  OPENAI_TASK.AUDIO_TRANSCRIBE : 'openai_transcribe',
+  OPENAI_TASK.SPEECH : 'openai_speech',
+};
+Map<OPENAI_TASK, String> OPENAI_FILETYPE = {
+  OPENAI_TASK.CHAT : 'prompt',
+  OPENAI_TASK.IMAGE : 'png',
+  OPENAI_TASK.AUDIO_TRANSLATE : 'txt',
+  OPENAI_TASK.AUDIO_TRANSCRIBE : 'txt',
+  OPENAI_TASK.SPEECH : 'mp3',
+};
+
 Map<String, OPENAI_TASK> OPENAI_TASK_LIST = {
   'openai_text' : OPENAI_TASK.CHAT,
   'openai_image' : OPENAI_TASK.IMAGE,

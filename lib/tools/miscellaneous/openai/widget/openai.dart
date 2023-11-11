@@ -24,7 +24,6 @@ import 'package:gc_wizard/common_widgets/spinners/gcw_double_spinner.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/base/_common/logic/base.dart';
-import 'package:gc_wizard/tools/images_and_files/hexstring2file/logic/hexstring2file.dart';
 import 'package:gc_wizard/tools/miscellaneous/openai/logic/openai.dart';
 import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:gc_wizard/utils/file_utils/gcw_file.dart';
@@ -51,6 +50,7 @@ class _OpenAIState extends State<OpenAI> {
   String _currentImageData = '';
   String _currentImageSize = '256x256';
   Uint8List _currentAudioFile = Uint8List.fromList([]);
+  List<int> _currentOutputData = [];
   OPENAI_TASK _currentTask = OPENAI_TASK.CHAT;
 
   bool _loadFile = false;
@@ -230,6 +230,7 @@ class _OpenAIState extends State<OpenAI> {
                         onPressed: () {
                           _exportFile(
                             context,
+                            _currentTask,
                             Uint8List.fromList(_currentPrompt.codeUnits),
                           );
                         },
@@ -275,20 +276,16 @@ class _OpenAIState extends State<OpenAI> {
 
   void _calcOutput() {
     _getOpenAItask();
-    //if (_currentMode == GCWSwitchPosition.left) {
-    //  _getChatGPTtext();
-    //  setState(() {});
-    //} else {
-    //  _getChatGPTimage();
-    //}
+    setState(() {});
   }
 
   void _exportFile(
     BuildContext context,
+    OPENAI_TASK task,
     Uint8List data,
   ) async {
     bool value = false;
-    String filename = buildFileNameWithDate('openai.dart', null) + '.prompt';
+    String filename = buildFileNameWithDate(OPENAI_FILENAME[task]!, null) + '.' + OPENAI_FILETYPE[task]!;
     value = await saveByteDataToFile(context, data, filename);
     if (value) showExportedFileDialog(context);
   }
@@ -334,67 +331,52 @@ class _OpenAIState extends State<OpenAI> {
       switch (_currentTask) {
         case OPENAI_TASK.CHAT:
           var outputMap = jsonDecode(output.textData);
-          _currentOutput = outputMap['choices'][0]['text'] as String;
+          if (outputMap['object'] == 'chat.completion') {
+            _currentOutput = outputMap['choices'][0]['message']['content'] as String;
+          } else {
+            _currentOutput = outputMap['choices'][0]['text'] as String;
+          }
           _outputWidget = GCWDefaultOutput(
             child: _currentOutput,
-            trailing: GCWIconButton(
-              icon: Icons.email_outlined,
-              size: IconButtonSize.SMALL,
-              onPressed: () async {
-                final Email email = Email(
-                  body: 'Model: ' +
-                      _currentModel +
-                      '\n' +
-                      'Prompt: ' +
-                      _currentPrompt +
-                      '\n' +
-                      'Temperature: ' +
-                      _currentTemperature.toString() +
-                      '\n' +
-                      _currentOutput,
-                  subject: 'Invalid Content created',
-                  recipients: ['thomas@familiezimmermann.de'],
-                  //cc: ['cc@example.com'],
-                  //bcc: ['bcc@example.com'],
-                  //attachmentPaths: ['/path/to/attachment.zip'],
-                  isHTML: false,
-                );
-                try {
-                  await FlutterEmailSender.send(email);
-                  showSnackBar('SUCCESS - e-Mail send', context);
-                } catch (error) {
-                  showSnackBar(error.toString(), context);
-                }
-              },
-            ),
+            trailing: _defaultOutputTrainling(),
           );
           break;
         case OPENAI_TASK.IMAGE:
           var outputMap = jsonDecode(output.imageData);
           if (_currentImageMode == GCWSwitchPosition.left) {
             _currentOutput = outputMap['data'][0]['url'] as String;
-            _outputWidget = GCWDefaultOutput(child: _currentOutput);
+            _currentOutputData = _currentOutput.codeUnits;
+            _outputWidget = GCWDefaultOutput(trailing: _defaultOutputTrainling(), child: _currentOutput);
           } else {
             _currentOutput = outputMap['data'][0]['b64_json'] as String;
             _currentImageData = decodeBase64(_currentOutput);
-            _currentImageData = asciiToHexString(_currentImageData);
-            var fileData = hexstring2file(_currentImageData);
-            _outputWidget = Column(
-              children: <Widget>[
-                GCWExpandableTextDivider(
-                    expanded: false,
-                    text: 'BASE64',
-                    child: GCWDefaultOutput(
-                      child: _currentOutput,
-                    )),
-                GCWImageView(imageData: GCWImageViewData(GCWFile(bytes: fileData!)))
-              ],
-            );
+            _currentOutputData = _currentImageData.codeUnits;
+            var fileData = Uint8List.fromList(_currentOutputData);
+            _outputWidget = GCWDefaultOutput(
+                trailing: _defaultOutputTrainling(),
+                child: Column(
+                  children: <Widget>[
+                    GCWExpandableTextDivider(
+                        expanded: false,
+                        text: 'BASE64',
+                        child: GCWDefaultOutput(
+                          child: _currentOutput,
+                        )),
+                    GCWImageView(
+                      imageData: GCWImageViewData(GCWFile(bytes: fileData, name: _currentPrompt)),
+                      suppressOpenInTool: const {GCWImageViewOpenInTools.HIDDENDATA, },
+                      suppressedButtons: const {GCWImageViewButtons.SAVE},
+                    )
+                  ],
+                ));
           }
           break;
         case OPENAI_TASK.SPEECH:
-          _outputWidget = GCWSoundPlayer(
-            file: GCWFile(bytes: output.audioData, name: _currentPrompt),
+          _outputWidget = GCWDefaultOutput(
+            trailing: _defaultOutputTrainling(),
+            child: GCWSoundPlayer(
+              file: GCWFile(bytes: output.audioData, name: _currentPrompt),
+            ),
           );
           break;
         case OPENAI_TASK.AUDIO_TRANSLATE:
@@ -411,5 +393,50 @@ class _OpenAIState extends State<OpenAI> {
             i18n(context, 'openai_error') + '\n' + output.httpCode + '\n' + output.httpMessage + '\n' + output.textData;
       }
     });
+  }
+
+  Widget _defaultOutputTrainling() {
+    return Row(
+      children: <Widget>[
+        GCWIconButton(
+          icon: Icons.save,
+          size: IconButtonSize.SMALL,
+          onPressed: () {
+            _exportFile(
+              context,
+              _currentTask,
+              Uint8List.fromList(_currentOutputData),
+            );
+          },
+        ),
+        GCWIconButton(
+          icon: Icons.email_outlined,
+          size: IconButtonSize.SMALL,
+          onPressed: () async {
+            final Email email = Email(
+              body: 'Model: ' +
+                  _currentModel +
+                  '\n' +
+                  'Prompt: ' +
+                  _currentPrompt +
+                  '\n' +
+                  'Temperature: ' +
+                  _currentTemperature.toString() +
+                  '\n' +
+                  _currentOutput,
+              subject: 'Invalid Content created',
+              recipients: ['thomas@familiezimmermann.de'],
+              isHTML: false,
+            );
+            try {
+              await FlutterEmailSender.send(email);
+              showSnackBar('SUCCESS - e-Mail send', context);
+            } catch (error) {
+              showSnackBar(error.toString(), context);
+            }
+          },
+        ),
+      ],
+    );
   }
 }
