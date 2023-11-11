@@ -18,6 +18,7 @@ Future<OpenAItaskOutput> _OpenAIgetImageAsync(
   String httpCode = '';
   String httpMessage = '';
   String imageData = '';
+  String textData =  '';
   OPENAI_TASK_STATUS status = OPENAI_TASK_STATUS.ERROR;
 
   try {
@@ -44,9 +45,10 @@ Future<OpenAItaskOutput> _OpenAIgetImageAsync(
     httpCode = responseImage.statusCode.toString();
     httpMessage = responseImage.reasonPhrase.toString();
     imageData = responseImage.body;
-
     if (httpCode != '200') {
       OPENAI_TASK_STATUS.ERROR;
+      var errorMessage = jsonDecode(imageData);
+      textData = (errorMessage['error']['code'] as String) + '\n' + (errorMessage['error']['message'] as String);
     } else {
       status = OPENAI_TASK_STATUS.OK;
     }
@@ -54,7 +56,6 @@ Future<OpenAItaskOutput> _OpenAIgetImageAsync(
     status = OPENAI_TASK_STATUS.ERROR;
     httpCode = exception.toString();
     httpMessage = stackTrace.toString();
-    imageData = '';
   }
 
   return OpenAItaskOutput(
@@ -63,6 +64,6 @@ Future<OpenAItaskOutput> _OpenAIgetImageAsync(
       httpMessage: httpMessage,
       imageData: imageData,
       imageDataType: OPENAI_IMAGE_DATATYPE.NULL,
-      textData: '',
-      audioData: Uint8List.fromList([]));
+      textData: textData,
+      audioFile: GCWFile(bytes: Uint8List.fromList([]), name: ''));
 }

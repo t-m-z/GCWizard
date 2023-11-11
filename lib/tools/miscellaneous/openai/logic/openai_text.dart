@@ -1,7 +1,7 @@
 part of 'package:gc_wizard/tools/miscellaneous/openai/logic/openai.dart';
 
-final BASE_URL_CHATGPT_CHAT_TEXT = 'https://api.openai.com/v1/chat/completions';
-final BASE_URL_CHATGPT_COMPLETIONS_TEXT = 'https://api.openai.com/v1/completions';
+final _BASE_URL_CHATGPT_CHAT_TEXT = 'https://api.openai.com/v1/chat/completions';
+final _BASE_URL_CHATGPT_COMPLETIONS_TEXT = 'https://api.openai.com/v1/completions';
 
 final List<String> MODELS_CHAT = [
   'gpt-4-1106-preview ',
@@ -22,18 +22,18 @@ final List<String> MODELS_COMPLETIONS = [
   'davinci-002',
 ];
 
-final Map<String, String> ENDPOINTS = {
-  'gpt-4': BASE_URL_CHATGPT_CHAT_TEXT,
-  'gpt-4-0613': BASE_URL_CHATGPT_CHAT_TEXT,
-  'gpt-4-32k': BASE_URL_CHATGPT_CHAT_TEXT,
-  'gpt-4-32k-0613': BASE_URL_CHATGPT_CHAT_TEXT,
-  'gpt-3.5-turbo': BASE_URL_CHATGPT_CHAT_TEXT,
-  'gpt-3.5-turbo-0613': BASE_URL_CHATGPT_CHAT_TEXT,
-  'gpt-3.5-turbo-16k': BASE_URL_CHATGPT_CHAT_TEXT,
-  'gpt-3.5-turbo-16k-0613': BASE_URL_CHATGPT_CHAT_TEXT,
-  'gpt-3.5-turbo-instruct': BASE_URL_CHATGPT_COMPLETIONS_TEXT,
-  'babbage-002': BASE_URL_CHATGPT_COMPLETIONS_TEXT,
-  'davinci-002': BASE_URL_CHATGPT_COMPLETIONS_TEXT,
+final Map<String, String> _OPENAI_ENDPOINTS = {
+  'gpt-4': _BASE_URL_CHATGPT_CHAT_TEXT,
+  'gpt-4-0613': _BASE_URL_CHATGPT_CHAT_TEXT,
+  'gpt-4-32k': _BASE_URL_CHATGPT_CHAT_TEXT,
+  'gpt-4-32k-0613': _BASE_URL_CHATGPT_CHAT_TEXT,
+  'gpt-3.5-turbo': _BASE_URL_CHATGPT_CHAT_TEXT,
+  'gpt-3.5-turbo-0613': _BASE_URL_CHATGPT_CHAT_TEXT,
+  'gpt-3.5-turbo-16k': _BASE_URL_CHATGPT_CHAT_TEXT,
+  'gpt-3.5-turbo-16k-0613': _BASE_URL_CHATGPT_CHAT_TEXT,
+  'gpt-3.5-turbo-instruct': _BASE_URL_CHATGPT_COMPLETIONS_TEXT,
+  'babbage-002': _BASE_URL_CHATGPT_COMPLETIONS_TEXT,
+  'davinci-002': _BASE_URL_CHATGPT_COMPLETIONS_TEXT,
 };
 
 Future<OpenAItaskOutput> _OpenAIgetTextAsync(String APIkey, String model, String prompt, double temperature,
@@ -50,7 +50,7 @@ Future<OpenAItaskOutput> _OpenAIgetTextAsync(String APIkey, String model, String
     'Authorization': 'Bearer ' + APIkey,
   };
 
-  final CHATGPT_CHAT_BODY = {
+  final OPENAI_CHAT_BODY = {
     'model': model,
     'messages': [
       {'role': 'user', 'content': prompt}
@@ -59,7 +59,7 @@ Future<OpenAItaskOutput> _OpenAIgetTextAsync(String APIkey, String model, String
     'temperature': temperature,
   };
 
-  final CHATGPT_COMPLETION_BODY = {
+  final OPENAI_COMPLETION_BODY = {
     'model': model,
     'prompt': prompt,
     'max_tokens': 1000,
@@ -67,12 +67,12 @@ Future<OpenAItaskOutput> _OpenAIgetTextAsync(String APIkey, String model, String
   };
 
   if (MODELS_CHAT.contains(model)) {
-    body = jsonEncode(CHATGPT_CHAT_BODY);
+    body = jsonEncode(OPENAI_CHAT_BODY);
   } else {
-    body = jsonEncode(CHATGPT_COMPLETION_BODY);
+    body = jsonEncode(OPENAI_COMPLETION_BODY);
   }
   try {
-    uri = ENDPOINTS[model]!;
+    uri = _OPENAI_ENDPOINTS[model]!;
     final http.Response responseChat = await http.post(
       Uri.parse(uri),
       headers: CHATGPT_MODEL_HEADERS,
@@ -80,14 +80,12 @@ Future<OpenAItaskOutput> _OpenAIgetTextAsync(String APIkey, String model, String
     );
     httpCode = responseChat.statusCode.toString();
     httpMessage = responseChat.reasonPhrase.toString();
-
+    textData = responseChat.body;
 
     if (httpCode != '200') {
       status = OPENAI_TASK_STATUS.ERROR;
-      textData = responseChat.body;
     } else {
       status = OPENAI_TASK_STATUS.OK;
-      textData = responseChat.body;
     }
   } catch (exception, stackTrace) {
     status = OPENAI_TASK_STATUS.ERROR;
@@ -103,5 +101,5 @@ Future<OpenAItaskOutput> _OpenAIgetTextAsync(String APIkey, String model, String
       textData: textData,
       imageData: '',
       imageDataType: OPENAI_IMAGE_DATATYPE.NULL,
-      audioData: Uint8List.fromList([]));
+      audioFile: GCWFile(bytes: Uint8List.fromList([]), name: ''));
 }

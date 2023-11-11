@@ -1,11 +1,12 @@
 
 import 'dart:convert';
+import 'dart:io';
 import 'dart:isolate';
 import 'dart:typed_data';
-//import 'dart:io';
-//import 'package:dio/dio.dart';
 
+import 'package:dart_openai/dart_openai.dart';
 import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
+import 'package:gc_wizard/utils/file_utils/gcw_file.dart';
 import 'package:http/http.dart' as http;
 
 part 'package:gc_wizard/tools/miscellaneous/openai/logic/openai_text.dart';
@@ -24,6 +25,7 @@ Map<OPENAI_TASK, String> OPENAI_FILENAME = {
   OPENAI_TASK.SPEECH : 'openai_speech',
   OPENAI_TASK.PROMPT : 'openai_prompt',
 };
+
 Map<OPENAI_TASK, String> OPENAI_FILETYPE = {
   OPENAI_TASK.CHAT : 'chat',
   OPENAI_TASK.IMAGE : 'png',
@@ -52,7 +54,7 @@ class OPENAIgetChatJobData {
   final double openai_speed;
   final String openai_voice;
   final OPENAI_TASK openai_task;
-  final Uint8List openai_audiofile;
+  final GCWFile openai_audiofile;
 
   OPENAIgetChatJobData({required this.openai_audiofile, required this.openai_speed, required this.openai_voice, required this.openai_api_key, required this.openai_model, required this.openai_prompt, required this.openai_temperature, required this.openai_image_size, required this.openai_image_url, required this.openai_task});
 }
@@ -64,19 +66,19 @@ class OpenAItaskOutput {
   final String textData;
   final String imageData;
   final OPENAI_IMAGE_DATATYPE imageDataType;
-  final Uint8List audioData;
+  final GCWFile audioFile;
 
-  OpenAItaskOutput({required this.status, required this.httpCode, required this.httpMessage, required this.textData, required this.imageData, required this.imageDataType, required this.audioData});
+  OpenAItaskOutput({required this.status, required this.httpCode, required this.httpMessage, required this.textData, required this.imageData, required this.imageDataType, required this.audioFile});
 }
 
 Future<OpenAItaskOutput> OpenAIrunTaskAsync(GCWAsyncExecuterParameters? jobData) async {
   if (jobData?.parameters is! OPENAIgetChatJobData) {
     return Future.value(
-        OpenAItaskOutput(status: OPENAI_TASK_STATUS.ERROR, httpCode: '', httpMessage: '', textData: '',imageData: '', imageDataType: OPENAI_IMAGE_DATATYPE.NULL, audioData: Uint8List.fromList([])));
+        OpenAItaskOutput(status: OPENAI_TASK_STATUS.ERROR, httpCode: '', httpMessage: '', textData: '',imageData: '', imageDataType: OPENAI_IMAGE_DATATYPE.NULL, audioFile: GCWFile(bytes: Uint8List.fromList([]), name: '')));
   }
   var ChatGPTgetChatJob = jobData!.parameters as OPENAIgetChatJobData;
 
-  OpenAItaskOutput output = OpenAItaskOutput(status: OPENAI_TASK_STATUS.ERROR, httpCode: '', httpMessage: '', textData: '',imageData: '', imageDataType: OPENAI_IMAGE_DATATYPE.NULL, audioData: Uint8List.fromList([]));
+  OpenAItaskOutput output = OpenAItaskOutput(status: OPENAI_TASK_STATUS.ERROR, httpCode: '', httpMessage: '', textData: '',imageData: '', imageDataType: OPENAI_IMAGE_DATATYPE.NULL, audioFile: GCWFile(bytes: Uint8List.fromList([]), name: ''));
 
   switch (ChatGPTgetChatJob.openai_task) {
     case OPENAI_TASK.CHAT:
@@ -98,17 +100,14 @@ Future<OpenAItaskOutput> OpenAIrunTaskAsync(GCWAsyncExecuterParameters? jobData)
           sendAsyncPort: jobData.sendAsyncPort);
       break;
     case OPENAI_TASK.AUDIO_TRANSCRIBE:
+    case OPENAI_TASK.AUDIO_TRANSLATE:
       output = await _OpenAIgetAudioAsync(
           ChatGPTgetChatJob.openai_api_key,
-          ChatGPTgetChatJob.openai_model,
           ChatGPTgetChatJob.openai_prompt,
           ChatGPTgetChatJob.openai_temperature,
-          ChatGPTgetChatJob.openai_image_size,
-          ChatGPTgetChatJob.openai_image_url,
+          ChatGPTgetChatJob.openai_audiofile,
           ChatGPTgetChatJob.openai_task,
           sendAsyncPort: jobData.sendAsyncPort);
-      break;
-    case OPENAI_TASK.AUDIO_TRANSLATE:
       break;
     case OPENAI_TASK.SPEECH:
       output = await _OpenAIgetSpeechAsync(

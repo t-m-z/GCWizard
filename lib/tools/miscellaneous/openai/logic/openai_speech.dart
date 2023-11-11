@@ -1,6 +1,6 @@
 part of 'package:gc_wizard/tools/miscellaneous/openai/logic/openai.dart';
 
-final BASE_URL_OPENAI_SPEECH = 'https://api.openai.com/v1/audio/speech';
+final _BASE_URL_OPENAI_SPEECH = 'https://api.openai.com/v1/audio/speech';
 
 Map<String, String> OPEN_AI_SPEECH_VOICE = {
   'alloy': 'alloy',
@@ -33,7 +33,7 @@ Future<OpenAItaskOutput> _OpenAIgetSpeechAsync(String APIkey, String model, Stri
   };
 
   try {
-    uri = BASE_URL_OPENAI_SPEECH;
+    uri = _BASE_URL_OPENAI_SPEECH;
 
     final http.Response response = await http.post(
       Uri.parse(uri),
@@ -65,5 +65,5 @@ Future<OpenAItaskOutput> _OpenAIgetSpeechAsync(String APIkey, String model, Stri
       textData: '',
       imageData: '',
       imageDataType: OPENAI_IMAGE_DATATYPE.NULL,
-      audioData: audioData);
+      audioFile: GCWFile(bytes: audioData, name: ''));
 }

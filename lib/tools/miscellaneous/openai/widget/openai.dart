@@ -50,9 +50,9 @@ class _OpenAIState extends State<OpenAI> {
   String _currentModel = 'gpt-3.5-turbo-instruct';
   String _currentImageData = '';
   String _currentImageSize = '256x256';
-  Uint8List _currentAudioFile = Uint8List.fromList([]);
+  GCWFile _currentAudioFile = GCWFile(bytes: Uint8List.fromList([]), name: '');
   List<int> _currentOutputData = [];
-  List<String> _currentChatHistory = [];
+  List<List<String>> _currentChatHistory = [];
   OPENAI_TASK _currentTask = OPENAI_TASK.CHAT;
 
   bool _loadFile = false;
@@ -98,42 +98,43 @@ class _OpenAIState extends State<OpenAI> {
             );
           }).toList(),
           onChanged: (value) {
+            _outputWidget = Container();
             setState(() {
               _currentTask = value;
             });
           },
         ),
         _currentTask == OPENAI_TASK.CHAT
-            ? Column(
-                children: <Widget>[
-                  GCWDropDown<String>(
-                    title: i18n(context, 'openai_model'),
-                    value: _currentModel,
-                    items: _modelIDs.entries.map((mode) {
-                      return GCWDropDownMenuItem(
-                        value: mode.key,
-                        child: mode.value,
-                      );
-                    }).toList(),
-                    onChanged: (value) {
-                      setState(() {
-                        _currentModel = value;
-                      });
-                    },
-                  ),
-                  GCWDoubleSpinner(
-                      title: i18n(context, 'openai_temperature'),
-                      min: 0,
-                      max: 1,
-                      numberDecimalDigits: 6,
-                      onChanged: (value) {
-                        setState(() {
-                          _currentTemperature = value;
-                        });
-                      },
-                      value: _currentTemperature),
-                ],
+            ? GCWDropDown<String>(
+                title: i18n(context, 'openai_model'),
+                value: _currentModel,
+                items: _modelIDs.entries.map((mode) {
+                  return GCWDropDownMenuItem(
+                    value: mode.key,
+                    child: mode.value,
+                  );
+                }).toList(),
+                onChanged: (value) {
+                  setState(() {
+                    _currentModel = value;
+                  });
+                },
               )
+            : Container(),
+        _currentTask == OPENAI_TASK.CHAT ||
+                _currentTask == OPENAI_TASK.AUDIO_TRANSCRIBE ||
+                _currentTask == OPENAI_TASK.AUDIO_TRANSLATE
+            ? GCWDoubleSpinner(
+                title: i18n(context, 'openai_temperature'),
+                min: 0,
+                max: 1,
+                numberDecimalDigits: 6,
+                onChanged: (value) {
+                  setState(() {
+                    _currentTemperature = value;
+                  });
+                },
+                value: _currentTemperature)
             : Container(),
         _currentTask == OPENAI_TASK.IMAGE
             ? Column(children: <Widget>[
@@ -194,21 +195,11 @@ class _OpenAIState extends State<OpenAI> {
                     value: _currentSpeed),
               ])
             : Container(),
-        (_currentTask == OPENAI_TASK.AUDIO_TRANSCRIBE) || (_currentTask == OPENAI_TASK.AUDIO_TRANSLATE)
-            ? GCWOpenFile(
-                onLoaded: (_file) {
-                  if (_file == null) {
-                    showSnackBar(i18n(context, 'common_loadfile_exception_notloaded'), context);
-                    return;
-                  }
-                  _currentAudioFile = _file.bytes;
-                  setState(() {});
-                },
-              )
-            : Container(),
-        (_currentTask == OPENAI_TASK.CHAT) ||
-                (_currentTask == OPENAI_TASK.IMAGE) ||
-                (_currentTask == OPENAI_TASK.SPEECH)
+        _currentTask == OPENAI_TASK.CHAT ||
+                _currentTask == OPENAI_TASK.IMAGE ||
+                _currentTask == OPENAI_TASK.AUDIO_TRANSCRIBE ||
+                _currentTask == OPENAI_TASK.AUDIO_TRANSLATE ||
+                _currentTask == OPENAI_TASK.SPEECH
             ? Column(children: <Widget>[
                 GCWTextDivider(
                   text: i18n(context, 'openai_prompt'),
@@ -250,6 +241,18 @@ class _OpenAIState extends State<OpenAI> {
                 ),
               ])
             : Container(),
+        _currentTask == OPENAI_TASK.AUDIO_TRANSCRIBE || _currentTask == OPENAI_TASK.AUDIO_TRANSLATE
+            ? GCWOpenFile(
+                onLoaded: (_file) {
+                  if (_file == null) {
+                    showSnackBar(i18n(context, 'common_loadfile_exception_notloaded'), context);
+                    return;
+                  }
+                  _currentAudioFile = _file;
+                  setState(() {});
+                },
+              )
+            : Container(),
         if (_loadFile)
           GCWOpenFile(
             onLoaded: (_file) {
@@ -264,20 +267,38 @@ class _OpenAIState extends State<OpenAI> {
             },
           ),
         GCWButton(
-          text: i18n(context, 'common_start'),
+          text: i18n(context, 'openai_start'),
           onPressed: () {
             setState(() {
-              _currentChatHistory.add('PROMPT: ' + _currentPrompt);
+              switch (_currentTask) {
+                case OPENAI_TASK.AUDIO_TRANSLATE:
+                  _currentChatHistory.add(['USER', 'TRANSLATE\nPROMPT: ' + _currentPrompt]);
+                  break;
+                case OPENAI_TASK.AUDIO_TRANSCRIBE:
+                  _currentChatHistory.add(['USER', 'TRANSCRIBE\nPROMPT: ' + _currentPrompt]);
+                  break;
+                case OPENAI_TASK.IMAGE:
+                  _currentChatHistory.add(['USER', 'CREATE IMAGE\nPROMPT: ' + _currentPrompt]);
+                  break;
+                case OPENAI_TASK.SPEECH:
+                  _currentChatHistory.add(['USER', 'SPEECH\nPROMPT: ' + _currentPrompt + '\nVOICE: ' + _currentVoice + '\nSPEED: ' + _currentSpeed.toStringAsFixed(2)]);
+                  break;
+                case OPENAI_TASK.CHAT:
+                  _currentChatHistory.add(['USER', _currentPrompt]);
+                  break;
+              }
               _calcOutput();
             });
           },
         ),
         _outputWidget,
         GCWExpandableTextDivider(
+          suppressTopSpace: false,
           expanded: false,
           text: i18n(context, 'openai_history'),
           child: GCWColumnedMultilineOutput(
             data: _buildCurrentChatHistory(_currentChatHistory),
+            flexValues: [2, 8],
           ),
         ),
       ],
@@ -289,10 +310,10 @@ class _OpenAIState extends State<OpenAI> {
     setState(() {});
   }
 
-  List<List<String>> _buildCurrentChatHistory(List<String> history){
+  List<List<String>> _buildCurrentChatHistory(List<List<String>> history) {
     List<List<String>> result = [];
-    for (String chatItem in history) {
-      result.add([chatItem]);
+    for (List<String> chatItem in history) {
+      result.add(chatItem);
     }
     return result;
   }
@@ -354,25 +375,26 @@ class _OpenAIState extends State<OpenAI> {
           } else {
             _currentOutput = outputMap['choices'][0]['text'] as String;
           }
+          _currentOutput = _currentOutput.trim();
           _outputWidget = GCWDefaultOutput(
             child: _currentOutput,
-            trailing: _defaultOutputTrainling(),
+            trailing: _defaultOutputTrailing(),
           );
-          _currentChatHistory.add('OPENAI: ' + _currentOutput);
+          _currentChatHistory.add(['OPENAI', _currentOutput]);
           break;
         case OPENAI_TASK.IMAGE:
           var outputMap = jsonDecode(output.imageData);
           if (_currentImageMode == GCWSwitchPosition.left) {
             _currentOutput = outputMap['data'][0]['url'] as String;
             _currentOutputData = _currentOutput.codeUnits;
-            _outputWidget = GCWDefaultOutput(trailing: _defaultOutputTrainling(), child: _currentOutput);
+            _outputWidget = GCWDefaultOutput(trailing: _defaultOutputTrailing(), child: _currentOutput);
           } else {
             _currentOutput = outputMap['data'][0]['b64_json'] as String;
             _currentImageData = decodeBase64(_currentOutput);
             _currentOutputData = _currentImageData.codeUnits;
             var fileData = Uint8List.fromList(_currentOutputData);
             _outputWidget = GCWDefaultOutput(
-                trailing: _defaultOutputTrainling(),
+                trailing: _defaultOutputTrailing(),
                 child: Column(
                   children: <Widget>[
                     GCWExpandableTextDivider(
@@ -383,28 +405,40 @@ class _OpenAIState extends State<OpenAI> {
                         )),
                     GCWImageView(
                       imageData: GCWImageViewData(GCWFile(bytes: fileData, name: _currentPrompt)),
-                      suppressOpenInTool: const {GCWImageViewOpenInTools.HIDDENDATA, },
+                      suppressOpenInTool: const {
+                        GCWImageViewOpenInTools.HIDDENDATA,
+                      },
                       suppressedButtons: const {GCWImageViewButtons.SAVE},
                     )
                   ],
                 ));
           }
-          _currentChatHistory.add('OPENAI: ' + 'IMAGE');
+          _currentChatHistory.add(['OPENAI', 'CREATED IMAGE']);
           break;
         case OPENAI_TASK.SPEECH:
+          _currentOutputData = output.audioFile.bytes;
           _outputWidget = GCWDefaultOutput(
-            trailing: _defaultOutputTrainling(),
+            trailing: _defaultOutputTrailing(),
             child: GCWSoundPlayer(
-              file: GCWFile(bytes: output.audioData, name: _currentPrompt),
+              file: output.audioFile,
             ),
           );
-          _currentChatHistory.add('OPENAI: ' + 'SPEECH');
+          _currentChatHistory.add(['OPENAI: ', 'CREATED SPEECH']);
           break;
         case OPENAI_TASK.AUDIO_TRANSLATE:
-          break;
         case OPENAI_TASK.AUDIO_TRANSCRIBE:
+          _currentOutput = output.textData;
+          _outputWidget = GCWDefaultOutput(
+            child: _currentOutput,
+            trailing: _defaultOutputTrailing(),
+          );
+          _currentChatHistory.add(['OPENAI', _currentOutput]);
           break;
       }
+    } else {
+      _currentOutput = output.textData;
+      _currentChatHistory.add(['OPENAI', _currentOutput]);
+      _outputWidget = GCWDefaultOutput(trailing: _defaultOutputTrailing(), child: _currentOutput);
     }
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -416,7 +450,7 @@ class _OpenAIState extends State<OpenAI> {
     });
   }
 
-  Widget _defaultOutputTrainling() {
+  Widget _defaultOutputTrailing() {
     return Row(
       children: <Widget>[
         GCWIconButton(
