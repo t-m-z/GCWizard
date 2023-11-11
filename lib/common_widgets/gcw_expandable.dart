@@ -30,7 +30,8 @@ class GCWExpandableTextDivider extends StatefulWidget {
 
 class _GCWExpandableTextDividerState extends State<GCWExpandableTextDivider> {
   bool? _currentExpanded;
-
+  Widget trailing = Container();
+  
   void _toggleExpand() {
     setState(() {
       _currentExpanded = !_currentExpanded!;
@@ -45,6 +46,7 @@ class _GCWExpandableTextDividerState extends State<GCWExpandableTextDivider> {
   Widget build(BuildContext context) {
     _currentExpanded ??= widget.expanded;
 
+    if (widget.trailing != null) trailing = widget.trailing!;
     return Column(
       children: [
         InkWell(
@@ -55,7 +57,7 @@ class _GCWExpandableTextDividerState extends State<GCWExpandableTextDivider> {
             style: widget.style,
             trailing: Row(
               children: <Widget>[
-                widget.trailing == null ? Container() : widget.trailing!,
+                trailing,
                 GCWIconButton(
                   icon: _currentExpanded! ? Icons.arrow_drop_up : Icons.arrow_drop_down,
                   size: IconButtonSize.TINY,
