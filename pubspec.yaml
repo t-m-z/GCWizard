@@ -14,11 +14,13 @@ dependencies:
   cached_network_image: ^3.3.0
   code_text_field: ^1.1.0
   collection: ^1.17.1
-  dart_openai: ^4.0.0
+  dart_openai: ^4.1.2
   device_info_plus: ^9.1.0
   diacritic: ^0.1.1
+  flutter_email_sender: ^6.0.2
   encrypt: ^5.0.3
   exif: ^3.1.4
+  dio: ^5.3.3
   file_picker: ^5.5.0
   file_picker_writable: ^2.0.3
   flutter:
