@@ -334,6 +334,8 @@ flutter:
     - lib/tools/symbol_tables/_common/assets/stenography/
     - lib/tools/symbol_tables/_common/assets/steinheil/
     - lib/tools/symbol_tables/_common/assets/stippelcode/
+    - lib/tools/symbol_tables/_common/assets/stratego/
+    - lib/tools/symbol_tables/_common/assets/stratego_hierarchy/
     - lib/tools/symbol_tables/_common/assets/suetterlin/
     - lib/tools/symbol_tables/_common/assets/sunuz/
     - lib/tools/symbol_tables/_common/assets/surf/
