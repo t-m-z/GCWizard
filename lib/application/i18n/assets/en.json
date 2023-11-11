@@ -3318,6 +3318,7 @@
   "openai_voice": "Voice",
   "openai_translate": "Translate",
   "openai_transcribe": "Transcribe",
+  "openai_history": "History",
   "pantonecolorcodes_title": "Pantone Color Codes (PMS)",
   "pantonecolorcodes_description": "Color codes for the Pantone Matching System (PMS)",
   "pantonecolorcodes_mode_pmstocolor": "PMS → Color",

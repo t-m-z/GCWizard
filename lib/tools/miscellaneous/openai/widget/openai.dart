@@ -19,6 +19,7 @@ import 'package:gc_wizard/common_widgets/gcw_openfile.dart';
 import 'package:gc_wizard/common_widgets/gcw_snackbar.dart';
 import 'package:gc_wizard/common_widgets/gcw_soundplayer.dart';
 import 'package:gc_wizard/common_widgets/image_viewers/gcw_imageview.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_double_spinner.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
@@ -51,6 +52,7 @@ class _OpenAIState extends State<OpenAI> {
   String _currentImageSize = '256x256';
   Uint8List _currentAudioFile = Uint8List.fromList([]);
   List<int> _currentOutputData = [];
+  List<String> _currentChatHistory = [];
   OPENAI_TASK _currentTask = OPENAI_TASK.CHAT;
 
   bool _loadFile = false;
@@ -230,7 +232,7 @@ class _OpenAIState extends State<OpenAI> {
                         onPressed: () {
                           _exportFile(
                             context,
-                            _currentTask,
+                            OPENAI_TASK.PROMPT,
                             Uint8List.fromList(_currentPrompt.codeUnits),
                           );
                         },
@@ -265,11 +267,19 @@ class _OpenAIState extends State<OpenAI> {
           text: i18n(context, 'common_start'),
           onPressed: () {
             setState(() {
+              _currentChatHistory.add('PROMPT: ' + _currentPrompt);
               _calcOutput();
             });
           },
         ),
         _outputWidget,
+        GCWExpandableTextDivider(
+          expanded: false,
+          text: i18n(context, 'openai_history'),
+          child: GCWColumnedMultilineOutput(
+            data: _buildCurrentChatHistory(_currentChatHistory),
+          ),
+        ),
       ],
     );
   }
@@ -277,6 +287,14 @@ class _OpenAIState extends State<OpenAI> {
   void _calcOutput() {
     _getOpenAItask();
     setState(() {});
+  }
+
+  List<List<String>> _buildCurrentChatHistory(List<String> history){
+    List<List<String>> result = [];
+    for (String chatItem in history) {
+      result.add([chatItem]);
+    }
+    return result;
   }
 
   void _exportFile(
@@ -340,6 +358,7 @@ class _OpenAIState extends State<OpenAI> {
             child: _currentOutput,
             trailing: _defaultOutputTrainling(),
           );
+          _currentChatHistory.add('OPENAI: ' + _currentOutput);
           break;
         case OPENAI_TASK.IMAGE:
           var outputMap = jsonDecode(output.imageData);
@@ -370,6 +389,7 @@ class _OpenAIState extends State<OpenAI> {
                   ],
                 ));
           }
+          _currentChatHistory.add('OPENAI: ' + 'IMAGE');
           break;
         case OPENAI_TASK.SPEECH:
           _outputWidget = GCWDefaultOutput(
@@ -378,6 +398,7 @@ class _OpenAIState extends State<OpenAI> {
               file: GCWFile(bytes: output.audioData, name: _currentPrompt),
             ),
           );
+          _currentChatHistory.add('OPENAI: ' + 'SPEECH');
           break;
         case OPENAI_TASK.AUDIO_TRANSLATE:
           break;
