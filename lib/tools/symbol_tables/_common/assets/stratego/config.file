@@ -1,0 +1,17 @@
+{
+	"case_sensitive" : false,
+	"special_mappings" : {
+		"bomb" : "6",
+		"colonel" : "2",
+		"flag" : "1",
+		"general" : "1",
+		"lieutenant" : "4",
+		"major" : "3",
+		"marshal" : "1",
+		"miner" : "5",
+		"scout" : "8",
+		"sergeant" : "4",
+		"spy" : "1",
+		"captain" : "4"
+    }
+}
