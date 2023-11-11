@@ -21,6 +21,7 @@ class _NightlyState extends State<Nightly> {
           GCWColumnedMultilineOutput(
           data: [
             ['Tool', 'Adventure Lab\nAnalyse von Lab Caches'],
+            ['Tool', 'Open AI\nClient für ChatGPT, DALL-E, Whisper'],
             ['Tool', 'Weird Rotation\nrotiere Buchstaben einzeln'],
             ['Koordinate', 'What 3 Words\nUmwandeln in W33/Suche nach W3W'],
             ['Koordinate', 'GCX8K7RD\nDas dort genutzte Koordinatenformat'],
@@ -44,6 +45,7 @@ class _NightlyState extends State<Nightly> {
               ['Symbol', 'Cuxhaven-Hamburg\nTelegrafenzeichen'],
               ['Symbol', 'Maya Zahlen\nGlyphs für Maya-Zahlen'],
               ['Symbol', 'Steinheil\nTelegrafenzeichen'],
+              ['Symbol', 'Stratego\nSpielsteine'],
             ],
             flexValues: [3, 7],),
         ],
