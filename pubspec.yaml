@@ -20,6 +20,7 @@ dependencies:
   flutter_email_sender: ^6.0.2
   encrypt: ^5.0.3
   exif: ^3.1.4
+  dio: ^5.3.3
   file_picker: ^5.5.0
   file_picker_writable: ^2.0.3
   flutter:

@@ -17,6 +17,7 @@ import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/common_widgets/gcw_expandable.dart';
 import 'package:gc_wizard/common_widgets/gcw_openfile.dart';
 import 'package:gc_wizard/common_widgets/gcw_snackbar.dart';
+import 'package:gc_wizard/common_widgets/gcw_soundplayer.dart';
 import 'package:gc_wizard/common_widgets/image_viewers/gcw_imageview.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_double_spinner.dart';
@@ -392,6 +393,9 @@ class _OpenAIState extends State<OpenAI> {
           }
           break;
         case OPENAI_TASK.SPEECH:
+          _outputWidget = GCWSoundPlayer(
+            file: GCWFile(bytes: output.audioData, name: _currentPrompt),
+          );
           break;
         case OPENAI_TASK.AUDIO_TRANSLATE:
           break;

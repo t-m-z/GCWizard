@@ -2,17 +2,19 @@ part of 'package:gc_wizard/tools/miscellaneous/openai/logic/openai.dart';
 
 final BASE_URL_OPENAI_IMAGE = 'https://api.openai.com/v1/images/generations';
 
-enum OPENAI_IMAGE_DATATYPE {URL, BASE64, NULL}
+enum OPENAI_IMAGE_DATATYPE { URL, BASE64, NULL }
 
 Map<String, String> OPEN_AI_IMAGE_SIZE = {
-  '256x256' : '256x256',
-  '512x512' : '512x512',
-  '1024x1024' : '1024x1024',
-  '1024x1792' : '1024x1792',
-  '1792x1024' : '1792x1024',
+  '256x256': '256x256',
+  '512x512': '512x512',
+  '1024x1024': '1024x1024',
+  '1024x1792': '1024x1792',
+  '1792x1024': '1792x1024',
 };
 
-Future<OpenAItaskOutput> _OpenAIgetImageAsync(String APIkey, String model, String prompt, double temperature, String size, bool imageUrl, {SendPort? sendAsyncPort}) async {
+Future<OpenAItaskOutput> _OpenAIgetImageAsync(
+    String APIkey, String model, String prompt, double temperature, String size, bool imageUrl,
+    {SendPort? sendAsyncPort}) async {
   String httpCode = '';
   String httpMessage = '';
   String imageData = '';
@@ -21,7 +23,7 @@ Future<OpenAItaskOutput> _OpenAIgetImageAsync(String APIkey, String model, Strin
   try {
     final Map<String, String> CHATGPT_MODEL_HEADERS = {
       'Content-Type': 'application/json',
-      'Authorization' : 'Bearer '+APIkey,
+      'Authorization': 'Bearer ' + APIkey,
     };
 
     final OPENAI_IMAGE_BODY = {
@@ -33,7 +35,6 @@ Future<OpenAItaskOutput> _OpenAIgetImageAsync(String APIkey, String model, Strin
     };
 
     final body = jsonEncode(OPENAI_IMAGE_BODY);
-    print(body);
     final uri = BASE_URL_OPENAI_IMAGE;
     final http.Response responseImage = await http.post(
       Uri.parse(uri),
@@ -43,21 +44,25 @@ Future<OpenAItaskOutput> _OpenAIgetImageAsync(String APIkey, String model, Strin
     httpCode = responseImage.statusCode.toString();
     httpMessage = responseImage.reasonPhrase.toString();
     imageData = responseImage.body;
+
     if (httpCode != '200') {
-      print('ERROR    ----------------------------------------------------------------');
-      print(httpCode);
-      print(httpMessage);
-      print(imageData);
+      OPENAI_TASK_STATUS.ERROR;
     } else {
       status = OPENAI_TASK_STATUS.OK;
-      print('CORECT    ----------------------------------------------------------------');
-      print(httpCode);
-      print(httpMessage);
-      print(imageData);
     }
-  } catch (e) {
-    print(e.toString());
+  } catch (exception, stackTrace) {
+    status = OPENAI_TASK_STATUS.ERROR;
+    httpCode = exception.toString();
+    httpMessage = stackTrace.toString();
+    imageData = '';
   }
 
-  return OpenAItaskOutput(status: status, httpCode: httpCode, httpMessage: httpMessage, imageData: imageData, imageDataType: OPENAI_IMAGE_DATATYPE.NULL, textData: '');
+  return OpenAItaskOutput(
+      status: status,
+      httpCode: httpCode,
+      httpMessage: httpMessage,
+      imageData: imageData,
+      imageDataType: OPENAI_IMAGE_DATATYPE.NULL,
+      textData: '',
+      audioData: Uint8List.fromList([]));
 }

@@ -2,6 +2,8 @@
 import 'dart:convert';
 import 'dart:isolate';
 import 'dart:typed_data';
+//import 'dart:io';
+//import 'package:dio/dio.dart';
 
 import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
 import 'package:http/http.dart' as http;
@@ -44,18 +46,19 @@ class OpenAItaskOutput {
   final String textData;
   final String imageData;
   final OPENAI_IMAGE_DATATYPE imageDataType;
+  final Uint8List audioData;
 
-  OpenAItaskOutput({required this.status, required this.httpCode, required this.httpMessage, required this.textData, required this.imageData, required this.imageDataType, });
+  OpenAItaskOutput({required this.status, required this.httpCode, required this.httpMessage, required this.textData, required this.imageData, required this.imageDataType, required this.audioData});
 }
 
 Future<OpenAItaskOutput> OpenAIrunTaskAsync(GCWAsyncExecuterParameters? jobData) async {
   if (jobData?.parameters is! OPENAIgetChatJobData) {
     return Future.value(
-        OpenAItaskOutput(status: OPENAI_TASK_STATUS.ERROR, httpCode: '', httpMessage: '', textData: '',imageData: '', imageDataType: OPENAI_IMAGE_DATATYPE.NULL, ));
+        OpenAItaskOutput(status: OPENAI_TASK_STATUS.ERROR, httpCode: '', httpMessage: '', textData: '',imageData: '', imageDataType: OPENAI_IMAGE_DATATYPE.NULL, audioData: Uint8List.fromList([])));
   }
   var ChatGPTgetChatJob = jobData!.parameters as OPENAIgetChatJobData;
 
-  OpenAItaskOutput output = OpenAItaskOutput(status: OPENAI_TASK_STATUS.ERROR, httpCode: '', httpMessage: '', textData: '',imageData: '', imageDataType: OPENAI_IMAGE_DATATYPE.NULL, );
+  OpenAItaskOutput output = OpenAItaskOutput(status: OPENAI_TASK_STATUS.ERROR, httpCode: '', httpMessage: '', textData: '',imageData: '', imageDataType: OPENAI_IMAGE_DATATYPE.NULL, audioData: Uint8List.fromList([]));
 
   switch (ChatGPTgetChatJob.openai_task) {
     case OPENAI_TASK.CHAT:

@@ -3,24 +3,26 @@ part of 'package:gc_wizard/tools/miscellaneous/openai/logic/openai.dart';
 final BASE_URL_OPENAI_SPEECH = 'https://api.openai.com/v1/audio/speech';
 
 Map<String, String> OPEN_AI_SPEECH_VOICE = {
-  'alloy' : 'alloy',
-  'echo' : 'echo',
-  'fable' : 'fable',
-  'onyx' : 'onyx',
-  'nova' : 'nova',
-  'shimmer' : 'shimmer',
+  'alloy': 'alloy',
+  'echo': 'echo',
+  'fable': 'fable',
+  'onyx': 'onyx',
+  'nova': 'nova',
+  'shimmer': 'shimmer',
 };
 
-Future<OpenAItaskOutput> _OpenAIgetSpeechAsync(String APIkey, String model, String prompt, double speed, String voice, {SendPort? sendAsyncPort}) async {
+Future<OpenAItaskOutput> _OpenAIgetSpeechAsync(String APIkey, String model, String prompt, double speed, String voice,
+    {SendPort? sendAsyncPort}) async {
   String httpCode = '';
   String httpMessage = '';
-  String textData = '';
   String uri = '';
+  Uint8List audioData = Uint8List.fromList([]);
+
   OPENAI_TASK_STATUS status = OPENAI_TASK_STATUS.ERROR;
 
   final Map<String, String> OPENAI_SPEECH_HEADERS = {
     'Content-Type': 'application/json',
-    'Authorization' : 'Bearer '+APIkey,
+    'Authorization': 'Bearer ' + APIkey,
   };
 
   final OPENAI_SPEECH_BODY = {
@@ -32,29 +34,36 @@ Future<OpenAItaskOutput> _OpenAIgetSpeechAsync(String APIkey, String model, Stri
 
   try {
     uri = BASE_URL_OPENAI_SPEECH;
-    final http.Response responseChat = await http.post(
+
+    final http.Response response = await http.post(
       Uri.parse(uri),
       headers: OPENAI_SPEECH_HEADERS,
       body: jsonEncode(OPENAI_SPEECH_BODY),
     );
-    httpCode = responseChat.statusCode.toString();
-    httpMessage = responseChat.reasonPhrase.toString();
-    textData = responseChat.body;
+    httpCode = response.statusCode.toString();
+    httpMessage = response.reasonPhrase.toString();
+
     if (httpCode != '200') {
-      print('ERROR    ----------------------------------------------------------------');
-      print(httpCode);
-      print(httpMessage);
-      print(textData);
+      status = OPENAI_TASK_STATUS.ERROR;
+      audioData = Uint8List.fromList([]);
     } else {
       status = OPENAI_TASK_STATUS.OK;
-      print('CORECT    ----------------------------------------------------------------');
-      print(httpCode);
-      print(httpMessage);
-      print(textData);
+      audioData = Uint8List.fromList(response.body.codeUnits);
     }
-  } catch (e) {
-    print(e.toString());
+
+  } catch (exception, stackTrace) {
+    status = OPENAI_TASK_STATUS.ERROR;
+    httpCode = exception.toString();
+    httpMessage = stackTrace.toString();
+    audioData = Uint8List.fromList([]);
   }
 
-  return OpenAItaskOutput(status: status, httpCode: httpCode, httpMessage: httpMessage, textData: textData, imageData: '', imageDataType: OPENAI_IMAGE_DATATYPE.NULL, );
+  return OpenAItaskOutput(
+      status: status,
+      httpCode: httpCode,
+      httpMessage: httpMessage,
+      textData: '',
+      imageData: '',
+      imageDataType: OPENAI_IMAGE_DATATYPE.NULL,
+      audioData: audioData);
 }
