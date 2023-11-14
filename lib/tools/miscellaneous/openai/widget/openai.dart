@@ -49,6 +49,7 @@ class _OpenAIState extends State<OpenAI> {
   String _currentOutput = '';
   String _currentModel = 'gpt-3.5-turbo-instruct';
   String _currentImageData = '';
+  String _currentLanguage = 'german';
   String _currentImageSize = '256x256';
   GCWFile _currentAudioFile = GCWFile(bytes: Uint8List.fromList([]), name: '');
   List<int> _currentOutputData = [];
@@ -182,6 +183,21 @@ class _OpenAIState extends State<OpenAI> {
                     });
                   },
                 ),
+                GCWDropDown<String>(
+                  title: i18n(context, 'openai_language'),
+                  value: _currentLanguage,
+                  items: OPEN_AI_SPEECH_LANGUAGE.entries.map((mode) {
+                    return GCWDropDownMenuItem(
+                      value: mode.value,
+                      child: mode.key,
+                    );
+                  }).toList(),
+                  onChanged: (value) {
+                    setState(() {
+                      _currentLanguage = value;
+                    });
+                  },
+                ),
                 GCWDoubleSpinner(
                     title: i18n(context, 'openai_speed'),
                     min: 0.25,
@@ -281,7 +297,15 @@ class _OpenAIState extends State<OpenAI> {
                   _currentChatHistory.add(['USER', 'CREATE IMAGE\nPROMPT: ' + _currentPrompt]);
                   break;
                 case OPENAI_TASK.SPEECH:
-                  _currentChatHistory.add(['USER', 'SPEECH\nPROMPT: ' + _currentPrompt + '\nVOICE: ' + _currentVoice + '\nSPEED: ' + _currentSpeed.toStringAsFixed(2)]);
+                  _currentChatHistory.add([
+                    'USER',
+                    'SPEECH\nPROMPT: ' +
+                        _currentPrompt +
+                        '\nVOICE: ' +
+                        _currentVoice +
+                        '\nSPEED: ' +
+                        _currentSpeed.toStringAsFixed(2)
+                  ]);
                   break;
                 case OPENAI_TASK.CHAT:
                   _currentChatHistory.add(['USER', _currentPrompt]);
@@ -362,6 +386,7 @@ class _OpenAIState extends State<OpenAI> {
       openai_voice: _currentVoice,
       openai_audiofile: _currentAudioFile,
       openai_task: _currentTask,
+      openai_language: _currentLanguage,
     ));
   }
 
