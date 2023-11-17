@@ -1,7 +1,66 @@
 part of 'package:gc_wizard/tools/miscellaneous/openai/logic/openai.dart';
 
-final _BASE_URL_OPENAI_SPEECH = 'https://api.openai.com/v1/audio/speech';
+const _BASE_URL_OPENAI_SPEECH = 'https://api.openai.com/v1/audio/speech';
 
+Map<String, String> OPEN_AI_SPEECH_LANGUAGE = {
+  'Afrikaans':'afrikaans',
+  'Arabic':'arabic',
+  'Armenian':'armenian',
+  'Azerbaijani':'azerbaijani',
+  'Belarusian':'belarusian',
+  'Bosnian':'bosnian',
+  'Bulgarian':'bulgarian',
+  'Catalan':'catalan',
+  'Chinese':'chinese',
+  'Croatian':'croatian',
+  'Czech':'czech',
+  'Danish':'danish',
+  'Dutch':'dutch',
+  'English':'english',
+  'Estonian':'estonian',
+  'Finnish':'finnish',
+  'French':'french',
+  'Galician':'galician',
+  'German':'german',
+  'Greek':'greek',
+  'Hebrew':'hebrew',
+  'Hindi':'hindi',
+  'Hungarian':'hungarian',
+  'Icelandic':'icelandic',
+  'Indonesian':'indonesian',
+  'Italian':'italian',
+  'Japanese':'japanese',
+  'Kannada':'kannada',
+  'Kazakh':'kazakh',
+  'Korean':'korean',
+  'Latvian':'latvian',
+  'Lithuanian':'lithuanian',
+  'Macedonian':'macedonian',
+  'Malay':'malay',
+  'Marathi':'marathi',
+  'Maori':'maori',
+  'Nepali':'nepali',
+  'Norwegian':'norwegian',
+  'Persian':'persian',
+  'Polish':'polish',
+  'Portuguese':'portuguese',
+  'Romanian':'romanian',
+  'Russian':'russian',
+  'Serbian':'serbian',
+  'Slovak':'slovak',
+  'Slovenian':'slovenian',
+  'Spanish':'spanish',
+  'Swahili':'swahili',
+  'Swedish':'swedish',
+  'Tagalog':'tagalog',
+  'Tamil':'tamil',
+  'Thai':'thai',
+  'Turkish':'turkish',
+  'Ukrainian':'ukrainian',
+  'Urdu':'urdu',
+  'Vietnamese':'vietnamese',
+  'Welsh':'welsh',
+};
 Map<String, String> OPEN_AI_SPEECH_VOICE = {
   'alloy': 'alloy',
   'echo': 'echo',
@@ -11,7 +70,7 @@ Map<String, String> OPEN_AI_SPEECH_VOICE = {
   'shimmer': 'shimmer',
 };
 
-Future<OpenAItaskOutput> _OpenAIgetSpeechAsync(String APIkey, String model, String prompt, double speed, String voice,
+Future<OpenAItaskOutput> _OpenAIgetSpeechAsync(String APIkey, String model, String prompt, double speed, String voice, String language,
     {SendPort? sendAsyncPort}) async {
   String httpCode = '';
   String httpMessage = '';
@@ -30,6 +89,7 @@ Future<OpenAItaskOutput> _OpenAIgetSpeechAsync(String APIkey, String model, Stri
     'input': prompt,
     'speed': speed,
     'voice': voice,
+    'language': language,
   };
 
   try {

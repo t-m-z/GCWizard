@@ -1,6 +1,6 @@
 part of 'package:gc_wizard/tools/miscellaneous/openai/logic/openai.dart';
 
-final BASE_URL_OPENAI_IMAGE = 'https://api.openai.com/v1/images/generations';
+const BASE_URL_OPENAI_IMAGE = 'https://api.openai.com/v1/images/generations';
 
 enum OPENAI_IMAGE_DATATYPE { URL, BASE64, NULL }
 
@@ -36,7 +36,7 @@ Future<OpenAItaskOutput> _OpenAIgetImageAsync(
     };
 
     final body = jsonEncode(OPENAI_IMAGE_BODY);
-    final uri = BASE_URL_OPENAI_IMAGE;
+    const uri = BASE_URL_OPENAI_IMAGE;
     final http.Response responseImage = await http.post(
       Uri.parse(uri),
       headers: CHATGPT_MODEL_HEADERS,
