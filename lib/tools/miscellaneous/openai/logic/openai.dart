@@ -86,8 +86,11 @@ class OpenAItaskOutput {
       required this.textData,
       required this.imageData,
       required this.imageDataType,
-      required this.audioFile});
+      required this.audioFile,
+      });
 }
+
+final EMPTY_TASK_OUTPUT = OpenAItaskOutput(status: OPENAI_TASK_STATUS.ERROR, httpCode: '', httpMessage: '', textData: '', imageData: '', imageDataType: OPENAI_IMAGE_DATATYPE.NULL, audioFile: GCWFile(bytes: Uint8List.fromList([])));
 
 Future<OpenAItaskOutput> OpenAIrunTaskAsync(GCWAsyncExecuterParameters? jobData) async {
   if (jobData?.parameters is! OPENAIgetChatJobData) {
@@ -138,6 +141,7 @@ Future<OpenAItaskOutput> OpenAIrunTaskAsync(GCWAsyncExecuterParameters? jobData)
           ChatGPTgetChatJob.openai_prompt, ChatGPTgetChatJob.openai_speed, ChatGPTgetChatJob.openai_voice, ChatGPTgetChatJob.openai_language,
           sendAsyncPort: jobData.sendAsyncPort);
       break;
+    default: output = EMPTY_TASK_OUTPUT;
   }
 
   jobData.sendAsyncPort?.send(output);

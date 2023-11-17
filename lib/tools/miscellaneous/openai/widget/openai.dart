@@ -42,7 +42,7 @@ class _OpenAIState extends State<OpenAI> {
   late TextEditingController _promptController;
 
   String _currentPrompt = '';
-  String _currentAPIkey = Prefs.getString(PREFERENCE_CHATGPT_API_KEY);
+  final _currentAPIkey = Prefs.getString(PREFERENCE_CHATGPT_API_KEY);
   double _currentTemperature = 0.0;
   double _currentSpeed = 1.0;
   String _currentVoice = 'alloy';
@@ -52,6 +52,12 @@ class _OpenAIState extends State<OpenAI> {
   String _currentLanguage = 'german';
   String _currentImageSize = '256x256';
   GCWFile _currentAudioFile = GCWFile(bytes: Uint8List.fromList([]), name: '');
+
+  String _outputId = '';
+  String _outputObject = '';
+  String _outputCreated = '';
+  String _outputModel = '';
+
   List<int> _currentOutputData = [];
   List<List<String>> _currentChatHistory = [];
   OPENAI_TASK _currentTask = OPENAI_TASK.CHAT;
@@ -228,9 +234,8 @@ class _OpenAIState extends State<OpenAI> {
                         icon: Icons.file_open,
                         size: IconButtonSize.SMALL,
                         onPressed: () {
-                          setState(() {
-                            _loadFile = !_loadFile;
-                          });
+                          _loadFile = !_loadFile;
+                          setState(() {});
                         },
                       ),
                       GCWIconButton(
@@ -277,9 +282,11 @@ class _OpenAIState extends State<OpenAI> {
                 _loadFile = !_loadFile;
                 return;
               }
-              _currentPrompt = String.fromCharCodes(_file.bytes);
               _loadFile = !_loadFile;
-              setState(() {});
+              setState(() {
+                _currentPrompt = String.fromCharCodes(_file.bytes);
+                _promptController.text = _currentPrompt;
+              });
             },
           ),
         GCWButton(
@@ -310,6 +317,7 @@ class _OpenAIState extends State<OpenAI> {
                 case OPENAI_TASK.CHAT:
                   _currentChatHistory.add(['USER', _currentPrompt]);
                   break;
+                default: {}
               }
               _calcOutput();
             });
@@ -347,9 +355,17 @@ class _OpenAIState extends State<OpenAI> {
     OPENAI_TASK task,
     Uint8List data,
   ) async {
+    List<String> chat = [];
+    if (task == OPENAI_TASK.CHAT) {
+      for (var chatElement in _currentChatHistory) {
+        chat.add(chatElement[0]);
+        chat.add(chatElement[1]);
+      }
+    }
+    Uint8List finalData = Uint8List.fromList((String.fromCharCodes(data) + '\n\n\n' 'History' + '\n\n' + chat.join('\n')).codeUnits);
     bool value = false;
     String filename = buildFileNameWithDate(OPENAI_FILENAME[task]!, null) + '.' + OPENAI_FILETYPE[task]!;
-    value = await saveByteDataToFile(context, data, filename);
+    value = await saveByteDataToFile(context, finalData, filename);
     if (value) showExportedFileDialog(context);
   }
 
@@ -395,12 +411,18 @@ class _OpenAIState extends State<OpenAI> {
       switch (_currentTask) {
         case OPENAI_TASK.CHAT:
           var outputMap = jsonDecode(output.textData);
-          if (outputMap['object'] == 'chat.completion') {
+          _outputId = outputMap['id'].toString();
+          _outputObject = outputMap['object'].toString();
+          _outputCreated = outputMap['created'].toString();
+          _outputModel = outputMap['model'].toString();
+
+          if (_outputObject == 'chat.completion') {
             _currentOutput = outputMap['choices'][0]['message']['content'] as String;
           } else {
             _currentOutput = outputMap['choices'][0]['text'] as String;
           }
           _currentOutput = _currentOutput.trim();
+          _currentOutputData = _currentOutput.codeUnits;
           _outputWidget = GCWDefaultOutput(
             child: _currentOutput,
             trailing: _defaultOutputTrailing(),
@@ -409,6 +431,11 @@ class _OpenAIState extends State<OpenAI> {
           break;
         case OPENAI_TASK.IMAGE:
           var outputMap = jsonDecode(output.imageData);
+          _outputId = outputMap['id'].toString();
+          _outputObject = outputMap['object'].toString();
+          _outputCreated = outputMap['created'].toString();
+          _outputModel = outputMap['model'].toString();
+
           if (_currentImageMode == GCWSwitchPosition.left) {
             _currentOutput = outputMap['data'][0]['url'] as String;
             _currentOutputData = _currentOutput.codeUnits;
@@ -459,6 +486,7 @@ class _OpenAIState extends State<OpenAI> {
           );
           _currentChatHistory.add(['OPENAI', _currentOutput]);
           break;
+        default: Container();
       }
     } else {
       _currentOutput = output.textData;
@@ -502,6 +530,18 @@ class _OpenAIState extends State<OpenAI> {
                   '\n' +
                   'Temperature: ' +
                   _currentTemperature.toString() +
+                  '\n' +
+                  'ID: ' +
+                  _outputId +
+                  '\n' +
+                  'Object: ' +
+                  _outputObject +
+                  '\n' +
+                  'Created: ' +
+                  _outputCreated +
+                  '\n' +
+                  'Model: ' +
+                  _outputModel +
                   '\n' +
                   _currentOutput,
               subject: 'Invalid Content created',

@@ -1,6 +1,6 @@
 part of 'package:gc_wizard/tools/miscellaneous/openai/logic/openai.dart';
 
-final _BASE_URL_OPENAI_SPEECH = 'https://api.openai.com/v1/audio/speech';
+const _BASE_URL_OPENAI_SPEECH = 'https://api.openai.com/v1/audio/speech';
 
 Map<String, String> OPEN_AI_SPEECH_LANGUAGE = {
   'Afrikaans':'afrikaans',
