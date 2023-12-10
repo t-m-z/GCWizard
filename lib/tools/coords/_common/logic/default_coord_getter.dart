@@ -12,7 +12,7 @@ const defaultGaussKruegerType = CoordinateFormatKey.GAUSS_KRUEGER_GK1;
 const defaultSlippyMapType = CoordinateFormatKey.SLIPPYMAP_10;
 const defaultWhat3WordsType = CoordinateFormatKey.WHAT3WORDS_DE;
 
-const defaultCoordinate = LatLng(0.0, 0.0);
+final defaultCoordinate = LatLng(0.0, 0.0);
 
 CoordinateFormatKey? _getDefaultSubtypeForFormat(CoordinateFormatKey format) {
   switch (format) {
