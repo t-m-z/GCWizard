@@ -178,7 +178,7 @@ void _initDefaultSettings(PreferencesInitMode mode, {String reinitSinglePreferen
   if (reinitSinglePreference == PREFERENCE_COORD_DEFAULT_W3W_APIKEY ||
       _reinitAll ||
       Prefs.get(PREFERENCE_COORD_DEFAULT_W3W_APIKEY) == null) {
-    Prefs.setString(PREFERENCE_COORD_DEFAULT_W3W_APIKEY, THOMPSON);
+    Prefs.setString(PREFERENCE_COORD_DEFAULT_W3W_APIKEY, '');
   }
 
   if (reinitSinglePreference == PREFERENCE_DEFAULT_LENGTH_UNIT ||
