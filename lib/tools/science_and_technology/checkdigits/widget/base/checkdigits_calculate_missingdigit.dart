@@ -19,14 +19,14 @@ class CheckDigitsCalculateMissingDigits extends StatefulWidget {
 }
 
 class CheckDigitsCalculateMissingDigitsState extends State<CheckDigitsCalculateMissingDigits> {
-  String _currentInputN = '';
+  String _currentInputNumberString = '';
   late TextEditingController currentInputController;
   List<String> _numbers = <String>[];
 
   @override
   void initState() {
     super.initState();
-    currentInputController = TextEditingController(text: _currentInputN);
+    currentInputController = TextEditingController(text: _currentInputNumberString);
   }
 
   @override
@@ -41,16 +41,18 @@ class CheckDigitsCalculateMissingDigitsState extends State<CheckDigitsCalculateM
       children: <Widget>[
         GCWTextField(
           controller: currentInputController,
+          inputFormatters: [INPUTFORMATTERS[widget.mode]!],
+          hintText: INPUTFORMATTERS_HINT[widget.mode]!,
           onChanged: (text) {
             setState(() {
-              _currentInputN = text;
+              _currentInputNumberString = text;
             });
           },
         ),
         GCWSubmitButton(
           onPressed: () {
             setState(() {
-              _numbers = checkDigitsCalculateDigits(widget.mode, _currentInputN);
+              _numbers = checkDigitsCalculateMissingDigitsAndNumber(widget.mode, checkDigitsNormalizeNumber(_currentInputNumberString));
             });
           },
         ),
@@ -95,9 +97,9 @@ class CheckDigitsCalculateMissingDigitsState extends State<CheckDigitsCalculateM
           GCWOutput(
             title: i18n(context, 'checkdigits_hint'),
             suppressCopyButton: true,
-            child: i18n(context, 'checkdigits_iban_hint'),
+            child: i18n(context, 'checkdigits_iban_hint_iban_multiple'),
           ),
-          _showInvalidBankNumbers(),
+          (_currentInputNumberString.length > 2 && _currentInputNumberString.toUpperCase().substring(0,2) == 'DE') ? _showInvalidBankNumbers() : Container(),
         ],
       );
     } else {
@@ -114,13 +116,13 @@ class CheckDigitsCalculateMissingDigitsState extends State<CheckDigitsCalculateM
     Map<String, String> output = {};
     int count = 1;
     for (int i = 0; i < _numbers.length; i++) {
-      if (BANK_NUMBERS_ACCOUNT_METHODS[_numbers[i].substring(4, 12)] == null) {
+      if (checkDigitsIBANDEBankNumberDoesNotExist(_numbers[i].substring(4, 12))) {
         output[count.toString() + '.'] = _numbers[i];
       }
     }
 
     return GCWOutput(
-        title: i18n(context, 'checkdigits_iban_invalid_banknumbers'),
+        title: i18n(context, 'checkdigits_iban_hint_iban_de_invalid_banknumbers'),
         child: GCWColumnedMultilineOutput(
             data: output.entries.map((entry) {
               return [entry.key, entry.value];

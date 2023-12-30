@@ -83,7 +83,7 @@
   "ccitt_ccir_476": "ccir476 amtor sitor navtex",
   "changelog": "changelog",
   "chao": "chao john francis byrne",
-  "checkdigits": "ean imei uic iban isbn euro",
+  "checkdigits": "imei, isbn, ean, gtin, uic, euro, iban, 13616, visacard, mastercard, americanexpress, dinersclub",
   "christmas": "",
   "chronogram": "",
   "cipherwheel": "",

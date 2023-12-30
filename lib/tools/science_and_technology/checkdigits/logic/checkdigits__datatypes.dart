@@ -30,47 +30,46 @@ final Map<String, String> ID_LETTERCODE = {
 };
 
 enum CheckDigitsMode {
-  EAN,
-  DEPERSID,
+  EAN_GTIN,
   DETAXID,
   EURO,
   IBAN,
   IMEI,
   ISBN,
-  UIC
+  UIC,
+  CREDITCARD,
 }
 
-final MaskTextInputFormatter MASKINPUTFORMATTER_EURO = MaskTextInputFormatter(mask: "@########", filter: {"@": RegExp(r'[AB?]'), "#": RegExp(r'[0-9?]')});
-final MaskTextInputFormatter MASKINPUTFORMATTER_IBAN = MaskTextInputFormatter(mask: "@@################################", filter: {"@": RegExp(r'[A-Za-z?]'), "#": RegExp(r'[0-9?]')});
+final MaskTextInputFormatter MASKINPUTFORMATTER_EURO = MaskTextInputFormatter(mask: "@§##########", filter: {"@": RegExp(r'[A-Za-z?]'), "§": RegExp(r'[A-Za-z0-9?]'),"#": RegExp(r'[0-9?]')});
+final MaskTextInputFormatter MASKINPUTFORMATTER_IBAN = MaskTextInputFormatter(mask: "AA@@ @@@@ @@@@ @@@@ @@@@ @@@@ @@@@ @@@@ @", filter: {"A": RegExp(r'[A-Za-z?]'), "@": RegExp(r'[A-Za-z0-9?]')});
 final MaskTextInputFormatter MASKINPUTFORMATTER_ISBN = MaskTextInputFormatter(mask: "#########@###", filter: {"@": RegExp(r'[A-Za-z0-9?]'), "#": RegExp(r'[0-9?]')});
-final MaskTextInputFormatter MASKINPUTFORMATTER_DEPERSID = MaskTextInputFormatter(mask: "@#########@<<#######<#######<<<<<<<#", filter: {"@": RegExp(r'[A-Za-z?]'), "#": RegExp(r'[0-9?]')});
-final MaskTextInputFormatter MASKINPUTFORMATTER_DEPERSID_SERIAL = MaskTextInputFormatter(mask: "@@@@@@@@@@", filter: {"@": RegExp(r'[A-Za-z0-9?]')});
-final MaskTextInputFormatter MASKINPUTFORMATTER_DEPERSID_DATE = MaskTextInputFormatter(mask: "#######", filter: {"#": RegExp(r'[0-9?]')});
-final MaskTextInputFormatter MASKINPUTFORMATTER_DEPERSID_DIGIT = MaskTextInputFormatter(mask: "#", filter: {"#": RegExp(r'[0-9?]')});
+final MaskTextInputFormatter MASKINPUTFORMATTER_DETAXID = MaskTextInputFormatter(mask: "###########", filter: {"#": RegExp(r'[0-9?]')});
 final MaskTextInputFormatter MASKINPUTFORMATTER_IMEI = MaskTextInputFormatter(mask: "###############", filter: {"#": RegExp(r'[0-9?]')});
+final MaskTextInputFormatter MASKINPUTFORMATTER_CREDITCARD = MaskTextInputFormatter(mask: "#### #### #### #### ###", filter: {"#": RegExp(r'[0-9?]')});
 final MaskTextInputFormatter MASKINPUTFORMATTER_EAN = MaskTextInputFormatter(mask: "##################", filter: {"#": RegExp(r'[0-9?]')});
-final MaskTextInputFormatter MASKINPUTFORMATTER_UIC = MaskTextInputFormatter(mask: "###########-#", filter: {"#": RegExp(r'[0-9?]')});
+final MaskTextInputFormatter MASKINPUTFORMATTER_GTIN = MaskTextInputFormatter(mask: "##################", filter: {"#": RegExp(r'[0-9?]')});
+final MaskTextInputFormatter MASKINPUTFORMATTER_UIC = MaskTextInputFormatter(mask: "## ## ### # ###-#", filter: {"#": RegExp(r'[0-9?]')});
 
 Map <CheckDigitsMode, MaskTextInputFormatter> INPUTFORMATTERS = {
   CheckDigitsMode.ISBN : MASKINPUTFORMATTER_ISBN,
   CheckDigitsMode.IBAN : MASKINPUTFORMATTER_IBAN,
   CheckDigitsMode.EURO : MASKINPUTFORMATTER_EURO,
-  CheckDigitsMode.DEPERSID : MASKINPUTFORMATTER_DEPERSID,
+  CheckDigitsMode.DETAXID : MASKINPUTFORMATTER_DETAXID,
   CheckDigitsMode.UIC : MASKINPUTFORMATTER_UIC,
+  CheckDigitsMode.EAN_GTIN : MASKINPUTFORMATTER_EAN,
+  CheckDigitsMode.IMEI : MASKINPUTFORMATTER_IMEI,
+  CheckDigitsMode.CREDITCARD : MASKINPUTFORMATTER_CREDITCARD,
 };
 
 Map<CheckDigitsMode, String> INPUTFORMATTERS_HINT = {
   CheckDigitsMode.ISBN : "000000000@000",
-  CheckDigitsMode.IBAN : "AA00000000000000000000000000000000",
+  CheckDigitsMode.IBAN : "AA@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
   CheckDigitsMode.EURO : "A@0000000000",
-  CheckDigitsMode.DEPERSID : "0000000000@<<0000000<0000000<<<<<<<0",
-  CheckDigitsMode.UIC : "00000000000-0",
-};
-
-final Map<CheckDigitsMode, int> maxInt = {
-  CheckDigitsMode.EAN     : 999999999999999999, // 18 digits
-  CheckDigitsMode.IMEI    : 999999999999999,    // 15 digits
-  CheckDigitsMode.DETAXID : 99999999999,        // 11 digits
+  CheckDigitsMode.UIC : "00 00 000 0 000-0",
+  CheckDigitsMode.EAN_GTIN : "00000000000000",
+  CheckDigitsMode.IMEI : "00000000000000",
+  CheckDigitsMode.CREDITCARD : "0000 0000 0000 0000 000",
+  CheckDigitsMode.DETAXID : "00000000000",
 };
 
 class CheckDigitOutput{
@@ -80,3 +79,4 @@ class CheckDigitOutput{
 
   CheckDigitOutput(this.correct, this.correctDigit, this.correctNumbers);
 }
+
