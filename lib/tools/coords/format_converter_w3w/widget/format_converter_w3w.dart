@@ -40,7 +40,7 @@ class FormatConverterW3W extends StatefulWidget {
 }
 
 class FormatConverterW3WState extends State<FormatConverterW3W> {
-  LatLng _currentCoordsLatLng = const LatLng(0.0, 0.0);
+  LatLng _currentCoordsLatLng = LatLng(0.0, 0.0);
   String _currentCoordsW3W = '';
   W3WResults _currentW3wToCoordinates = W3WRESULTS_EMPTY;
 
