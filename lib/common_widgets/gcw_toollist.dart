@@ -38,7 +38,9 @@ class _GCWToolListState extends State<GCWToolList> {
     return ListView.separated(
       physics: const AlwaysScrollableScrollPhysics(),
       itemCount: widget.toolList.length + 1,
-      separatorBuilder: (BuildContext context, int index) => const Divider(),
+      separatorBuilder: (BuildContext context, int index) => Divider(
+        color:themeColors().inputBackground(),
+      ),
       itemBuilder: (BuildContext context, int i) {
         return _buildRow(context, i);
       },

@@ -95,6 +95,7 @@ Drawer buildMainMenu(BuildContext context) {
   );
 
   return Drawer(
+    backgroundColor: themeColors().primaryBackground(),
       child: Column(
     children: <Widget>[
       header,

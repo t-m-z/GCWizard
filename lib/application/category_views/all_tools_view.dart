@@ -413,6 +413,7 @@ class _MainViewState extends State<MainView> {
               onTap: (value) {
                 Prefs.setInt(PREFERENCE_TABS_LAST_VIEWED_TAB, value);
               },
+              unselectedLabelColor: themeColors().inActive(),
               tabs: const [
                 Tab(icon: Icon(Icons.category)),
                 Tab(icon: Icon(Icons.list)),

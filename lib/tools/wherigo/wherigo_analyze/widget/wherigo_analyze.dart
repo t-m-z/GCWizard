@@ -243,6 +243,9 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
                           },
                           child: Text(i18n(context, 'common_yes'))),
                       ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.lightBlueAccent,
+                          ),
                           onPressed: () => Navigator.of(context).pop(), child: Text(i18n(context, 'common_no')))
                     ],
                   ));

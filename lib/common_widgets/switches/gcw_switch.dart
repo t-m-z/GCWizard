@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/application/theme/theme_colors.dart';
 
 class GCWSwitch extends StatefulWidget {
   final void Function(bool) onChanged;
@@ -35,6 +36,12 @@ class _GCWSwitchState extends State<GCWSwitch> {
         activeColor: widget.activeThumbColor,
         activeTrackColor: widget.activeTrackColor,
         inactiveTrackColor: widget.inactiveTrackColor,
-        inactiveThumbColor: widget.inactiveThumbColor);
+        inactiveThumbColor: widget.inactiveThumbColor,
+        trackOutlineColor: MaterialStateProperty.resolveWith ((Set  states) {
+          if (states.contains(MaterialState.disabled)) {
+            return themeColors().primaryBackground();
+          }
+          return themeColors().primaryBackground();
+        }),);
   }
 }
