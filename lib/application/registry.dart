@@ -4488,6 +4488,9 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'magicode', symbolSearchStrings: const [
       'symbol_magicode',
     ]),
+    GCWSymbolTableTool(symbolKey: 'malachim', symbolSearchStrings: const [
+      'symbol_malachim',
+    ]),
     GCWSymbolTableTool(symbolKey: 'mandalorian', symbolSearchStrings: const [
       'symbol_mandalorian',
     ]),
@@ -4540,6 +4543,15 @@ void initializeRegistry(BuildContext context) {
       'symbol_moon_phases',
     ]),
     GCWSymbolTableTool(symbolKey: 'morse', symbolSearchStrings: const [
+      'morse',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'morse_gerke', symbolSearchStrings: const [
+      'morse',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'morse_original', symbolSearchStrings: const [
+      'morse',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'morse_steinheil', symbolSearchStrings: const [
       'morse',
     ]),
     GCWSymbolTableTool(symbolKey: 'murray', symbolSearchStrings: const [
