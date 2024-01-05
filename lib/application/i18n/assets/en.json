@@ -4700,10 +4700,15 @@
   "symboltables_barbier_description": "Tactiles signs for blind people, alternative for braille code",
   "symboltables_barcode39_title": "Barcode 39",
   "symboltables_barcode39_description": "Barcode 39",
+<<<<<<< HEAD
   "symboltables_base16_title": "Hexadecimal Digits",
   "symboltables_base16_description": "Notation proposed by Ronald O. Whittaker, US Patent 3974444, 1976/10/08",
   "symboltables_base16_02_title": "Hexadecimal Digits",
   "symboltables_base16_02_description": "Notation proposed by Bruce A. Martin, 1968",
+=======
+  "symboltables_base16_title" : "Base-16 digits",
+  "symboltables_base16_description" : "Machine-readable font for hexidecimal digits (proposed by R. O. Whittaker in a letter to Datamtion, January 1972",
+>>>>>>> 5493e373fb479a8eda96752b3ad4dd9cd64ef6c0
   "symboltables_baudot_1888_title": "Baudot Code, 1988, US Patent",
   "symboltables_baudot_1888_description": "Teletype code",
   "symboltables_baudot_1888_shift_to_sign_table": "SPACE, NUMERALS FOLLOW",
@@ -4714,8 +4719,13 @@
   "symboltables_baudot_54123_shift_to_sign_table": "SPACE, NUMERALS FOLLOW",
   "symboltables_baudot_54123_shift_to_letter_table": "SPACE, LETTERS FOLLOW",
   "symboltables_baudot_54123_backspace": "DELETE",
+<<<<<<< HEAD
   "symboltables_bibibinary_title": "BiBi-Binary",
   "symboltables_bibibinary_description": "Hexadecimal Notation proposed by Robert Lapointe, 1968",
+=======
+  "symboltables_bibibinary_title" : "BiBi-Binary",
+  "symboltables_bibibinary_description" : "Hexadecimal numeral system first described in 1968 by Robert 'Boby' Lapointe",
+>>>>>>> 5493e373fb479a8eda96752b3ad4dd9cd64ef6c0
   "symboltables_birds_on_a_wire_title": "Birds On A Wire",
   "symboltables_birds_on_a_wire_description": "Birds",
   "symboltables_blox_title": "Blox",
