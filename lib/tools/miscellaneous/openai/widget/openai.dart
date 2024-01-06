@@ -21,6 +21,7 @@ import 'package:gc_wizard/common_widgets/gcw_soundplayer.dart';
 import 'package:gc_wizard/common_widgets/image_viewers/gcw_imageview.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_double_spinner.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
@@ -490,8 +491,23 @@ class _OpenAIState extends State<OpenAI> {
       }
     } else {
       _currentOutput = output.textData;
+      var errorMessage = json.decode(output.textData);
       _currentChatHistory.add(['OPENAI', _currentOutput]);
-      _outputWidget = GCWDefaultOutput(trailing: _defaultOutputTrailing(), child: _currentOutput);
+      List<List<String>> data = [];
+      if (output.httpCode != '') data.add([i18n(context, 'openai_error_http_code'), output.httpCode]);
+      if (output.httpMessage != '') data.add([i18n(context, 'openai_error_http_message'), output.httpMessage]);
+      if (errorMessage['error']['message'].toString() != 'null') data.add([i18n(context, 'openai_error_message'), errorMessage['error']['message'].toString()]);
+      if (errorMessage['error']['code'].toString() != 'null') data.add([i18n(context, 'openai_error_code'), errorMessage['error']['code'].toString()]);
+      if (errorMessage['error']['param'].toString() != 'null') data.add([i18n(context, 'openai_error_param'), errorMessage['error']['param'].toString()]);
+      if (errorMessage['error']['type'].toString() != 'null') data.add([i18n(context, 'openai_error_type'), errorMessage['error']['type'].toString()]);
+
+      _outputWidget = GCWOutput(
+          trailing: _defaultOutputTrailing(),
+          title: i18n(context, 'openai_error'),
+          child: GCWColumnedMultilineOutput(
+            flexValues: [2,4],
+            data: data,
+          ));
     }
 
     WidgetsBinding.instance.addPostFrameCallback((_) {

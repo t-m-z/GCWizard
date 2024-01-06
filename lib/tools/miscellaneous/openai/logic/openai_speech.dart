@@ -76,6 +76,7 @@ Future<OpenAItaskOutput> _OpenAIgetSpeechAsync(String APIkey, String model, Stri
   String httpMessage = '';
   String uri = '';
   Uint8List audioData = Uint8List.fromList([]);
+  String textData = '';
 
   OPENAI_TASK_STATUS status = OPENAI_TASK_STATUS.ERROR;
 
@@ -106,6 +107,7 @@ Future<OpenAItaskOutput> _OpenAIgetSpeechAsync(String APIkey, String model, Stri
     if (httpCode != '200') {
       status = OPENAI_TASK_STATUS.ERROR;
       audioData = Uint8List.fromList([]);
+      textData = response.body;
     } else {
       status = OPENAI_TASK_STATUS.OK;
       audioData = Uint8List.fromList(response.body.codeUnits);
@@ -122,7 +124,7 @@ Future<OpenAItaskOutput> _OpenAIgetSpeechAsync(String APIkey, String model, Stri
       status: status,
       httpCode: httpCode,
       httpMessage: httpMessage,
-      textData: '',
+      textData: textData,
       imageData: '',
       imageDataType: OPENAI_IMAGE_DATATYPE.NULL,
       audioFile: GCWFile(bytes: audioData, name: ''));

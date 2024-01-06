@@ -1,6 +1,7 @@
 part of 'package:gc_wizard/tools/miscellaneous/openai/logic/openai.dart';
 
-Future<OpenAItaskOutput> _OpenAIgetAudioAsync(String APIkey, String prompt, double temperature, GCWFile audioFile, OPENAI_TASK task,
+Future<OpenAItaskOutput> _OpenAIgetAudioAsync(
+    String APIkey, String prompt, double temperature, GCWFile audioFile, OPENAI_TASK task,
     {SendPort? sendAsyncPort}) async {
   String httpCode = '';
   String httpMessage = '';
@@ -8,8 +9,13 @@ Future<OpenAItaskOutput> _OpenAIgetAudioAsync(String APIkey, String prompt, doub
   OPENAI_TASK_STATUS status = OPENAI_TASK_STATUS.ERROR;
 
   try {
-    OpenAI.apiKey = APIkey;
-
+    try {
+      OpenAI.apiKey = APIkey;
+    } catch (exception, stackTrace) {
+      status = OPENAI_TASK_STATUS.ERROR;
+      httpCode = exception.toString();
+      httpMessage = stackTrace.toString();
+    }
     if (task == OPENAI_TASK.AUDIO_TRANSCRIBE) {
       final transcription = await OpenAI.instance.audio.createTranscription(
         prompt: prompt,
@@ -31,11 +37,12 @@ Future<OpenAItaskOutput> _OpenAIgetAudioAsync(String APIkey, String prompt, doub
       textData = translation.text.toString();
       status = OPENAI_TASK_STATUS.OK;
     }
-  } on RequestFailedException catch(e) {
+  } catch(exception) { //)on RequestFailedException catch (exception) {
     status = OPENAI_TASK_STATUS.ERROR;
-    httpMessage = e.message;
-    httpCode = e.statusCode.toString();
-    textData = '';
+    httpMessage = '';
+    httpCode = '';
+    textData = jsonEncode({'error': {'message': exception.toString(), 'code': null, 'type': null, 'param': null}
+    });
   }
 
   return OpenAItaskOutput(
