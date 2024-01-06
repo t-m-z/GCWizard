@@ -47,8 +47,9 @@ Future<OpenAItaskOutput> _OpenAIgetImageAsync(
     imageData = responseImage.body;
     if (httpCode != '200') {
       OPENAI_TASK_STATUS.ERROR;
-      var errorMessage = jsonDecode(imageData);
-      textData = (errorMessage['error']['code'] as String) + '\n' + (errorMessage['error']['message'] as String);
+      //var errorMessage = jsonDecode(imageData);
+      textData = httpCode +'\n' + httpMessage + '\n' + imageData; //(errorMessage['error']['code'] as String) + '\n' + (errorMessage['error']['message'] as String);
+
     } else {
       status = OPENAI_TASK_STATUS.OK;
     }
