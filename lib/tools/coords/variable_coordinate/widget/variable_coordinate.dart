@@ -4,12 +4,12 @@ import 'package:gc_wizard/application/permissions/user_location.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_submit_button.dart';
-import 'package:gc_wizard/common_widgets/coordinates/gcw_coords_output/gcw_coords_output.dart';
-import 'package:gc_wizard/common_widgets/coordinates/gcw_coords_output/gcw_coords_outputformat.dart';
+import 'package:gc_wizard/tools/coords/_common/widget/gcw_coords_output/gcw_coords_output.dart';
+import 'package:gc_wizard/tools/coords/_common/widget/gcw_coords_output/gcw_coords_outputformat.dart';
 import 'package:gc_wizard/common_widgets/dialogs/gcw_dialog.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
+import 'package:gc_wizard/common_widgets/gcw_snackbar.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
-import 'package:gc_wizard/common_widgets/gcw_toast.dart';
 import 'package:gc_wizard/common_widgets/key_value_editor/gcw_key_value_editor.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output_text.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_onoff_switch.dart';
@@ -17,6 +17,7 @@ import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/common_widgets/text_input_formatters/variablestring_textinputformatter.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/common_widgets/units/gcw_unit_dropdown.dart';
+import 'package:gc_wizard/tools/coords/_common/formats/dmm/logic/dmm.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_text_formatter.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
@@ -210,13 +211,17 @@ class _VariableCoordinateState extends State<VariableCoordinate> {
     return GCWKeyValueEditor(
       keyHintText: i18n(context, 'coords_variablecoordinate_variable'),
       valueHintText: i18n(context, 'coords_variablecoordinate_possiblevalues'),
-      valueInputFormatters: [VariableStringTextInputFormatter()],
+      addValueInputFormatters: [VariableStringTextInputFormatter()],
       valueFlex: 4,
       onNewEntryChanged: _updateNewEntry,
       entries: widget.formula.values,
       onAddEntry: (entry) => _addEntry(entry),
       onUpdateEntry: (entry) => _updateEntry(entry),
       addOnDispose: true,
+      validateEditedValue: (String input) {
+        return VARIABLESTRING.hasMatch(input);
+      },
+      invalidEditedValueMessage: i18n(context, 'formulasolver_values_novalidinterpolated'),
     );
   }
 
@@ -417,15 +422,17 @@ class _VariableCoordinateState extends State<VariableCoordinate> {
         setState(() {
           _isOnLocationAccess = false;
         });
-        showToast(i18n(context, 'coords_common_location_permissiondenied'));
+        showSnackBar(i18n(context, 'coords_common_location_permissiondenied'), context);
 
         return;
       }
 
       _location.getLocation().then((locationData) {
         if (locationData.accuracy == null || locationData.accuracy! > LOW_LOCATION_ACCURACY) {
-          showToast(i18n(context, 'coords_common_location_lowaccuracy',
-              parameters: [NumberFormat('0.0').format(locationData.accuracy)]));
+          showSnackBar(
+              i18n(context, 'coords_common_location_lowaccuracy',
+                  parameters: [NumberFormat('0.0').format(locationData.accuracy)]),
+              context);
         }
 
         LatLng _coords;
@@ -439,7 +446,7 @@ class _VariableCoordinateState extends State<VariableCoordinate> {
         String insertedCoord;
         if (defaultCoordinateFormat.type == CoordinateFormatKey.DMM) {
           //Insert Geocaching Format with exact 3 digits
-          insertedCoord = DMM.fromLatLon(coords.toLatLng()!).toString(3);
+          insertedCoord = DMMCoordinate.fromLatLon(coords.toLatLng()!).toString(3);
         } else {
           insertedCoord = formatCoordOutput(coords.toLatLng()!, defaultCoordinateFormat, defaultEllipsoid);
         }

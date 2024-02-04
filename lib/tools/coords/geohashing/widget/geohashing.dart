@@ -5,18 +5,18 @@ import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_paste_button.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_submit_button.dart';
-import 'package:gc_wizard/common_widgets/coordinates/gcw_coords/coord_format_inputs/degrees_latlon/degrees_lat_textinputformatter.dart';
-import 'package:gc_wizard/common_widgets/coordinates/gcw_coords/coord_format_inputs/degrees_latlon/degrees_lon_textinputformatter.dart';
-import 'package:gc_wizard/common_widgets/coordinates/gcw_coords_output/gcw_coords_output.dart';
-import 'package:gc_wizard/common_widgets/coordinates/gcw_coords_output/gcw_coords_outputformat.dart';
+import 'package:gc_wizard/tools/coords/_common/widget/gcw_coords_output/gcw_coords_output.dart';
+import 'package:gc_wizard/tools/coords/_common/widget/gcw_coords_output/gcw_coords_outputformat.dart';
 import 'package:gc_wizard/common_widgets/dialogs/gcw_dialog.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/gcw_date_picker.dart';
-import 'package:gc_wizard/common_widgets/gcw_toast.dart';
+import 'package:gc_wizard/common_widgets/gcw_snackbar.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_double_textfield.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_integer_textfield.dart';
+import 'package:gc_wizard/tools/coords/_common/widget/coord_format_inputs/degrees_lat_textinputformatter.dart';
+import 'package:gc_wizard/tools/coords/_common/widget/coord_format_inputs/degrees_lon_textinputformatter.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_text_formatter.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 import 'package:gc_wizard/tools/coords/geohashing/logic/geohashing.dart' as geohashing;
@@ -131,14 +131,8 @@ class _GeohashingState extends State<Geohashing> {
           value: _currentOnline,
           onChanged: (value) {
             if (value == GCWSwitchPosition.right) {
-              showGCWDialog(context,
-                i18n(context, 'geohashing_dow_jones_index'),
-                SizedBox(
-                  width: 300,
-                  height: 130,
-                  child: Text(i18n(context, 'geohashing_dow_jones_index_online'))
-                ),
-                [
+              showGCWDialog(context, i18n(context, 'geohashing_dow_jones_index'),
+                  SizedBox(width: 300, height: 130, child: Text(i18n(context, 'geohashing_dow_jones_index_online'))), [
                 GCWDialogButton(
                   text: i18n(context, 'common_ok'),
                   onPressed: () {
@@ -246,7 +240,7 @@ class _GeohashingState extends State<Geohashing> {
 
     _geohashing = _buildGeohashing();
     if (_geohashing!.errorCode == geohashing.ErrorCode.futureDate) {
-      showToast(i18n(context, 'geohashing_future_date'));
+      showSnackBar(i18n(context, 'geohashing_future_date'), context);
     }
 
     _geohashing!.toLatLng().then((value) {
@@ -292,7 +286,7 @@ class _GeohashingState extends State<Geohashing> {
         setState(() {
           _isOnLocationAccess = false;
         });
-        showToast(i18n(context, 'coords_common_location_permissiondenied'));
+        showSnackBar(i18n(context, 'coords_common_location_permissiondenied'), context);
 
         return;
       }

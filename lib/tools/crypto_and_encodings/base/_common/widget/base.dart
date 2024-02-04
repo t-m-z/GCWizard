@@ -7,7 +7,7 @@ import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_param
 import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/dialogs/gcw_exported_file_dialog.dart';
-import 'package:gc_wizard/common_widgets/gcw_toast.dart';
+import 'package:gc_wizard/common_widgets/gcw_snackbar.dart';
 import 'package:gc_wizard/common_widgets/gcw_web_statefulwidget.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
@@ -22,15 +22,14 @@ abstract class AbstractBase extends GCWWebStatefulWidget {
   final String Function(String) encode;
   final String Function(String) decode;
   final bool searchMultimedia;
-  final String apiSpecification;
 
   AbstractBase(
       {Key? key,
       required this.encode,
       required this.decode,
       required this.searchMultimedia,
-      required this.apiSpecification})
-      : super(key: key, apiSpecification: apiSpecification);
+      required super.apiSpecification})
+      : super(key: key);
 
   @override
   _AbstractBaseState createState() => _AbstractBaseState();
@@ -177,7 +176,7 @@ class _AbstractBaseState extends State<AbstractBase> {
       }
       _outData = _AsyncBaseDecodeOutput(fileData, textData);
     } else {
-      showToast(i18n(context, 'common_loadfile_exception_notloaded'));
+      showSnackBar(i18n(context, 'common_loadfile_exception_notloaded'), context);
       return;
     }
 

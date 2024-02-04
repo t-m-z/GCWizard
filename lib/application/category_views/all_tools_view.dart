@@ -176,6 +176,8 @@ import 'package:gc_wizard/tools/images_and_files/stegano/widget/stegano.dart';
 import 'package:gc_wizard/tools/images_and_files/visual_cryptography/widget/visual_cryptography.dart';
 import 'package:gc_wizard/tools/miscellaneous/gcwizardscript/widget/gcwizard_script.dart';
 import 'package:gc_wizard/tools/science_and_technology/alcohol_mass/widget/alcohol_mass.dart';
+import 'package:gc_wizard/tools/science_and_technology/alphabet_number_systems/hebrew/widget/hebrew_number_system.dart';
+import 'package:gc_wizard/tools/science_and_technology/alphabet_number_systems/milesian/widget/milesian_number_system.dart';
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/heat_index/widget/heat_index.dart';
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/humidex/widget/humidex.dart';
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/summer_simmer/widget/summer_simmer.dart';
@@ -276,6 +278,7 @@ import 'package:gc_wizard/utils/string_utils.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/common_widget_utils.dart';
 import 'package:prefs/prefs.dart';
 
+import '../theme/theme.dart';
 import 'selector_lists/miscellaneous_selection.dart';
 
 class MainView extends GCWWebStatefulWidget {
@@ -455,7 +458,7 @@ class _MainViewState extends State<MainView> {
   IconButton _buildIcon() {
     return IconButton(
         icon: Image.asset(
-          'assets/logo/circle_border_128.png',
+          applogoFilename(),
           width: 35.0,
           height: 35.0,
         ),
@@ -594,6 +597,7 @@ void _initStaticToolList() {
       className(const Gray()),
       className(const Gronsfeld()),
       className(const HeatIndex()),
+      className(const HebrewNumberSystem()),
       className(const HashBreaker()),
       className(const HashSelection()),
       className(const Hexadecimal()),
@@ -634,6 +638,7 @@ void _initStaticToolList() {
       className(const MayaCalendarSelection()),
       className(const MayaNumbersSelection()),
       className(const MexicanArmyCipherWheel()),
+      className(const MilesianNumberSystem()),
       className(const MoonPosition()),
       className(const MoonRiseSet()),
       className(const MorseSelection()),

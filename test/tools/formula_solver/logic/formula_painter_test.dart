@@ -12,8 +12,6 @@ void main() {
     };
 
     List<Map<String, Object?>> _inputsToExpected = [
-      {'formula' : '\'\'', 'expectedOutput' : 'gg'},
-
       {'formula' : 'A', 'values': <String, String>{}, 'expectedOutput' : 'R'},
       {'formula' : '0', 'values': <String, String>{}, 'expectedOutput' : 'g'},
 
@@ -66,6 +64,20 @@ void main() {
       {'formula' : 'A + B]', 'values': values, 'expectedOutput' : 'rrbbrB'},
       {'formula' : '[A + B', 'values': values, 'expectedOutput' : 'Brrbbr'},
 
+      //variables with names which are included in other variable names
+      {'formula' : 'A1 + A10', 'values': {'A1': '1', 'A10': '3'}, 'expectedOutput' : 'rrrbbrrr'},
+      {'formula' : 'A10 + A1', 'values': {'A1': '1', 'A10': '3'}, 'expectedOutput' : 'rrrrbbrr'},
+      {'formula' : 'A1 + A10', 'values': {'A10': '3'}, 'expectedOutput' : 'RGGbbrrr'},
+      {'formula' : 'A1 + A10', 'values': {'A1': '1'}, 'expectedOutput' : 'rrrbbrrG'},
+      {'formula' : 'A1 + A10', 'values': {'A10': '3', 'A1': '1'}, 'expectedOutput' : 'rrrbbrrr'},
+      {'formula' : 'BC + ABCD', 'values': {'ABCD': '3', 'BC': '1'}, 'expectedOutput' : 'rrrbbrrrr'},
+      {'formula' : 'BC + ABCD', 'values': {'BC': '1', 'ABCD': '1'}, 'expectedOutput' : 'rrrbbrrrr'},
+      {'formula' : 'Bc + ABCD', 'values': {'ABCD': '3', 'bc': '1'}, 'expectedOutput' : 'rrrbbrrrr'},
+      {'formula' : 'BC + AbcD', 'values': {'ABCD': '3', 'bc': '1'}, 'expectedOutput' : 'rrrbbrrrr'},
+      {'formula' : 'bc + ABCD', 'values': {'BC': '1', 'AbcD': '3'}, 'expectedOutput' : 'rrrbbrrrr'},
+      {'formula' : 'ABCD + bc', 'values': {'BC': '1', 'AbcD': '3'}, 'expectedOutput' : 'rrrrrbbrr'},
+      {'formula' : 'ABCD + bc', 'values': {'BD': '1', 'AbcD': '3'}, 'expectedOutput' : 'rrrrrbbRR'},
+
       //Trim empty space
       {'formula' : 'sin(0) ', 'values': <String, String>{}, 'expectedOutput' : 'bbbbgbb'},
 
@@ -98,6 +110,7 @@ void main() {
       {'formula' : 'nth(1234.,2,3)', 'expectedOutput' : 'bbbbgggggbgbgb'},
       {'formula' : 'nth(1234.1,2,3)', 'expectedOutput' : 'bbbbggggggbgbgb'},
       {'formula' : 'nth(567,3,8,2)', 'expectedOutput' : 'bbbbgggbgbgBGb'},
+      {'formula' : 'nth("ABC", 1)', 'expectedOutput' : 'bbbbGGGGGbggb'},
       {'formula' : 'max()', 'expectedOutput' : 'BBBBB'},
       {'formula' : 'max(1)', 'expectedOutput' : 'bbbbgb'},
       {'formula' : 'max(1,2)', 'expectedOutput' : 'bbbbgbgb'},
@@ -432,6 +445,8 @@ void main() {
      {'formula' : 'len(A)', 'values': {'A': ''}, 'expectedOutput' : 'bbbbRb'},
      {'formula' : 'len(AB)', 'values': {'A': '', 'B': '"C"'}, 'expectedOutput' : 'bbbbRrb'},
      {'formula' : 'len(AB)', 'values': {'A': '""', 'B': "C"}, 'expectedOutput' : 'bbbbrRb'},
+     {'formula' : 'nth(A, 1)', 'values': {'A': '10'}, 'expectedOutput' : 'bbbbrbggb'},
+     {'formula' : 'nth(A, 1)', 'values': {'A': '"AB"'}, 'expectedOutput' : 'bbbbRbggb'},
      {'formula' : 'len("ABC") * bww(\'55\')', 'expectedOutput' : 'bbbbgggggbbbbbbbbggggb'},
      {'formula' : 'len("ABC) * bww(\'55\')', 'expectedOutput' : 'bbbbGGGGbbbbbbbbggggb'}, // Text begins at "ABC and never ends, so also ) * bww('55') is part of the string
      {'formula' : 'len("ABC) * bww("55")', 'expectedOutput' : 'bbbbGGGGbbbbbbbbggggb'}, // String ends at bww(", so 55 is normal number and a new string without end starts at ")
