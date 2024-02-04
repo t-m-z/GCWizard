@@ -53,7 +53,7 @@ Future<Adventures> getAdventureData(LatLng? coordinate, int radius, {required Se
 
     final Map<String, dynamic> responseJson = json.decode(response.body) as Map<String, dynamic>;
     int totalCount = responseJson["TotalCount"] as int;
-    if (httpCode == '200' || totalCount > 0) {
+    if (httpCode == '200' && totalCount > 0) {
       resultCode = ANALYSE_RESULT_STATUS.OK;
       httpCode = '200';
       List<AdventureData> AdventureList = [];
@@ -222,7 +222,7 @@ Future<Adventures> getAdventureData(LatLng? coordinate, int radius, {required Se
           httpBody: httpBody);
     } else {
       return Adventures(
-          AdventureList: [], resultCode: resultCode, httpCode: httpCode, httpMessage: httpMessage, httpBody: httpBody);
+          AdventureList: [], resultCode: ANALYSE_RESULT_STATUS.ERROR_OTHER, httpCode: httpCode, httpMessage: 'adventure_labs_lab_other_empty', httpBody: httpBody);
     }
   } catch (exception) {
     httpCode = 'adventure_labs_lab_other_exception_adventure';

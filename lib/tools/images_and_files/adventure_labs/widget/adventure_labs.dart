@@ -5,8 +5,6 @@ import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer.dart'
 import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
-import 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart';
-import 'package:gc_wizard/common_widgets/coordinates/gcw_coords_export_dialog.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/gcw_expandable.dart';
 import 'package:gc_wizard/common_widgets/gcw_tool.dart';
@@ -18,6 +16,8 @@ import 'package:gc_wizard/common_widgets/switches/gcw_onoff_switch.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_text_formatter.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
+import 'package:gc_wizard/tools/coords/_common/widget/gcw_coords.dart';
+import 'package:gc_wizard/tools/coords/_common/widget/gcw_coords_export_dialog.dart';
 import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
 import 'package:gc_wizard/tools/coords/map_view/widget/gcw_mapview.dart';
 import 'package:gc_wizard/tools/images_and_files/adventure_labs/logic/adventure_labs.dart';
@@ -46,74 +46,88 @@ class AdventureLabsState extends State<AdventureLabs> {
   @override
   Widget build(BuildContext context) {
     // https://www.kindacode.com/article/flutter-ask-for-confirmation-when-back-button-pressed/
-    return WillPopScope(
-        onWillPop: () async {
-          bool willLeave = false;
-          // show the confirm dialog
-          await showDialog<bool>(
+    // https://stackoverflow.com/questions/77500680/willpopscope-is-deprecated-after-flutter-3-12
+    // https://api.flutter.dev/flutter/widgets/PopScope-class.html
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (didPop)  {
+        // show the confirm dialog
+        if (didPop) {
+          return;
+        } else {
+          showDialog<bool>(
               context: context,
               builder: (_) => AlertDialog(
-                    title: Text(i18n(context, 'adventure_labs_exit_title')),
-                    titleTextStyle: const TextStyle(color: Colors.black, fontSize: 16.0, fontWeight: FontWeight.bold),
-                    content: Text(i18n(context, 'adventure_labs_exit_message')),
-                    contentTextStyle: const TextStyle(color: Colors.black, fontSize: 16.0),
-                    backgroundColor: themeColors().dialog(),
-                    actions: [
-                      TextButton(
-                          onPressed: () {
-                            willLeave = true;
-                            Navigator.of(context).pop();
-                          },
-                          child: Text(i18n(context, 'common_yes'))),
-                      ElevatedButton(
-                          onPressed: () => Navigator.of(context).pop(), child: Text(i18n(context, 'common_no')))
-                    ],
-                  ));
-          return willLeave;
-        },
-        child: Column(
-          children: <Widget>[
-            GCWCoords(
-              title: i18n(context, 'adventure_labs_start'),
-              coordsFormat: _currentCoords.format,
-              onChanged: (ret) {
-                setState(() {
-                  _currentCoords = ret;
-                });
-              },
-            ),
-            GCWTextDivider(
-              text: i18n(context, 'adventure_labs_radius'),
-            ),
-            GCWIntegerSpinner(
-              min: 0,
-              max: 9999,
-              value: _currentRadius,
+                title: Text(i18n(context, 'adventure_labs_exit_title')),
+                titleTextStyle: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.bold),
+                content: Text(i18n(context, 'adventure_labs_exit_message')),
+                contentTextStyle:
+                const TextStyle(color: Colors.black, fontSize: 16.0),
+                backgroundColor: themeColors().dialog(),
+                actions: [
+                  TextButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                        Navigator.pop(context);
+                      },
+                      child: Text(i18n(context, 'common_yes'))),
+                  ElevatedButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: Text(i18n(context, 'common_no')))
+                ],
+              ));
+          return;
+        }
+      },
+      child: Column(
+        children: <Widget>[
+          GCWCoords(
+            title: i18n(context, 'adventure_labs_start'),
+            coordsFormat: _currentCoords.format,
+            onChanged: (ret) {
+              setState(() {
+                _currentCoords = ret!;
+              });
+            },
+          ),
+          GCWTextDivider(
+            text: i18n(context, 'adventure_labs_radius'),
+          ),
+          GCWIntegerSpinner(
+            min: 0,
+            max: 9999,
+            value: _currentRadius,
+            onChanged: (value) {
+              setState(() {
+                _currentRadius = value;
+              });
+            },
+          ),
+          GCWOnOffSwitch(
+              title: i18n(context, 'adventure_labs_expert_mode'),
+              value: expertMode,
               onChanged: (value) {
                 setState(() {
-                  _currentRadius = value;
+                  expertMode = !expertMode;
                 });
-              },
-            ),
-            GCWOnOffSwitch(
-                title: i18n(context, 'adventure_labs_expert_mode'),
-                value: expertMode,
-                onChanged: (value) {
-                  setState(() {
-                    expertMode = !expertMode;
-                  });
-                }),
-            GCWButton(
-              text: i18n(context, 'adventure_labs_search'),
-              onPressed: () {
-                setState(() {
-                  _getAdventureDataAsync();
-                });
-              },
-            ),
-            _buildOutput()
-          ],
-        ));
+              }),
+          GCWButton(
+            text: i18n(context, 'adventure_labs_search'),
+            onPressed: () {
+              setState(() {
+                _getAdventureDataAsync();
+              });
+            },
+          ),
+          _buildOutput()        ],
+      ),
+
+    );
   }
 
   void _getAdventureDataAsync() async {
@@ -445,7 +459,7 @@ class AdventureLabsState extends State<AdventureLabs> {
       GCWColumnedMultilineOutput(
         data: [
           [i18n(context, 'adventure_labs_lab_other_code'), i18n(context, _outData.httpCode)],
-          [i18n(context, 'adventure_labs_lab_other_message'), _outData.httpMessage],
+          [i18n(context, 'adventure_labs_lab_other_message'), i18n(context,_outData.httpMessage)],
           [i18n(context, 'adventure_labs_lab_other_body'), _outData.httpBody],
         ],
         flexValues: const [2, 3],
