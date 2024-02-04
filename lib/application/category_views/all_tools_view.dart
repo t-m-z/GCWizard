@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/category_views/favorites.dart';
+import 'package:gc_wizard/application/category_views/gcc/gcc_view.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/babylon_numbers_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/base_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/bcd_selection.dart';
@@ -416,7 +417,8 @@ class _MainViewState extends State<MainView> {
             GCWToolList(toolList: toolList ?? _categoryList),
             GCWToolList(toolList: toolList ?? _mainToolList),
             GCWToolList(toolList: toolList ?? Favorites.favoritedGCWTools()),
-            GCWToolList(toolList: toolList ?? _gccToolList),
+            GCCView(),
+            //GCWToolList(toolList: toolList ?? _gccToolList),
           ],
         ),
       ),
@@ -759,6 +761,7 @@ void _initStaticToolList() {
     ].contains(className(element.tool));
   }).toList();
   _mainToolList.sort((a, b) => sortToolList(a, b));
+
   _gccToolList = registeredTools.where((element) {
     return [
       className(const ADFGVX()),
@@ -886,6 +889,5 @@ void _initStaticToolList() {
       className(const MiscellaneousSelection()),
     ].contains(className(element.tool));
   }).toList();
-
   _categoryList.sort((a, b) => sortToolList(a, b));
 }
