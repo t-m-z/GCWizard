@@ -121,6 +121,7 @@ import 'package:gc_wizard/tools/coords/segment_bearings/widget/segment_bearings.
 import 'package:gc_wizard/tools/coords/segment_line/widget/segment_line.dart';
 import 'package:gc_wizard/tools/coords/variable_coordinate/widget/variable_coordinate_formulas.dart';
 import 'package:gc_wizard/tools/coords/waypoint_projection/widget/waypoint_projection.dart';
+import 'package:gc_wizard/tools/coords/what3words/widget/w3w.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/abaddon/widget/abaddon.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/adfgvx/widget/adfgvx.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/affine/widget/affine.dart';
@@ -1648,6 +1649,18 @@ void initializeRegistry(BuildContext context) {
         tool: const FormatConverter(),
         id: 'coords_formatconverter',
         iconPath: 'lib/tools/coords/_common/assets/icons/icon_format_converter.png',
+        categories: const [
+          ToolCategory.COORDINATES
+        ],
+        searchKeys: const [
+          'coordinates',
+          'coordinates_formatconverter',
+          'coordinates_w3w',
+        ]),
+    GCWTool(
+        tool: const FormatConverterW3W(),
+        id: 'coords_formatconverter_w3w',
+        iconPath: 'lib/tools/coords/_common/assets/icons/icon_w3w.png',
         categories: const [
           ToolCategory.COORDINATES
         ],
