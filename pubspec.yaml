@@ -1,6 +1,6 @@
 name: gc_wizard
-description: GC Wizard
-version: 3.0.3+178
+description: GC Wizard nightly
+version: 3.0.666+007
 publish_to: none
 
 environment:
@@ -400,6 +400,6 @@ flutter:
     - lib/tools/symbol_tables/_common/assets/zodiac_z408/
 
 flutter_icons:
-  image_path: "assets/logo/circle_border_nightly.png"
+  image_path: "assets/logo/circle_border_1024_gold_nightly.png"
   android: true
   ios: true

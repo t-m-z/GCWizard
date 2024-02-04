@@ -3,6 +3,7 @@ import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/main_menu/about.dart';
 import 'package:gc_wizard/application/main_menu/call_for_contribution.dart';
 import 'package:gc_wizard/application/main_menu/changelog.dart';
+import 'package:gc_wizard/application/main_menu/nightly.dart';
 import 'package:gc_wizard/application/navigation/no_animation_material_page_route.dart';
 import 'package:gc_wizard/application/registry.dart';
 import 'package:gc_wizard/application/settings/widget/settings_coordinates.dart';
@@ -33,7 +34,8 @@ Drawer buildMainMenu(BuildContext context) {
               shape: BoxShape.circle,
             ),
             child: Image.asset(
-              applogoFilename(),
+              'assets/logo/circle_border_128_tmz_nightly.png',
+              //applogoFilename(),
             ),
           ),
           Padding(
@@ -54,6 +56,8 @@ Drawer buildMainMenu(BuildContext context) {
   final otherMenuItems = [
     _CategoryMetaData(
         registeredTools.firstWhere((tool) => className(tool.tool) == className(const Changelog())), Icons.show_chart),
+    _CategoryMetaData(
+        registeredTools.firstWhere((tool) => className(tool.tool) == className(const Nightly())), Icons.data_exploration),
     _CategoryMetaData(
         registeredTools.firstWhere((tool) => className(tool.tool) == className(const About())), Icons.info)
   ];

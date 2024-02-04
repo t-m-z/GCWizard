@@ -277,7 +277,6 @@ import 'package:gc_wizard/utils/string_utils.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/common_widget_utils.dart';
 import 'package:prefs/prefs.dart';
 
-import '../theme/theme.dart';
 import 'selector_lists/miscellaneous_selection.dart';
 
 class MainView extends GCWWebStatefulWidget {
@@ -457,7 +456,8 @@ class _MainViewState extends State<MainView> {
   IconButton _buildIcon() {
     return IconButton(
         icon: Image.asset(
-          applogoFilename(),
+          'assets/logo/circle_border_128_tmz_nightly.png',
+          //applogoFilename(),
           width: 35.0,
           height: 35.0,
         ),

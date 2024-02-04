@@ -11,7 +11,7 @@ import 'package:gc_wizard/common_widgets/gcw_text.dart';
 import 'package:gc_wizard/common_widgets/gcw_tool.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/common_widget_utils.dart';
 
-const _ABOUT_MAINTAINER = 'Mark \'S-Man42\' Lorenz';
+const _ABOUT_MAINTAINER = 'Thomas \'TMZ\' Zimmermann';
 
 class About extends StatefulWidget {
   const About({Key? key}) : super(key: key);
