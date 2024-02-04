@@ -1,3 +1,4 @@
+import 'package:gc_wizard/tools/coords/_common/formats/GC8K7RC/logic/GC8K7RC.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/swissgridplus/logic/swissgridplus.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants.dart';
@@ -128,6 +129,8 @@ BaseCoordinate buildCoordinate(CoordinateFormat format, LatLng coords, [Ellipsoi
       return NaturalAreaCodeCoordinate.fromLatLon(coords);
     case CoordinateFormatKey.SLIPPY_MAP:
       return SlippyMapCoordinate.fromLatLon(coords, format.subtype!);
+    case CoordinateFormatKey.GC8K7RC:
+      return GC8K7RCCoordinate.fromLatLon(coords);
     case CoordinateFormatKey.GEOHASH:
       return GeohashCoordinate.fromLatLon(coords);
     case CoordinateFormatKey.GEO3X3:

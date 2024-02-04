@@ -7,6 +7,7 @@ import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/clipboard/gcw_clipboard.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
+import 'package:gc_wizard/tools/coords/_common/formats/GC8K7RC/logic/GC8K7RC.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_definition.dart';
 import 'package:gc_wizard/tools/coords/_common/widget/coord_format_inputs/degrees_lat_textinputformatter.dart';
 import 'package:gc_wizard/tools/coords/_common/widget/coord_format_inputs/degrees_lon_textinputformatter.dart';
@@ -76,6 +77,7 @@ part 'package:gc_wizard/tools/coords/_common/formats/slippymap/widget/gcw_coords
 part 'package:gc_wizard/tools/coords/_common/formats/swissgrid/widget/gcw_coords_swissgrid.dart';
 part 'package:gc_wizard/tools/coords/_common/formats/swissgridplus/widget/gcw_coords_swissgridplus.dart';
 part 'package:gc_wizard/tools/coords/_common/formats/xyz/widget/gcw_coords_xyz.dart';
+part 'package:gc_wizard/tools/coords/_common/formats/GC8K7RC/widget/gcw_coords_GC8K7RC.dart';
 part 'package:gc_wizard/tools/coords/_common/formats/geo3x3/widget/gcw_coords_geo3x3.dart';
 part 'package:gc_wizard/tools/coords/_common/formats/geo3x3/widget/geo3x3_textinputformatter.dart';
 part 'package:gc_wizard/tools/coords/_common/formats/geohash/widget/gcw_coords_geohash.dart';
@@ -421,6 +423,7 @@ var allCoordinateWidgetInfos = [
   _GCWCoordWidgetInfoGeohash(),
   _GCWCoordWidgetInfoQuadtree(),
   _GCWCoordWidgetInfoMakaney(),
+  _GCWCoordWidgetInfoGC8K7RC(),
   _GCWCoordWidgetInfoGeoHex(),
   _GCWCoordWidgetInfoGeo3x3(),
 ];

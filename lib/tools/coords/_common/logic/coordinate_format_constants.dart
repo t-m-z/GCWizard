@@ -1,3 +1,4 @@
+import 'package:gc_wizard/tools/coords/_common/formats/GC8K7RC/logic/GC8K7RC.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/dec/logic/dec.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/dmm/logic/dmm.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/dms/logic/dms.dart';
@@ -39,6 +40,7 @@ enum CoordinateFormatKey {
   MERCATOR,
   NATURAL_AREA_CODE,
   SLIPPY_MAP,
+  GC8K7RC,
   GEOHASH,
   GEO3X3,
   GEOHEX,
@@ -119,6 +121,7 @@ final allCoordinateFormatDefinitions = [
   MaidenheadFormatDefinition,
   MercatorFormatDefinition,
   NaturalAreaCodeFormatDefinition,
+  GC8K7RCFormatDefinition,
   GeohashFormatDefinition,
   GeoHexFormatDefinition,
   Geo3x3FormatDefinition,
