@@ -326,7 +326,8 @@ class _MainViewState extends State<MainView> {
 
       showGCWDialog(
           context,
-          i18n(context, 'common_newversion_title', parameters: [mostRecentChangelogVersion]),
+          i18n(context, 'common_newversion_title',
+              parameters: [mostRecentChangelogVersion]),
           Text(entries.join('\n')),
           [
             GCWDialogButton(
@@ -335,8 +336,10 @@ class _MainViewState extends State<MainView> {
                   Navigator.push(
                       context,
                       NoAnimationMaterialPageRoute<GCWTool>(
-                          builder: (context) => registeredTools
-                              .firstWhere((tool) => className(tool.tool) == className(const Changelog()))));
+                          builder: (context) => registeredTools.firstWhere(
+                              (tool) =>
+                                  className(tool.tool) ==
+                                  className(const Changelog()))));
                 }),
             GCWDialogButton(text: i18n(context, 'common_ok'))
           ],
@@ -346,17 +349,22 @@ class _MainViewState extends State<MainView> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       var countAppOpened = Prefs.getInt(PREFERENCE_APP_COUNT_OPENED);
 
-      if (countAppOpened > 1 && Prefs.getString(PREFERENCE_CHANGELOG_DISPLAYED) != CHANGELOG.keys.first) {
+      if (countAppOpened > 1 &&
+          Prefs.getString(PREFERENCE_CHANGELOG_DISPLAYED) !=
+              CHANGELOG.keys.first) {
         _showWhatsNewDialog();
         Prefs.setString(PREFERENCE_CHANGELOG_DISPLAYED, CHANGELOG.keys.first);
         return;
       }
 
-      if (countAppOpened > 0 && (countAppOpened == 10 || countAppOpened % _SHOW_SUPPORT_HINT_EVERY_N == 0)) {
+      if (countAppOpened > 0 &&
+          (countAppOpened == 10 ||
+              countAppOpened % _SHOW_SUPPORT_HINT_EVERY_N == 0)) {
         showGCWAlertDialog(
           context,
           i18n(context, 'common_support_title'),
-          i18n(context, 'common_support_text', parameters: [Prefs.getInt(PREFERENCE_APP_COUNT_OPENED)]),
+          i18n(context, 'common_support_text',
+              parameters: [Prefs.getInt(PREFERENCE_APP_COUNT_OPENED)]),
           () => launchUrl(Uri.parse(i18n(context, 'common_support_link'))),
         );
       }
@@ -387,7 +395,8 @@ class _MainViewState extends State<MainView> {
     if (_mainToolList.isEmpty) _initStaticToolList();
     Favorites.initialize();
 
-    var toolList = (_isSearching && _searchText.isNotEmpty) ? _getSearchedList() : null;
+    var toolList =
+        (_isSearching && _searchText.isNotEmpty) ? _getSearchedList() : null;
 
     return DefaultTabController(
       length: 4,
@@ -401,11 +410,17 @@ class _MainViewState extends State<MainView> {
               onTap: (value) {
                 Prefs.setInt(PREFERENCE_TABS_LAST_VIEWED_TAB, value);
               },
-              tabs: const [
+              tabs: [
                 Tab(icon: Icon(Icons.category)),
                 Tab(icon: Icon(Icons.list)),
                 Tab(icon: Icon(Icons.star)),
-                Tab(text: 'GCC'),
+                Tab(
+                  //text: 'GCC',
+                  child: Image.asset(
+                      'lib/application/category_views/gcc/icons/gcc-logo.png',
+                      width: 25,
+                      height: 25),
+                ),
               ],
             ),
             leading: _buildIcon(),
@@ -417,8 +432,7 @@ class _MainViewState extends State<MainView> {
             GCWToolList(toolList: toolList ?? _categoryList),
             GCWToolList(toolList: toolList ?? _mainToolList),
             GCWToolList(toolList: toolList ?? Favorites.favoritedGCWTools()),
-            GCCView(),
-            //GCWToolList(toolList: toolList ?? _gccToolList),
+            const GCCView(),
           ],
         ),
       ),
@@ -469,11 +483,13 @@ class _MainViewState extends State<MainView> {
   }
 
   List<GCWTool> _getSearchedList() {
-    var _sanitizedSearchText = removeAccents(_searchText.toLowerCase()).replaceAll(ALLOWED_SEARCH_CHARACTERS, '');
+    var _sanitizedSearchText = removeAccents(_searchText.toLowerCase())
+        .replaceAll(ALLOWED_SEARCH_CHARACTERS, '');
 
     if (_sanitizedSearchText.isEmpty) return <GCWTool>[];
 
-    Set<String> _queryTexts = _sanitizedSearchText.split(REGEXP_SPLIT_STRINGLIST).toSet();
+    Set<String> _queryTexts =
+        _sanitizedSearchText.split(REGEXP_SPLIT_STRINGLIST).toSet();
 
     return registeredTools.where((tool) {
       if (tool.indexedSearchStrings.isEmpty) return false;
@@ -799,17 +815,13 @@ void _initStaticToolList() {
       className(const PiSelection()),
       className(Playfair()),
       className(const PrimesSelection()),
-
       className(const CalendarWeek()),
-
       className(const CenterThreePoints()),
       className(const CenterTwoPoints()),
       className(const CentroidArithmeticMean()),
       className(const CentroidCenterOfGravity()),
-
       className(const Combination()),
       className(const CombinationPermutation()),
-
       className(const Cow()),
       className(const CrossBearing()),
       className(const CrossSum()),
@@ -830,8 +842,6 @@ void _initStaticToolList() {
       className(const ExcelTime()),
       className(const ExifReader()),
       className(const EquilateralTriangle()),
-
-
       className(const IntersectBearings()),
       className(const IntersectFourPoints()),
       className(const IntersectGeodeticAndCircle()),
@@ -841,10 +851,7 @@ void _initStaticToolList() {
       className(const IPCodes()),
       className(const IteratedCrossSumRange()),
       className(const IteratedCrossSumRangeFrequency()),
-
       className(const NumeralBases()),
-
-
       className(const PeriodicTable()),
       className(const PeriodicTableDataView(
         atomicNumber: 1,
@@ -869,10 +876,8 @@ void _initStaticToolList() {
       className(Vigenere()),
       className(const Windchill()),
       className(const Z22()),
-
       className(const WaypointProjection()),
       className(const Weekday()),
-
     ].contains(className(element.tool));
   }).toList();
 

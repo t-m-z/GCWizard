@@ -209,6 +209,7 @@ Map<String, String> _buildDecodeMatrix(String key, String columnOrder, bool matr
         }
       }
       break;
+    default:
   }
 
   // Build matrix - first row with single numbers

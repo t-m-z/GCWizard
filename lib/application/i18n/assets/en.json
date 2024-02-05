@@ -2208,6 +2208,7 @@
   "gccode_description": "Converts the GC Code of a Geocache into its internal ID (Base31)",
   "gccode_example": "GCK25B → 156997",
   "gccode_novalidgcode": "No valid GC Code",
+  "gcc_tables": "Tables",
   "gcwizard_script_title" : "GCW Script",
   "gcwizard_script_description" : "Simple Scripting Engine like BASIC",
   "gcwizard_script_hint_program" : "Script",
