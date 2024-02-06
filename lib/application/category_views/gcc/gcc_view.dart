@@ -1135,7 +1135,7 @@ class _GCCViewState extends State<GCCView> {
                     child: Column(
                       children: [
                         Image.asset('lib/application/category_views/gcc/icons/tables.png', width: 75, height: 75),
-                        Text(i18n(context, 'gcc_tables'),),
+                        Text(i18n(context, 'gcc_tables_title'),),
                       ],
                     )),
               ),

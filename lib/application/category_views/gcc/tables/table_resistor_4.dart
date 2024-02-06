@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class TableResistor4 extends StatefulWidget {
-  const TableResistor4({Key? key}) : super(key: key);
+class GCCTableResistor4 extends StatefulWidget {
+  const GCCTableResistor4({Key? key}) : super(key: key);
 
   @override
-  _TableResistor4State createState() => _TableResistor4State();
+  _GCCTableResistor4State createState() => _GCCTableResistor4State();
 }
 
-class _TableResistor4State extends State<TableResistor4> {
+class _GCCTableResistor4State extends State<GCCTableResistor4> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class TableResistor5 extends StatefulWidget {
-  const TableResistor5({Key? key}) : super(key: key);
+class GCCTableResistor5 extends StatefulWidget {
+  const GCCTableResistor5({Key? key}) : super(key: key);
 
   @override
-  _TableResistor5State createState() => _TableResistor5State();
+  _GCCTableResistor5State createState() => _GCCTableResistor5State();
 }
 
-class _TableResistor5State extends State<TableResistor5> {
+class _GCCTableResistor5State extends State<GCCTableResistor5> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build

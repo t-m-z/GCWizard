@@ -1,4 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/application/category_views/gcc/tables/gcc_tables_selection.dart';
+import 'package:gc_wizard/application/category_views/gcc/tables/table_ascii_set.dart';
+import 'package:gc_wizard/application/category_views/gcc/tables/table_morse.dart';
+import 'package:gc_wizard/application/category_views/gcc/tables/table_numeralbases.dart';
+import 'package:gc_wizard/application/category_views/gcc/tables/table_resistor_4.dart';
+import 'package:gc_wizard/application/category_views/gcc/tables/table_resistor_5.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/apparent_temperature_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/astronomy_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/babylon_numbers_selection.dart';
@@ -753,6 +759,21 @@ void initializeRegistry(BuildContext context) {
     ], searchKeys: const [
       'gameoflife',
     ]),
+
+    //GCC Selection **************************************************************************************
+    GCWTool(tool: const GCCTableSelection(), id: 'gcc_tables', searchKeys: const [
+    ]),
+    GCWTool(tool: const GCCTableASCIISet(), id: 'gcc_tables_ascii', searchKeys: const [
+    ]),
+    GCWTool(tool: const GCCTableMorse(), id: 'gcc_tables_morse', searchKeys: const [
+    ]),
+    GCWTool(tool: const GCCTableNumeralBasesNames(), id: 'gcc_tables_numeralbases', searchKeys: const [
+    ]),
+    GCWTool(tool: const GCCTableResistor4(), id: 'gcc_tables_resistor4', searchKeys: const [
+    ]),
+    GCWTool(tool: const GCCTableResistor5(), id: 'gcc_tables_resistor5', searchKeys: const [
+    ]),
+
     GCWTool(tool: const GCCode(), id: 'gccode', categories: const [
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: const [

@@ -17,11 +17,11 @@ class GCCSymbolsSelection extends GCWSelection {
   Widget build(BuildContext context) {
     final List<GCWTool> _toolList = registeredTools.where((element) {
       return [
-        className(const TableASCIISet()),
-        className(const TableMorse()),
-        className(const TableNumeralBasesNames()),
-        className(const TableResistor4()),
-        className(const TableResistor5()),
+        className(const GCCTableASCIISet()),
+        className(const GCCTableMorse()),
+        className(const GCCTableNumeralBasesNames()),
+        className(const GCCTableResistor4()),
+        className(const GCCTableResistor5()),
       ].contains(className(element.tool));
     }).toList();
 
