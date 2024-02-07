@@ -18,7 +18,7 @@ class _GCCTableMorseState extends State<GCCTableMorse> {
         GCWTextDivider(
           text: i18n(context, 'gcc_tables_morse_letters'),
         ),
-        GCWColumnedMultilineOutput(flexValues: [
+        const GCWColumnedMultilineOutput(flexValues: [
           4,
           2,
           2,
@@ -49,7 +49,7 @@ class _GCCTableMorseState extends State<GCCTableMorse> {
         GCWTextDivider(
           text: i18n(context, 'gcc_tables_morse_numbers'),
         ),
-        GCWColumnedMultilineOutput(flexValues: [
+        const GCWColumnedMultilineOutput(flexValues: [
     4,
     2,
     2,
@@ -65,7 +65,7 @@ class _GCCTableMorseState extends State<GCCTableMorse> {
         GCWTextDivider(
           text: i18n(context, 'gcc_tables_morse_signs'),
         ),
-      GCWColumnedMultilineOutput(flexValues: [
+      const GCWColumnedMultilineOutput(flexValues: [
         4,
         2,
         2,
@@ -83,7 +83,7 @@ class _GCCTableMorseState extends State<GCCTableMorse> {
         GCWTextDivider(
           text: i18n(context, 'gcc_tables_morse_signals'),
         ),
-        GCWColumnedMultilineOutput(flexValues: [
+        GCWColumnedMultilineOutput(flexValues: const [
           4,
           2,
           2,

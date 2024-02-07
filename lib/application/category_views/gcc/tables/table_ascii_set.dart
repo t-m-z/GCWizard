@@ -51,7 +51,7 @@ class _GCCTableASCIISetState extends State<GCCTableASCIISet> {
     }
     return GCWColumnedMultilineOutput(
         hasHeader: true,
-        flexValues: [2, 2, 2, 2],
+        flexValues: const [2, 2, 2, 2],
         data: data);
   }
 }

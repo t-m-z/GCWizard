@@ -35,9 +35,9 @@ class _GCCTableResistor4State extends State<GCCTableResistor4> {
               child:Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Container(
-                  color: Colors.grey,child: Text(''),
+                  color: Colors.grey,
                   padding: const EdgeInsets.symmetric(vertical: DOUBLE_DEFAULT_MARGIN, horizontal: DOUBLE_DEFAULT_MARGIN),
-                  margin: const EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN, right: DOUBLE_DEFAULT_MARGIN),
+                  margin: const EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN, right: DOUBLE_DEFAULT_MARGIN),child: const Text(''),
                 ),
               ),
             ),
@@ -55,9 +55,9 @@ class _GCCTableResistor4State extends State<GCCTableResistor4> {
               child:Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Container(
-                  color: Colors.orangeAccent,child: Text(''),
+                  color: Colors.orangeAccent,
                   padding: const EdgeInsets.symmetric(vertical: DOUBLE_DEFAULT_MARGIN, horizontal: DOUBLE_DEFAULT_MARGIN),
-                  margin: const EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN, right: DOUBLE_DEFAULT_MARGIN),
+                  margin: const EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN, right: DOUBLE_DEFAULT_MARGIN),child: const Text(''),
                 ),
               ),
             ),
@@ -75,9 +75,9 @@ class _GCCTableResistor4State extends State<GCCTableResistor4> {
             child:Padding(
               padding: const EdgeInsets.all(8.0),
               child: Container(
-                color: Colors.black,child: Text(''),
+                color: Colors.black,
                 padding: const EdgeInsets.symmetric(vertical: DOUBLE_DEFAULT_MARGIN, horizontal: DOUBLE_DEFAULT_MARGIN),
-                margin: const EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN, right: DOUBLE_DEFAULT_MARGIN),
+                margin: const EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN, right: DOUBLE_DEFAULT_MARGIN),child: const Text(''),
               ),
             ),
           ),
@@ -102,9 +102,9 @@ class _GCCTableResistor4State extends State<GCCTableResistor4> {
             child:Padding(
               padding: const EdgeInsets.all(8.0),
               child: Container(
-                color: Colors.brown,child: Text(''),
+                color: Colors.brown,
                 padding: const EdgeInsets.symmetric(vertical: DOUBLE_DEFAULT_MARGIN, horizontal: DOUBLE_DEFAULT_MARGIN),
-                margin: const EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN, right: DOUBLE_DEFAULT_MARGIN),
+                margin: const EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN, right: DOUBLE_DEFAULT_MARGIN),child: const Text(''),
               ),
             ),
           ),
@@ -128,9 +128,9 @@ class _GCCTableResistor4State extends State<GCCTableResistor4> {
             child:Padding(
               padding: const EdgeInsets.all(8.0),
               child: Container(
-                color: Colors.red,child: Text(''),
+                color: Colors.red,
                 padding: const EdgeInsets.symmetric(vertical: DOUBLE_DEFAULT_MARGIN, horizontal: DOUBLE_DEFAULT_MARGIN),
-                margin: const EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN, right: DOUBLE_DEFAULT_MARGIN),
+                margin: const EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN, right: DOUBLE_DEFAULT_MARGIN),child: const Text(''),
               ),
             ),
           ),
@@ -154,9 +154,9 @@ class _GCCTableResistor4State extends State<GCCTableResistor4> {
             child:Padding(
               padding: const EdgeInsets.all(8.0),
               child: Container(
-                color: Colors.orange,child: Text(''),
+                color: Colors.orange,
                 padding: const EdgeInsets.symmetric(vertical: DOUBLE_DEFAULT_MARGIN, horizontal: DOUBLE_DEFAULT_MARGIN),
-                margin: const EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN, right: DOUBLE_DEFAULT_MARGIN),
+                margin: const EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN, right: DOUBLE_DEFAULT_MARGIN),child: const Text(''),
               ),
             ),
           ),
@@ -179,9 +179,9 @@ class _GCCTableResistor4State extends State<GCCTableResistor4> {
             child:Padding(
               padding: const EdgeInsets.all(8.0),
               child: Container(
-                color: Colors.yellow,child: Text(''),
+                color: Colors.yellow,
                 padding: const EdgeInsets.symmetric(vertical: DOUBLE_DEFAULT_MARGIN, horizontal: DOUBLE_DEFAULT_MARGIN),
-                margin: const EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN, right: DOUBLE_DEFAULT_MARGIN),
+                margin: const EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN, right: DOUBLE_DEFAULT_MARGIN),child: const Text(''),
               ),
             ),
           ),
@@ -204,9 +204,9 @@ class _GCCTableResistor4State extends State<GCCTableResistor4> {
             child:Padding(
               padding: const EdgeInsets.all(8.0),
               child: Container(
-                color: Colors.green,child: Text(''),
+                color: Colors.green,
                 padding: const EdgeInsets.symmetric(vertical: DOUBLE_DEFAULT_MARGIN, horizontal: DOUBLE_DEFAULT_MARGIN),
-                margin: const EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN, right: DOUBLE_DEFAULT_MARGIN),
+                margin: const EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN, right: DOUBLE_DEFAULT_MARGIN),child: const Text(''),
               ),
             ),
           ),
@@ -230,9 +230,9 @@ class _GCCTableResistor4State extends State<GCCTableResistor4> {
             child:Padding(
               padding: const EdgeInsets.all(8.0),
               child: Container(
-                color: Colors.blue,child: Text(''),
+                color: Colors.blue,
                 padding: const EdgeInsets.symmetric(vertical: DOUBLE_DEFAULT_MARGIN, horizontal: DOUBLE_DEFAULT_MARGIN),
-                margin: const EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN, right: DOUBLE_DEFAULT_MARGIN),
+                margin: const EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN, right: DOUBLE_DEFAULT_MARGIN),child: const Text(''),
               ),
             ),
           ),
@@ -256,9 +256,9 @@ class _GCCTableResistor4State extends State<GCCTableResistor4> {
             child:Padding(
               padding: const EdgeInsets.all(8.0),
               child: Container(
-                color: Colors.purple,child: Text(''),
+                color: Colors.purple,
                 padding: const EdgeInsets.symmetric(vertical: DOUBLE_DEFAULT_MARGIN, horizontal: DOUBLE_DEFAULT_MARGIN),
-                margin: const EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN, right: DOUBLE_DEFAULT_MARGIN),
+                margin: const EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN, right: DOUBLE_DEFAULT_MARGIN),child: const Text(''),
               ),
             ),
           ),
@@ -282,9 +282,9 @@ class _GCCTableResistor4State extends State<GCCTableResistor4> {
             child:Padding(
               padding: const EdgeInsets.all(8.0),
               child: Container(
-                color: Colors.grey,child: Text(''),
+                color: Colors.grey,
                 padding: const EdgeInsets.symmetric(vertical: DOUBLE_DEFAULT_MARGIN, horizontal: DOUBLE_DEFAULT_MARGIN),
-                margin: const EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN, right: DOUBLE_DEFAULT_MARGIN),
+                margin: const EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN, right: DOUBLE_DEFAULT_MARGIN),child: const Text(''),
               ),
             ),
           ),
@@ -308,9 +308,9 @@ class _GCCTableResistor4State extends State<GCCTableResistor4> {
             child:Padding(
               padding: const EdgeInsets.all(8.0),
               child: Container(
-                color: Colors.white,child: Text(''),
+                color: Colors.white,
                 padding: const EdgeInsets.symmetric(vertical: DOUBLE_DEFAULT_MARGIN, horizontal: DOUBLE_DEFAULT_MARGIN),
-                margin: const EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN, right: DOUBLE_DEFAULT_MARGIN),
+                margin: const EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN, right: DOUBLE_DEFAULT_MARGIN),child: const Text(''),
               ),
             ),
           ),

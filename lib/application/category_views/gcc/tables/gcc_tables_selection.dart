@@ -4,6 +4,7 @@ import 'package:gc_wizard/application/category_views/gcc/tables/table_morse.dart
 import 'package:gc_wizard/application/category_views/gcc/tables/table_numeralbases.dart';
 import 'package:gc_wizard/application/category_views/gcc/tables/table_resistor_4.dart';
 import 'package:gc_wizard/application/category_views/gcc/tables/table_resistor_5.dart';
+import 'package:gc_wizard/application/category_views/gcc/tables/table_roman.dart';
 import 'package:gc_wizard/application/registry.dart';
 import 'package:gc_wizard/common_widgets/gcw_selection.dart';
 import 'package:gc_wizard/common_widgets/gcw_tool.dart';
@@ -22,6 +23,7 @@ class GCCTableSelection extends GCWSelection {
         className(const GCCTableNumeralBasesNames()),
         className(const GCCTableResistor4()),
         className(const GCCTableResistor5()),
+        className(const GCCTableRoman()),
       ].contains(className(element.tool));
     }).toList();
 

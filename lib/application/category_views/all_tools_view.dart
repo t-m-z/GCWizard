@@ -411,9 +411,9 @@ class _MainViewState extends State<MainView> {
                 Prefs.setInt(PREFERENCE_TABS_LAST_VIEWED_TAB, value);
               },
               tabs: [
-                Tab(icon: Icon(Icons.category)),
-                Tab(icon: Icon(Icons.list)),
-                Tab(icon: Icon(Icons.star)),
+                const Tab(icon: Icon(Icons.category)),
+                const Tab(icon: Icon(Icons.list)),
+                const Tab(icon: Icon(Icons.star)),
                 Tab(
                   //text: 'GCC',
                   child: Image.asset(
@@ -507,12 +507,10 @@ class _MainViewState extends State<MainView> {
 
 List<GCWTool> _categoryList = [];
 List<GCWTool> _mainToolList = [];
-List<GCWTool> _gccToolList = [];
 
 void refreshToolLists() {
   _categoryList = [];
   _mainToolList = [];
-  _gccToolList = [];
 }
 
 void _initStaticToolList() {
@@ -777,109 +775,6 @@ void _initStaticToolList() {
     ].contains(className(element.tool));
   }).toList();
   _mainToolList.sort((a, b) => sortToolList(a, b));
-
-  _gccToolList = registeredTools.where((element) {
-    return [
-      className(const ADFGVX()),
-      className(const Affine()),
-      className(const AlcoholMass()),
-      className(AlphabetValues()),
-      className(const ASCIIValues()),
-      className(Atbash()),
-      className(const Bacon()),
-      className(const BaseSelection()),
-      className(const Brainfk()),
-      className(Caesar()),
-      className(const ColorTool()),
-      className(const Deadfish()),
-      className(const DNAAminoAcids()),
-      className(const DNAAminoAcidsTable()),
-      className(const DNANucleicAcidSequence()),
-      className(const EasterSelection()),
-      className(const Enigma()),
-      className(const ESelection()),
-      className(const FormulaSolverFormulaGroups()),
-      className(const Gade()),
-      className(const GCCode()),
-      className(const HashSelection()),
-      className(const HeatIndex()),
-      className(const Kamasutra()),
-      className(const Kenny()),
-      className(const Projectiles()),
-      className(const RailFence()),
-      className(const MoonPosition()),
-      className(const MoonRiseSet()),
-      className(const MorseSelection()),
-      className(Rot13()),
-      className(const PhiSelection()),
-      className(const PiSelection()),
-      className(Playfair()),
-      className(const PrimesSelection()),
-      className(const CalendarWeek()),
-      className(const CenterThreePoints()),
-      className(const CenterTwoPoints()),
-      className(const CentroidArithmeticMean()),
-      className(const CentroidCenterOfGravity()),
-      className(const Combination()),
-      className(const CombinationPermutation()),
-      className(const Cow()),
-      className(const CrossBearing()),
-      className(const CrossSum()),
-      className(const CrossSumRange()),
-      className(const CrossSumRangeFrequency()),
-      className(const DayCalculator()),
-      className(const DayOfTheYear()),
-      className(const Decabit()),
-      className(const DistanceBearing()),
-      className(const Divisor()),
-      className(const DTMF()),
-      className(const SilverRatioSelection()),
-      className(const DuckSpeak()),
-      className(const EarwigoTextDeobfuscation()),
-      className(const EdelcrantzTelegraph()),
-      className(const EllipsoidTransform()),
-      className(const EnclosedAreas()),
-      className(const ExcelTime()),
-      className(const ExifReader()),
-      className(const EquilateralTriangle()),
-      className(const IntersectBearings()),
-      className(const IntersectFourPoints()),
-      className(const IntersectGeodeticAndCircle()),
-      className(const Intersection()),
-      className(const IntersectThreeCircles()),
-      className(const IntersectTwoCircles()),
-      className(const IPCodes()),
-      className(const IteratedCrossSumRange()),
-      className(const IteratedCrossSumRangeFrequency()),
-      className(const NumeralBases()),
-      className(const PeriodicTable()),
-      className(const PeriodicTableDataView(
-        atomicNumber: 1,
-      )),
-      className(const Permutation()),
-      className(OneTimePad()),
-      className(const ShadowLength()),
-      className(const ResistorSelection()),
-      className(RomanNumbers()),
-      className(Rot18()),
-      className(Rot5()),
-      className(Rot47()),
-      className(RotationGeneral()),
-      className(const RSASelection()),
-      className(const Skytale()),
-      className(const Solitaire()),
-      className(const SunPosition()),
-      className(const SunRiseSet()),
-      className(const TapCode()),
-      className(Tapir()),
-      className(const VanitySelection()),
-      className(Vigenere()),
-      className(const Windchill()),
-      className(const Z22()),
-      className(const WaypointProjection()),
-      className(const Weekday()),
-    ].contains(className(element.tool));
-  }).toList();
 
   _categoryList = registeredTools.where((element) {
     return [

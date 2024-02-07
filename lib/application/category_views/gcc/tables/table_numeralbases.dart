@@ -14,7 +14,7 @@ class _GCCTableNumeralBasesNamesState extends State<GCCTableNumeralBasesNames> {
   Widget build(BuildContext context) {
     return GCWColumnedMultilineOutput(
       hasHeader: true,
-        flexValues: [2, 8],
+        flexValues: const [2, 8],
         data: [
           [i18n(context, 'gcc_tables_numeralbases_base'), i18n(context, 'gcc_tables_numeralbases_name')],
           ['2', i18n(context, 'common_numeralbase_binary')],
