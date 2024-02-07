@@ -2232,6 +2232,8 @@
   "gcc_tables_numeralbases_name": "Name",
   "gcc_tables_resistor4_title": "Resistors, 4 Rings",
   "gcc_tables_resistor5_title": "Resistors, 5 Rings",
+  "gcc_tables_resistors_color": "Color",
+  "gcc_tables_resistors_ring": "Ring",
   "gcwizard_script_title" : "GCW Script",
   "gcwizard_script_description" : "Simple Scripting Engine like BASIC",
   "gcwizard_script_hint_program" : "Script",
