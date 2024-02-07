@@ -2212,7 +2212,7 @@
   "gccode_description": "Converts the GC Code of a Geocache into its internal ID (Base31)",
   "gccode_example": "GCK25B → 156997",
   "gccode_novalidgcode": "No valid GC Code",
-  "gcc_symbols_title": "MyGeoTools",
+  "gcc_symbols_title": "Symbol Tables incl. MyGeoTools",
   "gcc_tables_title": "Tables",
   "gcc_tables_ascii_title": "ASCII Charset",
   "gcc_tables_ascii_char": "Character",

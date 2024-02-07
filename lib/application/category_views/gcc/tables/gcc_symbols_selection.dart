@@ -1,9 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/category_views/gcc/tables/table_ascii_set.dart';
-import 'package:gc_wizard/application/category_views/gcc/tables/table_morse.dart';
-import 'package:gc_wizard/application/category_views/gcc/tables/table_numeralbases.dart';
-import 'package:gc_wizard/application/category_views/gcc/tables/table_resistor_4.dart';
-import 'package:gc_wizard/application/category_views/gcc/tables/table_resistor_5.dart';
 import 'package:gc_wizard/application/registry.dart';
 import 'package:gc_wizard/common_widgets/gcw_selection.dart';
 import 'package:gc_wizard/common_widgets/gcw_tool.dart';
@@ -22,11 +17,66 @@ class GCCSymbolsSelection extends GCWSelection {
       ].contains(className(element.tool));
     }).toList();
 
-    _toolList = registeredTools.where((element) {
+ /*   _toolList = registeredTools.where((element) {
       return [
-        'symboltables_adlam',
+        // 8Bit Braille
+        'symboltables_alchemy',
+        'symboltables_egiptiorum',
+        'symboltables_cirth',
+        'symboltables_antiker',
+        'symboltables_arcadian',
+        // ascii
+        // astronomy
+        // atbash
+        'symboltables_ath',
+        'symboltables_babylonian_numerals',
+        // bacon
+        'symboltables_barbier',
+        'symboltables_baudot_54123',
+        // binärcode
+        // bluebox
+        'symboltables_blox',
+        'symboltables_brahmi',
+        'symboltables_braille_de',
+        // buchstabenwert
+        'symboltables_chappe_1794',
+        'symboltables_chappe_1809',
+        'symboltables_chappe_v1',
+        'symboltables_cherokee',
+        // code sonne mRNA
+        'symboltables_color_honey',
+        'symboltables_color_tokki',
+        'symboltables_daedric',
+        'symboltables_dagger',
+        'symboltables_dancing_men',
+        'symboltables_deafblind',
+        // decabit
+        'symboltables_dragon_language',
+        'symboltables_fakoo',
+        // faur farbcodes
+        'symboltables_finger',
+        'symboltables_fonic',
+        'symboltables_flags',
+        'symboltables_freemason',
+        'symboltables_freemasaon_v2',
+        'symboltables_futurama',
+        'symboltables_gargish',
+        'symboltables_gernreich',
+        'symboltables_glagolitic',
+        // gebärden
+        // glückszahl
+        'symboltables_gnommish',
+        // griechische buchstaben
+        'symboltables_greek_numerals',
+        // hennoch
+        'symboltables_hexahue',
+        'symboltables_hieratic',
+        'symboltables_hobbit_runes',
+        'symboltables_hvd',
+        'symboltables_hylian_64',
+        'symboltables_hymnos',
       ].contains(element.id);
-    }).toList();
+    }).toList();*/
 
     _toolList.sort((a, b) => sortToolList(a, b));
 
