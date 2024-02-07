@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/application/category_views/gcc/tables/gcc_symbols_selection.dart';
 import 'package:gc_wizard/application/category_views/gcc/tables/gcc_tables_selection.dart';
 import 'package:gc_wizard/application/category_views/gcc/tables/table_ascii_set.dart';
 import 'package:gc_wizard/application/category_views/gcc/tables/table_morse.dart';
 import 'package:gc_wizard/application/category_views/gcc/tables/table_numeralbases.dart';
 import 'package:gc_wizard/application/category_views/gcc/tables/table_resistor_4.dart';
 import 'package:gc_wizard/application/category_views/gcc/tables/table_resistor_5.dart';
+import 'package:gc_wizard/application/category_views/gcc/tables/table_roman.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/apparent_temperature_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/astronomy_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/babylon_numbers_selection.dart';
@@ -772,6 +774,10 @@ void initializeRegistry(BuildContext context) {
     GCWTool(tool: const GCCTableResistor4(), id: 'gcc_tables_resistor4', searchKeys: const [
     ]),
     GCWTool(tool: const GCCTableResistor5(), id: 'gcc_tables_resistor5', searchKeys: const [
+    ]),
+    GCWTool(tool: const GCCTableRoman(), id: 'gcc_tables_roman', searchKeys: const [
+    ]),
+    GCWTool(tool: const GCCSymbolsSelection(), id: 'gcc_symbols', searchKeys: const [
     ]),
 
     GCWTool(tool: const GCCode(), id: 'gccode', categories: const [

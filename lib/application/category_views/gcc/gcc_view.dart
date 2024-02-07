@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/application/category_views/gcc/tables/gcc_symbols_selection.dart';
 import 'package:gc_wizard/application/category_views/gcc/tables/gcc_tables_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/astronomy_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/base_selection.dart';
@@ -17,7 +18,6 @@ import 'package:gc_wizard/application/category_views/selector_lists/resistor_sel
 import 'package:gc_wizard/application/category_views/selector_lists/roman_numbers_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/rotation_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/scrabble_selection.dart';
-import 'package:gc_wizard/application/category_views/selector_lists/symbol_table_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/vanity_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/vigenere_selection.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
@@ -751,7 +751,7 @@ class _GCCViewState extends State<GCCView> {
                       // Handle icon tap
                       _navigateToSubPage(registeredTools.where((element) {
                         return [
-                          className(const SymbolTableSelection()),
+                          className(const GCCSymbolsSelection()),
                         ].contains(className(element.tool));
                       }).toList()[0]);
                     },

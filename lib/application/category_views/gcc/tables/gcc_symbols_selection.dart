@@ -8,6 +8,7 @@ import 'package:gc_wizard/application/registry.dart';
 import 'package:gc_wizard/common_widgets/gcw_selection.dart';
 import 'package:gc_wizard/common_widgets/gcw_tool.dart';
 import 'package:gc_wizard/common_widgets/gcw_toollist.dart';
+import 'package:gc_wizard/tools/symbol_tables/_common/widget/symbol_table.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/common_widget_utils.dart';
 
 class GCCSymbolsSelection extends GCWSelection {
@@ -15,15 +16,19 @@ class GCCSymbolsSelection extends GCWSelection {
 
   @override
   Widget build(BuildContext context) {
-    final List<GCWTool> _toolList = registeredTools.where((element) {
+    List<GCWTool> _toolList = registeredTools.where((element) {
       return [
-        className(const GCCTableASCIISet()),
-        className(const GCCTableMorse()),
-        className(const GCCTableNumeralBasesNames()),
-        className(const GCCTableResistor4()),
-        className(const GCCTableResistor5()),
+        className(const SymbolTable()),
       ].contains(className(element.tool));
     }).toList();
+
+    _toolList = registeredTools.where((element) {
+      return [
+        'symboltables_adlam',
+      ].contains(element.id);
+    }).toList();
+
+    _toolList.sort((a, b) => sortToolList(a, b));
 
     return GCWToolList(toolList: _toolList);
   }
