@@ -4,7 +4,7 @@ enum AIR_RESISTANCE {NONE, STOKES, NEWTON}
 
 Map<AIR_RESISTANCE, String> AIR_RESISTANCE_LIST = {
   AIR_RESISTANCE.NONE: 'ballistics_drag_none',
-  AIR_RESISTANCE.STOKES: 'ballistics_drag_stokes',
+  //AIR_RESISTANCE.STOKES: 'ballistics_drag_stokes',
   AIR_RESISTANCE.NEWTON: 'ballistics_drag_newton',
 };
 

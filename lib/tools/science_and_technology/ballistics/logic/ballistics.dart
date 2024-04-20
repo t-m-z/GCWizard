@@ -26,12 +26,24 @@ OutputBallistics calculateBallisticsNoDrag(double velocity, double angle, double
 
 OutputBallistics calculateBallisticsStokes(double velocity, double angle, double acceleration, double startHeight,  double mass, double diameter, double drag, double density){
 // https://www.geogebra.org/m/tEypsSwj#material/sPGWKHD2
-// Stokes    https://matheplanet.com/matheplanet/nuke/html/article.php?sid=497
+
+  const viscosityAir = 18.2; //μPa·s
+  double k1 = 6 * pi * viscosityAir * velocity;
+  angle = angle / 180 * pi;
+
+  double XofT(double T){
+    return 0;
+  }
+
+  double YofT(double T){
+    return 0;
+  }
 
   double time = 0.0;
   double distance = 0.0;
   double maxSpeed = 0.0;
   double maxHeight = 0.0;
+  double y = startHeight;
 
   return OutputBallistics(Time: time, Height: maxHeight, Distance: distance, maxSpeed: maxSpeed);
 }
@@ -156,7 +168,7 @@ OutputBallistics calculateBallisticsNewton(double V0, double Winkel, double g, d
   double Vyo = 0.0; // Vx Start
   double Tu  = 0.0; // Zeit bis Scheitel
 
-  // iteratinswerte
+  // iterationswerte
   double  T1, T2, Tm, H1, H2, Hm;
 
   double ln(double x) {
@@ -211,5 +223,6 @@ OutputBallistics calculateBallisticsNewton(double V0, double Winkel, double g, d
   W = XofT(T);
 
   W = XofT(T);
+
   return OutputBallistics(Time: T, Height: H, Distance: W, maxSpeed: maxSpeed);
 }

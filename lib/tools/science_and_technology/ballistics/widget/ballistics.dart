@@ -172,8 +172,9 @@ class BallisticsState extends State<Ballistics> {
             _currentInputVelocity, _currentInputAngle, _currentInputAcceleration, _currentInputHeight);
         break;
       case AIR_RESISTANCE.STOKES:
-      // output = calculateBallisticsNewton(_currentInputVelocity, _currentInputAngle, _currentInputAcceleration, _currentInputHeight, _currentInputMass, _currentInputDiameter, _currentInputDrag, _currentInputDensity);
-      // break;
+        output = calculateBallisticsStokes(_currentInputVelocity, _currentInputAngle, _currentInputAcceleration,
+            _currentInputHeight, _currentInputMass, _currentInputDiameter, _currentInputDrag, _currentInputDensity);
+        break;
       case AIR_RESISTANCE.NEWTON:
         output = calculateBallisticsNewton(_currentInputVelocity, _currentInputAngle, _currentInputAcceleration,
             _currentInputHeight, _currentInputMass, _currentInputDiameter, _currentInputDrag, _currentInputDensity);
@@ -209,12 +210,12 @@ class BallisticsState extends State<Ballistics> {
               ),
             ),
             Expanded(
-                flex: 5,
+                flex: 4,
                 child: GCWUnits(
                   value: _currentOutputDistanceUnit,
                   unitCategory: UNITCATEGORY_LENGTH,
-                  onlyShowPrefixSymbols: false,
-                  onlyShowUnitSymbols: false,
+                  onlyShowPrefixSymbols: true,
+                  onlyShowUnitSymbols: true,
                   onChanged: (GCWUnitsValue value) {
                     setState(() {
                       _currentOutputDistanceUnit = value;
@@ -244,22 +245,20 @@ class BallisticsState extends State<Ballistics> {
               ),
             ),
             Expanded(
-              flex: 5,
-              child: Container(
-                  padding: const EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN),
-                  child: GCWUnits(
-                    value: _currentOutputTimeUnit,
-                    unitCategory: UNITCATEGORY_TIME,
-                    onlyShowPrefixSymbols: false,
-                    onlyShowUnitSymbols: false,
-                    onChanged: (GCWUnitsValue value) {
-                      setState(() {
-                        _currentOutputTimeUnit = value;
-                        outputDistanceValue = _currentOutputTimeUnit.value.fromReference(output.Time) /
-                            _currentOutputTimeUnit.prefix.value;
-                      });
-                    },
-                  )),
+              flex: 4,
+              child: GCWUnits(
+                value: _currentOutputTimeUnit,
+                unitCategory: UNITCATEGORY_TIME,
+                onlyShowPrefixSymbols: true,
+                onlyShowUnitSymbols: true,
+                onChanged: (GCWUnitsValue value) {
+                  setState(() {
+                    _currentOutputTimeUnit = value;
+                    outputDistanceValue =
+                        _currentOutputTimeUnit.value.fromReference(output.Time) / _currentOutputTimeUnit.prefix.value;
+                  });
+                },
+              ),
             ),
           ],
         ),
@@ -282,12 +281,12 @@ class BallisticsState extends State<Ballistics> {
               ),
             ),
             Expanded(
-                flex: 5,
+                flex: 4,
                 child: GCWUnits(
                   value: _currentOutputHeightUnit,
                   unitCategory: UNITCATEGORY_LENGTH,
-                  onlyShowPrefixSymbols: false,
-                  onlyShowUnitSymbols: false,
+                  onlyShowPrefixSymbols: true,
+                  onlyShowUnitSymbols: true,
                   onChanged: (GCWUnitsValue value) {
                     setState(() {
                       _currentOutputHeightUnit = value;
@@ -319,12 +318,12 @@ class BallisticsState extends State<Ballistics> {
               ),
             ),
             Expanded(
-              flex: 5,
+              flex: 4,
               child: GCWUnits(
                 value: _currentOutputMaxSpeedUnit,
                 unitCategory: UNITCATEGORY_VELOCITY,
-                onlyShowPrefixSymbols: false,
-                onlyShowUnitSymbols: false,
+                onlyShowPrefixSymbols: true,
+                onlyShowUnitSymbols: true,
                 onChanged: (GCWUnitsValue value) {
                   setState(() {
                     _currentOutputMaxSpeedUnit = value;
