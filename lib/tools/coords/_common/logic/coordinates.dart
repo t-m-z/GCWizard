@@ -1,4 +1,5 @@
 import 'package:gc_wizard/tools/coords/_common/formats/GC8K7RC/logic/GC8K7RC.dart';
+import 'package:gc_wizard/tools/coords/_common/formats/mapcode/logic/mapcode.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/swissgridplus/logic/swissgridplus.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants.dart';
@@ -147,6 +148,8 @@ BaseCoordinate buildCoordinate(CoordinateFormat format, LatLng coords, [Ellipsoi
       return ReverseWherigoWaldmeisterCoordinate.fromLatLon(coords);
     case CoordinateFormatKey.REVERSE_WIG_DAY1976:
       return ReverseWherigoDay1976Coordinate.fromLatLon(coords);
+    case CoordinateFormatKey.MAPCODE:
+      return MapCode.fromLatLon(coords, format.subtype!);
     default:
       return buildDefaultCoordinateByCoordinates(coords);
   }
