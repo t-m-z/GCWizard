@@ -290,7 +290,6 @@ import 'package:gc_wizard/tools/wherigo/urwigo_text_deobfuscation/widget/urwigo_
 import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/utils/string_utils.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/common_widget_utils.dart';
-
 import 'package:prefs/prefs.dart';
 
 class MainView extends GCWWebStatefulWidget {
