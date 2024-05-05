@@ -1,3 +1,5 @@
+// https://platform.openai.com/docs/guides/speech-to-text/quickstart
+
 part of 'package:gc_wizard/tools/miscellaneous/openai/logic/openai.dart';
 
 Future<OpenAItaskOutput> _OpenAIgetAudioAsync(String APIkey, String prompt, double temperature, GCWFile audioFile, OPENAI_TASK task,

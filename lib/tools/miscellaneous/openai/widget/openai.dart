@@ -47,10 +47,12 @@ class _OpenAIState extends State<OpenAI> {
   double _currentSpeed = 1.0;
   String _currentVoice = 'alloy';
   String _currentOutput = '';
-  String _currentModel = 'gpt-3.5-turbo-instruct';
+  String _currentChatModel = MODELS_CHAT_COMPLETIONS[0]; // gpt-4
+  String _currentImageModel = MODELS_IMAGE[0]; // dall-e-2
   String _currentImageData = '';
   String _currentLanguage = 'german';
-  String _currentImageSize = '256x256';
+  String _currentImageSize = '1024x1024';
+  String _currentImageQuality = 'standard';
   GCWFile _currentAudioFile = GCWFile(bytes: Uint8List.fromList([]), name: '');
 
   String _outputId = '';
@@ -66,7 +68,8 @@ class _OpenAIState extends State<OpenAI> {
 
   Widget _outputWidget = Container();
 
-  Map<String, String> _modelIDs = {};
+  Map<String, String> _textModelIDs = {};
+  Map<String, String> _imageModelIDs = {};
 
   GCWSwitchPosition _currentImageMode = GCWSwitchPosition.left;
 
@@ -74,11 +77,15 @@ class _OpenAIState extends State<OpenAI> {
   void initState() {
     super.initState();
 
-    for (String model in MODELS_CHAT) {
-      _modelIDs[model] = model;
+    for (String model in MODELS_CHAT_COMPLETIONS) {
+      _textModelIDs[model] = model;
     }
     for (String model in MODELS_COMPLETIONS) {
-      _modelIDs[model] = model;
+      _textModelIDs[model] = model;
+    }
+
+    for (String model in MODELS_IMAGE) {
+      _imageModelIDs[model] = model;
     }
 
     _promptController = TextEditingController(text: _currentPrompt);
@@ -89,6 +96,205 @@ class _OpenAIState extends State<OpenAI> {
     _promptController.dispose();
 
     super.dispose();
+  }
+
+  Widget _widgetInputDataChat(){
+    return Column(
+      children: [
+        GCWDropDown<String>(
+          title: i18n(context, 'openai_model'),
+          value: _currentChatModel,
+          items: _textModelIDs.entries.map((mode) {
+            return GCWDropDownMenuItem(
+              value: mode.key,
+              child: mode.value,
+            );
+          }).toList(),
+          onChanged: (value) {
+            setState(() {
+              _currentChatModel = value;
+            });
+          },
+        ),
+        GCWDoubleSpinner(
+            title: i18n(context, 'openai_temperature'),
+            min: 0,
+            max: 1,
+            numberDecimalDigits: 6,
+            onChanged: (value) {
+              setState(() {
+                _currentTemperature = value;
+              });
+            },
+            value: _currentTemperature),
+      ],
+    );
+  }
+
+  Widget _widgetInputDataImage(){
+    return Column(
+      children: [
+        GCWDropDown<String>(
+          title: i18n(context, 'openai_model'),
+          value: _currentImageModel,
+          items: _imageModelIDs.entries.map((mode) {
+            return GCWDropDownMenuItem(
+              value: mode.key,
+              child: mode.value,
+            );
+          }).toList(),
+          onChanged: (value) {
+            setState(() {
+              _currentImageModel = value;
+            });
+          },
+        ),
+        GCWDropDown<String>(
+          title: i18n(context, 'openai_size'),
+          value: _currentImageSize,
+          items: OPEN_AI_IMAGE_SIZE[_currentImageModel]!.entries.map((mode) {
+            return GCWDropDownMenuItem(
+              value: mode.key,
+              child: mode.value,
+            );
+          }).toList(),
+          onChanged: (value) {
+            setState(() {
+              _currentImageSize = value;
+            });
+          },
+        ),
+        GCWDropDown<String>(
+          title: i18n(context, 'openai_quality'),
+          value: _currentImageQuality,
+          items: OPEN_AI_IMAGE_QUALITY[_currentImageModel]!.entries.map((mode) {
+            return GCWDropDownMenuItem(
+              value: mode.key,
+              child: mode.value,
+            );
+          }).toList(),
+          onChanged: (value) {
+            setState(() {
+              _currentImageQuality = value;
+            });
+          },
+        ),
+        GCWTwoOptionsSwitch(
+          leftValue: i18n(context, 'openai_image_url'),
+          rightValue: i18n(context, 'openai_image_image'),
+          value: _currentImageMode,
+          onChanged: (value) {
+            setState(() {
+              _currentImageMode = value;
+            });
+          },
+        ),
+      ],
+    );
+  }
+
+  Widget _widgetInputDataAudioTranslate(){
+    return Column(
+      children: [
+        GCWDoubleSpinner(
+            title: i18n(context, 'openai_temperature'),
+            min: 0,
+            max: 1,
+            numberDecimalDigits: 6,
+            onChanged: (value) {
+              setState(() {
+                _currentTemperature = value;
+              });
+            },
+            value: _currentTemperature),
+        GCWOpenFile(
+          onLoaded: (_file) {
+            if (_file == null) {
+              showSnackBar(i18n(context, 'common_loadfile_exception_notloaded'), context);
+              return;
+            }
+            _currentAudioFile = _file;
+            setState(() {});
+          },
+        )
+      ],
+    );
+  }
+
+  Widget _widgetInputDataAudioTranscribe(){
+    return Column(
+      children: [
+        GCWDoubleSpinner(
+            title: i18n(context, 'openai_temperature'),
+            min: 0,
+            max: 1,
+            numberDecimalDigits: 6,
+            onChanged: (value) {
+              setState(() {
+                _currentTemperature = value;
+              });
+            },
+            value: _currentTemperature),
+        GCWOpenFile(
+          onLoaded: (_file) {
+            if (_file == null) {
+              showSnackBar(i18n(context, 'common_loadfile_exception_notloaded'), context);
+              return;
+            }
+            _currentAudioFile = _file;
+            setState(() {});
+          },
+        )
+      ],
+    );
+  }
+
+  Widget _widgetInputDataSpeech(){
+    return Column(
+      children: [
+        GCWDropDown<String>(
+          title: i18n(context, 'openai_voice'),
+          value: _currentVoice,
+          items: OPEN_AI_SPEECH_VOICE.entries.map((mode) {
+            return GCWDropDownMenuItem(
+              value: mode.key,
+              child: mode.value,
+            );
+          }).toList(),
+          onChanged: (value) {
+            setState(() {
+              _currentVoice = value;
+            });
+          },
+        ),
+        GCWDropDown<String>(
+          title: i18n(context, 'openai_language'),
+          value: _currentLanguage,
+          items: OPEN_AI_SPEECH_LANGUAGE.entries.map((mode) {
+            return GCWDropDownMenuItem(
+              value: mode.value,
+              child: mode.key,
+            );
+          }).toList(),
+          onChanged: (value) {
+            setState(() {
+              _currentLanguage = value;
+            });
+          },
+        ),
+        GCWDoubleSpinner(
+            title: i18n(context, 'openai_speed'),
+            min: 0.25,
+            max: 4,
+            numberDecimalDigits: 6,
+            onChanged: (value) {
+              setState(() {
+                _currentSpeed = value;
+              });
+            },
+            value: _currentSpeed),
+      ],
+    );
   }
 
   @override
@@ -112,117 +318,21 @@ class _OpenAIState extends State<OpenAI> {
           },
         ),
         _currentTask == OPENAI_TASK.CHAT
-            ? GCWDropDown<String>(
-                title: i18n(context, 'openai_model'),
-                value: _currentModel,
-                items: _modelIDs.entries.map((mode) {
-                  return GCWDropDownMenuItem(
-                    value: mode.key,
-                    child: mode.value,
-                  );
-                }).toList(),
-                onChanged: (value) {
-                  setState(() {
-                    _currentModel = value;
-                  });
-                },
-              )
-            : Container(),
-        _currentTask == OPENAI_TASK.CHAT ||
-                _currentTask == OPENAI_TASK.AUDIO_TRANSCRIBE ||
-                _currentTask == OPENAI_TASK.AUDIO_TRANSLATE
-            ? GCWDoubleSpinner(
-                title: i18n(context, 'openai_temperature'),
-                min: 0,
-                max: 1,
-                numberDecimalDigits: 6,
-                onChanged: (value) {
-                  setState(() {
-                    _currentTemperature = value;
-                  });
-                },
-                value: _currentTemperature)
+            ? _widgetInputDataChat()
             : Container(),
         _currentTask == OPENAI_TASK.IMAGE
-            ? Column(children: <Widget>[
-                GCWDropDown<String>(
-                  title: i18n(context, 'openai_size'),
-                  value: _currentImageSize,
-                  items: OPEN_AI_IMAGE_SIZE.entries.map((mode) {
-                    return GCWDropDownMenuItem(
-                      value: mode.key,
-                      child: mode.value,
-                    );
-                  }).toList(),
-                  onChanged: (value) {
-                    setState(() {
-                      _currentImageSize = value;
-                    });
-                  },
-                ),
-                GCWTwoOptionsSwitch(
-                  leftValue: i18n(context, 'openai_image_url'),
-                  rightValue: i18n(context, 'openai_image'),
-                  value: _currentImageMode,
-                  onChanged: (value) {
-                    setState(() {
-                      _currentImageMode = value;
-                    });
-                  },
-                ),
-              ])
+            ? _widgetInputDataImage()
+            : Container(),
+        _currentTask == OPENAI_TASK.AUDIO_TRANSCRIBE
+            ? _widgetInputDataAudioTranscribe()
+            : Container(),
+        _currentTask == OPENAI_TASK.AUDIO_TRANSLATE
+            ? _widgetInputDataAudioTranslate()
             : Container(),
         _currentTask == OPENAI_TASK.SPEECH
-            ? Column(children: <Widget>[
-                GCWDropDown<String>(
-                  title: i18n(context, 'openai_voice'),
-                  value: _currentVoice,
-                  items: OPEN_AI_SPEECH_VOICE.entries.map((mode) {
-                    return GCWDropDownMenuItem(
-                      value: mode.key,
-                      child: mode.value,
-                    );
-                  }).toList(),
-                  onChanged: (value) {
-                    setState(() {
-                      _currentVoice = value;
-                    });
-                  },
-                ),
-                GCWDropDown<String>(
-                  title: i18n(context, 'openai_language'),
-                  value: _currentLanguage,
-                  items: OPEN_AI_SPEECH_LANGUAGE.entries.map((mode) {
-                    return GCWDropDownMenuItem(
-                      value: mode.value,
-                      child: mode.key,
-                    );
-                  }).toList(),
-                  onChanged: (value) {
-                    setState(() {
-                      _currentLanguage = value;
-                    });
-                  },
-                ),
-                GCWDoubleSpinner(
-                    title: i18n(context, 'openai_speed'),
-                    min: 0.25,
-                    max: 4,
-                    numberDecimalDigits: 6,
-                    onChanged: (value) {
-                      setState(() {
-                        _currentSpeed = value;
-                      });
-                    },
-                    value: _currentSpeed),
-              ])
+            ? _widgetInputDataSpeech()
             : Container(),
-        _currentTask == OPENAI_TASK.CHAT ||
-                _currentTask == OPENAI_TASK.IMAGE ||
-                _currentTask == OPENAI_TASK.AUDIO_TRANSCRIBE ||
-                _currentTask == OPENAI_TASK.AUDIO_TRANSLATE ||
-                _currentTask == OPENAI_TASK.SPEECH
-            ? Column(children: <Widget>[
+        Column(children: <Widget>[
                 GCWTextDivider(
                   text: i18n(context, 'openai_prompt'),
                   suppressTopSpace: true,
@@ -260,20 +370,7 @@ class _OpenAIState extends State<OpenAI> {
                     });
                   },
                 ),
-              ])
-            : Container(),
-        _currentTask == OPENAI_TASK.AUDIO_TRANSCRIBE || _currentTask == OPENAI_TASK.AUDIO_TRANSLATE
-            ? GCWOpenFile(
-                onLoaded: (_file) {
-                  if (_file == null) {
-                    showSnackBar(i18n(context, 'common_loadfile_exception_notloaded'), context);
-                    return;
-                  }
-                  _currentAudioFile = _file;
-                  setState(() {});
-                },
-              )
-            : Container(),
+              ]),
         if (_loadFile)
           GCWOpenFile(
             onLoaded: (_file) {
@@ -393,7 +490,8 @@ class _OpenAIState extends State<OpenAI> {
   Future<GCWAsyncExecuterParameters> _buildChatGPTgetJobData() async {
     return GCWAsyncExecuterParameters(OPENAIgetChatJobData(
       openai_api_key: _currentAPIkey,
-      openai_model: _currentModel,
+      openai_chat_model: _currentChatModel,
+      openai_image_model: _currentImageModel,
       openai_prompt: _currentPrompt,
       openai_temperature: _currentTemperature,
       openai_image_size: _currentImageSize,
@@ -523,7 +621,7 @@ class _OpenAIState extends State<OpenAI> {
           onPressed: () async {
             final Email email = Email(
               body: 'Model: ' +
-                  _currentModel +
+                  _currentModel() +
                   '\n' +
                   'Prompt: ' +
                   _currentPrompt +
@@ -558,5 +656,16 @@ class _OpenAIState extends State<OpenAI> {
         ),
       ],
     );
+  }
+
+  String _currentModel(){
+    switch (_currentTask) {
+      case OPENAI_TASK.IMAGE: return _currentImageModel;
+      case OPENAI_TASK.CHAT: return _currentChatModel;
+      case OPENAI_TASK.SPEECH: return 'tts-1';
+      case OPENAI_TASK.AUDIO_TRANSCRIBE: return 'whisper-1';
+      case OPENAI_TASK.AUDIO_TRANSLATE: return 'whisper-1';
+      default: return '';
+    }
   }
 }

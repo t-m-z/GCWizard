@@ -1,24 +1,46 @@
+// https://platform.openai.com/docs/guides/images
+
 part of 'package:gc_wizard/tools/miscellaneous/openai/logic/openai.dart';
 
 const BASE_URL_OPENAI_IMAGE = 'https://api.openai.com/v1/images/generations';
 
 enum OPENAI_IMAGE_DATATYPE { URL, BASE64, NULL }
 
-Map<String, String> OPEN_AI_IMAGE_SIZE = {
-  '256x256': '256x256',
-  '512x512': '512x512',
-  '1024x1024': '1024x1024',
-  '1024x1792': '1024x1792',
-  '1792x1024': '1792x1024',
+final List<String> MODELS_IMAGE = [
+  'dall-e-2',
+  'dall-e-3', // size 1024x1024, 1024x1792 or 1792x1024
+];
+
+Map<String, Map<String, String>> OPEN_AI_IMAGE_SIZE = {
+  'dall-e-2': {
+    '256x256': '256x256',
+    '512x512': '512x512',
+    '1024x1024': '1024x1024',
+  },
+  'dall-e-3': {
+    '1024x1024': '1024x1024',
+    '1024x1792': '1024x1792',
+    '1792x1024': '1792x1024',
+  }
 };
 
-Future<OpenAItaskOutput> _OpenAIgetImageAsync(
-    String APIkey, String model, String prompt, double temperature, String size, bool imageUrl,
+Map<String, Map<String, String>> OPEN_AI_IMAGE_QUALITY = {
+  'dall-e-2': {
+    'standard': 'standard',
+  },
+  'dall-e-3': {
+    'standard': 'standard',
+    'hd': 'hd',
+  }
+};
+
+Future<OpenAItaskOutput> _OpenAIgetImageAsync(String APIkey, String model,
+    String prompt, double temperature, String size, bool imageUrl,
     {SendPort? sendAsyncPort}) async {
   String httpCode = '';
   String httpMessage = '';
   String imageData = '';
-  String textData =  '';
+  String textData = '';
   OPENAI_TASK_STATUS status = OPENAI_TASK_STATUS.ERROR;
 
   try {
@@ -28,7 +50,7 @@ Future<OpenAItaskOutput> _OpenAIgetImageAsync(
     };
 
     final OPENAI_IMAGE_BODY = {
-      //'model': 'dall-e-3',
+      'model': 'dall-e-3',
       'prompt': prompt,
       'n': 1,
       'size': size,
@@ -48,7 +70,9 @@ Future<OpenAItaskOutput> _OpenAIgetImageAsync(
     if (httpCode != '200') {
       OPENAI_TASK_STATUS.ERROR;
       var errorMessage = jsonDecode(imageData);
-      textData = (errorMessage['error']['code'] as String) + '\n' + (errorMessage['error']['message'] as String);
+      textData = (errorMessage['error']['code'] as String) +
+          '\n' +
+          (errorMessage['error']['message'] as String);
     } else {
       status = OPENAI_TASK_STATUS.OK;
     }

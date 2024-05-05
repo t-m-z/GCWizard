@@ -1,39 +1,23 @@
+// https://platform.openai.com/docs/guides/text-generation
+
 part of 'package:gc_wizard/tools/miscellaneous/openai/logic/openai.dart';
 
-const _BASE_URL_CHATGPT_CHAT_TEXT = 'https://api.openai.com/v1/chat/completions';
+const _BASE_URL_CHATGPT_CHAT_COMPLETION_TEXT = 'https://api.openai.com/v1/chat/completions';
 const _BASE_URL_CHATGPT_COMPLETIONS_TEXT = 'https://api.openai.com/v1/completions';
 
-final List<String> MODELS_CHAT = [
-  'gpt-4-1106-preview ',
+final List<String> MODELS_CHAT_COMPLETIONS = [
   'gpt-4',
-  'gpt-4-0613',
-  'gpt-4-32k',
-  'gpt-4-32k-0613',
   'gpt-3.5-turbo',
-  'gpt-3.5-turbo-0613',
-  'gpt-3.5-turbo-16k',
-  'gpt-3.5-turbo-16k-0613',
-  'gpt-3.5-turbo-1106 ',
 ];
 
 final List<String> MODELS_COMPLETIONS = [
   'gpt-3.5-turbo-instruct',
-  'babbage-002',
-  'davinci-002',
 ];
 
 final Map<String, String> _OPENAI_ENDPOINTS = {
-  'gpt-4': _BASE_URL_CHATGPT_CHAT_TEXT,
-  'gpt-4-0613': _BASE_URL_CHATGPT_CHAT_TEXT,
-  'gpt-4-32k': _BASE_URL_CHATGPT_CHAT_TEXT,
-  'gpt-4-32k-0613': _BASE_URL_CHATGPT_CHAT_TEXT,
-  'gpt-3.5-turbo': _BASE_URL_CHATGPT_CHAT_TEXT,
-  'gpt-3.5-turbo-0613': _BASE_URL_CHATGPT_CHAT_TEXT,
-  'gpt-3.5-turbo-16k': _BASE_URL_CHATGPT_CHAT_TEXT,
-  'gpt-3.5-turbo-16k-0613': _BASE_URL_CHATGPT_CHAT_TEXT,
+  'gpt-4': _BASE_URL_CHATGPT_CHAT_COMPLETION_TEXT,
+  'gpt-3.5-turbo': _BASE_URL_CHATGPT_CHAT_COMPLETION_TEXT,
   'gpt-3.5-turbo-instruct': _BASE_URL_CHATGPT_COMPLETIONS_TEXT,
-  'babbage-002': _BASE_URL_CHATGPT_COMPLETIONS_TEXT,
-  'davinci-002': _BASE_URL_CHATGPT_COMPLETIONS_TEXT,
 };
 
 Future<OpenAItaskOutput> _OpenAIgetTextAsync(String APIkey, String model, String prompt, double temperature,
@@ -66,7 +50,7 @@ Future<OpenAItaskOutput> _OpenAIgetTextAsync(String APIkey, String model, String
     'temperature': temperature,
   };
 
-  if (MODELS_CHAT.contains(model)) {
+  if (MODELS_CHAT_COMPLETIONS.contains(model)) {
     body = jsonEncode(OPENAI_CHAT_BODY);
   } else {
     body = jsonEncode(OPENAI_COMPLETION_BODY);
@@ -93,7 +77,6 @@ Future<OpenAItaskOutput> _OpenAIgetTextAsync(String APIkey, String model, String
     httpMessage = stackTrace.toString();
     textData = '';
   }
-
   return OpenAItaskOutput(
       status: status,
       httpCode: httpCode,

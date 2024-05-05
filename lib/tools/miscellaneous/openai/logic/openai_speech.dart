@@ -1,3 +1,5 @@
+// https://platform.openai.com/docs/guides/text-to-speech
+
 part of 'package:gc_wizard/tools/miscellaneous/openai/logic/openai.dart';
 
 const _BASE_URL_OPENAI_SPEECH = 'https://api.openai.com/v1/audio/speech';
