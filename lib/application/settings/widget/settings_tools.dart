@@ -15,21 +15,25 @@ class ToolSettings extends StatefulWidget {
 }
 
 class _ToolSettingsState extends State<ToolSettings> {
-
   late TextEditingController _chatGPTAPIKeyController;
   String _chatgpt_api_key = Prefs.get(PREFERENCE_CHATGPT_API_KEY).toString();
+  late TextEditingController _inputControllerOpenGTINDBApiKey;
+  String _currentInputOpenGTINDBApiKey =
+      Prefs.get(PREFERENCE_EAN_DEFAULT_OPENGTIN_APIKEY).toString();
 
   @override
   void initState() {
     super.initState();
 
     _chatGPTAPIKeyController = TextEditingController(text: _chatgpt_api_key);
+    _inputControllerOpenGTINDBApiKey =
+        TextEditingController(text: _currentInputOpenGTINDBApiKey);
   }
 
   @override
   void dispose() {
     _chatGPTAPIKeyController.dispose();
-
+    _inputControllerOpenGTINDBApiKey.dispose();
     super.dispose();
   }
 
@@ -68,6 +72,18 @@ class _ToolSettingsState extends State<ToolSettings> {
             setState(() {
               _chatgpt_api_key = text;
               Prefs.setString(PREFERENCE_CHATGPT_API_KEY, _chatgpt_api_key);
+            });
+          },
+        ),
+        GCWTextDivider(
+          text: i18n(context, 'settings_tools_defaultopengtindb_apikey'),
+        ),
+        GCWTextField(
+          controller: _inputControllerOpenGTINDBApiKey,
+          onChanged: (text) {
+            setState(() {
+              _currentInputOpenGTINDBApiKey = text;
+              Prefs.setString(PREFERENCE_EAN_DEFAULT_OPENGTIN_APIKEY, text);
             });
           },
         ),
