@@ -296,7 +296,6 @@ class MainView extends GCWWebStatefulWidget {
   MainView({Key? key, Map<String, String>? webParameter})
       : super(key: key, webParameter: webParameter, apiSpecification: null);
 
-
   @override
   _MainViewState createState() => _MainViewState();
 }
