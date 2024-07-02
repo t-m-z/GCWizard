@@ -1,8 +1,10 @@
-import 'package:unluac/decompile/registers.dart';
-import 'package:unluac/decompile/block.dart';
-import 'package:unluac/decompile/expression.dart';
-import 'package:unluac/decompile/statement.dart';
-import 'package:unluac/decompile/target.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/registers.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/block/block.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/expression/expression.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/statement/statement.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/target/globaltarget.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/statement/assignment.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/operation/operation.dart';
 
 class GlobalSet extends Operation {
   String global;
@@ -15,5 +17,7 @@ class GlobalSet extends Operation {
     return Assignment(GlobalTarget(global), value);
   }
 }
+
+
 
 
