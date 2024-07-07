@@ -13,9 +13,9 @@ class WhileBlock extends Block {
   final List<Statement> statements;
 
   WhileBlock(LFunction function, Branch branch, int loopback, Registers r)
-      : this.branch = branch,
-        this.loopback = loopback,
-        this.r = r,
+      : branch = branch,
+        loopback = loopback,
+        r = r,
         statements = List<Statement>.filled(branch.end - branch.begin + 1, Statement(), growable: true),
         super(function, branch.begin, branch.end);
 
