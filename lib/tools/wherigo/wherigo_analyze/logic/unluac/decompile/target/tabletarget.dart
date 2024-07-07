@@ -1,0 +1,42 @@
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/decompiler.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/expression/expression.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/expression/tablereference.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/output.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/target/target.dart';
+
+class TableTarget extends Target {
+  final Expression table;
+  final Expression index;
+
+  TableTarget(this.table, this.index);
+
+  @override
+  void print(Decompiler d, Output out) {
+    TableReference(table, index).print(d, out);
+  }
+
+  @override
+  void printMethod(Decompiler d, Output out) {
+    table.print(d, out);
+    out.print(":");
+    out.print(index.asName());
+  }
+
+  @override
+  bool isFunctionName() {
+    if (!index.isIdentifier()) {
+      return false;
+    }
+    if (!table.isDotChain()) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  bool beginsWithParen() {
+    return table.isUngrouped() || table.beginsWithParen();
+  }
+}
+
+
