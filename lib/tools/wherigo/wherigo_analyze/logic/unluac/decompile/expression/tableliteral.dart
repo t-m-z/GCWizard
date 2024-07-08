@@ -14,7 +14,7 @@ class TableLiteral extends Expression {
   int capacity;
 
   TableLiteral(int arraySize, int hashSize)
-      : entries = List<Entry>.filled(arraySize + hashSize, Entry(), growable: true),
+      : entries = List<Entry>.filled(arraySize + hashSize, Entry(Expression(0), Expression(0),false,0), growable: true),
         capacity = arraySize + hashSize,
         super(Expression.PRECEDENCE_ATOMIC);
 

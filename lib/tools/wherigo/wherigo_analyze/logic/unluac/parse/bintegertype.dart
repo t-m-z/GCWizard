@@ -23,12 +23,14 @@ class BIntegerType extends BObjectType<BInteger> {
         value = BInteger.Int(buffer.getInt16_(0, Endian.little));
         break;
       case 4:
-        value = BInteger.Int(buffer.getInt32(0, Endian.little));
+        //value = BInteger.Int(buffer.getInt32(0, Endian.little));
+        value = BInteger.Int(buffer.getInt32());
         break;
       default:
         {
-          final bytes = Uint8List(intSize);
-          buffer.asUint8List().getRange(0, intSize).toList(growable: false).copyInto(bytes);
+          //final bytes = Uint8List(intSize);
+          //buffer.asUint8List().getRange(0, intSize).toList(growable: false).copyInto(bytes);
+          final bytes = Uint8List.fromList(buffer.asUint8List());
           value = BInteger.BigInt(BigInt.from(bytes.buffer.asByteData().getInt64(0, Endian.little)));
         }
         break;
@@ -40,7 +42,7 @@ class BIntegerType extends BObjectType<BInteger> {
   BInteger parse(ByteBuffer_ buffer, BHeader header) {
     final value = raw_parse(buffer, header);
     if (header.debug) {
-      print('-- parsed <integer> ${value.asInt()}');
+      //print('-- parsed <integer> ${value.asInt()}');
     }
     return value;
   }

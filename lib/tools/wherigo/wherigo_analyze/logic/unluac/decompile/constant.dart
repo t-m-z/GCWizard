@@ -53,7 +53,7 @@ class Constant {
       ? 3
       : throw ArgumentError("Illegal constant type: $constant"),
         boolValue = constant is LBoolean ? constant == LBoolean.LTRUE : false,
-        number = constant is LNumber ? constant : null,
+        number = constant is LNumber ? constant as LNumber : null,
         string = constant is LString ? constant.deref() : null;
 
   void print(Decompiler d, Output out, bool braced) {

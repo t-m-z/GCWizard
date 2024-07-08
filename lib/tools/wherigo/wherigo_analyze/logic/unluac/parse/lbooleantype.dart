@@ -14,7 +14,7 @@ class LBooleanType extends BObjectType<LBoolean> {
     } else {
       LBoolean bool = value == 0 ? LBoolean.LFALSE : LBoolean.LTRUE;
       if (header.debug) {
-        print('-- parsed <boolean> $bool');
+        //print('-- parsed <boolean> $bool');
       }
       return bool;
     }

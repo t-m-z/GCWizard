@@ -96,7 +96,7 @@ class BHeader {
     if (versionNumber >= 0x53) {
       upvalues = buffer.getUint8_(5);
       if (debug) {
-        print('-- main chunk upvalue count: $upvalues');
+        //print('-- main chunk upvalue count: $upvalues');
       }
       // TODO: check this value
     }

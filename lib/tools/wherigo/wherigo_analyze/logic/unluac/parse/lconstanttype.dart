@@ -19,22 +19,22 @@ class LConstantType50 extends LConstantType {
   LObject parse(ByteBuffer_ buffer, BHeader header) {
     int type = buffer.getUint8();
     if (header.debug) {
-      print("-- parsing <constant>, type is ");
+      //print("-- parsing <constant>, type is ");
       switch (type) {
         case 0:
-          print("<nil>");
+          //print("<nil>");
           break;
         case 1:
-          print("<boolean>");
+          //print("<boolean>");
           break;
         case 3:
-          print("<number>");
+          //print("<number>");
           break;
         case 4:
-          print("<string>");
+          //print("<string>");
           break;
         default:
-          print("illegal $type");
+          //print("illegal $type");
           break;
       }
     }
@@ -44,7 +44,7 @@ class LConstantType50 extends LConstantType {
       case 1:
         return header.bool_.parse(buffer, header);
       case 3:
-        return header.number.parse(buffer, header);
+        return header.number.parse(buffer, header) as LObject;
       case 4:
         return header.string.parse(buffer, header);
       default:
@@ -58,28 +58,28 @@ class LConstantType53 extends LConstantType {
   LObject parse(ByteBuffer_ buffer, BHeader header) {
     int type = buffer.getUint8();
     if (header.debug) {
-      print("-- parsing <constant>, type is ");
+      //print("-- parsing <constant>, type is ");
       switch (type) {
         case 0:
-          print("<nil>");
+          //print("<nil>");
           break;
         case 1:
-          print("<boolean>");
+          //print("<boolean>");
           break;
         case 3:
-          print("<float>");
+          //print("<float>");
           break;
         case 0x13:
-          print("<integer>");
+          //print("<integer>");
           break;
         case 4:
-          print("<short string>");
+          //print("<short string>");
           break;
         case 0x14:
-          print("<long string>");
+          //print("<long string>");
           break;
         default:
-          print("illegal $type");
+          //print("illegal $type");
           break;
       }
     }
@@ -87,11 +87,11 @@ class LConstantType53 extends LConstantType {
       case 0:
         return LNil.NIL;
       case 1:
-        return header.bool.parse(buffer, header);
+        return header.bool_.parse(buffer, header);
       case 3:
-        return header.lfloat.parse(buffer, header);
+        return header.lfloat.parse(buffer, header) as LObject;
       case 0x13:
-        return header.linteger.parse(buffer, header);
+        return header.linteger.parse(buffer, header) as LObject;
       case 4:
       case 0x14:
         return header.string.parse(buffer, header);

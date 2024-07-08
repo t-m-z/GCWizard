@@ -16,7 +16,7 @@ class BSizeTType extends BObjectType<BSizeT> {
   BSizeT parse(ByteBuffer_ buffer, BHeader header) {
     final value = BSizeT(integerType.raw_parse(buffer, header));
     if (header.debug) {
-      print('-- parsed <size_t> $value');
+      //print('-- parsed <size_t> $value');
     }
     return value;
   }

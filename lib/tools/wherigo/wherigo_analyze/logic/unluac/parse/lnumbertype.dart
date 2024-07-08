@@ -64,7 +64,7 @@ class LNumberType {
       }
     }
     if (header.debug) {
-      print("-- parsed <number> $value");
+      //print("-- parsed <number> $value");
     }
     return value;
   }

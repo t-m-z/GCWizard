@@ -18,10 +18,10 @@ class LFunctionType extends BObjectType<LFunction> {
   @override
   LFunction parse(ByteBuffer_ buffer, BHeader header) {
     if (header.debug) {
-      print("-- beginning to parse function");
+      //print("-- beginning to parse function");
     }
     if (header.debug) {
-      print("-- parsing name...start...end...upvalues...params...varargs...stack");
+      //print("-- parsing name...start...end...upvalues...params...varargs...stack");
     }
     var s = LFunctionParseState();
     parseMain(buffer, header, s);
@@ -62,40 +62,40 @@ class LFunctionType extends BObjectType<LFunction> {
 
   void parseCode(ByteBuffer_ buffer, BHeader header, LFunctionParseState s) {
     if (header.debug) {
-      print("-- beginning to parse bytecode list");
+      //print("-- beginning to parse bytecode list");
     }
     s.length = header.integer.parse(buffer, header).asInt();
     s.code = List<int>.filled(s.length, 0);
     for (var i = 0; i < s.length; i++) {
       s.code[i] = buffer.getInt32();
       if (header.debug) {
-        print("-- parsed codepoint ${s.code[i].toRadixString(16)}");
+        //print("-- parsed codepoint ${s.code[i].toRadixString(16)}");
       }
     }
   }
 
   void parseConstants(ByteBuffer_ buffer, BHeader header, LFunctionParseState s) {
     if (header.debug) {
-      print("-- beginning to parse constants list");
+      //print("-- beginning to parse constants list");
     }
     s.constants = header.constant.parseList(buffer, header);
     if (header.debug) {
-      print("-- beginning to parse functions list");
+      //print("-- beginning to parse functions list");
     }
     s.functions = header.function.parseList(buffer, header);
   }
 
   void parseDebug(ByteBuffer_ buffer, BHeader header, LFunctionParseState s) {
     if (header.debug) {
-      print("-- beginning to parse source lines list");
+      //print("-- beginning to parse source lines list");
     }
     s.lines = header.integer.parseList(buffer, header);
     if (header.debug) {
-      print("-- beginning to parse locals list");
+      //print("-- beginning to parse locals list");
     }
     s.locals = header.local.parseList(buffer, header);
     if (header.debug) {
-      print("-- beginning to parse upvalues list");
+      //print("-- beginning to parse upvalues list");
     }
     var upvalueNames = header.string.parseList(buffer, header);
     for (var i = 0; i < upvalueNames.length.asInt(); i++) {

@@ -10,6 +10,5 @@ class LNil extends LObject {
     return identical(this, other);
   }
 
-  @override
   int get hashCode => super.hashCode;
 }

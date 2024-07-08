@@ -10,7 +10,7 @@ class LLocalType extends BObjectType<LLocal> {
     final start = header.integer.parse(buffer, header);
     final end = header.integer.parse(buffer, header);
     if (header.debug) {
-      print('-- parsing local, name: $name from ${start.asInt()} to ${end.asInt()}');
+      //print('-- parsing local, name: $name from ${start.asInt()} to ${end.asInt()}');
     }
     return LLocal(name, start, end);
   }
