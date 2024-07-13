@@ -29,7 +29,7 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    namespace 'de.sman42.gc_wizard'
+    namespace 'de.tmz.sman42.gc_wizard'
     compileSdkVersion 34
 
     sourceSets {
@@ -41,7 +41,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "de.sman42.gc_wizard"
+        applicationId "de.tmz.sman42.gc_wizard"
         minSdkVersion 21
         targetSdkVersion 34
         versionCode flutterVersionCode.toInteger()
