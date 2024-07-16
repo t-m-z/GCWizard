@@ -22,7 +22,7 @@
          FlutterApplication and put your custom class here. -->
     <application
         android:label="GC Wizard nightly"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/ic_launcher_tmz">
         <activity
             android:name="io.flutter.embedding.android.FlutterActivity"
             android:launchMode="singleTop"

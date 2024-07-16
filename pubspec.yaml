@@ -416,6 +416,6 @@ flutter:
     - lib/tools/symbol_tables/_common/assets/zodiac_z408/
 
 flutter_icons:
-  image_path: "assets/logo/circle_border_1024_gold_nightly.png"
+  image_path: "assets/logo/circle_border_1024_tmz_nightly.png"
   android: true
   ios: true
