@@ -318,7 +318,9 @@ import 'package:gc_wizard/tools/science_and_technology/alphabet_number_systems/m
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/heat_index/widget/heat_index.dart';
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/humidex/widget/humidex.dart';
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/summer_simmer/widget/summer_simmer.dart';
+import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/utci/widget/utci.dart';
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/wet_bulb_temperature/widget/wet_bulb_temperature.dart';
+import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/wet_bulb_globe_temperature/widget/wet_bulb_globe_temperature.dart';
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/windchill/widget/windchill.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/easter/easter_date/widget/easter_date.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/easter/easter_years/widget/easter_years.dart';
@@ -1798,6 +1800,11 @@ void initializeRegistry(BuildContext context) {
           'apparenttemperature',
           'apparenttemperature_summersimmerindex',
         ]),
+    GCWTool(tool: const UTCI(), id: 'utci', searchKeys: const [
+      'apparenttemperature',
+      'apparenttemperature_utci',
+    ]),
+
     GCWTool(tool: const Windchill(), id: 'windchill', searchKeys: const [
       'apparenttemperature',
       'apparenttemperature_windchill',
@@ -1809,6 +1816,11 @@ void initializeRegistry(BuildContext context) {
           'apparenttemperature',
           'apparenttemperature_wet_bulb_temperature',
         ]),
+
+    GCWTool(tool: const WetBulbGlobeTemperature(), id: 'wet_bulb_globe_temperature', searchKeys: const [
+      'apparenttemperature',
+      'apparenttemperature_wet_bulb_globe_temperature',
+    ]),
 
     //AstronomySelection  ********************************************************************************************
     GCWTool(
