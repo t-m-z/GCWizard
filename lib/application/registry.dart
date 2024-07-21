@@ -279,6 +279,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/tomtom/widget/tomtom.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/trifid/widget/trifid.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/trithemius/widget/trithemius.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/universal_product_code/widget/universal_product_code.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/upsidedown/widget/upsidedown.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/vigenere/widget/vigenere.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/wasd/widget/wasd.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/zamonian_numbers/widget/zamonian_numbers.dart';
@@ -1694,6 +1695,16 @@ void initializeRegistry(BuildContext context) {
           'binary',
           'universalproductcode',
         ]),
+    GCWTool(tool: const UnitConverter(), id: 'unitconverter', categories: const [
+      ToolCategory.SCIENCE_AND_TECHNOLOGY
+    ], searchKeys: const [
+      'unitconverter',
+    ]),
+    GCWTool(tool: const UpsideDown(), id: 'upsidedown', categories: const [
+      ToolCategory.CRYPTOGRAPHY
+    ], searchKeys: const [
+      'upsidedown',
+    ]),
     GCWTool(
         tool: const VelocityAcceleration(),
         id: 'velocity_acceleration',
