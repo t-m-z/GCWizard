@@ -454,6 +454,7 @@ import 'package:gc_wizard/tools/science_and_technology/telegraphs/popham_telegra
 import 'package:gc_wizard/tools/science_and_technology/telegraphs/prussia_telegraph/widget/prussia_telegraph.dart';
 import 'package:gc_wizard/tools/science_and_technology/telegraphs/schilling_canstatt_telegraph/widget/schilling_canstatt_telegraph.dart';
 import 'package:gc_wizard/tools/science_and_technology/telegraphs/semaphore/widget/semaphore.dart';
+import 'package:gc_wizard/tools/science_and_technology/telegraphs/steinheil/widget/steinheil.dart';
 import 'package:gc_wizard/tools/science_and_technology/telegraphs/wheatstone_cooke_5_needles/widget/wheatstone_cooke_5_needles.dart';
 import 'package:gc_wizard/tools/science_and_technology/telegraphs/wigwag/widget/wigwag.dart';
 import 'package:gc_wizard/tools/science_and_technology/teletypewriter/algol/widget/algol.dart';
@@ -6347,90 +6348,58 @@ void initializeRegistry(BuildContext context) {
     ]),
 
     // TelegraphSelection *********************************************************************************************
-    GCWTool(
-        tool: const ChappeTelegraph(),
-        id: 'telegraph_chappe',
-        searchKeys: const [
-          'telegraph',
-          'telegraph_chappe',
-        ]),
-    GCWTool(
-        tool: const EdelcrantzTelegraph(),
-        id: 'telegraph_edelcrantz',
-        searchKeys: const [
-          'telegraph',
-          'telegraph_edelcrantz',
-        ]),
-    GCWTool(
-        tool: const MurrayTelegraph(),
-        id: 'telegraph_murray',
-        searchKeys: const [
-          'telegraph',
-          'telegraph_murray',
-        ]),
-    GCWTool(
-        tool: const OhlsenTelegraph(),
-        id: 'telegraph_ohlsen',
-        searchKeys: const [
-          'telegraph',
-          'telegraph_ohlsen',
-        ]),
-    GCWTool(
-        tool: const PasleyTelegraph(),
-        id: 'telegraph_pasley',
-        searchKeys: const [
-          'telegraph',
-          'telegraph_pasley',
-        ]),
-    GCWTool(
-        tool: const PophamTelegraph(),
-        id: 'telegraph_popham',
-        searchKeys: const [
-          'telegraph',
-          'telegraph_popham',
-        ]),
-    GCWTool(
-        tool: const PrussiaTelegraph(),
-        id: 'telegraph_prussia',
-        searchKeys: const [
-          'telegraph',
-          'telegraph_prussia',
-        ]),
-    GCWTool(
-        tool: const SemaphoreTelegraph(),
-        id: 'symboltables_semaphore',
-        searchKeys: const [
-          'telegraph',
-          'telegraph_semaphore',
-        ]),
-    GCWTool(
-        tool: const WigWagSemaphoreTelegraph(),
-        id: 'telegraph_wigwag',
-        searchKeys: const [
-          'telegraph',
-          'telegraph_wigwag',
-        ]),
-    GCWTool(
-        tool: const GaussWeberTelegraph(),
-        id: 'telegraph_gausswebertelegraph',
-        searchKeys: const [
-          'telegraph',
-          'telegraph_gaussweber',
-        ]),
-    GCWTool(
-        tool: const SchillingCanstattTelegraph(),
-        id: 'telegraph_schillingcanstatt',
-        searchKeys: const [
-          'telegraph',
-          'telegraph_schillingcanstatt',
-        ]),
-    GCWTool(
-        tool: const WheatstoneCookeNeedleTelegraph(),
-        id: 'telegraph_wheatstonecooke_needle',
-        searchKeys: const [
-          'telegraph',
-          'telegraph_wheatstonecooke_needle',
-        ]),
+    GCWTool(tool: const ChappeTelegraph(), id: 'telegraph_chappe', searchKeys: const [
+      'telegraph',
+      'telegraph_chappe',
+    ]),
+    GCWTool(tool: const EdelcrantzTelegraph(), id: 'telegraph_edelcrantz', searchKeys: const [
+      'telegraph',
+      'telegraph_edelcrantz',
+    ]),
+    GCWTool(tool: const MurrayTelegraph(), id: 'telegraph_murray', searchKeys: const [
+      'telegraph',
+      'telegraph_murray',
+    ]),
+    GCWTool(tool: const OhlsenTelegraph(), id: 'telegraph_ohlsen', searchKeys: const [
+      'telegraph',
+      'telegraph_ohlsen',
+    ]),
+    GCWTool(tool: const PasleyTelegraph(), id: 'telegraph_pasley', searchKeys: const [
+      'telegraph',
+      'telegraph_pasley',
+    ]),
+    GCWTool(tool: const PophamTelegraph(), id: 'telegraph_popham', searchKeys: const [
+      'telegraph',
+      'telegraph_popham',
+    ]),
+    GCWTool(tool: const PrussiaTelegraph(), id: 'telegraph_prussia', searchKeys: const [
+      'telegraph',
+      'telegraph_prussia',
+    ]),
+    GCWTool(tool: const SemaphoreTelegraph(), id: 'symboltables_semaphore', searchKeys: const [
+      'telegraph',
+      'telegraph_semaphore',
+    ]),
+    GCWTool(tool: const SteinheilTelegraph(), id: 'telegraph_steinheil', searchKeys: const [
+      'telegraph',
+      'telegraph_steinheil',
+    ]),
+    GCWTool(tool: const WigWagSemaphoreTelegraph(), id: 'telegraph_wigwag', searchKeys: const [
+      'telegraph',
+      'telegraph_wigwag',
+    ]),
+    GCWTool(tool: const GaussWeberTelegraph(), id: 'telegraph_gausswebertelegraph', searchKeys: const [
+      'telegraph',
+      'telegraph_gaussweber',
+    ]),
+    GCWTool(tool: const SchillingCanstattTelegraph(), id: 'telegraph_schillingcanstatt', searchKeys: const [
+      'telegraph',
+      'telegraph_schillingcanstatt',
+    ]),
+    GCWTool(tool: const WheatstoneCookeNeedleTelegraph(), id: 'telegraph_wheatstonecooke_needle', searchKeys: const [
+      'telegraph',
+      'telegraph_wheatstonecooke_needle',
+    ]),
 
     //Teletypewriter Selection **********************************************************************************************
     GCWTool(
