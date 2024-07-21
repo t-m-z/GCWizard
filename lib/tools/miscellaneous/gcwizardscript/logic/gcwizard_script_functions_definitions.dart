@@ -176,7 +176,7 @@ const List<String> _Functions_14 = [
   'LISTISNOTEMPTY(',
 ];
 const List<String> _Functions_15 = [
-    'CENTERTWOPOINTS(',
+  'CENTERTWOPOINTS(',
 ];
 const List<String> _Functions_16 = [];
 const List<String> _Functions_17 = [
@@ -199,7 +199,10 @@ const Map<String, _GCWizardScriptClassFunctionDefinition> _FUNCTIONS = {
   // waypoints
   'WPTSADD': _GCWizardScriptClassFunctionDefinition(_wptsAdd, 2, functionReturn: false),
   'WPTSCLEAR': _GCWizardScriptClassFunctionDefinition(_wptsClear, 0, functionReturn: false),
-  'WPTSCOUNT': _GCWizardScriptClassFunctionDefinition(_wptsCount, 0, ),
+  'WPTSCOUNT': _GCWizardScriptClassFunctionDefinition(
+    _wptsCount,
+    0,
+  ),
   'WPTSLON': _GCWizardScriptClassFunctionDefinition(
     _wptsLon,
     1,
@@ -227,7 +230,7 @@ const Map<String, _GCWizardScriptClassFunctionDefinition> _FUNCTIONS = {
   'LISTISNOTEMPTY': _GCWizardScriptClassFunctionDefinition(_listIsNotEmpty, 1),
   'LISTTOSTRING': _GCWizardScriptClassFunctionDefinition(_listToString, 1),
   'LISTGET': _GCWizardScriptClassFunctionDefinition(_listGet, 2),
-  'LISTFROM': _GCWizardScriptClassFunctionDefinition(_listFrom, 1, functionReturn: false),
+  'LISTFROM': _GCWizardScriptClassFunctionDefinition(_listFrom, 2, functionReturn: false),
 
   // math
   'ABS': _GCWizardScriptClassFunctionDefinition(_abs, 1),
