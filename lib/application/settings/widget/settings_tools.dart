@@ -31,25 +31,36 @@ class _ToolSettingsState extends State<ToolSettings> {
   String _currentInputWhoIs = Prefs.get(PREFERENCE_WTF_WHOIS).toString();
   String _currentInputGreyNoise = Prefs.get(PREFERENCE_WTF_GREYNOISE).toString();
 
+  late TextEditingController _inputControllerOpenGTINDBApiKey;
+  String _currentInputOpenGTINDBApiKey = Prefs.get(PREFERENCE_EAN_DEFAULT_OPENGTIN_APIKEY).toString();
+
   @override
   void initState() {
     super.initState();
+
     _inputControllerWhoIs = TextEditingController(text: _currentInputWhoIs);
     _inputControllerSHODAN = TextEditingController(text: _currentInputSHODAN);
     _inputControllerVT = TextEditingController(text: _currentInputVT);
     _inputControllerPT = TextEditingController(text: _currentInputPT);
     _inputControllerMail = TextEditingController(text: _currentInputMail);
     _inputControllerGreyNoise = TextEditingController(text: _currentInputGreyNoise);
+
+    _inputControllerOpenGTINDBApiKey = TextEditingController(text: _currentInputOpenGTINDBApiKey);
+
   }
 
   @override
   void dispose() {
+
     _inputControllerWhoIs.dispose();
     _inputControllerSHODAN.dispose();
     _inputControllerVT.dispose();
     _inputControllerPT.dispose();
     _inputControllerMail.dispose();
     _inputControllerGreyNoise.dispose();
+
+    _inputControllerOpenGTINDBApiKey.dispose();
+
     super.dispose();
   }
 
@@ -136,9 +147,21 @@ class _ToolSettingsState extends State<ToolSettings> {
           title: i18n(context, 'settings_wtf_greynoise'),
           controller: _inputControllerGreyNoise,
           onChanged: (text) {
+    setState(() {
+    _currentInputGreyNoise = text;
+    Prefs.setString(PREFERENCE_WTF_GREYNOISE, text);
+    });
+    },
+        ),
+    GCWTextDivider(
+    text: i18n(context, 'settings_tools_defaultopengtindb_apikey'),
+        ),
+        GCWTextField(
+          controller: _inputControllerOpenGTINDBApiKey,
+          onChanged: (text) {
             setState(() {
-              _currentInputGreyNoise = text;
-              Prefs.setString(PREFERENCE_WTF_GREYNOISE, text);
+              _currentInputOpenGTINDBApiKey = text;
+              Prefs.setString(PREFERENCE_EAN_DEFAULT_OPENGTIN_APIKEY, text);
             });
           },
         ),
