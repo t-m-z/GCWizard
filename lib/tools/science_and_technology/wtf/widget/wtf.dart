@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 
-import 'package:gc_wizard/application/i18n/app_localizations.dart';
 import 'package:gc_wizard/application/settings/logic/preferences.dart';
 import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer.dart';
 import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
 import 'package:gc_wizard/common_widgets/gcw_expandable.dart';
-import 'package:gc_wizard/common_widgets/gcw_toast.dart';
+import 'package:gc_wizard/common_widgets/gcw_snackbar.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
@@ -174,7 +174,7 @@ class WTFIsState extends State<WTFIs> {
   void _showWTFOutput(WTFoutput output) {
 
     if (output.result == WTFstatus.OK) {
-      showToast(i18n(context, 'wtf_result_ok'));
+      showSnackBar(i18n(context, 'wtf_result_ok'), context);
 
       _handleSHODAN(output.dataSHODAN);
       _handleVirusTotal(output.dataVirusTotal);
@@ -183,7 +183,7 @@ class WTFIsState extends State<WTFIs> {
       _handleIPWhoIs(output.dataIPWhoIs);
       _handleGreyNoise(output.dataGreyNoise);
     } else {
-      showToast(i18n(context, 'wtf_result_error_2') + '\n' + output.httpCode + '\n' + output.httpMessage);
+      showSnackBar(i18n(context, 'wtf_result_error_2') + '\n' + output.httpCode + '\n' + output.httpMessage, context);
     }
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -228,13 +228,13 @@ class WTFIsState extends State<WTFIs> {
 
       case WTFstatus.ERROR:
         _getDataSHODAN = false;
-        showToast(i18n(context, 'wtf_result_error_shodan') + '\n' + output.httpCode + '\n' + output.httpMessage,
-            duration: 15);
+        showSnackBar(i18n(context, 'wtf_result_error_shodan') + '\n' + output.httpCode + '\n' + output.httpMessage,
+            context, duration: 15);
         break;
 
       case WTFstatus.NULL:
         _getDataSHODAN = false;
-        showToast(i18n(context, 'wtf_result_null_shodan'), duration: 15);
+        showSnackBar(i18n(context, 'wtf_result_null_shodan'), context, duration: 15);
         break;
     }
   }
@@ -250,12 +250,12 @@ class WTFIsState extends State<WTFIs> {
         break;
       case WTFstatus.ERROR:
         _getDataVT = false;
-        showToast(i18n(context, 'wtf_result_error_vt') + '\n' + output.httpCode + '\n' + output.httpMessage,
-            duration: 15);
+        showSnackBar(i18n(context, 'wtf_result_error_vt') + '\n' + output.httpCode + '\n' + output.httpMessage,
+            context, duration: 15);
         break;
       case WTFstatus.NULL:
         _getDataVT = false;
-        showToast(i18n(context, 'wtf_result_null_vt'), duration: 15);
+        showSnackBar(i18n(context, 'wtf_result_null_vt'), context, duration: 15);
         break;
     }
   }
@@ -271,12 +271,12 @@ class WTFIsState extends State<WTFIs> {
         break;
       case WTFstatus.ERROR:
         _getDataPT = false;
-        showToast(i18n(context, 'wtf_result_error_pt') + '\n' + output.httpCode + '\n' + output.httpMessage,
-            duration: 15);
+        showSnackBar(i18n(context, 'wtf_result_error_pt') + '\n' + output.httpCode + '\n' + output.httpMessage,
+            context, duration: 15);
         break;
       case WTFstatus.NULL:
         _getDataPT = false;
-        showToast(i18n(context, 'wtf_result_null_pt'), duration: 15);
+        showSnackBar(i18n(context, 'wtf_result_null_pt'), context, duration: 15);
         break;
     }
   }
@@ -301,12 +301,12 @@ class WTFIsState extends State<WTFIs> {
         break;
       case WTFstatus.ERROR:
         _getDataWhoIs = false;
-        showToast(i18n(context, 'wtf_result_error_whois') + '\n' + output.httpCode + '\n' + output.httpMessage,
-            duration: 15);
+        showSnackBar(i18n(context, 'wtf_result_error_whois') + '\n' + output.httpCode + '\n' + output.httpMessage,
+            context, duration: 15);
         break;
       case WTFstatus.NULL:
         _getDataWhoIs = false;
-        showToast(i18n(context, 'wtf_result_null_whois'), duration: 15);
+        showSnackBar(i18n(context, 'wtf_result_null_whois'), context, duration: 15);
         break;
     }
   }
@@ -331,13 +331,13 @@ class WTFIsState extends State<WTFIs> {
 
       case WTFstatus.ERROR:
         _getDataIPWhoIs = false;
-        showToast(i18n(context, 'wtf_result_error_ipwhois') + '\n' + output.httpCode + '\n' + output.httpMessage,
+        showSnackBar(i18n(context, 'wtf_result_error_ipwhois') + '\n' + output.httpCode + '\n' + output.httpMessage, context,
             duration: 15);
         break;
 
       case WTFstatus.NULL:
         _getDataIPWhoIs = false;
-        showToast(i18n(context, 'wtf_result_null_ipwhois'), duration: 15);
+        showSnackBar(i18n(context, 'wtf_result_null_ipwhois'), context, duration: 15);
         break;
     }
   }
@@ -355,7 +355,7 @@ class WTFIsState extends State<WTFIs> {
 
       case WTFstatus.NULL:
         _getDataGreyNoise = false;
-        showToast(i18n(context, 'wtf_result_null_greynoise'), duration: 15);
+        showSnackBar(i18n(context, 'wtf_result_null_greynoise'), context, duration: 15);
         break;
     }
   }

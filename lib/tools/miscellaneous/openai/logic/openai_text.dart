@@ -6,7 +6,8 @@ const _BASE_URL_CHATGPT_CHAT_COMPLETION_TEXT = 'https://api.openai.com/v1/chat/c
 const _BASE_URL_CHATGPT_COMPLETIONS_TEXT = 'https://api.openai.com/v1/completions';
 
 final List<String> MODELS_CHAT_COMPLETIONS = [
-  'gpt-4',
+  'gpt-4-o',
+  'gpt-4-turbo',
   'gpt-3.5-turbo',
 ];
 
