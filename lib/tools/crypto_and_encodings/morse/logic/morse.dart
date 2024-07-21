@@ -1,3 +1,4 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:gc_wizard/utils/collection_utils.dart';
 import 'package:gc_wizard/utils/string_utils.dart';
 
@@ -32,6 +33,35 @@ const Map<MorseType, String> MORSE_CODES = {
   MorseType.MORSE1844: 'symboltables_morse_1844_vail',
   MorseType.GERKE: 'symboltables_morse_gerke',
   MorseType.STEINHEIL: 'symboltables_morse_steinheil',
+};
+
+final Map<String, AssetSource> MORSE_TONE = {
+  '.' : AssetSource('audio/morseSymbolDit.mp3'),  // 1 dit
+  '-' : AssetSource('audio/morseSymbolDah.mp3'),  // 1 dah = 3 dit
+  ',' : AssetSource('audio/morseSpaceSymbol.mp3'),  // 1 dit Pause zwischen dit/dah
+  String.fromCharCode(8195) : AssetSource('audio/morseSpaceLetter.mp3'),  // 3 dit Pause zwischen Buchstaben
+  '|' : AssetSource('audio/morseSpaceWord.mp3'),  // 7 dit Pause zwischen Wörter
+};
+
+const Map<String, String> _AZToMorse = {
+  'A': '.-', 'B': '-...', 'C': '-.-.', 'D': '-..', 'E': '.', 'F': '..-.', 'G': '--.', 'H': '....', 'I': '..',
+  'J': '.---', 'K': '-.-', 'L': '.-..', 'M': '--',
+  'N': '-.', 'O': '---', 'P': '.--.', 'Q': '--.-', 'R': '.-.', 'S': '...', 'T': '-', 'U': '..-', 'V': '...-',
+  'W': '.--', 'X': '-..-', 'Y': '-.--', 'Z': '--..',
+  '1': '.----', '2': '..---', '3': '...--', '4': '....-', '5': '.....', '6': '-....', '7': '--...', '8': '---..',
+  '9': '----.', '0': '-----',
+  '\u00C5': '.--.-', //Å
+  '\u00C0': '.--.-', //À
+  '\u00C4': '.-.-', //Ä
+  '\u00C8': '.-..-', //È
+  '\u00C9': '..-..', //É
+  '\u00D6': '---.', //Ö
+  '\u00DC': '..--', //Ü
+  '\u00DF': '...--..', //ß
+  '\u00D1': '--.--', //Ñ
+  'CH': '----', '.': '.-.-.-', ',': '--..--', ':': '---...', ';': '-.-.-.', '?': '..--..', '@': '.--.-.',
+  '-': '-....-', '_': '..--.-', '(': '-.--.', ')': '-.--.-', '\'': '.----.', '=': '-...-', '+': '.-.-.', '/': '-..-.',
+  '!': '-.-.--'
 };
 
 const Map<MorseType, Map<String, String>> _AZTO_MORSE_CODE = {

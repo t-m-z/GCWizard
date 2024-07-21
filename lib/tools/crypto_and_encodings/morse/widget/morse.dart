@@ -1,4 +1,9 @@
+import 'dart:async';
+
+import 'package:audioplayers/audioplayers.dart';
+import 'package:uuid/uuid.dart';
 import 'package:flutter/material.dart';
+
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
@@ -12,6 +17,7 @@ import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/morse/logic/morse.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/text_widget_utils.dart';
+
 
 const String _apiSpecification = '''
 {
@@ -72,6 +78,25 @@ class _MorseState extends State<Morse> {
   static const _kFontFam = 'MyFlutterApp';
   static const String? _kFontPkg = null;
   static const IconData primitive_dot = IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+
+  var player = AudioPlayer(playerId: const Uuid().v4(),);
+
+  String _playlist = '';
+  int _index = 0;
+
+  void playSound(int index) {
+    if (index < _playlist.length) {
+      player.play(MORSE_TONE[_playlist[index]]!);
+      if (index + 1 < _playlist.length) {
+        StreamSubscription<void> subscription = player.onPlayerComplete.listen((event) => 0);
+        subscription = player.onPlayerComplete.listen((event) {
+          index++;
+          playSound(index,);
+          subscription.cancel();
+        });
+      }
+    }
+  }
 
   @override
   void initState() {
@@ -482,6 +507,35 @@ class _MorseState extends State<Morse> {
           type: _currentCode);
     }
 
-    return GCWOutputText(text: output, style: textStyle);
+    return Column(
+      children: <Widget>[
+        GCWOutputText(text: output, style: textStyle),
+        GCWIconButton(
+          icon: Icons.play_arrow,
+          onPressed: () {
+            _index = 0;
+            if (_currentMode == GCWSwitchPosition.left) {
+              _playlist = _buildMorseCode(output);
+            } else {
+              _playlist = _buildMorseCode(_currentDecodeInput);
+            }
+            if (_playlist.isNotEmpty) {
+              playSound(_index);
+            }
+          },
+        )
+      ],
+    );
+  }
+
+  String _buildMorseCode(String code){
+    List<String> result = [];
+    for (int i = 0; i < code.length; i++){
+      result.add(code[i]);
+      if ((code[i] == '.' || code[i] == '-') && (i + 1 < code.length) && ((code[i + 1] == '.' || code[i + 1] == '-'))) {
+        result.add(',');
+      }
+    }
+    return result.join('');
   }
 }
