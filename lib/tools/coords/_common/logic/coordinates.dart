@@ -1,3 +1,9 @@
+import 'package:gc_wizard/tools/coords/_common/formats/GC8K7RC/logic/GC8K7RC.dart';
+import 'package:gc_wizard/tools/coords/_common/formats/swissgridplus/logic/swissgridplus.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart' as defaultCoord;
+import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/bosch/logic/bosch.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/dec/logic/dec.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/dmm/logic/dmm.dart';
@@ -21,13 +27,9 @@ import 'package:gc_wizard/tools/coords/_common/formats/reversewherigo_day1976/lo
 import 'package:gc_wizard/tools/coords/_common/formats/reversewherigo_waldmeister/logic/reverse_wherigo_waldmeister.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/slippymap/logic/slippy_map.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/swissgrid/logic/swissgrid.dart';
-import 'package:gc_wizard/tools/coords/_common/formats/swissgridplus/logic/swissgridplus.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/utm/logic/utm.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/xyz/logic/xyz.dart';
-import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format.dart';
-import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants.dart';
-import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart' as defaultCoord;
-import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
+
 import 'package:latlong2/latlong.dart';
 
 import 'coordinate_format_definition.dart';
@@ -129,6 +131,8 @@ BaseCoordinate buildCoordinate(CoordinateFormat format, LatLng coords, [Ellipsoi
       return NaturalAreaCodeCoordinate.fromLatLon(coords);
     case CoordinateFormatKey.SLIPPY_MAP:
       return SlippyMapCoordinate.fromLatLon(coords, format.subtype!);
+    case CoordinateFormatKey.GC8K7RC:
+      return GC8K7RCCoordinate.fromLatLon(coords);
     case CoordinateFormatKey.GEOHASH:
       return GeohashCoordinate.fromLatLon(coords);
     case CoordinateFormatKey.GEO3X3:

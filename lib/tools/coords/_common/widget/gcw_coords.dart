@@ -7,13 +7,21 @@ import 'package:gc_wizard/application/settings/logic/preferences.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/clipboard/gcw_clipboard.dart';
+import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
+import 'package:gc_wizard/tools/coords/_common/formats/GC8K7RC/logic/GC8K7RC.dart';
+import 'package:gc_wizard/tools/coords/_common/formats/mapcode/logic/external_libs/ctrynams_short.dart';
+import 'package:gc_wizard/tools/coords/_common/formats/mapcode/logic/external_libs/mapcode.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_definition.dart';
+import 'package:gc_wizard/tools/coords/_common/widget/coord_format_inputs/degrees_lat_textinputformatter.dart';
+import 'package:gc_wizard/tools/coords/_common/widget/coord_format_inputs/degrees_lon_textinputformatter.dart';
+import 'package:gc_wizard/tools/coords/_common/widget/gcw_coords_formatselector.dart';
+import 'package:gc_wizard/tools/coords/_common/widget/gcw_coords_paste_button.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_sign_dropdown.dart';
 import 'package:gc_wizard/common_widgets/gcw_distance.dart';
 import 'package:gc_wizard/common_widgets/gcw_snackbar.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
-import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
 import 'package:gc_wizard/common_widgets/text_input_formatters/gcw_integer_textinputformatter.dart';
 import 'package:gc_wizard/common_widgets/text_input_formatters/gcw_minutesseconds_textinputformatter.dart';
 import 'package:gc_wizard/common_widgets/text_input_formatters/wrapper_for_masktextinputformatter.dart';
@@ -33,8 +41,6 @@ import 'package:gc_wizard/tools/coords/_common/formats/geohex/logic/geohex.dart'
 import 'package:gc_wizard/tools/coords/_common/formats/lambert/logic/lambert.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/maidenhead/logic/maidenhead.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/makaney/logic/makaney.dart';
-import 'package:gc_wizard/tools/coords/_common/formats/mapcode/logic/external_libs/ctrynams_short.dart';
-import 'package:gc_wizard/tools/coords/_common/formats/mapcode/logic/external_libs/mapcode.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/mapcode/logic/mapcode.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/mercator/logic/mercator.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/mgrs_utm/logic/mgrs.dart';
@@ -50,14 +56,9 @@ import 'package:gc_wizard/tools/coords/_common/formats/utm/logic/utm.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/xyz/logic/xyz.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants.dart';
-import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_definition.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_text_formatter.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
-import 'package:gc_wizard/tools/coords/_common/widget/coord_format_inputs/degrees_lat_textinputformatter.dart';
-import 'package:gc_wizard/tools/coords/_common/widget/coord_format_inputs/degrees_lon_textinputformatter.dart';
-import 'package:gc_wizard/tools/coords/_common/widget/gcw_coords_formatselector.dart';
-import 'package:gc_wizard/tools/coords/_common/widget/gcw_coords_paste_button.dart';
 import 'package:gc_wizard/utils/collection_utils.dart';
 import 'package:gc_wizard/utils/complex_return_types.dart';
 import 'package:gc_wizard/utils/constants.dart';
@@ -99,8 +100,10 @@ part 'package:gc_wizard/tools/coords/_common/formats/reversewherigo_waldmeister/
 part 'package:gc_wizard/tools/coords/_common/formats/slippymap/widget/gcw_coords_slippymap.dart';
 part 'package:gc_wizard/tools/coords/_common/formats/swissgrid/widget/gcw_coords_swissgrid.dart';
 part 'package:gc_wizard/tools/coords/_common/formats/swissgridplus/widget/gcw_coords_swissgridplus.dart';
-part 'package:gc_wizard/tools/coords/_common/formats/utm/widget/gcw_coords_utm.dart';
 part 'package:gc_wizard/tools/coords/_common/formats/xyz/widget/gcw_coords_xyz.dart';
+part 'package:gc_wizard/tools/coords/_common/formats/utm/widget/gcw_coords_utm.dart';
+part 'package:gc_wizard/tools/coords/_common/formats/GC8K7RC/widget/gcw_coords_GC8K7RC.dart';
+
 
 class GCWCoords extends StatefulWidget {
   final void Function(BaseCoordinate?) onChanged;
@@ -417,6 +420,7 @@ var allCoordinateWidgetInfos = [
   _GCWCoordWidgetInfoGeohash(),
   _GCWCoordWidgetInfoBosch(),
   _GCWCoordWidgetInfoMakaney(),
+  _GCWCoordWidgetInfoGC8K7RC(),
   _GCWCoordWidgetInfoGeoHex(),
   _GCWCoordWidgetInfoGeo3x3(),
   _GCWCoordWidgetInfoMapCode(),

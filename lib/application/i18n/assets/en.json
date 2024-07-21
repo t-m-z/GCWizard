@@ -2025,6 +2025,7 @@
   "coords_formatconverter_lambert_l93cc49": "RGF93: CC49",
   "coords_formatconverter_lambert_l93cc50": "RGF93: CC50",
   "coords_formatconverter_maidenhead_locator": "Maidenhead Locator",
+  "coords_formatconverter_gc8k7rc_locator": "GC8K7RC",
   "coords_formatconverter_mapcode_locator": "MapCode",
   "coords_formatconverter_mapcode_international": "International Code",
   "coords_formatconverter_mapcode_local": "Local Code",
