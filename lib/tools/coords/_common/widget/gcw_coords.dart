@@ -28,10 +28,12 @@ import 'package:gc_wizard/common_widgets/text_input_formatters/wrapper_for_maskt
 import 'package:gc_wizard/common_widgets/textfields/gcw_double_textfield.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_integer_textfield.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
+import 'package:gc_wizard/tools/coords/_common/formats/bosch/logic/bosch.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/dec/logic/dec.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/dmm/logic/dmm.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/dms/logic/dms.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/dutchgrid/logic/dutchgrid.dart';
+import 'package:gc_wizard/tools/coords/_common/formats/gars/logic/gars.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/gausskrueger/logic/gauss_krueger.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/geo3x3/logic/geo3x3.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/geohash/logic/geohash.dart';
@@ -41,6 +43,7 @@ import 'package:gc_wizard/tools/coords/_common/formats/maidenhead/logic/maidenhe
 import 'package:gc_wizard/tools/coords/_common/formats/makaney/logic/makaney.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/mapcode/logic/mapcode.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/mercator/logic/mercator.dart';
+import 'package:gc_wizard/tools/coords/_common/formats/mgrs_utm/logic/mgrs.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/natural_area_code/logic/natural_area_code.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/openlocationcode/logic/open_location_code.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/quadtree/logic/quadtree.dart';
@@ -49,14 +52,13 @@ import 'package:gc_wizard/tools/coords/_common/formats/reversewherigo_waldmeiste
 import 'package:gc_wizard/tools/coords/_common/formats/slippymap/logic/slippy_map.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/swissgrid/logic/swissgrid.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/swissgridplus/logic/swissgridplus.dart';
+import 'package:gc_wizard/tools/coords/_common/formats/utm/logic/utm.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/xyz/logic/xyz.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_text_formatter.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
-import 'package:gc_wizard/tools/coords/_common/formats/mgrs_utm/logic/mgrs.dart';
-import 'package:gc_wizard/tools/coords/_common/formats/utm/logic/utm.dart';
 import 'package:gc_wizard/utils/collection_utils.dart';
 import 'package:gc_wizard/utils/complex_return_types.dart';
 import 'package:gc_wizard/utils/constants.dart';
@@ -67,14 +69,30 @@ import 'package:latlong2/latlong.dart';
 import 'package:location/location.dart';
 import 'package:prefs/prefs.dart';
 
+part 'package:gc_wizard/tools/coords/_common/formats/bosch/widget/gcw_coords_bosch.dart';
 part 'package:gc_wizard/tools/coords/_common/formats/dec/widget/gcw_coords_dec.dart';
 part 'package:gc_wizard/tools/coords/_common/formats/dmm/widget/gcw_coords_dmm.dart';
 part 'package:gc_wizard/tools/coords/_common/formats/dms/widget/gcw_coords_dms.dart';
 part 'package:gc_wizard/tools/coords/_common/formats/dutchgrid/widget/gcw_coords_dutchgrid.dart';
 part 'package:gc_wizard/tools/coords/_common/formats/gausskrueger/widget/gcw_coords_gausskrueger.dart';
+part 'package:gc_wizard/tools/coords/_common/formats/gars/widget/gcw_coords_gars.dart';
+part 'package:gc_wizard/tools/coords/_common/formats/geo3x3/widget/gcw_coords_geo3x3.dart';
+part 'package:gc_wizard/tools/coords/_common/formats/geo3x3/widget/geo3x3_textinputformatter.dart';
+part 'package:gc_wizard/tools/coords/_common/formats/geohash/widget/gcw_coords_geohash.dart';
+part 'package:gc_wizard/tools/coords/_common/formats/geohash/widget/geohash_textinputformatter.dart';
+part 'package:gc_wizard/tools/coords/_common/formats/geohex/widget/gcw_coords_geohex.dart';
+part 'package:gc_wizard/tools/coords/_common/formats/geohex/widget/geohex_textinputformatter.dart';
 part 'package:gc_wizard/tools/coords/_common/formats/lambert/widget/gcw_coords_lambert.dart';
-part 'package:gc_wizard/tools/coords/_common/formats/mercator/widget/gcw_coords_mercator.dart';
+part 'package:gc_wizard/tools/coords/_common/formats/maidenhead/widget/gcw_coords_maidenhead.dart';
+part 'package:gc_wizard/tools/coords/_common/formats/maidenhead/widget/maidenhead_textinputformatter.dart';
+part 'package:gc_wizard/tools/coords/_common/formats/makaney/widget/gcw_coords_makaney.dart';
+part 'package:gc_wizard/tools/coords/_common/formats/makaney/widget/makaney_textinputformatter.dart';
 part 'package:gc_wizard/tools/coords/_common/formats/mapcode/widget/gcw_coords_mapcode.dart';
+part 'package:gc_wizard/tools/coords/_common/formats/mercator/widget/gcw_coords_mercator.dart';
+part 'package:gc_wizard/tools/coords/_common/formats/mgrs_utm/widget/gcw_coords_mgrs.dart';
+part 'package:gc_wizard/tools/coords/_common/formats/mgrs_utm/widget/utm_lonzone_textinputformatter.dart';
+part 'package:gc_wizard/tools/coords/_common/formats/natural_area_code/widget/gcw_coords_naturalareacode.dart';
+part 'package:gc_wizard/tools/coords/_common/formats/natural_area_code/widget/naturalareacode_textinputformatter.dart';
 part 'package:gc_wizard/tools/coords/_common/formats/openlocationcode/widget/gcw_coords_openlocationcode.dart';
 part 'package:gc_wizard/tools/coords/_common/formats/quadtree/widget/gcw_coords_quadtree.dart';
 part 'package:gc_wizard/tools/coords/_common/formats/reversewherigo_day1976/widget/gcw_coords_reversewherigo_day1976.dart';
@@ -83,22 +101,9 @@ part 'package:gc_wizard/tools/coords/_common/formats/slippymap/widget/gcw_coords
 part 'package:gc_wizard/tools/coords/_common/formats/swissgrid/widget/gcw_coords_swissgrid.dart';
 part 'package:gc_wizard/tools/coords/_common/formats/swissgridplus/widget/gcw_coords_swissgridplus.dart';
 part 'package:gc_wizard/tools/coords/_common/formats/xyz/widget/gcw_coords_xyz.dart';
-part 'package:gc_wizard/tools/coords/_common/formats/GC8K7RC/widget/gcw_coords_GC8K7RC.dart';
-part 'package:gc_wizard/tools/coords/_common/formats/geo3x3/widget/gcw_coords_geo3x3.dart';
-part 'package:gc_wizard/tools/coords/_common/formats/geo3x3/widget/geo3x3_textinputformatter.dart';
-part 'package:gc_wizard/tools/coords/_common/formats/geohash/widget/gcw_coords_geohash.dart';
-part 'package:gc_wizard/tools/coords/_common/formats/geohash/widget/geohash_textinputformatter.dart';
-part 'package:gc_wizard/tools/coords/_common/formats/geohex/widget/gcw_coords_geohex.dart';
-part 'package:gc_wizard/tools/coords/_common/formats/geohex/widget/geohex_textinputformatter.dart';
-part 'package:gc_wizard/tools/coords/_common/formats/maidenhead/widget/gcw_coords_maidenhead.dart';
-part 'package:gc_wizard/tools/coords/_common/formats/maidenhead/widget/maidenhead_textinputformatter.dart';
-part 'package:gc_wizard/tools/coords/_common/formats/makaney/widget/gcw_coords_makaney.dart';
-part 'package:gc_wizard/tools/coords/_common/formats/makaney/widget/makaney_textinputformatter.dart';
-part 'package:gc_wizard/tools/coords/_common/formats/mgrs_utm/widget/gcw_coords_mgrs.dart';
 part 'package:gc_wizard/tools/coords/_common/formats/utm/widget/gcw_coords_utm.dart';
-part 'package:gc_wizard/tools/coords/_common/formats/mgrs_utm/widget/utm_lonzone_textinputformatter.dart';
-part 'package:gc_wizard/tools/coords/_common/formats/natural_area_code/widget/gcw_coords_naturalareacode.dart';
-part 'package:gc_wizard/tools/coords/_common/formats/natural_area_code/widget/naturalareacode_textinputformatter.dart';
+part 'package:gc_wizard/tools/coords/_common/formats/GC8K7RC/widget/gcw_coords_GC8K7RC.dart';
+
 
 class GCWCoords extends StatefulWidget {
   final void Function(BaseCoordinate?) onChanged;
@@ -154,9 +159,10 @@ class _GCWCoordsState extends State<GCWCoords> {
 
   @override
   Widget build(BuildContext context) {
-
     Column _widget;
-    if (widget.notitle != null && widget.notitle! && widget.title != null && widget.title!.isNotEmpty) {
+    if (widget.notitle != null && widget.notitle! ||
+        widget.title == null ||
+        widget.title != null && widget.title!.isNotEmpty) {
       _widget = Column(
         children: <Widget>[
           Row(
@@ -189,8 +195,7 @@ class _GCWCoordsState extends State<GCWCoords> {
           setState(() {
             _setCurrentValueAndEmitOnChange(newValue);
           });
-        }
-    );
+        });
 
     _resetCoords = false;
     _widget.children.add(_currentWidget!);
@@ -319,17 +324,12 @@ class _GCWCoordsState extends State<GCWCoords> {
   }
 }
 
-abstract class _GCWCoordWidget extends StatefulWidget{
+abstract class _GCWCoordWidget extends StatefulWidget {
   final bool initialize;
   final BaseCoordinate? coordinates;
   final void Function(BaseCoordinate?) onChanged;
 
-  const _GCWCoordWidget({
-      super.key,
-      this.initialize = false,
-      required this.coordinates,
-      required this.onChanged
-  });
+  const _GCWCoordWidget({super.key, this.initialize = false, required this.coordinates, required this.onChanged});
 }
 
 abstract class GCWCoordWidgetInfo {
@@ -338,47 +338,35 @@ abstract class GCWCoordWidgetInfo {
   String get name;
   String get example;
 
-  _GCWCoordWidget mainWidget({
-    Key? key,
-    required void Function(BaseCoordinate?) onChanged,
-    required BaseCoordinate? coordinates,
-    bool? initialize
-  });
+  _GCWCoordWidget mainWidget(
+      {Key? key,
+      required void Function(BaseCoordinate?) onChanged,
+      required BaseCoordinate? coordinates,
+      bool? initialize});
 }
 
 abstract class GCWCoordWidgetWithSubtypeInfo extends GCWCoordWidgetInfo {
   CoordinateFormatKey get subtype;
   List<_GCWCoordWidgetSubtypeInfo> get subtypes;
 
-  Widget inputWidget({
-    required BuildContext context,
-    required CoordinateFormatKey value,
-    required void Function(CoordinateFormatKey) onChanged}) {
-
-    return _buildSubtypeWidget(
-        context: context,
-        value: value,
-        onChanged: onChanged
-    );
+  Widget inputWidget(
+      {required BuildContext context,
+      required CoordinateFormatKey value,
+      required void Function(CoordinateFormatKey) onChanged}) {
+    return _buildSubtypeWidget(context: context, value: value, onChanged: onChanged);
   }
 
-  Widget outputWidget({
-    required BuildContext context,
-    required CoordinateFormatKey value,
-    required void Function(CoordinateFormatKey) onChanged}) {
-
-    return _buildSubtypeWidget(
-        context: context,
-        value: value,
-        onChanged: onChanged
-    );
+  Widget outputWidget(
+      {required BuildContext context,
+      required CoordinateFormatKey value,
+      required void Function(CoordinateFormatKey) onChanged}) {
+    return _buildSubtypeWidget(context: context, value: value, onChanged: onChanged);
   }
 
-  Widget _buildSubtypeWidget({
-    required BuildContext context,
-    required CoordinateFormatKey value,
-    required void Function(CoordinateFormatKey) onChanged
-  });
+  Widget _buildSubtypeWidget(
+      {required BuildContext context,
+      required CoordinateFormatKey value,
+      required void Function(CoordinateFormatKey) onChanged});
 }
 
 class _GCWCoordWidgetSubtypeInfo {
@@ -400,7 +388,8 @@ GCWCoordWidgetInfo? coordinateWidgetInfoByByPersistenceKey(String key) {
   return null;
 }
 
-_GCWCoordWidgetSubtypeInfo? coordinateWidgetSubtypeInfoByType(GCWCoordWidgetInfo widgetInfo, CoordinateFormatKey subtype) {
+_GCWCoordWidgetSubtypeInfo? coordinateWidgetSubtypeInfoByType(
+    GCWCoordWidgetInfo widgetInfo, CoordinateFormatKey subtype) {
   if (widgetInfo is GCWCoordWidgetWithSubtypeInfo) {
     return widgetInfo.subtypes.firstWhere((subtypeInfo) => subtypeInfo.type == subtype);
   } else {
@@ -422,16 +411,18 @@ var allCoordinateWidgetInfos = [
   _GCWCoordWidgetInfoDutchGrid(),
   _GCWCoordWidgetInfoMaidenhead(),
   _GCWCoordWidgetInfoMercator(),
+  _GCWCoordWidgetInfoQuadtree(),
   _GCWCoordWidgetInfoNaturalAreaCode(),
   _GCWCoordWidgetInfoOpenLocationCode(),
   _GCWCoordWidgetInfoSlippyMap(),
   _GCWCoordWidgetInfoReverseWherigoWaldmeister(),
   _GCWCoordWidgetInfoReverseWherigoDay1976(),
   _GCWCoordWidgetInfoGeohash(),
-  _GCWCoordWidgetInfoQuadtree(),
+  _GCWCoordWidgetInfoBosch(),
   _GCWCoordWidgetInfoMakaney(),
   _GCWCoordWidgetInfoGC8K7RC(),
   _GCWCoordWidgetInfoGeoHex(),
   _GCWCoordWidgetInfoGeo3x3(),
   _GCWCoordWidgetInfoMapCode(),
+  _GCWCoordWidgetInfoGARS(),
 ];

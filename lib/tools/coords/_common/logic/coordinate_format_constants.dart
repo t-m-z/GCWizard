@@ -1,8 +1,10 @@
 import 'package:gc_wizard/tools/coords/_common/formats/GC8K7RC/logic/GC8K7RC.dart';
+import 'package:gc_wizard/tools/coords/_common/formats/bosch/logic/bosch.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/dec/logic/dec.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/dmm/logic/dmm.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/dms/logic/dms.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/dutchgrid/logic/dutchgrid.dart';
+import 'package:gc_wizard/tools/coords/_common/formats/gars/logic/gars.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/gausskrueger/logic/gauss_krueger.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/geo3x3/logic/geo3x3.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/geohash/logic/geohash.dart';
@@ -26,6 +28,7 @@ import 'package:gc_wizard/tools/coords/_common/formats/xyz/logic/xyz.dart';
 
 enum CoordinateFormatKey {
   ALL,
+  BOSCH,
   DEC,
   DMM,
   DMS,
@@ -42,6 +45,7 @@ enum CoordinateFormatKey {
   NATURAL_AREA_CODE,
   SLIPPY_MAP,
   GC8K7RC,
+  GARS,
   GEOHASH,
   GEO3X3,
   GEOHEX,
@@ -134,14 +138,11 @@ final allCoordinateFormatDefinitions = [
   MakaneyFormatDefinition,
   QuadtreeFormatDefinition,
   SlippyMapFormatDefinition,
-  MapCodeFormatDefinition
+  MapCodeFormatDefinition,
+  BoschFormatDefinition,
+  GARSFormatDefinition,
+
+  GeohashFormatDefinition, // Must be last one in list!
 ];
 
-final standardCoordinateFormatDefinitions = [
-  DMSFormatDefinition,
-  DMMFormatDefinition,
-  DECFormatDefinition
-];
-
-
-
+final standardCoordinateFormatDefinitions = [DMSFormatDefinition, DMMFormatDefinition, DECFormatDefinition];
