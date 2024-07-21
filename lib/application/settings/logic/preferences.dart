@@ -40,6 +40,12 @@ const PREFERENCE_TOOL_COUNT_SORT = 'tool_count_sort';
 const PREFERENCE_TOOLLIST_SHOW_DESCRIPTIONS = 'toollist_show_descriptions';
 const PREFERENCE_TOOLLIST_SHOW_EXAMPLES = 'toollist_show_examples';
 const PREFERENCE_WHERIGOANALYZER_EXPERTMODE = 'wherigoanalyzer_expertmode';
+const PREFERENCE_WTF_MAIL = 'wtf_mail';
+const PREFERENCE_WTF_SHODAN = 'wtf_shodan';
+const PREFERENCE_WTF_VT = 'wtf_vt';
+const PREFERENCE_WTF_PT = 'wtf_pt';
+const PREFERENCE_WTF_WHOIS = 'wtf_whois';
+const PREFERENCE_WTF_GREYNOISE = 'wtf_greynoise';
 
 final ALL_PREFERENCES = <String>[
   PREFERENCE_ALPHABET_CUSTOM_ALPHABETS,
@@ -84,3 +90,4 @@ final ALL_PREFERENCES = <String>[
   PREFERENCE_TOOLLIST_SHOW_EXAMPLES,
   PREFERENCE_WHERIGOANALYZER_EXPERTMODE,
 ];
+>>>>>>> f78c042032325c9090033d4301bbe55990fd5360

@@ -15,27 +15,56 @@ class ToolSettings extends StatefulWidget {
 }
 
 class _ToolSettingsState extends State<ToolSettings> {
-
   late TextEditingController _chatGPTAPIKeyController;
   String _chatgpt_api_key = Prefs.get(PREFERENCE_CHATGPT_API_KEY).toString();
 
+  late TextEditingController _inputControllerSHODAN;
+  late TextEditingController _inputControllerWhoIs;
+  late TextEditingController _inputControllerPT;
+  late TextEditingController _inputControllerVT;
+  late TextEditingController _inputControllerMail;
+  late TextEditingController _inputControllerGreyNoise;
+
+  String _currentInputMail = Prefs.get(PREFERENCE_WTF_MAIL).toString();
+  String _currentInputSHODAN = Prefs.get(PREFERENCE_WTF_SHODAN).toString();
+  String _currentInputPT = Prefs.get(PREFERENCE_WTF_PT).toString();
+  String _currentInputVT = Prefs.get(PREFERENCE_WTF_VT).toString();
+  String _currentInputWhoIs = Prefs.get(PREFERENCE_WTF_WHOIS).toString();
+  String _currentInputGreyNoise = Prefs.get(PREFERENCE_WTF_GREYNOISE).toString();
+
   late TextEditingController _inputControllerOpenGTINDBApiKey;
-  String _currentInputOpenGTINDBApiKey =
-      Prefs.get(PREFERENCE_EAN_DEFAULT_OPENGTIN_APIKEY).toString();
+  String _currentInputOpenGTINDBApiKey = Prefs.get(PREFERENCE_EAN_DEFAULT_OPENGTIN_APIKEY).toString();
 
   @override
   void initState() {
     super.initState();
 
     _chatGPTAPIKeyController = TextEditingController(text: _chatgpt_api_key);
-    _inputControllerOpenGTINDBApiKey =
-        TextEditingController(text: _currentInputOpenGTINDBApiKey);
+    _inputControllerOpenGTINDBApiKey = TextEditingController(text: _currentInputOpenGTINDBApiKey);
+
+    _inputControllerWhoIs = TextEditingController(text: _currentInputWhoIs);
+    _inputControllerSHODAN = TextEditingController(text: _currentInputSHODAN);
+    _inputControllerVT = TextEditingController(text: _currentInputVT);
+    _inputControllerPT = TextEditingController(text: _currentInputPT);
+    _inputControllerMail = TextEditingController(text: _currentInputMail);
+    _inputControllerGreyNoise = TextEditingController(text: _currentInputGreyNoise);
+
+    _inputControllerOpenGTINDBApiKey = TextEditingController(text: _currentInputOpenGTINDBApiKey);
   }
 
   @override
   void dispose() {
     _chatGPTAPIKeyController.dispose();
+
+    _inputControllerWhoIs.dispose();
+    _inputControllerSHODAN.dispose();
+    _inputControllerVT.dispose();
+    _inputControllerPT.dispose();
+    _inputControllerMail.dispose();
+    _inputControllerGreyNoise.dispose();
+
     _inputControllerOpenGTINDBApiKey.dispose();
+
     super.dispose();
   }
 
@@ -74,6 +103,69 @@ class _ToolSettingsState extends State<ToolSettings> {
             setState(() {
               _chatgpt_api_key = text;
               Prefs.setString(PREFERENCE_CHATGPT_API_KEY, _chatgpt_api_key);
+            });
+          },
+        ),
+        GCWTextDivider(
+          text: i18n(context, 'settings_wtf_title'),
+        ),
+        GCWTextField(
+          title: i18n(context, 'settings_wtf_virustotal'),
+          controller: _inputControllerVT,
+          onChanged: (text) {
+            setState(() {
+              _currentInputVT = text;
+              Prefs.setString(PREFERENCE_WTF_VT, text);
+            });
+          },
+        ),
+        GCWTextField(
+          title: i18n(context, 'settings_wtf_passivetotal'),
+          controller: _inputControllerPT,
+          onChanged: (text) {
+            setState(() {
+              _currentInputPT = text;
+              Prefs.setString(PREFERENCE_WTF_PT, text);
+            });
+          },
+        ),
+        GCWTextField(
+          title: i18n(context, 'settings_wtf_email'),
+          controller: _inputControllerMail,
+          onChanged: (text) {
+            setState(() {
+              _currentInputMail = text;
+              Prefs.setString(PREFERENCE_WTF_MAIL, text);
+            });
+          },
+        ),
+        GCWTextField(
+          title: i18n(context, 'settings_wtf_shodan'),
+          controller: _inputControllerSHODAN,
+          onChanged: (text) {
+            setState(() {
+              _currentInputSHODAN = text;
+              Prefs.setString(PREFERENCE_WTF_SHODAN, text);
+            });
+          },
+        ),
+        GCWTextField(
+          title: i18n(context, 'settings_wtf_whois'),
+          controller: _inputControllerWhoIs,
+          onChanged: (text) {
+            setState(() {
+              _currentInputWhoIs = text;
+              Prefs.setString(PREFERENCE_WTF_WHOIS, text);
+            });
+          },
+        ),
+        GCWTextField(
+          title: i18n(context, 'settings_wtf_greynoise'),
+          controller: _inputControllerGreyNoise,
+          onChanged: (text) {
+            setState(() {
+              _currentInputGreyNoise = text;
+              Prefs.setString(PREFERENCE_WTF_GREYNOISE, text);
             });
           },
         ),
