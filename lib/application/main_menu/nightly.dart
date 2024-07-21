@@ -26,14 +26,16 @@ class _NightlyState extends State<Nightly> {
             ['Koordinate', 'What 3 Words\nUmwandeln in W33/Suche nach W3W'],
             ['Koordinate', 'GCX8K7RC\nDas dort genutzte Koordinatenformat'],
           ],
-          flexValues: [3, 7],),
+          flexValues: const [3, 7],),
         GCWTextDivider(text: 'Previews'),
         GCWColumnedMultilineOutput(
           data: [
             ['Tool', 'Ballistics\nSchiefer Wurf'],
             ['Tool', 'Logical Solver\nLösen von Logikrätseln'],
             ['Tool', 'Triangle\nBerechnungen von Dreiecken'],
+            ['Tool', 'UTIC\nApparent temperature'],
             ['Tool', 'Waveform\nAnalyse von WAV-Dateien'],
+            ['Tool', 'WBGT\nApparent temperature'],
             ['Tool', 'Wedding anniversaries\nHochzeitsjubiläen'],
             ['Code', 'Judoon'],
             ['Code', 'Leet Speak'],
@@ -48,7 +50,7 @@ class _NightlyState extends State<Nightly> {
             ['Enhancement', 'Bundeswehr Talking board\nLoad/Save'],
             ['Enhancement', 'GCW Script\nString methods padLeft, ...'],
           ],
-          flexValues: [3, 7],),
+          flexValues: const [3, 7],),
       ],
     );
 
