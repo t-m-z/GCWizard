@@ -79,6 +79,7 @@ import 'package:gc_wizard/tools/coords/resection/widget/resection.dart';
 import 'package:gc_wizard/tools/coords/rhumb_line/widget/rhumbline_distancebearing.dart';
 import 'package:gc_wizard/tools/coords/rhumb_line/widget/rhumbline_waypoint_projection.dart';
 import 'package:gc_wizard/tools/coords/variable_coordinate/widget/variable_coordinate_formulas.dart';
+import 'package:gc_wizard/tools/coords/what3words/widget/w3w.dart';
 import 'package:gc_wizard/tools/coords/waypoint_projection/widget/waypoint_projection_geodetic.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/abaddon/widget/abaddon.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/adfgvx/widget/adfgvx.dart';
@@ -600,6 +601,7 @@ void _initStaticToolList() {
       className(const EquilateralTriangle()),
       className(const ESelection()),
       className(const FormatConverter()),
+      className(const FormatConverterW3W()),
       className(const FormulaSolverFormulaGroups()),
       className(const FourteenSegments()),
       className(const Fox()),
