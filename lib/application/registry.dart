@@ -6142,6 +6142,12 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'stippelcode', symbolSearchStrings: const [
       'symbol_stippelcode',
     ]),
+    GCWSymbolTableTool(symbolKey: 'stratego', symbolSearchStrings: const [
+      'symbol_stratego',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'stratego_hierarchy', symbolSearchStrings: const [
+      'symbol_stratego',
+    ]),
     GCWSymbolTableTool(symbolKey: 'suetterlin', symbolSearchStrings: const [
       'symbol_suetterlin',
     ]),
