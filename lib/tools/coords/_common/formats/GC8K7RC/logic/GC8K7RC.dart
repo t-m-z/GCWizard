@@ -28,7 +28,7 @@ class GC8K7RCCoordinate extends BaseCoordinate {
   GC8K7RCCoordinate(this.velocity, this.distance );
 
   @override
-  LatLng toLatLng({Ellipsoid? ells}) {
+  LatLng? toLatLng({Ellipsoid? ells}) {
     ells ??= defaultEllipsoid;
     return _GC8K7RCToLatLon(this, ells);
   }
@@ -48,7 +48,7 @@ class GC8K7RCCoordinate extends BaseCoordinate {
   }
 }
 
-LatLng _GC8K7RCToLatLon(GC8K7RCCoordinate GC8K7RC, Ellipsoid ells) {
+LatLng? _GC8K7RCToLatLon(GC8K7RCCoordinate GC8K7RC, Ellipsoid ells) {
   var velocity = GC8K7RC.velocity;
   var distance = GC8K7RC.distance;
 
