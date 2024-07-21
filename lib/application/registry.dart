@@ -227,6 +227,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/language_games/duck_speak/w
 import 'package:gc_wizard/tools/crypto_and_encodings/language_games/pig_latin/widget/pig_latin.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/language_games/robber_language/widget/robber_language.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/language_games/spoon_language/widget/spoon_language.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/leetspeak/widget/leetspeak.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/maya_numbers/widget/maya_numbers.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/mexican_army_cipher_wheel/widget/mexican_army_cipher_wheel.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/morbit/widget/morbit.dart';
@@ -895,22 +896,38 @@ void initializeRegistry(BuildContext context) {
     ]),
 
     //GCC Selection **************************************************************************************
-    GCWTool(tool: const GCCTableSelection(), id: 'gcc_tables', searchKeys: const [
-    ]),
-    GCWTool(tool: const GCCTableASCIISet(), id: 'gcc_tables_ascii', searchKeys: const [
-    ]),
-    GCWTool(tool: const GCCTableMorse(), id: 'gcc_tables_morse', searchKeys: const [
-    ]),
-    GCWTool(tool: const GCCTableNumeralBasesNames(), id: 'gcc_tables_numeralbases', searchKeys: const [
-    ]),
-    GCWTool(tool: const GCCTableResistor4(), id: 'gcc_tables_resistor4', searchKeys: const [
-    ]),
-    GCWTool(tool: const GCCTableResistor5(), id: 'gcc_tables_resistor5', searchKeys: const [
-    ]),
-    GCWTool(tool: const GCCTableRoman(), id: 'gcc_tables_roman', searchKeys: const [
-    ]),
-    GCWTool(tool: const GCCSymbolsSelection(), id: 'gcc_symbols', searchKeys: const [
-    ]),
+    GCWTool(
+        tool: const GCCTableSelection(),
+        id: 'gcc_tables',
+        searchKeys: const []),
+    GCWTool(
+        tool: const GCCTableASCIISet(),
+        id: 'gcc_tables_ascii',
+        searchKeys: const []),
+    GCWTool(
+        tool: const GCCTableMorse(),
+        id: 'gcc_tables_morse',
+        searchKeys: const []),
+    GCWTool(
+        tool: const GCCTableNumeralBasesNames(),
+        id: 'gcc_tables_numeralbases',
+        searchKeys: const []),
+    GCWTool(
+        tool: const GCCTableResistor4(),
+        id: 'gcc_tables_resistor4',
+        searchKeys: const []),
+    GCWTool(
+        tool: const GCCTableResistor5(),
+        id: 'gcc_tables_resistor5',
+        searchKeys: const []),
+    GCWTool(
+        tool: const GCCTableRoman(),
+        id: 'gcc_tables_roman',
+        searchKeys: const []),
+    GCWTool(
+        tool: const GCCSymbolsSelection(),
+        id: 'gcc_symbols',
+        searchKeys: const []),
 
     GCWTool(tool: const GCCode(), id: 'gccode', categories: const [
       ToolCategory.CRYPTOGRAPHY
@@ -1125,11 +1142,19 @@ void initializeRegistry(BuildContext context) {
         id: 'languagegames_selection',
         categories: const [ToolCategory.CRYPTOGRAPHY],
         searchKeys: const []),
-    GCWTool(tool: const LogicalSolver(), id: 'logicalsolver', categories: const [
-      ToolCategory.GAMES
+    GCWTool(
+      tool: const LogicalSolver(),
+      id: 'logicalsolver',
+      categories: const [ToolCategory.GAMES],
+      searchKeys: const [
+        'games',
+        'games_logicalsolver',
+      ],
+    ),
+    GCWTool(tool: const LeetSpeak(), id: 'leetspeak', categories: const [
+      ToolCategory.CRYPTOGRAPHY
     ], searchKeys: const [
-      'games',
-      'games_logicalsolver',
+      'leetspeak',
     ]),
     GCWTool(
         tool: const MagicEyeSolver(),
@@ -1268,11 +1293,15 @@ void initializeRegistry(BuildContext context) {
         searchKeys: const [
           'periodictable',
         ]),
-    GCWTool(tool: const PeriodicTableSelection(), id: 'periodictable_selection', categories: const [
-      ToolCategory.SCIENCE_AND_TECHNOLOGY
-    ], searchKeys: const [
-      'periodictable',
-    ]),
+    GCWTool(
+        tool: const PeriodicTableSelection(),
+        id: 'periodictable_selection',
+        categories: const [
+          ToolCategory.SCIENCE_AND_TECHNOLOGY
+        ],
+        searchKeys: const [
+          'periodictable',
+        ]),
     GCWTool(tool: const PhiSelection(), id: 'phi_selection', categories: const [
       ToolCategory.SCIENCE_AND_TECHNOLOGY
     ], searchKeys: const [
@@ -1822,37 +1851,53 @@ void initializeRegistry(BuildContext context) {
         searchKeys: const [
           'easter_date',
         ]),
-    GCWTool(tool: const SunRiseSet(), id: 'astronomy_sunriseset', searchKeys: const [
-      'astronomy',
-      'astronomy_riseset',
-      'astronomy_sun',
-      'astronomy_sunriseset',
-    ]),
-    GCWTool(tool: const SunPosition(), id: 'astronomy_sunposition', searchKeys: const [
-      'astronomy',
-      'astronomy_position',
-      'astronomy_sun',
-    ], licenses: [
-      ToolLicense(
-        credit: 'Helmut Lehmeyer\nastronomie.info',
-        licenseType: 'GNU License',
-        url: 'http://web.archive.org/web/20180502230101/http://lexikon.astronomie.info/java/sunmoon/progs/Astronomy.java'
-      )
-    ]),
-    GCWTool(tool: const MoonRiseSet(), id: 'astronomy_moonriseset', searchKeys: const [
-      'astronomy',
-      'astronomy_riseset',
-      'astronomy_moon',
-    ]),
-    GCWTool(tool: const MoonPosition(), id: 'astronomy_moonposition', searchKeys: const [
-      'astronomy',
-      'astronomy_position',
-      'astronomy_moon',
-      'astronomy_moonposition',
-    ]),
-    GCWTool(tool: const EasterSelection(), id: 'astronomy_easter_selection', searchKeys: const [
-      'easter_date',
-    ]),
+    GCWTool(
+        tool: const SunRiseSet(),
+        id: 'astronomy_sunriseset',
+        searchKeys: const [
+          'astronomy',
+          'astronomy_riseset',
+          'astronomy_sun',
+          'astronomy_sunriseset',
+        ]),
+    GCWTool(
+        tool: const SunPosition(),
+        id: 'astronomy_sunposition',
+        searchKeys: const [
+          'astronomy',
+          'astronomy_position',
+          'astronomy_sun',
+        ],
+        licenses: [
+          ToolLicense(
+              credit: 'Helmut Lehmeyer\nastronomie.info',
+              licenseType: 'GNU License',
+              url:
+                  'http://web.archive.org/web/20180502230101/http://lexikon.astronomie.info/java/sunmoon/progs/Astronomy.java')
+        ]),
+    GCWTool(
+        tool: const MoonRiseSet(),
+        id: 'astronomy_moonriseset',
+        searchKeys: const [
+          'astronomy',
+          'astronomy_riseset',
+          'astronomy_moon',
+        ]),
+    GCWTool(
+        tool: const MoonPosition(),
+        id: 'astronomy_moonposition',
+        searchKeys: const [
+          'astronomy',
+          'astronomy_position',
+          'astronomy_moon',
+          'astronomy_moonposition',
+        ]),
+    GCWTool(
+        tool: const EasterSelection(),
+        id: 'astronomy_easter_selection',
+        searchKeys: const [
+          'easter_date',
+        ]),
     GCWTool(tool: const Seasons(), id: 'astronomy_seasons', searchKeys: const [
       'astronomy',
       'astronomy_seasons',
@@ -3032,10 +3077,8 @@ void initializeRegistry(BuildContext context) {
     GCWTool(
         tool: const HashOverview(),
         id: 'hashes_overview',
-
         searchKeys: const ['hashes', 'hashes_overview'],
         licenses: [_toolLicensePointyCastle]),
-
 
     GCWTool(
         tool: const HashIdentification(),
@@ -3070,11 +3113,9 @@ void initializeRegistry(BuildContext context) {
           'hashes_sha2',
           'hashes_sha224',
           'hashes_hmac',
-
         ],
         licenses: [
           _toolLicensePointyCastle
-
         ]),
     GCWTool(tool: const SHA256(), id: 'hashes_sha256', searchKeys: const [
       'hashes',
@@ -3091,11 +3132,9 @@ void initializeRegistry(BuildContext context) {
           'hashes_sha2',
           'hashes_sha256',
           'hashes_hmac',
-
         ],
         licenses: [
           _toolLicensePointyCastle
-
         ]),
     GCWTool(tool: const SHA384(), id: 'hashes_sha384', searchKeys: const [
       'hashes',
@@ -3112,11 +3151,9 @@ void initializeRegistry(BuildContext context) {
           'hashes_sha2',
           'hashes_sha384',
           'hashes_hmac',
-
         ],
         licenses: [
           _toolLicensePointyCastle
-
         ]),
     GCWTool(tool: const SHA512(), id: 'hashes_sha512', searchKeys: const [
       'hashes',
@@ -3133,11 +3170,9 @@ void initializeRegistry(BuildContext context) {
           'hashes_sha2',
           'hashes_sha512',
           'hashes_hmac',
-
         ],
         licenses: [
           _toolLicensePointyCastle
-
         ]),
     GCWTool(
         tool: const SHA512_224(),
@@ -3146,11 +3181,9 @@ void initializeRegistry(BuildContext context) {
           'hashes',
           'hashes_sha2',
           'hashes_sha512_224',
-
         ],
         licenses: [
           _toolLicensePointyCastle
-
         ]),
     GCWTool(
         tool: const SHA512_224HMac(),
@@ -3160,11 +3193,9 @@ void initializeRegistry(BuildContext context) {
           'hashes_sha2',
           'hashes_sha512_224',
           'hashes_hmac',
-
         ],
         licenses: [
           _toolLicensePointyCastle
-
         ]),
     GCWTool(
         tool: const SHA512_256(),
@@ -3173,11 +3204,9 @@ void initializeRegistry(BuildContext context) {
           'hashes',
           'hashes_sha2',
           'hashes_sha512_256',
-
         ],
         licenses: [
           _toolLicensePointyCastle
-
         ]),
     GCWTool(
         tool: const SHA512_256HMac(),
@@ -3187,11 +3216,9 @@ void initializeRegistry(BuildContext context) {
           'hashes_sha2',
           'hashes_sha512_256',
           'hashes_hmac',
-
         ],
         licenses: [
           _toolLicensePointyCastle
-
         ]),
     GCWTool(tool: const SHA3_224(), id: 'hashes_sha3.224', searchKeys: const [
       'hashes',
@@ -3208,11 +3235,9 @@ void initializeRegistry(BuildContext context) {
           'hashes_sha3',
           'hashes_sha3_224',
           'hashes_hmac',
-
         ],
         licenses: [
           _toolLicensePointyCastle
-
         ]),
     GCWTool(tool: const SHA3_256(), id: 'hashes_sha3.256', searchKeys: const [
       'hashes',
@@ -3229,11 +3254,9 @@ void initializeRegistry(BuildContext context) {
           'hashes_sha3',
           'hashes_sha3_256',
           'hashes_hmac',
-
         ],
         licenses: [
           _toolLicensePointyCastle
-
         ]),
     GCWTool(tool: const SHA3_384(), id: 'hashes_sha3.384', searchKeys: const [
       'hashes',
@@ -3250,11 +3273,9 @@ void initializeRegistry(BuildContext context) {
           'hashes_sha3',
           'hashes_sha3_384',
           'hashes_hmac',
-
         ],
         licenses: [
           _toolLicensePointyCastle
-
         ]),
     GCWTool(tool: const SHA3_512(), id: 'hashes_sha3.512', searchKeys: const [
       'hashes',
@@ -3271,11 +3292,9 @@ void initializeRegistry(BuildContext context) {
           'hashes_sha3',
           'hashes_sha3_512',
           'hashes_hmac',
-
         ],
         licenses: [
           _toolLicensePointyCastle
-
         ]),
     GCWTool(
         tool: const Keccak_128(),
@@ -3285,11 +3304,9 @@ void initializeRegistry(BuildContext context) {
           'hashes_sha3',
           'hashes_keccak',
           'hashes_keccak_128',
-
         ],
         licenses: [
           _toolLicensePointyCastle
-
         ]),
     GCWTool(
         tool: const Keccak_224(),
@@ -3299,11 +3316,9 @@ void initializeRegistry(BuildContext context) {
           'hashes_sha3',
           'hashes_keccak',
           'hashes_keccak_224',
-
         ],
         licenses: [
           _toolLicensePointyCastle
-
         ]),
     GCWTool(
         tool: const Keccak_256(),
@@ -3313,11 +3328,9 @@ void initializeRegistry(BuildContext context) {
           'hashes_sha3',
           'hashes_keccak',
           'hashes_keccak_256',
-
         ],
         licenses: [
           _toolLicensePointyCastle
-
         ]),
     GCWTool(
         tool: const Keccak_288(),
@@ -3327,11 +3340,9 @@ void initializeRegistry(BuildContext context) {
           'hashes_sha3',
           'hashes_keccak',
           'hashes_keccak_288',
-
         ],
         licenses: [
           _toolLicensePointyCastle
-
         ]),
     GCWTool(
         tool: const Keccak_384(),
@@ -3341,11 +3352,9 @@ void initializeRegistry(BuildContext context) {
           'hashes_sha3',
           'hashes_keccak',
           'hashes_keccak_384',
-
         ],
         licenses: [
           _toolLicensePointyCastle
-
         ]),
     GCWTool(
         tool: const Keccak_512(),
@@ -3355,11 +3364,9 @@ void initializeRegistry(BuildContext context) {
           'hashes_sha3',
           'hashes_keccak',
           'hashes_keccak_512',
-
         ],
         licenses: [
           _toolLicensePointyCastle
-
         ]),
     GCWTool(
         tool: const RIPEMD_128(),
@@ -3368,11 +3375,9 @@ void initializeRegistry(BuildContext context) {
           'hashes',
           'hashes_ripemd',
           'hashes_ripemd_128',
-
         ],
         licenses: [
           _toolLicensePointyCastle
-
         ]),
     GCWTool(
         tool: const RIPEMD_128HMac(),
@@ -3382,11 +3387,9 @@ void initializeRegistry(BuildContext context) {
           'hashes_ripemd',
           'hashes_ripemd_128',
           'hashes_hmac',
-
         ],
         licenses: [
           _toolLicensePointyCastle
-
         ]),
     GCWTool(
         tool: const RIPEMD_160(),
@@ -3395,11 +3398,9 @@ void initializeRegistry(BuildContext context) {
           'hashes',
           'hashes_ripemd',
           'hashes_ripemd_160',
-
         ],
         licenses: [
           _toolLicensePointyCastle
-
         ]),
     GCWTool(
         tool: const RIPEMD_160HMac(),
@@ -3409,11 +3410,9 @@ void initializeRegistry(BuildContext context) {
           'hashes_ripemd',
           'hashes_ripemd_160',
           'hashes_hmac',
-
         ],
         licenses: [
           _toolLicensePointyCastle
-
         ]),
     GCWTool(
         tool: const RIPEMD_256(),
@@ -3422,11 +3421,9 @@ void initializeRegistry(BuildContext context) {
           'hashes',
           'hashes_ripemd',
           'hashes_ripemd_256',
-
         ],
         licenses: [
           _toolLicensePointyCastle
-
         ]),
     GCWTool(
         tool: const RIPEMD_256HMac(),
@@ -3436,12 +3433,9 @@ void initializeRegistry(BuildContext context) {
           'hashes_ripemd',
           'hashes_ripemd_256',
           'hashes_hmac',
-
         ],
         licenses: [
           _toolLicensePointyCastle
-
-
         ]),
     GCWTool(
         tool: const RIPEMD_320(),
@@ -3450,11 +3444,9 @@ void initializeRegistry(BuildContext context) {
           'hashes',
           'hashes_ripemd',
           'hashes_ripemd_320',
-
         ],
         licenses: [
           _toolLicensePointyCastle
-
         ]),
     GCWTool(
         tool: const RIPEMD_320HMac(),
@@ -3464,11 +3456,9 @@ void initializeRegistry(BuildContext context) {
           'hashes_ripemd',
           'hashes_ripemd_320',
           'hashes_hmac',
-
         ],
         licenses: [
           _toolLicensePointyCastle
-
         ]),
     GCWTool(tool: const MD2(), id: 'hashes_md2', searchKeys: const [
       'hashes',
@@ -3522,12 +3512,9 @@ void initializeRegistry(BuildContext context) {
           'hashes',
           'hashes_tiger_192',
           'hashes_hmac',
-
         ],
         licenses: [
           _toolLicensePointyCastle
-
-
         ]),
     GCWTool(
         tool: const Whirlpool_512(),
@@ -3535,12 +3522,9 @@ void initializeRegistry(BuildContext context) {
         searchKeys: const [
           'hashes',
           'hashes_whirlpool_512',
-
         ],
         licenses: [
           _toolLicensePointyCastle
-
-
         ]),
     GCWTool(
         tool: const Whirlpool_512HMac(),
@@ -3549,12 +3533,9 @@ void initializeRegistry(BuildContext context) {
           'hashes',
           'hashes_whirlpool_512',
           'hashes_hmac',
-
         ],
         licenses: [
           _toolLicensePointyCastle
-
-
         ]),
     GCWTool(
         tool: const BLAKE2b_160(),
@@ -3563,11 +3544,9 @@ void initializeRegistry(BuildContext context) {
           'hashes',
           'hashes_blake2b',
           'hashes_blake2b_160',
-
         ],
         licenses: [
           _toolLicensePointyCastle
-
         ]),
     GCWTool(
         tool: const BLAKE2b_224(),
@@ -3576,12 +3555,9 @@ void initializeRegistry(BuildContext context) {
           'hashes',
           'hashes_blake2b',
           'hashes_blake2b_224',
-
         ],
         licenses: [
           _toolLicensePointyCastle
-
-
         ]),
     GCWTool(
         tool: const BLAKE2b_256(),
@@ -3590,12 +3566,9 @@ void initializeRegistry(BuildContext context) {
           'hashes',
           'hashes_blake2b',
           'hashes_blake2b_256',
-
         ],
         licenses: [
           _toolLicensePointyCastle
-
-
         ]),
     GCWTool(
         tool: const BLAKE2b_384(),
@@ -3604,12 +3577,9 @@ void initializeRegistry(BuildContext context) {
           'hashes',
           'hashes_blake2b',
           'hashes_blake2b_384',
-
         ],
         licenses: [
           _toolLicensePointyCastle
-
-
         ]),
     GCWTool(
         tool: const BLAKE2b_512(),
@@ -3618,12 +3588,9 @@ void initializeRegistry(BuildContext context) {
           'hashes',
           'hashes_blake2b',
           'hashes_blake2b_512',
-
         ],
         licenses: [
           _toolLicensePointyCastle
-
-
         ]),
 
     // IceCodeSelection *********************************************************************************************
@@ -3685,7 +3652,6 @@ void initializeRegistry(BuildContext context) {
           'changelog',
         ]),
     GCWTool(
-
         tool: const Nightly(),
         id: 'mainmenu_nightly',
         suppressHelpButton: true,
@@ -3693,7 +3659,6 @@ void initializeRegistry(BuildContext context) {
           'nightly',
         ]),
     GCWTool(
-
         tool: const About(),
         id: 'mainmenu_about',
         suppressHelpButton: true,
@@ -3958,23 +3923,34 @@ void initializeRegistry(BuildContext context) {
           'numbersequence_busy_beavernumbersselection',
         ]),
 
-    GCWTool(tool: const NumberSequenceCatalanSelection(), id: 'numbersequence_catalan', searchKeys: const [
-      'numbersequence',
-      'numbersequence_catalanselection',
-    ]),
-    GCWTool(tool: const NumberSequenceRecamanSelection(), id: 'numbersequence_recaman', searchKeys: const [
-      'numbersequence',
-      'numbersequence_recamanselection',
-    ]),
-    GCWTool(tool: const NumberSequenceLychrelSelection(), id: 'numbersequence_lychrel', searchKeys: const [
-      'numbersequence',
-      'numbersequence_lychrelselection',
-    ]),
-    GCWTool(tool: const NumberSequenceBusyBeaverSelection(), id: 'numbersequence_busy_beaver', searchKeys: const [
-      'numbersequence',
-      'numbersequence_busy_beavernumbersselection',
-    ]),
-
+    GCWTool(
+        tool: const NumberSequenceCatalanSelection(),
+        id: 'numbersequence_catalan',
+        searchKeys: const [
+          'numbersequence',
+          'numbersequence_catalanselection',
+        ]),
+    GCWTool(
+        tool: const NumberSequenceRecamanSelection(),
+        id: 'numbersequence_recaman',
+        searchKeys: const [
+          'numbersequence',
+          'numbersequence_recamanselection',
+        ]),
+    GCWTool(
+        tool: const NumberSequenceLychrelSelection(),
+        id: 'numbersequence_lychrel',
+        searchKeys: const [
+          'numbersequence',
+          'numbersequence_lychrelselection',
+        ]),
+    GCWTool(
+        tool: const NumberSequenceBusyBeaverSelection(),
+        id: 'numbersequence_busy_beaver',
+        searchKeys: const [
+          'numbersequence',
+          'numbersequence_busy_beavernumbersselection',
+        ]),
 
     //NumberSequenceSelection BusyBeaver ****************************************************************************************
     GCWTool(
@@ -4947,7 +4923,6 @@ void initializeRegistry(BuildContext context) {
         id: 'scrabbleoverview',
         searchKeys: const [
           'games_scrabble',
-
         ],
         licenses: [
           ToolLicense(
@@ -4960,7 +4935,6 @@ void initializeRegistry(BuildContext context) {
               licenseType: 'CC BY-SA 4.0',
               url:
                   'https://de.wikipedia.org/w/index.php?title=Scrabble&oldid=245686434'),
-
         ]),
 
     //Miscellaneous Selection *****************************************************************************************
@@ -4976,13 +4950,16 @@ void initializeRegistry(BuildContext context) {
           'gcwizard_script',
         ]),
 
-
-    GCWTool(tool: const OpenAI(), id: 'openai', isBeta: true, categories: const [
-      ToolCategory.MISCELLANEOUS
-    ], searchKeys: const [
-      'openai',
-    ]),
-
+    GCWTool(
+        tool: const OpenAI(),
+        id: 'openai',
+        isBeta: true,
+        categories: const [
+          ToolCategory.MISCELLANEOUS
+        ],
+        searchKeys: const [
+          'openai',
+        ]),
 
     //Segments Display *******************************************************************************************
     GCWTool(
