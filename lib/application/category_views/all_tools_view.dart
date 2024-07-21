@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/category_views/favorites.dart';
+import 'package:gc_wizard/application/category_views/gcc/gcc_view.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/babylon_numbers_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/base_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/bcd_selection.dart';
@@ -340,7 +341,8 @@ class _MainViewState extends State<MainView> {
 
       showGCWDialog(
           context,
-          i18n(context, 'common_newversion_title', parameters: [mostRecentChangelogVersion]),
+          i18n(context, 'common_newversion_title',
+              parameters: [mostRecentChangelogVersion]),
           Text(entries.join('\n')),
           [
             GCWDialogButton(
@@ -349,8 +351,10 @@ class _MainViewState extends State<MainView> {
                   Navigator.push(
                       context,
                       NoAnimationMaterialPageRoute<GCWTool>(
-                          builder: (context) => registeredTools
-                              .firstWhere((tool) => className(tool.tool) == className(const Changelog()))));
+                          builder: (context) => registeredTools.firstWhere(
+                              (tool) =>
+                                  className(tool.tool) ==
+                                  className(const Changelog()))));
                 }),
             GCWDialogButton(text: i18n(context, 'common_ok'))
           ],
@@ -360,17 +364,22 @@ class _MainViewState extends State<MainView> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       var countAppOpened = Prefs.getInt(PREFERENCE_APP_COUNT_OPENED);
 
-      if (countAppOpened > 1 && Prefs.getString(PREFERENCE_CHANGELOG_DISPLAYED) != CHANGELOG.keys.first) {
+      if (countAppOpened > 1 &&
+          Prefs.getString(PREFERENCE_CHANGELOG_DISPLAYED) !=
+              CHANGELOG.keys.first) {
         _showWhatsNewDialog();
         Prefs.setString(PREFERENCE_CHANGELOG_DISPLAYED, CHANGELOG.keys.first);
         return;
       }
 
-      if (countAppOpened > 0 && (countAppOpened == 10 || countAppOpened % _SHOW_SUPPORT_HINT_EVERY_N == 0)) {
+      if (countAppOpened > 0 &&
+          (countAppOpened == 10 ||
+              countAppOpened % _SHOW_SUPPORT_HINT_EVERY_N == 0)) {
         showGCWAlertDialog(
           context,
           i18n(context, 'common_support_title'),
-          i18n(context, 'common_support_text', parameters: [Prefs.getInt(PREFERENCE_APP_COUNT_OPENED)]),
+          i18n(context, 'common_support_text',
+              parameters: [Prefs.getInt(PREFERENCE_APP_COUNT_OPENED)]),
           () => launchUrl(Uri.parse(i18n(context, 'common_support_link'))),
         );
       }
@@ -401,10 +410,11 @@ class _MainViewState extends State<MainView> {
     if (_mainToolList.isEmpty) _initStaticToolList();
     Favorites.initialize();
 
-    var toolList = (_isSearching && _searchText.isNotEmpty) ? _getSearchedList() : null;
+    var toolList =
+        (_isSearching && _searchText.isNotEmpty) ? _getSearchedList() : null;
 
     return DefaultTabController(
-      length: 3,
+      length: 4,
       initialIndex: Prefs.getBool(PREFERENCE_TABS_USE_DEFAULT_TAB)
           ? Prefs.getInt(PREFERENCE_TABS_DEFAULT_TAB)
           : Prefs.getInt(PREFERENCE_TABS_LAST_VIEWED_TAB),
@@ -415,10 +425,17 @@ class _MainViewState extends State<MainView> {
               onTap: (value) {
                 Prefs.setInt(PREFERENCE_TABS_LAST_VIEWED_TAB, value);
               },
-              tabs: const [
-                Tab(icon: Icon(Icons.category)),
-                Tab(icon: Icon(Icons.list)),
-                Tab(icon: Icon(Icons.star)),
+              tabs: [
+                const Tab(icon: Icon(Icons.category)),
+                const Tab(icon: Icon(Icons.list)),
+                const Tab(icon: Icon(Icons.star)),
+                Tab(
+                  //text: 'GCC',
+                  child: Image.asset(
+                      'lib/application/category_views/gcc/icons/gcc-logo.png',
+                      width: 25,
+                      height: 25),
+                ),
               ],
             ),
             leading: _buildIcon(),
@@ -430,6 +447,7 @@ class _MainViewState extends State<MainView> {
             GCWToolList(toolList: toolList ?? _categoryList),
             GCWToolList(toolList: toolList ?? _mainToolList),
             GCWToolList(toolList: toolList ?? Favorites.favoritedGCWTools()),
+            const GCCView(),
           ],
         ),
       ),
@@ -481,11 +499,13 @@ class _MainViewState extends State<MainView> {
   }
 
   List<GCWTool> _getSearchedList() {
-    var _sanitizedSearchText = removeAccents(_searchText.toLowerCase()).replaceAll(NOT_ALLOWED_SEARCH_CHARACTERS, '');
+    var _sanitizedSearchText = removeAccents(_searchText.toLowerCase())
+        .replaceAll(NOT_ALLOWED_SEARCH_CHARACTERS, '');
 
     if (_sanitizedSearchText.isEmpty) return <GCWTool>[];
 
-    Set<String> _queryTexts = _sanitizedSearchText.split(REGEXP_SPLIT_STRINGLIST).toSet();
+    Set<String> _queryTexts =
+        _sanitizedSearchText.split(REGEXP_SPLIT_STRINGLIST).toSet();
 
     return registeredTools.where((tool) {
       if (tool.indexedSearchStrings.isEmpty) return false;
@@ -802,6 +822,5 @@ void _initStaticToolList() {
       className(const MiscellaneousSelection()),
     ].contains(className(element.tool));
   }).toList();
-
   _categoryList.sort((a, b) => sortToolList(a, b));
 }

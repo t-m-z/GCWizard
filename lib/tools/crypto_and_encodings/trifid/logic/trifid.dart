@@ -39,7 +39,6 @@ TrifidOutput encryptTrifid(String input, int blockSize,
       }
       break;
     default:
-      break;
   }
   EncodeMatrix = _buildEncodeMatrix(alphabet);
   DecodeMatrix = switchMapKeyValue(EncodeMatrix);
@@ -98,7 +97,6 @@ TrifidOutput decryptTrifid(String input, int blockSize,
       }
       break;
     default:
-      break;
   }
   EncodeMatrix = _buildEncodeMatrix(alphabet);
   DecodeMatrix = switchMapKeyValue(EncodeMatrix);
