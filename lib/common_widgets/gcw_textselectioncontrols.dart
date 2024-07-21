@@ -73,7 +73,7 @@ class GCWTextSelectionControls extends MaterialTextSelectionControls {
               insertIntoGCWClipboard(context, selectedText(delegate));
               handleCut(delegate, clipboardStatus);
             }
-          : () {},
+          :  () {},
 
       handleSelectAll: canSelectAll(delegate) ? () => handleSelectAll1(delegate) : () => {},
     );

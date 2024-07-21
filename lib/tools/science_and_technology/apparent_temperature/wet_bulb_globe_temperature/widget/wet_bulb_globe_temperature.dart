@@ -4,7 +4,7 @@ import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/coordinates/gcw_coords/gcw_coords.dart';
-import 'package:gc_wizard/common_widgets/dividers/gcw_divider.dart';
+import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/common_widgets/gcw_datetime_picker.dart';
 import 'package:gc_wizard/common_widgets/gcw_expandable.dart';
@@ -35,7 +35,8 @@ class WetBulbGlobeTemperature extends StatefulWidget {
 }
 
 class WetBulbGlobeTemperatureState extends State<WetBulbGlobeTemperature> {
-  DateTimeTimezone _currentDateTime = DateTimeTimezone(datetime: DateTime.now(), timezone: DateTime.now().timeZoneOffset);
+  DateTimeTimezone _currentDateTime =
+      DateTimeTimezone(datetime: DateTime.now(), timezone: DateTime.now().timeZoneOffset);
   BaseCoordinate _currentCoords = defaultBaseCoordinate;
 
   double _currentTemperature = 0.0;
@@ -50,10 +51,10 @@ class WetBulbGlobeTemperatureState extends State<WetBulbGlobeTemperature> {
 
   @override
   Widget build(BuildContext context) {
-
     return Column(
       children: <Widget>[
         GCWExpandableTextDivider(
+          suppressBottomSpace: false,
           text: i18n(context, 'common_location'),
           child: GCWCoords(
             title: i18n(context, 'common_location'),
@@ -66,6 +67,8 @@ class WetBulbGlobeTemperatureState extends State<WetBulbGlobeTemperature> {
           ),
         ),
         GCWExpandableTextDivider(
+          suppressTopSpace: false,
+          suppressBottomSpace: false,
           text: i18n(context, 'astronomy_postion_datetime'),
           child: GCWDateTimePicker(
             config: const {
@@ -81,77 +84,95 @@ class WetBulbGlobeTemperatureState extends State<WetBulbGlobeTemperature> {
             },
           ),
         ),
-        GCWUnitInput(
-          value: _currentTemperature,
-          title: i18n(context, 'common_measure_temperature'),
-          initialUnit: TEMPERATURE_CELSIUS,
-          min: 0.0,
-          unitList: temperatures,
-          onChanged: (value) {
-            setState(() {
-              _currentTemperature = TEMPERATURE_CELSIUS.fromKelvin(value);
-            });
-          },
+        Container(
+          padding: const EdgeInsets.only(top: 2 * DEFAULT_MARGIN, bottom: 2 * DEFAULT_MARGIN),
+          child: GCWUnitInput(
+            value: _currentTemperature,
+            title: i18n(context, 'common_measure_temperature'),
+            initialUnit: TEMPERATURE_CELSIUS,
+            min: 0.0,
+            unitList: temperatures,
+            onChanged: (value) {
+              setState(() {
+                _currentTemperature = TEMPERATURE_CELSIUS.fromKelvin(value);
+              });
+            },
+          ),
         ),
-        GCWUnitInput(
-          value: _currentHumidity,
-          title: i18n(context, 'common_measure_humidity'),
-          initialUnit: HUMIDITY,
-          min: 0.0,
-          unitList: humidity,
-          onChanged: (value) {
-            setState(() {
-              _currentHumidity = value;
-            });
-          },
+        Container(
+          padding: const EdgeInsets.only(top: 2 * DEFAULT_MARGIN, bottom: 2 * DEFAULT_MARGIN),
+          child: GCWUnitInput(
+            value: _currentHumidity,
+            title: i18n(context, 'common_measure_humidity'),
+            initialUnit: HUMIDITY,
+            min: 0.0,
+            unitList: humidity,
+            onChanged: (value) {
+              setState(() {
+                _currentHumidity = value;
+              });
+            },
+          ),
         ),
-        GCWUnitInput(
-          value: _currentAirPressure,
-          title: i18n(context, 'common_measure_airpressure'),
-          initialUnit: PRESSURE_MBAR,
-          unitList: allPressures(),
-          onChanged: (value) {
-            setState(() {
-              _currentAirPressure = PRESSURE_MBAR.fromPascal(value);
-            });
-          },
+        Container(
+          padding: const EdgeInsets.only(top: 2 * DEFAULT_MARGIN, bottom: 2 * DEFAULT_MARGIN),
+          child: GCWUnitInput(
+            value: _currentAirPressure,
+            title: i18n(context, 'common_measure_airpressure'),
+            initialUnit: PRESSURE_MBAR,
+            unitList: allPressures(),
+            onChanged: (value) {
+              setState(() {
+                _currentAirPressure = PRESSURE_MBAR.fromPascal(value);
+              });
+            },
+          ),
         ),
-        GCWUnitInput(
-          value: _currentWindSpeed,
-          title: i18n(context, 'common_measure_windspeed'),
-          initialUnit: VELOCITY_MS,
-          unitList: velocities,
-          onChanged: (value) {
-            setState(() {
-              _currentWindSpeed = value;
-            });
-          },
+        Container(
+          padding: const EdgeInsets.only(top: 2 * DEFAULT_MARGIN, bottom: 2 * DEFAULT_MARGIN),
+          child: GCWUnitInput(
+            value: _currentWindSpeed,
+            title: i18n(context, 'common_measure_windspeed'),
+            initialUnit: VELOCITY_MS,
+            unitList: velocities,
+            onChanged: (value) {
+              setState(() {
+                _currentWindSpeed = value;
+              });
+            },
+          ),
         ),
-        GCWDropDown(
-          title: i18n(context, 'wet_bulb_globe_temperature_cloud'),
-          value: _currentCloudCover,
-          onChanged: (value) {
-            setState(() {
-              _currentCloudCover = value;
-            });
-          },
-        items: CLOUD_COVER_LIST.entries.map((entry) {
-          return GCWDropDownMenuItem(
-            value: entry.key,
-            child: i18n(context, entry.value),
-          );
-        }).toList(),
+        Container(
+          padding: const EdgeInsets.only(top: 2 * DEFAULT_MARGIN, bottom: 2 * DEFAULT_MARGIN),
+          child: GCWDropDown(
+            title: i18n(context, 'wet_bulb_globe_temperature_cloud'),
+            value: _currentCloudCover,
+            onChanged: (value) {
+              setState(() {
+                _currentCloudCover = value;
+              });
+            },
+            items: CLOUD_COVER_LIST.entries.map((entry) {
+              return GCWDropDownMenuItem(
+                value: entry.key,
+                child: i18n(context, entry.value),
+              );
+            }).toList(),
+          ),
         ),
-        GCWTwoOptionsSwitch(
-          title: i18n(context, 'wet_bulb_globe_temperature_area'),
-          leftValue: i18n(context, 'wet_bulb_globe_temperature_area_urban'),
-          rightValue: i18n(context, 'wet_bulb_globe_temperature_area_rural'),
-          value: _currentAreaUrban ? GCWSwitchPosition.left : GCWSwitchPosition.right,
-          onChanged: (value) {
-            setState(() {
-              _currentAreaUrban = value == GCWSwitchPosition.left;
-            });
-          },
+        Container(
+          padding: const EdgeInsets.only(top: 2 * DEFAULT_MARGIN, bottom: 2 * DEFAULT_MARGIN),
+          child: GCWTwoOptionsSwitch(
+            title: i18n(context, 'wet_bulb_globe_temperature_area'),
+            leftValue: i18n(context, 'wet_bulb_globe_temperature_area_urban'),
+            rightValue: i18n(context, 'wet_bulb_globe_temperature_area_rural'),
+            value: _currentAreaUrban ? GCWSwitchPosition.left : GCWSwitchPosition.right,
+            onChanged: (value) {
+              setState(() {
+                _currentAreaUrban = value == GCWSwitchPosition.left;
+              });
+            },
+          ),
         ),
         _buildOutput(context)
       ],
@@ -169,7 +190,7 @@ class WetBulbGlobeTemperatureState extends State<WetBulbGlobeTemperature> {
         _currentAirPressure,
         _currentAreaUrban,
         _currentCloudCover);
-    if (output.Status == -1) {
+    if (output.Status == -1 || output.Twbg > 100.0 || output.Twbg < 50.0) {
       return Container();
     }
 
@@ -195,53 +216,43 @@ class WetBulbGlobeTemperatureState extends State<WetBulbGlobeTemperature> {
       children: [
         GCWDefaultOutput(
             child: Row(children: <Widget>[
-              Expanded(
-                flex: 4,
-                child: Text(i18n(context, 'wet_bulb_globe_temperature_title')),
-              ),
-              Expanded(
-                flex: 2,
-                //child: Text(_currentOutputUnit.symbol),
-                child: Container(
-                    margin: const EdgeInsets.only(left: DEFAULT_MARGIN, right: DEFAULT_MARGIN),
-                    child: GCWUnitDropDown(
-                      value: _currentOutputUnit,
-                      onlyShowSymbols: true,
-                      unitList: temperatures,
-                      unitCategory: UNITCATEGORY_TEMPERATURE,
-                      onChanged: (value) {
-                        setState(() {
-                          _currentOutputUnit = value;
-                        });
-                      },
-                    )),
-              ),
-              Expanded(
-                flex: 2,
-                child: Container(
-                    margin: const EdgeInsets.only(left: DEFAULT_MARGIN),
-                    child: GCWOutput(child: NumberFormat('#.##').format(WBGT))),
-              ),
-            ])),
-        const GCWDivider(),
-        Row(
-          children: [
-            Container(
-              width: 50,
-              padding: const EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN),
-              child: GCWIconButton(
-                icon: Icons.wb_sunny,
-                iconColor: _colorWBGT(output.Twbg),
-                backgroundColor: const Color(0xFF4d4d4d),
-                onPressed: () {},
-              ),
+          Container(
+            width: 50,
+            padding: const EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN),
+            child: GCWIconButton(
+              icon: Icons.wb_sunny,
+              iconColor: _colorWBGT(output.Twbg),
+              backgroundColor: const Color(0xFF4d4d4d),
+              onPressed: () {},
             ),
-            Expanded(
-              child: GCWOutput(
-                child: i18n(context, hintWBGT),
-              ),
-            )
-          ],
+          ),
+          Expanded(
+            flex: 2,
+            //child: Text(_currentOutputUnit.symbol),
+            child: Container(
+                margin: const EdgeInsets.only(left: DEFAULT_MARGIN, right: 2 * DEFAULT_MARGIN),
+                child: GCWUnitDropDown(
+                  value: _currentOutputUnit,
+                  onlyShowSymbols: false,
+                  unitList: temperatures,
+                  unitCategory: UNITCATEGORY_TEMPERATURE,
+                  onChanged: (value) {
+                    setState(() {
+                      _currentOutputUnit = value;
+                    });
+                  },
+                )),
+          ),
+          Expanded(
+            flex: 2,
+            child: Container(
+                margin: const EdgeInsets.only(left: 2 * DEFAULT_MARGIN),
+                child: GCWOutput(child: NumberFormat('#.###').format(WBGT))),
+          ),
+        ])),
+        GCWTextDivider(text: i18n(context, 'heatindex_hint')),
+        GCWOutput(
+          child: i18n(context, hintWBGT),
         ),
         GCWExpandableTextDivider(
           expanded: false,
