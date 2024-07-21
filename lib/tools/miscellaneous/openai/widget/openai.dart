@@ -427,7 +427,7 @@ class _OpenAIState extends State<OpenAI> {
           text: i18n(context, 'openai_history'),
           child: GCWColumnedMultilineOutput(
             data: _buildCurrentChatHistory(_currentChatHistory),
-            flexValues: [2, 8],
+            flexValues: const [2, 8],
           ),
         ),
       ],
