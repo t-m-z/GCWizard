@@ -37,12 +37,8 @@ class SymbolData {
   ui.Image? standardImage;
   ui.Image? specialEncryptionImage;
 
-  SymbolData({
-    required this.path,
-    required this.bytes,
-    this.displayName,
-    this.standardImage,
-    this.specialEncryptionImage});
+  SymbolData(
+      {required this.path, required this.bytes, this.displayName, this.standardImage, this.specialEncryptionImage});
 
   Size? imageSize() {
     if (standardImage == null) return null;
@@ -98,7 +94,7 @@ class SymbolTableData {
 
     var jsonConfig = asJsonMap(json.decode(file));
 
-    _config.caseSensitive = jsonConfig[SymbolTableConstants.CONFIG_CASESENSITIVE] != null;
+    _config.caseSensitive = jsonConfig[SymbolTableConstants.CONFIG_CASESENSITIVE] == true;
     _config.translationPrefix = toStringOrNull(jsonConfig[SymbolTableConstants.CONFIG_TRANSLATION_PREFIX]) ?? '';
 
     if (jsonConfig[SymbolTableConstants.CONFIG_TRANSLATE] != null) {
@@ -283,5 +279,5 @@ String filenameWithoutSuffix(String filename) {
 }
 
 class defaultSymbolTableData extends SymbolTableData {
-  defaultSymbolTableData(BuildContext context) : super (context, '');
+  defaultSymbolTableData(BuildContext context) : super(context, '');
 }
