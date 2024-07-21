@@ -15,8 +15,10 @@ class ToolSettings extends StatefulWidget {
 }
 
 class _ToolSettingsState extends State<ToolSettings> {
+
   late TextEditingController _chatGPTAPIKeyController;
   String _chatgpt_api_key = Prefs.get(PREFERENCE_CHATGPT_API_KEY).toString();
+
   late TextEditingController _inputControllerOpenGTINDBApiKey;
   String _currentInputOpenGTINDBApiKey =
       Prefs.get(PREFERENCE_EAN_DEFAULT_OPENGTIN_APIKEY).toString();
