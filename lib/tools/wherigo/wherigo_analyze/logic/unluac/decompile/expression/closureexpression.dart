@@ -1,11 +1,11 @@
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/lfunction.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/declaration.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/decompiler.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/output.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/target/tabletarget.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/target/target.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/target/variabletarget.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/expression/expression.dart';
+import '../../parse/lfunction.dart';
+import '../declaration.dart';
+import '../decompiler.dart';
+import '../output.dart';
+import '../target/tabletarget.dart';
+import '../target/target.dart';
+import '../target/variabletarget.dart';
+import 'expression.dart';
 
 class ClosureExpression extends Expression {
   final LFunction function;

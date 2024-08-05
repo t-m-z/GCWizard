@@ -1,4 +1,4 @@
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/bobject.dart';
+import 'bobject.dart';
 
 class BInteger extends BObject {
   final BigInt? big;
@@ -19,18 +19,18 @@ class BInteger extends BObject {
       : big = big,
         n = 0 {
     if (_maxInt == null) {
-      _maxInt = BigInt.from(0x7FFFFFFFFFFFFFFF);
-      _minInt = BigInt.from(-0x8000000000000000);
+      _maxInt = BigInt.from(int.maxValue);
+      _minInt = BigInt.from(int.minValue);
     }
   }
 
   int asInt() {
     if (big == null) {
       return n;
-    } else if (big! > _maxInt! || big! < _minInt!) {
+    } else if (big > _maxInt! || big < _minInt!) {
       throw StateError('The size of an integer is outside the range that unluac can handle.');
     } else {
-      return big!.toInt();
+      return big.toInt();
     }
   }
 
@@ -40,8 +40,8 @@ class BInteger extends BObject {
         thunk();
       }
     } else {
-      BigInt? i = big;
-      while (i!.sign > 0) {
+      BigInt i = big;
+      while (i.sign > 0) {
         thunk();
         i -= BigInt.one;
       }

@@ -1,7 +1,7 @@
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/lfunction.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/lupvalue.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/declaration.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/expression/upvalueexpression.dart';
+import '../parse/lfunction.dart';
+import '../parse/lupvalue.dart';
+import 'declaration.dart';
+import 'expression/upvalueexpression.dart';
 
 class Upvalues {
   final List<LUpvalue> upvalues;

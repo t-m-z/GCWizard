@@ -1,7 +1,7 @@
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/declaration.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/decompiler.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/output.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/statement/statement.dart';
+import '../declaration.dart';
+import '../decompiler.dart';
+import '../output.dart';
+import 'statement.dart';
 
 class Declare extends Statement {
   final List<Declaration> decls;

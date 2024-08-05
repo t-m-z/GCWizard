@@ -1,7 +1,7 @@
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/lfunction.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/codeextract.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/op.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/opcodemap.dart';
+import '../parse/lfunction.dart';
+import 'codeextract.dart';
+import 'op.dart';
+import 'opcodemap.dart';
 
 class Code {
   late final CodeExtract extractor;

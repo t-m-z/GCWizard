@@ -1,5 +1,5 @@
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/codeextract.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/opcodeformat.dart';
+import 'codeextract.dart';
+import 'opcodeformat.dart';
 
 enum Op {
   // Lua 5.1 Opcodes

@@ -1,13 +1,13 @@
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/declaration.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/decompiler.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/expression/expression.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/output.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/target/target.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/statement/statement.dart';
+import '../declaration.dart';
+import '../decompiler.dart';
+import '../expression/expression.dart';
+import '../output.dart';
+import '../target/target.dart';
+import 'statement.dart';
 
 class Assignment extends Statement {
   final List<Target?> targets = List<Target?>.filled(5, null, growable: true);
-  final List<Expression> values = List<Expression>.filled(5, Expression(0), growable: true);
+  final List<Expression?> values = List<Expression?>.filled(5, null, growable: true);
 
   bool allnil = true;
   bool _declare = false;
@@ -91,12 +91,12 @@ class Assignment extends Statement {
         out.print('local ');
       }
       bool functionSugar = false;
-      if (targets.length == 1 && values.length == 1 && values.first.isClosure() && targets.first!.isFunctionName()) {
+      if (targets.length == 1 && values.length == 1 && values.first!.isClosure() && targets.first!.isFunctionName()) {
         var closure = values.first;
-        if (!_declare || declareStart >= closure.closureUpvalueLine()) {
+        if (!_declare || declareStart >= closure!.closureUpvalueLine()) {
           functionSugar = true;
         }
-        if (targets.first!.isLocal() && closure.isUpvalueOf(targets.first!.getIndex()!)) {
+        if (targets.first!.isLocal() && closure!.isUpvalueOf(targets.first!.getIndex())) {
           functionSugar = true;
         }
       }
@@ -111,7 +111,7 @@ class Assignment extends Statement {
           Expression.printSequence(d, out, values, false, false);
         }
       } else {
-        values.first.printClosure(d, out, targets.first!);
+        values.first!.printClosure(d, out, targets.first!);
       }
       if (comment != null) {
         out.print(' -- ');

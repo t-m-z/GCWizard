@@ -1,7 +1,7 @@
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/declaration.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/decompiler.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/output.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/target/target.dart';
+import '../declaration.dart';
+import '../decompiler.dart';
+import '../output.dart';
+import 'target.dart';
 
 class VariableTarget extends Target {
   final Declaration decl;

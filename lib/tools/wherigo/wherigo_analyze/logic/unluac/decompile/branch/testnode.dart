@@ -1,7 +1,7 @@
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/expression/expression.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/registers.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/branch/branch.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/branch/notbranch.dart';
+import '../expression/expression.dart';
+import '../registers.dart';
+import 'branch.dart';
+import 'notbranch.dart';
 
 class TestNode extends Branch {
   final int test;

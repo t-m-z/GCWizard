@@ -1,10 +1,10 @@
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/lboolean.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/lnil.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/lnumber.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/lobject.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/lstring.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/decompiler.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/output.dart';
+import '../parse/lboolean.dart';
+import '../parse/lnil.dart';
+import '../parse/lnumber.dart';
+import '../parse/lobject.dart';
+import '../parse/lstring.dart';
+import 'decompiler.dart';
+import 'output.dart';
 
 class Constant {
   static final Set<String> reservedWords = {
@@ -53,7 +53,7 @@ class Constant {
       ? 3
       : throw ArgumentError("Illegal constant type: $constant"),
         boolValue = constant is LBoolean ? constant == LBoolean.LTRUE : false,
-        number = constant is LNumber ? constant as LNumber : null,
+        number = constant is LNumber ? constant : null,
         string = constant is LString ? constant.deref() : null;
 
   void print(Decompiler d, Output out, bool braced) {

@@ -1,14 +1,14 @@
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/lnil.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/constant.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/decompiler.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/output.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/target/target.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/expression/binaryexpression.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/expression/constantexpression.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/expression/tableliteral.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/expression/unaryexpression.dart';
+import '../../parse/lnil.dart';
+import '../constant.dart';
+import '../decompiler.dart';
+import '../output.dart';
+import '../target/target.dart';
+import 'binaryexpression.dart';
+import 'constantexpression.dart';
+import 'tableliteral.dart';
+import 'unaryexpression.dart';
 
-class Expression {
+abstract class Expression {
   static const int PRECEDENCE_OR = 1;
   static const int PRECEDENCE_AND = 2;
   static const int PRECEDENCE_COMPARE = 3;
@@ -140,9 +140,7 @@ class Expression {
     right.print(d, out);
   }
 
-  void print(Decompiler d, Output out) {
-    out.print('');
-  }
+  void print(Decompiler d, Output out);
 
   void printBraced(Decompiler d, Output out) {
     print(d, out);
@@ -152,10 +150,7 @@ class Expression {
     print(d, out);
   }
 
-  int getConstantIndex() {
-    // TODO: implement getConstantIndex
-    throw UnimplementedError();
-  }
+  int getConstantIndex();
 
   bool beginsWithParen() {
     return false;

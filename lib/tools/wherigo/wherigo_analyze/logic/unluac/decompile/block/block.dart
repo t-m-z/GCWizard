@@ -1,8 +1,8 @@
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/lfunction.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/decompiler.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/operation/operation.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/registers.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/statement/statement.dart';
+import '../../parse/lfunction.dart';
+import '../decompiler.dart';
+import '../operation/operation.dart';
+import '../registers.dart';
+import '../statement/statement.dart';
 
 abstract class Block extends Statement implements Comparable<Block> {
   final LFunction function;

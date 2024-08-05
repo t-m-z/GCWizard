@@ -1,8 +1,8 @@
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/lfunction.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/version.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/constant.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/expression/constantexpression.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/expression/globalexpression.dart';
+import '../parse/lfunction.dart';
+import '../version.dart';
+import 'constant.dart';
+import 'expression/constantexpression.dart';
+import 'expression/globalexpression.dart';
 
 class Function_ {
   List<Constant> constants;

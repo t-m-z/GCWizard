@@ -1,4 +1,4 @@
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/llocal.dart';
+import '../parse/llocal.dart';
 
 class Declaration {
   final String name;

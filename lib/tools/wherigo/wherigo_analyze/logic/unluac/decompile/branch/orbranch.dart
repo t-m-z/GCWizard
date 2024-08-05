@@ -1,8 +1,8 @@
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/expression/binaryexpression.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/expression/expression.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/registers.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/branch/andbranch.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/branch/branch.dart';
+import '../expression/binaryexpression.dart';
+import '../expression/expression.dart';
+import '../registers.dart';
+import 'andbranch.dart';
+import 'branch.dart';
 
 class OrBranch extends Branch {
   final Branch left;

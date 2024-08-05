@@ -1,11 +1,11 @@
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/lfunction.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/version.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/decompiler.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/expression/expression.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/output.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/registers.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/statement/statement.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/block/block.dart';
+import '../../parse/lfunction.dart';
+import '../../version.dart';
+import '../decompiler.dart';
+import '../expression/expression.dart';
+import '../output.dart';
+import '../registers.dart';
+import '../statement/statement.dart';
+import 'block.dart';
 
 class TForBlock extends Block {
   final int register;
@@ -14,9 +14,9 @@ class TForBlock extends Block {
   final List<Statement> statements;
 
   TForBlock(LFunction function, int begin, int end, int register, int length, Registers r)
-      : register = register,
-        length = length,
-        r = r,
+      : this.register = register,
+        this.length = length,
+        this.r = r,
         statements = List<Statement>.filled(end - begin + 1, Statement()),
         super(function, begin, end);
 

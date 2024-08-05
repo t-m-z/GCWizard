@@ -1,22 +1,22 @@
 import 'dart:core';
 import 'dart:typed_data';
 
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/configuration.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/codeextract.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/util/bytebuffer.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/util/exception.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/version.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/bintegertype.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/bsizettype.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/lbooleantype.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/lconstanttype.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/lfunction.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/lfunctiontype.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/lheader.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/llocaltype.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/lnumbertype.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/lstringtype.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/lupvaluetype.dart';
+import '../configuration.dart';
+import '../decompile/codeextract.dart';
+import '../util/bytebuffer.dart';
+import '../util/exception.dart';
+import '../version.dart';
+import 'bintegertype.dart';
+import 'bsizettype.dart';
+import 'lbooleantype.dart';
+import 'lconstanttype.dart';
+import 'lfunction.dart';
+import 'lfunctiontype.dart';
+import 'lheader.dart';
+import 'llocaltype.dart';
+import 'lnumbertype.dart';
+import 'lstringtype.dart';
+import 'lupvaluetype.dart';
 
 class BHeader {
   static final Uint8List signature = {
@@ -96,7 +96,7 @@ class BHeader {
     if (versionNumber >= 0x53) {
       upvalues = buffer.getUint8_(5);
       if (debug) {
-        //print('-- main chunk upvalue count: $upvalues');
+        print('-- main chunk upvalue count: $upvalues');
       }
       // TODO: check this value
     }

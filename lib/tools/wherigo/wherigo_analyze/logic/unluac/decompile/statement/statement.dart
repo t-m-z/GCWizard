@@ -1,8 +1,8 @@
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/block/ifthenelseblock.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/decompiler.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/output.dart';
+import '../block/ifthenelseblock.dart';
+import '../decompiler.dart';
+import '../output.dart';
 
-class Statement {
+abstract class Statement {
   /// Prints out a sequence of statements on separate lines. Correctly
   /// informs the last statement that it is last in a block.
   static void printSequence(Decompiler d, Output out, List<Statement> stmts) {
@@ -24,9 +24,7 @@ class Statement {
     }
   }
 
-  void print(Decompiler d, Output out) {
-    // TODO: implement print
-  }
+  void print(Decompiler d, Output out);
 
   void printTail(Decompiler d, Output out) {
     print(d, out);

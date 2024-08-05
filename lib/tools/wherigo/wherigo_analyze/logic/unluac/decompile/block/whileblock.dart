@@ -1,10 +1,10 @@
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/lfunction.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/branch/branch.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/decompiler.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/output.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/registers.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/statement/statement.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/block/block.dart';
+import '../../parse/lfunction.dart';
+import '../branch/branch.dart';
+import '../decompiler.dart';
+import '../output.dart';
+import '../registers.dart';
+import '../statement/statement.dart';
+import 'block.dart';
 
 class WhileBlock extends Block {
   final Branch branch;
@@ -13,9 +13,9 @@ class WhileBlock extends Block {
   final List<Statement> statements;
 
   WhileBlock(LFunction function, Branch branch, int loopback, Registers r)
-      : branch = branch,
-        loopback = loopback,
-        r = r,
+      : this.branch = branch,
+        this.loopback = loopback,
+        this.r = r,
         statements = List<Statement>.filled(branch.end - branch.begin + 1, Statement(), growable: true),
         super(function, branch.begin, branch.end);
 

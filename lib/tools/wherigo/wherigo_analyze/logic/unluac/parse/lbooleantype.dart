@@ -1,8 +1,8 @@
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/util/bytebuffer.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/util/exception.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/bheader.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/bobjecttype.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/lboolean.dart';
+import '../util/bytebuffer.dart';
+import '../util/exception.dart';
+import 'bheader.dart';
+import 'bobjecttype.dart';
+import 'lboolean.dart';
 
 
 class LBooleanType extends BObjectType<LBoolean> {
@@ -14,7 +14,7 @@ class LBooleanType extends BObjectType<LBoolean> {
     } else {
       LBoolean bool = value == 0 ? LBoolean.LFALSE : LBoolean.LTRUE;
       if (header.debug) {
-        //print('-- parsed <boolean> $bool');
+        print('-- parsed <boolean> $bool');
       }
       return bool;
     }

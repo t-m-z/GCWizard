@@ -1,16 +1,12 @@
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/declaration.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/decompiler.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/output.dart';
+import '../declaration.dart';
+import '../decompiler.dart';
+import '../output.dart';
 
-class Target {
+abstract class Target {
 
-  void print(Decompiler d, Output out) {
-    print(d, out);
-  }
+  void print(Decompiler d, Output out);
   
-  void printMethod(Decompiler d, Output out) {
-    printMethod(d, out);
-  }
+  void printMethod(Decompiler d, Output out);
   
   bool isDeclaration(Declaration decl) {
     return false;

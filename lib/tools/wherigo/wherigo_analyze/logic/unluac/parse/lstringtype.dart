@@ -1,9 +1,8 @@
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/binteger.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/util/bytebuffer.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/bheader.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/bobjecttype.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/bsizet.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/lstring.dart';
+import '../util/bytebuffer.dart';
+import 'bheader.dart';
+import 'bobjecttype.dart';
+import 'bsizet.dart';
+import 'lstring.dart';
 
 abstract class LStringType extends BObjectType<LString> {
   static LStringType50 getType50() {
@@ -28,9 +27,9 @@ class LStringType50 extends LStringType {
     });
     String s = b.toString();
     if (header.debug) {
-      //print("-- parsed <string> \"$s\"");
+      print("-- parsed <string> \"$s\"");
     }
-    return LString(sizeT as int, s);
+    return LString(sizeT, s);
   }
 }
 
@@ -42,7 +41,7 @@ class LStringType53 extends LStringType {
     if (size == 0xFF) {
       sizeT = header.sizeT.parse(buffer, header);
     } else {
-      sizeT = BSizeT(size as BInteger);
+      sizeT = BSizeT(size);
     }
     final StringBuffer b = this.b.get();
     b.clear();
@@ -52,9 +51,9 @@ class LStringType53 extends LStringType {
     b.writeCharCode(0);
     String s = b.toString();
     if (header.debug) {
-      //print("-- parsed <string> \"$s\"");
+      print("-- parsed <string> \"$s\"");
     }
-    return LString(sizeT as int, s);
+    return LString(sizeT, s);
   }
 }
 

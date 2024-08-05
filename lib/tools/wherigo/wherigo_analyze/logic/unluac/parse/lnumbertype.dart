@@ -1,6 +1,6 @@
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/util/bytebuffer.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/bheader.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/lnumber.dart';
+import '../util/bytebuffer.dart';
+import 'bheader.dart';
+import 'lnumber.dart';
 
 enum NumberMode {
   MODE_NUMBER, // Used for Lua 5.0 - 5.2 where numbers can represent integers or floats
@@ -64,7 +64,7 @@ class LNumberType {
       }
     }
     if (header.debug) {
-      //print("-- parsed <number> $value");
+      print("-- parsed <number> $value");
     }
     return value;
   }

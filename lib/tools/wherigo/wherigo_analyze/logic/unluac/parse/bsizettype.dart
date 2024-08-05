@@ -1,8 +1,8 @@
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/util/bytebuffer.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/bheader.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/bintegertype.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/bobjecttype.dart';
-import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/bsizet.dart';
+import '../util/bytebuffer.dart';
+import 'bheader.dart';
+import 'bintegertype.dart';
+import 'bobjecttype.dart';
+import 'bsizet.dart';
 
 
 class BSizeTType extends BObjectType<BSizeT> {
@@ -16,7 +16,7 @@ class BSizeTType extends BObjectType<BSizeT> {
   BSizeT parse(ByteBuffer_ buffer, BHeader header) {
     final value = BSizeT(integerType.raw_parse(buffer, header));
     if (header.debug) {
-      //print('-- parsed <size_t> $value');
+      print('-- parsed <size_t> $value');
     }
     return value;
   }
