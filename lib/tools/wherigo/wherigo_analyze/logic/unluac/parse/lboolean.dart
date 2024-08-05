@@ -1,4 +1,4 @@
-import 'lobject.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/lobject.dart';
 
 class LBoolean extends LObject {
   static final LBoolean LTRUE = LBoolean(true);

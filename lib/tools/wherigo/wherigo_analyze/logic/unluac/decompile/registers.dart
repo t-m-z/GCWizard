@@ -1,10 +1,10 @@
 import 'dart:core';
-import 'declaration.dart';
-import 'expression/expression.dart';
-import 'expression/localvariable.dart';
-import 'function.dart';
-import 'target/target.dart';
-import 'target/variabletarget.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/declaration.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/expression/expression.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/expression/localvariable.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/function.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/target/target.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/target/variabletarget.dart';
 
 class Registers {
   final int registers;

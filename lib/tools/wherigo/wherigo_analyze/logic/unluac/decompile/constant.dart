@@ -1,10 +1,10 @@
-import '../parse/lboolean.dart';
-import '../parse/lnil.dart';
-import '../parse/lnumber.dart';
-import '../parse/lobject.dart';
-import '../parse/lstring.dart';
-import 'decompiler.dart';
-import 'output.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/lboolean.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/lnil.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/lnumber.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/lobject.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/lstring.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/decompiler.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/output.dart';
 
 class Constant {
   static final Set<String> reservedWords = {

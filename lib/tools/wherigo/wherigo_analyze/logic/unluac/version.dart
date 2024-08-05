@@ -1,6 +1,6 @@
-import 'decompile/op.dart';
-import 'decompile/opcodemap.dart';
-import 'parse/lheadertype.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/op.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/opcodemap.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/lheadertype.dart';
 
 abstract class Version {
   static final Version LUA50 = Version50();

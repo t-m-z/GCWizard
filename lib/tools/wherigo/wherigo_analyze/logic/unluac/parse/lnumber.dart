@@ -1,4 +1,4 @@
-import 'lnumbertype.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/lnumbertype.dart';
 
 abstract class LNumber {
   static LNumber makeInteger(int number) {

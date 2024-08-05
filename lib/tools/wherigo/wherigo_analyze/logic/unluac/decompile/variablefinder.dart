@@ -1,12 +1,12 @@
 import 'dart:core';
 import 'dart:math';
 
-import '../parse/lfunction.dart';
-import '../parse/lupvalue.dart';
-import 'code.dart';
-import 'declaration.dart';
-import 'decompiler.dart';
-import 'op.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/lfunction.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/lupvalue.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/code.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/declaration.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/decompiler.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/op.dart';
 
 class VariableFinder {
     static bool isConstantReference(int value) {

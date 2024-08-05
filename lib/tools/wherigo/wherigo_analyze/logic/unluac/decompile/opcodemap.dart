@@ -1,4 +1,4 @@
-import 'op.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/op.dart';
 
 class OpcodeMap {
   late List<Op> map;

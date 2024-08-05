@@ -1,4 +1,4 @@
-import 'bobject.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/bobject.dart';
 
 class BInteger extends BObject {
   final BigInt? big;

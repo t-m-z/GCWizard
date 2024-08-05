@@ -1,4 +1,4 @@
-import '../util/bytebuffer.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/util/bytebuffer.dart';
 
 class LSourceLines {
   static LSourceLines? parse(ByteBuffer_ buffer) {

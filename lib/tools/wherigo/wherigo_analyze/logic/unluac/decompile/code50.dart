@@ -1,4 +1,4 @@
-import 'codeextract.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/codeextract.dart';
 
 class Code50 implements CodeExtract {
   late int shiftA;

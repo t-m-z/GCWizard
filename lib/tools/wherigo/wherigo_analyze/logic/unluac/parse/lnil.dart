@@ -1,4 +1,4 @@
-import 'lobject.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/lobject.dart';
 
 class LNil extends LObject {
   static final LNil NIL = LNil._internal();

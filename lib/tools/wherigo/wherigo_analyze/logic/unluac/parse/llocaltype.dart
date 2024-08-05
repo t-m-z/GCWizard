@@ -1,7 +1,7 @@
-import '../util/bytebuffer.dart';
-import 'bheader.dart';
-import 'bobjecttype.dart';
-import 'llocal.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/util/bytebuffer.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/bheader.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/bobjecttype.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/llocal.dart';
 
 class LLocalType extends BObjectType<LLocal> {
   @override

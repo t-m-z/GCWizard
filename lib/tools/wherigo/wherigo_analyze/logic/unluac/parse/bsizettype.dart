@@ -1,8 +1,8 @@
-import '../util/bytebuffer.dart';
-import 'bheader.dart';
-import 'bintegertype.dart';
-import 'bobjecttype.dart';
-import 'bsizet.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/util/bytebuffer.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/bheader.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/bintegertype.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/bobjecttype.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/bsizet.dart';
 
 
 class BSizeTType extends BObjectType<BSizeT> {

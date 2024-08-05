@@ -1,5 +1,5 @@
-import 'binteger.dart';
-import 'lstring.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/binteger.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/lstring.dart';
 
 class LLocal {
   final LString name;

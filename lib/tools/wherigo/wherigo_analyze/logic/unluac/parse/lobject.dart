@@ -1,4 +1,4 @@
-import 'bobject.dart';
+importpackage:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/ 'bobject.dart';
 
 abstract class LObject extends BObject {
 

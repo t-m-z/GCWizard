@@ -1,21 +1,21 @@
 import 'dart:typed_data';
 
-import '../util/bytebuffer.dart';
-import 'bheader.dart';
-import 'bobjecttype.dart';
-import 'bintegertype.dart';
-import 'bsizettype.dart';
-import 'lheader.dart';
-import 'lnumbertype.dart';
-import 'lstringtype.dart';
-import 'lconstanttype.dart';
-import 'lfunctiontype.dart';
-import 'lbooleantype.dart';
-import 'llocaltype.dart';
-import 'lupvaluetype.dart';
-import '../decompile/code.dart';
-import '../decompile/code50.dart';
-import '../decompile/codeextract.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/util/bytebuffer.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/bheader.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/bobjecttype.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/bintegertype.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/bsizettype.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/lheader.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/lnumbertype.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/lstringtype.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/lconstanttype.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/lfunctiontype.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/lbooleantype.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/llocaltype.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/lupvaluetype.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/code.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/code50.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/codeextract.dart';
 
 abstract class LHeaderType extends BObjectType<LHeader> {
   static final LHeaderType TYPE50 = LHeaderType50();

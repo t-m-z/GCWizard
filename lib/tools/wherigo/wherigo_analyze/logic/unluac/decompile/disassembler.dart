@@ -1,6 +1,6 @@
-import '../parse/lfunction.dart';
-import 'code.dart';
-import 'output.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/lfunction.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/code.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/output.dart';
 
 class Disassembler {
   final LFunction function;

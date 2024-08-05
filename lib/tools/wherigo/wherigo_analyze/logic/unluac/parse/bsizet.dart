@@ -1,4 +1,4 @@
-import 'binteger.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/binteger.dart';
 
 class BSizeT extends BInteger {
   BSizeT(BInteger b) : super(b);

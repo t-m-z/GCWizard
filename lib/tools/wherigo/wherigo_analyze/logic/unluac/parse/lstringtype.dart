@@ -1,8 +1,8 @@
-import '../util/bytebuffer.dart';
-import 'bheader.dart';
-import 'bobjecttype.dart';
-import 'bsizet.dart';
-import 'lstring.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/util/bytebuffer.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/bheader.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/bobjecttype.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/bsizet.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/lstring.dart';
 
 abstract class LStringType extends BObjectType<LString> {
   static LStringType50 getType50() {

@@ -1,5 +1,5 @@
-import 'binteger.dart';
-import 'bobject.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/binteger.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/bobject.dart';
 
 class BList<T extends BObject> extends BObject {
   final BInteger length;

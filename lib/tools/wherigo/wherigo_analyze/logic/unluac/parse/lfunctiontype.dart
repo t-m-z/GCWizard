@@ -1,13 +1,13 @@
-import '../util/bytebuffer.dart';
-import 'bheader.dart';
-import 'binteger.dart';
-import 'blist.dart';
-import 'bobjecttype.dart';
-import 'lfunction.dart';
-import 'llocal.dart';
-import 'lobject.dart';
-import 'lstring.dart';
-import 'lupvalue.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/util/bytebuffer.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/bheader.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/binteger.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/blist.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/bobjecttype.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/lfunction.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/llocal.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/lobject.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/lstring.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/lupvalue.dart';
 
 class LFunctionType extends BObjectType<LFunction> {
   static final LFunctionType TYPE50 = LFunctionType50();

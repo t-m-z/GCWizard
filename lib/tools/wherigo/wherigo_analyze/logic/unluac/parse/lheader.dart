@@ -1,14 +1,14 @@
-import '../decompile/codeextract.dart';
-import 'bobject.dart';
-import 'bintegertype.dart';
-import 'bsizettype.dart';
-import 'lbooleantype.dart';
-import 'lconstanttype.dart';
-import 'lfunctiontype.dart';
-import 'llocaltype.dart';
-import 'lnumbertype.dart';
-import 'lstringtype.dart';
-import 'lupvaluetype.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/codeextract.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/bobject.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/bintegertype.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/bsizettype.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/lbooleantype.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/lconstanttype.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/lfunctiontype.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/llocaltype.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/lnumbertype.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/lstringtype.dart';
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/parse/lupvaluetype.dart';
 
 class LHeader extends BObject {
   final int format;
