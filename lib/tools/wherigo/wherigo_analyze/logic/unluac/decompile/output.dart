@@ -1,10 +1,6 @@
 import 'dart:io';
 
-abstract class OutputProvider {
-  void print(String s);
-  void printByte(int b);
-  void println();
-}
+import 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/unluac/decompile/outputprovider.dart';
 
 class Output {
   OutputProvider out;
