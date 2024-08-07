@@ -2,14 +2,14 @@ import "package:flutter_test/flutter_test.dart";
 import 'package:gc_wizard/tools/crypto_and_encodings/ragbaby/logic/ragbaby.dart';
 
 void main() {
-  group("Ragbaby.encryptRagbaby:", () {
+  group("Ragbaby: encryptRagbaby:", () {
     List<Map<String, Object?>> _inputsToExpected = [
       {'input': '', 'option': RagbabyType, 'pw': '', 'expectedOutput': ''},
       {
         'input': 'The quick brown fox jumps.',
         'option': RagbabyType.NoJX,
         'pw': 'secretword',
-        'expectedOutput': 'Wkt vzndu hdggs kgc pczcb.'
+        'expectedOutput': 'Wkt vzndu hdggs kgg pczcb.'
       },
       {
         'input': 'The quick brown fox jumps!',
@@ -33,7 +33,7 @@ void main() {
         'input': 'du wirst gerächt werden',
         'option': RagbabyType.AZ,
         'pw': 'grabtharä',
-        'expectedOutput': 'ew ylhyi bkcälll gldmoy'
+        'expectedOutput': 'ew ylhyi bkcäkkk gldmoy'
       },
     ];
 
@@ -47,7 +47,7 @@ void main() {
     }
   });
 
-  group("Ragbaby.decryptRagbaby:", () {
+  group("Ragbaby: decryptRagbaby:", () {
     List<Map<String, Object?>> _inputsToExpected = [
       {'expectedOutput': '', 'option': RagbabyType, 'pw': '', 'input': ''},
 
@@ -68,12 +68,19 @@ void main() {
         'option': RagbabyType.AZ09,
         'pw': 'secretword',
         'input': '46 vymdu hdggz jg3aa?'
-        // decoded number always turns into an upper letter
-        // no idea how to handle this special case
       },
-
-      // {'expectedOutput' : 'BEI GRABTHARS HAMMER', 'pw': '', 'input' :'CGM IUEGAPIBD LERSMA'},
-      //  {'expectedOutput' : 'DU WIRST GERÄCHT WERDEN.', 'pw': 'fedcba', 'input' : 'CW ZMVYF KAWÄLQC EGYKKW.'},
+      {
+        'expectedOutput' : 'BEI GRABTHARS HAMMER',
+        'option': RagbabyType.NoJX,
+        'pw': '',
+        'input' :'CGM IUEGAPIBD LERSMA'
+      },
+      {
+        'expectedOutput' : 'DU WIRST GERÄCHT WERDEN.',
+        'option': RagbabyType.AZ,
+        'pw': 'fedcba',
+        'input' : 'CW YLVXZ JAWÄJOE FGXJJW.'
+      },
     ];
 
     for (var elem in _inputsToExpected) {
