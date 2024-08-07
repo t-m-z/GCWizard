@@ -1,6 +1,4 @@
-import 'dart:async';
-import 'package:audioplayers/audioplayers.dart';
-import 'package:uuid/uuid.dart';
+import 'package:flutter_dtmf/dtmf.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
@@ -35,57 +33,9 @@ class _DTMFState extends State<DTMF> {
 
   final _maskInputFormatter = GCWMaskTextInputFormatter(mask: '#' * 10000, filter: {"#": RegExp(r'[0-9\*\#a-dA-D]')});
 
-  var player = AudioPlayer(playerId: const Uuid().v4(),);
-  int _index = 0;
   String _playlist = '';
 
-  // https://discord.com/channels/509714518008528896/533299043686940692/threads/990854105394216970
-  //Walter — 27.06.2022 17:28
-  //void playSound(
-  //     String path, [
-  //     void Function()? funcAfterwards,
-  //   ]) {
-  //     print('playSound $path');
-  //
-  //     player.play(
-  //       AssetSource(path),
-  //       volume: 1,
-  //     );
-  //     if (funcAfterwards != null) {
-  //       player.onPlayerComplete.listen((event) {
-  //         funcAfterwards();
-  //       });
-  //     }
-  //   }
-
-  //The following approach works
-  //     if (funcAfterwards != null) {
-  //       // player.onPlayerComplete.listen((event) {
-  //       //   funcAfterwards();
-  //       // });
-  //
-  //       StreamSubscription<void> subscription = player.onPlayerComplete.listen((event) => 0);
-  //       subscription = player.onPlayerComplete.listen((event) {
-  //         funcAfterwards();
-  //         subscription.cancel();
-  //       });
-  //     }
-  //
-  void playSound(int index) {
-    if (index < _playlist.length) {
-      player.play(DTMFSOUND[_playlist[index]]!);
-      if (index + 1 < _playlist.length) {
-        StreamSubscription<void> subscription = player.onPlayerComplete.listen((event) => 0);
-        subscription = player.onPlayerComplete.listen((event) {
-          index++;
-          playSound(index,);
-          subscription.cancel();
-        });
-      }
-    }
-  }
-
-  @override
+   @override
   void initState() {
     super.initState();
     _encodeController = TextEditingController(text: _currentEncodeInput);
@@ -204,16 +154,19 @@ class _DTMFState extends State<DTMF> {
       ),
       GCWIconButton(
         icon: Icons.play_arrow,
-        onPressed: () {
-          _index = 0;
+        onPressed: () async {
           if (_currentMode == GCWSwitchPosition.left) {
             _playlist = _currentEncodeInput;
           } else {
             _playlist = _currentDecodeInput;
           }
-          if (_playlist.isNotEmpty) {
-            playSound(_index);
-          }
+          await Dtmf.playTone(
+              digits: _playlist,
+              samplingRate: 8000,
+              durationMs: 160,
+              volume: 1.0,
+              //forceMaxVolume: true,
+          );
         },
       ),
     ]);
