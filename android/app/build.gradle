@@ -42,7 +42,7 @@ android {
 
     defaultConfig {
         applicationId "de.tmz.sman42.gc_wizard.nightly"
-        minSdkVersion 21
+        minSdkVersion 30
         targetSdkVersion 34
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
