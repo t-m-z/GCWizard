@@ -243,6 +243,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/playfair/widget/playfair.da
 import 'package:gc_wizard/tools/crypto_and_encodings/pokemon/widget/pokemon.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/pollux/widget/pollux.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/polybios/widget/polybios.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/porta/widget/porta.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/predator/widget/predator.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/prime_alphabet/widget/prime_alphabet.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/rabbit/widget/rabbit.dart';
@@ -977,7 +978,7 @@ void initializeRegistry(BuildContext context) {
           sourceUrl: 'https://web.archive.org/web/20240715180948/https://xkcd.com/426/'),
       ToolLicenseAPI(
         context: context,
-        author: '@Crox (geohashing.site)',
+        author: 'crox.net (geo.crox.net/djia)',
         title: 'Dow Jones API',
         licenseType: ToolLicenseType.FREE_TO_USE,
         licenseUrl:
@@ -1372,6 +1373,22 @@ void initializeRegistry(BuildContext context) {
     ], searchKeys: const [
       'polybios',
     ]),
+    GCWTool(tool: const Porta(), id: 'porta', categories: const [
+      ToolCategory.CRYPTOGRAPHY
+    ], searchKeys: const [
+      'porta',
+    ],
+  licenses: [
+    ToolLicenseOnlineArticle(
+      context: context,
+      author: 'Didier Müller',
+      title: 'Le chiffre da Porta',
+      sourceUrl: 'https://web.archive.org/web/20240726132205/https://www.apprendre-en-ligne.net/crypto/porta/index.html',
+      year: 2021,
+      month: 01,
+      day: 24,
+    )
+  ]),
     GCWTool(
         tool: const PredatorSelection(),
         id: 'predator_selection',
@@ -1420,6 +1437,7 @@ void initializeRegistry(BuildContext context) {
           sourceUrl: 'https://web.archive.org/web/20240415085406/https://youngtyros.com/2023/02/19/ragbaby-cipher/'
       )
     ]),
+
     GCWTool(tool: const RailFence(), id: 'railfence', categories: const [
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: const [
@@ -5342,8 +5360,9 @@ void initializeRegistry(BuildContext context) {
       ToolLicenseOnlineArticle(
           context: context,
           author: 'commons.wikimedia.org and contributors',
-          title: 'Chappe code - c. 1794.svg',
-          sourceUrl: 'https://commons.wikimedia.org/w/index.php?title=File:Chappe_code_-_c._1794.svg&oldid=876996749')
+          title: 'File:Chappe code - c. 1794.svg',
+          sourceUrl:
+              'https://commons.wikimedia.org/w/index.php?title=File:Chappe_code_-_c._1794.svg&oldid=876996749')
     ]),
     GCWSymbolTableTool(symbolKey: 'chappe_1809', symbolSearchStrings: const [
       'telegraph',
@@ -5354,8 +5373,9 @@ void initializeRegistry(BuildContext context) {
       ToolLicenseOnlineArticle(
           context: context,
           author: 'commons.wikimedia.org and contributors',
-          title: 'Chappe code - c. 1809.svg',
-          sourceUrl: 'https://commons.wikimedia.org/w/index.php?title=File:Chappe_code_-_c._1809.svg&oldid=876996757')
+          title: 'File:Chappe code - c. 1809.svg',
+          sourceUrl:
+              'https://commons.wikimedia.org/w/index.php?title=File:Chappe_code_-_c._1809.svg&oldid=876996757')
     ]),
     GCWSymbolTableTool(symbolKey: 'chappe_v1', symbolSearchStrings: const [
       'telegraph',
@@ -7510,7 +7530,7 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'theban', symbolSearchStrings: const [
       'symbol_theban',
     ], licenses: [
-      stl._toolLicenseOnlineBookDeOccultaPhilosophia
+      stl._toolLicenseCullyLong,
     ]),
     GCWSymbolTableTool(symbolKey: 'three_squares', symbolSearchStrings: const [
       'symbol_three_squares',
