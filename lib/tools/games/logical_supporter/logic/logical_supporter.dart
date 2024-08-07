@@ -191,13 +191,26 @@ class _LogicalBlock {
 			}
 		}
 	}
+
+	@override
+	String toString() {
+		var output = '';
+		for (var row in block) {
+			output += '[';
+			for (var value in row) {
+				output += value?.value.toString() ?? '' + ',';
+			}
+			output += ']';
+		}
+		return output;
+	}
 }
 
 
 class Logical {
 	late List<List<_LogicalBlock>> blocks;
 	late List<List<String>> logicalItems;
-	List<_LogicalSolverSolution>? solutions;
+	List<_LogicalSupporterSolution>? solutions;
 	int categoriesCount = 4;
 	int itemsCount = 5;
 	LogicalState state = LogicalState.Ok;
@@ -231,7 +244,13 @@ class Logical {
 					logicalItems[itemBlock][item] = logical.logicalItems[itemBlock][item];
 				}
 			}
-		} else if (categoriesCount == 4 && itemsCount == 5) {
+		} else {
+			_initExampleItems();
+		}
+	}
+
+	void _initExampleItems() {
+		if (categoriesCount == 4 && itemsCount == 5) {
 			logicalItems[0][0] = 'Steffi';
 			logicalItems[0][1] = 'George';
 			logicalItems[0][2] = 'Barack';
@@ -528,6 +547,20 @@ class Logical {
 				itemsCount, (lineIndex) => rowIndex.toString() + lineIndex.toString()));
 	}
 
+	String blocksToString() {
+		var output = '';
+		for (var blockRow in blocks) {
+			output += '[';
+			for (var block in blockRow) {
+				output += '[';
+				output += block.toString();
+				output += ']';
+			}
+			output += ']';
+		}
+
+		return output.replaceAll('null', '').replaceAll(' ', '');
+	}
 
 	static const String _jsonItems = 'items';
 	static const String _jsonDataMinus = 'n';
@@ -661,10 +694,10 @@ class Logical {
 	}
 }
 
-class _LogicalSolverSolution {
+class _LogicalSupporterSolution {
 	final List<List<int?>> solution;
 
-	_LogicalSolverSolution(this.solution);
+	_LogicalSupporterSolution(this.solution);
 
 	int? getValue (int x, int y) {
 		if (y < 0 || y >= solution.length || x < 0 || x >= solution[y].length) return null;

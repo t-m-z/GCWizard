@@ -175,7 +175,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/zamonian_numbers/widget/zam
 import 'package:gc_wizard/tools/formula_solver/widget/formula_solver_formulagroups.dart';
 import 'package:gc_wizard/tools/games/bowling/widget/bowling.dart';
 import 'package:gc_wizard/tools/games/catan/widget/catan.dart';
-import 'package:gc_wizard/tools/games/logical_solver/widget/logical_solver.dart';
+import 'package:gc_wizard/tools/games/logical_supporter/widget/logical_supporter.dart';
 import 'package:gc_wizard/tools/games/nonogram/widget/nonogram_solver.dart';
 import 'package:gc_wizard/tools/games/number_pyramid/widget/number_pyramid_solver.dart';
 import 'package:gc_wizard/tools/games/sudoku/sudoku_solver/widget/sudoku_solver.dart';
@@ -689,8 +689,8 @@ void _initStaticToolList() {
       className(const Kenny()),
       className(const KeyboardSelection()),
       className(const LCM()),
-      className(const LogicalSolver()),
       className(const LeetSpeak()),
+      className(const LogicalSupporter()),
       className(const MagicEyeSolver()),
       className(const MathematicalConstants()),
       className(const Malbolge()),
