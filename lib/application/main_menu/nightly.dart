@@ -31,12 +31,11 @@ class _NightlyState extends State<Nightly> {
         GCWColumnedMultilineOutput(
           data: [
             ['Tool', 'Ballistics\nSchiefer Wurf'],
-            ['Tool', 'Logical Solver\nLösen von Logikrätseln'],
             ['Tool', 'Triangle\nBerechnungen von Dreiecken'],
             ['Tool', 'UTIC\nApparent temperature'],
             ['Tool', 'Waveform\nAnalyse von WAV-Dateien'],
             ['Tool', 'WBGT\nApparent temperature'],
-            ['Tool', 'Logical Supporter\nHochzeitsjubiläen'],
+            ['Tool', 'Logical Supporter\nUnterstützen bei Logik-Rätsel'],
             ['Code', 'Judoon'],
             ['Code', 'Leet Speak'],
             ['Code', 'Porta'],
