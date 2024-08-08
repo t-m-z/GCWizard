@@ -2,15 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/theme/fixed_colors.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_submit_button.dart';
+import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
+import 'package:gc_wizard/common_widgets/gcw_distance.dart';
+import 'package:gc_wizard/common_widgets/switches/gcw_onoff_switch.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
 import 'package:gc_wizard/tools/coords/_common/widget/gcw_coords.dart';
 import 'package:gc_wizard/tools/coords/_common/widget/gcw_coords_bearing.dart';
 import 'package:gc_wizard/tools/coords/_common/widget/gcw_coords_output/gcw_coords_output.dart';
 import 'package:gc_wizard/tools/coords/_common/widget/gcw_coords_output/gcw_coords_outputformat.dart';
-import 'package:gc_wizard/common_widgets/gcw_distance.dart';
-import 'package:gc_wizard/common_widgets/switches/gcw_onoff_switch.dart';
-import 'package:gc_wizard/tools/coords/_common/logic/coordinate_text_formatter.dart';
-import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
-import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
 import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
 import 'package:gc_wizard/utils/constants.dart';
 import 'package:latlong2/latlong.dart';
@@ -20,7 +21,8 @@ class WaypointProjection extends StatefulWidget {
   final LatLng Function(LatLng coord, double bearingDeg, double distance, Ellipsoid ellipsoid) calculate;
   final List<LatLng> Function(LatLng coord, double bearingDeg, double distance, Ellipsoid ellipsoid) calculateReverse;
 
-  const WaypointProjection({Key? key, required this.type, required this.calculate, required this.calculateReverse}) : super(key: key);
+  const WaypointProjection({Key? key, required this.type, required this.calculate, required this.calculateReverse})
+      : super(key: key);
 
   @override
   _WaypointProjectionState createState() => _WaypointProjectionState();
@@ -36,7 +38,7 @@ class _WaypointProjectionState extends State<WaypointProjection> {
   var _currentMapPoints = <GCWMapPoint>[];
   var _currentMapPolylines = <GCWMapPolyline>[];
 
-  var _currentOutput = <String>[];
+  var _currentOutput = <Object>[];
   var _currentOutputFormat = defaultCoordinateFormat;
 
   @override
@@ -44,7 +46,7 @@ class _WaypointProjectionState extends State<WaypointProjection> {
     return Column(
       children: <Widget>[
         GCWCoords(
-          title: i18n(context, 'coords_waypointprojection_start'),
+          title: i18n(context, 'coords_common_coordinate'),
           coordsFormat: _currentCoords.format,
           onChanged: (ret) {
             setState(() {
@@ -54,6 +56,7 @@ class _WaypointProjectionState extends State<WaypointProjection> {
             });
           },
         ),
+        GCWTextDivider(text: i18n(context, 'coords_waypointprojection_projection')),
         GCWDistance(
           onChanged: (value) {
             setState(() {
@@ -107,8 +110,8 @@ class _WaypointProjectionState extends State<WaypointProjection> {
         return;
       }
 
-      _currentValues =
-          widget.calculateReverse(_currentCoords.toLatLng()!, _currentBearing.value, _currentDistance, defaultEllipsoid);
+      _currentValues = widget.calculateReverse(
+          _currentCoords.toLatLng()!, _currentBearing.value, _currentDistance, defaultEllipsoid);
       if (_currentValues.isEmpty) {
         _currentOutput = [i18n(context, 'coords_waypointprojection_reverse_nocoordinatefound')];
         return;
@@ -157,7 +160,7 @@ class _WaypointProjectionState extends State<WaypointProjection> {
     }
 
     _currentOutput = _currentValues.map((LatLng value) {
-      return formatCoordOutput(value, _currentOutputFormat, defaultEllipsoid);
+      return buildCoordinate(_currentOutputFormat, value);
     }).toList();
   }
 }

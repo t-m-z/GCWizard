@@ -1,6 +1,6 @@
 import 'package:gc_wizard/tools/coords/_common/logic/distance_bearing.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
-import 'package:gc_wizard/tools/coords/_common/logic/external_libs/net.sf.geographic_lib/geographic_lib.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/external_libs/karney.geographic_lib/geographic_lib.dart';
 import 'package:latlong2/latlong.dart';
 
 bool _isNearPole(double lat) {
@@ -8,8 +8,8 @@ bool _isNearPole(double lat) {
 }
 
 DistanceBearingData distanceBearing(LatLng coords1, LatLng coords2, Ellipsoid ellipsoid) {
-  RhumbInverseReturn data = Rhumb(ellipsoid.a, ellipsoid.f)
-      .inverse(coords1.latitude, coords1.longitude, coords2.latitude, coords2.longitude);
+  RhumbInverseReturn data =
+      Rhumb(ellipsoid.a, ellipsoid.f).inverse(coords1.latitude, coords1.longitude, coords2.latitude, coords2.longitude);
 
   var distance = data.s12;
   var bearing = data.azi12;
@@ -33,7 +33,8 @@ LatLng projection(LatLng coord, double bearingDeg, double distance, Ellipsoid el
 
   bearingDeg = normalizeBearing(bearingDeg);
 
-  RhumbDirectReturn projected = Rhumb(ellipsoid.a, ellipsoid.f).direct(coord.latitude, coord.longitude, bearingDeg, distance);
+  RhumbDirectReturn projected =
+      Rhumb(ellipsoid.a, ellipsoid.f).direct(coord.latitude, coord.longitude, bearingDeg, distance);
 
   var lat = projected.lat2;
   var lon = projected.lon2;

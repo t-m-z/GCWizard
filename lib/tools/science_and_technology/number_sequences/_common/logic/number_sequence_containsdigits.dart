@@ -71,7 +71,9 @@ BigInt Function(int)? _getNumberSequenceFunction(NumberSequencesMode mode) {
   }
 }
 
-PositionOfSequenceOutput numberSequencesGetFirstPositionOfSequence(NumberSequencesMode sequence, String? check, int maxIndex, {bool checkMode = false}) {
+PositionOfSequenceOutput numberSequencesGetFirstPositionOfSequence(
+    NumberSequencesMode sequence, String? check, int maxIndex,
+    {bool checkMode = false}) {
   if (check == null || check.isEmpty) {
     return PositionOfSequenceOutput('-1', 0, 0);
   }
@@ -114,7 +116,7 @@ PositionOfSequenceOutput numberSequencesGetFirstPositionOfSequence(NumberSequenc
       return PositionOfSequenceOutput('1', 1, 1);
     } else {
       index = 2;
-      while (index <= maxIndex) {
+      while ((index <= maxIndex) && (BigInt.parse(check) > number)) {
         number = pn1 + pn0;
         pn0 = pn1;
         pn1 = number;
@@ -139,7 +141,7 @@ PositionOfSequenceOutput numberSequencesGetFirstPositionOfSequence(NumberSequenc
       return PositionOfSequenceOutput('1', 1, 1);
     } else {
       index = 2;
-      while (index <= maxIndex) {
+      while ((index <= maxIndex) && (BigInt.parse(check) > number)) {
         number = Two * pn1 + pn0;
         pn0 = pn1;
         pn1 = number;
@@ -162,7 +164,7 @@ PositionOfSequenceOutput numberSequencesGetFirstPositionOfSequence(NumberSequenc
     pn1 = Two;
     number = pn1;
     index = 2;
-    while (index <= maxIndex) {
+    while ((index <= maxIndex) && (BigInt.parse(check) > number)) {
       number = Two * pn1 + pn0;
       pn0 = pn1;
       pn1 = number;
@@ -186,7 +188,7 @@ PositionOfSequenceOutput numberSequencesGetFirstPositionOfSequence(NumberSequenc
     } else {
       index = 1;
       number = Three;
-      while (index <= maxIndex) {
+      while ((index <= maxIndex) && (BigInt.parse(check) > number)) {
         numberString = number.toString();
         if (expr.hasMatch(numberString)) {
           int j = 0;
@@ -208,7 +210,7 @@ PositionOfSequenceOutput numberSequencesGetFirstPositionOfSequence(NumberSequenc
     int pn0 = 0;
     int number = 0;
     recamanSequence.add(0);
-    while (index <= maxIndex) {
+    while ((index <= maxIndex) && (BigInt.parse(check) > BigInt.from(number))) {
       if (index == 0) {
         number = 0;
       } else if ((pn0 - index) > 0 && !recamanSequence.contains(pn0 - index)) {
@@ -236,7 +238,7 @@ PositionOfSequenceOutput numberSequencesGetFirstPositionOfSequence(NumberSequenc
       return PositionOfSequenceOutput('1', 1, 1);
     } else {
       index = 2;
-      while (index <= maxIndex) {
+      while ((index <= maxIndex) && (BigInt.parse(check) > number)) {
         number = number * BigInt.from(index);
         numberString = number.toString();
         if (expr.hasMatch(numberString)) {
@@ -251,24 +253,26 @@ PositionOfSequenceOutput numberSequencesGetFirstPositionOfSequence(NumberSequenc
     }
   } else if (sequence == NumberSequencesMode.BELL) {
     List<BigInt> bellList = <BigInt>[];
-    while (index <= maxIndex) {
-      if (index == 0) {
-        number = One;
-      } else {
-        for (int k = 0; k <= index - 1; k++) {
-          number = number + _getBinomialCoefficient(index - 1, k) * bellList[k];
+    if (check == Zero.toString()) {} else {
+      while ((index <= maxIndex) && (BigInt.parse(check) > number)) {
+        if (index == 0) {
+          number = One;
+        } else {
+          for (int k = 0; k <= index - 1; k++) {
+            number = number + _getBinomialCoefficient(index - 1, k) * bellList[k];
+          }
         }
-      }
-      bellList.add(number);
-      numberString = number.toString();
-      if (expr.hasMatch(numberString)) {
-        int j = 0;
-        while (!numberString.substring(j).startsWith(check)) {
-          j++;
+        bellList.add(number);
+        numberString = number.toString();
+        if (expr.hasMatch(numberString)) {
+          int j = 0;
+          while (!numberString.substring(j).startsWith(check)) {
+            j++;
+          }
+          return PositionOfSequenceOutput(numberString, index, j + 1);
         }
-        return PositionOfSequenceOutput(numberString, index, j + 1);
+        index = index + 1;
       }
-      index = index + 1;
     }
   } else {
     switch (sequence) {
@@ -308,6 +312,9 @@ PositionOfSequenceOutput numberSequencesGetFirstPositionOfSequence(NumberSequenc
       case NumberSequencesMode.HAPPY_NUMBERS:
         sequenceList.addAll(happy_numbers);
         break;
+      case NumberSequencesMode.BUSY_BEAVER:
+        sequenceList.addAll(busy_beaver_numbers);
+        break;
       default:
         {}
     }
@@ -324,5 +331,3 @@ PositionOfSequenceOutput numberSequencesGetFirstPositionOfSequence(NumberSequenc
 
   return PositionOfSequenceOutput('-1', 0, 0);
 }
-
-

@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_submit_button.dart';
-import 'package:gc_wizard/tools/coords/_common/widget/gcw_coords.dart';
-import 'package:gc_wizard/tools/coords/_common/widget/gcw_coords_formatselector.dart';
-import 'package:gc_wizard/tools/coords/_common/widget/gcw_coords_output/gcw_coords_output.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
@@ -12,7 +9,11 @@ import 'package:gc_wizard/tools/coords/_common/formats/dec/logic/dec.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_text_formatter.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
+import 'package:gc_wizard/tools/coords/_common/widget/gcw_coords.dart';
+import 'package:gc_wizard/tools/coords/_common/widget/gcw_coords_formatselector.dart';
+import 'package:gc_wizard/tools/coords/_common/widget/gcw_coords_output/gcw_coords_output.dart';
 import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
 
 class FormatConverter extends StatefulWidget {
@@ -24,7 +25,7 @@ class FormatConverter extends StatefulWidget {
 
 class _FormatConverterState extends State<FormatConverter> {
   var _currentCoords = defaultBaseCoordinate;
-  String _currentOutput = '';
+  Object _currentOutput = '';
 
   var _currentMapPoint = GCWMapPoint(point: defaultCoordinate);
   var _currentOutputFormat = defaultCoordinateFormat;
@@ -97,7 +98,7 @@ class _FormatConverterState extends State<FormatConverter> {
   void _calculateOutput(BuildContext context) {
     var outputLatLng = _currentCoords.toLatLng();
     if (outputLatLng != null) {
-      _currentOutput = formatCoordOutput(outputLatLng, _currentOutputFormat);
+      _currentOutput = buildCoordinate(_currentOutputFormat, outputLatLng);
       _currentMapPoint = GCWMapPoint(point: outputLatLng);
     } else {
       _currentOutput = i18n(context, 'coords_formatconverter_invalid_coordinate');
