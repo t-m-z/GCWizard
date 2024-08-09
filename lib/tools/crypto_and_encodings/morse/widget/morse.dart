@@ -1,4 +1,9 @@
+import 'dart:async';
+
+import 'package:flutter_dtmf/dtmf.dart';
+import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
 import 'package:flutter/material.dart';
+
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
@@ -67,11 +72,18 @@ class _MorseState extends State<Morse> {
   var _currentDecodeInput = '';
   GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
 
+  String _playlist = '';
+  int _index = 0;
+
   MorseType _currentCode = MorseType.MORSE_ITU;
 
   static const _kFontFam = 'MyFlutterApp';
   static const String? _kFontPkg = null;
-  static const IconData primitive_dot = IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData primitive_dot =
+      IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+
+  int _currentDurationDit = 60;
+  int _currentWPM = 20;
 
   @override
   void initState() {
@@ -82,9 +94,11 @@ class _MorseState extends State<Morse> {
         _currentMode = GCWSwitchPosition.left;
       }
       if (_currentMode == GCWSwitchPosition.left) {
-        _currentEncodeInput = widget.getWebParameter('input') ?? _currentEncodeInput;
+        _currentEncodeInput =
+            widget.getWebParameter('input') ?? _currentEncodeInput;
       } else {
-        _currentDecodeInput = widget.getWebParameter('input') ?? _currentDecodeInput;
+        _currentDecodeInput =
+            widget.getWebParameter('input') ?? _currentDecodeInput;
       }
       widget.webParameter = null;
     }
@@ -145,6 +159,17 @@ class _MorseState extends State<Morse> {
                   });
                 },
               ),
+        GCWIntegerSpinner(
+            title: i18n(context, 'morse_wpm'),
+            min: 1,
+            max: 50,
+            onChanged: (value) {
+              setState(() {
+                _currentWPM = value;
+                _currentDurationDit = (6 / 5 / _currentWPM * 1000).toInt();
+              });
+            },
+            value: _currentWPM),
         GCWTextDivider(text: i18n(context, 'common_output')),
         _buildOutput(context)
       ],
@@ -183,7 +208,8 @@ class _MorseState extends State<Morse> {
     ], children: [
       morseButtons,
       Container(
-        padding: const EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN, left: DOUBLE_DEFAULT_MARGIN),
+        padding: const EdgeInsets.only(
+            right: DOUBLE_DEFAULT_MARGIN, left: DOUBLE_DEFAULT_MARGIN),
         child: Row(
           children: [
             Expanded(
@@ -215,7 +241,8 @@ class _MorseState extends State<Morse> {
           icon: Icons.backspace,
           onPressed: () {
             setState(() {
-              _currentDecodeInput = textControllerDoBackSpace(_currentDecodeInput, _decodeController);
+              _currentDecodeInput = textControllerDoBackSpace(
+                  _currentDecodeInput, _decodeController);
             });
           },
         ),
@@ -230,7 +257,8 @@ class _MorseState extends State<Morse> {
         children: [
           Expanded(
             child: GCWIconButton(
-              customIcon: Icon(Icons.circle, size: 15, color: themeColors().mainFont()),
+              customIcon:
+                  Icon(Icons.circle, size: 15, color: themeColors().mainFont()),
               onPressed: () {
                 setState(() {
                   _addCharacter('.');
@@ -240,7 +268,8 @@ class _MorseState extends State<Morse> {
           ),
           Expanded(
             child: GCWIconButton(
-              customIcon: Icon(Icons.remove, size: 35, color: themeColors().mainFont()),
+              customIcon:
+                  Icon(Icons.remove, size: 35, color: themeColors().mainFont()),
               onPressed: () {
                 setState(() {
                   _addCharacter('-');
@@ -269,7 +298,8 @@ class _MorseState extends State<Morse> {
         children: [
           Expanded(
             child: GCWIconButton(
-              customIcon: Icon(Icons.circle, size: 10, color: themeColors().mainFont()),
+              customIcon:
+                  Icon(Icons.circle, size: 10, color: themeColors().mainFont()),
               onPressed: () {
                 setState(() {
                   _addCharacter('.');
@@ -279,7 +309,8 @@ class _MorseState extends State<Morse> {
           ),
           Expanded(
             child: GCWIconButton(
-              customIcon: Icon(Icons.remove, size: 20, color: themeColors().mainFont()),
+              customIcon:
+                  Icon(Icons.remove, size: 20, color: themeColors().mainFont()),
               onPressed: () {
                 setState(() {
                   _addCharacter('-');
@@ -289,7 +320,8 @@ class _MorseState extends State<Morse> {
           ),
           Expanded(
             child: GCWIconButton(
-              customIcon: Icon(Icons.remove, size: 30, color: themeColors().mainFont()),
+              customIcon:
+                  Icon(Icons.remove, size: 30, color: themeColors().mainFont()),
               onPressed: () {
                 setState(() {
                   _addCharacter('–');
@@ -299,7 +331,8 @@ class _MorseState extends State<Morse> {
           ),
           Expanded(
             child: GCWIconButton(
-              customIcon: Icon(Icons.space_bar, size: 15, color: themeColors().mainFont()),
+              customIcon: Icon(Icons.space_bar,
+                  size: 15, color: themeColors().mainFont()),
               onPressed: () {
                 setState(() {
                   _addCharacter('\u202F');
@@ -322,7 +355,8 @@ class _MorseState extends State<Morse> {
         children: [
           Expanded(
             child: GCWIconButton(
-              customIcon: Icon(Icons.circle, size: 10, color: themeColors().mainFont()),
+              customIcon:
+                  Icon(Icons.circle, size: 10, color: themeColors().mainFont()),
               onPressed: () {
                 setState(() {
                   _addCharacter('.');
@@ -332,7 +366,8 @@ class _MorseState extends State<Morse> {
           ),
           Expanded(
             child: GCWIconButton(
-              customIcon: Icon(Icons.remove, size: 20, color: themeColors().mainFont()),
+              customIcon:
+                  Icon(Icons.remove, size: 20, color: themeColors().mainFont()),
               onPressed: () {
                 setState(() {
                   _addCharacter('-');
@@ -342,7 +377,8 @@ class _MorseState extends State<Morse> {
           ),
           Expanded(
             child: GCWIconButton(
-              customIcon: Icon(Icons.remove, size: 30, color: themeColors().mainFont()),
+              customIcon:
+                  Icon(Icons.remove, size: 30, color: themeColors().mainFont()),
               onPressed: () {
                 setState(() {
                   _addCharacter('–');
@@ -352,7 +388,8 @@ class _MorseState extends State<Morse> {
           ),
           Expanded(
             child: GCWIconButton(
-              customIcon: Icon(Icons.remove, size: 40, color: themeColors().mainFont()),
+              customIcon:
+                  Icon(Icons.remove, size: 40, color: themeColors().mainFont()),
               onPressed: () {
                 setState(() {
                   _addCharacter('―');
@@ -362,7 +399,8 @@ class _MorseState extends State<Morse> {
           ),
           Expanded(
             child: GCWIconButton(
-              customIcon: Icon(Icons.space_bar, size: 15, color: themeColors().mainFont()),
+              customIcon: Icon(Icons.space_bar,
+                  size: 15, color: themeColors().mainFont()),
               onPressed: () {
                 setState(() {
                   _addCharacter('\u202F');
@@ -382,7 +420,8 @@ class _MorseState extends State<Morse> {
         children: [
           Expanded(
             child: GCWIconButton(
-              customIcon: Icon(Icons.circle, size: 10, color: themeColors().mainFont()),
+              customIcon:
+                  Icon(Icons.circle, size: 10, color: themeColors().mainFont()),
               onPressed: () {
                 setState(() {
                   _addCharacter('.');
@@ -392,7 +431,8 @@ class _MorseState extends State<Morse> {
           ),
           Expanded(
             child: GCWIconButton(
-              customIcon: Icon(Icons.remove, size: 20, color: themeColors().mainFont()),
+              customIcon:
+                  Icon(Icons.remove, size: 20, color: themeColors().mainFont()),
               onPressed: () {
                 setState(() {
                   _addCharacter('-');
@@ -402,7 +442,8 @@ class _MorseState extends State<Morse> {
           ),
           Expanded(
             child: GCWIconButton(
-              customIcon: Icon(Icons.remove, size: 40, color: themeColors().mainFont()),
+              customIcon:
+                  Icon(Icons.remove, size: 40, color: themeColors().mainFont()),
               onPressed: () {
                 setState(() {
                   _addCharacter('―');
@@ -428,7 +469,8 @@ class _MorseState extends State<Morse> {
         children: [
           Expanded(
             child: GCWIconButton(
-              customIcon: Icon(Icons.circle, size: 10, color: themeColors().mainFont()),
+              customIcon:
+                  Icon(Icons.circle, size: 10, color: themeColors().mainFont()),
               onPressed: () {
                 setState(() {
                   _addCharacter('.');
@@ -462,7 +504,8 @@ class _MorseState extends State<Morse> {
   }
 
   void _addCharacter(String input) {
-    _currentDecodeInput = textControllerInsertText(input, _currentDecodeInput, _decodeController);
+    _currentDecodeInput =
+        textControllerInsertText(input, _currentDecodeInput, _decodeController);
   }
 
   Widget _buildOutput(BuildContext context) {
@@ -470,18 +513,78 @@ class _MorseState extends State<Morse> {
 
     var textStyle = gcwTextStyle();
     if (_currentMode == GCWSwitchPosition.left) {
-      output = encodeMorse(_currentEncodeInput, type: _currentCode, spaceCharacter: String.fromCharCode(8195));
+      output = encodeMorse(_currentEncodeInput,
+          type: _currentCode, spaceCharacter: String.fromCharCode(8195));
       if (_currentCode == MorseType.STEINHEIL) {
         output = output.replaceAll('-', '·');
       }
-      textStyle =
-          TextStyle(fontSize: textStyle.fontSize! + 15, fontFamily: textStyle.fontFamily, fontWeight: FontWeight.bold);
+      textStyle = TextStyle(
+          fontSize: textStyle.fontSize! + 15,
+          fontFamily: textStyle.fontFamily,
+          fontWeight: FontWeight.bold);
     } else {
       output = decodeMorse(
-          _currentCode == MorseType.STEINHEIL ? _currentDecodeInput.replaceAll('·', '-') : _currentDecodeInput,
+          _currentCode == MorseType.STEINHEIL
+              ? _currentDecodeInput.replaceAll('·', '-')
+              : _currentDecodeInput,
           type: _currentCode);
     }
 
-    return GCWOutputText(text: output, style: textStyle);
+    return Column(
+      children: <Widget>[
+        GCWOutputText(text: output, style: textStyle),
+        GCWIconButton(
+          icon: Icons.play_arrow,
+          onPressed: () async {
+            _index = 0;
+            if (_currentMode == GCWSwitchPosition.left) {
+              _playlist = _buildMorseCode(output);
+            } else {
+              _playlist = _buildMorseCode(_currentDecodeInput);
+            }
+            for (String code in _playlist.split('')) {
+              switch (code) {
+                case '.':
+                  await Dtmf.playTone(
+                      digits: "1",
+                      samplingRate: 8000,
+                      durationMs: _currentDurationDit,
+                      volume: 1.0);
+                  break;
+                case '-':
+                  await Dtmf.playTone(
+                      digits: "1",
+                      samplingRate: 8000,
+                      durationMs: _currentDurationDit * 3,
+                      volume: 1.0);
+                  break;
+                case ',':
+                  Future.delayed(Duration(milliseconds: _currentDurationDit), () {});
+                  break;
+                case '|':
+                  Future.delayed(Duration(milliseconds: _currentDurationDit * 7), () {});
+                  break;
+                default:
+                  Future.delayed(Duration(milliseconds: _currentDurationDit * 7), () {});
+                  break;
+              }
+            }
+          },
+        )
+      ],
+    );
+  }
+
+  String _buildMorseCode(String code) {
+    List<String> result = [];
+    for (int i = 0; i < code.length; i++) {
+      result.add(code[i]);
+      if ((code[i] == '.' || code[i] == '-') &&
+          (i + 1 < code.length) &&
+          ((code[i + 1] == '.' || code[i + 1] == '-'))) {
+        result.add(',');
+      }
+    }
+    return result.join('');
   }
 }
