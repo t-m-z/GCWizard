@@ -1113,14 +1113,16 @@ void initializeRegistry(BuildContext context) {
     ], searchKeys: const [
       'judoon',
     ], licenses: [
-      ToolLicenseOnlineArticle(context: context,
-          author: 'Whooligan',
-          title: 'Whooligan\'s Judoon Language Translator',
-          customComment: 'This tool is inspired by the site https://whooligan.weebly.com/index.html'
-              'Whooligan is an index of Doctor Who stuff (It is  a fan forum). '
-              'Last updates were about 4 years ago.',
-          sourceUrl: 'https://web.archive.org/web/20230311235731/http://www.judoon.com/judoon-translator.php',
-      )]),
+      ToolLicenseOnlineArticle(
+        context: context,
+        author: 'Whooligan',
+        title: 'Whooligan\'s Judoon Language Translator',
+        customComment: 'This tool is inspired by the site https://whooligan.weebly.com/index.html'
+            'Whooligan is an index of Doctor Who stuff (It is  a fan forum). '
+            'Last updates were about 4 years ago.',
+        sourceUrl: 'https://web.archive.org/web/20230311235731/http://www.judoon.com/judoon-translator.php',
+      )
+    ]),
     GCWTool(tool: const Kamasutra(), id: 'kamasutra', categories: const [
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: const [
@@ -1339,8 +1341,7 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'de.wikipedia.org and contributors',
           title: 'Zielcode',
-          sourceUrl:
-            'https://de.wikipedia.org/w/index.php?title=Zielcode&oldid=246247471')
+          sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Zielcode&oldid=246247471')
     ]),
     GCWTool(tool: const PiSelection(), id: 'pi_selection', categories: const [
       ToolCategory.SCIENCE_AND_TECHNOLOGY
@@ -1377,18 +1378,18 @@ void initializeRegistry(BuildContext context) {
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: const [
       'porta',
-    ],
-  licenses: [
-    ToolLicenseOnlineArticle(
-      context: context,
-      author: 'Didier Müller',
-      title: 'Le chiffre da Porta',
-      sourceUrl: 'https://web.archive.org/web/20240726132205/https://www.apprendre-en-ligne.net/crypto/porta/index.html',
-      year: 2021,
-      month: 01,
-      day: 24,
-    )
-  ]),
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+        context: context,
+        author: 'Didier Müller',
+        title: 'Le chiffre da Porta',
+        sourceUrl:
+            'https://web.archive.org/web/20240726132205/https://www.apprendre-en-ligne.net/crypto/porta/index.html',
+        year: 2021,
+        month: 01,
+        day: 24,
+      )
+    ]),
     GCWTool(
         tool: const PredatorSelection(),
         id: 'predator_selection',
@@ -1430,12 +1431,14 @@ void initializeRegistry(BuildContext context) {
     ], searchKeys: const [
       'ragbaby',
     ], licenses: [
-      ToolLicenseOnlineArticle(context: context,
+      ToolLicenseOnlineArticle(
+          context: context,
           author: 'Lionel',
           title: 'Ragbaby Cipher Young Tyros',
-          year: 2023, month: 02, day: 24,
-          sourceUrl: 'https://web.archive.org/web/20240415085406/https://youngtyros.com/2023/02/19/ragbaby-cipher/'
-      )
+          year: 2023,
+          month: 02,
+          day: 24,
+          sourceUrl: 'https://web.archive.org/web/20240415085406/https://youngtyros.com/2023/02/19/ragbaby-cipher/')
     ]),
 
     GCWTool(tool: const RailFence(), id: 'railfence', categories: const [
@@ -1799,7 +1802,6 @@ void initializeRegistry(BuildContext context) {
       'apparenttemperature',
       'apparenttemperature_utci',
     ]),
-
     GCWTool(tool: const Windchill(), id: 'windchill', searchKeys: const [
       'apparenttemperature',
       'apparenttemperature_windchill',
@@ -1822,7 +1824,6 @@ void initializeRegistry(BuildContext context) {
           sourceUrl: 'https://de.wikipedia.org/w/index.php?title=K%C3%BChlgrenztemperatur&oldid=246986523',
           licenseType: ToolLicenseType.CCBYSA4)
     ]),
-
     GCWTool(tool: const WetBulbGlobeTemperature(), id: 'wet_bulb_globe_temperature', searchKeys: const [
       'apparenttemperature',
       'apparenttemperature_wet_bulb_globe_temperature',
@@ -1934,6 +1935,7 @@ void initializeRegistry(BuildContext context) {
     GCWTool(tool: const EasterSelection(), id: 'astronomy_easter_selection', searchKeys: const [
       'easter_date',
     ]),
+
     GCWTool(tool: const Seasons(), id: 'astronomy_seasons', searchKeys: const [
       'astronomy',
       'astronomy_seasons',
@@ -3084,7 +3086,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'en.wikipedia.org and contributors',
           title: 'Befunge',
-          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Befunge&oldid=1187697788'),
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Befunge&oldid=1187697788',
+          licenseType: ToolLicenseType.CCBYSA4),
       ToolLicensePortedCode(
           context: context,
           author: 'catseye',
@@ -3100,7 +3103,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'en.wikipedia.org and contributors',
           title: 'Brainfuck',
-          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Brainfuck&oldid=1235460695'),
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Brainfuck&oldid=1235460695',
+          licenseType: ToolLicenseType.CCBYSA4),
       ToolLicensePortedCode(
           context: context,
           author: 'Fabian Mastenbroek',
@@ -3197,7 +3201,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'en.wikipedia.org and contributors',
           title: 'Karel (programming language)',
-          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Karel_(programming_language)&oldid=1220885127'),
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Karel_(programming_language)&oldid=1220885127',
+          licenseType: ToolLicenseType.CCBYSA4),
       ToolLicenseOnlineArticle(
           context: context,
           author: 'Robert H. Untch',
@@ -3218,7 +3223,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'en.wikipedia.org and contributors',
           title: 'Malbolge',
-          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Malbolge&oldid=1230857335'),
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Malbolge&oldid=1230857335',
+          licenseType: ToolLicenseType.CCBYSA4),
       ToolLicenseOnlineArticle(
           context: context,
           author: 'Ben Olmstead',
@@ -3249,7 +3255,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'de.wikipedia.org and contributors',
           title: 'Ook!',
-          sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Ook!&oldid=223308865'),
+          sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Ook!&oldid=223308865',
+          licenseType: ToolLicenseType.CCBYSA4),
       ToolLicensePortedCode(
           context: context,
           author: 'David Morgan-Mar',
@@ -3937,7 +3944,6 @@ void initializeRegistry(BuildContext context) {
       'numbersequence',
       'numbersequence_lychrelselection',
     ]),
-
     GCWTool(tool: const NumberSequenceBusyBeaverSelection(), id: 'numbersequence_busy_beaver', searchKeys: const [
       'numbersequence',
       'numbersequence_busy_beavernumbersselection',
@@ -5011,6 +5017,11 @@ void initializeRegistry(BuildContext context) {
     ]),
 
     //Symbol Tables **********************************************************************************************
+
+    // https://docs.google.com/spreadsheets/d/1yPCPTHXHWqRxkAQFCAktz9E1-dGCiQRHmwwh06h9kWs/edit?gid=0#gid=0
+    // TODO get/search/request license and add license information
+    // TODO keep google sheet up to date
+
     GCWTool(tool: const SymbolTableExamplesSelect(), autoScroll: false, id: 'symboltablesexamples', searchKeys: const [
       'symbol',
       'symboltablesexamples',
@@ -5060,6 +5071,13 @@ void initializeRegistry(BuildContext context) {
       'symbol_alchemy',
     ], licenses: [
       stl._toolLicenseMyGeoToolsCodeTabellen,
+      ToolLicenseOnlineArticle(
+        context: context,
+        author: 'en.wikipedia.org and contributors',
+        title: 'Alchemical symbol',
+        sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Alchemical_symbol&oldid=1228852947',
+        licenseType: ToolLicenseType.CCBYSA4,
+      ),
     ]),
     GCWSymbolTableTool(symbolKey: 'alchemy_alphabet', symbolSearchStrings: const [
       'symbol_alchemy_alphabet',
@@ -5134,7 +5152,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'de.wikipedia.org and contributors',
           title: 'Arabische Zahlschrift',
-          sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Arabische_Zahlschrift&oldid=246917272')
+          sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Arabische_Zahlschrift&oldid=246917272',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'arcadian', symbolSearchStrings: const [
       'symbol_arcadian',
@@ -5148,6 +5167,21 @@ void initializeRegistry(BuildContext context) {
     ], licenses: [
       stl._toolLicenseMyGeoToolsCodeTabellen,
       stl._toolLicenseGeocachingToolbox,
+      ToolLicenseFont(
+        context: context,
+        author: 'WurdBentur',
+        title: 'Dadh Ath',
+        sourceUrl:
+            'https://web.archive.org/web/20240808095142/https://www.deviantart.com/wurdbendur/art/Dadh-Ath-9821558',
+        licenseType: ToolLicenseType.FREE_TO_USE,
+      ),
+      ToolLicenseFont(
+        context: context,
+        author: 'Omniglot',
+        title: 'Ath alphabet',
+        sourceUrl: 'https://web.archive.org/web/20240808095601/https://www.omniglot.com/conscripts/ath.htm',
+        licenseType: ToolLicenseType.FREE_TO_USE,
+      )
     ]),
     GCWSymbolTableTool(symbolKey: 'atlantean', symbolSearchStrings: const [
       'symbol_atlantean',
@@ -5176,22 +5210,57 @@ void initializeRegistry(BuildContext context) {
       'symbol_australian_sign_language',
     ], licenses: [
       stl._toolLicenseGeocachingToolbox,
+      ToolLicenseOnlineBook(
+          context: context,
+          author: 'Trevor A Johnston',
+          title:
+              'Auslan: The Sign Language of the Australian Deaf community. Unpublished doctoral dissertation, University of Sydney, Sydney.',
+          year: 1989,
+          month: 1,
+          day: 1,
+          sourceUrl: 'https://web.archive.org/web/20240808102336/https://www.academia.edu/792102')
     ]),
     GCWSymbolTableTool(symbolKey: 'babylonian_numerals', symbolSearchStrings: const [
       'babylonian_numerals',
     ], licenses: [
       stl._toolLicenseGeocachingToolbox,
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'en.wikipedia.org and contributors',
+          title: 'Babylonian cuneiform numerals',
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Babylonian_cuneiform_numerals&oldid=1218528028',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'ballet', symbolSearchStrings: const [
       'symbol_ballet',
     ], licenses: [
       stl._toolLicenseGeocachingToolbox,
+      ToolLicenseFont(
+          context: context,
+          author: 'WOODCUTTER',
+          title: 'Ballet',
+          sourceUrl: 'https://web.archive.org/web/20240808101306/https://www.dafont.com/ballet.font',
+          licenseType: ToolLicenseType.FREE_TO_USE,
+          customComment: 'dafont.com')
     ]),
     GCWSymbolTableTool(symbolKey: 'barbier', symbolSearchStrings: const [
       'braille',
       'symbol_barbier',
     ], licenses: [
       stl._toolLicenseMyGeoToolsCodeTabellen,
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'en.wikipedia.org and contributors',
+          title: 'Charles Barbier',
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Charles_Barbier&oldid=1216652066',
+          licenseType: ToolLicenseType.CCBYSA4),
+      ToolLicenseOnlineBook(
+          context: context,
+          author: 'Charles Barbier',
+          title: "Essai sur divers procédés d'expéditive française",
+          year: 1815,
+          sourceUrl:
+              "https://books.google.de/books?id=lkVzrUr1RvEC&q=essai+sur+divers+proc%C3%A9d%C3%A9s+d%27exp%C3%A9ditive+fran%C3%A7aise&pg=PA1&redir_esc=y#v=snippet&q=essai%20sur%20divers%20proc%C3%A9d%C3%A9s%20d'exp%C3%A9ditive%20fran%C3%A7aise&f=false")
     ]),
     GCWSymbolTableTool(symbolKey: 'barcode39', symbolSearchStrings: const [
       'barcodes',
@@ -5360,9 +5429,8 @@ void initializeRegistry(BuildContext context) {
       ToolLicenseOnlineArticle(
           context: context,
           author: 'commons.wikimedia.org and contributors',
-          title: 'File:Chappe code - c. 1794.svg',
-          sourceUrl:
-              'https://commons.wikimedia.org/w/index.php?title=File:Chappe_code_-_c._1794.svg&oldid=876996749')
+          title: 'Chappe code - c. 1794.svg',
+          sourceUrl: 'https://commons.wikimedia.org/w/index.php?title=File:Chappe_code_-_c._1794.svg&oldid=876996749')
     ]),
     GCWSymbolTableTool(symbolKey: 'chappe_1809', symbolSearchStrings: const [
       'telegraph',
@@ -5373,9 +5441,8 @@ void initializeRegistry(BuildContext context) {
       ToolLicenseOnlineArticle(
           context: context,
           author: 'commons.wikimedia.org and contributors',
-          title: 'File:Chappe code - c. 1809.svg',
-          sourceUrl:
-              'https://commons.wikimedia.org/w/index.php?title=File:Chappe_code_-_c._1809.svg&oldid=876996757')
+          title: 'Chappe code - c. 1809.svg',
+          sourceUrl: 'https://commons.wikimedia.org/w/index.php?title=File:Chappe_code_-_c._1809.svg&oldid=876996757')
     ]),
     GCWSymbolTableTool(symbolKey: 'chappe_v1', symbolSearchStrings: const [
       'telegraph',
@@ -5414,7 +5481,22 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'cherokee', symbolSearchStrings: const [
       'symbol_cherokee',
     ], licenses: [
-      stl._toolLicenseMyGeoToolsCodeTabellen,
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'en.wikipedia.org and contributors',
+          title: 'Cherokee language',
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Cherokee_language&oldid=1238063152',
+          licenseType: ToolLicenseType.CCBYSA4)
+    ]),
+    GCWSymbolTableTool(symbolKey: 'chinese_numerals', symbolSearchStrings: const [
+      'symbol_chinese_numerals',
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'en.wikipedia.org and contributors',
+          title: 'Chinese numerals',
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Chinese_numerals&oldid=1233670341',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'chinese_numerals', symbolSearchStrings: const [
       'symbol_chinese_numerals',
@@ -5457,11 +5539,20 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'en.wikipedia.org and contributors',
           title: 'Cistercian numerals',
-          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Cistercian_numerals&oldid=1213598900')
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Cistercian_numerals&oldid=1213598900',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'clocks_1', symbolSearchStrings: const [
       'symbol_clocks',
-    ], licenses: const []),
+    ], licenses: [
+      ToolLicenseImage(
+          context: context,
+          author: 'en.wikipedia.org and contributors',
+          title: 'Der Clock Code/ das Uhrenalphabet',
+          sourceUrl: 'https://web.archive.org/web/20221206164006/https://www.bergziege-owl.de/clock-code/',
+          licenseType: ToolLicenseType.FREE_TO_USE,
+          licenseUseType: ToolLicenseUseType.COPY)
+    ]),
     GCWSymbolTableTool(symbolKey: 'clocks_2_1', symbolSearchStrings: const [
       'symbol_clocks',
     ], licenses: const []),
@@ -5520,7 +5611,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'en.wikipedia.org and contributors',
           title: 'Cooke and Wheatstone telegraph',
-          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Cooke_and_Wheatstone_telegraph&oldid=1232265572')
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Cooke_and_Wheatstone_telegraph&oldid=1232265572',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'cookewheatstone_2', symbolSearchStrings: const [
       'telegraph',
@@ -5531,7 +5623,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'en.wikipedia.org and contributors',
           title: 'Cooke and Wheatstone telegraph',
-          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Cooke_and_Wheatstone_telegraph&oldid=1232265572')
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Cooke_and_Wheatstone_telegraph&oldid=1232265572',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'cookewheatstone_5', symbolSearchStrings: const [
       'telegraph',
@@ -5542,7 +5635,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'en.wikipedia.org and contributors',
           title: 'Cooke and Wheatstone telegraph',
-          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Cooke_and_Wheatstone_telegraph&oldid=1232265572')
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Cooke_and_Wheatstone_telegraph&oldid=1232265572',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'cosmic', symbolSearchStrings: const [
       'symbol_cosmic',
@@ -5566,7 +5660,8 @@ void initializeRegistry(BuildContext context) {
           author: 'wikipedia.org and contributors',
           title: 'Gallery of sovereign state flags',
           sourceUrl:
-              'http://web.archive.org/web/20210109105312/https://en.wikipedia.org/wiki/Gallery_of_sovereign_state_flags')
+              'http://web.archive.org/web/20210109105312/https://en.wikipedia.org/wiki/Gallery_of_sovereign_state_flags',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'covenant', symbolSearchStrings: const [
       'symbol_covenant',
@@ -5597,7 +5692,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'wikipedia.org and contributors',
           title: 'Cyrillic script',
-          sourceUrl: 'https://web.archive.org/web/20190330043501/https://en.wikipedia.org/wiki/Cyrillic_script')
+          sourceUrl: 'https://web.archive.org/web/20190330043501/https://en.wikipedia.org/wiki/Cyrillic_script',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'cyrillic_numbers', symbolSearchStrings: const [
       'symbol_cyrillic_numbers',
@@ -5606,7 +5702,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'wikipedia.org and contributors',
           title: 'Cyrillic script',
-          sourceUrl: 'https://web.archive.org/web/20190330043501/https://en.wikipedia.org/wiki/Cyrillic_script')
+          sourceUrl: 'https://web.archive.org/web/20190330043501/https://en.wikipedia.org/wiki/Cyrillic_script',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'daedric', symbolSearchStrings: const [
       'symbol_daedric',
@@ -5651,7 +5748,8 @@ void initializeRegistry(BuildContext context) {
           author: 'en.wikipedia.org and contributors',
           title: 'The Adventure of the Dancing Men',
           sourceUrl:
-              'http://web.archive.org/web/20210108115120/https://en.wikipedia.org/wiki/The_Adventure_of_the_Dancing_Men'),
+              'http://web.archive.org/web/20210108115120/https://en.wikipedia.org/wiki/The_Adventure_of_the_Dancing_Men',
+          licenseType: ToolLicenseType.CCBYSA4),
       stl._toolLicenseWrixonGeheimsprachen,
       stl._toolLicenseGeocachingToolbox
     ]),
@@ -5660,6 +5758,28 @@ void initializeRegistry(BuildContext context) {
       'symbol_deafblind',
     ], licenses: [
       stl._toolLicenseMyGeoToolsCodeTabellen,
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'Deafblind Information Australia',
+          title: 'Living with Deafblindness. Deafblind Manual Alphabet',
+          sourceUrl:
+              'https://web.archive.org/web/20240808104641/https://www.deafblindinformation.org.au/living-with-deafblindness/deafblind-communication/deafblind-manual-alphabet/'),
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'en.wikipedia.org and contributors',
+          title: 'Two-handed manual alphabets',
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Two-handed_manual_alphabets&oldid=1182989428',
+          licenseType: ToolLicenseType.CCBYSA4)
+    ]),
+    GCWSymbolTableTool(symbolKey: 'devanagari_numerals', symbolSearchStrings: const [
+      'symbol_devanagari_numerals',
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'en.wikipedia.org and contributors',
+          title: 'Devanagari numerals',
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Devanagari_numerals&oldid=1220470774',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'devanagari_numerals', symbolSearchStrings: const [
       'symbol_devanagari_numerals',
@@ -5738,7 +5858,15 @@ void initializeRegistry(BuildContext context) {
     ]),
     GCWSymbolTableTool(symbolKey: 'doremi', symbolSearchStrings: const [
       'symbol_doremi',
-    ], licenses: const []),
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'de.wikipedia.org and contributors',
+          title: 'Solresol',
+          sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Solresol&oldid=242474951',
+          licenseType: ToolLicenseType.CCBYSA4)
+    ]),
+
     GCWSymbolTableTool(symbolKey: 'dragon_language', symbolSearchStrings: const [
       'symbol_dragon_language',
     ], licenses: [
@@ -5763,7 +5891,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'de.wikipedia.org and contributors',
           title: 'Arabische Zahlschrift',
-          sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Arabische_Zahlschrift&oldid=246917272')
+          sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Arabische_Zahlschrift&oldid=246917272',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'egyptian_numerals', symbolSearchStrings: const [
       'symbol_egyptian_numerals',
@@ -5772,7 +5901,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'en.wikipedia.org and contributors',
           title: 'Egyptian numerals',
-          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Egyptian_numerals&oldid=1222065795')
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Egyptian_numerals&oldid=1222065795',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'elia', symbolSearchStrings: const [
       'elia',
@@ -5786,7 +5916,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'en.wikipedia.org and contributors',
           title: 'Enochian',
-          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Enochian&oldid=1232294087')
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Enochian&oldid=1232294087',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'eternity_code', symbolSearchStrings: const [
       'symbol_eternity_code',
@@ -5795,20 +5926,20 @@ void initializeRegistry(BuildContext context) {
       'symbol_eurythmy',
     ], licenses: [
       ToolLicenseImage(
-        context: context,
-        author: 'Rudolf Steiner Verlag',
-        title: 'Eurythmiefiguren',
-        privatePermission: ToolLicensePrivatePermission(
-          medium: 'e-mail',
-          permissionYear: 2020,
-          permissionMonth: 11,
-          permissionDay: 14,
           context: context,
-        ),
-        sourceUrl: 'https://web.archive.org/web/20210731034944/https://www.anthroposophie-muenchen.de/eurythmiefiguren',
-        licenseType: ToolLicenseType.NON_COMMERCIAL,
-        licenseUseType: ToolLicenseUseType.COPY,
-      )
+          author: 'Rudolf Steiner Verlag',
+          title: 'Eurythmiefiguren',
+          privatePermission: ToolLicensePrivatePermission(
+            medium: 'e-mail',
+            permissionYear: 2020,
+            permissionMonth: 11,
+            permissionDay: 14,
+            context: context,
+          ),
+          sourceUrl:
+              'https://web.archive.org/web/20210731034944/https://www.anthroposophie-muenchen.de/eurythmiefiguren',
+          licenseType: ToolLicenseType.NON_COMMERCIAL,
+          licenseUseType: ToolLicenseUseType.COPY)
     ]),
     GCWSymbolTableTool(symbolKey: 'face_it', symbolSearchStrings: const [
       'symbol_face_it',
@@ -5824,6 +5955,12 @@ void initializeRegistry(BuildContext context) {
       'symbol_fakoo',
     ], licenses: [
       stl._toolLicenseMyGeoToolsCodeTabellen,
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'Alexander Fakoó',
+          title: 'FAKOO.DE',
+          sourceUrl: 'https://web.archive.org/web/20240808105937/https://fakoo.de/',
+          licenseType: ToolLicenseType.CCBYNCND40)
     ]),
     GCWSymbolTableTool(symbolKey: 'fantastic', symbolSearchStrings: const [
       'symbol_fantastic',
@@ -5838,17 +5975,38 @@ void initializeRegistry(BuildContext context) {
     ]),
     GCWSymbolTableTool(symbolKey: 'fez', symbolSearchStrings: const [
       'symbol_fez',
-    ], licenses: const []),
+    ], licenses: [
+      ToolLicenseFont(
+          context: context,
+          author: 'CalTrask',
+          title: 'Zuish',
+          sourceUrl: 'https://web.archive.org/web/20240808110634/https://www.dafont.com/zuish.font',
+          licenseType: ToolLicenseType.FREE_TO_USE,
+          customComment: 'dafont.com')
+    ]),
     GCWSymbolTableTool(symbolKey: 'finger', symbolSearchStrings: const [
       'symbol_signlanguage',
       'symbol_finger',
     ], licenses: [
       stl._toolLicenseMyGeoToolsCodeTabellen,
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'de.wikipedia.org and contributors',
+          title: 'Fingeralphabet',
+          sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Fingeralphabet&oldid=247429082',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'finger_numbers', symbolSearchStrings: const [
       'symbol_signlanguage',
       'symbol_finger_numbers',
-    ], licenses: const []),
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'de.wikipedia.org and contributors',
+          title: 'Fingeralphabet',
+          sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Fingeralphabet&oldid=247429082',
+          licenseType: ToolLicenseType.CCBYSA4)
+    ]),
     GCWSymbolTableTool(symbolKey: 'flags', symbolSearchStrings: const [
       'symbol_flags',
     ], licenses: [
@@ -5856,12 +6014,25 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'en.wikipedia.org and contributors',
           title: 'International maritime signal flags',
-          sourceUrl: 'https://en.wikipedia.org/wiki/International_maritime_signal_flags')
+          sourceUrl: 'https://en.wikipedia.org/wiki/International_maritime_signal_flags',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'flags_german_kriegsmarine', symbolSearchStrings: const [
       'symbol_flags',
       'symbol_flags_german_kriegsmarine',
-    ], licenses: const []),
+    ], licenses: [
+      ToolLicenseOfflineBook(
+          context: context,
+          author: 'Andreas Herzfeld',
+          title: 'Die Signalflaggen und Signalbücher deutscher Kriegs- und Handelsmarinen seit 1815',
+          isbn: '978-3-935131-16-2'),
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'Andreas Herzfeld',
+          title: 'Die Signalflaggen und Signalbücher deutscher Kriegs- und Handelsmarinen seit 1815',
+          sourceUrl: 'https://web.archive.org/web/20240808112049/https://dr-herzfeld.de/signalflaggen/index.htm')
+    ]),
+
     GCWSymbolTableTool(symbolKey: 'flags_nato', symbolSearchStrings: const [
       'symbol_flags',
       'symbol_flags_nato',
@@ -5870,7 +6041,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'en.wikipedia.org and contributors',
           title: 'International maritime signal flags',
-          sourceUrl: 'https://en.wikipedia.org/wiki/International_maritime_signal_flags')
+          sourceUrl: 'https://en.wikipedia.org/wiki/International_maritime_signal_flags',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'flags_rn_howe', symbolSearchStrings: const [
       'symbol_flags',
@@ -5892,7 +6064,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'en.wikipedia.org and contributors',
           title: 'Maritime flag signalling',
-          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Maritime_flag_signalling&oldid=1176428184')
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Maritime_flag_signalling&oldid=1176428184',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'flags_rn_popham', symbolSearchStrings: const [
       'symbol_flags',
@@ -5956,7 +6129,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'en.wikipedia.org and contributors',
           title: 'Elder Futhark',
-          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Elder_Futhark&oldid=1236807910')
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Elder_Futhark&oldid=1236807910',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'futhark_younger', symbolSearchStrings: const [
       'symbol_runes',
@@ -5966,7 +6140,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'en.wikipedia.org and contributors',
           title: 'Younger Futhark',
-          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Younger_Futhark&oldid=1226247571')
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Younger_Futhark&oldid=1226247571',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'futhorc', symbolSearchStrings: const [
       'symbol_runes',
@@ -5977,7 +6152,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'en.wikipedia.org and contributors',
           title: 'Anglo-Saxon runes',
-          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Anglo-Saxon_runes&oldid=1231842934')
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Anglo-Saxon_runes&oldid=1231842934',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'futurama', symbolSearchStrings: const [
       'symbol_futurama',
@@ -6100,7 +6276,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'de.wikipedia.org and contributors',
           title: 'Glagolitische Schrift',
-          sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Glagolitische_Schrift&oldid=242590359')
+          sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Glagolitische_Schrift&oldid=242590359',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'gnommish', symbolSearchStrings: const [], licenses: [
       ToolLicenseFont(
@@ -6118,7 +6295,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'wikipedia.org and contributors',
           title: 'Greek numerals',
-          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Greek_numerals&oldid=1236399172')
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Greek_numerals&oldid=1236399172',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'hangul_korean', symbolSearchStrings: const [
       'symbol_hangul',
@@ -6127,7 +6305,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'wikipedia.org and contributors',
           title: 'Hangul',
-          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Hangul&oldid=1236544404')
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Hangul&oldid=1236544404',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'hangul_sino_korean', symbolSearchStrings: const [
       'symbol_hangul',
@@ -6137,7 +6316,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'wikipedia.org and contributors',
           title: 'Sino Korean numbers',
-          sourceUrl: 'https://www.koreanwikiproject.com/wiki/index.php?title=Sino_Korean_numbers&oldid=30107')
+          sourceUrl: 'https://www.koreanwikiproject.com/wiki/index.php?title=Sino_Korean_numbers&oldid=30107',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'hanja', symbolSearchStrings: const [
       'symbol_hanja',
@@ -6147,7 +6327,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'wikipedia.org and contributors',
           title: 'Korean numerals',
-          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Korean_numerals&oldid=1229158459')
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Korean_numerals&oldid=1229158459',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'hazard', symbolSearchStrings: const [
       'symbol_hazard',
@@ -6361,7 +6542,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'de.wikipedia.org and contributors',
           title: 'Brandschutzzeichen',
-          sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Brandschutzzeichen&oldid=244450333')
+          sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Brandschutzzeichen&oldid=244450333',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'iso7010_mandatory', symbolSearchStrings: const [
       'iso7010',
@@ -6371,7 +6553,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'de.wikipedia.org and contributors',
           title: 'Gebotszeichen',
-          sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Gebotszeichen&oldid=244450314')
+          sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Gebotszeichen&oldid=244450314',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'iso7010_prohibition', symbolSearchStrings: const [
       'iso7010',
@@ -6381,7 +6564,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'de.wikipedia.org and contributors',
           title: 'Verbotszeichen',
-          sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Verbotszeichen&oldid=244450293')
+          sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Verbotszeichen&oldid=244450293',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'iso7010_safecondition', symbolSearchStrings: const [
       'iso7010',
@@ -6391,7 +6575,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'de.wikipedia.org and contributors',
           title: 'Rettungszeichen',
-          sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Rettungszeichen&oldid=244450083')
+          sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Rettungszeichen&oldid=244450083',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'iso7010_warning', symbolSearchStrings: const [
       'iso7010',
@@ -6401,7 +6586,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'de.wikipedia.org and contributors',
           title: 'Warnzeichen',
-          sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Warnzeichen&oldid=242647614')
+          sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Warnzeichen&oldid=242647614',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'ita1_1926', symbolSearchStrings: const [
       'ccitt',
@@ -6412,12 +6598,10 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'en.wikipedia.org and contributors',
           title: 'Baudot code',
-          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Baudot_code&oldid=1237256507')
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Baudot_code&oldid=1237256507',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
-    GCWSymbolTableTool(
-        symbolKey: 'ita1_1929',
-        symbolSearchStrings: const ['ccitt', 'symbol_baudot', 'teletypewriter'],
-        licenses: const []),
+
     GCWSymbolTableTool(symbolKey: 'ita2_1929', symbolSearchStrings: const [
       'ccitt',
       'symbol_murray',
@@ -6467,7 +6651,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'en.wikipedia.org and contributors',
           title: 'KarTrak',
-          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=KarTrak&oldid=1231296757')
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=KarTrak&oldid=1231296757',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'kaktovik', symbolSearchStrings: const [
       'symbol_kaktovik',
@@ -6477,7 +6662,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'en.wikipedia.org and contributors',
           title: 'Kaktovik numerals',
-          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Kaktovik_numerals&oldid=1236877061')
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Kaktovik_numerals&oldid=1236877061',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'kharoshthi', symbolSearchStrings: const [
       'symbol_kharoshthi',
@@ -6540,7 +6726,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'en.wikipedia.org and contributors',
           title: 'Kurrent',
-          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Kurrent&oldid=1205126071')
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Kurrent&oldid=1205126071',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'la_buse', symbolSearchStrings: const [
       'symbol_freemason',
@@ -6587,7 +6774,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'en.wikipedia.org and contributors',
           title: 'Malachim',
-          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Malachim&oldid=1217968821')
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Malachim&oldid=1217968821',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'mandalorian', symbolSearchStrings: const [
       'symbol_mandalorian',
@@ -6691,13 +6879,6 @@ void initializeRegistry(BuildContext context) {
     ], licenses: [
       stl._toolLicenseMyGeoToolsCodeTabellen,
       stl._toolLicenseGeocachingToolbox,
-      ToolLicenseOnlineArticle(
-          context: context,
-          author: 'Geocaching Toolbox',
-          title: 'Maze code',
-          sourceUrl:
-              'https://web.archive.org/web/20210917155214/https://www.geocachingtoolbox.com/index.php?lang=en&page=codeTables&id=mazeCode',
-          licenseType: ToolLicenseType.CCNC30)
     ]),
     GCWSymbolTableTool(symbolKey: 'medieval_runes', symbolSearchStrings: const [
       'symbol_runes',
@@ -6727,7 +6908,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'en.wikipedia.org and contributors',
           title: 'Lunar phase',
-          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Lunar_phase&oldid=1231773726')
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Lunar_phase&oldid=1231773726',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'morse', symbolSearchStrings: const [
       'morse',
@@ -6785,10 +6967,65 @@ void initializeRegistry(BuildContext context) {
     ], licenses: [
       ToolLicenseOnlineArticle(
           context: context,
-          author: 'en.wikipedia.org and contributors',
-          title: 'Murray',
-          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Baudot_code&oldid=1227345731',
+          author: 'Helmar Fischer',
+          title: 'Der Klappentelegraph',
+          sourceUrl:
+              'https://web.archive.org/web/20240808115703/https://cms.sachsen.schule/fileadmin/_special/gruppen/592/klappentelegraph/download/klappentelegraphenalphabet_f_2007.pdf',
+          licenseType: ToolLicenseType.PRIVATE_PERMISSION,
+          privatePermission: ToolLicensePrivatePermission(
+              context: context,
+              medium: 'e-Mail',
+              permissionYear: 2024,
+              permissionMonth: 7,
+              permissionDay: 23,
+              permissionAuthor: 'Helmar Fischer')),
+    ]),
+    GCWSymbolTableTool(symbolKey: 'murray_v2_fischer_corrected', symbolSearchStrings: const [
+      'symbol_murray',
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'Helmar Fischer',
+          title: 'Der Klappentelegraph',
+          sourceUrl:
+              'https://web.archive.org/web/20240808115529/https://cms.sachsen.schule/fileadmin/_special/gruppen/592/klappentelegraph/download/klappentelegraphenalphabet_2016.pdf',
+          licenseType: ToolLicenseType.PRIVATE_PERMISSION,
+          privatePermission: ToolLicensePrivatePermission(
+              context: context,
+              medium: 'e-Mail',
+              permissionYear: 2024,
+              permissionMonth: 7,
+              permissionDay: 23,
+              permissionAuthor: 'Helmar Fischer'))
+    ]),
+    GCWSymbolTableTool(symbolKey: 'murray_v3_navy_1796', symbolSearchStrings: const [
+      'symbol_murray',
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'Samuel William Fores',
+          title: 'Abbildung des Telegraphen der im Februar 1796 auf der Admiralität zu London errichtet wurde',
+          sourceUrl: 'https://web.archive.org/web/20240808120340/https://www.bilder.mspt.de/',
+          customComment: 'Museumsstiftung Post und Telekommunikation, Inventarnummer: 4.2014.882',
           licenseType: ToolLicenseType.CCBYSA4)
+    ]),
+    GCWSymbolTableTool(symbolKey: 'murray_v4_roucoux', symbolSearchStrings: const [
+      'symbol_murray',
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'Omar Roucoux',
+          title: 'Dunstable Signalling Station',
+          sourceUrl:
+              'https://web.archive.org/web/20240808120043/https://virtual-library.culturalservices.net/webingres/bedfordshire/vlib/0.digitised_resources/dunstable_article_signalling_station_enlargement.htm',
+          licenseType: ToolLicenseType.PRIVATE_PERMISSION,
+          privatePermission: ToolLicensePrivatePermission(
+              context: context,
+              medium: 'e-Mail',
+              permissionYear: 2021,
+              permissionMonth: 12,
+              permissionDay: 21,
+              permissionAuthor: 'John Buckledee'))
     ]),
     GCWSymbolTableTool(symbolKey: 'murraybaudot', symbolSearchStrings: const [
       'ccitt',
@@ -6856,32 +7093,80 @@ void initializeRegistry(BuildContext context) {
       'music',
       'music_notes',
       'symbol_notes_doremi',
-    ], licenses: const []),
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'de.wikipedia.org and contributors',
+          title: 'Solresol',
+          sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Solresol&oldid=242474951',
+          licenseType: ToolLicenseType.CCBYSA4)
+    ]),
+
     GCWSymbolTableTool(symbolKey: 'notes_names_altoclef', symbolSearchStrings: const [
       'music',
       'music_notes',
       'symbol_notes_names_altoclef',
-    ], licenses: const []),
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'en.wikipedia.org and contributors',
+          title: 'Clef',
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Clef&oldid=1236772573',
+          licenseType: ToolLicenseType.CCBYSA4)
+    ]),
+
     GCWSymbolTableTool(symbolKey: 'notes_names_bassclef', symbolSearchStrings: const [
       'music',
       'music_notes',
       'symbol_notes_names_bassclef',
-    ], licenses: const []),
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'en.wikipedia.org and contributors',
+          title: 'Clef',
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Clef&oldid=1236772573',
+          licenseType: ToolLicenseType.CCBYSA4)
+    ]),
+
     GCWSymbolTableTool(symbolKey: 'notes_names_trebleclef', symbolSearchStrings: const [
       'music',
       'music_notes',
       'symbol_notes_names_trebleclef',
-    ], licenses: const []),
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'en.wikipedia.org and contributors',
+          title: 'Clef',
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Clef&oldid=1236772573',
+          licenseType: ToolLicenseType.CCBYSA4)
+    ]),
+
     GCWSymbolTableTool(symbolKey: 'notes_notevalues', symbolSearchStrings: const [
       'music',
       'music_notes',
       'symbol_notes_notevalues',
-    ], licenses: const []),
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'en.wikipedia.org and contributors',
+          title: 'Musical note',
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Musical_note&oldid=1238867492',
+          licenseType: ToolLicenseType.CCBYSA4)
+    ]),
+
     GCWSymbolTableTool(symbolKey: 'notes_restvalues', symbolSearchStrings: const [
       'music',
       'music_notes',
       'symbol_notes_restvalues',
-    ], licenses: const []),
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'en.wikipedia.org and contributors',
+          title: 'Rest (music)',
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Rest_(music)&oldid=1226810233',
+          licenseType: ToolLicenseType.CCBYSA4)
+    ]),
+
     GCWSymbolTableTool(symbolKey: 'nyctography', symbolSearchStrings: const [
       'symbol_nyctography',
     ], licenses: [
@@ -6912,23 +7197,50 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'en.wikipedia.org and contributors',
           title: 'Ogham',
-          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Ogham&oldid=1234313745')
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Ogham&oldid=1234313745',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'optical_fiber_fotag', symbolSearchStrings: const [
       'color',
       'symbol_opticalfiber',
       'symbol_optical_fiber_fotag',
-    ], licenses: const []),
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'en.wikipedia.org and contributors',
+          title: 'TIA-598-C',
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=TIA-598-C&oldid=919612867',
+          licenseType: ToolLicenseType.CCBYSA4)
+    ]),
+
     GCWSymbolTableTool(symbolKey: 'optical_fiber_iec60304', symbolSearchStrings: const [
       'color',
       'symbol_opticalfiber',
       'symbol_optical_fiber_iec60304',
-    ], licenses: const []),
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+        context: context,
+        author: 'Opternus',
+        title: 'LWL Farbcodierungen',
+        sourceUrl:
+            'https://web.archive.org/web/20240808130122/https://www.opternus.de/media/pdf/79/53/b6/LWL-Farbcodes.pdf',
+      )
+    ]),
+
     GCWSymbolTableTool(symbolKey: 'optical_fiber_swisscom', symbolSearchStrings: const [
       'color',
       'symbol_opticalfiber',
       'optical_fiber_swisscom',
-    ], licenses: const []),
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+        context: context,
+        author: 'Opternus',
+        title: 'LWL Farbcodierungen',
+        sourceUrl:
+            'https://web.archive.org/web/20240808130122/https://www.opternus.de/media/pdf/79/53/b6/LWL-Farbcodes.pdf',
+      )
+    ]),
+
     GCWSymbolTableTool(symbolKey: 'phoenician', symbolSearchStrings: const [
       'symbol_phoenician',
       'zigzag'
@@ -6937,7 +7249,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'en.wikipedia.org and contributors',
           title: 'Phoenician (Unicode block)',
-          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Phoenician_(Unicode_block)&oldid=1236804525')
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Phoenician_(Unicode_block)&oldid=1236804525',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'pipeline', symbolSearchStrings: const [
       'symbol_pipeline',
@@ -6952,7 +7265,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'wikipedia.org and contributors',
           title: 'DIN 2403',
-          sourceUrl: 'https://de.wikipedia.org/w/index.php?title=DIN_2403&oldid=220693795')
+          sourceUrl: 'https://de.wikipedia.org/w/index.php?title=DIN_2403&oldid=220693795',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'pixel', symbolSearchStrings: const [
       'symbol_pixel',
@@ -6974,7 +7288,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'en.wikipedia.org and contributors',
           title: 'Astrological symbols',
-          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Astrological_symbols&oldid=1227161520')
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Astrological_symbols&oldid=1227161520',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'pleiadian', symbolSearchStrings: const [
       'symbol_pleiadian',
@@ -6988,7 +7303,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'en.wikipedia.org and contributors',
           title: 'Unown',
-          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Unown&oldid=1238601379')
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Unown&oldid=1238601379',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'postcode_01247', symbolSearchStrings: const [
       'barcodes',
@@ -6998,7 +7314,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'wikipedia.org and contributors',
           title: 'Zielcode',
-          sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Zielcode&oldid=246247471')
+          sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Zielcode&oldid=246247471',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'postcode_8421', symbolSearchStrings: const [
       'barcodes',
@@ -7008,7 +7325,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'wikipedia.org and contributors',
           title: 'Zielcode',
-          sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Zielcode&oldid=246247471')
+          sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Zielcode&oldid=246247471',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'postnet', symbolSearchStrings: const [
       'barcodes',
@@ -7085,6 +7403,12 @@ void initializeRegistry(BuildContext context) {
       stl._toolLicenseCullyLong,
       stl._toolLicenseMyGeoToolsCodeTabellen,
       stl._toolLicenseGeocachingToolbox,
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'Alexander Fakoó',
+          title: 'Das Quadoo-Alphabet',
+          sourceUrl: 'https://web.archive.org/web/20240808130803/https://fakoo.de/quadoo.html',
+          licenseType: ToolLicenseType.CCBYNCND40)
     ]),
     GCWSymbolTableTool(symbolKey: 'ravkan', symbolSearchStrings: const [
       'symbol_ravkan',
@@ -7120,7 +7444,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'en.wikipedia.org and contributors',
           title: 'Resistor color codes',
-          sourceUrl: 'https://en.wikiversity.org/w/index.php?title=Resistor_color_codes&oldid=2580031')
+          sourceUrl: 'https://en.wikiversity.org/w/index.php?title=Resistor_color_codes&oldid=2580031',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'rhesus_a', symbolSearchStrings: const [
       'symbol_rhesus',
@@ -7170,7 +7495,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'en.wikipedia.org and contributors',
           title: 'RM4SCC',
-          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=RM4SCC&oldid=1214051326'),
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=RM4SCC&oldid=1214051326',
+          licenseType: ToolLicenseType.CCBYSA4),
     ]),
     GCWSymbolTableTool(symbolKey: 'robots', symbolSearchStrings: const [
       'symbol_robots',
@@ -7290,6 +7616,31 @@ void initializeRegistry(BuildContext context) {
     ], licenses: [
       stl._toolLicenseGeocachingToolbox,
     ]),
+    GCWSymbolTableTool(symbolKey: 'slash_and_pipe_codeofclaw', symbolSearchStrings: const [
+      'symbol_slash_and_pipe',
+      'symbol_slash_and_pipe_codeofclaw',
+      'symbol_slash_and_pipe_underland',
+    ], licenses: [
+      stl._toolLicenseGeocachingToolbox,
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'en.wikipedia and contributors',
+          title: 'Gregor and the Code of Claw',
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Gregor_and_the_Code_of_Claw&oldid=1176094103',
+          licenseType: ToolLicenseType.CCBYSA4)
+    ]),
+    GCWSymbolTableTool(symbolKey: 'slash_and_pipe_underland', symbolSearchStrings: const [
+      'symbol_slash_and_pipe',
+      'symbol_slash_and_pipe_underland',
+    ], licenses: [
+      stl._toolLicenseGeocachingToolbox,
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'en.wikipedia and contributors',
+          title: 'Gregor and the Code of Claw',
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Gregor_and_the_Code_of_Claw&oldid=1176094103',
+          licenseType: ToolLicenseType.CCBYSA4)
+    ]),
     GCWSymbolTableTool(symbolKey: 'solmisation', symbolSearchStrings: const [
       'symbol_solmisation',
     ], licenses: [
@@ -7310,7 +7661,13 @@ void initializeRegistry(BuildContext context) {
             'https://web.archive.org/web/20240722095602/https://www.addizio.de/wp-content/uploads/2019/04/Solmisation.zip',
         licenseType: ToolLicenseType.PRIVATE_PERMISSION,
         licenseUseType: ToolLicenseUseType.COPY,
-      )
+      ),
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'de.wikipedia.org and contributors',
+          title: 'Solmisation',
+          sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Solmisation&oldid=246661837',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'space_invaders', symbolSearchStrings: const [
       'symbol_space_invaders',
@@ -7366,7 +7723,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'en.wikipedia.org and contributors',
           title: 'Sütterlin',
-          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=S%C3%BCtterlin&oldid=1231365683')
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=S%C3%BCtterlin&oldid=1231365683',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'sunuz', symbolSearchStrings: const [
       'symbol_sunuz',
@@ -7396,7 +7754,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'en.wikipedia.org and contributors',
           title: 'TAE connector',
-          sourceUrl: 'https://simple.wikipedia.org/w/index.php?title=TAE_connector&oldid=8424911')
+          sourceUrl: 'https://simple.wikipedia.org/w/index.php?title=TAE_connector&oldid=8424911',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'tamil_numerals', symbolSearchStrings: const [
       'symbol_tamil_numerals',
@@ -7405,7 +7764,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'de.wikipedia.org and contributors',
           title: 'Arabische Zahlschrift',
-          sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Arabische_Zahlschrift&oldid=246917272')
+          sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Arabische_Zahlschrift&oldid=246917272',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(
       symbolKey: 'telegraph_pasley',
@@ -7635,92 +7995,293 @@ void initializeRegistry(BuildContext context) {
           licenseType: ToolLicenseType.CCBYNCND30)
     ]),
     GCWSymbolTableTool(symbolKey: 'wakandan', symbolSearchStrings: const [
-      'symbol_wakandan',
-    ], licenses: const []),
-    GCWSymbolTableTool(symbolKey: 'weather_a', symbolSearchStrings: const ['weather', 'weather_a'], licenses: const []),
-    GCWSymbolTableTool(
-        symbolKey: 'weather_c',
-        symbolSearchStrings: const ['weather', 'weather_c', 'weather_clouds'],
-        licenses: const []),
-    GCWSymbolTableTool(
-        symbolKey: 'weather_cl',
-        symbolSearchStrings: const ['weather', 'weather_cl', 'weather_clouds'],
-        licenses: const []),
-    GCWSymbolTableTool(
-        symbolKey: 'weather_cm',
-        symbolSearchStrings: const ['weather', 'weather_cm', 'weather_clouds'],
-        licenses: const []),
-    GCWSymbolTableTool(
-        symbolKey: 'weather_ch',
-        symbolSearchStrings: const ['weather', 'weather_ch', 'weather_clouds'],
-        licenses: const []),
-    GCWSymbolTableTool(
-        symbolKey: 'weather_n',
-        symbolSearchStrings: const ['weather', 'weather_n', 'weather_clouds'],
-        licenses: const []),
-    GCWSymbolTableTool(symbolKey: 'weather_w', symbolSearchStrings: const ['weather', 'weather_w'], licenses: const []),
-    GCWSymbolTableTool(
-        symbolKey: 'weather_ww', symbolSearchStrings: const ['weather', 'weather_ww'], licenses: const []),
+      'symbol_wakandan'
+    ], licenses: [
+      ToolLicenseFont(
+          context: context,
+          author: 'Adam Pypstra',
+          title: 'Wakanda Forever',
+          sourceUrl: 'https://web.archive.org/web/20200615000000*/https://dribbble.com/shots/4269681-Wakanda-Forever',
+          licenseType: ToolLicenseType.FREE_TO_USE)
+    ]),
+    GCWSymbolTableTool(symbolKey: 'weather_a', symbolSearchStrings: const [
+      'weather',
+      'weather_a'
+    ], licenses: [
+      ToolLicenseImage(
+          context: context,
+          author: 'Unknown',
+          title: 'Pressure Tendency',
+          sourceUrl:
+              'http://web.archive.org/web/20231123172913/https://www.wpc.ncep.noaa.gov/dailywxmap/plottedwx.html',
+          licenseType: ToolLicenseType.PUBLIC_DOMAIN,
+          licenseUseType: ToolLicenseUseType.COPY)
+    ]),
+    GCWSymbolTableTool(symbolKey: 'weather_c', symbolSearchStrings: const [
+      'weather',
+      'weather_c',
+      'weather_clouds'
+    ], licenses: [
+      ToolLicenseImage(
+          context: context,
+          author: 'Unknown',
+          title: 'WEATHER FIGURES AND SYMBOLS',
+          sourceUrl:
+              'https://web.archive.org/web/20230809231644/https://cdn2.hubspot.net/hubfs/604407/weather_symbols.gif',
+          licenseType: ToolLicenseType.PUBLIC_DOMAIN,
+          licenseUseType: ToolLicenseUseType.COPY)
+    ]),
+    GCWSymbolTableTool(symbolKey: 'weather_cl', symbolSearchStrings: const [
+      'weather',
+      'weather_cl',
+      'weather_clouds'
+    ], licenses: [
+      ToolLicenseImage(
+          context: context,
+          author: 'Unknown',
+          title: 'Low Clouds',
+          sourceUrl:
+              'http://web.archive.org/web/20231123172913/https://www.wpc.ncep.noaa.gov/dailywxmap/plottedwx.html',
+          licenseType: ToolLicenseType.PUBLIC_DOMAIN,
+          licenseUseType: ToolLicenseUseType.COPY)
+    ]),
+    GCWSymbolTableTool(symbolKey: 'weather_cm', symbolSearchStrings: const [
+      'weather',
+      'weather_cm',
+      'weather_clouds'
+    ], licenses: [
+      ToolLicenseImage(
+          context: context,
+          author: 'Unknown',
+          title: 'Middle Clouds',
+          sourceUrl:
+              'http://web.archive.org/web/20231123172913/https://www.wpc.ncep.noaa.gov/dailywxmap/plottedwx.html',
+          licenseType: ToolLicenseType.PUBLIC_DOMAIN,
+          licenseUseType: ToolLicenseUseType.COPY)
+    ]),
+    GCWSymbolTableTool(symbolKey: 'weather_ch', symbolSearchStrings: const [
+      'weather',
+      'weather_ch',
+      'weather_clouds'
+    ], licenses: [
+      ToolLicenseImage(
+          context: context,
+          author: 'Unknown',
+          title: 'High Clouds',
+          sourceUrl:
+              'http://web.archive.org/web/20231123172913/https://www.wpc.ncep.noaa.gov/dailywxmap/plottedwx.html',
+          licenseType: ToolLicenseType.PUBLIC_DOMAIN,
+          licenseUseType: ToolLicenseUseType.COPY)
+    ]),
+    GCWSymbolTableTool(symbolKey: 'weather_n', symbolSearchStrings: const [
+      'weather',
+      'weather_n',
+      'weather_clouds'
+    ], licenses: [
+      ToolLicenseImage(
+          context: context,
+          author: 'Unknown',
+          title: 'Sky Cover',
+          sourceUrl:
+              'http://web.archive.org/web/20231123172913/https://www.wpc.ncep.noaa.gov/dailywxmap/plottedwx.html',
+          licenseType: ToolLicenseType.PUBLIC_DOMAIN,
+          licenseUseType: ToolLicenseUseType.COPY)
+    ]),
+    GCWSymbolTableTool(symbolKey: 'weather_w', symbolSearchStrings: const [
+      'weather',
+      'weather_w'
+    ], licenses: [
+      ToolLicenseImage(
+          context: context,
+          author: 'Unknown',
+          title: 'Past Weather',
+          sourceUrl:
+              'http://web.archive.org/web/20231123172913/https://www.wpc.ncep.noaa.gov/dailywxmap/plottedwx.html',
+          licenseType: ToolLicenseType.PUBLIC_DOMAIN,
+          licenseUseType: ToolLicenseUseType.COPY)
+    ]),
+    GCWSymbolTableTool(symbolKey: 'weather_ww', symbolSearchStrings: const [
+      'weather',
+      'weather_ww'
+    ], licenses: [
+      ToolLicenseImage(
+          context: context,
+          author: 'Unknown',
+          title: 'WEATHER FIGURES AND SYMBOLS',
+          sourceUrl:
+              'https://web.archive.org/web/20230809231644/https://cdn2.hubspot.net/hubfs/604407/weather_symbols.gif',
+          licenseType: ToolLicenseType.PUBLIC_DOMAIN,
+          licenseUseType: ToolLicenseUseType.COPY)
+    ]),
+
     GCWSymbolTableTool(symbolKey: 'webdings', symbolSearchStrings: const [
       'symbol_webdings',
-    ], licenses: const []),
-    GCWSymbolTableTool(
-        symbolKey: 'westernunion',
-        symbolSearchStrings: const ['symbol_westernunion', 'teletypewriter'],
-        licenses: const []),
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'commons.wikimedia.org and contributors',
+          title: 'Webdings',
+          sourceUrl: 'https://commons.wikimedia.org/w/index.php?title=File:Webdings-big.png&oldid=899647144',
+          licenseType: ToolLicenseType.PUBLIC_DOMAIN)
+    ]),
+    GCWSymbolTableTool(symbolKey: 'westernunion', symbolSearchStrings: const [
+      'symbol_westernunion',
+      'teletypewriter'
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'commons.wikimedia.org and contributors',
+          title: "RTTY.COM's CODE-CARD CORNER",
+          sourceUrl: 'https://web.archive.org/web/20240808182500/https://www.rtty.com/CODECARD/codecrd1.htm',
+          licenseType: ToolLicenseType.FREE_TO_USE)
+    ]),
     GCWSymbolTableTool(symbolKey: 'windforce_beaufort', symbolSearchStrings: const [
       'beaufort',
       'symbol_windforce_beaufort',
-    ], licenses: const []),
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'commons.wikimedia.org and contributors',
+          title: 'Wind speed',
+          sourceUrl: 'https://commons.wikimedia.org/w/index.php?title=Wind_speed&oldid=760157124',
+          licenseType: ToolLicenseType.CCBYSA4)
+    ]),
+    GCWSymbolTableTool(symbolKey: 'wingdings', symbolSearchStrings: const [
+      'symbol_wingdings',
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'commons.wikimedia.org and contributors',
+          title: 'Wingdings',
+          sourceUrl: 'https://commons.wikimedia.org/w/index.php?title=Wind_speed&oldid=760157124',
+          licenseType: ToolLicenseType.PUBLIC_DOMAIN)
+    ]),
     GCWSymbolTableTool(symbolKey: 'windforce_knots', symbolSearchStrings: const [
       'beaufort',
       'symbol_windforce_knots',
-    ], licenses: const []),
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'commons.wikimedia.org and contributors',
+          title: 'Wind speed',
+          sourceUrl: 'https://commons.wikimedia.org/w/index.php?title=Wind_speed&oldid=760157124',
+          licenseType: ToolLicenseType.PUBLIC_DOMAIN)
+    ]),
+
     GCWSymbolTableTool(symbolKey: 'window', symbolSearchStrings: const [
       'window',
     ], licenses: const []),
     GCWSymbolTableTool(symbolKey: 'wingdings', symbolSearchStrings: const [
       'symbol_wingdings',
-    ], licenses: const []),
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'commons.wikimedia.org and contributors',
+          title: 'Wind speed',
+          sourceUrl: 'https://commons.wikimedia.org/w/index.php?title=Wind_speed&oldid=760157124',
+          licenseType: ToolLicenseType.PUBLIC_DOMAIN)
+    ]),
     GCWSymbolTableTool(symbolKey: 'wingdings2', symbolSearchStrings: const [
       'symbol_wingdings2',
-    ], licenses: const []),
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'commons.wikimedia.org and contributors',
+          title: 'Wingdings',
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Wingdings&oldid=1234924688',
+          licenseType: ToolLicenseType.PUBLIC_DOMAIN)
+    ]),
     GCWSymbolTableTool(symbolKey: 'wingdings3', symbolSearchStrings: const [
       'symbol_wingdings3',
-    ], licenses: const []),
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'commons.wikimedia.org and contributors',
+          title: 'Wingdings',
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Wingdings&oldid=1234924688',
+          licenseType: ToolLicenseType.PUBLIC_DOMAIN)
+    ]),
     GCWSymbolTableTool(symbolKey: 'yan_koryani', symbolSearchStrings: const [
       'symbol_yan_koryani',
     ], licenses: [
       stl._toolLicenseMyGeoToolsCodeTabellen,
+      ToolLicenseFont(
+          context: context,
+          author: 'Omniglot',
+          title: 'Tékumel writing systems',
+          sourceUrl: 'https://web.archive.org/web/20140802011409/http://www.omniglot.com/writing/tekumel.php',
+          licenseType: ToolLicenseType.FREE_TO_USE)
     ]),
     GCWSymbolTableTool(symbolKey: 'yinyang', symbolSearchStrings: const [
       'symbol_yinyang',
     ], licenses: const []),
     GCWSymbolTableTool(symbolKey: 'zamonian', symbolSearchStrings: const [
       'symbol_zamonian',
-    ], licenses: const []),
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'commons.wikimedia.org and contributors',
+          title: 'File:Zamonische zahlen.svg',
+          sourceUrl: 'https://commons.wikimedia.org/w/index.php?title=File:Zamonische_zahlen.svg&oldid=529684347',
+          licenseType: ToolLicenseType.CCBYSA4)
+    ]),
     GCWSymbolTableTool(symbolKey: 'zentradi', symbolSearchStrings: const [
       'symbol_zentradi',
     ], licenses: [
       stl._toolLicenseCullyLong,
       stl._toolLicenseMyGeoToolsCodeTabellen,
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'commons.wikimedia.org and contributors',
+          title: 'File:Zentradi Alphabet.jpg',
+          sourceUrl: 'https://commons.wikimedia.org/w/index.php?title=File:Zentradi_Alphabet.jpg&oldid=722312236',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'zodiac_signs', symbolSearchStrings: const [
       'symbol_zodiacsigns',
-    ], licenses: const []),
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'en.wikipedia.org and contributors',
+          title: 'Zodiac',
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Zodiac&oldid=1236213028',
+          licenseType: ToolLicenseType.CCBYSA4)
+    ]),
     GCWSymbolTableTool(symbolKey: 'zodiac_signs_latin', symbolSearchStrings: const [
       'symbol_zodiacsigns',
       'symbol_zodiacsigns_latin',
-    ], licenses: const []),
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'en.wikipedia.org and contributors',
+          title: 'Zodiac',
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Zodiac&oldid=1236213028',
+          licenseType: ToolLicenseType.CCBYSA4)
+    ]),
+
     GCWSymbolTableTool(symbolKey: 'zodiac_z340', symbolSearchStrings: const [
       'symbol_zodiac_z340',
-    ], licenses: const []),
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'commons.wikimedia.org and contributors',
+          title: 'File:Zodiac Z340 cipher key.png',
+          sourceUrl: 'https://commons.wikimedia.org/w/index.php?title=File:Zodiac_Z340_cipher_key.png&oldid=759087501',
+          licenseType: ToolLicenseType.CCBYSA4)
+    ]),
     GCWSymbolTableTool(symbolKey: 'zodiac_z408', symbolSearchStrings: const [
       'symbol_zodiac_z408',
-    ], licenses: const []),
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'en.wikisource.org and contributors; Donald and Bettye Harden',
+          title: 'Zodiac Killer cipher translated',
+          sourceUrl:
+              'https://en.wikisource.org/w/index.php?title=Index:Zodiac_Killer_cipher_deciphered_by_Donald_and_Bettye_Harden.pdf&oldid=11214165',
+          licenseType: ToolLicenseType.CCBYSA4)
+    ]),
 
     // TelegraphSelection *********************************************************************************************
-
     GCWTool(tool: const ChappeTelegraph(), id: 'telegraph_chappe', searchKeys: const [
       'telegraph',
       'telegraph_chappe',
@@ -7772,7 +8333,8 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'commons.wikimedia.org and contributors',
           title: 'Foy–Breguet telegraph',
-          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Foy%E2%80%93Breguet_telegraph&oldid=1169555630')
+          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Foy%E2%80%93Breguet_telegraph&oldid=1169555630',
+          licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWTool(tool: const MurrayTelegraph(), id: 'telegraph_murray', searchKeys: const [
       'telegraph',
