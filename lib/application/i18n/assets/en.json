@@ -3367,7 +3367,7 @@
   "morse_example": "-- --- .-. ... .",
   "morse_selection_title": "Morse",
   "morse_selection_example": "-- --- .-. ... .",
-  "morse_wpm": "Word per Minute",
+  "morse_wpm": "Words per Minute",
   "multidecoder_title": "Multi Decoder",
   "multidecoder_description": "Tries to decode one input with a set of pre-configured tools",
   "multidecoder_key": "Key",
