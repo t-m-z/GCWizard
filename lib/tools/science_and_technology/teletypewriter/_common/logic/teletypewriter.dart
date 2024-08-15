@@ -70,6 +70,20 @@ class PunchtapeConfig {
   });
 }
 
+const Map<int, String> CODEBOOK_BITS_54321 = {
+  5: 'punchtape_mode_bitorder_54321',
+  6: 'punchtape_mode_bitorder_654321',
+  7: 'punchtape_mode_bitorder_7654321',
+  8: 'punchtape_mode_bitorder_87654321',
+};
+
+const Map<int, String> CODEBOOK_BITS_12345 = {
+  5: 'punchtape_mode_bitorder_12345',
+  6: 'punchtape_mode_bitorder_123456',
+  7: 'punchtape_mode_bitorder_1234567',
+  8: 'punchtape_mode_bitorder_12345678',
+};
+
 const Map<TeletypewriterCodebook, CodebookConfig> ANCIENT_CODEBOOK = {
   TeletypewriterCodebook.BAUDOT_12345:
       CodebookConfig(title: 'punchtape_baudot_title', subtitle: 'punchtape_baudot_description'),
@@ -240,45 +254,47 @@ const Map<TeletypewriterCodebook, int> BINARY_LENGTH = {
   TeletypewriterCodebook.ALGOL: 5,
 };
 
-const Map<String, int> _AZToBaudot_12345 = {
+Map<String, int> _AZToBaudot_12345 = {
 // Original code from US Patent in Bit-Order 12345
-  'A': 16,
-  'B': 6,
-  'C': 22,
-  'D': 30,
-  'E': 8,
-  '\u00C9' /* É */ : 24,
+  'A': 1,
+  'B': 12,
+  'C': 13,
+  'D': 15,
+  'E': 2,
+  '\u00C9' /* É */ : 3,
   'F': 14,
   'G': 10,
-  'H': 26,
-  'I': 12,
-  'J': 18,
-  'K': 19,
+  'H': 11,
+  'I': 6,
+  'J': 9,
+  'K': 25,
   'L': 27,
-  'M': 11,
-  'N': 15,
-  'O': 18,
+  'M': 26,
+  'N': 30,
+  'O': 7,
   'P': 31,
-  'Q': 23,
-  'R': 7,
-  'S': 5,
+  'Q': 29,
+  'R': 28,
+  'S': 20,
   'T': 21,
-  'U': 20,
-  'V': 29,
-  'W': 13,
-  'X': 9,
+  'U': 5,
+  'V': 23,
+  'W': 22,
+  'X': 18,
   'Y': 4,
-  'Z': 25,
+  'Z': 19,
   'Ṯ': 17,
-  '✲': 3,
+  '✲': 24,
   ' ': 0,
+  ' ': 8,
+  ' ': 16,
 };
 final Map<int, String> _Baudot_12345ToAZ = switchMapKeyValue(_AZToBaudot_12345);
 
 // original Baudot according to US Patent has no numbers
 
 const Map<String, int> _AZToBaudot_54123 = {
-  // Baudot-Code from EN Wikipedia in Bit-Order 54321
+  // Baudot-Code from EN Wikipedia in Bit-Order 54123 calculated as 54321
   'A': 4,
   'B': 9,
   'C': 13,
@@ -312,35 +328,35 @@ const Map<String, int> _AZToBaudot_54123 = {
 final Map<int, String> _Baudot_54123ToAZ = switchMapKeyValue(_AZToBaudot_54123);
 
 const Map<String, int> _NumbersToBaudot_54123 = {
-  '1': 4,
-  '8': 9,
-  '9': 13,
-  '0': 30,
+  '3': 1,
   '2': 2,
-  '&': 6,
-  'f': 11,
-  '7': 10,
-  'h': 14,
   'o': 3,
+  '1': 4,
+  '4': 5,
+  '&': 6,
+  '5': 7,
+  '8': 9,
+  '7': 10,
+  'f': 11,
   '6': 12,
-  '(': 28,
-  '=': 30,
+  '9': 13,
+  'h': 14,
+  '0': 15,
+  ';': 17,
+  ',': 18,
+  '?': 19,
+  '.': 20,
+  '!': 21,
+  ':': 22,
+  "'": 23,
+  '✲': 24,
+  '-': 25,
   ')': 26,
   'N°': 27,
-  '5': 7,
-  '%': 31,
+  '(': 28,
   '/': 29,
-  '-': 25,
-  ';': 17,
-  '!': 21,
-  '4': 5,
-  "'": 23,
-  '?': 19,
-  ',': 18,
-  '3': 1,
-  ':': 22,
-  '.': 20,
-  '✲': 24,
+  '=': 30,
+  '%': 31,
 };
 final Map<int, String> _Baudot_54123ToNumbers = switchMapKeyValue(_NumbersToBaudot_54123);
 
@@ -1963,7 +1979,7 @@ String encodeTeletypewriter_ZC1(String input) {
   return out.join(' ');
 }
 
-String decodeTeletypewriter(List<int> values, TeletypewriterCodebook language) {
+String decodeTeletypewriter(List<int> values, TeletypewriterCodebook language, {bool numbersOnly = false}) {
   if (values.isEmpty) return '';
 
   String out = '';
@@ -1981,22 +1997,26 @@ String decodeTeletypewriter(List<int> values, TeletypewriterCodebook language) {
     case TeletypewriterCodebook.CCITT_ITA1_EU:
     case TeletypewriterCodebook.CCITT_ITA1_UK:
       for (var value in values) {
-        if (value == _NUMBERS_FOLLOW[language]) {
-          if (out.isNotEmpty) out += ' ';
-          isLetterMode = false;
-          continue;
-        }
-
-        if (value == _LETTERS_FOLLOW[language]) {
-          out += ' ';
-          isLetterMode = true;
-          continue;
-        }
-
-        if (isLetterMode) {
-          out += _DecodeAZ(language, value) ?? '';
-        } else {
+        if (numbersOnly) {
           out += _DecodeNumber(language, value) ?? '';
+        } else {
+          if (value == _NUMBERS_FOLLOW[language]) {
+            if (out.isNotEmpty) out += ' ';
+            isLetterMode = false;
+            continue;
+          }
+
+          if (value == _LETTERS_FOLLOW[language]) {
+            out += ' ';
+            isLetterMode = true;
+            continue;
+          }
+
+          if (isLetterMode) {
+            out += _DecodeAZ(language, value) ?? '';
+          } else {
+            out += _DecodeNumber(language, value) ?? '';
+          }
         }
       }
 
@@ -2015,20 +2035,24 @@ String decodeTeletypewriter(List<int> values, TeletypewriterCodebook language) {
     case TeletypewriterCodebook.TTS:
     case TeletypewriterCodebook.ALGOL:
       for (var value in values) {
-        if (value == _NUMBERS_FOLLOW[language]) {
-          isLetterMode = false;
-          continue;
-        }
-
-        if (value == _LETTERS_FOLLOW[language]) {
-          isLetterMode = true;
-          continue;
-        }
-
-        if (isLetterMode) {
-          out += _DecodeAZ(language, value) ?? '';
-        } else {
+        if (numbersOnly) {
           out += _DecodeNumber(language, value) ?? '';
+        } else {
+          if (value == _NUMBERS_FOLLOW[language]) {
+            isLetterMode = false;
+            continue;
+          }
+
+          if (value == _LETTERS_FOLLOW[language]) {
+            isLetterMode = true;
+            continue;
+          }
+
+          if (isLetterMode) {
+            out += _DecodeAZ(language, value) ?? '';
+          } else {
+            out += _DecodeNumber(language, value) ?? '';
+          }
         }
       }
 
