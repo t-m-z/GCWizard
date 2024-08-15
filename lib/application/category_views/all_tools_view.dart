@@ -154,6 +154,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/rotation/rot47/widget/rot47
 import 'package:gc_wizard/tools/crypto_and_encodings/rotation/rot5/widget/rot5.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/rotation/rotation_general/widget/rotation_general.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/skytale/widget/skytale.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/slash_and_pipe/widget/slash_and_pipe.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/solitaire/widget/solitaire.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/straddling_checkerboard/widget/straddling_checkerboard.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/substitution/widget/substitution.dart';
@@ -169,6 +170,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/zamonian_numbers/widget/zam
 import 'package:gc_wizard/tools/formula_solver/widget/formula_solver_formulagroups.dart';
 import 'package:gc_wizard/tools/games/bowling/widget/bowling.dart';
 import 'package:gc_wizard/tools/games/catan/widget/catan.dart';
+import 'package:gc_wizard/tools/games/logical_supporter/widget/logical_supporter.dart';
 import 'package:gc_wizard/tools/games/nonogram/widget/nonogram_solver.dart';
 import 'package:gc_wizard/tools/games/number_pyramid/widget/number_pyramid_solver.dart';
 import 'package:gc_wizard/tools/games/sudoku/sudoku_solver/widget/sudoku_solver.dart';
@@ -255,6 +257,7 @@ import 'package:gc_wizard/tools/science_and_technology/periodic_table/periodic_t
 import 'package:gc_wizard/tools/science_and_technology/periodic_table/periodic_table_data_view/widget/periodic_table_data_view.dart';
 import 'package:gc_wizard/tools/science_and_technology/physical_constants/widget/physical_constants.dart';
 import 'package:gc_wizard/tools/science_and_technology/piano/widget/piano.dart';
+import 'package:gc_wizard/tools/science_and_technology/postcode/widget/postcode.dart';
 import 'package:gc_wizard/tools/science_and_technology/projectiles/widget/projectiles.dart';
 import 'package:gc_wizard/tools/science_and_technology/quadratic_equation/widget/quadratic_equation.dart';
 import 'package:gc_wizard/tools/science_and_technology/recycling/widget/recycling.dart';
@@ -286,6 +289,7 @@ import 'package:gc_wizard/tools/science_and_technology/ufi/widget/ufi.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/widget/unit_converter.dart';
 import 'package:gc_wizard/tools/science_and_technology/velocity_acceleration/widget/velocity_acceleration.dart';
 import 'package:gc_wizard/tools/symbol_tables/symbol_replacer/widget/symbol_replacer.dart';
+import 'package:gc_wizard/tools/uncategorized/wedding_anniversaries/widget/wedding_anniversaries.dart';
 import 'package:gc_wizard/tools/uncategorized/zodiac/widget/zodiac.dart';
 import 'package:gc_wizard/tools/wherigo/earwigo_text_deobfuscation/widget/earwigo_text_deobfuscation.dart';
 import 'package:gc_wizard/tools/wherigo/urwigo_hashbreaker/widget/urwigo_hashbreaker.dart';
@@ -650,6 +654,7 @@ void _initStaticToolList() {
       className(const Kenny()),
       className(const KeyboardSelection()),
       className(const LCM()),
+      className(const LogicalSupporter()),
       className(const MagicEyeSolver()),
       className(const MathematicalConstants()),
       className(const Malbolge()),
@@ -686,6 +691,7 @@ void _initStaticToolList() {
       className(const PhiSelection()),
       className(const PhysicalConstants()),
       className(const Piano()),
+      className(const Postcode()),
       className(const Piet()),
       className(const PiSelection()),
       className(const PigLatin()),
@@ -727,6 +733,7 @@ void _initStaticToolList() {
       className(const SevenSegments()),
       className(const SixteenSegments()),
       className(const Skytale()),
+      className(const SlashAndPipe()),
       className(const Solitaire()),
       className(const Sort()),
       className(const SpellingAlphabetsCrypt()),
@@ -771,6 +778,7 @@ void _initStaticToolList() {
       className(const WASD()),
       className(const WaypointProjectionGeodetic()),
       className(const WaypointProjectionRhumbline()),
+      className(const WeddingAnniversaries()),
       className(const Weekday()),
       className(const WetBulbTemperature()),
       className(const WherigoSelection()),
