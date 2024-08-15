@@ -1,6 +1,6 @@
 name: gc_wizard
 description: GC Wizard nightly
-version: 3.1.666+014
+version: 3.1.666+015
 publish_to: none
 
 environment:
