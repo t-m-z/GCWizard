@@ -136,7 +136,7 @@ Future<OpenAItaskOutput> OpenAIrunTaskAsync(
     case OPENAI_TASK.CHAT:
       output = await _OpenAIgetTextAsync(
           ChatGPTgetChatJob.openai_api_key,
-          ChatGPTgetChatJob.openai_image_model,
+          ChatGPTgetChatJob.openai_chat_model,
           ChatGPTgetChatJob.openai_prompt,
           ChatGPTgetChatJob.openai_temperature,
           sendAsyncPort: jobData.sendAsyncPort);

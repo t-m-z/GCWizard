@@ -34,7 +34,6 @@ Future<OpenAItaskOutput> _OpenAIgetTextAsync(String APIkey, String model, String
     'Content-Type': 'application/json',
     'Authorization': 'Bearer ' + APIkey,
   };
-
   final OPENAI_CHAT_BODY = {
     'model': model,
     'messages': [
@@ -43,14 +42,12 @@ Future<OpenAItaskOutput> _OpenAIgetTextAsync(String APIkey, String model, String
     'max_tokens': 1000,
     'temperature': temperature,
   };
-
   final OPENAI_COMPLETION_BODY = {
     'model': model,
     'prompt': prompt,
     'max_tokens': 1000,
     'temperature': temperature,
   };
-
   if (MODELS_CHAT_COMPLETIONS.contains(model)) {
     body = jsonEncode(OPENAI_CHAT_BODY);
   } else {
@@ -66,7 +63,6 @@ Future<OpenAItaskOutput> _OpenAIgetTextAsync(String APIkey, String model, String
     httpCode = responseChat.statusCode.toString();
     httpMessage = responseChat.reasonPhrase.toString();
     textData = responseChat.body;
-
     if (httpCode != '200') {
       status = OPENAI_TASK_STATUS.ERROR;
     } else {
