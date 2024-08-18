@@ -116,7 +116,7 @@
   "coordinates_intersection": "two intersection angles bearings directions",
   "coordinates_intersectthreecircles": "three circles distances intersection",
   "coordinates_intersecttwocircles": "two circles distances intersection",
-  "coordinates_mapview": "mapview  openmap measurement",
+  "coordinates_mapview": "mapview  openmap measurement spoof fake mock gps location",
   "coordinates_resection": "two three angles directions resection bearings",
   "coordinates_rhumbline": "rhumblines loxodromes rhumbs",
   "coordinates_segmentbearing": "segments segmentbearings regularly angles bearings courses bisectors",
