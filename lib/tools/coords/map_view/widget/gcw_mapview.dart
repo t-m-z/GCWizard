@@ -74,7 +74,7 @@ class GCWMapView extends StatefulWidget {
   _GCWMapViewState createState() => _GCWMapViewState();
 }
 
-class _GCWMapViewState extends State<GCWMapView> {
+class _GCWMapViewState extends State<GCWMapView> with SingleTickerProviderStateMixin{
   late MapMarkerIcon _markerIcon;
 
   final MapController _mapController = MapController();
@@ -100,8 +100,8 @@ class _GCWMapViewState extends State<GCWMapView> {
 
   String _platformVersion = 'Unknown';
   final _fluttermocklocationPlugin = Fluttermocklocation();
-  bool _timerStarted = false;
-  Timer? _timer;
+  bool _timerActive = false;
+  late Timer _timer;
 
   LatLngBounds _getBounds() {
     if (widget.points.isEmpty) return _DEFAULT_BOUNDS;
@@ -154,10 +154,11 @@ class _GCWMapViewState extends State<GCWMapView> {
   @override
   void dispose() {
     _cancelLocationSubscription();
+    if (_timerActive) {
+      _timer.cancel();
+    }
 
     super.dispose();
-    _timer!.cancel();
-
   }
 
   void _cancelLocationSubscription() {
@@ -982,27 +983,14 @@ class _GCWMapViewState extends State<GCWMapView> {
                         style: gcwDialogTextStyle(),
                         copyText: _currentAccuracy!.toString(),
                       ),
-                      _timerStarted
+                      _timerActive
                           ? GCWIconButton(
-                              icon: _timerStarted ? Icons.stop : Icons.not_started,
+                              icon: Icons.stop,
                               iconColor: colors.dialogText(),
                               onPressed: () {
-                                if (!_timerStarted) {
-                                  _timer = Timer.periodic(
-                                    Duration(seconds: 1),
-                                    (timer) {
-                                      _updateLocation(
-                                        gcwMarker.mapPoint.point.latitude,
-                                        gcwMarker.mapPoint.point.longitude,
-                                      );
-                                    },
-                                  );
-                                } else {
-                                  _timer!.cancel();
-                                }
-                                _timerStarted = !_timerStarted;
+                                _timer.cancel();
+                                _timerActive = false;
                                 setState(() {
-                                  //_updateLocation(gcwMarker.mapPoint.point.latitude, gcwMarker.mapPoint.point.longitude, );
                                   _popupLayerController.hidePopup();
                                 });
                               },
@@ -1051,21 +1039,24 @@ class _GCWMapViewState extends State<GCWMapView> {
                       ),
                       const Spacer(),
                       GCWIconButton(
-                        icon: _timerStarted ? Icons.stop : Icons.not_started,
+                        icon: _timerActive ? Icons.stop : Icons.not_started,
                         iconColor: colors.dialogText(),
                         onPressed: () {
-                          _timerStarted = !_timerStarted;
-                          _timer = Timer.periodic(
-                            Duration(seconds: 1),
-                            (timer) {
-                              _updateLocation(
-                                gcwMarker.mapPoint.point.latitude,
-                                gcwMarker.mapPoint.point.longitude,
-                              );
-                            },
-                          );
+                          if (!_timerActive) {
+                            _timer = Timer.periodic(
+                              Duration(seconds: 1),
+                                  (timer) {
+                                _updateLocation(
+                                  gcwMarker.mapPoint.point.latitude,
+                                  gcwMarker.mapPoint.point.longitude,
+                                );
+                              },
+                            );
+                          } else {
+                            _timer.cancel();
+                          }
+                          _timerActive = !_timerActive;
                           setState(() {
-                            //_updateLocation(gcwMarker.mapPoint.point.latitude, gcwMarker.mapPoint.point.longitude, );
                             _popupLayerController.hidePopup();
                           });
                         },
@@ -1112,30 +1103,19 @@ class _GCWMapViewState extends State<GCWMapView> {
 
   void _updateLocation(double latitude, double longitude) async {
     try {
-      //final double latitude = double.parse(_latController.text);
-      //final double longitude = double.parse(_lngController.text);
       try {
-        await Fluttermocklocation().updateMockLocation(latitude, longitude);
-        showSnackBar("Mock location updated: $latitude, $longitude", context);
-        //print("Mock location updated: $latitude, $longitude");
+        Fluttermocklocation().updateMockLocation(latitude, longitude);
+        if (_timerActive) {
+            showSnackBar("Mock location updated: $latitude, $longitude", context);
+        }
       } catch (e) {
         showSnackBar(
             "Error updating the location: $e. Please enable Developer Options on your Android device, <Select mock location app> and choose this app.",
             context,
             duration: 15);
-        //print("Error updating the location: $e");
-        //setState(() {
-        //  _errorString =
-        //  'To use this application, please enable Developer Options on your Android device.\n\nWithin Developer Options select\n\n"Select mock location app"\n\nand choose this app.';
-        //  _error = true;
-        //});
       }
     } catch (e) {
       showSnackBar("Invalid latitude or longitude.", context);
-      //setState(() {
-      //  _errorString = 'Invalid latitude or longitude.';
-      //  _error = true;
-      //});
     }
   }
 
