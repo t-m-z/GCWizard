@@ -234,6 +234,11 @@ class _LicensesState extends State<Licenses> {
               licenseType: ToolLicenseType.MIT,
               licenseUrl: 'https://web.archive.org/web/20240723145110/https://pub.dev/packages/flutter_map_tappable_polyline/license'
             ),
+            ToolLicensePortedCode(context: context, author: 'dariocavada', title: 'Flutter Library: fluttermocklocation',
+                sourceUrl: 'https://web.archive.org/web/20240818082138/https://pub.dev/packages/fluttermocklocation',
+                licenseType: ToolLicenseType.MIT,
+                licenseUrl: 'https://web.archive.org/web/20240818081942/https://pub.dev/packages/fluttermocklocation/license'
+            ),
             ToolLicensePortedCode(context: context, author: '@GitTouch (GitHub)', title: 'Flutter Library: highlight',
               sourceUrl: 'https://web.archive.org/web/20231103183350/https://pub.dev/packages/highlight',
               licenseType: ToolLicenseType.MIT,
