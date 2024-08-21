@@ -2,12 +2,19 @@ import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/l
 import 'package:gc_wizard/utils/collection_utils.dart';
 import 'package:gc_wizard/utils/constants.dart';
 
-Map<String, List<String>> _CODEBOOK_STEINHEIL_V3 = {
+// https://de.wikisource.org/wiki/C._A._Steinheil_und_der_erste_Schreibtelegraph
+// https://www.jmcvey.net/cable/elements/letters1.htm
+// https://web.archive.org/web/20240817181952/https://www.jmcvey.net/cable/elements/letters1.htm
+// https://archive.org/details/telegraphmanualc00shafrich/page/302/mode/2up
+// https://books.google.de/books/about/The_Telegraph_Manual.html?id=2q5LAAAAYAAJ&redir_esc=y
+// Page 178
+
+const Map<String, List<String>> _CODEBOOK_STEINHEIL_V3 = {
   'E': ['h'],
   'I': ['d'],
   'J': ['d'],
 };
-Map<String, List<String>> _CODEBOOK_STEINHEIL_V2 = {
+const Map<String, List<String>> _CODEBOOK_STEINHEIL_V2 = {
   'D': ['c', 'h', ],
   'E': ['g'],
   'I': ['c'],
@@ -16,7 +23,7 @@ Map<String, List<String>> _CODEBOOK_STEINHEIL_V2 = {
   'R': ['g', 'h'],
   'T': ['d', 'g'],
 };
-Map<String, List<String>> _CODEBOOK_STEINHEIL_V1 = {
+const Map<String, List<String>> _CODEBOOK_STEINHEIL_V1 = {
   'A': ['c', 'f', 'h', ],
   'C': ['d', 'f', 'g'],
   'D': ['b', 'g', ],
@@ -77,12 +84,15 @@ Map<String, List<String>> _CODEBOOK_STEINHEIL = {
 };
 
 Segments encodeSteinheil(String input) {
-
-  List<String> inputs = input.split('');
+  List<String> inputs = input.toUpperCase().replaceAll('SCH', '#').replaceAll('CH', '§').split('');
   List<List<String>> result = [];
 
+  _CODEBOOK_STEINHEIL['#'] = ['b', 'd', 'e', 'g']; // SCH
+  _CODEBOOK_STEINHEIL['§'] = ['e', 'f', 'g', 'h']; // CH
   for (int i = 0; i < inputs.length; i++) {
-    if (_CODEBOOK_STEINHEIL[inputs[i].toUpperCase()] != null) result.add(_CODEBOOK_STEINHEIL[inputs[i].toUpperCase()]!);
+    if (_CODEBOOK_STEINHEIL[inputs[i]] != null) {
+      result.add(_CODEBOOK_STEINHEIL[inputs[i].toUpperCase()]!);
+    }
   }
   return Segments(displays: result);
 }
