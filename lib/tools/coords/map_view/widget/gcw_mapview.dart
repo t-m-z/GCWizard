@@ -74,7 +74,7 @@ class GCWMapView extends StatefulWidget {
   _GCWMapViewState createState() => _GCWMapViewState();
 }
 
-class _GCWMapViewState extends State<GCWMapView> with SingleTickerProviderStateMixin{
+class _GCWMapViewState extends State<GCWMapView> {
   late MapMarkerIcon _markerIcon;
 
   final MapController _mapController = MapController();
@@ -100,8 +100,10 @@ class _GCWMapViewState extends State<GCWMapView> with SingleTickerProviderStateM
 
   String _platformVersion = 'Unknown';
   final _fluttermocklocationPlugin = Fluttermocklocation();
-  bool _timerActive = false;
+  bool _timerIsActive = false;
   late Timer _timer;
+  double _mockLatitude = 0.0;
+  double _mockLongitude = 0.0;
 
   LatLngBounds _getBounds() {
     if (widget.points.isEmpty) return _DEFAULT_BOUNDS;
@@ -154,9 +156,6 @@ class _GCWMapViewState extends State<GCWMapView> with SingleTickerProviderStateM
   @override
   void dispose() {
     _cancelLocationSubscription();
-    if (_timerActive) {
-      _timer.cancel();
-    }
 
     super.dispose();
   }
@@ -983,13 +982,14 @@ class _GCWMapViewState extends State<GCWMapView> with SingleTickerProviderStateM
                         style: gcwDialogTextStyle(),
                         copyText: _currentAccuracy!.toString(),
                       ),
-                      _timerActive
+                      _timerIsActive
                           ? GCWIconButton(
                               icon: Icons.stop,
                               iconColor: colors.dialogText(),
                               onPressed: () {
+                                _timerIsActive = false;
                                 _timer.cancel();
-                                _timerActive = false;
+                                showSnackBar(i18n(context, 'coords_map_view_mock_stop'), context);
                                 setState(() {
                                   _popupLayerController.hidePopup();
                                 });
@@ -1039,23 +1039,26 @@ class _GCWMapViewState extends State<GCWMapView> with SingleTickerProviderStateM
                       ),
                       const Spacer(),
                       GCWIconButton(
-                        icon: _timerActive ? Icons.stop : Icons.not_started,
+                        icon: _timerIsActive ? Icons.stop : Icons.not_started,
                         iconColor: colors.dialogText(),
                         onPressed: () {
-                          if (!_timerActive) {
+                          _timerIsActive = !_timerIsActive;
+                          if (_timerIsActive) {
+                            _mockLatitude = gcwMarker.mapPoint.point.latitude;
+                            _mockLongitude = gcwMarker.mapPoint.point.longitude;
                             _timer = Timer.periodic(
-                              Duration(seconds: 1),
-                                  (timer) {
-                                _updateLocation(
-                                  gcwMarker.mapPoint.point.latitude,
-                                  gcwMarker.mapPoint.point.longitude,
-                                );
+                              const Duration(seconds: 1),
+                              (_timer) {
+                                if (_timerIsActive) {
+                                  _updateMockLocation();
+                                }
                               },
                             );
                           } else {
                             _timer.cancel();
+                            showSnackBar(i18n(context, 'coords_map_view_mock_stop'), context);
                           }
-                          _timerActive = !_timerActive;
+
                           setState(() {
                             _popupLayerController.hidePopup();
                           });
@@ -1101,21 +1104,17 @@ class _GCWMapViewState extends State<GCWMapView> with SingleTickerProviderStateM
         ));
   }
 
-  void _updateLocation(double latitude, double longitude) async {
+  void _updateMockLocation() {
     try {
-      try {
-        Fluttermocklocation().updateMockLocation(latitude, longitude);
-        if (_timerActive) {
-            showSnackBar("Mock location updated: $latitude, $longitude", context);
-        }
-      } catch (e) {
-        showSnackBar(
-            "Error updating the location: $e. Please enable Developer Options on your Android device, <Select mock location app> and choose this app.",
-            context,
-            duration: 15);
+      if (_timerIsActive) {
+        Fluttermocklocation().updateMockLocation(_mockLatitude, _mockLongitude);
+        showSnackBar(i18n(context, 'coords_map_view_mock_start') + " $_mockLatitude, $_mockLongitude", context);
       }
     } catch (e) {
-      showSnackBar("Invalid latitude or longitude.", context);
+      showSnackBar(
+          "$e. " + i18n(context, 'coords_map_view_mock_error'),
+          context,
+          duration: 15);
     }
   }
 
