@@ -142,6 +142,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/pollux/widget/pollux.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/polybios/widget/polybios.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/prime_alphabet/widget/prime_alphabet.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/rabbit/widget/rabbit.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/ragbaby/widget/ragbaby.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/rail_fence/widget/rail_fence.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/rc4/widget/rc4.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/reverse/widget/reverse.dart';
@@ -276,6 +277,7 @@ import 'package:gc_wizard/tools/science_and_technology/telegraphs/popham_telegra
 import 'package:gc_wizard/tools/science_and_technology/telegraphs/prussia_telegraph/widget/prussia_telegraph.dart';
 import 'package:gc_wizard/tools/science_and_technology/telegraphs/schilling_canstatt_telegraph/widget/schilling_canstatt_telegraph.dart';
 import 'package:gc_wizard/tools/science_and_technology/telegraphs/semaphore/widget/semaphore.dart';
+import 'package:gc_wizard/tools/science_and_technology/telegraphs/steinheil/widget/steinheil.dart';
 import 'package:gc_wizard/tools/science_and_technology/telegraphs/wheatstone_cooke_5_needles/widget/wheatstone_cooke_5_needles.dart';
 import 'package:gc_wizard/tools/science_and_technology/telegraphs/wigwag/widget/wigwag.dart';
 import 'package:gc_wizard/tools/science_and_technology/teletypewriter/algol/widget/algol.dart';
@@ -705,6 +707,7 @@ void _initStaticToolList() {
       className(const QrCode()),
       className(const QuadraticEquation()),
       className(const Rabbit()),
+      className(const Ragbaby()),
       className(const RailFence()),
       className(const RALColorCodes()),
       className(const RC4()),
@@ -741,6 +744,7 @@ void _initStaticToolList() {
       className(const SQRT3Selection()),
       className(const SQRT5Selection()),
       className(const Stegano()),
+      className(const SteinheilTelegraph()),
       className(const StraddlingCheckerboard()),
       className(const Substitution()),
       className(SubstitutionBreaker()),
