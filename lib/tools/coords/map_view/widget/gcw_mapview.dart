@@ -1039,13 +1039,15 @@ class _GCWMapViewState extends State<GCWMapView> {
                       ),
                       const Spacer(),
                       GCWIconButton(
-                        icon: _timerIsActive ? Icons.stop : Icons.not_started,
+                        //icon: _timerIsActive ? Icons.stop : Icons.not_started,
+                        icon: _timerIsActive ? Icons.swap_horizontal_circle : Icons.not_started,
                         iconColor: colors.dialogText(),
                         onPressed: () {
                           _timerIsActive = !_timerIsActive;
                           if (_timerIsActive) {
                             _mockLatitude = gcwMarker.mapPoint.point.latitude;
                             _mockLongitude = gcwMarker.mapPoint.point.longitude;
+                            showSnackBar(i18n(context, 'coords_map_view_mock_start') + " $_mockLatitude, $_mockLongitude", context);
                             _timer = Timer.periodic(
                               const Duration(seconds: 1),
                               (_timer) {
@@ -1055,8 +1057,12 @@ class _GCWMapViewState extends State<GCWMapView> {
                               },
                             );
                           } else {
-                            _timer.cancel();
-                            showSnackBar(i18n(context, 'coords_map_view_mock_stop'), context);
+                            //_timer.cancel();
+                            //showSnackBar(i18n(context, 'coords_map_view_mock_stop'), context);
+                            _timerIsActive = true;
+                            _mockLatitude = gcwMarker.mapPoint.point.latitude;
+                            _mockLongitude = gcwMarker.mapPoint.point.longitude;
+                            showSnackBar(i18n(context, 'coords_map_view_mock_change') + " $_mockLatitude, $_mockLongitude", context);
                           }
 
                           setState(() {
@@ -1108,7 +1114,7 @@ class _GCWMapViewState extends State<GCWMapView> {
     try {
       if (_timerIsActive) {
         Fluttermocklocation().updateMockLocation(_mockLatitude, _mockLongitude);
-        showSnackBar(i18n(context, 'coords_map_view_mock_start') + " $_mockLatitude, $_mockLongitude", context);
+        //showSnackBar(i18n(context, 'coords_map_view_mock_start') + " $_mockLatitude, $_mockLongitude", context);
       }
     } catch (e) {
       showSnackBar(
