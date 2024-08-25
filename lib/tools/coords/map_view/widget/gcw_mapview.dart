@@ -1047,7 +1047,9 @@ class _GCWMapViewState extends State<GCWMapView> {
                           if (_timerIsActive) {
                             _mockLatitude = gcwMarker.mapPoint.point.latitude;
                             _mockLongitude = gcwMarker.mapPoint.point.longitude;
-                            showSnackBar(i18n(context, 'coords_map_view_mock_start') + " $_mockLatitude, $_mockLongitude", context);
+                            showSnackBar(
+                                i18n(context, 'coords_map_view_mock_start') + " $_mockLatitude, $_mockLongitude",
+                                context);
                             _timer = Timer.periodic(
                               const Duration(seconds: 1),
                               (_timer) {
@@ -1062,7 +1064,9 @@ class _GCWMapViewState extends State<GCWMapView> {
                             _timerIsActive = true;
                             _mockLatitude = gcwMarker.mapPoint.point.latitude;
                             _mockLongitude = gcwMarker.mapPoint.point.longitude;
-                            showSnackBar(i18n(context, 'coords_map_view_mock_change') + " $_mockLatitude, $_mockLongitude", context);
+                            showSnackBar(
+                                i18n(context, 'coords_map_view_mock_change') + " $_mockLatitude, $_mockLongitude",
+                                context);
                           }
 
                           setState(() {
@@ -1112,15 +1116,17 @@ class _GCWMapViewState extends State<GCWMapView> {
 
   void _updateMockLocation() {
     try {
-      if (_timerIsActive) {
-        Fluttermocklocation().updateMockLocation(_mockLatitude, _mockLongitude);
-        //showSnackBar(i18n(context, 'coords_map_view_mock_start') + " $_mockLatitude, $_mockLongitude", context);
+      try {
+        if (_timerIsActive) {
+          Fluttermocklocation().updateMockLocation(_mockLatitude, _mockLongitude);
+          //showSnackBar(i18n(context, 'coords_map_view_mock_start') + " $_mockLatitude, $_mockLongitude", context);
+        }
+      } catch (e) {
+        showSnackBar("$e. " + i18n(context, 'coords_map_view_mock_error'), context, duration: 15);
       }
     } catch (e) {
-      showSnackBar(
-          "$e. " + i18n(context, 'coords_map_view_mock_error'),
-          context,
-          duration: 15);
+      showSnackBar("$e. " + i18n(context, 'coords_map_view_mock_invalid'), context, duration: 15);setState(() {
+      });
     }
   }
 
