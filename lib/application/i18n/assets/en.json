@@ -1996,6 +1996,7 @@
   "coords_map_view_mock_stop": "Mocking location has stopped",
   "coords_map_view_mock_change": "Mocking location changed to",
   "coords_map_view_mock_error": "Please enable Developer Options on your Android device, <Select mock location app> and choose this app.",
+  "coords_map_view_mock_invalid": "Invalid latitude or longitude.",
   "coords_map_view_linedialog_section": "Section",
   "coords_map_view_linedialog_section_bearing_ab": "Bearing A → B",
   "coords_map_view_linedialog_section_bearing_ba": "Bearing B → A",
