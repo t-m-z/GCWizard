@@ -903,7 +903,7 @@ class _GCWMapViewState extends State<GCWMapView> {
     ThemeColors colors = themeColors();
     _GCWMarker gcwMarker = marker as _GCWMarker;
 
-    var height = 100.0;
+    var height = 140.0;
     if (widget.isEditable) height += 50; // for FROM/TO Line Buttons
     if (gcwMarker.mapPoint.isEditable) height += 50; // for Edit Buttons
 
@@ -1038,44 +1038,45 @@ class _GCWMapViewState extends State<GCWMapView> {
                         },
                       ),
                       const Spacer(),
-                      GCWIconButton(
-                        //icon: _timerIsActive ? Icons.stop : Icons.not_started,
-                        icon: _timerIsActive ? Icons.swap_horizontal_circle : Icons.not_started,
-                        iconColor: colors.dialogText(),
-                        onPressed: () {
-                          _timerIsActive = !_timerIsActive;
-                          if (_timerIsActive) {
-                            _mockLatitude = gcwMarker.mapPoint.point.latitude;
-                            _mockLongitude = gcwMarker.mapPoint.point.longitude;
-                            showSnackBar(
-                                i18n(context, 'coords_map_view_mock_start') + " $_mockLatitude, $_mockLongitude",
-                                context);
-                            _timer = Timer.periodic(
-                              const Duration(seconds: 1),
-                              (_timer) {
-                                if (_timerIsActive) {
-                                  _updateMockLocation();
-                                }
-                              },
-                            );
-                          } else {
-                            _timerIsActive = true;
-                            _mockLatitude = gcwMarker.mapPoint.point.latitude;
-                            _mockLongitude = gcwMarker.mapPoint.point.longitude;
-                            showSnackBar(
-                                i18n(context, 'coords_map_view_mock_change') + " $_mockLatitude, $_mockLongitude",
-                                context);
-                          }
-
-                          setState(() {
-                            _popupLayerController.hidePopup();
-                          });
-                        },
-                      ),
-                      const Spacer()
                     ]),
                   ])
                 : Container(),
+            !_isOwnPosition(gcwMarker.mapPoint)
+              ? GCWIconButton(
+                //icon: _timerIsActive ? Icons.stop : Icons.not_started,
+                icon: _timerIsActive ? Icons.swap_horizontal_circle : Icons.not_started,
+                iconColor: colors.dialogText(),
+                onPressed: () {
+                  _timerIsActive = !_timerIsActive;
+                  if (_timerIsActive) {
+                    _mockLatitude = gcwMarker.mapPoint.point.latitude;
+                    _mockLongitude = gcwMarker.mapPoint.point.longitude;
+                    showSnackBar(
+                        i18n(context, 'coords_map_view_mock_start') + " $_mockLatitude, $_mockLongitude",
+                        context);
+                    _timer = Timer.periodic(
+                      const Duration(seconds: 1),
+                          (_timer) {
+                        if (_timerIsActive) {
+                          _updateMockLocation();
+                        }
+                      },
+                    );
+                  } else {
+                    _timerIsActive = true;
+                    _mockLatitude = gcwMarker.mapPoint.point.latitude;
+                    _mockLongitude = gcwMarker.mapPoint.point.longitude;
+                    showSnackBar(
+                        i18n(context, 'coords_map_view_mock_change') + " $_mockLatitude, $_mockLongitude",
+                        context);
+                  }
+
+                  setState(() {
+                    _popupLayerController.hidePopup();
+                  });
+                },
+              )
+              : Container(),
             _isOwnPosition(gcwMarker.mapPoint) || !widget.isEditable
                 ? Container()
                 : _isPolylineDrawing && widget.polylines.isNotEmpty && !_isPolylineDrawingFirstPoint
