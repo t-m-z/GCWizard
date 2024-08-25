@@ -1059,8 +1059,6 @@ class _GCWMapViewState extends State<GCWMapView> {
                               },
                             );
                           } else {
-                            //_timer.cancel();
-                            //showSnackBar(i18n(context, 'coords_map_view_mock_stop'), context);
                             _timerIsActive = true;
                             _mockLatitude = gcwMarker.mapPoint.point.latitude;
                             _mockLongitude = gcwMarker.mapPoint.point.longitude;
@@ -1119,7 +1117,6 @@ class _GCWMapViewState extends State<GCWMapView> {
       try {
         if (_timerIsActive) {
           Fluttermocklocation().updateMockLocation(_mockLatitude, _mockLongitude);
-          //showSnackBar(i18n(context, 'coords_map_view_mock_start') + " $_mockLatitude, $_mockLongitude", context);
         }
       } catch (e) {
         showSnackBar("$e. " + i18n(context, 'coords_map_view_mock_error'), context, duration: 15);
