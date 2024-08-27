@@ -9,7 +9,6 @@ import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_sign_dropdown.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
-import 'package:gc_wizard/common_widgets/spinners/gcw_double_spinner.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_double_textfield.dart';
@@ -134,13 +133,13 @@ class _CoordinatesSettingsState extends State<CoordinatesSettings> {
         GCWTextDivider(
           text: i18n(context, 'settings_coordinates_mock_location_altitude'),
         ),
-        GCWDoubleSpinner(
-          value: Prefs.getDouble(PREFERENCE_COORD_MOCK_LOCATION_ALTITUDE),
-          min: 0.0,
-          max: 5000.0,
-          onChanged: (double value) {
+        GCWIntegerSpinner(
+          value: Prefs.getInt(PREFERENCE_COORD_MOCK_LOCATION_ALTITUDE),
+          min: 0,
+          max: 5000,
+          onChanged: (int value) {
             setState(() {
-              Prefs.setDouble(PREFERENCE_COORD_MOCK_LOCATION_ALTITUDE, value);
+              Prefs.setInt(PREFERENCE_COORD_MOCK_LOCATION_ALTITUDE, value);
             });
           },
         ),
