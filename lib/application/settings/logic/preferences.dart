@@ -15,6 +15,7 @@ const PREFERENCE_COORD_DEFAULT_HEMISPHERE_LATITUDE = 'coord_default_hemisphere_l
 const PREFERENCE_COORD_DEFAULT_HEMISPHERE_LONGITUDE = 'coord_default_hemisphere_longitude';
 const PREFERENCE_COORD_PRECISION_DMM_COPY = 'coord_precision_dmm_copy';
 const PREFERENCE_COORD_VARIABLECOORDINATE_FORMULAS = 'coord_variablecoordinate_formulas';
+const PREFERENCE_COORD_MOCK_LOCATION_ALTITUDE = 'coord_mock_location_altitude';
 const PREFERENCE_DEFAULT_LENGTH_UNIT = 'default_length_unit';
 const PREFERENCE_FAVORITES = 'favorites';
 const PREFERENCE_FORMULASOLVER_FORMULAS = 'formulasolver_formulas';

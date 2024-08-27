@@ -104,6 +104,7 @@ class _GCWMapViewState extends State<GCWMapView> {
   late Timer _timer;
   double _mockLatitude = 0.0;
   double _mockLongitude = 0.0;
+  double _mockAltitude = Prefs.getDouble(PREFERENCE_COORD_MOCK_LOCATION_ALTITUDE);
 
   LatLngBounds _getBounds() {
     if (widget.points.isEmpty) return _DEFAULT_BOUNDS;
@@ -1052,10 +1053,10 @@ class _GCWMapViewState extends State<GCWMapView> {
                     _mockLatitude = gcwMarker.mapPoint.point.latitude;
                     _mockLongitude = gcwMarker.mapPoint.point.longitude;
                     showSnackBar(
-                        i18n(context, 'coords_map_view_mock_start') + " $_mockLatitude, $_mockLongitude",
+                        i18n(context, 'coords_map_view_mock_start') + " $_mockLatitude, $_mockLongitude, $_mockAltitude",
                         context);
                     _timer = Timer.periodic(
-                      const Duration(seconds: 1),
+                      const Duration(milliseconds: 500),
                           (_timer) {
                         if (_timerIsActive) {
                           _updateMockLocation();
@@ -1067,7 +1068,7 @@ class _GCWMapViewState extends State<GCWMapView> {
                     _mockLatitude = gcwMarker.mapPoint.point.latitude;
                     _mockLongitude = gcwMarker.mapPoint.point.longitude;
                     showSnackBar(
-                        i18n(context, 'coords_map_view_mock_change') + " $_mockLatitude, $_mockLongitude",
+                        i18n(context, 'coords_map_view_mock_change') + " $_mockLatitude, $_mockLongitude, $_mockAltitude",
                         context);
                   }
 
@@ -1117,7 +1118,7 @@ class _GCWMapViewState extends State<GCWMapView> {
     try {
       try {
         if (_timerIsActive) {
-          Fluttermocklocation().updateMockLocation(_mockLatitude, _mockLongitude);
+          Fluttermocklocation().updateMockLocation(_mockLatitude, _mockLongitude, altitude: _mockAltitude);
         }
       } catch (e) {
         showSnackBar("$e. " + i18n(context, 'coords_map_view_mock_error'), context, duration: 15);
