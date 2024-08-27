@@ -11,6 +11,7 @@ import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_sign_dropdown.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
+import 'package:gc_wizard/common_widgets/spinners/gcw_double_spinner.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_double_textfield.dart';
@@ -35,8 +36,10 @@ class CoordinatesSettings extends StatefulWidget {
 
 class _CoordinatesSettingsState extends State<CoordinatesSettings> {
   late CoordinateFormat _currentDefaultFormat;
-  var _currentDefaultHemisphereLatitude = Prefs.getString(PREFERENCE_COORD_DEFAULT_HEMISPHERE_LATITUDE);
-  var _currentDefaultHemisphereLongitude = Prefs.getString(PREFERENCE_COORD_DEFAULT_HEMISPHERE_LONGITUDE);
+  var _currentDefaultHemisphereLatitude =
+      Prefs.getString(PREFERENCE_COORD_DEFAULT_HEMISPHERE_LATITUDE);
+  var _currentDefaultHemisphereLongitude =
+      Prefs.getString(PREFERENCE_COORD_DEFAULT_HEMISPHERE_LONGITUDE);
   Ellipsoid _currentDefaultEllipsoid = defaultEllipsoid;
 
   late TextEditingController _controllerAPIKey;
@@ -72,14 +75,19 @@ class _CoordinatesSettingsState extends State<CoordinatesSettings> {
             setState(() {
               _currentDefaultFormat = newValue;
 
-              var typePersistenceKey = persistenceKeyByCoordinateFormatKey(_currentDefaultFormat.type);
-              Prefs.setString(PREFERENCE_COORD_DEFAULT_FORMAT, typePersistenceKey);
+              var typePersistenceKey = persistenceKeyByCoordinateFormatKey(
+                  _currentDefaultFormat.type);
+              Prefs.setString(
+                  PREFERENCE_COORD_DEFAULT_FORMAT, typePersistenceKey);
 
               if (_currentDefaultFormat.subtype == null) {
-                restoreSingleDefaultPreference(PREFERENCE_COORD_DEFAULT_FORMAT_SUBTYPE);
+                restoreSingleDefaultPreference(
+                    PREFERENCE_COORD_DEFAULT_FORMAT_SUBTYPE);
               } else {
-                var subtypePersistenceKey = persistenceKeyByCoordinateFormatKey(_currentDefaultFormat.subtype!);
-                Prefs.setString(PREFERENCE_COORD_DEFAULT_FORMAT_SUBTYPE, subtypePersistenceKey);
+                var subtypePersistenceKey = persistenceKeyByCoordinateFormatKey(
+                    _currentDefaultFormat.subtype!);
+                Prefs.setString(PREFERENCE_COORD_DEFAULT_FORMAT_SUBTYPE,
+                    subtypePersistenceKey);
               }
             });
           },
@@ -89,24 +97,40 @@ class _CoordinatesSettingsState extends State<CoordinatesSettings> {
         ),
         GCWSignDropDown(
             title: i18n(context, 'coords_common_latitude'),
-            itemList: [i18n(context, 'coords_common_north'), i18n(context, 'coords_common_south')],
-            value: _currentDefaultHemisphereLatitude == HemisphereLatitude.North.toString() ? 1 : -1,
+            itemList: [
+              i18n(context, 'coords_common_north'),
+              i18n(context, 'coords_common_south')
+            ],
+            value: _currentDefaultHemisphereLatitude ==
+                    HemisphereLatitude.North.toString()
+                ? 1
+                : -1,
             onChanged: (value) {
               setState(() {
-                _currentDefaultHemisphereLatitude =
-                    value > 0 ? HemisphereLatitude.North.toString() : HemisphereLatitude.South.toString();
-                Prefs.setString(PREFERENCE_COORD_DEFAULT_HEMISPHERE_LATITUDE, _currentDefaultHemisphereLatitude);
+                _currentDefaultHemisphereLatitude = value > 0
+                    ? HemisphereLatitude.North.toString()
+                    : HemisphereLatitude.South.toString();
+                Prefs.setString(PREFERENCE_COORD_DEFAULT_HEMISPHERE_LATITUDE,
+                    _currentDefaultHemisphereLatitude);
               });
             }),
         GCWSignDropDown(
             title: i18n(context, 'coords_common_longitude'),
-            itemList: [i18n(context, 'coords_common_east'), i18n(context, 'coords_common_west')],
-            value: _currentDefaultHemisphereLongitude == HemisphereLongitude.East.toString() ? 1 : -1,
+            itemList: [
+              i18n(context, 'coords_common_east'),
+              i18n(context, 'coords_common_west')
+            ],
+            value: _currentDefaultHemisphereLongitude ==
+                    HemisphereLongitude.East.toString()
+                ? 1
+                : -1,
             onChanged: (value) {
               setState(() {
-                _currentDefaultHemisphereLongitude =
-                    value > 0 ? HemisphereLongitude.East.toString() : HemisphereLongitude.West.toString();
-                Prefs.setString(PREFERENCE_COORD_DEFAULT_HEMISPHERE_LONGITUDE, _currentDefaultHemisphereLongitude);
+                _currentDefaultHemisphereLongitude = value > 0
+                    ? HemisphereLongitude.East.toString()
+                    : HemisphereLongitude.West.toString();
+                Prefs.setString(PREFERENCE_COORD_DEFAULT_HEMISPHERE_LONGITUDE,
+                    _currentDefaultHemisphereLongitude);
               });
             }),
         GCWTextDivider(
@@ -132,13 +156,17 @@ class _CoordinatesSettingsState extends State<CoordinatesSettings> {
 
             switch (_currentDefaultEllipsoid.type) {
               case EllipsoidType.STANDARD:
-                Prefs.setString(PREFERENCE_COORD_DEFAULT_ELLIPSOID_TYPE, EllipsoidType.STANDARD.toString());
-                Prefs.setString(PREFERENCE_COORD_DEFAULT_ELLIPSOID_NAME, ells.name);
+                Prefs.setString(PREFERENCE_COORD_DEFAULT_ELLIPSOID_TYPE,
+                    EllipsoidType.STANDARD.toString());
+                Prefs.setString(
+                    PREFERENCE_COORD_DEFAULT_ELLIPSOID_NAME, ells.name);
                 break;
               case EllipsoidType.USER_DEFINED:
-                Prefs.setString(PREFERENCE_COORD_DEFAULT_ELLIPSOID_TYPE, EllipsoidType.USER_DEFINED.toString());
+                Prefs.setString(PREFERENCE_COORD_DEFAULT_ELLIPSOID_TYPE,
+                    EllipsoidType.USER_DEFINED.toString());
                 Prefs.setDouble(PREFERENCE_COORD_DEFAULT_ELLIPSOID_A, ells.a);
-                Prefs.setDouble(PREFERENCE_COORD_DEFAULT_ELLIPSOID_INVF, ells.invf);
+                Prefs.setDouble(
+                    PREFERENCE_COORD_DEFAULT_ELLIPSOID_INVF, ells.invf);
                 break;
             }
           },
@@ -152,6 +180,19 @@ class _CoordinatesSettingsState extends State<CoordinatesSettings> {
             setState(() {
               _currentAPIKey = value;
               Prefs.setString(PREFERENCE_COORD_DEFAULT_W3W_APIKEY, value);
+            });
+          },
+        ),
+        GCWTextDivider(
+          text: i18n(context, 'settings_coordinates_mock_location_altitude'),
+        ),
+        GCWDoubleSpinner(
+          value: Prefs.getDouble(PREFERENCE_COORD_MOCK_LOCATION_ALTITUDE),
+          min: 0.0,
+          max: 5000.0,
+          onChanged: (double value) {
+            setState(() {
+              Prefs.setDouble(PREFERENCE_COORD_MOCK_LOCATION_ALTITUDE, value);
             });
           },
         ),
