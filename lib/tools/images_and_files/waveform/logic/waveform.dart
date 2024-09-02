@@ -9,23 +9,31 @@ import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 part 'package:gc_wizard/tools/images_and_files/waveform/logic/waveform_datatypes.dart';
 part 'package:gc_wizard/tools/images_and_files/waveform/logic/waveform_data.dart';
 
-SoundfileData getSoundfileData(Uint8List bytes){
+SoundfileData getSoundfileData(Uint8List bytes) {
   switch (getFileType(bytes)) {
     case FileType.WAV:
     case FileType.WMV:
       return WAVContent(bytes);
-    default: return SoundfileData(
-        structure: [],
-        PCMformat: 0,
-        bits: 0,
-        channels: 0,
-        sampleRate: 0,
-        duration: 0.0,
-        amplitudesData: Uint8List.fromList([]));
+    default:
+      return SoundfileData(
+          structure: [],
+          PCMformat: 0,
+          bits: 0,
+          channels: 0,
+          sampleRate: 0,
+          duration: 0.0,
+          amplitudesData: Uint8List.fromList([]));
   }
 }
 
-Future<MorseData> PCMamplitudes2Image({required double duration, required List<double> RMSperPoint, required double maxAmplitude, required int pointsize, required int hScalefactor, required int volume}) async {
+Future<MorseData> PCMamplitudes2Image(
+    {required double duration,
+    required List<double> RMSperPoint,
+    required double maxAmplitude,
+    required double minAmplitude,
+    required int pointsize,
+    required int hScalefactor,
+    required int volume}) async {
   // https://planetcalc.com/8627/
   // PCM audio data is stored as a sequence of signal amplitude samples recorded at regular intervals.
   // One second of the low-quality 8kHz audio consists of 8000 amplitude samples.
@@ -53,10 +61,10 @@ Future<MorseData> PCMamplitudes2Image({required double duration, required List<d
 
   const BOUNDS = 10.0;
 
-  var width = BOUNDS + RMSperPoint.length * hScalefactor + BOUNDS * 1.0;
-  var height = BOUNDS + maxAmplitude + maxAmplitude + BOUNDS;
+  var width = BOUNDS + RMSperPoint.length * hScalefactor + BOUNDS;
+  var height = BOUNDS + maxAmplitude + BOUNDS;
 
-  var threshhold = maxAmplitude * volume / 10;
+  var threshhold = maxAmplitude - (maxAmplitude - minAmplitude) / 3;
 
   List<bool> morseCode = [];
 
@@ -64,51 +72,60 @@ Future<MorseData> PCMamplitudes2Image({required double duration, required List<d
   int durationScaleV = maxAmplitude ~/ 100;
 
   final canvasRecorder = ui.PictureRecorder();
-  final canvas = ui.Canvas(canvasRecorder, ui.Rect.fromLTWH(0, 0, width, height));
+  final canvas =
+      ui.Canvas(canvasRecorder, ui.Rect.fromLTWH(0, 0, width, height));
 
   final paint = Paint()
     ..color = Colors.black
-    ..style = PaintingStyle.fill
+    ..style = PaintingStyle.stroke
     ..strokeWidth = pointsize.toDouble();
 
   canvas.drawRect(Rect.fromLTWH(0, 0, width, height), paint);
 
   paint.color = Colors.white;
   paint.strokeWidth = pointsize.toDouble() * 2;
-  canvas.drawLine(
-      Offset(BOUNDS, height / 2),
-      Offset(BOUNDS + width * pointsize, height / 2),
-      paint);
+  canvas.drawLine(Offset(BOUNDS, height / 4),
+      Offset(BOUNDS + width * pointsize, height / 4), paint);
 
   paint.color = Colors.orangeAccent;
   paint.strokeWidth = pointsize.toDouble();
-  for (int column = 0; column < RMSperPoint.length; column++) {
 
-    if (RMSperPoint[column] > threshhold) {
-      morseCode.add(true);
-    } else {
-      morseCode.add(false);
-    }
+  final path = Path();
 
-    canvas.drawLine(
-        Offset(BOUNDS + 1 + column * hScalefactor, height / 2 - RMSperPoint[column] * durationScaleV),
-        Offset(BOUNDS + 1 + column * hScalefactor, height / 2 + RMSperPoint[column] * durationScaleV),
-        paint);
+  path.moveTo(BOUNDS, 0);
+  path.lineTo(BOUNDS, BOUNDS + maxAmplitude);
+  for (var i = 0; i < RMSperPoint.length; i++) {
+    path.lineTo(BOUNDS + i, BOUNDS + RMSperPoint[i]);
 
-    if (column % durationScaleH == 0) {
+    if (i % durationScaleH == 0) {
       paint.color = Colors.red;
       paint.strokeWidth = pointsize.toDouble() * 2;
       canvas.drawLine(
-          Offset(BOUNDS + 1 + column * hScalefactor, height / 2 - durationScaleV * 10),
-          Offset(BOUNDS + 1 + column * hScalefactor, height / 2 + durationScaleV * 10),
+          Offset(
+              BOUNDS + 1 + i * hScalefactor, height / 4 - durationScaleV * 10),
+          Offset(
+              BOUNDS + 1 + i * hScalefactor, height / 4 + durationScaleV * 10),
           paint);
       paint.color = Colors.orangeAccent;
       paint.strokeWidth = pointsize.toDouble();
     }
-  }
 
-  final img = await canvasRecorder.endRecording().toImage(width.floor(), height.floor());
+    if (RMSperPoint[i] > threshhold) {
+      morseCode.add(false);
+    } else {
+      morseCode.add(true);
+    }
+  }
+  path.lineTo(BOUNDS + RMSperPoint.length - 1, 0);
+
+  canvas.drawPath(path, paint);
+
+  final img = await canvasRecorder
+      .endRecording()
+      .toImage(width.floor(), height.floor());
   final data = await img.toByteData(format: ui.ImageByteFormat.png);
 
-  return MorseData(MorseImage: trimNullBytes(data!.buffer.asUint8List()), MorseCode: morseCode);
+  return MorseData(
+      MorseImage: trimNullBytes(data!.buffer.asUint8List()),
+      MorseCode: morseCode);
 }

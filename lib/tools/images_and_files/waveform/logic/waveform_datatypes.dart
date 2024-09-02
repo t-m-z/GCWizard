@@ -42,7 +42,8 @@ class MorseData {
 
 class AmplitudeData {
   final double maxAmplitude;
+  final double minAmplitude;
   final List<double> Amplitudes;
 
-  AmplitudeData({required this.maxAmplitude, required this.Amplitudes});
+  AmplitudeData({required this.maxAmplitude, required this.minAmplitude, required this.Amplitudes});
 }
