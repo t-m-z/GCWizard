@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'dart:math';
+import 'dart:typed_data';
+import 'dart:ui' as ui;
 
 import 'package:collection/collection.dart';
 import 'package:flutter/gestures.dart';
@@ -26,7 +28,7 @@ import 'package:gc_wizard/common_widgets/gcw_text.dart';
 import 'package:gc_wizard/application/tools/widget/gcw_tool.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output_text.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_parser.dart';
-import 'package:gc_wizard/tools/coords/_common/logic/coordinate_text_formatter.dart';
+import 'package:gc_wizard/tools/coords/_common/widget/coordinate_text_formatter.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
@@ -36,6 +38,7 @@ import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
 import 'package:gc_wizard/tools/coords/map_view/persistence/mapview_persistence_adapter.dart';
 import 'package:gc_wizard/tools/coords/map_view/widget/mappoint_editor.dart';
 import 'package:gc_wizard/tools/coords/map_view/widget/mappolyline_editor.dart';
+
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/default_units_getter.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/length.dart';
 import 'package:gc_wizard/utils/complex_return_types.dart';
@@ -46,6 +49,9 @@ import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:location/location.dart';
 import 'package:prefs/prefs.dart';
+
+part 'package:gc_wizard/tools/coords/map_view/widget/scalebar/gcw_mapview_scalebar.dart';
+part 'package:gc_wizard/tools/coords/map_view/widget/scalebar/gcw_mapview_scalebar_painter.dart';
 
 enum MapMarkerIcon {CROSSLINES, LOCATION}
 
@@ -250,9 +256,7 @@ class _GCWMapViewState extends State<GCWMapView> {
                   menuItemBuilder: (context) => _buildPopupMenuButtons(),
                 )
             ),
-            widget.isEditable
-                ? Positioned(top: 15.0, left: 15.0, child: Column(children: _buildAddButtons()))
-                : Container(),
+            Positioned(top: 15.0, left: 15.0, child: Column(children: _buildAddButtons())),
             Positioned(
               bottom: 5.0,
               left: 5.0,
@@ -318,6 +322,9 @@ class _GCWMapViewState extends State<GCWMapView> {
 
           _showPolylineDialog(polylines.first as _GCWTappablePolyline);
         },
+      ),
+      const GCWMapViewScalebar(
+        alignment: Alignment.bottomLeft,
       ),
       PopupMarkerLayer(
           options: PopupMarkerLayerOptions(
@@ -627,7 +634,7 @@ class _GCWMapViewState extends State<GCWMapView> {
 
   List<Widget> _buildAddButtons() {
     var buttons = [
-      GCWIconButton(
+      widget.isEditable ? GCWIconButton(
         backgroundColor: COLOR_MAP_ICONBUTTONS,
         customIcon: _createIconButtonIcons(iconFromMapMarkerValues(_markerIcon), stacked: Icons.add),
         onPressed: () {
@@ -653,8 +660,8 @@ class _GCWMapViewState extends State<GCWMapView> {
               });
           }
         },
-      ),
-      GCWIconButton(
+      ) : Container(),
+      widget.isEditable ? GCWIconButton(
         backgroundColor: _isPolylineDrawing ? COLOR_MAP_ACTIVATED_ICONBUTTON : COLOR_MAP_ICONBUTTONS,
         customIcon: _isPolylineDrawing
             ? _createIconButtonIcons(Icons.timeline, stacked: Icons.priority_high)
@@ -673,7 +680,7 @@ class _GCWMapViewState extends State<GCWMapView> {
             _isPolylineDrawingFirstPoint = true;
           });
         },
-      ),
+      ) : Container(),
       GCWIconButton(
         backgroundColor: _isPointsHidden ? COLOR_MAP_ACTIVATED_ICONBUTTON : COLOR_MAP_ICONBUTTONS,
         customIcon: _createIconButtonIcons(_negativeIconFromMapMarkerValues(_markerIcon)),
