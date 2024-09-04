@@ -265,11 +265,13 @@ SoundfileData WAVContent(Uint8List bytes) {
         break;
       case 'data':
         sectionContentList = [];
+
         sectionContentList.add(SoundfileDataSectionContent(
             Meaning: 'sign',
             Bytes: bytes.sublist(index, index + 4).join(' '),
             Value: String.fromCharCodes(
                 bytes.sublist(index, index + 4)))); // 4 Byte Big Endian
+
         sectionContentList.add(SoundfileDataSectionContent(
             Meaning: 'size',
             Bytes: bytes.sublist(index + 4, index + 8).join(' '),
@@ -277,8 +279,10 @@ SoundfileData WAVContent(Uint8List bytes) {
                     .getInt32(index + 4, Endian.little)
                     .toString() +
                 ' Byte')); // 4 Byte
+
         dataSize =
             ByteData.sublistView(bytes).getInt32(index + 4, Endian.little);
+        dataSize = min(bytes.length - index - 8, dataSize);
         amplitudesData = bytes.sublist(index + 8, index + 8 + dataSize);
         if (dataSize % 2 == 0) {
           sectionContentList.add(SoundfileDataSectionContent(
@@ -289,10 +293,12 @@ SoundfileData WAVContent(Uint8List bytes) {
               Meaning: 'padding', Bytes: '1 Byte', Value: '')); // 4 Byte
           amplitudesData.add(0);
         }
+
         sectionContentList.add(SoundfileDataSectionContent(
             Meaning: 'duration',
             Bytes: '',
             Value: (dataSize / dataRate).toStringAsFixed(2) + ' s')); // 4 Byte
+
         section = SoundfileDataSection(
             SectionTitle: 'data_chunk', SectionContent: sectionContentList);
         WaveFormDataSectionList.add(section);
@@ -407,18 +413,44 @@ SoundfileData WAVContent(Uint8List bytes) {
 }
 
 AmplitudeData calculateRMSAmplitudes(
+    // https://planetcalc.com/8627/
+    // PCM audio data is stored as a sequence of signal amplitude samples recorded at regular intervals.
+    // One second of the low-quality 8kHz audio consists of 8000 amplitude samples.
+    // To display every point of this fragment as is, you need at least an 8000-pixel wide display.
+    // Therefore, we need an algorithm to reduce the visual representation of the waveform.
+    //
+    // The calculator uses the root mean square (RMS) algorithm to represent a sample set as a single line on the waveform graph.
+    //
+    // Determine the number of graph width points P
+    // Determine the number of samples per point S=T/P, where T - total number of samples
+    //
+    // For every point, calculate RMS:    R= sqrt{ sum{n=1 to S} of s(n)^2}
+    //
+    //    where s(n) - is the n-th sample of a given point
+    //
+    // For every point, draw a vertical line from -R to R
+    //
+    // Audio amplitude samples are stored either as float or integer values in PCM format.
+    // The calculator converts the integer amplitudes to float ones in range (-1...1) to represent the signal waveform on the graph uniformly.
+    // PCM format can store two types of integer data. If the integer sample size is less or equal to 8 bits (one byte), it is stored as an unsigned value.
+    // Otherwise (more than 8 bit), it's two's complement signed.
+    // The calculator transforms 8-bit integer data to float in this way: (s(n)-128)/128.
+    // The greater integer data (16, 24, or 32-bits long) is converted to float as s(n)/|int_min|.
+    // |int_min| equals to 32768; 8388608 or 2147483648 for 16, 24 or 32-bit integer respectively.
+
     {required int PCMformat,
     required int bits,
     required int channels,
     required int sampleRate,
     required Uint8List PCMamplitudesData,
-    required int blocksize,
-    required int vScalefactor}) {
+    required int blocksize}) {
   List<double> RMSperPoint = [];
   double amplitude = 0.0;
   double RMS = 0.0;
   double maxAmplitude = 0.0;
   double minAmplitude = 1000.0;
+
+  double vScalefactor = 1; //3000.0;
 
   int samplBlocksize = blocksize * channels * bits ~/ 8;
 
@@ -450,7 +482,9 @@ AmplitudeData calculateRMSAmplitudes(
         RMS = 0;
 
         maxAmplitude = max(RMSperPoint.last, maxAmplitude);
-        minAmplitude = min(RMSperPoint.last, minAmplitude);
+        if (RMSperPoint.last > 0) {
+          minAmplitude = min(RMSperPoint.last, minAmplitude);
+        }
       }
       sample = sample + 6 * channels;
     }
@@ -510,7 +544,9 @@ AmplitudeData calculateRMSAmplitudes(
         RMS = 0;
 
         maxAmplitude = max(RMSperPoint.last, maxAmplitude);
-        minAmplitude = min(RMSperPoint.last, minAmplitude);
+        if (RMSperPoint.last > 0) {
+          minAmplitude = min(RMSperPoint.last, minAmplitude);
+        }
       }
     }
   }

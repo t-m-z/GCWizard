@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
+import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/gcw_expandable.dart';
@@ -11,6 +12,8 @@ import 'package:gc_wizard/common_widgets/image_viewers/gcw_imageview.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output_text.dart';
+import 'package:gc_wizard/common_widgets/spinners/gcw_dropdown_spinner.dart';
+import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
 import 'package:gc_wizard/tools/images_and_files/animated_image_morse_code/logic/animated_image_morse_code.dart';
 import 'package:gc_wizard/tools/images_and_files/hex_viewer/widget/hex_viewer.dart';
 import 'package:gc_wizard/tools/images_and_files/waveform/logic/waveform.dart';
@@ -40,11 +43,8 @@ class WaveFormState extends State<WaveForm> {
   MorseCodeOutput? _decodedMorse = MorseCodeOutput('', '');
   List<bool> _soundfileMorsecode = [];
 
-  final _currentPointsize = 1;
-  final _currentHScalefactor = 1;
-  final _currentVScalefactor = 3;
-  final _currentVolume = 8;
-  final _currentBlocksize = 4;
+  int _currentTolerance = 0;
+  int _currentBlocksize = 4;
   final _blocksizes = [
     1,
     2,
@@ -97,15 +97,13 @@ class WaveFormState extends State<WaveForm> {
                 sampleRate: _soundfileData.sampleRate,
                 PCMamplitudesData: _soundfileData.amplitudesData,
                 blocksize: _blocksizes[_currentBlocksize],
-                vScalefactor: _currentVScalefactor * 1000);
+            );
             PCMamplitudes2Image(
                     duration: _soundfileData.duration,
                     RMSperPoint: _amplitudesData.Amplitudes,
                     maxAmplitude: _amplitudesData.maxAmplitude,
                     minAmplitude: _amplitudesData.minAmplitude,
-                    pointsize: _currentPointsize,
-                    volume: _currentVolume,
-                    hScalefactor: _currentHScalefactor)
+            )
                 .then((value) {
               setState(() {
                 _soundfileImage = value.MorseImage;
@@ -113,6 +111,7 @@ class WaveFormState extends State<WaveForm> {
                 _decodedMorse = decodeMorseCode(
                   List.filled(_soundfileMorsecode.length, 1),
                   _soundfileMorsecode,
+                  tolerance: 1.2 + _currentTolerance / 10,
                 );
               });
             });
@@ -120,6 +119,41 @@ class WaveFormState extends State<WaveForm> {
         ),
         GCWSoundPlayer(
           file: GCWFile(bytes: _bytes),
+        ),
+        GCWDropDownSpinner(
+          title: i18n(context, 'waveform_settings_waveform_blocksize'),
+          index: _currentBlocksize,
+          items: _blocksizes.map((item) => Text(item.toString(), style: gcwTextStyle())).toList(),
+          onChanged: (value ) {
+            setState(() {
+              _currentBlocksize = value;
+              _amplitudesData = calculateRMSAmplitudes(
+                PCMformat: _soundfileData.PCMformat,
+                bits: _soundfileData.bits,
+                channels: _soundfileData.channels,
+                sampleRate: _soundfileData.sampleRate,
+                PCMamplitudesData: _soundfileData.amplitudesData,
+                blocksize: _blocksizes[_currentBlocksize],
+              );
+              PCMamplitudes2Image(
+                duration: _soundfileData.duration,
+                RMSperPoint: _amplitudesData.Amplitudes,
+                maxAmplitude: _amplitudesData.maxAmplitude,
+                minAmplitude: _amplitudesData.minAmplitude,
+              )
+                  .then((value) {
+                setState(() {
+                  _soundfileImage = value.MorseImage;
+                  _soundfileMorsecode = value.MorseCode;
+                  _decodedMorse = decodeMorseCode(
+                    List.filled(_soundfileMorsecode.length, 1),
+                    _soundfileMorsecode,
+                    tolerance: 1.2 + _currentTolerance / 10,
+                  );
+                });
+              });
+            });
+          },
         ),
         _buildOutput(),
       ],
@@ -147,9 +181,26 @@ class WaveFormState extends State<WaveForm> {
           : Container(),
       GCWExpandableTextDivider(
         text: i18n(context, 'waveform_output_morsecode'),
+        expanded: false,
         suppressTopSpace: false,
         child: Column(
           children: <Widget>[
+            GCWIntegerSpinner(
+              title: i18n(context, 'waveform_settings_morse_tolerance'),
+              min: -12,
+              max: 12,
+              value: _currentTolerance,
+              onChanged: (value ) {
+                setState(() {
+                  _currentTolerance = value;
+                  _decodedMorse = decodeMorseCode(
+                    List.filled(_soundfileMorsecode.length, 1),
+                    _soundfileMorsecode,
+                    tolerance: 1.2 + _currentTolerance / 10,
+                  );
+                });
+              },
+            ),
             GCWOutputText(text: _decodedMorse!.morseCode),
             GCWOutputText(
               text: _decodedMorse!.text,
@@ -159,6 +210,7 @@ class WaveFormState extends State<WaveForm> {
       ),
       GCWExpandableTextDivider(
         text: i18n(context, 'waveform_output_section_structure'),
+        expanded: false,
         suppressTopSpace: false,
         child: Column(
           children: output,
