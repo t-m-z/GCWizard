@@ -50,6 +50,7 @@ Future<MorseData> PCMamplitudes2Image(
   var height = BOUNDS + maxAmplitude + BOUNDS;
 
   List<bool> morseCode = [];
+  Map<double, int> pitches = {};
 
   //int durationScaleH = RMSperPoint.length ~/ duration;
   //int durationScaleV = maxAmplitude ~/ 100 ;
@@ -73,11 +74,17 @@ Future<MorseData> PCMamplitudes2Image(
   paint.color = Colors.orangeAccent;
   paint.strokeWidth = 2.0;
 
+  final segment = (maxAmplitude - minAmplitude) / 265;
   final path = Path();
 
   path.moveTo(BOUNDS, 0);
   path.lineTo(BOUNDS, BOUNDS + maxAmplitude);
   for (var i = 0; i < RMSperPoint.length; i++) {
+    if (pitches[RMSperPoint[i]] == null) {
+      pitches[RMSperPoint[i]] = 1;
+    } else {
+      pitches[RMSperPoint[i]] = pitches[RMSperPoint[i]] + 1;
+    }
     RMSperPoint[i] = RMSperPoint[i] * vScaleFactor;
     path.lineTo(BOUNDS + i, BOUNDS + maxAmplitude - RMSperPoint[i]);
 
@@ -94,7 +101,7 @@ Future<MorseData> PCMamplitudes2Image(
     //   paint.strokeWidth = 2.0;
     // }
 
-    if (_highPitch(RMSperPoint[i])) {
+    if (_highPitch(RMSperPoint[i], segment)) {
     //if (RMSperPoint[i] > threshhold) {
       morseCode.add(false);
     } else {
@@ -124,4 +131,12 @@ Future<MorseData> PCMamplitudes2Image(
   return MorseData(
       MorseImage: trimNullBytes(data!.buffer.asUint8List()),
       MorseCode: morseCode);
+}
+
+bool _highPitch(double pitch, double segment) {
+  if (pitch > (segment * 128)) {
+    return true;
+  } else {
+    return false;
+  }
 }
