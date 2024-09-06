@@ -51,8 +51,8 @@ Future<MorseData> PCMamplitudes2Image(
 
   List<bool> morseCode = [];
 
-  int durationScaleH = RMSperPoint.length ~/ duration;
-  int durationScaleV = maxAmplitude ~/ 100 ;
+  //int durationScaleH = RMSperPoint.length ~/ duration;
+  //int durationScaleV = maxAmplitude ~/ 100 ;
 
   final canvasRecorder = ui.PictureRecorder();
   final canvas =
@@ -65,10 +65,10 @@ Future<MorseData> PCMamplitudes2Image(
 
   canvas.drawRect(Rect.fromLTWH(0, 0, width, height), paint);
 
-  paint.color = Colors.white;
-  paint.strokeWidth = 2.0;
-  canvas.drawLine(Offset(BOUNDS, height / 4 * 3),
-      Offset(BOUNDS + width, height / 4 * 3), paint);
+  //paint.color = Colors.white;
+  //paint.strokeWidth = 2.0;
+  //canvas.drawLine(Offset(BOUNDS, height / 4 * 3),
+  //    Offset(BOUNDS + width, height / 4 * 3), paint);
 
   paint.color = Colors.orangeAccent;
   paint.strokeWidth = 2.0;
@@ -81,20 +81,21 @@ Future<MorseData> PCMamplitudes2Image(
     RMSperPoint[i] = RMSperPoint[i] * vScaleFactor;
     path.lineTo(BOUNDS + i, BOUNDS + maxAmplitude - RMSperPoint[i]);
 
-    if (i % durationScaleH == 0) {
-      paint.color = Colors.red;
-      paint.strokeWidth = 2.0;
-      canvas.drawLine(
-          Offset(
-              BOUNDS + 1 + i, height / 4 * 3 - durationScaleV),
-          Offset(
-              BOUNDS + 1 + i, height / 4 * 3 + durationScaleV),
-          paint);
-      paint.color = Colors.orangeAccent;
-      paint.strokeWidth = 2.0;
-    }
+    // if (i % durationScaleH == 0) {
+    //   paint.color = Colors.red;
+    //   paint.strokeWidth = 2.0;
+    //   canvas.drawLine(
+    //       Offset(
+    //           BOUNDS + 1 + i, height / 4 * 3 - durationScaleV),
+    //       Offset(
+    //           BOUNDS + 1 + i, height / 4 * 3 + durationScaleV),
+    //       paint);
+    //   paint.color = Colors.orangeAccent;
+    //   paint.strokeWidth = 2.0;
+    // }
 
-    if (RMSperPoint[i] > threshhold) {
+    if (_highPitch(RMSperPoint[i])) {
+    //if (RMSperPoint[i] > threshhold) {
       morseCode.add(false);
     } else {
       morseCode.add(true);
