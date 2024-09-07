@@ -43,7 +43,7 @@ class WaveFormState extends State<WaveForm> {
   MorseCodeOutput? _decodedMorse = MorseCodeOutput('', '');
   List<bool> _soundfileMorsecode = [];
 
-  int _currentTolerance = 0;
+  int _currentTolerance = 12;
   int _currentBlocksize = 4;
   final _blocksizes = [
     1,
@@ -187,8 +187,8 @@ class WaveFormState extends State<WaveForm> {
           children: <Widget>[
             GCWIntegerSpinner(
               title: i18n(context, 'waveform_settings_morse_tolerance'),
-              min: -12,
-              max: 12,
+              min: 0,
+              max: 24,
               value: _currentTolerance,
               onChanged: (value ) {
                 setState(() {
@@ -196,7 +196,7 @@ class WaveFormState extends State<WaveForm> {
                   _decodedMorse = decodeMorseCode(
                     List.filled(_soundfileMorsecode.length, 1),
                     _soundfileMorsecode,
-                    tolerance: 1.2 + _currentTolerance / 10,
+                    tolerance: 1.2 + (_currentTolerance - 12) / 10,
                   );
                 });
               },
