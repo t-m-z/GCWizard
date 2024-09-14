@@ -59,9 +59,11 @@ const Map<int, String> _WAV_FORMAT_CODE = {
 const Map<String, String> _LIST_INFO_CODE = {
   'IARL': 'Location where the subject of the file is archived',
   'IART': 'Artist of the original subject of the file',
-  'ICMS': 'Name of the person or organization that commissioned the original subject of the file',
+  'ICMS':
+      'Name of the person or organization that commissioned the original subject of the file',
   'ICMT': 'General comments about the file or its subject',
-  'ICOP': 'Copyright information about the file (e.g., "Copyright Some Company 2011")',
+  'ICOP':
+      'Copyright information about the file (e.g., "Copyright Some Company 2011")',
   'ICRD': 'Date the subject of the file was created',
   'ICRP': 'Whether and how an image was cropped',
   'IDIM': 'Dimensions of the original subject of the file',
@@ -76,7 +78,8 @@ const Map<String, String> _LIST_INFO_CODE = {
   'IPRD': 'Name of the title the subject was originally intended for',
   'ISBJ': 'Description of the contents of the file (subject)',
   'ISFT': 'Name of the software package used to create the file',
-  'ISRC': 'Name of the person or organization that supplied the original subject of the file',
+  'ISRC':
+      'Name of the person or organization that supplied the original subject of the file',
   'ISRF': 'Original form of the material that was digitized (source form)',
   'ITCH': 'Name of the technician who digitized the subject file',
 };
@@ -133,7 +136,7 @@ SoundfileData WAVContent(Uint8List bytes) {
 
   int index = 0;
   while (index < bytes.length) {
-   switch (index + 4 < bytes.length
+    switch (index + 4 < bytes.length
         ? String.fromCharCodes(bytes.sublist(index, index + 4))
         : String.fromCharCodes(bytes.sublist(index))) {
       case 'RIFF':
@@ -141,16 +144,22 @@ SoundfileData WAVContent(Uint8List bytes) {
         sectionContentList.add(SoundfileDataSectionContent(
             Meaning: 'sign',
             Bytes: bytes.sublist(index, index + 4).join(' '),
-            Value: String.fromCharCodes(bytes.sublist(index, index + 4)))); // 4 Byte Big Endian
+            Value: String.fromCharCodes(
+                bytes.sublist(index, index + 4)))); // 4 Byte Big Endian
         sectionContentList.add(SoundfileDataSectionContent(
             Meaning: 'size',
             Bytes: bytes.sublist(index + 4, index + 8).join(' '),
-            Value: ByteData.sublistView(bytes).getInt32(index + 4, Endian.little).toString() + ' Byte')); // 4 Byte
+            Value: ByteData.sublistView(bytes)
+                    .getInt32(index + 4, Endian.little)
+                    .toString() +
+                ' Byte')); // 4 Byte
         sectionContentList.add(SoundfileDataSectionContent(
             Meaning: 'subtype',
             Bytes: bytes.sublist(index + 8, index + 12).join(' '),
-            Value: String.fromCharCodes(bytes.sublist(index + 8, index + 12)))); // 4 Byte Big Endian
-        section = SoundfileDataSection(SectionTitle: 'riff_header', SectionContent: sectionContentList);
+            Value: String.fromCharCodes(
+                bytes.sublist(index + 8, index + 12)))); // 4 Byte Big Endian
+        section = SoundfileDataSection(
+            SectionTitle: 'riff_header', SectionContent: sectionContentList);
         WaveFormDataSectionList.add(section);
         index = index + 12;
         break;
@@ -159,160 +168,231 @@ SoundfileData WAVContent(Uint8List bytes) {
         sectionContentList.add(SoundfileDataSectionContent(
             Meaning: 'sign',
             Bytes: bytes.sublist(index, index + 4).join(' '),
-            Value: String.fromCharCodes(bytes.sublist(index, index + 4)))); // 4 Byte Big Endian
+            Value: String.fromCharCodes(
+                bytes.sublist(index, index + 4)))); // 4 Byte Big Endian
         sectionContentList.add(SoundfileDataSectionContent(
             Meaning: 'size',
             Bytes: bytes.sublist(index + 4, index + 8).join(' '),
-            Value: ByteData.sublistView(bytes).getInt32(index + 4, Endian.little).toString() + ' Byte')); // 4 Byte
-        int size = ByteData.sublistView(bytes).getInt32(index + 4, Endian.little);
+            Value: ByteData.sublistView(bytes)
+                    .getInt32(index + 4, Endian.little)
+                    .toString() +
+                ' Byte')); // 4 Byte
+        int size =
+            ByteData.sublistView(bytes).getInt32(index + 4, Endian.little);
         sectionContentList.add(SoundfileDataSectionContent(
             Meaning: 'type',
             Bytes: bytes.sublist(index + 8, index + 10).join(' '),
-            Value: ByteData.sublistView(bytes).getInt16(index + 8, Endian.little).toString())); // 2 Byte
-        PCMformat = ByteData.sublistView(bytes).getInt16(index + 8, Endian.little);
+            Value: ByteData.sublistView(bytes)
+                .getInt16(index + 8, Endian.little)
+                .toString())); // 2 Byte
+        PCMformat =
+            ByteData.sublistView(bytes).getInt16(index + 8, Endian.little);
         sectionContentList.add(SoundfileDataSectionContent(
             Meaning: '',
-            Bytes: _WAV_FORMAT_CODE[ByteData.sublistView(bytes).getInt16(index + 8, Endian.little)]!,
+            Bytes: _WAV_FORMAT_CODE[ByteData.sublistView(bytes)
+                .getInt16(index + 8, Endian.little)]!,
             Value: ''));
         sectionContentList.add(SoundfileDataSectionContent(
             Meaning: 'channel',
             Bytes: bytes.sublist(index + 10, index + 12).join(' '),
-            Value: ByteData.sublistView(bytes).getInt16(index + 10, Endian.little).toString())); // 2 Byte
+            Value: ByteData.sublistView(bytes)
+                .getInt16(index + 10, Endian.little)
+                .toString())); // 2 Byte
         sectionContentList.add(SoundfileDataSectionContent(
             Meaning: 'samplerate',
             Bytes: bytes.sublist(index + 12, index + 16).join(' '),
-            Value: ByteData.sublistView(bytes).getInt32(index + 12, Endian.little).toString() + ' Hz')); // 4 Byte
+            Value: ByteData.sublistView(bytes)
+                    .getInt32(index + 12, Endian.little)
+                    .toString() +
+                ' Hz')); // 4 Byte
         sectionContentList.add(SoundfileDataSectionContent(
             Meaning: 'datarate',
             Bytes: bytes.sublist(index + 16, index + 20).join(' '),
-            Value: ByteData.sublistView(bytes).getInt32(index + 16, Endian.little).toString() + ' Byte/s')); // 4 Byte
+            Value: ByteData.sublistView(bytes)
+                    .getInt32(index + 16, Endian.little)
+                    .toString() +
+                ' Byte/s')); // 4 Byte
         sectionContentList.add(SoundfileDataSectionContent(
             Meaning: 'totalsamplelength',
             Bytes: bytes.sublist(index + 20, index + 22).join(' '),
-            Value: ByteData.sublistView(bytes).getInt16(index + 20, Endian.little).toString() + ' Byte')); // 2 Byte
+            Value: ByteData.sublistView(bytes)
+                    .getInt16(index + 20, Endian.little)
+                    .toString() +
+                ' Byte')); // 2 Byte
         sectionContentList.add(SoundfileDataSectionContent(
             Meaning: 'bitspersample',
             Bytes: bytes.sublist(index + 22, index + 24).join(' '),
-            Value: ByteData.sublistView(bytes).getInt16(index + 22, Endian.little).toString())); // 2 Byte
+            Value: ByteData.sublistView(bytes)
+                .getInt16(index + 22, Endian.little)
+                .toString())); // 2 Byte
         if (size > 16) {
           sectionContentList.add(SoundfileDataSectionContent(
               Meaning: 'extensionsize',
               Bytes: bytes.sublist(index + 24, index + 26).join(' '),
-              Value: ByteData.sublistView(bytes).getInt16(index + 24, Endian.little).toString())); // 2 Byte
-          size = ByteData.sublistView(bytes).getInt32(index + 24, Endian.little);
+              Value: ByteData.sublistView(bytes)
+                  .getInt16(index + 24, Endian.little)
+                  .toString())); // 2 Byte
+          size =
+              ByteData.sublistView(bytes).getInt32(index + 24, Endian.little);
           if (size > 0) {
             sectionContentList.add(SoundfileDataSectionContent(
                 Meaning: 'validbits',
                 Bytes: bytes.sublist(index + 26, index + 28).join(' '),
-                Value: ByteData.sublistView(bytes).getInt16(index + 26, Endian.little).toString())); // 2 Byte
+                Value: ByteData.sublistView(bytes)
+                    .getInt16(index + 26, Endian.little)
+                    .toString())); // 2 Byte
             sectionContentList.add(SoundfileDataSectionContent(
                 Meaning: 'channelmask',
                 Bytes: bytes.sublist(index + 28, index + 32).join(' '),
-                Value: _WAVchannelMask(ByteData.sublistView(bytes).getInt32(index + 24, Endian.little)))); // 4 Byte
+                Value: _WAVchannelMask(ByteData.sublistView(bytes)
+                    .getInt32(index + 24, Endian.little)))); // 4 Byte
             sectionContentList.add(SoundfileDataSectionContent(
                 Meaning: '',
-                Bytes: _WAVchannelMaskAnalyze(ByteData.sublistView(bytes).getInt32(index + 24, Endian.little)),
+                Bytes: _WAVchannelMaskAnalyze(ByteData.sublistView(bytes)
+                    .getInt32(index + 24, Endian.little)),
                 Value: '')); // 4 Byte
             sectionContentList.add(SoundfileDataSectionContent(
                 Meaning: 'subformat',
                 Bytes: bytes.sublist(index + 32, index + 48).join(' '),
-                Value: String.fromCharCodes(bytes.sublist(index + 32, index + 48)))); // 16 Byte
+                Value: String.fromCharCodes(
+                    bytes.sublist(index + 32, index + 48)))); // 16 Byte
           }
         }
-        section = SoundfileDataSection(SectionTitle: 'format_chunk', SectionContent: sectionContentList);
+        section = SoundfileDataSection(
+            SectionTitle: 'format_chunk', SectionContent: sectionContentList);
         WaveFormDataSectionList.add(section);
         index = index + 24;
         break;
       case 'data':
         sectionContentList = [];
+
         sectionContentList.add(SoundfileDataSectionContent(
             Meaning: 'sign',
             Bytes: bytes.sublist(index, index + 4).join(' '),
-            Value: String.fromCharCodes(bytes.sublist(index, index + 4)))); // 4 Byte Big Endian
+            Value: String.fromCharCodes(
+                bytes.sublist(index, index + 4)))); // 4 Byte Big Endian
+
         sectionContentList.add(SoundfileDataSectionContent(
             Meaning: 'size',
             Bytes: bytes.sublist(index + 4, index + 8).join(' '),
-            Value: ByteData.sublistView(bytes).getInt32(index + 4, Endian.little).toString() + ' Byte')); // 4 Byte
-        dataSize = ByteData.sublistView(bytes).getInt32(index + 4, Endian.little);
+            Value: ByteData.sublistView(bytes)
+                    .getInt32(index + 4, Endian.little)
+                    .toString() +
+                ' Byte')); // 4 Byte
+
+        dataSize =
+            ByteData.sublistView(bytes).getInt32(index + 4, Endian.little);
+        dataSize = min(bytes.length - index - 8, dataSize);
         amplitudesData = bytes.sublist(index + 8, index + 8 + dataSize);
         if (dataSize % 2 == 0) {
-          sectionContentList.add(SoundfileDataSectionContent(Meaning: 'padding', Bytes: 'no padding', Value: ''));
+          sectionContentList.add(SoundfileDataSectionContent(
+              Meaning: 'padding', Bytes: 'no padding', Value: ''));
         } // 4 Byte
         else {
-          sectionContentList.add(SoundfileDataSectionContent(Meaning: 'padding', Bytes: '1 Byte', Value: '')); // 4 Byte
+          sectionContentList.add(SoundfileDataSectionContent(
+              Meaning: 'padding', Bytes: '1 Byte', Value: '')); // 4 Byte
           amplitudesData.add(0);
         }
+
         sectionContentList.add(SoundfileDataSectionContent(
-            Meaning: 'duration', Bytes: '', Value: (dataSize / dataRate).toStringAsFixed(2) + ' s')); // 4 Byte
-        section = SoundfileDataSection(SectionTitle: 'data_chunk', SectionContent: sectionContentList);
+            Meaning: 'duration',
+            Bytes: '',
+            Value: (dataSize / dataRate).toStringAsFixed(2) + ' s')); // 4 Byte
+
+        section = SoundfileDataSection(
+            SectionTitle: 'data_chunk', SectionContent: sectionContentList);
         WaveFormDataSectionList.add(section);
         index = index + 8 + dataSize;
         break;
       case 'LIST':
-      // https://www.recordingblogs.com/wiki/list-chunk-of-a-wave-file
+        // https://www.recordingblogs.com/wiki/list-chunk-of-a-wave-file
         sectionContentList = [];
         sectionContentList.add(SoundfileDataSectionContent(
             Meaning: 'sign',
             Bytes: bytes.sublist(index, index + 4).join(' '),
-            Value: String.fromCharCodes(bytes.sublist(index, index + 4)))); // 4 Byte Big Endian
+            Value: String.fromCharCodes(
+                bytes.sublist(index, index + 4)))); // 4 Byte Big Endian
         sectionContentList.add(SoundfileDataSectionContent(
             Meaning: 'size',
             Bytes: bytes.sublist(index + 4, index + 8).join(' '),
-            Value: ByteData.sublistView(bytes).getInt32(index + 4, Endian.little).toString() + ' Byte')); // 4 Byte
-        int size = ByteData.sublistView(bytes).getInt32(index + 4, Endian.little);
+            Value: ByteData.sublistView(bytes)
+                    .getInt32(index + 4, Endian.little)
+                    .toString() +
+                ' Byte')); // 4 Byte
+        int size =
+            ByteData.sublistView(bytes).getInt32(index + 4, Endian.little);
         sectionContentList.add(SoundfileDataSectionContent(
             Meaning: 'type',
             Bytes: bytes.sublist(index + 8, index + 12).join(' '),
-            Value: String.fromCharCodes(bytes.sublist(index + 8, index + 12)))); // 4 Byte
-        String type = String.fromCharCodes(bytes.sublist(index + 8, index + 12));
+            Value: String.fromCharCodes(
+                bytes.sublist(index + 8, index + 12)))); // 4 Byte
+        String type =
+            String.fromCharCodes(bytes.sublist(index + 8, index + 12));
         if (type == 'INFO') {
           int listIndex = index + 12;
           while (listIndex < index + 8 + size) {
             sectionContentList.add(SoundfileDataSectionContent(
                 Meaning: 'subtype',
                 Bytes: bytes.sublist(listIndex, listIndex + 4).join(' '),
-                Value: String.fromCharCodes(bytes.sublist(listIndex, listIndex + 4)))); // 4 Byte
+                Value: String.fromCharCodes(
+                    bytes.sublist(listIndex, listIndex + 4)))); // 4 Byte
             sectionContentList.add(SoundfileDataSectionContent(
                 Meaning: '',
-                Bytes: _LIST_INFO_CODE[String.fromCharCodes(bytes.sublist(listIndex, listIndex + 4))].toString(),
+                Bytes: _LIST_INFO_CODE[String.fromCharCodes(
+                        bytes.sublist(listIndex, listIndex + 4))]
+                    .toString(),
                 Value: ''));
             sectionContentList.add(SoundfileDataSectionContent(
                 Meaning: 'size',
                 Bytes: bytes.sublist(listIndex + 4, listIndex + 8).join(' '),
-                Value:
-                ByteData.sublistView(bytes).getInt32(listIndex + 4, Endian.little).toString() + ' Byte')); // 4 Byte
-            int size = ByteData.sublistView(bytes).getInt32(listIndex + 4, Endian.little);
+                Value: ByteData.sublistView(bytes)
+                        .getInt32(listIndex + 4, Endian.little)
+                        .toString() +
+                    ' Byte')); // 4 Byte
+            int size = ByteData.sublistView(bytes)
+                .getInt32(listIndex + 4, Endian.little);
             sectionContentList.add(SoundfileDataSectionContent(
                 Meaning: 'data',
-                Bytes: bytes.sublist(listIndex + 8, listIndex + 8 + size).join(' '),
-                Value: String.fromCharCodes(bytes.sublist(listIndex + 8, listIndex + 8 + size)))); // 4 Byte
+                Bytes: bytes
+                    .sublist(listIndex + 8, listIndex + 8 + size)
+                    .join(' '),
+                Value: String.fromCharCodes(bytes.sublist(
+                    listIndex + 8, listIndex + 8 + size)))); // 4 Byte
             listIndex = listIndex + 8 + size;
           }
         } else {
           sectionContentList.add(SoundfileDataSectionContent(
               Meaning: 'data',
               Bytes: bytes.sublist(index + 8, index + 8 + size).join(' '),
-              Value: String.fromCharCodes(bytes.sublist(index + 8, index + 8 + size)))); // 4 Byte
+              Value: String.fromCharCodes(
+                  bytes.sublist(index + 8, index + 8 + size)))); // 4 Byte
         }
-        section = SoundfileDataSection(SectionTitle: 'metadata_chunk', SectionContent: sectionContentList);
+        section = SoundfileDataSection(
+            SectionTitle: 'metadata_chunk', SectionContent: sectionContentList);
         WaveFormDataSectionList.add(section);
         index = index + 8 + size;
         break;
       case 'id3 ':
-      // https://id3.org/id3v2.3.0#Private_frame
+        // https://id3.org/id3v2.3.0#Private_frame
         sectionContentList = [];
         sectionContentList.add(SoundfileDataSectionContent(
             Meaning: 'sign',
             Bytes: bytes.sublist(index, index + 4).join(' '),
-            Value: String.fromCharCodes(bytes.sublist(index, index + 4)))); // 4 Byte Big Endian
+            Value: String.fromCharCodes(
+                bytes.sublist(index, index + 4)))); // 4 Byte Big Endian
         sectionContentList.add(SoundfileDataSectionContent(
             Meaning: 'size',
             Bytes: bytes.sublist(index + 4, index + 8).join(' '),
-            Value: ByteData.sublistView(bytes).getInt32(index + 4, Endian.little).toString() + ' Byte')); // 4 Byte
-        int size = ByteData.sublistView(bytes).getInt32(index + 4, Endian.little);
+            Value: ByteData.sublistView(bytes)
+                    .getInt32(index + 4, Endian.little)
+                    .toString() +
+                ' Byte')); // 4 Byte
+        int size =
+            ByteData.sublistView(bytes).getInt32(index + 4, Endian.little);
 //        sectionContentList.add(SoundfileDataSectionContent(Meaning: 'data', Bytes: bytes.sublist(index + 8, index + 8 + size).join(' '), Value: String.fromCharCodes(bytes.sublist(index + 8, index + 8 + size)))); // 4 Byte
         //sectionContentList.addAll(analyzeID3Chunk(bytes.sublist(index + 8, index + 8 + size)));
-        section = SoundfileDataSection(SectionTitle: 'id3_chunk', SectionContent: sectionContentList);
+        section = SoundfileDataSection(
+            SectionTitle: 'id3_chunk', SectionContent: sectionContentList);
         WaveFormDataSectionList.add(section);
         index = index + 8 + size;
         break;
@@ -333,12 +413,44 @@ SoundfileData WAVContent(Uint8List bytes) {
 }
 
 AmplitudeData calculateRMSAmplitudes(
-    {required int PCMformat, required int bits, required int channels, required int sampleRate, required Uint8List PCMamplitudesData, required int blocksize, required int vScalefactor}) {
+    // https://planetcalc.com/8627/
+    // PCM audio data is stored as a sequence of signal amplitude samples recorded at regular intervals.
+    // One second of the low-quality 8kHz audio consists of 8000 amplitude samples.
+    // To display every point of this fragment as is, you need at least an 8000-pixel wide display.
+    // Therefore, we need an algorithm to reduce the visual representation of the waveform.
+    //
+    // The calculator uses the root mean square (RMS) algorithm to represent a sample set as a single line on the waveform graph.
+    //
+    // Determine the number of graph width points P
+    // Determine the number of samples per point S=T/P, where T - total number of samples
+    //
+    // For every point, calculate RMS:    R= sqrt{ sum{n=1 to S} of s(n)^2}
+    //
+    //    where s(n) - is the n-th sample of a given point
+    //
+    // For every point, draw a vertical line from -R to R
+    //
+    // Audio amplitude samples are stored either as float or integer values in PCM format.
+    // The calculator converts the integer amplitudes to float ones in range (-1...1) to represent the signal waveform on the graph uniformly.
+    // PCM format can store two types of integer data. If the integer sample size is less or equal to 8 bits (one byte), it is stored as an unsigned value.
+    // Otherwise (more than 8 bit), it's two's complement signed.
+    // The calculator transforms 8-bit integer data to float in this way: (s(n)-128)/128.
+    // The greater integer data (16, 24, or 32-bits long) is converted to float as s(n)/|int_min|.
+    // |int_min| equals to 32768; 8388608 or 2147483648 for 16, 24 or 32-bit integer respectively.
 
+    {required int PCMformat,
+    required int bits,
+    required int channels,
+    required int sampleRate,
+    required Uint8List PCMamplitudesData,
+    required int blocksize}) {
   List<double> RMSperPoint = [];
   double amplitude = 0.0;
   double RMS = 0.0;
   double maxAmplitude = 0.0;
+  double minAmplitude = 1000.0;
+
+  double vScalefactor = 1; //3000.0;
 
   int samplBlocksize = blocksize * channels * bits ~/ 8;
 
@@ -356,7 +468,10 @@ AmplitudeData calculateRMSAmplitudes(
         LPCM[c] = LPCMc;
       }
       for (int c = 0; c < channels * 2; c++) {
-        amplitude = amplitude + LPCM[c]![0] * 256 * 256 + LPCM[c]![1] * 256 + LPCM[c]![2];
+        amplitude = amplitude +
+            LPCM[c]![0] * 256 * 256 +
+            LPCM[c]![1] * 256 +
+            LPCM[c]![2];
       }
       amplitude = amplitude / channels / 2 / 8388608;
 
@@ -367,24 +482,33 @@ AmplitudeData calculateRMSAmplitudes(
         RMS = 0;
 
         maxAmplitude = max(RMSperPoint.last, maxAmplitude);
+        if (RMSperPoint.last > 0) {
+          minAmplitude = min(RMSperPoint.last, minAmplitude);
+        }
       }
       sample = sample + 6 * channels;
     }
   } else {
     // 8 Bit, 16 Bit, 32 Bit
-    for (int sample = 0; sample < PCMamplitudesData.length; sample = sample + bits ~/ 8 * channels) {
+    for (int sample = 0;
+        sample < PCMamplitudesData.length;
+        sample = sample + bits ~/ 8 * channels) {
       amplitude = 0.0;
       switch (bits) {
         case 8:
           for (int i = 0; i < channels; i++) {
-            amplitude = amplitude + (ByteData.sublistView(PCMamplitudesData).getInt8(sample + i) - 128);
+            amplitude = amplitude +
+                (ByteData.sublistView(PCMamplitudesData).getInt8(sample + i) -
+                    128);
           }
           amplitude = amplitude / channels / 128;
           break;
         case 16:
           if (sample + 4 < PCMamplitudesData.length) {
             for (int i = 0; i < channels; i++) {
-              amplitude = amplitude + ByteData.sublistView(PCMamplitudesData).getInt16(sample + i * 2, Endian.little);
+              amplitude = amplitude +
+                  ByteData.sublistView(PCMamplitudesData)
+                      .getInt16(sample + i * 2, Endian.little);
             }
             amplitude = amplitude / channels / 32768;
           }
@@ -394,7 +518,9 @@ AmplitudeData calculateRMSAmplitudes(
             // PCM
             if (sample + 8 < PCMamplitudesData.length) {
               for (int i = 0; i < channels; i++) {
-                amplitude = amplitude + ByteData.sublistView(PCMamplitudesData).getInt32(sample + i * 4, Endian.little);
+                amplitude = amplitude +
+                    ByteData.sublistView(PCMamplitudesData)
+                        .getInt32(sample + i * 4, Endian.little);
               }
               amplitude = amplitude / channels / 2147483648;
             }
@@ -402,8 +528,9 @@ AmplitudeData calculateRMSAmplitudes(
             // IEEE Float 32
             if (sample + 8 < PCMamplitudesData.length) {
               for (int i = 0; i < channels; i++) {
-                amplitude =
-                    amplitude + ByteData.sublistView(PCMamplitudesData).getFloat32(sample + i * 4, Endian.little);
+                amplitude = amplitude +
+                    ByteData.sublistView(PCMamplitudesData)
+                        .getFloat32(sample + i * 4, Endian.little);
               }
               amplitude = amplitude / channels;
             }
@@ -417,10 +544,16 @@ AmplitudeData calculateRMSAmplitudes(
         RMS = 0;
 
         maxAmplitude = max(RMSperPoint.last, maxAmplitude);
+        if (RMSperPoint.last > 0) {
+          minAmplitude = min(RMSperPoint.last, minAmplitude);
+        }
       }
     }
   }
   RMSperPoint.add(sqrt(RMS / sampleRate) * vScalefactor);
 
-  return AmplitudeData(maxAmplitude: maxAmplitude, Amplitudes: RMSperPoint);
+  return AmplitudeData(
+      maxAmplitude: maxAmplitude,
+      minAmplitude: minAmplitude,
+      Amplitudes: RMSperPoint);
 }

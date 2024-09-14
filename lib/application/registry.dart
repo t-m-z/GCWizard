@@ -1721,7 +1721,14 @@ void initializeRegistry(BuildContext context) {
       ToolCategory.IMAGES_AND_FILES
     ], searchKeys: const [
       'waveform',
-    ]),
+    ],
+        licenses: [ToolLicensePortedCode(
+            context: context,
+            author: 'Anton, Timur',
+            title: 'Planet calc - Audio file waveform',
+            sourceUrl:
+            'https://web.archive.org/web/20240902215729/https://planetcalc.com/8627/',
+            licenseType: ToolLicenseType.CCBYSA3)]),
     GCWTool(
         tool: const WherigoSelection(),
         id: 'wherigourwigo_selection',

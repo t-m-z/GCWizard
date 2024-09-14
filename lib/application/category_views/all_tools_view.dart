@@ -828,6 +828,7 @@ void _initStaticToolList() {
       className(const WaveForm()),
       className(const WaypointProjectionGeodetic()),
       className(const WaypointProjectionRhumbline()),
+      className(const WeddingAnniversaries()),
       className(const Weekday()),
       className(const WetBulbTemperature()),
       className(const WetBulbGlobeTemperature()),
