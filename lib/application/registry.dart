@@ -1698,10 +1698,24 @@ void initializeRegistry(BuildContext context) {
     ], licenses: [
       ToolLicenseOnlineArticle(
         context: context,
+        author: 'John W. Pepi, Maynard, MA',
+        title: 'Summer Simmer Index - The NEW SUMMER SIMMER INDEX - A COMFORT INDEX FOR THE NEW MILLENNIUM',
+        sourceUrl:
+        'https://web.archive.org/web/20240910160710/http://summersimmer.com/home.htm',
+      ),
+      ToolLicenseOnlineArticle(
+        context: context,
         author: 'vCalc',
         title: 'Summer Simmer Index',
         sourceUrl:
         'https://web.archive.org/web/20240724192214/https://ncalculators.com/meteorology/summer-simmer-index-calculator.htm',
+      ),
+      ToolLicenseOnlineArticle(
+        context: context,
+        author: 'ncalculators.com',
+        title: 'Summer Simmer Index Calculator',
+        sourceUrl:
+        'https://web.archive.org/web/20240910160327/https://ncalculators.com/meteorology/summer-simmer-index-calculator.htm',
       )
     ]),
     GCWTool(tool: const Windchill(), id: 'windchill', searchKeys: const [
@@ -2456,7 +2470,7 @@ void initializeRegistry(BuildContext context) {
       ],
     ),
     GCWTool(
-        tool: const MapView(),
+        tool: MapView(),
         autoScroll: false,
         suppressToolMargin: true,
         id: 'coords_openmap',
@@ -2584,7 +2598,23 @@ void initializeRegistry(BuildContext context) {
           'coordinates',
           'coordinates_centerthreepoints',
         ],
-        licenses: const []),
+        licenses: [
+          ToolLicensePortedCode(
+            context: context,
+            author: 'Kirk Kuykendall, Charles \'@cffk\' Karney (gis.stackexchange.com)',
+            title: 'Answer: How can I use ArcGIS 10.1 to find a geodesic equidistant point defined by three points?',
+            sourceUrl: 'http://web.archive.org/web/20240909104633/https://gis.stackexchange.com/revisions/63083/4',
+            licenseType: ToolLicenseType.CCBYSA3,
+            licenseUrl: 'http://web.archive.org/web/20240909124039/https://gis.stackexchange.com/posts/63083/timeline'
+          ),
+          ToolLicenseOnlineArticle(
+            context: context,
+            author: 'Rod Stephens',
+            year: 2001, month: 11, day: 8,
+            title: 'Draw a circle through three points in C#',
+            sourceUrl: 'http://web.archive.org/web/20140428104056/http://blog.csharphelper.com/2011/11/08/draw-a-circle-through-three-points-in-c.aspx'
+          )
+        ]),
     GCWTool(
         tool: const SegmentLine(),
         id: 'coords_segmentline',
