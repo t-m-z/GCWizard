@@ -32,16 +32,7 @@ class _NightlyState extends State<Nightly> {
         GCWTextDivider(text: 'Near Term Previews'),
         GCWColumnedMultilineOutput(
           data: [
-            [i18n(context, 'cryptography_selection_title'), 'Postcode/Zielcode'],
-            [i18n(context, 'cryptography_selection_title'), 'Slash & Pipes'],
-            [i18n(context, 'cryptography_selection_title'), 'Porta'],
-            [i18n(context, 'cryptography_selection_title'), 'Judoon'],
-            [i18n(context, 'cryptography_selection_title'), 'Ragbaby'],
-            [i18n(context, 'cryptography_selection_title'), 'Gauss Weber Telegraph'],
-            [i18n(context, 'games_selection_title'), 'Logical Supporter\nUnterstützen bei Logik-Rätsel'],
-            [i18n(context, 'symboltables_selection_title'), 'Ice Lolly Font'],
-            [i18n(context, 'symboltables_selection_title'), 'Steinheil Telegrafenzeichen'],
-            ['Enhancement', 'DTMF\noutput tones'],
+            ['n/a', '']
           ],
           flexValues: const [3, 7],),
         GCWTextDivider(text: 'Long Term Previews'),
