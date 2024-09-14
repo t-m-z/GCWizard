@@ -90,6 +90,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/amsco/widget/amsco.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/atbash/widget/atbash.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/avemaria/widget/avemaria.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/bacon/widget/bacon.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/bacon/widget/bacon_analyze.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/battleship/widget/battleship.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/beghilos/widget/beghilos.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/bifid/widget/bifid.dart';
@@ -126,11 +127,11 @@ import 'package:gc_wizard/tools/crypto_and_encodings/gronsfeld/widget/gronsfeld.
 import 'package:gc_wizard/tools/crypto_and_encodings/hashes/hash_breaker/widget/hash_breaker.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/homophone/widget/homophone.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/houdini/widget/houdini.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/judoon/widget/judoon.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/kamasutra/widget/kamasutra.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/kenny/widget/kenny.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/language_games/chicken_language/widget/chicken_language.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/language_games/duck_speak/widget/duck_speak.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/language_games/judoon/widget/judoon.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/language_games/pig_latin/widget/pig_latin.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/language_games/robber_language/widget/robber_language.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/language_games/spoon_language/widget/spoon_language.dart';
@@ -566,6 +567,7 @@ void _initStaticToolList() {
       className(const BabylonNumbersSelection()),
       className(const Bacon()),
       className(const Ballistics()),
+      className(const BaconAnalyze()),
       className(const BaseSelection()),
       className(const Battleship()),
       className(const BCDSelection()),
@@ -696,7 +698,7 @@ void _initStaticToolList() {
       className(const MagicEyeSolver()),
       className(const MathematicalConstants()),
       className(const Malbolge()),
-      className(const MapView()),
+      className(MapView()),
       className(const MayaCalendarSelection()),
       className(const MayaNumbersSelection()),
       className(const MexicanArmyCipherWheel()),
