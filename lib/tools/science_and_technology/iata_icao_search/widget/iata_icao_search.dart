@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
-import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
+import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output_text.dart';
@@ -95,8 +95,8 @@ class _IATAICAOSearchState extends State<IATAICAOSearch> {
                   ),
                 ],
               ),
-        GCWButton(
-          text: i18n(context, 'common_search'),
+        GCWIconButton(
+          icon: Icons.search,
           onPressed: () {
             setState(() {
               _output = _buildOutput();

@@ -2,7 +2,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
-import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
+import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/dialogs/gcw_dialog.dart';
 import 'package:gc_wizard/common_widgets/gcw_openfile.dart';
 import 'package:gc_wizard/common_widgets/gcw_snackbar.dart';
@@ -160,8 +160,8 @@ class _PietState extends State<Piet> {
             });
           },
         ),
-        GCWButton(
-          text: i18n(context, 'common_start'),
+        GCWIconButton(
+          icon: Icons.play_arrow,
           onPressed: () {
             setState(() {
               _calcGeneratorOutput();

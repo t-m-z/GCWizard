@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
-import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
+import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
@@ -67,8 +67,8 @@ class _UrwigoHashBreakerState extends State<UrwigoHashBreaker> {
                       });
                     },
                   ),
-                  GCWButton(
-                    text: i18n(context, 'common_submit_button_text'),
+                  GCWIconButton(
+                    icon: Icons.search,
                     onPressed: () {
                       setState(() {
                         _currentOutputAlphabetical = breakUrwigoHash(_currentInput, HASH.ALPHABETICAL) ?? '';

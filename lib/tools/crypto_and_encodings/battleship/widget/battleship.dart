@@ -4,7 +4,6 @@ import 'package:flutter/services.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
-import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/clipboard/gcw_clipboard.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
@@ -124,8 +123,8 @@ class BattleshipState extends State<Battleship> {
                 });
               },
             ),
-      GCWButton(
-        text: i18n(context, 'common_start'),
+      GCWIconButton(
+        icon: Icons.play_arrow,
         onPressed: () {
           setState(() {
             _calcOutput();
