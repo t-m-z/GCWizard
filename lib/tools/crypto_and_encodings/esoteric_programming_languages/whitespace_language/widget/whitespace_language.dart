@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
-import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
+import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/dialogs/gcw_dialog.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_multiple_output.dart';
@@ -48,8 +48,8 @@ class _WhitespaceLanguageState extends State<WhitespaceLanguage> {
             });
           },
         ),
-        GCWButton(
-          text: i18n(context, 'common_start'),
+        GCWIconButton(
+          icon: Icons.play_arrow,
           onPressed: () {
             setState(() {
               _calcOutput(context);

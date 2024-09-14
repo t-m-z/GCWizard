@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
-import 'package:gc_wizard/common_widgets/buttons/gcw_submit_button.dart';
+import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
@@ -38,11 +38,13 @@ class _NumberSequenceContainsDigitsState extends State<NumberSequenceContainsDig
             });
           },
         ),
-        GCWSubmitButton(onPressed: () {
-          setState(() {
-            _buildOutput();
-          });
-        }),
+        GCWIconButton(
+            icon: Icons.calculate,
+            onPressed: () {
+              setState(() {
+                _buildOutput();
+              });
+            }),
         _currentOutput
       ],
     );
