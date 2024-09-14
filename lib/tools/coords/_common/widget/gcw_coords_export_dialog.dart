@@ -14,19 +14,14 @@ void showCoordinatesExportDialog(BuildContext context, List<GCWMapPoint> points,
         ? GCWDialogButton(
             text: 'JSON',
             onPressed: () async {
-              var possibleExportMode =
-                  json.length < MAX_QR_TEXT_LENGTH_FOR_EXPORT ? PossibleExportMode.BOTH : PossibleExportMode.TEXTONLY;
               showGCWDialog(
                   context,
                   'JSON ' + i18n(context, 'common_text'),
                   GCWTextExport(
                     text: json,
-                    initMode:
-                    TextExportMode.TEXT,
-                    possibleExportMode: possibleExportMode,
-                    addSaveButton: true,
+                    initMode: TextExportMode.TEXT,
                     saveFilenamePrefix: 'coords',
-                    saveFileType: FileType.JSON,
+                    saveFileTypeText: FileType.JSON,
                   ),
                   [GCWDialogButton(text: i18n(context, 'common_ok'))],
                   cancelButton: false);
