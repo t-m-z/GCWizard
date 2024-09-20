@@ -116,6 +116,7 @@ class _GCWMapViewState extends State<GCWMapView> {
   late Timer _timer;
   double _mockLatitude = 0.0;
   double _mockLongitude = 0.0;
+  double _mockAltitude = Prefs.getInt(PREFERENCE_COORD_MOCK_LOCATION_ALTITUDE).toDouble();
 
   LatLngBounds _getBounds() {
     if (widget.points.isEmpty) return _DEFAULT_BOUNDS;
@@ -1149,7 +1150,7 @@ class _GCWMapViewState extends State<GCWMapView> {
                     _mockLatitude = gcwMarker.mapPoint.point.latitude;
                     _mockLongitude = gcwMarker.mapPoint.point.longitude;
                     showSnackBar(
-                        i18n(context, 'coords_map_view_mock_start') + " $_mockLatitude, $_mockLongitude",
+                        i18n(context, 'coords_map_view_mock_start') + "\nlat $_mockLatitude,\nlon $_mockLongitude,\nalt $_mockAltitude m",
                         context);
                     _timer = Timer.periodic(
                       const Duration(seconds: 1),
@@ -1164,7 +1165,7 @@ class _GCWMapViewState extends State<GCWMapView> {
                     _mockLatitude = gcwMarker.mapPoint.point.latitude;
                     _mockLongitude = gcwMarker.mapPoint.point.longitude;
                     showSnackBar(
-                        i18n(context, 'coords_map_view_mock_change') + " $_mockLatitude, $_mockLongitude",
+                        i18n(context, 'coords_map_view_mock_change') + "\nlat $_mockLatitude,\nlon $_mockLongitude,\nalt $_mockAltitude m",
                         context);
                   }
 
@@ -1214,7 +1215,7 @@ class _GCWMapViewState extends State<GCWMapView> {
     try {
       try {
         if (_timerIsActive) {
-          Fluttermocklocation().updateMockLocation(_mockLatitude, _mockLongitude);
+          Fluttermocklocation().updateMockLocation(_mockLatitude, _mockLongitude, altitude: _mockAltitude);
         }
       } catch (e) {
         showSnackBar("$e. " + i18n(context, 'coords_map_view_mock_error'), context, duration: 15);

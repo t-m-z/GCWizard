@@ -155,6 +155,19 @@ class _CoordinatesSettingsState extends State<CoordinatesSettings> {
             });
           },
         ),
+        GCWTextDivider(
+          text: i18n(context, 'settings_coordinates_mock_location_altitude'),
+        ),
+        GCWIntegerSpinner(
+          value: Prefs.getInt(PREFERENCE_COORD_MOCK_LOCATION_ALTITUDE),
+          min: 0,
+          max: 5000,
+          onChanged: (int value) {
+            setState(() {
+              Prefs.setInt(PREFERENCE_COORD_MOCK_LOCATION_ALTITUDE, value);
+            });
+          },
+        ),
       ],
     );
   }
