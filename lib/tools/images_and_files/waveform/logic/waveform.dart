@@ -50,23 +50,28 @@ Future<MorseData> PCMamplitudes2Image(
 
   List<bool> morseCode = [];
 
-  final canvasRecorder = ui.PictureRecorder();
-  final canvas =
-      ui.Canvas(canvasRecorder, ui.Rect.fromLTWH(0, 0, width, height));
+  final canvasRecorderPolygon = ui.PictureRecorder();
+  final canvasPolygon =
+      ui.Canvas(canvasRecorderPolygon, ui.Rect.fromLTWH(0, 0, width, height));
+
+  final canvasRecorderRectangle = ui.PictureRecorder();
+  final canvasRectangle =
+  ui.Canvas(canvasRecorderRectangle, ui.Rect.fromLTWH(0, 0, width, height));
 
   final paint = Paint()
     ..color = Colors.black
     ..style = PaintingStyle.stroke
     ..strokeWidth = 2.0;
 
-  canvas.drawRect(Rect.fromLTWH(0, 0, width, height), paint);
+  canvasPolygon.drawRect(Rect.fromLTWH(0, 0, width, height), paint);
+  canvasRectangle.drawRect(Rect.fromLTWH(0, 0, width, height), paint);
 
   paint.color = Colors.white;
   paint.strokeWidth = 2.0;
-  canvas.drawLine(Offset(0, 0), Offset(width, 0), paint);
-  canvas.drawLine(Offset(0, minAmplitude), Offset(width, minAmplitude), paint);
-  canvas.drawLine(Offset(0, threshhold), Offset(width, threshhold), paint);
-  canvas.drawLine(Offset(0, maxAmplitude), Offset(width, maxAmplitude), paint);
+  canvasPolygon.drawLine(Offset(0, 0), Offset(width, 0), paint);
+  canvasPolygon.drawLine(Offset(0, minAmplitude), Offset(width, minAmplitude), paint);
+  canvasPolygon.drawLine(Offset(0, threshhold), Offset(width, threshhold), paint);
+  canvasPolygon.drawLine(Offset(0, maxAmplitude), Offset(width, maxAmplitude), paint);
 
   paint.color = Colors.orangeAccent;
   paint.strokeWidth = 2.0;
@@ -86,11 +91,15 @@ Future<MorseData> PCMamplitudes2Image(
       countLow ++;
     }
     path.lineTo(BOUNDS + i, BOUNDS + maxAmplitude - RMSperPoint[i]);
+    canvasRectangle.drawLine(Offset(BOUNDS + i, BOUNDS + maxAmplitude), Offset(BOUNDS + i, BOUNDS + maxAmplitude - RMSperPoint[i]), paint);
   }
+  canvasPolygon.drawPath(path, paint);
 
-  canvas.drawPath(path, paint);
+  paint.color = Colors.red;
+  canvasRectangle.drawLine(Offset(BOUNDS, BOUNDS + 10), Offset(BOUNDS + RMSperPoint.length, BOUNDS + 10), paint);
 
   bool highBand = countHigh > countLow;
+print('Highband : '+highBand.toString());
 
   for (var i = 0; i < RMSperPoint.length; i++) {
     if (highBand) {
@@ -108,13 +117,42 @@ Future<MorseData> PCMamplitudes2Image(
     }
   }
 
-  final img = await canvasRecorder
+  final imgPolygon = await canvasRecorderPolygon
       .endRecording()
       .toImage(width.floor(), height.floor());
-  final data = await img.toByteData(format: ui.ImageByteFormat.png);
+  final dataPolygon = await imgPolygon.toByteData(format: ui.ImageByteFormat.png);
+
+  final imgRectangle = await canvasRecorderRectangle
+      .endRecording()
+      .toImage(width.floor(), height.floor());
+  final dataRectangle = await imgRectangle.toByteData(format: ui.ImageByteFormat.png);
+
+  // get pixel info and build morse code
+  morseCode = [];
+  final byteData = await imgRectangle.toByteData(format: ui.ImageByteFormat.rawRgba);
+  if (byteData != null) {
+    final buffer = byteData.buffer.asUint8List();
+    // Calculate the index for the pixel at (x, y)
+    for (int i = 0; i < RMSperPoint.length; i++) {
+      int x = (BOUNDS + i).toInt();
+      int y = (BOUNDS + 8).toInt();
+      final pixelIndex = (y * imgRectangle.width + x) * 4;
+      final r = buffer[pixelIndex];
+      final g = buffer[pixelIndex + 1];
+      final b = buffer[pixelIndex + 2];
+      final a = buffer[pixelIndex + 3];
+      //print('Pixel at ($x, $y): R=$r, G=$g, B=$b, A=$a'); //print(x.toString() + ' '+_isBlack(r, g, b).toString());
+      morseCode.add(_isBlack(r, g, b));
+    }
+  }
 
   return MorseData(
-      MorseImage: trimNullBytes(data!.buffer.asUint8List()),
+      MorseImagePolygon: trimNullBytes(dataPolygon!.buffer.asUint8List()),
+      MorseImageRectangle: trimNullBytes(dataRectangle!.buffer.asUint8List()),
       MorseCode: morseCode);
+}
+
+bool _isBlack(int r, int g, int b) {
+  return (r == 0 && g == 0 && b == 0);
 }
 

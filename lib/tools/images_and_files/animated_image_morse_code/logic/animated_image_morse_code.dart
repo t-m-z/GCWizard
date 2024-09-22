@@ -159,7 +159,6 @@ List<List<int>> _filterImages(List<List<int>> filteredList, int imageIndex, List
 MorseCodeOutput? decodeMorseCode(List<int> durations, List<bool> onSignal, {double tolerance = 1.2}) {
   var timeList = _buildTimeList(durations, onSignal);
   var signalTimes = foundSignalTimes(timeList);
-
   if (signalTimes == null) return null;
   var out = '';
   for (var element in timeList) {

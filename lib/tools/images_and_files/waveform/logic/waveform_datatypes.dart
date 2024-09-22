@@ -34,10 +34,11 @@ class SoundfileDataSectionContent {
 }
 
 class MorseData {
-  final Uint8List MorseImage;
+  final Uint8List MorseImagePolygon;
+  final Uint8List MorseImageRectangle;
   final List<bool> MorseCode;
 
-  MorseData({required this.MorseImage, required this.MorseCode});
+  MorseData({required this.MorseImagePolygon, required this.MorseCode, required this.MorseImageRectangle});
 }
 
 class AmplitudeData {

@@ -6910,6 +6910,8 @@
   "waveform_output_section_data_chunk": "Data Chunk",
   "waveform_output_section_id3_chunk": "ID3 Chunk",
   "waveform_output_section_metadata_chunk": "Meta Data Chunk",
+  "waveform_output_image_polygon": "Polygon",
+  "waveform_output_image_rectangle": "Rectangle",
   "waveform_hint_openinhexviewer": "Due to the file size please analyse in Hexviewer Tool",
   "wasd_title": "Up-Down-Left-Right",
   "wasd_description": "Uses keyboard controls like in video games - e.g. WASD - to draw Digits",
