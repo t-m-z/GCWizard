@@ -26,123 +26,124 @@ SoundfileData getSoundfileData(Uint8List bytes) {
   }
 }
 
-Future<MorseData> PCMamplitudes2Image(
-    {required double duration,
-    required List<double> RMSperPoint,
-    required double maxAmplitude,
-    required double minAmplitude,
-    }) async {
-
+Future<MorseData> PCMamplitudes2Image({
+  required double duration,
+  required List<double> RMSperPoint,
+  required double maxAmplitude,
+  required double minAmplitude,
+}) async {
   const BOUNDS = 10.0;
 
   var vScaleFactor = 1.0;
 
-  while(maxAmplitude < 260) {
-    vScaleFactor = vScaleFactor * 10;
-    maxAmplitude = maxAmplitude * 10;
+  while (maxAmplitude * vScaleFactor < 260) {
+    vScaleFactor = vScaleFactor + 1;
   }
+  maxAmplitude = maxAmplitude * vScaleFactor;
   minAmplitude = minAmplitude * vScaleFactor;
-
-  double threshhold = maxAmplitude - (maxAmplitude - minAmplitude) / 2;
 
   var width = BOUNDS + RMSperPoint.length + BOUNDS;
   var height = BOUNDS + maxAmplitude + BOUNDS;
 
-  List<bool> morseCode = [];
+  double analyseBar = maxAmplitude - (maxAmplitude - minAmplitude) / 2;
 
   final canvasRecorderPolygon = ui.PictureRecorder();
-  final canvasPolygon =
-      ui.Canvas(canvasRecorderPolygon, ui.Rect.fromLTWH(0, 0, width, height));
+  final canvasPolygon = ui.Canvas(canvasRecorderPolygon, ui.Rect.fromLTWH(0, 0, width, height));
 
   final canvasRecorderRectangle = ui.PictureRecorder();
-  final canvasRectangle =
-  ui.Canvas(canvasRecorderRectangle, ui.Rect.fromLTWH(0, 0, width, height));
+  final canvasRectangle = ui.Canvas(canvasRecorderRectangle, ui.Rect.fromLTWH(0, 0, width, height));
 
   final paint = Paint()
-    ..color = Colors.black
-    ..style = PaintingStyle.stroke
-    ..strokeWidth = 2.0;
+    ..color = Colors.black87
+    ..style = PaintingStyle.fill;
 
   canvasPolygon.drawRect(Rect.fromLTWH(0, 0, width, height), paint);
   canvasRectangle.drawRect(Rect.fromLTWH(0, 0, width, height), paint);
 
-  paint.color = Colors.white;
+  paint.color = Colors.black;
+  canvasPolygon.drawRect(Rect.fromLTWH(BOUNDS, BOUNDS, RMSperPoint.length.toDouble(), maxAmplitude), paint);
+  canvasRectangle.drawRect(Rect.fromLTWH(BOUNDS, BOUNDS, RMSperPoint.length.toDouble(), maxAmplitude), paint);
+
   paint.strokeWidth = 2.0;
-  canvasPolygon.drawLine(Offset(0, 0), Offset(width, 0), paint);
-  canvasPolygon.drawLine(Offset(0, minAmplitude), Offset(width, minAmplitude), paint);
-  canvasPolygon.drawLine(Offset(0, threshhold), Offset(width, threshhold), paint);
-  canvasPolygon.drawLine(Offset(0, maxAmplitude), Offset(width, maxAmplitude), paint);
+  paint.style = PaintingStyle.stroke;
+  paint.color = Colors.white;
+  canvasPolygon.drawLine(
+      Offset(BOUNDS, _transform(height, BOUNDS, 0)),
+      Offset(width - BOUNDS, _transform(height, BOUNDS, 0)), paint);
+  canvasRectangle.drawLine(
+      Offset(BOUNDS, _transform(height, BOUNDS, 0)),
+      Offset(width, _transform(height, BOUNDS, 0)), paint);
+  paint.color = Colors.green;
+  canvasPolygon.drawLine(
+      Offset(BOUNDS, _transform(height, BOUNDS, minAmplitude)),
+      Offset(width - BOUNDS, _transform(height, BOUNDS, minAmplitude)), paint);
+  canvasRectangle.drawLine(
+      Offset(BOUNDS, _transform(height, BOUNDS, minAmplitude)),
+      Offset(width - BOUNDS, _transform(height, BOUNDS, minAmplitude)), paint);
+  paint.color = Colors.red;
+  canvasPolygon.drawLine(
+      Offset(BOUNDS, _transform(height, BOUNDS, maxAmplitude)),
+      Offset(width - BOUNDS, _transform(height, BOUNDS, maxAmplitude)), paint);
+  canvasRectangle.drawLine(
+      Offset(BOUNDS, _transform(height, BOUNDS, maxAmplitude)),
+      Offset(width - BOUNDS, _transform(height, BOUNDS, maxAmplitude)), paint);
 
   paint.color = Colors.orangeAccent;
-  paint.strokeWidth = 2.0;
 
   final path = Path();
 
-  int countHigh = 0;
-  int countLow = 0;
-
-  path.moveTo(BOUNDS, 0);
+  path.moveTo(BOUNDS, _transform(height, BOUNDS, 0));
   for (var i = 0; i < RMSperPoint.length; i++) {
     RMSperPoint[i] = RMSperPoint[i] * vScaleFactor;
-
-    if (RMSperPoint[i] > threshhold) {
-      countHigh++;
-    } else {
-      countLow ++;
-    }
-    path.lineTo(BOUNDS + i, BOUNDS + maxAmplitude - RMSperPoint[i]);
-    canvasRectangle.drawLine(Offset(BOUNDS + i, BOUNDS + maxAmplitude), Offset(BOUNDS + i, BOUNDS + maxAmplitude - RMSperPoint[i]), paint);
+    path.lineTo(BOUNDS + i, _transform(height, BOUNDS, RMSperPoint[i]));
   }
+  path.lineTo(BOUNDS + RMSperPoint.length, _transform(height, BOUNDS, 0));
+
   canvasPolygon.drawPath(path, paint);
 
-  paint.color = Colors.red;
-  canvasRectangle.drawLine(Offset(BOUNDS, BOUNDS + 10), Offset(BOUNDS + RMSperPoint.length, BOUNDS + 10), paint);
+  paint.style = PaintingStyle.fill;
+  canvasRectangle.drawPath(path, paint);
 
-  bool highBand = countHigh > countLow;
-print('Highband : '+highBand.toString());
+  paint.color = Colors.blue;
+  paint.strokeWidth = 1.0;
+  canvasPolygon.drawLine(
+      Offset(BOUNDS, _transform(height, BOUNDS, analyseBar - 2)),
+      Offset(width - BOUNDS, _transform(height, BOUNDS, analyseBar - 2)), paint);
+  canvasPolygon.drawLine(
+      Offset(BOUNDS, _transform(height, BOUNDS, analyseBar + 2)),
+      Offset(width - BOUNDS, _transform(height, BOUNDS, analyseBar + 2)), paint);
+  canvasRectangle.drawLine(
+      Offset(BOUNDS, _transform(height, BOUNDS, analyseBar - 2)),
+      Offset(width - BOUNDS, _transform(height, BOUNDS, analyseBar - 2)), paint);
+  canvasRectangle.drawLine(
+      Offset(BOUNDS, _transform(height, BOUNDS, analyseBar + 2)),
+      Offset(width - BOUNDS, _transform(height, BOUNDS, analyseBar + 2)), paint);
 
-  for (var i = 0; i < RMSperPoint.length; i++) {
-    if (highBand) {
-      if (RMSperPoint[i] > threshhold) {
-        morseCode.add(true);
-      } else {
-        morseCode.add(false);
-      }
-    } else {
-      if (RMSperPoint[i] > threshhold) {
-        morseCode.add(false);
-      } else {
-        morseCode.add(true);
-      }
-    }
-  }
-
-  final imgPolygon = await canvasRecorderPolygon
-      .endRecording()
-      .toImage(width.floor(), height.floor());
+  final imgPolygon = await canvasRecorderPolygon.endRecording().toImage(width.floor(), height.floor());
   final dataPolygon = await imgPolygon.toByteData(format: ui.ImageByteFormat.png);
 
-  final imgRectangle = await canvasRecorderRectangle
-      .endRecording()
-      .toImage(width.floor(), height.floor());
+  final imgRectangle = await canvasRecorderRectangle.endRecording().toImage(width.floor(), height.floor());
   final dataRectangle = await imgRectangle.toByteData(format: ui.ImageByteFormat.png);
 
   // get pixel info and build morse code
-  morseCode = [];
+  List<bool> morseCode = [];
   final byteData = await imgRectangle.toByteData(format: ui.ImageByteFormat.rawRgba);
   if (byteData != null) {
     final buffer = byteData.buffer.asUint8List();
     // Calculate the index for the pixel at (x, y)
+    int x = 0;
+    int y = _transform(height, BOUNDS, analyseBar).toInt();
+
     for (int i = 0; i < RMSperPoint.length; i++) {
-      int x = (BOUNDS + i).toInt();
-      int y = (BOUNDS + 8).toInt();
+      x = (BOUNDS + i).toInt();
       final pixelIndex = (y * imgRectangle.width + x) * 4;
+
       final r = buffer[pixelIndex];
       final g = buffer[pixelIndex + 1];
       final b = buffer[pixelIndex + 2];
-      final a = buffer[pixelIndex + 3];
-      //print('Pixel at ($x, $y): R=$r, G=$g, B=$b, A=$a'); //print(x.toString() + ' '+_isBlack(r, g, b).toString());
-      morseCode.add(_isBlack(r, g, b));
+      //final a = buffer[pixelIndex + 3];
+      morseCode.add(!_isBlack(r, g, b));
+
     }
   }
 
@@ -156,3 +157,6 @@ bool _isBlack(int r, int g, int b) {
   return (r == 0 && g == 0 && b == 0);
 }
 
+double _transform(double height, double bounds, double y) {
+  return height - bounds - y;
+}

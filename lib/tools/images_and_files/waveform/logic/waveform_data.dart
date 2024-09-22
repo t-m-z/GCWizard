@@ -445,10 +445,12 @@ AmplitudeData calculateRMSAmplitudes(
     required Uint8List PCMamplitudesData,
     required int blocksize}) {
   List<double> RMSperPoint = [];
+  Map<double, int> RMSCount = {};
   double amplitude = 0.0;
   double RMS = 0.0;
   double maxAmplitude = 0.0;
   double minAmplitude = 1000.0;
+  double RMSamplitude = 0.0;
 
   double vScalefactor = 1; //3000.0;
 
@@ -478,12 +480,18 @@ AmplitudeData calculateRMSAmplitudes(
       RMS = RMS + amplitude * amplitude;
 
       if (sample % samplBlocksize == 0) {
-        RMSperPoint.add(sqrt(RMS / sampleRate) * vScalefactor);
+        RMSamplitude = sqrt(RMS / sampleRate) * vScalefactor;
+        RMSperPoint.add(RMSamplitude);
         RMS = 0;
 
-        maxAmplitude = max(RMSperPoint.last, maxAmplitude);
+        if (RMSCount[RMSamplitude] == null) {
+          RMSCount[RMSamplitude] = 1;
+        } else {
+          RMSCount[RMSamplitude] = RMSCount[RMSamplitude]! + 1;
+        }
+        maxAmplitude = max(RMSamplitude, maxAmplitude);
         if (RMSperPoint.last > 0) {
-          minAmplitude = min(RMSperPoint.last, minAmplitude);
+          minAmplitude = min(RMSamplitude, minAmplitude);
         }
       }
       sample = sample + 6 * channels;
@@ -540,18 +548,36 @@ AmplitudeData calculateRMSAmplitudes(
       RMS = RMS + amplitude * amplitude;
 
       if (sample % samplBlocksize == 0) {
-        RMSperPoint.add(sqrt(RMS / sampleRate) * vScalefactor);
+        RMSamplitude = sqrt(RMS / sampleRate) * vScalefactor;
+        RMSperPoint.add(RMSamplitude);
         RMS = 0;
 
-        maxAmplitude = max(RMSperPoint.last, maxAmplitude);
-        if (RMSperPoint.last > 0) {
-          minAmplitude = min(RMSperPoint.last, minAmplitude);
+        if (RMSCount[RMSamplitude] == null) {
+          RMSCount[RMSamplitude] = 1;
+        } else {
+          RMSCount[RMSamplitude] = RMSCount[RMSamplitude]! + 1;
+        }
+
+        maxAmplitude = max(RMSamplitude, maxAmplitude);
+        if (RMSamplitude > 0) {
+          minAmplitude = min(RMSamplitude, minAmplitude);
         }
       }
     }
   }
   RMSperPoint.add(sqrt(RMS / sampleRate) * vScalefactor);
 
+  List<MapEntry<double, int>> mapEntries = RMSCount.entries.toList();
+  mapEntries.sort((a, b) => a.key.compareTo(b.key));
+  final Map<double, int> sortedRMSCountAscending = Map.fromEntries(mapEntries);
+
+  final List<double> sortedRMSKeys = sortedRMSCountAscending.keys.toList();
+  for (int i = 0; i < sortedRMSCountAscending.length - 1; i++) {
+    if ((sortedRMSKeys[i+1] - sortedRMSKeys[i]).abs() > (maxAmplitude - minAmplitude) / 10) {
+      minAmplitude = sortedRMSKeys[i+1];
+      break;
+    }
+  }
   return AmplitudeData(
       maxAmplitude: maxAmplitude,
       minAmplitude: minAmplitude,
