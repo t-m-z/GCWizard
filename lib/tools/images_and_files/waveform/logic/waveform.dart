@@ -66,27 +66,27 @@ Future<MorseData> PCMamplitudes2Image({
 
   paint.strokeWidth = 2.0;
   paint.style = PaintingStyle.stroke;
-  paint.color = Colors.white;
-  canvasPolygon.drawLine(
-      Offset(BOUNDS, _transform(height, BOUNDS, 0)),
-      Offset(width - BOUNDS, _transform(height, BOUNDS, 0)), paint);
-  canvasRectangle.drawLine(
-      Offset(BOUNDS, _transform(height, BOUNDS, 0)),
-      Offset(width, _transform(height, BOUNDS, 0)), paint);
-  paint.color = Colors.green;
-  canvasPolygon.drawLine(
-      Offset(BOUNDS, _transform(height, BOUNDS, minAmplitude)),
-      Offset(width - BOUNDS, _transform(height, BOUNDS, minAmplitude)), paint);
-  canvasRectangle.drawLine(
-      Offset(BOUNDS, _transform(height, BOUNDS, minAmplitude)),
-      Offset(width - BOUNDS, _transform(height, BOUNDS, minAmplitude)), paint);
-  paint.color = Colors.red;
-  canvasPolygon.drawLine(
-      Offset(BOUNDS, _transform(height, BOUNDS, maxAmplitude)),
-      Offset(width - BOUNDS, _transform(height, BOUNDS, maxAmplitude)), paint);
-  canvasRectangle.drawLine(
-      Offset(BOUNDS, _transform(height, BOUNDS, maxAmplitude)),
-      Offset(width - BOUNDS, _transform(height, BOUNDS, maxAmplitude)), paint);
+  // paint.color = Colors.white;
+  // canvasPolygon.drawLine(
+  //     Offset(BOUNDS, _transform(height, BOUNDS, 0)),
+  //     Offset(width - BOUNDS, _transform(height, BOUNDS, 0)), paint);
+  // canvasRectangle.drawLine(
+  //     Offset(BOUNDS, _transform(height, BOUNDS, 0)),
+  //     Offset(width, _transform(height, BOUNDS, 0)), paint);
+  // paint.color = Colors.green;
+  // canvasPolygon.drawLine(
+  //     Offset(BOUNDS, _transform(height, BOUNDS, minAmplitude)),
+  //     Offset(width - BOUNDS, _transform(height, BOUNDS, minAmplitude)), paint);
+  // canvasRectangle.drawLine(
+  //     Offset(BOUNDS, _transform(height, BOUNDS, minAmplitude)),
+  //     Offset(width - BOUNDS, _transform(height, BOUNDS, minAmplitude)), paint);
+  // paint.color = Colors.red;
+  // canvasPolygon.drawLine(
+  //     Offset(BOUNDS, _transform(height, BOUNDS, maxAmplitude)),
+  //     Offset(width - BOUNDS, _transform(height, BOUNDS, maxAmplitude)), paint);
+  // canvasRectangle.drawLine(
+  //     Offset(BOUNDS, _transform(height, BOUNDS, maxAmplitude)),
+  //     Offset(width - BOUNDS, _transform(height, BOUNDS, maxAmplitude)), paint);
 
   paint.color = Colors.orangeAccent;
 
@@ -104,20 +104,20 @@ Future<MorseData> PCMamplitudes2Image({
   paint.style = PaintingStyle.fill;
   canvasRectangle.drawPath(path, paint);
 
-  paint.color = Colors.blue;
-  paint.strokeWidth = 1.0;
-  canvasPolygon.drawLine(
-      Offset(BOUNDS, _transform(height, BOUNDS, analyseBar - 2)),
-      Offset(width - BOUNDS, _transform(height, BOUNDS, analyseBar - 2)), paint);
-  canvasPolygon.drawLine(
-      Offset(BOUNDS, _transform(height, BOUNDS, analyseBar + 2)),
-      Offset(width - BOUNDS, _transform(height, BOUNDS, analyseBar + 2)), paint);
-  canvasRectangle.drawLine(
-      Offset(BOUNDS, _transform(height, BOUNDS, analyseBar - 2)),
-      Offset(width - BOUNDS, _transform(height, BOUNDS, analyseBar - 2)), paint);
-  canvasRectangle.drawLine(
-      Offset(BOUNDS, _transform(height, BOUNDS, analyseBar + 2)),
-      Offset(width - BOUNDS, _transform(height, BOUNDS, analyseBar + 2)), paint);
+  // paint.color = Colors.blue;
+  // paint.strokeWidth = 1.0;
+  // canvasPolygon.drawLine(
+  //     Offset(BOUNDS, _transform(height, BOUNDS, analyseBar - 2)),
+  //     Offset(width - BOUNDS, _transform(height, BOUNDS, analyseBar - 2)), paint);
+  // canvasPolygon.drawLine(
+  //     Offset(BOUNDS, _transform(height, BOUNDS, analyseBar + 2)),
+  //     Offset(width - BOUNDS, _transform(height, BOUNDS, analyseBar + 2)), paint);
+  // canvasRectangle.drawLine(
+  //     Offset(BOUNDS, _transform(height, BOUNDS, analyseBar - 2)),
+  //     Offset(width - BOUNDS, _transform(height, BOUNDS, analyseBar - 2)), paint);
+  // canvasRectangle.drawLine(
+  //     Offset(BOUNDS, _transform(height, BOUNDS, analyseBar + 2)),
+  //     Offset(width - BOUNDS, _transform(height, BOUNDS, analyseBar + 2)), paint);
 
   final imgPolygon = await canvasRecorderPolygon.endRecording().toImage(width.floor(), height.floor());
   final dataPolygon = await imgPolygon.toByteData(format: ui.ImageByteFormat.png);
