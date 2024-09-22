@@ -7,13 +7,15 @@ import 'package:gc_wizard/utils/collection_utils.dart';
 import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 
 part 'package:gc_wizard/tools/images_and_files/waveform/logic/waveform_datatypes.dart';
-part 'package:gc_wizard/tools/images_and_files/waveform/logic/waveform_data.dart';
+part 'package:gc_wizard/tools/images_and_files/waveform/logic/waveform_wav_data.dart';
 
 SoundfileData getSoundfileData(Uint8List bytes) {
   switch (getFileType(bytes)) {
     case FileType.WAV:
     case FileType.WMV:
       return WAVContent(bytes);
+    case FileType.MP3:
+    case FileType.OGG:
     default:
       return SoundfileData(
           structure: [],
