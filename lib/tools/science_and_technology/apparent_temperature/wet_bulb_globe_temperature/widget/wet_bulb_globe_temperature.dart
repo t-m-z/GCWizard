@@ -233,7 +233,12 @@ class WetBulbGlobeTemperatureState extends State<WetBulbGlobeTemperature> {
 
   Widget _buildOutput(BuildContext context) {
     WBGTOutput output = calculateWetBulbGlobeTemperature(
-        _currentDateTime,
+        _currentDateTime.datetime.year,
+        _currentDateTime.datetime.month,
+        _currentDateTime.datetime.day,
+        _currentDateTime.datetime.hour,
+        _currentDateTime.datetime.minute,
+        _currentDateTime.timezone.inHours,
         _currentCoords.toLatLng()!,
         _currentWindSpeed,
         _currentWindSpeedHeight,

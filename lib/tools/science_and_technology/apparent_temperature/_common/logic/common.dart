@@ -72,13 +72,42 @@ Map<CLOUD_COVER, double> CLOUD_COVER_VALUE = {
   CLOUD_COVER.OBSCURED_9: 1.0,
 };
 
-double calculateSolarIrradiance({double solarElevationAngle = 0.0, required CLOUD_COVER cloudcover}) {
+// https://github.com/achristen/Solar-Irradiance-Calculations-IDL/blob/master/rad_solar_constant.pro
+// ;   Calculates the current solar irradiance at top of the atmosphere
+// ;   perpendicular to sun rays in W / m2 using the solar constant and correcting
+// ;   for the changing distance Earth-Sun.
+//
+// function rad_solar_constant, julian_time_utc
+//
+//    solar_constant_av = 1366.5 ; W m^-2
+//
+//    ; **************************************************
+//    ; calculate fractional year in radians
+//    ; **************************************************
+//
+//    caldat, julian_time_utc, month, day, year
+//    d_julian_utc = dat_dat2doy(day,month,year)
+//    frac_year = (d_julian_utc) * 2 * !pi / 365
+//
+//    ; **************************************************
+//    ; calculate ratio (squared) of average radius
+//    ; Earth-Sun to actual radius Earth-Sun (R_av / R)^2
+//    ; **************************************************
+//
+//     ratio_squared = 1.00011 + 0.034221 * cos(frac_year) + 0.001280 * sin(frac_year) + 0.000719 * cos(2*frac_year) + 0.000077 * sin(2*frac_year)
+//     i0 = ratio_squared * solar_constant_av
+//     return, i0
+//
+// end
+
+
+double calculateSolarIrradiance({double solarElevationAngleOld = 0.0, double solarElevationAngleNew = 0.0, required CLOUD_COVER cloudcover}) {
   // https://scool.larc.nasa.gov/lesson_plans/CloudCoverSolarRadiation.pdf#:~:text=There%20is%20a%20simple%20formula%20to%20predict%20how,%280%25%20no%20clouds%29%20to%201.0%20%28100%25%20complete%20coverage%29.
   // https://web.archive.org/web/20240920192708/https://scool.larc.nasa.gov/lesson_plans/CloudCoverSolarRadiation.pdf#:~:text=There%20is%20a%20simple%20formula%20to%20predict%20how,%280%25%20no%20clouds%29%20to%201.0%20%28100%25%20complete%20coverage%29
 
   // http://www.shodor.org/os411/courses/_master/tools/calculators/solarrad/
   // https://web.archive.org/web/20240920193138/http://www.shodor.org/os411/courses/_master/tools/calculators/solarrad/
-  double R0 = 990 * sin(solarElevationAngle * pi / 180) - 30;
+  double R0 = 990 * sin((solarElevationAngleOld + solarElevationAngleNew) / 2 * pi / 180) - 30;
   double cloudCoverFraction = CLOUD_COVER_VALUE[cloudcover]!;
   return R0 * (1.0 - 0.75 * pow(cloudCoverFraction, 3.4));
 }
@@ -128,14 +157,22 @@ double calculateDewPoint(
 double calculateMeanRadiantTemperature({
   required double Tg, // globe temperature (°C)
   required double va, // air velocity at the level of the globe (m/s)
-  required double e, // emissivity of the globe (no dimension)
-  required double D, // diameter of the globe (m)
+  double e = 0.95, // emissivity of the globe (no dimension) - Standard: 0.95
+  double D = 0.15, // diameter of the globe (m) - Standard: 0.15
   required double Ta, // air temperature (°C)
 }) {
   // https://en.wikipedia.org/wiki/Mean_radiant_temperature
-  double MRT = pow(pow(Tg + 273.15, 4) + 1.1 * pow(10, 8) * pow(va, 0.6) * (Tg - Ta) / e / pow(D, 0.4), 0.25) - 273.15;
+  //return pow(pow(Tg + 273.15, 4) + 1.100 * 100000000 * pow(va, 0.60) * (Tg - Ta) / e / pow(D, 0.4), 0.25) - 273.15;
 
-  return MRT;
+  // Sofia Thorsson calculation
+  return pow(pow(Tg + 273.15, 4) + 1.335 * pow(va, 0.71) * (Tg - Ta) / (e * pow(D, 0.4)) * 100000000, 0.25) - 273.15;
+
+  // Bernard calculation
+  double WF = 0.0;
+  double WF1 = 0.4 * pow((Tg - Ta).abs(), 0.25);
+  double WF2 = 2.5 * pow(va, 0.6);
+  (WF1 > WF2) ? WF = WF1 : WF = WF2;
+  return 100 * pow(pow((Tg + 273) / 100, 4) + WF * (Tg - Ta), 0.25) - 273;
 }
 
 double calculateGlobeTemperature(
