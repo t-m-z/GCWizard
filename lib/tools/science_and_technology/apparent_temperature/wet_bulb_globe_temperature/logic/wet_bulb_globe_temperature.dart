@@ -18,7 +18,6 @@
 // https://github.com/mdljts/wbgt
 
 import 'dart:core';
-import 'package:gc_wizard/common_widgets/gcw_datetime_picker.dart';
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/_common/logic/common.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/_common/logic/julian_date.dart';
@@ -75,25 +74,25 @@ WBGTOutput calculateWetBulbGlobeTemperature(
     double airPressure,
     bool urban,
     CLOUD_COVER cloudcover) {
-  var sunPositionOld = sunposition.SunPosition(
+  var sunPosition = sunposition.SunPosition(
       LatLng(coords.latitude, coords.longitude),
       JulianDate(
           DateTimeTimezone(datetime: DateTime(year, month, day, hour - 1, minute), timezone: Duration(hours: gmt))),
       const Ellipsoid(ELLIPSOID_NAME_WGS84, 6378137.0, 298.257223563));
-  var sunPositionNew = sunposition.SunPosition(
-      LatLng(coords.latitude, coords.longitude),
-      JulianDate(DateTimeTimezone(datetime: DateTime(year, month, day, hour, minute), timezone: Duration(hours: gmt))),
-      const Ellipsoid(ELLIPSOID_NAME_WGS84, 6378137.0, 298.257223563));
-
-  double solar = calculateSolarIrradiance(
-      solarElevationAngleOld: sunPositionOld.altitude,
-      solarElevationAngleNew: sunPositionNew.altitude,
-      cloudcover: cloudcover);
-  print(
-      'calculateSolarIrradiance --------------------------------------------------------------------------------------');
-  print(solar);
-  print(sunPositionNew.altitude);
-  print(sunPositionNew.azimuth);
+  // var sunPositionNew = sunposition.SunPosition(
+  //     LatLng(coords.latitude, coords.longitude),
+  //     JulianDate(DateTimeTimezone(datetime: DateTime(year, month, day, hour, minute), timezone: Duration(hours: gmt))),
+  //     const Ellipsoid(ELLIPSOID_NAME_WGS84, 6378137.0, 298.257223563));
+  //
+  // double solar = calculateSolarIrradiance(
+  //     solarElevationAngleOld: sunPositionOld.altitude,
+  //     solarElevationAngleNew: sunPositionNew.altitude,
+  //     cloudcover: cloudcover);
+  // print(
+  //     'calculateSolarIrradiance --------------------------------------------------------------------------------------');
+  // print(solar);
+  // print(sunPositionNew.altitude);
+  // print(sunPositionNew.azimuth);
 
   liljegrenOutputWBGT WBGT = calc_wbgt(
     year: year,
@@ -128,5 +127,5 @@ WBGTOutput calculateWetBulbGlobeTemperature(
   );
 
   return WBGTOutput(
-      Status: 0, Twbg: WBGT.Twbg, Solar: solar, Tdew: WBGT.Tdew, Tg: WBGT.Tg, Tmrt: Tmrt, SunPos: sunPosition);
+      Status: 0, Twbg: WBGT.Twbg, Solar: WBGT.solar, Tdew: WBGT.Tdew, Tg: WBGT.Tg, Tmrt: Tmrt, SunPos: sunPosition);
 }

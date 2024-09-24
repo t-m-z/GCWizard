@@ -8,6 +8,7 @@ class liljegrenOutputWBGT {
   final double Twbg;
   final double Tdew;
   final double est_speed;
+  final double solar;
 
   liljegrenOutputWBGT(
       {this.Status = 0,
@@ -16,7 +17,8 @@ class liljegrenOutputWBGT {
       this.Tpsy = 0.0,
       this.Twbg = 0.0,
       this.Tdew = 0.0,
-      this.est_speed = 0.0});
+      this.est_speed = 0.0,
+      this.solar = 0.0});
 }
 
 class liljegrenOutputSolarPosition {
@@ -268,7 +270,7 @@ liljegrenOutputWBGT calc_wbgt({
   tk = Tair + 273.15; // degC to kelvin
   rh = 0.01 * relhum; // % to fraction
 
-  // calculate the globe, natural wet bulb, psychrometric wet bulb and outdoor wet bulb globe temperatures
+  // calculate the globe, natural wet bulb, psychometric wet bulb and outdoor wet bulb globe temperatures
   Tg = Tglobe(tk, rh, pres, speed, solar, fdir, cza);
   Tnwb = _Twb(tk, rh, pres, speed, solar, fdir, cza, 1); // - 273.15;
   Tpsy = _Twb(tk, rh, pres, speed, solar, fdir, cza, 0); // - 273.15;
@@ -278,9 +280,9 @@ liljegrenOutputWBGT calc_wbgt({
   if (Tg == -9999 || Tnwb == -9999) {
     Twbg = -9999;
     return liljegrenOutputWBGT(
-        Status: -1, Tg: Tg, Tnwb: Tnwb, Tpsy: Tpsy, Twbg: Twbg, Tdew: Tdew, est_speed: est_speed);
+        Status: -1, Tg: Tg, Tnwb: Tnwb, Tpsy: Tpsy, Twbg: Twbg, Tdew: Tdew, est_speed: est_speed, solar: solar);
   } else {
-    return liljegrenOutputWBGT(Status: 0, Tg: Tg, Tnwb: Tnwb, Tpsy: Tpsy, Twbg: Twbg, Tdew: Tdew, est_speed: est_speed);
+    return liljegrenOutputWBGT(Status: 0, Tg: Tg, Tnwb: Tnwb, Tpsy: Tpsy, Twbg: Twbg, Tdew: Tdew, est_speed: est_speed, solar: solar);
   }
 }
 
