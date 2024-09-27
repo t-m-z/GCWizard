@@ -113,7 +113,7 @@ double calculateSolarIrradiance({double solarElevationAngleOld = 0.0, double sol
 }
 
 double calculateDewPoint(
-  double t, // temperature in °C
+  double tair, // temperature in °C
   double rh, // relative humidity in %
 ) {
   // https://energie-m.de/tools/taupunkt.html
@@ -126,21 +126,21 @@ double calculateDewPoint(
   var mw = 18.016; // Molekulargewicht des Wasserdampfes (kg/kmol)
   var gk = 8214.3; // universelle Gaskonstante (J/(kmol*K))
   var t0 = 273.15; // Absolute Temperatur von 0 °C (Kelvin)
-  var tk = t + t0; // Temperatur in Kelvin
+  var tk = tair + t0; // Temperatur in Kelvin
 
   double a = 0;
   double b = 0;
 
-  if (t >= 0) {
+  if (tair >= 0) {
     a = 7.5;
     b = 237.3;
-  } else if (t < 0) {
+  } else if (tair < 0) {
     a = 7.6;
     b = 240.7;
   }
 
   // Sättigungsdampfdruck (hPa)
-  double sdd = 6.1078 * pow(10, (a * t) / (b + t));
+  double sdd = 6.1078 * pow(10, (a * tair) / (b + tair));
 
   // Dampfdruck (hPa)
   double dd = sdd * (rh / 100);
@@ -199,3 +199,23 @@ double calculateGlobeTemperature(
 
   return (B + C * Ta + 7680000) / (C + 256000);
 }
+
+double calculateVaporPressure(
+    double temperature  // °C
+    ) {
+  // https://www.weather.gov/media/epz/wxcalc/vaporPressure.pdf
+  // https://web.archive.org/web/20240927172834/https://www.weather.gov/media/epz/wxcalc/vaporPressure.pdf
+  // temperature = tair => es = Vapor pressure saturated
+  // temperature = tdew => e = Vapor pressure actual
+  return 6.11 * pow(10, (7.5 * temperature / (237.3 + temperature)));
+}
+
+double calculateRelativeHumidityFromTairTdee(
+    double tair, // °C
+    double tdew  // °C
+    ) {
+  // https://www.weather.gov/media/epz/wxcalc/vaporPressure.pdf
+  // https://web.archive.org/web/20240927172834/https://www.weather.gov/media/epz/wxcalc/vaporPressure.pdf
+  return pow(10, (7.5 * tdew / (237.3 + tdew))) / pow(10, (7.5 * tair / (237.3 + tair))) * 100;
+}
+
