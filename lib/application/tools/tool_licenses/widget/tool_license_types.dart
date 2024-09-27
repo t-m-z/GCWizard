@@ -34,6 +34,8 @@ enum ToolLicenseType {
   PUBLIC_DOMAIN,// Public Domain
   NON_COMMERCIAL,
   REPRODUCTION_NEEDED,
+  OFL11,
+  OPEN_SOURCE,
   SIL_OFL11,
 }
 
@@ -75,6 +77,8 @@ String _licenseType(BuildContext context, ToolLicenseType licenseType) {
     case ToolLicenseType.PUBLIC_DOMAIN: return 'Public Domain';
     case ToolLicenseType.NON_COMMERCIAL: return i18n(context, 'toollicenses_noncommercial');
     case ToolLicenseType.REPRODUCTION_NEEDED: return i18n(context, 'toollicenses_reproduction_needed');
+    case ToolLicenseType.OFL11: return 'SIL Open Font License Version 1.1';
+    case ToolLicenseType.OPEN_SOURCE: return 'Open Source';
     case ToolLicenseType.SIL_OFL11: return 'SIL OPEN FONT LICENSE Version 1.1';
   }
 }
