@@ -9,6 +9,7 @@ class liljegrenOutputWBGT {
   final double Tdew;
   final double est_speed;
   final double solar;
+  final liljegrenOutputSolarPosition solpos;
 
   liljegrenOutputWBGT(
       {this.Status = 0,
@@ -18,7 +19,8 @@ class liljegrenOutputWBGT {
       this.Twbg = 0.0,
       this.Tdew = 0.0,
       this.est_speed = 0.0,
-      this.solar = 0.0});
+      this.solar = 0.0,
+      required this.solpos});
 }
 
 class liljegrenOutputSolarPosition {
@@ -51,8 +53,9 @@ class liljegrenOutputSolarParameter {
   final double solar; // solar irradiance (W/m2)
   final double cza; // cosine of solar zenith angle
   final double fdir; // fraction of solar irradiance due to direct beam
+  final liljegrenOutputSolarPosition solpos;
 
-  liljegrenOutputSolarParameter({this.Status = 0, this.solar = 0.0, this.cza = 0.0, this.fdir = 0.0});
+  liljegrenOutputSolarParameter({this.Status = 0, this.solar = 0.0, this.cza = 0.0, this.fdir = 0.0,  required this.solpos});
 }
 
 // https://raw.githubusercontent.com/mdljts/wbgt/master/src/wbgt.c.original
@@ -214,7 +217,7 @@ liljegrenOutputWBGT calc_wbgt({
   required int avg, // averaging time of meteorological inputs, minutes
   required double lat, // north latitude, decimal
   required double lon, // east longitude, decimal (negative in USA)
-  //required double solar, // solar irradiance, W/m2
+  required double solar, // solar irradiance, W/m2
   required double pres, // barometric pressure, mb
   required double Tair, // air (dry bulb) temperature, degC	*/
   required double relhum, // relative humidity, %
@@ -251,8 +254,6 @@ liljegrenOutputWBGT calc_wbgt({
   solar = solpar.solar;
   cza = solpar.cza;
   fdir = solpar.fdir;
-  print('_calc_solar_parameters --------------------------------------------------------------------------------------');
-  print(solar);
 
   // estimate the wind speed, if necessary
   if (zspeed != REF_HEIGHT) {
@@ -280,9 +281,9 @@ liljegrenOutputWBGT calc_wbgt({
   if (Tg == -9999 || Tnwb == -9999) {
     Twbg = -9999;
     return liljegrenOutputWBGT(
-        Status: -1, Tg: Tg, Tnwb: Tnwb, Tpsy: Tpsy, Twbg: Twbg, Tdew: Tdew, est_speed: est_speed, solar: solar);
+        Status: -1, Tg: Tg, Tnwb: Tnwb, Tpsy: Tpsy, Twbg: Twbg, Tdew: Tdew, est_speed: est_speed, solar: solar, solpos: solpar.solpos);
   } else {
-    return liljegrenOutputWBGT(Status: 0, Tg: Tg, Tnwb: Tnwb, Tpsy: Tpsy, Twbg: Twbg, Tdew: Tdew, est_speed: est_speed, solar: solar);
+    return liljegrenOutputWBGT(Status: 0, Tg: Tg, Tnwb: Tnwb, Tpsy: Tpsy, Twbg: Twbg, Tdew: Tdew, est_speed: est_speed, solar: solar, solpos: solpar.solpos);
   }
 }
 
@@ -325,9 +326,6 @@ liljegrenOutputSolarParameter _calc_solar_parameters(
   refr = solpos.refr;
   azim = solpos.azim;
   soldist = solpos.soldist;
-  print('_solarposition ----------------------------------------------------');
-  print(elev);
-  print(azim);
 
   cza = cos((90.0 - elev) * _DEG_RAD);
   toasolar = SOLAR_CONST * _max(0.0, cza) / soldist * soldist;
@@ -349,7 +347,7 @@ liljegrenOutputSolarParameter _calc_solar_parameters(
     fdir = 0.0;
   }
 
-  return liljegrenOutputSolarParameter(Status: 0, fdir: fdir, solar: solar, cza: cza);
+  return liljegrenOutputSolarParameter(Status: 0, fdir: fdir, solar: solar, cza: cza, solpos:solpos);
 }
 
 /* ============================================================================
@@ -798,7 +796,7 @@ liljegrenOutputSolarPosition _solarposition(
 
       daynumber = day.toInt();
     }
-print(daynumber);
+
     /* Construct Julian centuries since J2000 at 0 hours UT of date,
      * days.fraction since J2000, and UT hours.
      */

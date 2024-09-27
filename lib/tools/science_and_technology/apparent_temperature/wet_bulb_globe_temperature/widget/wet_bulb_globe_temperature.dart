@@ -14,6 +14,7 @@ import 'package:gc_wizard/common_widgets/gcw_expandable.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
+import 'package:gc_wizard/common_widgets/textfields/gcw_double_textfield.dart';
 import 'package:gc_wizard/common_widgets/units/gcw_unit_input.dart';
 import 'package:gc_wizard/common_widgets/units/gcw_unit_dropdown.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
@@ -22,6 +23,7 @@ import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/_common/widget/gcw_coords.dart';
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/_common/logic/common.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/humidity.dart';
+import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/length.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/temperature.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/pressure.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/unit.dart';
@@ -30,6 +32,7 @@ import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/velo
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/wet_bulb_globe_temperature/logic/wet_bulb_globe_temperature.dart';
 import 'package:gc_wizard/tools/symbol_tables/_common/logic/symbol_table_data.dart';
 import 'package:gc_wizard/utils/complex_return_types.dart';
+import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/utils/data_type_utils/object_type_utils.dart';
 import 'package:intl/intl.dart';
 
@@ -53,7 +56,14 @@ class WetBulbGlobeTemperatureState extends State<WetBulbGlobeTemperature> {
   bool _currentAreaUrban = true;
   CLOUD_COVER _currentCloudCover = CLOUD_COVER.CLEAR_0;
 
+  late TextEditingController _solarController;
+
+  DoubleText _currentSolar = defaultDoubleText;
+
+  GCWSwitchPosition _currentSolarMode = GCWSwitchPosition.left;
+
   Unit _currentOutputUnit = TEMPERATURE_CELSIUS;
+  Unit _currentOutputSolDistUnit = LENGTH_METER;
 
   List<Map<String, SymbolData>> _images = [];
   final String _ASSET_PATH = 'lib/tools/symbol_tables/_common/assets/weather_n/weather_n.zip';
@@ -98,7 +108,14 @@ class WetBulbGlobeTemperatureState extends State<WetBulbGlobeTemperature> {
   void initState() {
     super.initState();
 
+    _solarController = TextEditingController(text: _currentSolar.text);
     _initalizeImages();
+  }
+
+  @override
+  void dispose() {
+    _solarController.dispose();
+    super.dispose();
   }
 
   @override
@@ -180,6 +197,27 @@ class WetBulbGlobeTemperatureState extends State<WetBulbGlobeTemperature> {
             });
           },
         ),
+        GCWTwoOptionsSwitch(
+          title: i18n(context, 'wet_bulb_globe_temperature_solar'),
+          leftValue: i18n(context, 'wet_bulb_globe_temperature_solar_known'),
+          rightValue: i18n(context, 'wet_bulb_globe_temperature_solar_calculate'),
+          value: _currentSolarMode,
+          onChanged: (value) {
+            setState(() {
+              _currentSolarMode = value;
+            });
+          },
+        ),
+        _currentSolarMode == GCWSwitchPosition.left
+        ? GCWDoubleTextField(
+          controller: _solarController,
+          min: 0.0,
+          onChanged: (ret) {
+            setState(() {
+              _currentSolar = ret;
+            });
+          },)
+        : Container(),
         GCWDropDown<CLOUD_COVER>(
           title: i18n(context, 'wet_bulb_globe_temperature_cloud'),
           value: _currentCloudCover,
@@ -246,34 +284,16 @@ class WetBulbGlobeTemperatureState extends State<WetBulbGlobeTemperature> {
         _currentHumidity,
         _currentAirPressure,
         _currentAreaUrban,
-        _currentCloudCover);
+        _currentCloudCover,
+        _currentSolar.value);
     if (output.Status == -1) {
       return GCWDefaultOutput(
         child: i18n(context, 'wet_bulb_globe_temperature_invalid_input'),
       );
     }
 
-    String unit = _currentOutputUnit.symbol;
     String hintWBGT = _calculateHintWBGT(output.Twbg);
     double WBGT = _currentOutputUnit.fromReference(TEMPERATURE_CELSIUS.toKelvin(output.Twbg));
-
-    var _outputFurtherInformation = [
-      [
-        i18n(context, 'common_measure_solar_irradiance'),
-        output.Solar.toStringAsFixed(2) + ' W/m²',
-      ],
-      [
-        i18n(context, 'common_measure_dewpoint'),
-        _currentOutputUnit.fromReference(TEMPERATURE_CELSIUS.toKelvin(output.Tdew)).toStringAsFixed(2) + ' ' + unit
-      ],
-      [
-        i18n(context, 'common_measure_mean_radiant_temperature'),
-        _currentOutputUnit.fromReference(TEMPERATURE_CELSIUS.toKelvin(output.Tmrt)).toStringAsFixed(2) + ' ' + unit
-      ],
-      [i18n(context, 'astronomy_sunposition_title'), ''],
-      [i18n(context, 'astronomy_position_altitude'), output.SunPos.altitude.toStringAsFixed(2) + ' °'],
-      [i18n(context, 'astronomy_position_azimuth'), output.SunPos.azimuth.toStringAsFixed(2) + ' °'],
-    ];
 
     return Column(
       children: [
@@ -326,11 +346,62 @@ class WetBulbGlobeTemperatureState extends State<WetBulbGlobeTemperature> {
             )
           ],
         ),
+        _buildOutputFurtherInformation(output),
+      ],
+    );
+  }
+
+  Widget _buildOutputFurtherInformation(WBGTOutput output){
+    String unit = _currentOutputUnit.symbol;
+
+    var _outputFurtherInformation = [
+      [
+        i18n(context, 'common_measure_dewpoint'),
+        _currentOutputUnit.fromReference(TEMPERATURE_CELSIUS.toKelvin(output.Tdew)).toStringAsFixed(2), unit
+      ],
+      [
+        i18n(context, 'common_measure_mean_radiant_temperature'),
+        _currentOutputUnit.fromReference(TEMPERATURE_CELSIUS.toKelvin(output.Tmrt)).toStringAsFixed(2), unit
+      ],
+      [
+        i18n(context, 'common_measure_solar_irradiance'),
+        output.Solar.toStringAsFixed(2), 'W/m²',
+      ],
+    ];
+
+    var _outputFurtherInformationSunposition = [
+      [i18n(context, 'astronomy_position_altitude'), output.solpos.elev.toStringAsFixed(2), '°'],
+      [i18n(context, 'astronomy_position_azimuth'), output.solpos.azim.toStringAsFixed(2),'°'],
+      [i18n(context, 'astronomy_position_distancetoobserver'), output.solpos.soldist.toStringAsFixed(2), 'AU'],
+    ];
+
+    return Column(
+      children: [
         GCWExpandableTextDivider(
           expanded: false,
           suppressTopSpace: false,
           text: i18n(context, 'common_further_information'),
-          child: GCWColumnedMultilineOutput(data: _outputFurtherInformation),
+          child: Column(
+            children: [
+              GCWColumnedMultilineOutput(
+                data: _outputFurtherInformation,
+                flexValues: [8,3,2],
+                copyColumn: 1,),
+              GCWExpandableTextDivider(
+                expanded: false,
+                suppressTopSpace: false,
+                text: i18n(context, 'astronomy_sunposition_title'),
+                child: Column(
+                  children: [
+                    GCWColumnedMultilineOutput(
+                        data: _outputFurtherInformationSunposition,
+                        flexValues: [8,3,2],
+                        copyColumn: 1),
+                  ],
+                )
+              )
+            ],
+          ),
         )
       ],
     );
