@@ -89,6 +89,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/amsco/widget/amsco.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/atbash/widget/atbash.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/avemaria/widget/avemaria.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/bacon/widget/bacon.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/bacon/widget/bacon_analyze.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/battleship/widget/battleship.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/beghilos/widget/beghilos.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/bifid/widget/bifid.dart';
@@ -129,6 +130,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/kamasutra/widget/kamasutra.
 import 'package:gc_wizard/tools/crypto_and_encodings/kenny/widget/kenny.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/language_games/chicken_language/widget/chicken_language.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/language_games/duck_speak/widget/duck_speak.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/language_games/judoon/widget/judoon.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/language_games/pig_latin/widget/pig_latin.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/language_games/robber_language/widget/robber_language.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/language_games/spoon_language/widget/spoon_language.dart';
@@ -139,6 +141,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/one_time_pad/widget/one_tim
 import 'package:gc_wizard/tools/crypto_and_encodings/playfair/widget/playfair.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/pokemon/widget/pokemon.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/pollux/widget/pollux.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/porta/widget/porta.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/polybios/widget/polybios.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/prime_alphabet/widget/prime_alphabet.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/rabbit/widget/rabbit.dart';
@@ -534,6 +537,7 @@ void _initStaticToolList() {
       className(const AveMaria()),
       className(const BabylonNumbersSelection()),
       className(const Bacon()),
+      className(const BaconAnalyze()),
       className(const BaseSelection()),
       className(const Battleship()),
       className(const BCDSelection()),
@@ -651,6 +655,7 @@ void _initStaticToolList() {
       className(const IPCodes()),
       className(const IteratedCrossSumRange()),
       className(const IteratedCrossSumRangeFrequency()),
+      className(const Judoon()),
       className(const Kamasutra()),
       className(const KarolRobot()),
       className(const Kenny()),
@@ -660,7 +665,7 @@ void _initStaticToolList() {
       className(const MagicEyeSolver()),
       className(const MathematicalConstants()),
       className(const Malbolge()),
-      className(const MapView()),
+      className(MapView()),
       className(const MayaCalendarSelection()),
       className(const MayaNumbersSelection()),
       className(const MexicanArmyCipherWheel()),
@@ -701,6 +706,7 @@ void _initStaticToolList() {
       className(const Pokemon()),
       className(const Pollux()),
       className(const Polybios()),
+      className(const Porta()),
       className(const PredatorSelection()),
       className(const PrimeAlphabet()),
       className(const PrimesSelection()),
