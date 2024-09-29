@@ -271,21 +271,21 @@ class WetBulbGlobeTemperatureState extends State<WetBulbGlobeTemperature> {
 
   Widget _buildOutput(BuildContext context) {
     WBGTOutput output = calculateWetBulbGlobeTemperature(
-        _currentDateTime.datetime.year,
-        _currentDateTime.datetime.month,
-        _currentDateTime.datetime.day,
-        _currentDateTime.datetime.hour,
-        _currentDateTime.datetime.minute,
-        _currentDateTime.timezone.inHours,
-        _currentCoords.toLatLng()!,
-        _currentWindSpeed,
-        _currentWindSpeedHeight,
-        _currentTemperature,
-        _currentHumidity,
-        _currentAirPressure,
-        _currentAreaUrban,
-        _currentCloudCover,
-        _currentSolar.value);
+        year: _currentDateTime.datetime.year,
+        month: _currentDateTime.datetime.month,
+        day: _currentDateTime.datetime.day,
+        hour: _currentDateTime.datetime.hour,
+        minute: _currentDateTime.datetime.minute,
+        gmt: _currentDateTime.timezone.inHours,
+        coords: _currentCoords.toLatLng()!,
+        windSpeed: _currentWindSpeed,
+        windSpeedHeight: _currentWindSpeedHeight,
+        temperature: _currentTemperature,
+        humidity: _currentHumidity,
+        airPressure: _currentAirPressure,
+        urban: _currentAreaUrban,
+        cloudcover: _currentCloudCover,
+        solar: _currentSolar.value);
     if (output.Status == -1) {
       return GCWDefaultOutput(
         child: i18n(context, 'wet_bulb_globe_temperature_invalid_input'),
@@ -353,7 +353,13 @@ class WetBulbGlobeTemperatureState extends State<WetBulbGlobeTemperature> {
 
   Widget _buildOutputFurtherInformation(WBGTOutput output){
     String unit = _currentOutputUnit.symbol;
-
+print('##############################################################');
+    print('Tmrt '+output.Tmrt.toString());
+    print('Tdew '+output.Tdew.toString());
+    print('Tg   '+output.Tg.toString());
+    print('Tnwb '+output.Tnwb.toString());
+    print('Tpsy '+output.Tpsy.toString());
+    print('Twbg '+output.Twbg.toString());
     var _outputFurtherInformation = [
       [
         i18n(context, 'common_measure_dewpoint'),

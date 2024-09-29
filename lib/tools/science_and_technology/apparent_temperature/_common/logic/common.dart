@@ -1,5 +1,7 @@
 import 'dart:math';
 
+enum TMRT {WIKIPEDIA, THORSSON, BERNARD}
+
 enum CLOUD_COVER {
   CLEAR_0,
   FEW_1,
@@ -160,19 +162,33 @@ double calculateMeanRadiantTemperature({
   double e = 0.95, // emissivity of the globe (no dimension) - Standard: 0.95
   double D = 0.15, // diameter of the globe (m) - Standard: 0.15
   required double Ta, // air temperature (°C)
+  TMRT tmrtFormula = TMRT.BERNARD,
 }) {
-  // https://en.wikipedia.org/wiki/Mean_radiant_temperature
-  //return pow(pow(Tg + 273.15, 4) + 1.100 * 100000000 * pow(va, 0.60) * (Tg - Ta) / e / pow(D, 0.4), 0.25) - 273.15;
+  double MRT = 0.0;
 
-  // Sofia Thorsson calculation
-  return pow(pow(Tg + 273.15, 4) + 1.335 * pow(va, 0.71) * (Tg - Ta) / (e * pow(D, 0.4)) * 100000000, 0.25) - 273.15;
+  switch (tmrtFormula) {
+    case TMRT.WIKIPEDIA:
+    // https://en.wikipedia.org/wiki/Mean_radiant_temperature
+      MRT =   pow(pow(Tg + 273.15, 4) + 1.100 * 100000000 * pow(va, 0.60) * (Tg - Ta) / e / pow(D, 0.4), 0.25) - 273.15;
+      print('MRT wikipedia '+MRT.toString());
+      break;
+    case TMRT.THORSSON:
+    // Sofia Thorsson calculation
+      MRT =  pow(pow(Tg + 273.15, 4) + 1.335 * pow(va, 0.71) * (Tg - Ta) / (e * pow(D, 0.4)) * 100000000, 0.25) - 273.15;
+      print('MRT thorsson '+MRT.toString());
+      break;
+    case TMRT.BERNARD:
+    // Bernard calculation
+      double WF = 0.0;
+      double WF1 = 0.4 * pow((Tg - Ta).abs(), 0.25);
+      double WF2 = 2.5 * pow(va, 0.6);
+      (WF1 > WF2) ? WF = WF1 : WF = WF2;
+      MRT =  100 * pow(pow((Tg + 273) / 100, 4) + WF * (Tg - Ta), 0.25) - 273;
+      print('MRT bernard '+MRT.toString());
+      break;
+  }
 
-  // Bernard calculation
-  double WF = 0.0;
-  double WF1 = 0.4 * pow((Tg - Ta).abs(), 0.25);
-  double WF2 = 2.5 * pow(va, 0.6);
-  (WF1 > WF2) ? WF = WF1 : WF = WF2;
-  return 100 * pow(pow((Tg + 273) / 100, 4) + WF * (Tg - Ta), 0.25) - 273;
+  return MRT;
 }
 
 double calculateGlobeTemperature(

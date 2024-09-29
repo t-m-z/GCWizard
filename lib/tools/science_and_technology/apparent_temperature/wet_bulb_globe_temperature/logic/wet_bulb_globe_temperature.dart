@@ -55,22 +55,22 @@ class WBGTOutput {
       required this.solpos});
 }
 
-WBGTOutput calculateWetBulbGlobeTemperature(
-    int year,
-    int month,
-    int day,
-    int hour,
-    int minute,
-    int gmt,
-    LatLng coords,
-    double windSpeed,
-    double windSpeedHeight,
-    double temperature,
-    double humidity,
-    double airPressure,
-    bool urban,
-    CLOUD_COVER cloudcover,
-    double solar) {
+WBGTOutput calculateWetBulbGlobeTemperature({
+  required int year,
+  required int month,
+  required int day,
+  required int hour,
+  required int minute,
+  required int gmt,
+  required LatLng coords,
+  required double windSpeed,
+  required double windSpeedHeight,
+  required double temperature,
+  required double humidity,
+  required double airPressure,
+  required bool urban,
+  required CLOUD_COVER cloudcover,
+  required double solar}) {
 
   liljegrenOutputWBGT WBGT = calc_wbgt(
     year: year,
@@ -104,6 +104,7 @@ WBGTOutput calculateWetBulbGlobeTemperature(
     Ta: temperature,
   );
 
+  print(Tmrt);
   return WBGTOutput(
       Status: 0, Twbg: WBGT.Twbg, Solar: WBGT.solar, Tdew: WBGT.Tdew, Tg: WBGT.Tg, Tmrt: Tmrt, solpos: WBGT.solpos);
 }
