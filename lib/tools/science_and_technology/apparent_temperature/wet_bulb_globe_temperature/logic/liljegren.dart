@@ -1,5 +1,7 @@
 import 'dart:math';
 
+import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/_common/logic/common.dart';
+
 class liljegrenOutputWBGT {
   final int Status;
   final double Tg;
@@ -493,6 +495,8 @@ double Tglobe(
   } while (!converged && iter < MAX_ITER);
 
   if (converged) {
+    print('converged Tglobe '+(Tglobe_new - 273.15).toString());
+    print('calculatd Tglobe '+calculateGlobeTemperature(Ta: Tair, Td: calculateDewPoint(tair: Tair, rh: rh), P: Pair, u: speed, S: solar, fdb: null, fdif: null, cza: cza, ).toString());
     return (Tglobe_new - 273.15);
   } else {
     return (-9999.0);

@@ -114,9 +114,10 @@ double calculateSolarIrradiance({double solarElevationAngleOld = 0.0, double sol
   return R0 * (1.0 - 0.75 * pow(cloudCoverFraction, 3.4));
 }
 
-double calculateDewPoint(
-  double tair, // temperature in °C
-  double rh, // relative humidity in %
+double calculateDewPoint({
+  required double tair, // temperature in °C
+  required double rh,
+} // relative humidity in %
 ) {
   // https://energie-m.de/tools/taupunkt.html
   // https://myscope.net/taupunkttemperatur/
@@ -191,15 +192,16 @@ double calculateMeanRadiantTemperature({
   return MRT;
 }
 
-double calculateGlobeTemperature(
-  double Ta, // T ambient in °C
-  double Td, // T DewPoint in C°
-  double P, // Barometric pressure
-  double u, // Wind speed in m/s
-  double S, // Solar irridiance in W/m/m
-  double fdb, // direct beam radiation from the sun
-  double fdif, // diffuse radiation from the sun
-  double z, // Zenith angle in radians
+double calculateGlobeTemperature({
+  required double Ta, // T ambient in °C
+  required double Td, // T DewPoint in C°
+  required double P, // Barometric pressure
+  required double u, // Wind speed in m/s
+  required double S, // Solar irridiance in W/m/m
+  required double fdb, // direct beam radiation from the sun
+  required double fdif, // diffuse radiation from the sun
+  required double cza, // Zenith angle in radians
+}
 ) {
   // https://www.weather.gov/media/tsa/pdf/WBGTpaper2.pdf
   // https://web.archive.org/web/20240920214629/https://www.weather.gov/media/tsa/pdf/WBGTpaper2.pdf
@@ -210,7 +212,7 @@ double calculateGlobeTemperature(
       exp(17.67 * (Td - Td) / (Td + 243.5)) * (1.0007 + 0.00000346 * P) * 6.112 * exp(17.502 * Ta / (240.97 + Ta));
   double epsilona = 0.575 * pow(ea, 1 / 7);
 
-  double B = S * (fdb / 4 / sb / cos(z) + 1.2 / sb * fdif) + epsilona * pow(Ta, 4);
+  double B = S * (fdb / 4 / sb / cza + 1.2 / sb * fdif) + epsilona * pow(Ta, 4);
   double C = h * pow(u, 0.58) / (5.3865 * pow(10, -8));
 
   return (B + C * Ta + 7680000) / (C + 256000);

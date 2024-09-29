@@ -69,7 +69,7 @@ class _HumidexState extends State<Humidex> {
     humidex = TEMPERATURE_CELSIUS.toKelvin(humidex_c);
     humidex = _currentOutputUnit.fromReference(humidex);
 
-    double dewpoint = calculateDewPoint(_currentTemperature, _currentHumidity);
+    double dewpoint = calculateDewPoint(tair: _currentTemperature, rh: _currentHumidity);
     dewpoint = TEMPERATURE_CELSIUS.toKelvin(dewpoint);
     dewpoint = _currentOutputUnit.fromReference(dewpoint);
 

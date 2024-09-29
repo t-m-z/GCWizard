@@ -104,7 +104,6 @@ WBGTOutput calculateWetBulbGlobeTemperature({
     Ta: temperature,
   );
 
-  print(Tmrt);
   return WBGTOutput(
       Status: 0, Twbg: WBGT.Twbg, Solar: WBGT.solar, Tdew: WBGT.Tdew, Tg: WBGT.Tg, Tmrt: Tmrt, solpos: WBGT.solpos);
 }
