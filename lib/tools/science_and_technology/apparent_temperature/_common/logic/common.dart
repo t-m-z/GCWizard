@@ -1,6 +1,8 @@
 import 'dart:math';
 
-enum TMRT {WIKIPEDIA, THORSSON, BERNARD}
+import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/wet_bulb_globe_temperature/logic/liljegren.dart';
+
+enum TMRT {WIKIPEDIA, THORSSON, BERNARD, CLIMATCHIP}
 
 enum CLOUD_COVER {
   CLEAR_0,
@@ -157,12 +159,26 @@ double calculateDewPoint({
   return (b * v) / (a - v);
 }
 
+double _fTmrtB({
+  required double Tg, // globe temperature (°C)
+  required double va, // air velocity at the level of the globe (m/s)
+  required double Ta, // air temperature (°C)
+}
+) {
+  double WF = 0.0;
+  double WF1 = 0.4 * pow((Tg - Ta).abs(), 0.25);
+  double WF2 = 2.5 * pow(va, 0.6);
+  (WF1 > WF2) ? WF = WF1 : WF = WF2;
+  return  100 * pow(pow((Tg + 273) / 100, 4) + WF * (Tg - Ta), 0.25) - 273;
+}
+
 double calculateMeanRadiantTemperature({
   required double Tg, // globe temperature (°C)
   required double va, // air velocity at the level of the globe (m/s)
   double e = 0.95, // emissivity of the globe (no dimension) - Standard: 0.95
   double D = 0.15, // diameter of the globe (m) - Standard: 0.15
   required double Ta, // air temperature (°C)
+  double solar = -99,
   TMRT tmrtFormula = TMRT.BERNARD,
 }) {
   double MRT = 0.0;
@@ -186,6 +202,29 @@ double calculateMeanRadiantTemperature({
       (WF1 > WF2) ? WF = WF1 : WF = WF2;
       MRT =  100 * pow(pow((Tg + 273) / 100, 4) + WF * (Tg - Ta), 0.25) - 273;
       print('MRT bernard '+MRT.toString());
+      break;
+    case TMRT.CLIMATCHIP:
+      // Calculation from https://climatechip.org/excel-wbgt-calculator
+      double propDirect = 0.8;
+      double ZenithAngle = 0.5;
+      //Use the solar to get the globe temperature (Liljegren) then use the globe temperature to get MRT using Bernard’s formula
+      if (solar == -99) {
+        MRT = _fTmrtB(Ta: Ta, Tg: Tg, va: va);
+      }
+      else if (Tg == -99)
+      {
+        double RH = 60.0; //assume a value - not very sensitive to RH
+        double Tg = Tglobe(
+            Ta,
+            RH,
+            1013,
+            va,
+            solar,
+            propDirect,
+            ZenithAngle,
+        );
+        MRT = _fTmrtB(Ta: Ta, Tg: Tg, va: va);
+      }
       break;
   }
 

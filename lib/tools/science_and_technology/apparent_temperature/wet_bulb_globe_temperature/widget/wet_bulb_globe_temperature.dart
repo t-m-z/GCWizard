@@ -32,7 +32,6 @@ import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/velo
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/wet_bulb_globe_temperature/logic/wet_bulb_globe_temperature.dart';
 import 'package:gc_wizard/tools/symbol_tables/_common/logic/symbol_table_data.dart';
 import 'package:gc_wizard/utils/complex_return_types.dart';
-import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/utils/data_type_utils/object_type_utils.dart';
 import 'package:intl/intl.dart';
 
@@ -58,7 +57,7 @@ class WetBulbGlobeTemperatureState extends State<WetBulbGlobeTemperature> {
 
   late TextEditingController _solarController;
 
-  DoubleText _currentSolar = defaultDoubleText;
+  DoubleText _currentSolar = DoubleText('-1.0', -1.0);
 
   GCWSwitchPosition _currentSolarMode = GCWSwitchPosition.left;
 

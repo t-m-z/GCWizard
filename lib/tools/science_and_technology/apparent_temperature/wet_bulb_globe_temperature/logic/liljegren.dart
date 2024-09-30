@@ -1,7 +1,5 @@
 import 'dart:math';
 
-import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/_common/logic/common.dart';
-
 class liljegrenOutputWBGT {
   final int Status;
   final double Tg;
@@ -12,6 +10,7 @@ class liljegrenOutputWBGT {
   final double est_speed;
   final double solar;
   final liljegrenOutputSolarPosition solpos;
+  final liljegrenOutputSolarParameter solpar;
 
   liljegrenOutputWBGT(
       {this.Status = 0,
@@ -22,7 +21,8 @@ class liljegrenOutputWBGT {
       this.Tdew = 0.0,
       this.est_speed = 0.0,
       this.solar = 0.0,
-      required this.solpos});
+      required this.solpos,
+      required this.solpar});
 }
 
 class liljegrenOutputSolarPosition {
@@ -278,14 +278,15 @@ liljegrenOutputWBGT calc_wbgt({
   Tnwb = _Twb(tk, rh, pres, speed, solar, fdir, cza, 1); // - 273.15;
   Tpsy = _Twb(tk, rh, pres, speed, solar, fdir, cza, 0); // - 273.15;
   Twbg = 0.1 * Tair + 0.2 * Tg + 0.7 * Tnwb;
+
   Tdew = _dew_point(rh * _esat(tk, 0), 0) - 273.15;
 
   if (Tg == -9999 || Tnwb == -9999) {
     Twbg = -9999;
     return liljegrenOutputWBGT(
-        Status: -1, Tg: Tg, Tnwb: Tnwb, Tpsy: Tpsy, Twbg: Twbg, Tdew: Tdew, est_speed: est_speed, solar: solar, solpos: solpar.solpos);
+        Status: -1, Tg: Tg, Tnwb: Tnwb, Tpsy: Tpsy, Twbg: Twbg, Tdew: Tdew, est_speed: est_speed, solar: solar, solpos: solpar.solpos, solpar: solpar);
   } else {
-    return liljegrenOutputWBGT(Status: 0, Tg: Tg, Tnwb: Tnwb, Tpsy: Tpsy, Twbg: Twbg, Tdew: Tdew, est_speed: est_speed, solar: solar, solpos: solpar.solpos);
+    return liljegrenOutputWBGT(Status: 0, Tg: Tg, Tnwb: Tnwb, Tpsy: Tpsy, Twbg: Twbg, Tdew: Tdew, est_speed: est_speed, solar: solar, solpos: solpar.solpos, solpar: solpar);
   }
 }
 
@@ -496,7 +497,7 @@ double Tglobe(
 
   if (converged) {
     print('converged Tglobe '+(Tglobe_new - 273.15).toString());
-    print('calculatd Tglobe '+calculateGlobeTemperature(Ta: Tair, Td: calculateDewPoint(tair: Tair, rh: rh), P: Pair, u: speed, S: solar, fdb: null, fdif: null, cza: cza, ).toString());
+    //print('calculatd Tglobe '+calculateGlobeTemperature(Ta: Tair, Td: calculateDewPoint(tair: Tair, rh: rh), P: Pair, u: speed, S: solar, fdb: null, fdif: null, cza: cza, ).toString());
     return (Tglobe_new - 273.15);
   } else {
     return (-9999.0);
