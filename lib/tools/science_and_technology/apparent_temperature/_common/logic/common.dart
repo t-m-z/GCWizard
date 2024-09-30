@@ -217,7 +217,7 @@ double calculateMeanRadiantTemperature({
         double Tg = Tglobe(
             Ta,
             RH,
-            1013,
+            1013.25,
             va,
             solar,
             propDirect,
@@ -267,7 +267,7 @@ double calculateVaporPressure(
   return 6.11 * pow(10, (7.5 * temperature / (237.3 + temperature)));
 }
 
-double calculateRelativeHumidityFromTairTdee(
+double calculateRelativeHumidityFromTairTdew(
     double tair, // °C
     double tdew  // °C
     ) {

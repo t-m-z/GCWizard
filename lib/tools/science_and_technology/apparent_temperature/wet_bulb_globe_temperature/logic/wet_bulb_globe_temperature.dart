@@ -99,8 +99,6 @@ WBGTOutput calculateWetBulbGlobeTemperature({
   double Tmrt = calculateMeanRadiantTemperature(
     Tg: WBGT.Tg,
     va: windSpeed,
-    e: 0.95,
-    D: 0.15,
     Ta: temperature,
   );
 

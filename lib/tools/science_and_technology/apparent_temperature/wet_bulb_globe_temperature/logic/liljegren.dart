@@ -274,9 +274,10 @@ liljegrenOutputWBGT calc_wbgt({
   rh = 0.01 * relhum; // % to fraction
 
   // calculate the globe, natural wet bulb, psychometric wet bulb and outdoor wet bulb globe temperatures
-  Tg = Tglobe(tk, rh, pres, speed, solar, fdir, cza);
-  Tnwb = _Twb(tk, rh, pres, speed, solar, fdir, cza, 1); // - 273.15;
-  Tpsy = _Twb(tk, rh, pres, speed, solar, fdir, cza, 0); // - 273.15;
+  Tg = Tglobe(Tair: tk, rh: rh, Pair: pres, speed: speed, solar: solar, fdir: fdir , cza: cza);
+  Tnwb = _Twb(Tair: tk, rh: rh, Pair: pres, speed: speed, solar: solar, fdir: fdir, cza: cza, rad: 1);
+  Tpsy = _Twb(Tair: tk, rh: rh, Pair: pres, speed: speed, solar: solar, fdir: fdir, cza: cza, rad: 0);
+
   Twbg = 0.1 * Tair + 0.2 * Tg + 0.7 * Tnwb;
 
   Tdew = _dew_point(rh * _esat(tk, 0), 0) - 273.15;
@@ -360,17 +361,16 @@ liljegrenOutputSolarParameter _calc_solar_parameters(
  *		 Decision and Information Sciences Division
  *		 Argonne National Laboratory
  */
-double _Twb(
-  double Tair, // air (dry bulb) temperature, degC
-  double rh, // relative humidity
-  double Pair, // barometric pressure, mb
-  double speed, // wind speed, m/s
-  double solar, // solar irradiance, W/m2
-  double fdir, // fraction of solar irradiance due to direct beam
-  double cza, // cosine of solar zenith angle
-  int rad, // switch to enable/disable radiative heating;
-  // no radiative heating --> pyschrometric wet bulb temp
-) {
+double _Twb({
+  required double Tair, // air (dry bulb) temperature, degC
+  required double rh, // relative humidity
+  required double Pair, // barometric pressure, mb
+  required double speed, // wind speed, m/s
+  required double solar, // solar irradiance, W/m2
+  required double fdir, // fraction of solar irradiance due to direct beam
+  required double cza, // cosine of solar zenith angle
+  required int rad, // switch to enable/disable radiative heating; no radiative heating --> pyschrometric wet bulb temp
+}) {
   double a = 0.56; // from Bedingfield and Drew
 
   double sza = 0.0;
@@ -457,15 +457,15 @@ double _h_cylinder_in_air(
  *		 Decision and Information Sciences Division
  *		 Argonne National Laboratory
  */
-double Tglobe(
-  double Tair, // air (dry bulb) temperature, degC
-  double rh, // relative humidity, fraction between 0 and 1
-  double Pair, // barometric pressure, mb
-  double speed, // wind speed, m/s
-  double solar, // solar irradiance, W/m2
-  double fdir, // fraction of solar irradiance due to direct beam
-  double cza, // cosine of solar zenith angle
-) {
+double Tglobe({
+  required double Tair, // air (dry bulb) temperature, degC
+  required double rh, // relative humidity, fraction between 0 and 1
+  required double Pair, // barometric pressure, mb
+  required double speed, // wind speed, m/s
+  required double solar, // solar irradiance, W/m2
+  required double fdir, // fraction of solar irradiance due to direct beam
+  required double cza, // cosine of solar zenith angle
+}) {
   double Tsfc = 0.0;
   double Tref = 0.0;
   double Tglobe_prev = 0.0;
