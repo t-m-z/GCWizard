@@ -179,7 +179,7 @@ double calculateMeanRadiantTemperature({
   double D = 0.15, // diameter of the globe (m) - Standard: 0.15
   required double Ta, // air temperature (°C)
   double solar = -99,
-  TMRT tmrtFormula = TMRT.BERNARD,
+  TMRT tmrtFormula = TMRT.CLIMATCHIP,
 }) {
   double MRT = 0.0;
 
@@ -187,12 +187,10 @@ double calculateMeanRadiantTemperature({
     case TMRT.WIKIPEDIA:
     // https://en.wikipedia.org/wiki/Mean_radiant_temperature
       MRT =   pow(pow(Tg + 273.15, 4) + 1.100 * 100000000 * pow(va, 0.60) * (Tg - Ta) / e / pow(D, 0.4), 0.25) - 273.15;
-      print('MRT wikipedia '+MRT.toString());
       break;
     case TMRT.THORSSON:
     // Sofia Thorsson calculation
       MRT =  pow(pow(Tg + 273.15, 4) + 1.335 * pow(va, 0.71) * (Tg - Ta) / (e * pow(D, 0.4)) * 100000000, 0.25) - 273.15;
-      print('MRT thorsson '+MRT.toString());
       break;
     case TMRT.BERNARD:
     // Bernard calculation
@@ -201,28 +199,27 @@ double calculateMeanRadiantTemperature({
       double WF2 = 2.5 * pow(va, 0.6);
       (WF1 > WF2) ? WF = WF1 : WF = WF2;
       MRT =  100 * pow(pow((Tg + 273) / 100, 4) + WF * (Tg - Ta), 0.25) - 273;
-      print('MRT bernard '+MRT.toString());
       break;
     case TMRT.CLIMATCHIP:
       // Calculation from https://climatechip.org/excel-wbgt-calculator
       double propDirect = 0.8;
       double ZenithAngle = 0.5;
-      //Use the solar to get the globe temperature (Liljegren) then use the globe temperature to get MRT using Bernard’s formula
-      if (solar == -99) {
+      if (solar <= 0) {
         MRT = _fTmrtB(Ta: Ta, Tg: Tg, va: va);
       }
-      else if (Tg == -99)
-      {
+      else if (Tg <= 0) {
+        //Use the solar to get the globe temperature (Liljegren) then use the globe temperature to get MRT using Bernard’s formula
         double RH = 60.0; //assume a value - not very sensitive to RH
         double Tg = Tglobe(
-            Ta,
-            RH,
-            1013.25,
-            va,
-            solar,
-            propDirect,
-            ZenithAngle,
+            Tair: Ta,
+            rh: RH,
+            Pair: 1013.25,
+            speed: va,
+            solar: solar,
+            fdir: propDirect,
+            cza: ZenithAngle,
         );
+        print(Tg);
         MRT = _fTmrtB(Ta: Ta, Tg: Tg, va: va);
       }
       break;

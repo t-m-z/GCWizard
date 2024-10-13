@@ -199,18 +199,21 @@ class WetBulbGlobeTemperatureState extends State<WetBulbGlobeTemperature> {
         GCWTwoOptionsSwitch(
           title: i18n(context, 'wet_bulb_globe_temperature_solar'),
           leftValue: i18n(context, 'wet_bulb_globe_temperature_solar_known'),
-          rightValue: i18n(context, 'wet_bulb_globe_temperature_solar_calculate'),
+          rightValue: i18n(context, 'wet_bulb_globe_temperature_solar_calc'),
           value: _currentSolarMode,
           onChanged: (value) {
             setState(() {
               _currentSolarMode = value;
+              if (_currentSolarMode == GCWSwitchPosition.right) {
+                _currentSolar = DoubleText('-1.0', -1.0);
+              }
             });
           },
         ),
         _currentSolarMode == GCWSwitchPosition.left
         ? GCWDoubleTextField(
           controller: _solarController,
-          min: 0.0,
+          min: -100.0,
           onChanged: (ret) {
             setState(() {
               _currentSolar = ret;

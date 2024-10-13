@@ -234,7 +234,6 @@ liljegrenOutputWBGT calc_wbgt({
   double Twbg = 0.0; // wet bulb globe temperature, degC
   double Tdew = 0.0; // dew point temperAture
   double est_speed = 0.0; // estimated speed at reference height, m/s
-  double solar = 0.0; // solar irradiance, W/m2
   double cza = 0.0; // cosine of solar zenith angle
   double fdir = 0.0; // fraction of solar irradiance due to direct beam
   double tk = 0.0; // temperature converted to kelvin
@@ -242,20 +241,34 @@ liljegrenOutputWBGT calc_wbgt({
   double hour_gmt = 0.0;
   double dday = 0.0;
 
-  int daytime;
-  int stability_class;
+  int daytime = 0;
+  int stability_class = 0;
+
+  liljegrenOutputSolarParameter solpar = liljegrenOutputSolarParameter(solpos: liljegrenOutputSolarPosition());
 
   // convert time to GMT and center in avg period;
   hour_gmt = hour - gmt + (minute - 0.5 * avg) / 60.0;
   dday = day + hour_gmt / 24.0;
 
+print(solar);
+  if (solar >= 0) {
+    cza = 0.5;
+    fdir = 0.8;
+    print('solar knbow');
+  } else
   // calculate the cosine of the solar zenith angle and fraction of solar irradiance
   // due to the direct beam; adjust the solar irradiance if it is out of bounds
-  liljegrenOutputSolarParameter solpar = _calc_solar_parameters(year, month, dday, //solar,
-      lat, lon);
-  solar = solpar.solar;
-  cza = solpar.cza;
-  fdir = solpar.fdir;
+      {
+    solpar = _calc_solar_parameters(
+        year,
+        month,
+        dday, //solar,
+        lat,
+        lon);
+    solar = solpar.solar;
+    cza = solpar.cza;
+    fdir = solpar.fdir;
+  }
 
   // estimate the wind speed, if necessary
   if (zspeed != REF_HEIGHT) {

@@ -101,7 +101,40 @@ WBGTOutput calculateWetBulbGlobeTemperature({
     va: windSpeed,
     Ta: temperature,
   );
-
+print(calculateMeanRadiantTemperature(
+    Tg: WBGT.Tg,
+    va: windSpeed,
+    Ta: temperature,
+    solar: 1000,
+    tmrtFormula: TMRT.THORSSON
+));
+  print(calculateMeanRadiantTemperature(
+      Tg: WBGT.Tg,
+      va: windSpeed,
+      Ta: temperature,
+      solar: 1000,
+      tmrtFormula: TMRT.BERNARD
+  ));
+  print(calculateMeanRadiantTemperature(
+      Tg: WBGT.Tg,
+      va: windSpeed,
+      Ta: temperature,
+      tmrtFormula: TMRT.CLIMATCHIP
+  ));
+  print(calculateMeanRadiantTemperature(
+      Tg: 0,
+      va: windSpeed,
+      Ta: temperature,
+      solar: 1000,
+      tmrtFormula: TMRT.CLIMATCHIP
+  ));
+  print(calculateMeanRadiantTemperature(
+      Tg: WBGT.Tg,
+      va: windSpeed,
+      Ta: temperature,
+      solar: 1000,
+      tmrtFormula: TMRT.WIKIPEDIA
+  ));
   return WBGTOutput(
       Status: 0, Twbg: WBGT.Twbg, Solar: WBGT.solar, Tdew: WBGT.Tdew, Tg: WBGT.Tg, Tmrt: Tmrt, solpos: WBGT.solpos);
 }
