@@ -101,7 +101,8 @@ String decodeBase85(String input) {
   if (input.endsWith('~>')) input = input.substring(0, input.length - 2);
 
   var decoded = decodeASCII85(input);
-  return decoded == null ? '' : utf8.decode(decoded);
+  print(input+' '+decoded.toString());
+  return decoded == null ? '' : utf8.decode(decoded, allowMalformed: true);
 }
 
 bool _invalidBase85(String base85) {

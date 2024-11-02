@@ -7,8 +7,10 @@ import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_param
 import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/dialogs/gcw_exported_file_dialog.dart';
+import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/gcw_snackbar.dart';
 import 'package:gc_wizard/common_widgets/gcw_web_statefulwidget.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
@@ -138,8 +140,15 @@ class _AbstractBaseState extends State<AbstractBase> {
       } else {
         _outData = null;
         output = decodeBase(_currentInput, widget.decode);
-        outputWidget = GCWDefaultOutput(child: output);
+        outputWidget = Column(
+          children: [
+            GCWDefaultOutput(child: output),
+            GCWTextDivider(text: i18n(context, 'base_all_bases'),),
+            _showAllDecodedBases(_currentInput, widget.decode),
+          ],
+        );
       }
+
     }
 
     return outputWidget;
@@ -205,6 +214,37 @@ class _AbstractBaseState extends State<AbstractBase> {
       },
     );
   }
+
+  Widget _showAllDecodedBases(String input, String Function(String) function){
+    List<List<Object>> result = [];
+
+    if (function != decodeBase16) {
+      result.add(['Base16', decodeBase16(input)]);
+    }
+    if (function != decodeBase32) {
+      result.add(['Base32', decodeBase32(input)]);
+    }
+    if (function != decodeBase58) {
+      result.add(['Base58', decodeBase58(input)]);
+    }
+    if (function != decodeBase64) {
+      result.add(['Base64', decodeBase64(input)]);
+    }
+    if (function != decodeBase85) {
+      result.add(['Base85', decodeBase85(input)]);
+    }
+    if (function != decodeBase91) {
+      result.add(['Base91', decodeBase91(input)]);
+    }
+    if (function != decodeBase122) {
+      result.add(['Base122', decodeBase122(input)]);
+    }
+
+    return GCWColumnedMultilineOutput(
+        flexValues: [2,8],
+        data: result);
+  }
+
 }
 
 Future<_AsyncBaseDecodeReturn?> _execAsyncBaseDecode(GCWAsyncExecuterParameters? jobData) async {
