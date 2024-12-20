@@ -347,7 +347,7 @@ class FormatConverterW3WState extends State<FormatConverterW3W> {
       text: i18n(context, 'coords_formatconverter_w3w_suggestions'),
       child: GCWColumnedMultilineOutput(
         data: suggestions,
-        flexValues: [1, 2, 3],
+        flexValues: const [1, 2, 3],
       ),
     );
   }

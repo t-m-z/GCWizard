@@ -355,13 +355,7 @@ class WetBulbGlobeTemperatureState extends State<WetBulbGlobeTemperature> {
 
   Widget _buildOutputFurtherInformation(WBGTOutput output){
     String unit = _currentOutputUnit.symbol;
-    print('##############################################################');
-    print('Tmrt '+output.Tmrt.toString());
-    print('Tdew '+output.Tdew.toString());
-    print('Tg   '+output.Tg.toString());
-    print('Tnwb '+output.Tnwb.toString());
-    print('Tpsy '+output.Tpsy.toString());
-    print('Twbg '+output.Twbg.toString());
+
     var _outputFurtherInformation = [
       [
         i18n(context, 'common_measure_dewpoint'),
@@ -393,7 +387,7 @@ class WetBulbGlobeTemperatureState extends State<WetBulbGlobeTemperature> {
             children: [
               GCWColumnedMultilineOutput(
                 data: _outputFurtherInformation,
-                flexValues: [8,3,2],
+                flexValues: const [8,3,2],
                 copyColumn: 1,),
               GCWExpandableTextDivider(
                   expanded: false,
@@ -403,7 +397,7 @@ class WetBulbGlobeTemperatureState extends State<WetBulbGlobeTemperature> {
                     children: [
                       GCWColumnedMultilineOutput(
                           data: _outputFurtherInformationSunposition,
-                          flexValues: [8,3,2],
+                          flexValues: const [8,3,2],
                           copyColumn: 1),
                     ],
                   )

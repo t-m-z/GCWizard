@@ -250,11 +250,9 @@ liljegrenOutputWBGT calc_wbgt({
   hour_gmt = hour - gmt + (minute - 0.5 * avg) / 60.0;
   dday = day + hour_gmt / 24.0;
 
-  print(solar);
   if (solar >= 0) {
     cza = 0.5;
     fdir = 0.8;
-    print('solar knbow');
   } else
     // calculate the cosine of the solar zenith angle and fraction of solar irradiance
     // due to the direct beam; adjust the solar irradiance if it is out of bounds
@@ -509,7 +507,6 @@ double Tglobe({
   } while (!converged && iter < MAX_ITER);
 
   if (converged) {
-    print('converged Tglobe '+(Tglobe_new - 273.15).toString());
     //print('calculatd Tglobe '+calculateGlobeTemperature(Ta: Tair, Td: calculateDewPoint(tair: Tair, rh: rh), P: Pair, u: speed, S: solar, fdb: null, fdif: null, cza: cza, ).toString());
     return (Tglobe_new - 273.15);
   } else {

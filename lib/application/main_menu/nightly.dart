@@ -18,7 +18,7 @@ class _NightlyState extends State<Nightly> {
 
     var content = Column(
       children: [
-        GCWTextDivider(text: 'nightly Tools'),
+        const GCWTextDivider(text: 'nightly Tools'),
         GCWColumnedMultilineOutput(
           data: [
             [i18n(context, 'imagesandfiles_selection_title'), 'Adventure Lab\nAnalyse von Lab Caches'],
@@ -29,13 +29,13 @@ class _NightlyState extends State<Nightly> {
             [i18n(context, 'coords_selection_title'), 'GPS Mock Location'],
           ],
           flexValues: const [3, 7],),
-        GCWTextDivider(text: 'Near Term Previews'),
-        GCWColumnedMultilineOutput(
+        const GCWTextDivider(text: 'Near Term Previews'),
+        const GCWColumnedMultilineOutput(
           data: [
             ['n/a', '']
           ],
-          flexValues: const [3, 7],),
-        GCWTextDivider(text: 'Long Term Previews'),
+          flexValues: [3, 7],),
+        const GCWTextDivider(text: 'Long Term Previews'),
         GCWColumnedMultilineOutput(
           data: [
             [i18n(context, 'scienceandtechnology_selection_title'), 'Ballistics\nSchiefer Wurf'],
@@ -46,8 +46,8 @@ class _NightlyState extends State<Nightly> {
             [i18n(context, 'cryptography_selection_title'), 'Leet Speak'],
             [i18n(context, 'cryptography_selection_title'), 'Upside-Down Text'],
             [i18n(context, 'symboltables_selection_title'), 'Stratego Spielsteine'],
-            ['Enhancement', 'Morse\noutput tones'],
-            ['Enhancement', 'Bundeswehr Talking board\nLoad/Save'],
+            const ['Enhancement', 'Morse\noutput tones'],
+            const ['Enhancement', 'Bundeswehr Talking board\nLoad/Save'],
           ],
           flexValues: const [3, 7],),
       ],

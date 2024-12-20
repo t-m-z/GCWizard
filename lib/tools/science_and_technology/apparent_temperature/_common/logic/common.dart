@@ -219,7 +219,7 @@ double calculateMeanRadiantTemperature({
           fdir: propDirect,
           cza: ZenithAngle,
         );
-        print(Tg);
+
         MRT = _fTmrtB(Ta: Ta, Tg: Tg, va: va);
       }
       break;
