@@ -272,3 +272,7 @@ double calculateRelativeHumidityFromTairTdew(
   // https://web.archive.org/web/20240927172834/https://www.weather.gov/media/epz/wxcalc/vaporPressure.pdf
   return pow(10, (7.5 * tdew / (237.3 + tdew))) / pow(10, (7.5 * tair / (237.3 + tair))) * 100;
 }
+
+double calc_solar_irradiance({required double solarElevationAngle, required CLOUD_COVER cloudcover}){
+  return 0.0;
+}

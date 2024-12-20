@@ -259,7 +259,7 @@ liljegrenOutputWBGT calc_wbgt({
     // calculate the cosine of the solar zenith angle and fraction of solar irradiance
     // due to the direct beam; adjust the solar irradiance if it is out of bounds
       {
-    solpar = _calc_solar_parameters(
+    solpar = calc_solar_parameters(
         year,
         month,
         dday, //solar,
@@ -312,7 +312,7 @@ liljegrenOutputWBGT calc_wbgt({
  *		 Decision and Information Sciences Division
  *		 Argonne National Laboratory
  */
-liljegrenOutputSolarParameter _calc_solar_parameters(
+liljegrenOutputSolarParameter calc_solar_parameters(
     int year, // 4-digit year, e.g., 2007
     int month, // 2-digit month; month = 0 implies day = day of year
     double day, // day.fraction of month if month > 0;

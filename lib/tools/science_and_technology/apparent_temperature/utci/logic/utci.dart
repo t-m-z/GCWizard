@@ -13,14 +13,25 @@ import 'dart:math';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/_common/logic/common.dart';
-import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/_common/logic/liljegren.dart';
+import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/wet_bulb_globe_temperature/logic/liljegren.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/_common/logic/julian_date.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/sun_position/logic/sun_position.dart' as sunposition;
 import 'package:gc_wizard/tools/science_and_technology/astronomy/sun_position/logic/sun_position.dart';
 import 'package:gc_wizard/utils/complex_return_types.dart';
 import 'package:latlong2/latlong.dart';
 
-enum UTCI_HEATSTRESS_CONDITION { DARK_BLUE, BLUE_ACCENT, BLUE, LIGHT_BLUE, LIGHT_BLUE_ACCENT, GREEN, ORANGE, RED, RED_ACCENT, DARK_RED }
+enum UTCI_HEATSTRESS_CONDITION {
+  DARK_BLUE,
+  BLUE_ACCENT,
+  BLUE,
+  LIGHT_BLUE,
+  LIGHT_BLUE_ACCENT,
+  GREEN,
+  ORANGE,
+  RED,
+  RED_ACCENT,
+  DARK_RED
+}
 
 final Map<UTCI_HEATSTRESS_CONDITION, double> UTCI_HEAT_STRESS = {
   UTCI_HEATSTRESS_CONDITION.BLUE_ACCENT: -40.0,
@@ -42,10 +53,12 @@ class UTCIOutput {
   final double UTCI;
   final sunposition.SunPosition SunPos;
 
-  UTCIOutput({this.Solar = 0.0, this.Tg = 0.0, this.Tmrt = 0.0, this.Tdew = 0.0, required this.UTCI, required this.SunPos});
+  UTCIOutput(
+      {this.Solar = 0.0, this.Tg = 0.0, this.Tmrt = 0.0, this.Tdew = 0.0, required this.UTCI, required this.SunPos});
 }
 
-UTCIOutput calculateUTCI(double Ta, double RH, double va, double Tmrt, bool calculateTmrt, {DateTimeTimezone? dateTime, LatLng? coords, double? airPressure, bool? urban, CLOUD_COVER? cloudcover}) {
+UTCIOutput calculateUTCI(double Ta, double RH, double va, double Tmrt, bool calculateTmrt,
+    {DateTimeTZ? dateTime, LatLng? coords, double? airPressure, bool? urban, CLOUD_COVER? cloudcover}) {
   // http://james-ramsden.com/calculate-utci-c-code/
   // http://www.utci.org/utci_doku.php
   // http://www.utci.org/public/UTCI%20Program%20Code/UTCI_a002.f90
@@ -98,16 +111,22 @@ UTCIOutput calculateUTCI(double Ta, double RH, double va, double Tmrt, bool calc
   double solar = 0.0;
 
   if (calculateTmrt) {
-    var sunPosition = sunposition.SunPosition(
-        LatLng(coords!.latitude, coords.longitude),
-        JulianDate(dateTime!),
-        const Ellipsoid(ELLIPSOID_NAME_WGS84, 6378137.0, 298.257223563)
-    );
+    var sunPosition = sunposition.SunPosition(LatLng(coords!.latitude, coords.longitude), JulianDate(dateTime!),
+        const Ellipsoid(ELLIPSOID_NAME_WGS84, 6378137.0, 298.257223563));
     solar = calc_solar_irradiance(solarElevationAngle: sunPosition.altitude, cloudcover: cloudcover!);
-    double hour_gmt = dateTime.datetime.hour - dateTime.timezone.inHours + (dateTime.datetime.minute) / 60.0;
-    double dday = dateTime.datetime.day + hour_gmt / 24.0;
-    liljegrenOutputSolarParameter solpar = calc_solar_parameters(dateTime.datetime.year, dateTime.datetime.month, dday, solar, coords.latitude, coords.longitude);
-    Tg = Tglobe(Ta + 273.15, RH / 100, airPressure!, va, solar, solpar.fdir, solpar.cza);
+    double hour_gmt = dateTime.dateTimeUtc.hour - dateTime.timezone.inHours + (dateTime.dateTimeUtc.minute) / 60.0;
+    double dday = dateTime.dateTimeUtc.day + hour_gmt / 24.0;
+    liljegrenOutputSolarParameter solpar = calc_solar_parameters(
+        dateTime.dateTimeUtc.year, dateTime.dateTimeUtc.month, dday, coords.latitude, coords.longitude);
+    Tg = Tglobe(
+      Tair: Ta + 273.15,
+      rh: RH / 100,
+      Pair: airPressure!,
+      speed: va,
+      solar: solar,
+      fdir: solpar.fdir,
+      cza: solpar.cza,
+    );
     Tmrt = _calculateTmrt(Ta, va, Tg);
     if (Ta - 30.0 > Tmrt) Tmrt = Ta - 30.0;
     if (Tmrt - 70.0 > Ta) Tmrt = Ta + 70.0;
@@ -116,29 +135,47 @@ UTCIOutput calculateUTCI(double Ta, double RH, double va, double Tmrt, bool calc
   double UTCI = _calcUTCI(Ta, va, Tmrt, RH);
 
   if (calculateTmrt) {
-    return UTCIOutput(UTCI: UTCI, Solar: solar, Tg: Tg, Tmrt: Tmrt, Tdew: Tdew, SunPos: SunPosition(coords!, JulianDate(dateTime!), defaultEllipsoid));  }
-  else {
-    return UTCIOutput(UTCI: UTCI, Solar: solar, Tg: Tg, Tmrt: Tmrt, Tdew: Tdew, SunPos: SunPosition(const LatLng(0.0, 0.0), JulianDate(DateTimeTimezone(datetime: DateTime.now(), timezone: DateTime.now().timeZoneOffset)), defaultEllipsoid));
+    return UTCIOutput(
+        UTCI: UTCI,
+        Solar: solar,
+        Tg: Tg,
+        Tmrt: Tmrt,
+        Tdew: Tdew,
+        SunPos: SunPosition(coords!, JulianDate(dateTime!), defaultEllipsoid));
+  } else {
+    return UTCIOutput(
+        UTCI: UTCI,
+        Solar: solar,
+        Tg: Tg,
+        Tmrt: Tmrt,
+        Tdew: Tdew,
+        SunPos: SunPosition(
+            const LatLng(0.0, 0.0),
+            JulianDate(DateTimeTZ(dateTimeUtc: DateTime.now(), timezone: DateTime.now().timeZoneOffset)),
+            defaultEllipsoid));
   }
 }
 
-double _calculateTDewpoint(double relativeHumidity, double ambientTemperature){
+double _calculateTDewpoint(double relativeHumidity, double ambientTemperature) {
   // https://www.vcalc.com/wiki/rklarsen/Calculating+Dew+Point+Temperature+from+Relative+Humidity
   double B1 = 243.04;
   double A1 = 17.625;
 
-  return (relativeHumidity != 0.0) ? (B1 * (log(relativeHumidity / 100) / log(e) + (A1 * ambientTemperature) / (B1 + ambientTemperature)))/(A1 - log(relativeHumidity/100) / log(e) - A1 * ambientTemperature / (B1 + ambientTemperature)) : 0.0;
+  return (relativeHumidity != 0.0)
+      ? (B1 * (log(relativeHumidity / 100) / log(e) + (A1 * ambientTemperature) / (B1 + ambientTemperature))) /
+          (A1 - log(relativeHumidity / 100) / log(e) - A1 * ambientTemperature / (B1 + ambientTemperature))
+      : 0.0;
 }
 
-double _calculateTmrt(double Tair, double va, double Tglobe){
+double _calculateTmrt(double Tair, double va, double Tglobe) {
   // https://en.wikipedia.org/wiki/Mean_radiant_temperature
-  return  pow(pow(Tglobe + 273.15, 4) + 2.5 * pow(10, 8) * pow(va, 0.6) * (Tglobe - Tair), 0.25) - 273.15;
+  return pow(pow(Tglobe + 273.15, 4) + 2.5 * pow(10, 8) * pow(va, 0.6) * (Tglobe - Tair), 0.25) - 273.15;
 }
 
-double _calcUTCI(double Ta, double va, double Tmrt, double RH){
+double _calcUTCI(double Ta, double va, double Tmrt, double RH) {
   double ehPa = _es(Ta) * RH / 100.0;
   double D_Tmrt = Tmrt - Ta;
-  double Pa = ehPa / 10.0;//  convert vapour pressure to kPa
+  double Pa = ehPa / 10.0; //  convert vapour pressure to kPa
 
   double UTCI_approx = Ta +
       (0.607562052) +
@@ -355,17 +392,25 @@ double _calcUTCI(double Ta, double va, double Tmrt, double RH){
   return UTCI_approx;
 }
 
-double _es(double ta){
+double _es(double ta) {
   // calculates saturation vapour pressure over water in hPa for input air temperature (ta) in celsius according to:
   // Hardy, R.; ITS-90 Formulations for Vapor Pressure, Frostpoint Temperature, Dewpoint Temperature and Enhancement Factors in the Range -100 to 100 °C;
   // Proceedings of Third International Symposium on Humidity and Moisture; edited by National Physical Laboratory (NPL), London, 1998, pp. 214-221
   // http://www.thunderscientific.com/tech_info/reflibrary/its90formulas.pdf (retrieved 2008-10-01)
 
-  List<double> g =  [-2836.5744, -6028.076559, 19.54263612, -0.02737830188, 0.000016261698, 7.0229056 * pow(10, -10), -1.8680009 * pow(10, -13)] ;
+  List<double> g = [
+    -2836.5744,
+    -6028.076559,
+    19.54263612,
+    -0.02737830188,
+    0.000016261698,
+    7.0229056 * pow(10, -10),
+    -1.8680009 * pow(10, -13)
+  ];
   double tk = ta + 273.15;
   double es = 2.7150305 * log(tk);
   //for count, i in enumerate(g):
-  for (int count = 0; count < g.length; count++){
+  for (int count = 0; count < g.length; count++) {
     double i = g[count];
     es = es + (i * pow(tk, (count - 2)));
   }
