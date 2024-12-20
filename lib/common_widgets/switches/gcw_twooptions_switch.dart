@@ -132,7 +132,7 @@ class _GCWTwoOptionsSwitchState extends State<GCWTwoOptionsSwitch> {
             style: textStyle,
           ),
           Container(
-            padding: EdgeInsets.symmetric(vertical: DOUBLE_DEFAULT_MARGIN),
+            padding: const EdgeInsets.symmetric(vertical: DOUBLE_DEFAULT_MARGIN),
             child: Row(
               children: <Widget>[
                 Expanded(
@@ -147,7 +147,7 @@ class _GCWTwoOptionsSwitchState extends State<GCWTwoOptionsSwitch> {
                               label: widget.leftValue == null
                                   ? Text(i18n(context, 'common_encrypt'))
                                   : Text((widget.leftValue as String)),
-                              icon: _currentValue == GCWSwitchPosition.left ? Icon(Icons.check_circle_outline) : null,
+                              icon: _currentValue == GCWSwitchPosition.left ? const Icon(Icons.check_circle_outline) : null,
                               style: _currentValue == GCWSwitchPosition.left ? _activeStyle() : _inActiveStyle(),
                               onPressed: () {
                                 setState(() {
@@ -167,7 +167,7 @@ class _GCWTwoOptionsSwitchState extends State<GCWTwoOptionsSwitch> {
                                 (widget.rightValue as String),
                               ),
                               icon:
-                              _currentValue == GCWSwitchPosition.right ? Icon(Icons.check_circle_outline) : null,
+                              _currentValue == GCWSwitchPosition.right ? const Icon(Icons.check_circle_outline) : null,
                               style: _currentValue == GCWSwitchPosition.right ? _activeStyle() : _inActiveStyle(),
                               onPressed: () {
                                 setState(() {

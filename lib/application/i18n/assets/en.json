@@ -1,4 +1,6 @@
 {
+  "a_testwidget_title": "A TestWidget",
+  "a_testwidget_description": "A TestWidget",
   "abaddon_title": "Abaddon Code",
   "abaddon_description": "One letter to a three-element group of ¥, µ, þ",
   "abaddon_example": "þ¥µþµ¥¥¥¥þµþ",

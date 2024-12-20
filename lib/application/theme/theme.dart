@@ -66,7 +66,7 @@ ThemeData buildTheme() {
   final ThemeData base = colors.base();
   return ThemeData(
       useMaterial3: false,
-      fontFamily: 'Roboto',
+      fontFamily: 'Noto',
       scaffoldBackgroundColor: colors.primaryBackground(),
       textTheme: base.textTheme,
       textSelectionTheme: TextSelectionThemeData(

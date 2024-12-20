@@ -74,6 +74,12 @@ dev_dependencies:
 
 flutter:
   fonts:
+    - family: Noto
+      fonts:
+        - asset: lib/application/_common/assets/fonts/Noto/NotoSans_SemiCondensed-Bold.ttf
+        - asset: lib/application/_common/assets/fonts/Noto/NotoSans_SemiCondensed-BoldItalic.ttf
+        - asset: lib/application/_common/assets/fonts/Noto/NotoSans_SemiCondensed-Italic.ttf
+        - asset: lib/application/_common/assets/fonts/Noto/NotoSans_SemiCondensed-Regular.ttf
     - family: MyFlutterApp
       fonts:
         - asset: lib/application/_common/assets/fonts/Icons/MyFlutterApp.ttf

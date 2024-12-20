@@ -70,7 +70,7 @@ class _GCWTwoRadioButtonsState extends State<GCWTwoRadioButtons> {
               style: textStyle,
             ),
       Container(
-        padding: EdgeInsets.symmetric(vertical: DOUBLE_DEFAULT_MARGIN),
+        padding: const EdgeInsets.symmetric(vertical: DOUBLE_DEFAULT_MARGIN),
         child: Row(
           children: <Widget>[
             Expanded(
@@ -85,7 +85,7 @@ class _GCWTwoRadioButtonsState extends State<GCWTwoRadioButtons> {
                                 label: widget.leftValue == null
                                     ? Text(i18n(context, 'common_encrypt'))
                                     : Text((widget.leftValue as String)),
-                                icon: _currentValue == GCWSwitchPosition.left ? Icon(Icons.check_circle_outline) : null,
+                                icon: _currentValue == GCWSwitchPosition.left ? const Icon(Icons.circle) : const Icon(Icons.circle_outlined),
                                 style: _currentValue == GCWSwitchPosition.left ? _activeStyle() : _inActiveStyle(),
                                 onPressed: () {
                                   setState(() {
@@ -105,7 +105,7 @@ class _GCWTwoRadioButtonsState extends State<GCWTwoRadioButtons> {
                                         (widget.rightValue as String),
                                       ),
                                 icon:
-                                    _currentValue == GCWSwitchPosition.right ? Icon(Icons.check_circle_outline) : null,
+                                    _currentValue == GCWSwitchPosition.right ? const Icon(Icons.circle) : const Icon(Icons.circle_outlined),
                                 style: _currentValue == GCWSwitchPosition.right ? _activeStyle() : _inActiveStyle(),
                                 onPressed: () {
                                   setState(() {

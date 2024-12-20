@@ -57,6 +57,7 @@ import 'package:gc_wizard/application/tools/widget/gcw_tool.dart';
 import 'package:gc_wizard/application/tools/widget/gcw_toollist.dart';
 import 'package:gc_wizard/common_widgets/gcw_web_statefulwidget.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
+import 'package:gc_wizard/tools/_test_widgets/widget/test_widgets.dart';
 import 'package:gc_wizard/tools/coords/antipodes/widget/antipodes.dart';
 import 'package:gc_wizard/tools/coords/centerpoint/center_three_points/widget/center_three_points.dart';
 import 'package:gc_wizard/tools/coords/centerpoint/center_two_points/widget/center_two_points.dart';
@@ -809,6 +810,8 @@ void _initStaticToolList() {
       className(ZamonianNumbers()),
       className(const ZC1()),
       className(const Zodiac()),
+
+      className(const A_TestWidgets()),
     ].contains(className(element.tool));
   }).toList();
   _mainToolList.sort((a, b) => sortToolList(a, b));

@@ -110,6 +110,7 @@ import 'package:gc_wizard/application/settings/widget/settings_saverestore.dart'
 import 'package:gc_wizard/application/settings/widget/settings_tools.dart';
 import 'package:gc_wizard/application/tools/tool_licenses/widget/tool_license_types.dart';
 import 'package:gc_wizard/application/tools/widget/gcw_tool.dart';
+import 'package:gc_wizard/tools/_test_widgets/widget/test_widgets.dart';
 import 'package:gc_wizard/tools/coords/antipodes/widget/antipodes.dart';
 import 'package:gc_wizard/tools/coords/centerpoint/center_three_points/widget/center_three_points.dart';
 import 'package:gc_wizard/tools/coords/centerpoint/center_two_points/widget/center_two_points.dart';
@@ -511,6 +512,11 @@ void initializeRegistry(BuildContext context) {
 
   registeredTools = [
     //MainSelection
+    GCWTool(tool: const A_TestWidgets(), id: 'a_testwidget', categories: const [
+      ToolCategory.GENERAL_CODEBREAKERS
+    ], searchKeys: const [
+      'a_testwidget',
+    ]),
     GCWTool(tool: const Abaddon(), id: 'abaddon', categories: const [
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: const [
