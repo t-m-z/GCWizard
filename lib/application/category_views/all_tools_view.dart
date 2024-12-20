@@ -318,7 +318,7 @@ class MainView extends GCWWebStatefulWidget {
 }
 
 class _MainViewState extends State<MainView> {
-  var _isSearching = false;
+  var _isSearching = true;
   final _searchController = TextEditingController();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   var _searchText = '';
@@ -425,6 +425,8 @@ class _MainViewState extends State<MainView> {
       child: Scaffold(
         key: _scaffoldKey,
         appBar: AppBar(
+          centerTitle: false,
+          toolbarHeight: 120,
             bottom: TabBar(
               onTap: (value) {
                 Prefs.setInt(PREFERENCE_TABS_LAST_VIEWED_TAB, value);
@@ -437,7 +439,7 @@ class _MainViewState extends State<MainView> {
             ),
             leading: _buildIcon(),
             title: _buildTitleAndSearchTextField(),
-            actions: <Widget>[_buildSearchActionButton()]),
+        ),
         drawer: buildMainMenu(context),
         body: TabBarView(
           children: [
@@ -457,40 +459,29 @@ class _MainViewState extends State<MainView> {
     return null;
   }
 
-  IconButton _buildSearchActionButton() {
-    return IconButton(
-      icon: Icon(_isSearching ? Icons.close : Icons.search),
-      onPressed: () {
-        setState(() {
-          if (_isSearching) {
-            _searchController.clear();
-            _searchText = '';
-          }
-
-          _isSearching = !_isSearching;
-        });
-      },
-    );
-  }
-
   Widget _buildTitleAndSearchTextField() {
-    return _isSearching
-        ? GCWTextField(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(i18n(context, 'common_app_title')),
+        GCWTextField(
             autofocus: true,
             controller: _searchController,
             icon: Icon(Icons.search, color: themeColors().mainFont()),
             hintText: i18n(context, 'common_search') + '...')
-        : Text(i18n(context, 'common_app_title'));
+
+      ],
+    );
   }
 
-  IconButton _buildIcon() {
+  Widget _buildIcon() {
     return IconButton(
-        icon: Image.asset(
-          applogoFilename(),
-          width: 35.0,
-          height: 35.0,
-        ),
-        onPressed: () => _scaffoldKey.currentState?.openDrawer());
+          alignment: Alignment(1.0, 0.0),
+          icon: Image.asset(
+            applogoFilename(),
+          ),
+          onPressed: () => _scaffoldKey.currentState?.openDrawer()
+    );
   }
 
   List<GCWTool> _getSearchedList() {
