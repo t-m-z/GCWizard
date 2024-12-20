@@ -318,7 +318,6 @@ class MainView extends GCWWebStatefulWidget {
 }
 
 class _MainViewState extends State<MainView> {
-  var _isSearching = true;
   final _searchController = TextEditingController();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   var _searchText = '';
@@ -415,7 +414,7 @@ class _MainViewState extends State<MainView> {
     if (_mainToolList.isEmpty) _initStaticToolList();
     Favorites.initialize();
 
-    var toolList = (_isSearching && _searchText.isNotEmpty) ? _getSearchedList() : null;
+    var toolList = (_searchText.isNotEmpty) ? _getSearchedList() : null;
 
     return DefaultTabController(
       length: 3,
