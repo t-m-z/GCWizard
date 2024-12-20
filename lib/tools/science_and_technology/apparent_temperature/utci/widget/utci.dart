@@ -39,8 +39,8 @@ class UTCIState extends State<UTCI> {
   double _currentHumidity = 0.0;
   double _currentWindSpeed = 0.5;
 
-  DateTimeTimezone _currentDateTime =
-      DateTimeTimezone(datetime: DateTime.now(), timezone: DateTime.now().timeZoneOffset);
+  DateTimeTZ _currentDateTime =
+  DateTimeTZ(dateTimeUtc: DateTime.now(), timezone: DateTime.now().timeZoneOffset);
   BaseCoordinate _currentCoords = defaultBaseCoordinate;
   double _currentAirPressure = 1013.25;
   bool _currentAreaUrban = true;

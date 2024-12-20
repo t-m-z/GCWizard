@@ -197,8 +197,6 @@ class _MorseState extends State<Morse> {
       case MorseType.STEINHEIL:
         morseButtons = _buildMorseButtonsSteinheil(context);
         break;
-      default:
-        morseButtons = Container();
     }
 
     return GCWToolBar(flexValues: const [

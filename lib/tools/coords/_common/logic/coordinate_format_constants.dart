@@ -18,6 +18,7 @@ import 'package:gc_wizard/tools/coords/_common/formats/mgrs_utm/logic/mgrs.dart'
 import 'package:gc_wizard/tools/coords/_common/formats/natural_area_code/logic/natural_area_code.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/openlocationcode/logic/open_location_code.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/quadtree/logic/quadtree.dart';
+import 'package:gc_wizard/tools/coords/_common/formats/reversewherigo_10y_waldmeister/logic/reverse_wherigo_10y_waldmeister.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/reversewherigo_day1976/logic/reverse_wherigo_day1976.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/reversewherigo_waldmeister/logic/reverse_wherigo_waldmeister.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/s2cells_hilbert/logic/s2cells_hilbert.dart';
@@ -58,6 +59,7 @@ enum CoordinateFormatKey {
   REVERSE_WIG_WALDMEISTER,
   REVERSE_WIG_DAY1976,
   W3W,
+  REVERSE_WIG_10Y_WALDMEISTER,
   //GaussKrueger Subtypes
   GAUSS_KRUEGER_GK1,
   GAUSS_KRUEGER_GK2,
@@ -144,6 +146,7 @@ final allCoordinateFormatDefinitions = [
   MGRSFormatDefinition,
   ReverseWherigoWaldmeisterFormatDefinition,
   ReverseWherigoDay1976FormatDefinition,
+  ReverseWherigo10YWaldmeisterFormatDefinition,
   XYZFormatDefinition,
   SwissGridFormatDefinition,
   SwissGridPlusFormatDefinition,
