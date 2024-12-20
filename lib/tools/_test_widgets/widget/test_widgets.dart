@@ -86,16 +86,26 @@ class A_TestWidgetsState extends State<A_TestWidgets> {
             });
           },
         ),
-        /*GCWRadioButtons(
-            labels: ['h', 'v', 'f/r'],
-            position: _currentButton,
-            onChanged: (value) {
-              setState(() {
-                _currentButton = value;
-                _calculateOutput();
-              });
-            })            ,
-         */
+        GCWTwoRadioButtons(
+          labelPosition: GCWRadioButtonLabelPosition.left,
+          value: _currentMode,
+          onChanged: (value) {
+            setState(() {
+              _currentMode = value;
+              _calculateOutput();
+            });
+          },
+        ),
+        GCWTwoRadioButtons(
+          labelPosition: GCWRadioButtonLabelPosition.right,
+          value: _currentMode,
+          onChanged: (value) {
+            setState(() {
+              _currentMode = value;
+              _calculateOutput();
+            });
+          },
+        ),
         GCWSingleRadioButtons(
             labels: ['0', '10','200', '3000'],
             position: _currentButton,

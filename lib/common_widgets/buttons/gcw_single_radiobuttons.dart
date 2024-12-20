@@ -29,30 +29,6 @@ class GCWSingleRadioButtons extends StatefulWidget {
 class _GCWSingleRadioButtonsState extends State<GCWSingleRadioButtons> {
   var _currentValue = 0;
 
-  ButtonStyle _inActiveStyle() {
-    return ElevatedButton.styleFrom(
-      foregroundColor: Colors.white,
-      backgroundColor: themeColors().inputBackground(),
-      side: BorderSide(width: 2, color: themeColors().inputBackground()),
-      textStyle: TextStyle(
-        fontSize: defaultFontSize(),
-      ),
-    );
-  }
-
-  ButtonStyle _activeStyle() {
-    return ElevatedButton.styleFrom(
-      foregroundColor: Colors.black,
-      backgroundColor: themeColors().checkBoxHoverColor(),
-      side: BorderSide(width: 2, color: themeColors().checkBoxHoverColor()),
-      shadowColor: Colors.orange,
-      elevation: DEFAULT_MARGIN,
-      textStyle: TextStyle(
-        fontSize: defaultFontSize(),
-      ),
-    );
-  }
-
   Widget _buildButtonSet() {
     List<Widget> buttons = [];
     for (int i = 0; i < widget.labels.length; i++) {
