@@ -40,6 +40,8 @@ class _CowState extends State<Cow> {
     return Column(
       children: <Widget>[
         GCWTwoOptionsSwitch(
+          notitle: true,
+          style: GCWSwitchstyle.button,
           leftValue: i18n(context, 'common_programming_mode_interpret'),
           rightValue: i18n(context, 'common_programming_mode_generate'),
           value: _currentMode,

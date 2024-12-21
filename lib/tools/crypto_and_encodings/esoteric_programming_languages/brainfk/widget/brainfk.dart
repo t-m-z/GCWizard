@@ -81,6 +81,8 @@ class _BrainfkState extends State<Brainfk> {
     return Column(
       children: <Widget>[
         GCWTwoOptionsSwitch(
+          style: GCWSwitchstyle.button,
+          notitle: true,
           leftValue: i18n(context, 'common_programming_mode_interpret'),
           rightValue: i18n(context, 'common_programming_mode_generate'),
           value: _currentMode,

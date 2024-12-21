@@ -69,6 +69,8 @@ class _BundeswehrTalkingBoardObfuscationState extends State<BundeswehrTalkingBoa
     return Column(
       children: <Widget>[
         GCWTwoOptionsSwitch(
+          notitle: true,
+          style: GCWSwitchstyle.button,
           value: _currentMode,
           onChanged: (value) {
             setState(() {

@@ -12,26 +12,59 @@ class Fox extends StatefulWidget {
 }
 
 class _FoxState extends State<Fox> {
-  String _currentInput = '';
+
+  late TextEditingController _inputEncryptController;
+  late TextEditingController _inputDecryptController;
+
+  String _currentEncryptInput = '';
+  String _currentDecryptInput = '';
 
   GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _inputEncryptController = TextEditingController(text: _currentEncryptInput);
+    _inputDecryptController = TextEditingController(text: _currentDecryptInput);
+  }
+
+  @override
+  void dispose() {
+    _inputEncryptController.dispose();
+    _inputDecryptController.dispose();
+
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        GCWTextField(
-          onChanged: (text) {
+        GCWTwoOptionsSwitch(
+          style: GCWSwitchstyle.button,
+          notitle: true,
+          value: _currentMode,
+          onChanged: (value) {
             setState(() {
-              _currentInput = text;
+              _currentMode = value;
             });
           },
         ),
-        GCWTwoOptionsSwitch(
-          value: _currentMode,
-          onChanged: (mode) {
+        _currentMode == GCWSwitchPosition.left
+            ? GCWTextField(
+          controller: _inputEncryptController,
+          onChanged: (text) {
             setState(() {
-              _currentMode = mode;
+              _currentEncryptInput = text;
+            });
+          },
+        )
+            : GCWTextField(
+          controller: _inputDecryptController,
+          onChanged: (text) {
+            setState(() {
+              _currentDecryptInput = text;
             });
           },
         ),
@@ -44,9 +77,9 @@ class _FoxState extends State<Fox> {
 
   String _buildOutput() {
     if (_currentMode == GCWSwitchPosition.left) {
-      return encodeFox(_currentInput);
+      return encodeFox(_currentEncryptInput);
     } else {
-      return decodeFox(_currentInput);
+      return decodeFox(_currentDecryptInput);
     }
   }
 }

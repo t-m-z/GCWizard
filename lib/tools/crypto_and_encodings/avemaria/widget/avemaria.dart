@@ -39,6 +39,16 @@ class AveMariaState extends State<AveMaria> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
+        GCWTwoOptionsSwitch(
+          style: GCWSwitchstyle.button,
+          notitle: true,
+          value: _currentMode,
+          onChanged: (value) {
+            setState(() {
+              _currentMode = value;
+            });
+          },
+        ),
         _currentMode == GCWSwitchPosition.left
             ? GCWTextField(
                 controller: _encodeController,
@@ -64,15 +74,6 @@ class AveMariaState extends State<AveMaria> {
                   });
                 },
               ),
-        GCWTwoOptionsSwitch(
-          value: _currentMode,
-          onChanged: (value) {
-            setState(() {
-              _currentMode = value;
-              _calculateOutput();
-            });
-          },
-        ),
         GCWDefaultOutput(child: _calculateOutput())
       ],
     );

@@ -47,19 +47,9 @@ class _BrailleState extends State<Braille> {
   @override
   Widget build(BuildContext context) {
     return Column(children: <Widget>[
-      GCWDropDown<BrailleLanguage>(
-        value: _currentLanguage,
-        onChanged: (value) {
-          setState(() {
-            _currentLanguage = value;
-          });
-        },
-        items: BRAILLE_LANGUAGES.entries.map((mode) {
-          return GCWDropDownMenuItem(
-              value: mode.key, child: i18n(context, mode.value.title), subtitle: i18n(context, mode.value.subtitle));
-        }).toList(),
-      ),
       GCWTwoOptionsSwitch(
+        notitle: true,
+        style: GCWSwitchstyle.button,
         value: _currentMode,
         onChanged: (value) {
           setState(() {
@@ -81,6 +71,18 @@ class _BrailleState extends State<Braille> {
           // decrpyt: input segment => output number
           children: <Widget>[_buildVisualDecryption()],
         ),
+      GCWDropDown<BrailleLanguage>(
+        value: _currentLanguage,
+        onChanged: (value) {
+          setState(() {
+            _currentLanguage = value;
+          });
+        },
+        items: BRAILLE_LANGUAGES.entries.map((mode) {
+          return GCWDropDownMenuItem(
+              value: mode.key, child: i18n(context, mode.value.title), subtitle: i18n(context, mode.value.subtitle));
+        }).toList(),
+      ),
       _buildOutput()
     ]);
   }

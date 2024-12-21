@@ -32,6 +32,8 @@ class _BabylonNumbersState extends State<BabylonNumbers> {
   Widget build(BuildContext context) {
     return Column(children: <Widget>[
       GCWTwoOptionsSwitch(
+        notitle: true,
+        style: GCWSwitchstyle.button,
         value: _currentMode,
         onChanged: (value) {
           setState(() {

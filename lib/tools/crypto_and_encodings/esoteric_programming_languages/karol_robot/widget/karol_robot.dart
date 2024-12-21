@@ -66,6 +66,8 @@ class _KarolRobotState extends State<KarolRobot> {
     return Column(
       children: <Widget>[
         GCWTwoOptionsSwitch(
+          notitle: true,
+          style: GCWSwitchstyle.button,
           leftValue: i18n(context, 'karol_robot_interpret'),
           rightValue: i18n(context, 'karol_robot_generate'),
           value: _currentMode,

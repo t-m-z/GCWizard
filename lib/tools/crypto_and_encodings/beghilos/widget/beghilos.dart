@@ -45,6 +45,16 @@ class _BeghilosState extends State<Beghilos> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
+        GCWTwoOptionsSwitch(
+          notitle: true,
+          style: GCWSwitchstyle.button,
+          value: _currentMode,
+          onChanged: (value) {
+            setState(() {
+              _currentMode = value;
+            });
+          },
+        ),
         _currentMode == GCWSwitchPosition.left
             ? GCWTextField(
                 controller: _inputControllerDecode,
@@ -61,14 +71,6 @@ class _BeghilosState extends State<Beghilos> {
                     _currentInputEncode = text;
                   });
                 }),
-        GCWTwoOptionsSwitch(
-          value: _currentMode,
-          onChanged: (value) {
-            setState(() {
-              _currentMode = value;
-            });
-          },
-        ),
         _buildOutput(),
       ],
     );

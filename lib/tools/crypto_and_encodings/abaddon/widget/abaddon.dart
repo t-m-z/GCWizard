@@ -18,12 +18,14 @@ class Abaddon extends StatefulWidget {
 }
 
 class _AbaddonState extends State<Abaddon> {
-  late TextEditingController _inputController;
+  late TextEditingController _inputEncryptController;
+  late TextEditingController _inputDecryptController;
   late TextEditingController _aController;
   late TextEditingController _bController;
   late TextEditingController _cController;
 
-  var _currentInput = '';
+  var _currentEncryptInput = '';
+  var _currentDecryptInput = '';
   var _currentA = '¥';
   var _currentB = 'µ';
   var _currentC = 'þ';
@@ -34,7 +36,8 @@ class _AbaddonState extends State<Abaddon> {
   void initState() {
     super.initState();
 
-    _inputController = TextEditingController(text: _currentInput);
+    _inputEncryptController = TextEditingController(text: _currentEncryptInput);
+    _inputDecryptController = TextEditingController(text: _currentDecryptInput);
     _aController = TextEditingController(text: _currentA);
     _bController = TextEditingController(text: _currentB);
     _cController = TextEditingController(text: _currentC);
@@ -42,7 +45,8 @@ class _AbaddonState extends State<Abaddon> {
 
   @override
   void dispose() {
-    _inputController.dispose();
+    _inputEncryptController.dispose();
+    _inputDecryptController.dispose();
     _aController.dispose();
     _bController.dispose();
     _cController.dispose();
@@ -54,14 +58,34 @@ class _AbaddonState extends State<Abaddon> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        GCWTextField(
-          controller: _inputController,
-          onChanged: (text) {
+        GCWTwoOptionsSwitch(
+          style: GCWSwitchstyle.button,
+          notitle: true,
+          value: _currentMode,
+          onChanged: (value) {
             setState(() {
-              _currentInput = text;
+              _currentMode = value;
             });
           },
         ),
+        _currentMode == GCWSwitchPosition.left
+        ? GCWTextField(
+          controller: _inputEncryptController,
+          onChanged: (text) {
+            setState(() {
+              _currentEncryptInput = text;
+            });
+          },
+        )
+        : GCWTextField(
+          controller: _inputDecryptController,
+          onChanged: (text) {
+            setState(() {
+              _currentDecryptInput = text;
+            });
+          },
+        ),
+
         _buildInputButtons(context),
         GCWTextDivider(text: i18n(context, 'common_key')),
         Row(
@@ -104,14 +128,6 @@ class _AbaddonState extends State<Abaddon> {
             ),
           ],
         ),
-        GCWTwoOptionsSwitch(
-          value: _currentMode,
-          onChanged: (value) {
-            setState(() {
-              _currentMode = value;
-            });
-          },
-        ),
         GCWDefaultOutput(child: _buildOutput())
       ],
     );
@@ -149,7 +165,7 @@ class _AbaddonState extends State<Abaddon> {
         icon: Icons.backspace,
         onPressed: () {
           setState(() {
-            _currentInput = textControllerDoBackSpace(_currentInput, _inputController);
+            _currentDecryptInput = textControllerDoBackSpace(_currentDecryptInput, _inputDecryptController);
           });
         },
       ),
@@ -157,15 +173,17 @@ class _AbaddonState extends State<Abaddon> {
   }
 
   void _addCharacter(String input) {
-    _currentInput = textControllerInsertText(input, _currentInput, _inputController);
+    _currentDecryptInput = textControllerInsertText(input, _currentDecryptInput, _inputDecryptController);
   }
 
   String _buildOutput() {
-    if (_currentInput.isEmpty || _currentA.isEmpty || _currentB.isEmpty || _currentC.isEmpty) return '';
+    if (_currentA.isEmpty || _currentB.isEmpty || _currentC.isEmpty) return '';
+    if (_currentEncryptInput.isEmpty && _currentMode == GCWSwitchPosition.left) return '';
+    if (_currentDecryptInput.isEmpty && _currentMode == GCWSwitchPosition.right) return '';
 
     var key = {YEN: _currentA, MY: _currentB, THORN: _currentC};
     return _currentMode == GCWSwitchPosition.left
-        ? encryptAbaddon(_currentInput, key)
-        : decryptAbaddon(_currentInput, key);
+        ? encryptAbaddon(_currentEncryptInput, key)
+        : decryptAbaddon(_currentDecryptInput, key);
   }
 }

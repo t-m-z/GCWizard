@@ -15,8 +15,8 @@ abstract class AbstractBCD extends StatefulWidget {
 }
 
 class _AbstractBCDState extends State<AbstractBCD> {
-  late TextEditingController _encodeController;
-  late TextEditingController _decodeController;
+  late TextEditingController _inputEncryptController;
+  late TextEditingController _inputDecryptController;
 
   final _encodeMaskFormatter = GCWMaskTextInputFormatter(
       mask: '#' * 10000, // allow 10000 characters input
@@ -38,20 +38,22 @@ class _AbstractBCDState extends State<AbstractBCD> {
       mask: '########## ' * 5000, // allow 5000 5-digit binary blocks, spaces will be set automatically after each block
       filter: {"#": RegExp(r'[01]')});
 
-  String _currentInput = '';
+  var _currentEncryptInput = '';
+  var _currentDecryptInput = '';
+
   GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
 
   @override
   void initState() {
     super.initState();
-    _encodeController = TextEditingController(text: _currentInput);
-    _decodeController = TextEditingController(text: _currentInput);
+    _inputEncryptController = TextEditingController(text: _currentEncryptInput);
+    _inputDecryptController = TextEditingController(text: _currentDecryptInput);
   }
 
   @override
   void dispose() {
-    _encodeController.dispose();
-    _decodeController.dispose();
+    _inputEncryptController.dispose();
+    _inputDecryptController.dispose();
     super.dispose();
   }
 
@@ -59,17 +61,9 @@ class _AbstractBCDState extends State<AbstractBCD> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        _currentMode == GCWSwitchPosition.left
-            ? GCWTextField(
-                controller: _encodeController,
-                inputFormatters: [_encodeMaskFormatter],
-                onChanged: (text) {
-                  setState(() {
-                    _currentInput = text;
-                  });
-                })
-            : _buildDecode(context),
         GCWTwoOptionsSwitch(
+          style: GCWSwitchstyle.button,
+          notitle: true,
           value: _currentMode,
           onChanged: (value) {
             setState(() {
@@ -77,6 +71,17 @@ class _AbstractBCDState extends State<AbstractBCD> {
             });
           },
         ),
+        _currentMode == GCWSwitchPosition.left
+            ? GCWTextField(
+                controller: _inputEncryptController,
+                inputFormatters: [_encodeMaskFormatter],
+                onChanged: (text) {
+                  setState(() {
+                    _currentEncryptInput = text;
+                  });
+                },
+              )
+            : _buildDecode(context),
         _buildOutput(context)
       ],
     );
@@ -86,21 +91,21 @@ class _AbstractBCDState extends State<AbstractBCD> {
     switch (widget.type) {
       case BCDType.ONEOFTEN:
         return GCWTextField(
-            controller: _decodeController,
+            controller: _inputDecryptController,
             inputFormatters: [_decode10DigitsMaskFormatter],
             onChanged: (text) {
               setState(() {
-                _currentInput = text;
+                _currentDecryptInput = text;
               });
             });
       case BCDType.HAMMING:
       case BCDType.BIQUINARY:
         return GCWTextField(
-            controller: _decodeController,
+            controller: _inputDecryptController,
             inputFormatters: [_decode7DigitsMaskFormatter],
             onChanged: (text) {
               setState(() {
-                _currentInput = text;
+                _currentDecryptInput = text;
               });
             });
       case BCDType.LIBAWCRAIG:
@@ -108,20 +113,20 @@ class _AbstractBCDState extends State<AbstractBCD> {
       case BCDType.PLANET:
       case BCDType.POSTNET:
         return GCWTextField(
-            controller: _decodeController,
+            controller: _inputDecryptController,
             inputFormatters: [_decode5DigitsMaskFormatter],
             onChanged: (text) {
               setState(() {
-                _currentInput = text;
+                _currentDecryptInput = text;
               });
             });
       default:
         return GCWTextField(
-            controller: _decodeController,
+            controller: _inputDecryptController,
             inputFormatters: [_decode4DigitsMaskFormatter],
             onChanged: (text) {
               setState(() {
-                _currentInput = text;
+                _currentDecryptInput = text;
               });
             });
     }
@@ -131,9 +136,9 @@ class _AbstractBCDState extends State<AbstractBCD> {
     var output = '';
 
     if (_currentMode == GCWSwitchPosition.left) {
-      output = encodeBCD(_currentInput, widget.type);
+      output = encodeBCD(_currentEncryptInput, widget.type);
     } else {
-      output = decodeBCD(_currentInput, widget.type);
+      output = decodeBCD(_currentDecryptInput, widget.type);
     }
 
     return GCWDefaultOutput(child: output);

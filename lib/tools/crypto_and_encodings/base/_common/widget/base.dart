@@ -38,9 +38,12 @@ abstract class AbstractBase extends GCWWebStatefulWidget {
 class _AbstractBaseState extends State<AbstractBase> {
   final int _MAX_LENGTH_BASE_INPUT = 1000;
 
-  late TextEditingController _inputController;
+  late TextEditingController _inputEncryptController;
+  late TextEditingController _inputDecryptController;
 
-  String _currentInput = '';
+  var _currentEncryptInput = '';
+  var _currentDecryptInput = '';
+
   GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
 
   _AsyncBaseDecodeReturn? _decodeAsyncBaseData;
@@ -54,17 +57,23 @@ class _AbstractBaseState extends State<AbstractBase> {
       if (widget.getWebParameter('mode') == 'encode') {
         _currentMode = GCWSwitchPosition.left;
       }
+      if (_currentMode == GCWSwitchPosition.left) {
+        _currentEncryptInput = widget.getWebParameter('input') ?? _currentEncryptInput;
+      } else {
+        _currentDecryptInput = widget.getWebParameter('input') ?? _currentDecryptInput;
+      }
 
-      _currentInput = widget.getWebParameter('input') ?? _currentInput;
       widget.webParameter = null;
     }
 
-    _inputController = TextEditingController(text: _currentInput);
+    _inputEncryptController = TextEditingController(text: _currentEncryptInput);
+    _inputDecryptController = TextEditingController(text: _currentDecryptInput);
   }
 
   @override
   void dispose() {
-    _inputController.dispose();
+    _inputEncryptController.dispose();
+    _inputDecryptController.dispose();
     super.dispose();
   }
 
@@ -72,19 +81,30 @@ class _AbstractBaseState extends State<AbstractBase> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        GCWTextField(
-          controller: _inputController,
-          onChanged: (text) {
-            setState(() {
-              _currentInput = text;
-            });
-          },
-        ),
         GCWTwoOptionsSwitch(
+          style: GCWSwitchstyle.button,
+          notitle: true,
           value: _currentMode,
           onChanged: (value) {
             setState(() {
               _currentMode = value;
+            });
+          },
+        ),
+        _currentMode == GCWSwitchPosition.left
+            ? GCWTextField(
+          controller: _inputEncryptController,
+          onChanged: (text) {
+            setState(() {
+              _currentEncryptInput = text;
+            });
+          },
+        )
+            : GCWTextField(
+          controller: _inputDecryptController,
+          onChanged: (text) {
+            setState(() {
+              _currentDecryptInput = text;
             });
           },
         ),
@@ -114,7 +134,7 @@ class _AbstractBaseState extends State<AbstractBase> {
     late Widget outputWidget;
 
     if (_currentMode == GCWSwitchPosition.left) {
-      output = widget.encode(_currentInput);
+      output = widget.encode(_currentEncryptInput);
       outputWidget = GCWDefaultOutput(child: output);
     } else {
       if (_calcAsync()) {
@@ -137,7 +157,7 @@ class _AbstractBaseState extends State<AbstractBase> {
         }
       } else {
         _outData = null;
-        output = decodeBase(_currentInput, widget.decode);
+        output = decodeBase(_currentDecryptInput, widget.decode);
         outputWidget = GCWDefaultOutput(child: output);
       }
     }
@@ -148,7 +168,7 @@ class _AbstractBaseState extends State<AbstractBase> {
   bool _calcAsync() {
     return widget.searchMultimedia &&
         _currentMode == GCWSwitchPosition.right &&
-        _currentInput.length > _MAX_LENGTH_BASE_INPUT;
+        _currentDecryptInput.length > _MAX_LENGTH_BASE_INPUT;
   }
 
   Future<void> _exportFile(BuildContext context, Uint8List data) async {
@@ -160,8 +180,8 @@ class _AbstractBaseState extends State<AbstractBase> {
   }
 
   Future<GCWAsyncExecuterParameters?> _buildJobData() async {
-    if (_currentInput.isEmpty) return null;
-    return GCWAsyncExecuterParameters(_AsyncBaseDecodeParameters(widget.decode, _currentInput));
+    if (_currentDecryptInput.isEmpty) return null;
+    return GCWAsyncExecuterParameters(_AsyncBaseDecodeParameters(widget.decode, _currentDecryptInput));
   }
 
   void _showOutput(_AsyncBaseDecodeReturn? output) {

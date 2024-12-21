@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
-import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_multiple_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
@@ -54,6 +53,16 @@ class _BurrowsWheelerState extends State<BurrowsWheeler> {
   @override
   Widget build(BuildContext context) {
     return Column(children: <Widget>[
+      GCWTwoOptionsSwitch(
+        notitle: true,
+        style: GCWSwitchstyle.button,
+        value: currentMode,
+        onChanged: (value) {
+          setState(() {
+            currentMode = value;
+          });
+        },
+      ),
       currentMode == GCWSwitchPosition.left // encrypt
           ? GCWTextField(
               controller: plainController,
@@ -84,18 +93,7 @@ class _BurrowsWheelerState extends State<BurrowsWheeler> {
               },
             ),
       GCWTwoOptionsSwitch(
-        value: currentMode,
-        onChanged: (value) {
-          setState(() {
-            currentMode = value;
-          });
-        },
-      ),
-      GCWTextDivider(
-        text: i18n(context, 'burrowswheeler_index'),
-      ),
-      GCWTwoOptionsSwitch(
-        title: i18n(context, 'burrowswheeler_index_type'),
+        title: i18n(context, 'burrowswheeler_index'),
         leftValue: currentMode == GCWSwitchPosition.left
             ? i18n(context, 'burrowswheeler_index_type_number_automated')
             : i18n(context, 'burrowswheeler_index_type_number'),

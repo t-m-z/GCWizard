@@ -98,6 +98,16 @@ class _CaesarState extends State<Caesar> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
+        GCWTwoOptionsSwitch(
+          notitle: true,
+          style: GCWSwitchstyle.button,
+          value: _currentMode,
+          onChanged: (value) {
+            setState(() {
+              _currentMode = value;
+            });
+          },
+        ),
         GCWTextField(
           controller: _controller,
           onChanged: (text) {
@@ -112,14 +122,6 @@ class _CaesarState extends State<Caesar> {
           onChanged: (value) {
             setState(() {
               _currentKey = value;
-            });
-          },
-        ),
-        GCWTwoOptionsSwitch(
-          value: _currentMode,
-          onChanged: (value) {
-            setState(() {
-              _currentMode = value;
             });
           },
         ),

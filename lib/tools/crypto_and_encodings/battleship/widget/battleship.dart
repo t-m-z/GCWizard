@@ -63,6 +63,8 @@ class BattleshipState extends State<Battleship> {
   Widget build(BuildContext context) {
     return Column(children: <Widget>[
       GCWTwoOptionsSwitch(
+        notitle: true,
+        style: GCWSwitchstyle.button,
         value: _currentEncryptDecryptMode,
         onChanged: (value) {
           setState(() {

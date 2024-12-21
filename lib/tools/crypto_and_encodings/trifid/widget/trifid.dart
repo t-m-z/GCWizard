@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
-import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
-import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
+import 'package:gc_wizard/common_widgets/dropdowns/gcw_alphabetdropdown.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_multiple_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
@@ -21,12 +20,14 @@ class Trifid extends StatefulWidget {
 }
 
 class _TrifidState extends State<Trifid> {
-  late TextEditingController _inputController;
+  late TextEditingController _inputEncryptController;
+  late TextEditingController _inputDecryptController;
   late TextEditingController _alphabetController;
 
   var _currentMode = GCWSwitchPosition.right;
 
-  String _currentInput = '';
+  var _currentEncryptInput = '';
+  var _currentDecryptInput = '';
   String _currentAlphabet = '';
   int _currentBlockSize = 4;
 
@@ -35,13 +36,15 @@ class _TrifidState extends State<Trifid> {
   @override
   void initState() {
     super.initState();
-    _inputController = TextEditingController(text: _currentInput);
+    _inputEncryptController = TextEditingController(text: _currentEncryptInput);
+    _inputDecryptController = TextEditingController(text: _currentDecryptInput);
     _alphabetController = TextEditingController(text: _currentAlphabet);
   }
 
   @override
   void dispose() {
-    _inputController.dispose();
+    _inputEncryptController.dispose();
+    _inputDecryptController.dispose();
     _alphabetController.dispose();
 
     super.dispose();
@@ -58,6 +61,8 @@ class _TrifidState extends State<Trifid> {
     return Column(
       children: <Widget>[
         GCWTwoOptionsSwitch(
+          style: GCWSwitchstyle.button,
+          notitle: true,
           value: _currentMode,
           onChanged: (value) {
             setState(() {
@@ -65,14 +70,26 @@ class _TrifidState extends State<Trifid> {
             });
           },
         ),
-        GCWTextField(
-          controller: _inputController,
+        _currentMode == GCWSwitchPosition.left
+            ? GCWTextField(
+          controller: _inputEncryptController,
           inputFormatters: [
             FilteringTextInputFormatter.allow(RegExp('[A-Za-z+]')),
           ],
           onChanged: (text) {
             setState(() {
-              _currentInput = text;
+              _currentEncryptInput = text;
+            });
+          },
+        )
+            : GCWTextField(
+          controller: _inputDecryptController,
+          inputFormatters: [
+            FilteringTextInputFormatter.allow(RegExp('[A-Za-z+]')),
+          ],
+          onChanged: (text) {
+            setState(() {
+              _currentDecryptInput = text;
             });
           },
         ),
@@ -86,32 +103,22 @@ class _TrifidState extends State<Trifid> {
             });
           },
         ),
-        GCWTextDivider(text: i18n(context, 'common_alphabet')),
-        GCWDropDown<PolybiosMode>(
+        GCWAlphabetDropDown<PolybiosMode>(
           value: _currentTrifidMode,
+          items: TrifidModeItems,
+          customModeKey: PolybiosMode.CUSTOM,
+          textFieldController: _alphabetController,
           onChanged: (value) {
             setState(() {
               _currentTrifidMode = value;
             });
           },
-          items: TrifidModeItems.entries.map((mode) {
-            return GCWDropDownMenuItem(
-              value: mode.key,
-              child: mode.value,
-            );
-          }).toList(),
+          onCustomAlphabetChanged: (text) {
+            setState(() {
+              _currentAlphabet = text;
+            });
+          },
         ),
-        _currentTrifidMode == PolybiosMode.CUSTOM
-            ? GCWTextField(
-                hintText: i18n(context, 'common_alphabet'),
-                controller: _alphabetController,
-                onChanged: (text) {
-                  setState(() {
-                    _currentAlphabet = text;
-                  });
-                },
-              )
-            : Container(),
         _buildOutput()
       ],
     );
@@ -119,15 +126,16 @@ class _TrifidState extends State<Trifid> {
 
   Widget _buildOutput() {
     String output = '';
-    if (_currentInput.isEmpty) return const GCWDefaultOutput(child: '');
+    if (_currentEncryptInput.isEmpty && _currentMode == GCWSwitchPosition.left) return const GCWDefaultOutput(child: '');
+    if (_currentDecryptInput.isEmpty && _currentMode == GCWSwitchPosition.right) return const GCWDefaultOutput(child: '');
 
     var _currentOutput = TrifidOutput('', '');
     if (_currentMode == GCWSwitchPosition.left) {
       _currentOutput =
-          encryptTrifid(_currentInput, _currentBlockSize, mode: _currentTrifidMode, alphabet: _currentAlphabet);
+          encryptTrifid(_currentEncryptInput, _currentBlockSize, mode: _currentTrifidMode, alphabet: _currentAlphabet);
     } else {
       _currentOutput =
-          decryptTrifid(_currentInput, _currentBlockSize, mode: _currentTrifidMode, alphabet: _currentAlphabet);
+          decryptTrifid(_currentDecryptInput, _currentBlockSize, mode: _currentTrifidMode, alphabet: _currentAlphabet);
     }
 
     if (_currentOutput.output.startsWith('trifid')) {

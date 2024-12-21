@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
-import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_alphabetdropdown.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_alphabetmodification_dropdown.dart';
 import 'package:gc_wizard/common_widgets/gcw_snackbar.dart';
@@ -22,12 +21,14 @@ class Bifid extends StatefulWidget {
 }
 
 class _BifidState extends State<Bifid> {
-  late TextEditingController _inputController;
+  late TextEditingController _inputEncryptController;
+  late TextEditingController _inputDecryptController;
   late TextEditingController _alphabetController;
 
   var _currentMode = GCWSwitchPosition.right;
 
-  String _currentInput = '';
+  var _currentEncryptInput = '';
+  var _currentDecryptInput = '';
   String _currentAlphabet = '';
 
   PolybiosMode _currentBifidMode = PolybiosMode.AZ09;
@@ -40,13 +41,15 @@ class _BifidState extends State<Bifid> {
   @override
   void initState() {
     super.initState();
-    _inputController = TextEditingController(text: _currentInput);
+    _inputEncryptController = TextEditingController(text: _currentEncryptInput);
+    _inputDecryptController = TextEditingController(text: _currentDecryptInput);
     _alphabetController = TextEditingController(text: _currentAlphabet);
   }
 
   @override
   void dispose() {
-    _inputController.dispose();
+    _inputEncryptController.dispose();
+    _inputDecryptController.dispose();
     _alphabetController.dispose();
 
     super.dispose();
@@ -62,16 +65,9 @@ class _BifidState extends State<Bifid> {
 
     return Column(
       children: <Widget>[
-        GCWTextField(
-          controller: _inputController,
-          onChanged: (text) {
-            setState(() {
-              _currentInput = text;
-            });
-          },
-        ),
-
         GCWTwoOptionsSwitch(
+          style: GCWSwitchstyle.button,
+          notitle: true,
           value: _currentMode,
           onChanged: (value) {
             setState(() {
@@ -79,8 +75,23 @@ class _BifidState extends State<Bifid> {
             });
           },
         ),
-
-        GCWTextDivider(text: i18n(context, 'common_alphabet')),
+        _currentMode == GCWSwitchPosition.left
+            ? GCWTextField(
+          controller: _inputEncryptController,
+          onChanged: (text) {
+            setState(() {
+              _currentEncryptInput = text;
+            });
+          },
+        )
+            : GCWTextField(
+          controller: _inputDecryptController,
+          onChanged: (text) {
+            setState(() {
+              _currentDecryptInput = text;
+            });
+          },
+        ),
 
         GCWAlphabetDropDown<PolybiosMode>(
           value: _currentBifidMode,
@@ -135,14 +146,15 @@ class _BifidState extends State<Bifid> {
       key = "123456";
     }
 
-    if (_currentInput.isEmpty) return const GCWDefaultOutput(child: '');
+    if (_currentEncryptInput.isEmpty && _currentMode == GCWSwitchPosition.left) return const GCWDefaultOutput(child: '');
+    if (_currentDecryptInput.isEmpty && _currentMode == GCWSwitchPosition.right) return const GCWDefaultOutput(child: '');
 
     var _currentOutput = BifidOutput('', '', '');
     if (_currentMode == GCWSwitchPosition.left) {
-      _currentOutput = encryptBifid(_currentInput, key,
+      _currentOutput = encryptBifid(_currentEncryptInput, key,
           mode: _currentBifidMode, alphabet: _currentAlphabet, alphabetMode: _currentModificationMode);
     } else {
-      _currentOutput = decryptBifid(_currentInput, key,
+      _currentOutput = decryptBifid(_currentDecryptInput, key,
           mode: _currentBifidMode, alphabet: _currentAlphabet, alphabetMode: _currentModificationMode);
     }
 

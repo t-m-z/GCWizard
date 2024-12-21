@@ -17,13 +17,15 @@ class Chao extends StatefulWidget {
 }
 
 class _ChaoState extends State<Chao> {
-  late TextEditingController _inputController;
+  late TextEditingController _inputEncryptController;
+  late TextEditingController _inputDecryptController;
   late TextEditingController _alphabetControllerPlain;
   late TextEditingController _alphabetControllerChiffre;
 
   var _currentMode = GCWSwitchPosition.right;
 
-  String _currentInput = '';
+  var _currentEncryptInput = '';
+  var _currentDecryptInput = '';
   String _currentOutput = '';
   String _currentAlphabetPlain = '';
   String _currentAlphabetChiffre = '';
@@ -34,14 +36,16 @@ class _ChaoState extends State<Chao> {
   @override
   void initState() {
     super.initState();
-    _inputController = TextEditingController(text: _currentInput);
+    _inputEncryptController = TextEditingController(text: _currentEncryptInput);
+    _inputDecryptController = TextEditingController(text: _currentDecryptInput);
     _alphabetControllerPlain = TextEditingController(text: _currentAlphabetPlain);
     _alphabetControllerChiffre = TextEditingController(text: _currentAlphabetChiffre);
   }
 
   @override
   void dispose() {
-    _inputController.dispose();
+    _inputEncryptController.dispose();
+    _inputDecryptController.dispose();
     _alphabetControllerPlain.dispose();
     _alphabetControllerChiffre.dispose();
 
@@ -63,19 +67,30 @@ class _ChaoState extends State<Chao> {
 
     return Column(
       children: <Widget>[
-        GCWTextField(
-          controller: _inputController,
-          onChanged: (text) {
-            setState(() {
-              _currentInput = text;
-            });
-          },
-        ),
         GCWTwoOptionsSwitch(
+          style: GCWSwitchstyle.button,
+          notitle: true,
           value: _currentMode,
           onChanged: (value) {
             setState(() {
               _currentMode = value;
+            });
+          },
+        ),
+        _currentMode == GCWSwitchPosition.left
+            ? GCWTextField(
+          controller: _inputEncryptController,
+          onChanged: (text) {
+            setState(() {
+              _currentEncryptInput = text;
+            });
+          },
+        )
+            : GCWTextField(
+          controller: _inputDecryptController,
+          onChanged: (text) {
+            setState(() {
+              _currentDecryptInput = text;
             });
           },
         ),
@@ -120,7 +135,8 @@ class _ChaoState extends State<Chao> {
   }
 
   Widget _buildOutput() {
-    if (_currentInput.isEmpty) return const GCWDefaultOutput();
+    if (_currentEncryptInput.isEmpty && _currentMode == GCWSwitchPosition.left) return const GCWDefaultOutput();
+    if (_currentDecryptInput.isEmpty && _currentMode == GCWSwitchPosition.right) return const GCWDefaultOutput();
 
     var alphabetChiffre = '';
     var alphabetPlain = '';
@@ -153,9 +169,9 @@ class _ChaoState extends State<Chao> {
     }
 
     if (_currentMode == GCWSwitchPosition.left) {
-      _currentOutput = encryptChao(_currentInput, alphabetPlain, alphabetChiffre);
+      _currentOutput = encryptChao(_currentEncryptInput, alphabetPlain, alphabetChiffre);
     } else {
-      _currentOutput = decryptChao(_currentInput, alphabetPlain, alphabetChiffre);
+      _currentOutput = decryptChao(_currentDecryptInput, alphabetPlain, alphabetChiffre);
     }
 
     return GCWDefaultOutput(

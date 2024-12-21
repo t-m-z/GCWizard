@@ -53,6 +53,8 @@ class _MalbolgeState extends State<Malbolge> {
     return Column(
       children: <Widget>[
         GCWTwoOptionsSwitch(
+          notitle: true,
+          style: GCWSwitchstyle.button,
           leftValue: i18n(context, 'common_programming_mode_interpret'),
           rightValue: i18n(context, 'common_programming_mode_generate'),
           value: _currentMode,
@@ -79,21 +81,21 @@ class _MalbolgeState extends State<Malbolge> {
             : Column(
                 // interpret malbolge-programm
                 children: <Widget>[
-                  GCWOnOffSwitch(
-                    title: i18n(context, 'malbolge_mode_interpret_strict'),
-                    value: _currentStrict,
-                    onChanged: (value) {
-                      setState(() {
-                        _currentStrict = value;
-                      });
-                    },
-                  ),
                   GCWTextField(
                     controller: _programmController,
                     hintText: i18n(context, 'common_programming_hint_sourcecode'),
                     onChanged: (text) {
                       setState(() {
                         _currentProgramm = text;
+                      });
+                    },
+                  ),
+                  GCWOnOffSwitch(
+                    title: i18n(context, 'malbolge_mode_interpret_strict'),
+                    value: _currentStrict,
+                    onChanged: (value) {
+                      setState(() {
+                        _currentStrict = value;
                       });
                     },
                   ),

@@ -56,6 +56,8 @@ class _BeatnikState extends State<Beatnik> {
     return Column(
       children: <Widget>[
         GCWTwoOptionsSwitch(
+          style: GCWSwitchstyle.button,
+          notitle: true,
           leftValue: i18n(context, 'common_programming_mode_interpret'),
           rightValue: i18n(context, 'common_programming_mode_generate'),
           value: _currentMode,
@@ -82,6 +84,15 @@ class _BeatnikState extends State<Beatnik> {
             : Column(
                 // interpret Beatnik-programm
                 children: <Widget>[
+                  GCWTextField(
+                    controller: _programmController,
+                    hintText: i18n(context, 'common_programming_hint_sourcecode'),
+                    onChanged: (text) {
+                      setState(() {
+                        _currentProgram = text;
+                      });
+                    },
+                  ),
                   GCWTextDivider(
                     text: i18n(context, 'beatnik_hint_scrabble'),
                   ),
@@ -98,15 +109,6 @@ class _BeatnikState extends State<Beatnik> {
                         child: i18n(context, set.value.i18nNameId),
                       );
                     }).toList(),
-                  ),
-                  GCWTextField(
-                    controller: _programmController,
-                    hintText: i18n(context, 'common_programming_hint_sourcecode'),
-                    onChanged: (text) {
-                      setState(() {
-                        _currentProgram = text;
-                      });
-                    },
                   ),
                   GCWTextField(
                     controller: _inputController,

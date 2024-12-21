@@ -81,22 +81,25 @@ class _ChefState extends State<Chef> {
     return Column(
       children: <Widget>[
         GCWTwoOptionsSwitch(
-          leftValue: i18n(context, 'common_language_german'),
-          rightValue: i18n(context, 'common_language_english'),
-          value: _currentLanguage,
-          onChanged: (value) {
-            setState(() {
-              _currentLanguage = value;
-            });
-          },
-        ),
-        GCWTwoOptionsSwitch(
+          style: GCWSwitchstyle.button,
+          notitle: true,
           leftValue: i18n(context, 'common_programming_mode_interpret'),
           rightValue: i18n(context, 'common_programming_mode_generate'),
           value: _currentMode,
           onChanged: (value) {
             setState(() {
               _currentMode = value;
+            });
+          },
+        ),
+        GCWTwoOptionsSwitch(
+          notitle: true,
+          leftValue: i18n(context, 'common_language_german'),
+          rightValue: i18n(context, 'common_language_english'),
+          value: _currentLanguage,
+          onChanged: (value) {
+            setState(() {
+              _currentLanguage = value;
             });
           },
         ),

@@ -13,9 +13,11 @@ class CipherWheel extends StatefulWidget {
 }
 
 class _CipherWheelState extends State<CipherWheel> {
-  late TextEditingController _controller;
+  late TextEditingController _inputEncryptController;
+  late TextEditingController _inputDecryptController;
 
-  String _currentInput = '';
+  var _currentEncryptInput = '';
+  var _currentDecryptInput = '';
   int _currentKey = 1;
   String _output = '';
 
@@ -24,12 +26,14 @@ class _CipherWheelState extends State<CipherWheel> {
   @override
   void initState() {
     super.initState();
-    _controller = TextEditingController(text: _currentInput);
+    _inputEncryptController = TextEditingController(text: _currentEncryptInput);
+    _inputDecryptController = TextEditingController(text: _currentDecryptInput);
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    _inputEncryptController.dispose();
+    _inputDecryptController.dispose();
     super.dispose();
   }
 
@@ -37,12 +41,30 @@ class _CipherWheelState extends State<CipherWheel> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        GCWTextField(
-          controller: _controller,
+        GCWTwoOptionsSwitch(
+          style: GCWSwitchstyle.button,
+          notitle: true,
+          value: _currentMode,
+          onChanged: (value) {
+            setState(() {
+              _currentMode = value;
+            });
+          },
+        ),
+        _currentMode == GCWSwitchPosition.left
+            ? GCWTextField(
+          controller: _inputEncryptController,
           onChanged: (text) {
             setState(() {
-              _currentInput = text;
-              _calculateOutput();
+              _currentEncryptInput = text;
+            });
+          },
+        )
+            : GCWTextField(
+          controller: _inputDecryptController,
+          onChanged: (text) {
+            setState(() {
+              _currentDecryptInput = text;
             });
           },
         ),
@@ -54,15 +76,6 @@ class _CipherWheelState extends State<CipherWheel> {
             });
           },
         ),
-        GCWTwoOptionsSwitch(
-          value: _currentMode,
-          onChanged: (value) {
-            setState(() {
-              _currentMode = value;
-              _calculateOutput();
-            });
-          },
-        ),
         GCWDefaultOutput(child: _output)
       ],
     );
@@ -70,14 +83,14 @@ class _CipherWheelState extends State<CipherWheel> {
 
   void _calculateOutput() {
     if (_currentMode == GCWSwitchPosition.right) {
-      var input = _currentInput
+      var input = _currentDecryptInput
           .split(RegExp(r'\D+'))
           .where((number) => number.isNotEmpty)
           .map((number) => int.tryParse(number)!)
           .toList();
       _output = decryptCipherWheel(input, _currentKey);
     } else {
-      _output = encryptCipherWheel(_currentInput, _currentKey).join(' ');
+      _output = encryptCipherWheel(_currentEncryptInput, _currentKey).join(' ');
     }
   }
 }

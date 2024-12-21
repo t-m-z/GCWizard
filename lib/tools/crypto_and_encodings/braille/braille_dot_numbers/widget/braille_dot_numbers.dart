@@ -52,17 +52,15 @@ class _BrailleDotNumbersState extends State<BrailleDotNumbers> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        GCWDropDown<BrailleLanguage>(
-          value: _currentLanguage,
+        GCWTwoOptionsSwitch(
+          notitle: true,
+          style: GCWSwitchstyle.button,
+          value: _currentMode,
           onChanged: (value) {
             setState(() {
-              _currentLanguage = value;
+              _currentMode = value;
             });
           },
-          items: BRAILLE_LANGUAGES.entries.map((mode) {
-            return GCWDropDownMenuItem(
-                value: mode.key, child: i18n(context, mode.value.title), subtitle: i18n(context, mode.value.subtitle));
-          }).toList(),
         ),
         if (_currentMode == GCWSwitchPosition.left)
           GCWTextField(
@@ -83,13 +81,17 @@ class _BrailleDotNumbersState extends State<BrailleDotNumbers> {
               });
             },
           ),
-        GCWTwoOptionsSwitch(
-          value: _currentMode,
+        GCWDropDown<BrailleLanguage>(
+          value: _currentLanguage,
           onChanged: (value) {
             setState(() {
-              _currentMode = value;
+              _currentLanguage = value;
             });
           },
+          items: BRAILLE_LANGUAGES.entries.map((mode) {
+            return GCWDropDownMenuItem(
+                value: mode.key, child: i18n(context, mode.value.title), subtitle: i18n(context, mode.value.subtitle));
+          }).toList(),
         ),
         _buildOutput()
       ],

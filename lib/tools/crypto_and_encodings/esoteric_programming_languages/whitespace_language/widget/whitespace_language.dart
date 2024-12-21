@@ -31,20 +31,22 @@ class _WhitespaceLanguageState extends State<WhitespaceLanguage> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        GCWTextField(
-          onChanged: (text) {
-            setState(() {
-              _currentCode = text;
-            });
-          },
-        ),
         GCWTwoOptionsSwitch(
+          notitle: true,
+          style: GCWSwitchstyle.button,
           leftValue: i18n(context, 'common_programming_mode_interpret'),
           rightValue: i18n(context, 'common_programming_mode_generate'),
           value: _currentMode,
           onChanged: (value) {
             setState(() {
               _currentMode = value;
+            });
+          },
+        ),
+        GCWTextField(
+          onChanged: (text) {
+            setState(() {
+              _currentCode = text;
             });
           },
         ),

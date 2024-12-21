@@ -18,12 +18,14 @@ class ADFGVX extends StatefulWidget {
 }
 
 class _ADFGVXState extends State<ADFGVX> {
-  late TextEditingController _inputController;
+  late TextEditingController _inputEncryptController;
+  late TextEditingController _inputDecryptController;
   late TextEditingController _substitutionKeyController;
   late TextEditingController _transpositionKeyController;
   late TextEditingController _alphabetController;
 
-  String _currentInput = '';
+  var _currentEncryptInput = '';
+  var _currentDecryptInput = '';
   String _currentSubstitutionKey = '';
   String _currentTranspositionKey = '';
 
@@ -36,7 +38,8 @@ class _ADFGVXState extends State<ADFGVX> {
   @override
   void initState() {
     super.initState();
-    _inputController = TextEditingController(text: _currentInput);
+    _inputEncryptController = TextEditingController(text: _currentEncryptInput);
+    _inputDecryptController = TextEditingController(text: _currentDecryptInput);
     _substitutionKeyController = TextEditingController(text: _currentSubstitutionKey);
     _transpositionKeyController = TextEditingController(text: _currentTranspositionKey);
     _alphabetController = TextEditingController(text: _currentAlphabet);
@@ -44,7 +47,8 @@ class _ADFGVXState extends State<ADFGVX> {
 
   @override
   void dispose() {
-    _inputController.dispose();
+    _inputEncryptController.dispose();
+    _inputDecryptController.dispose();
     _substitutionKeyController.dispose();
     _transpositionKeyController.dispose();
     _alphabetController.dispose();
@@ -63,11 +67,30 @@ class _ADFGVXState extends State<ADFGVX> {
 
     return Column(
       children: <Widget>[
-        GCWTextField(
-          controller: _inputController,
+        GCWTwoOptionsSwitch(
+          style: GCWSwitchstyle.button,
+          notitle: true,
+          value: _currentMode,
+          onChanged: (value) {
+            setState(() {
+              _currentMode = value;
+            });
+          },
+        ),
+        _currentMode == GCWSwitchPosition.left
+            ? GCWTextField(
+          controller: _inputEncryptController,
           onChanged: (text) {
             setState(() {
-              _currentInput = text;
+              _currentEncryptInput = text;
+            });
+          },
+        )
+            : GCWTextField(
+          controller: _inputDecryptController,
+          onChanged: (text) {
+            setState(() {
+              _currentDecryptInput = text;
             });
           },
         ),
@@ -78,14 +101,6 @@ class _ADFGVXState extends State<ADFGVX> {
           onChanged: (text) {
             setState(() {
               _currentADFGVXMode = text;
-            });
-          },
-        ),
-        GCWTwoOptionsSwitch(
-          value: _currentMode,
-          onChanged: (value) {
-            setState(() {
-              _currentMode = value;
             });
           },
         ),
@@ -135,18 +150,18 @@ class _ADFGVXState extends State<ADFGVX> {
 
     if (_currentMode == GCWSwitchPosition.left) {
       if (_currentADFGVXMode == GCWSwitchPosition.left) {
-        output = encryptADFGX(_currentInput, _currentSubstitutionKey, _currentTranspositionKey,
+        output = encryptADFGX(_currentEncryptInput, _currentSubstitutionKey, _currentTranspositionKey,
             polybiosMode: _currentPolybiosMode, alphabet: _currentAlphabet);
       } else {
-        output = encryptADFGVX(_currentInput, _currentSubstitutionKey, _currentTranspositionKey,
+        output = encryptADFGVX(_currentEncryptInput, _currentSubstitutionKey, _currentTranspositionKey,
             polybiosMode: _currentPolybiosMode, alphabet: _currentAlphabet);
       }
     } else {
       if (_currentADFGVXMode == GCWSwitchPosition.left) {
-        output = decryptADFGX(_currentInput, _currentSubstitutionKey, _currentTranspositionKey,
+        output = decryptADFGX(_currentDecryptInput, _currentSubstitutionKey, _currentTranspositionKey,
             polybiosMode: _currentPolybiosMode, alphabet: _currentAlphabet);
       } else {
-        output = decryptADFGVX(_currentInput, _currentSubstitutionKey, _currentTranspositionKey,
+        output = decryptADFGVX(_currentDecryptInput, _currentSubstitutionKey, _currentTranspositionKey,
             polybiosMode: _currentPolybiosMode, alphabet: _currentAlphabet);
       }
     }

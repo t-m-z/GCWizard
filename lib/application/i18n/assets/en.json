@@ -502,7 +502,6 @@
   "burrowswheeler_description": "Basis for bzip-compression",
   "burrowswheeler_example": "Ananas → #SNNAAA",
   "burrowswheeler_index": "Index",
-  "burrowswheeler_index_type": "Type",
   "burrowswheeler_index_type_symbol": "Index Symbol",
   "burrowswheeler_index_type_number": "Index Number",
   "burrowswheeler_index_type_number_automated": "Index Number (autom.)",

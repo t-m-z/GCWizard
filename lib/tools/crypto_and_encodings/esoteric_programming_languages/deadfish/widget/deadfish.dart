@@ -13,19 +13,64 @@ class Deadfish extends StatefulWidget {
 }
 
 class _DeadfishState extends State<Deadfish> {
-  var _currentInput = '';
+  late TextEditingController _inputInterpretController;
+  late TextEditingController _inputGenerateController;
+
+  var _currentInterpretInput = '';
+  var _currentGenerateInput = '';
+
   var _currentMode = GCWSwitchPosition.left;
   var _currentDeadfishMode = GCWSwitchPosition.left;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _inputInterpretController = TextEditingController(text: _currentInterpretInput);
+    _inputGenerateController = TextEditingController(text: _currentGenerateInput);
+  }
+
+  @override
+  void dispose() {
+    _inputInterpretController.dispose();
+    _inputGenerateController.dispose();
+
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        GCWTextField(onChanged: (text) {
-          setState(() {
-            _currentInput = text;
-          });
-        }),
+        GCWTwoOptionsSwitch(
+          notitle: true,
+          style: GCWSwitchstyle.button,
+          value: _currentMode,
+          leftValue: i18n(context, 'common_programming_mode_interpret'),
+          rightValue: i18n(context, 'common_programming_mode_generate'),
+          onChanged: (value) {
+            setState(() {
+              _currentMode = value;
+            });
+          },
+        ),
+        _currentMode == GCWSwitchPosition.left
+            ? GCWTextField(
+          controller: _inputInterpretController,
+          onChanged: (text) {
+            setState(() {
+              _currentInterpretInput = text;
+            });
+          },
+        )
+            : GCWTextField(
+          controller: _inputGenerateController,
+          onChanged: (text) {
+            setState(() {
+              _currentGenerateInput = text;
+            });
+          },
+        ),
         GCWTwoOptionsSwitch(
           leftValue: i18n(context, 'deadfish_mode_left'),
           rightValue: i18n(context, 'deadfish_mode_right'),
@@ -36,16 +81,6 @@ class _DeadfishState extends State<Deadfish> {
             });
           },
         ),
-        GCWTwoOptionsSwitch(
-          value: _currentMode,
-          leftValue: i18n(context, 'common_programming_mode_interpret'),
-          rightValue: i18n(context, 'common_programming_mode_generate'),
-          onChanged: (value) {
-            setState(() {
-              _currentMode = value;
-            });
-          },
-        ),
         GCWDefaultOutput(child: _buildOutput())
       ],
     );
@@ -53,14 +88,14 @@ class _DeadfishState extends State<Deadfish> {
 
   String _buildOutput() {
     if (_currentMode == GCWSwitchPosition.right) {
-      var encoded = encodeDeadfish(_currentInput);
+      var encoded = encodeDeadfish(_currentGenerateInput);
       if (_currentDeadfishMode == GCWSwitchPosition.right) {
         encoded = encoded.replaceAll('i', 'x').replaceAll('s', 'k').replaceAll('o', 'c');
       }
 
       return encoded;
     } else {
-      var decodeable = _currentInput;
+      var decodeable = _currentInterpretInput;
       if (_currentDeadfishMode == GCWSwitchPosition.right) {
         decodeable = decodeable
             .toLowerCase()

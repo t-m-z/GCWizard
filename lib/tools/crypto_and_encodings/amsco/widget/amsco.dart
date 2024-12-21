@@ -19,10 +19,12 @@ class Amsco extends StatefulWidget {
 }
 
 class _AmscoState extends State<Amsco> {
-  late TextEditingController _inputController;
+  late TextEditingController _inputEncryptController;
+  late TextEditingController _inputDecryptController;
   late TextEditingController _keyController;
 
-  String _currentInput = '';
+  var _currentEncryptInput = '';
+  var _currentDecryptInput = '';
   String _currentKey = '';
 
   var _currentMode = GCWSwitchPosition.right;
@@ -33,13 +35,15 @@ class _AmscoState extends State<Amsco> {
   @override
   void initState() {
     super.initState();
-    _inputController = TextEditingController(text: _currentInput);
+    _inputEncryptController = TextEditingController(text: _currentEncryptInput);
+    _inputDecryptController = TextEditingController(text: _currentDecryptInput);
     _keyController = TextEditingController(text: _currentKey);
   }
 
   @override
   void dispose() {
-    _inputController.dispose();
+    _inputEncryptController.dispose();
+    _inputDecryptController.dispose();
     _keyController.dispose();
     super.dispose();
   }
@@ -48,19 +52,30 @@ class _AmscoState extends State<Amsco> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        GCWTextField(
-          controller: _inputController,
-          onChanged: (text) {
-            setState(() {
-              _currentInput = text;
-            });
-          },
-        ),
         GCWTwoOptionsSwitch(
+          style: GCWSwitchstyle.button,
+          notitle: true,
           value: _currentMode,
           onChanged: (value) {
             setState(() {
               _currentMode = value;
+            });
+          },
+        ),
+        _currentMode == GCWSwitchPosition.left
+            ? GCWTextField(
+          controller: _inputEncryptController,
+          onChanged: (text) {
+            setState(() {
+              _currentEncryptInput = text;
+            });
+          },
+        )
+            : GCWTextField(
+          controller: _inputDecryptController,
+          onChanged: (text) {
+            setState(() {
+              _currentDecryptInput = text;
             });
           },
         ),
@@ -94,9 +109,9 @@ class _AmscoState extends State<Amsco> {
   Widget _buildOutput(BuildContext context) {
     AmscoOutput _currentOutput;
     if (_currentMode == GCWSwitchPosition.left) {
-      _currentOutput = encryptAmsco(_currentInput, _currentKey, _currentOneCharStart == GCWSwitchPosition.left);
+      _currentOutput = encryptAmsco(_currentEncryptInput, _currentKey, _currentOneCharStart == GCWSwitchPosition.left);
     } else {
-      _currentOutput = decryptAmsco(_currentInput, _currentKey, _currentOneCharStart == GCWSwitchPosition.left);
+      _currentOutput = decryptAmsco(_currentDecryptInput, _currentKey, _currentOneCharStart == GCWSwitchPosition.left);
     }
 
     if (_currentOutput.errorCode != ErrorCode.OK) {

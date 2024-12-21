@@ -116,12 +116,9 @@ class _BookCipherState extends State<BookCipher> {
 
     return Column(
       children: <Widget>[
-        GCWTextField(onChanged: (text) {
-          setState(() {
-            _currentInput = text;
-          });
-        }),
         GCWTwoOptionsSwitch(
+          style: GCWSwitchstyle.button,
+          notitle: true,
           value: _currentSearchMode,
           onChanged: (value) {
             setState(() {
@@ -129,6 +126,11 @@ class _BookCipherState extends State<BookCipher> {
             });
           },
         ),
+        GCWTextField(onChanged: (text) {
+          setState(() {
+            _currentInput = text;
+          });
+        }),
         GCWOnOffSwitch(
             title: i18n(context, 'book_cipher_only_first_word_letter'),
             value: _onlyFirstWordLetter,
