@@ -2,12 +2,12 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
+import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
 import 'package:gc_wizard/common_widgets/dialogs/gcw_exported_file_dialog.dart';
 import 'package:gc_wizard/common_widgets/gcw_expandable.dart';
 import 'package:gc_wizard/common_widgets/image_viewers/gcw_imageview.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
-import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/base/_common/logic/base.dart';
 import 'package:gc_wizard/tools/images_and_files/id3_tag/logic/id3_tag.dart';
@@ -36,8 +36,8 @@ class _ID3TagState extends State<ID3Tag> {
   String _currentAlbum = '';
   String _currentYear = '';
   String _currentComment = '';
-  int _currentTrack = 0;
-  int _currentGenre = 0;
+  String _currentTrack = '0';
+  String _currentGenre = '0';
 
   late TextEditingController _artistController;
   late TextEditingController _albumController;
@@ -47,12 +47,10 @@ class _ID3TagState extends State<ID3Tag> {
 
   ID3TagList _ID3TagList = EMPTY_ID3TAGLIST;
 
+  ID3TagData _ID3TagDataSet = EMPTY_ID3TAGDATASET;
+
   bool _soundFileLoaded = false;
   bool _imageFileLoaded = false;
-
-  ID3_VERSION _versionID3 = ID3_VERSION.V24;
-
-  GCWSwitchPosition _currentMode = GCWSwitchPosition.left;
 
   @override
   initState() {
@@ -83,18 +81,196 @@ class _ID3TagState extends State<ID3Tag> {
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
         _buildWidgetOpenSoundFile(),
-        _buildWidgetModeSwitchReadWrite(),
-        (_currentMode == GCWSwitchPosition.right)
-            ? _buildWidgetInputMetaData()
-            : Container(),
+        //_buildWidgetModeSwitchReadWrite(),
+        //(_currentMode == GCWSwitchPosition.right)
+        //    ? _buildWidgetInputMetaData()
+        //    : Container(),
         _buildOutput()
       ],
     );
   }
 
+  Widget _widgetOutputV1() {
+    List<int> resultBytes = [];
+    _currentAlbum = _ID3TagDataSet.ID3v1data.tags['Album']!;
+    _currentArtist = _ID3TagDataSet.ID3v1data.tags['Artist']!;
+    _currentTitle = _ID3TagDataSet.ID3v1data.tags['Title']!;
+    _currentYear = _ID3TagDataSet.ID3v1data.tags['Year']!;
+    _currentComment = _ID3TagDataSet.ID3v1data.tags['Comment']!;
+    _currentGenre = _ID3TagDataSet.ID3v1data.tags['Genre']!;
+    _currentTrack = _ID3TagDataSet.ID3v1data.tags['Track']!;
+    return Column(
+      children: [
+        Row(// Artist
+          children: [
+            Expanded(child: Container(
+              padding: EdgeInsets.only(right: DEFAULT_MARGIN),
+              child: Text(i18n(context, 'metadata_artist'))
+            )),
+            Expanded(child: Container(
+              padding: EdgeInsets.only(left: DEFAULT_MARGIN),
+              child: GCWTextField(
+                controller: _artistController,
+                onChanged: (text) {
+                  setState(() {
+                    _currentArtist = text;
+                  });
+                },
+              ),
+            )),
+          ],
+        ),
+        Row(// Artist
+          children: [
+            Expanded(child: Container(
+                padding: EdgeInsets.only(right: DEFAULT_MARGIN),
+                child: Text(i18n(context, 'metadata_title'))
+            )),
+            Expanded(child: Container(
+              padding: EdgeInsets.only(left: DEFAULT_MARGIN),
+              child: GCWTextField(
+                controller: _titleController,
+                onChanged: (text) {
+                  setState(() {
+                    _currentTitle = text;
+                  });
+                },
+              ),
+            )),
+          ],
+        ),
+        Row(// Artist
+          children: [
+            Expanded(child: Container(
+                padding: EdgeInsets.only(right: DEFAULT_MARGIN),
+                child: Text(i18n(context, 'metadata_album'))
+            )),
+            Expanded(child: Container(
+              padding: EdgeInsets.only(left: DEFAULT_MARGIN),
+              child: GCWTextField(
+                controller: _albumController,
+                onChanged: (text) {
+                  setState(() {
+                    _currentAlbum = text;
+                  });
+                },
+              ),
+            )),
+          ],
+        ),  // Album
+        Row(// Artist
+          children: [
+            Expanded(child: Container(
+                padding: EdgeInsets.only(right: DEFAULT_MARGIN),
+                child: Text(i18n(context, 'metadata_comment'))
+            )),
+            Expanded(child: Container(
+              padding: EdgeInsets.only(left: DEFAULT_MARGIN),
+              child: GCWTextField(
+                controller: _commentController,
+                onChanged: (text) {
+                  setState(() {
+                    _currentComment = text;
+                  });
+                },
+              ),
+            )),
+          ],
+        ),  // Comment
+        Row(// Artist
+          children: [
+            Expanded(child: Container(
+                padding: EdgeInsets.only(right: DEFAULT_MARGIN),
+                child: Text(i18n(context, 'metadata_year'))
+            )),
+            Expanded(child: Container(
+              padding: EdgeInsets.only(left: DEFAULT_MARGIN),
+              child: GCWTextField(
+                controller: _yearController,
+                onChanged: (text) {
+                  setState(() {
+                    _currentYear = text;
+                  });
+                },
+              ),
+            )),
+          ],
+        ),  // Comment
+        Row(// Artist
+          children: [
+            Expanded(child: Container(
+                padding: EdgeInsets.only(right: DEFAULT_MARGIN),
+                child: Text(i18n(context, 'metadata_genre'))
+            )),
+            Expanded(child: Container(
+              padding: EdgeInsets.only(left: DEFAULT_MARGIN),
+              child: Container(),
+            )),
+          ],
+        ),  // Genre
+        Row(// Artist
+          children: [
+            Expanded(child: Container(
+                padding: EdgeInsets.only(right: DEFAULT_MARGIN),
+                child: Text(i18n(context, 'metadata_track'))
+            )),
+            Expanded(child: Container(
+              padding: EdgeInsets.only(left: DEFAULT_MARGIN),
+              child: Container(),
+            )),
+          ],
+        ),  // Track
+        GCWButton(
+            text: i18n(context, 'metadata_write'),
+            onPressed: () {
+              final encoder = ID3Encoder(_currentSoundFile?.bytes as List<int>);
+
+              resultBytes = encoder.encodeSync(MetadataV1Body(
+                title: _currentTitle,
+                artist: _currentArtist,
+                album: _currentAlbum,
+                year: _currentYear,
+                comment: _currentComment,
+                track: int.parse(_currentTrack),
+                genre: int.parse(_currentGenre),
+              ));
+
+              _exportFile(context, Uint8List.fromList(resultBytes),
+                  _currentSoundFile!.name!);
+
+              setState(() {
+                _ID3TagList =
+                    decodeID3MetaData(Uint8List.fromList(resultBytes));
+              });
+            })
+      ],
+    );
+  }
+
+  Widget _widgetOutputV23() {
+    return Column();
+  }
+
+  Widget _widgetOutputV24() {
+    return Column();
+  }
+
   Widget _buildOutput() {
     if (!_soundFileLoaded) {
       return Container();
+    }
+
+    switch (_ID3TagDataSet.version) {
+      case null:
+      case ID3_VERSION.NULL:
+        return Container();
+      case ID3_VERSION.V10:
+      case ID3_VERSION.V11:
+        return _widgetOutputV1();
+      case ID3_VERSION.V23:
+        return _widgetOutputV23();
+      case ID3_VERSION.V24:
+        return _widgetOutputV24();
     }
 
     return GCWDefaultOutput(
@@ -149,21 +325,6 @@ class _ID3TagState extends State<ID3Tag> {
         ));
   }
 
-  Widget _buildWidgetInputMetaData() {
-    if (_soundFileLoaded) {
-      return Column(
-        children: [
-          _buildWidgetInputStandardTags(),
-          _buildWidgetInputUserDefines(),
-          _buildWidgetOpenImageFile(),
-          _buildWidgetWriteMetaData(),
-        ],
-      );
-    } else {
-      return Container();
-    }
-  }
-
   Widget _buildWidgetOpenImageFile() {
     return GCWOpenFile(
       title: i18n(context, 'metadata_imagefile'),
@@ -182,152 +343,36 @@ class _ID3TagState extends State<ID3Tag> {
     );
   }
 
-  Widget _buildWidgetWriteMetaData() {
-    List<int> resultBytes = [];
-    return GCWButton(
-        text: i18n(context, 'metadata_write'),
-        onPressed: () {
-          final encoder = ID3Encoder(_currentSoundFile?.bytes as List<int>);
-          switch (_versionID3) {
-            case ID3_VERSION.NULL: break;
-            case ID3_VERSION.V10:
-            case ID3_VERSION.V11:
-              resultBytes = encoder.encodeSync(MetadataV1Body(
-                title: _currentTitle,
-                artist: _currentArtist,
-                album: _currentAlbum,
-                year: _currentYear,
-                comment: _currentComment,
-                track: _currentTrack,
-                genre: _currentGenre,
-              ));
-              break;
-            case ID3_VERSION.V23:
-              resultBytes = encoder.encodeSync(MetadataV2p3Body(
-                title: _currentTitle,
-                imageBytes: _imageFileLoaded ? _currentImageFile?.bytes : null,
-                artist: _currentArtist,
-                userDefines: {"GCWIZARD": '3.3.1', "userId": "tmz"},
-                album: _currentAlbum,
-              ));
-              break;
-            case ID3_VERSION.V24:
-              resultBytes = encoder.encodeSync(MetadataV2p4Body(
-                title: _currentTitle,
-                imageBytes: _imageFileLoaded ? _currentImageFile?.bytes : null,
-                artist: _currentArtist,
-                userDefines: {"GCWIZARD": '3.3.1', "userId": "tmz"},
-                album: _currentAlbum,
-              ));
-              break;
-          }
-          _exportFile(context, Uint8List.fromList(resultBytes), _currentSoundFile!.name!);
-
-          setState(() {
-            _ID3TagList = decodeID3MetaData(Uint8List.fromList(resultBytes));
-          });
-        });
-  }
-
-  Widget _buildWidgetOpenSoundFile(){
+  Widget _buildWidgetOpenSoundFile() {
     return GCWOpenFile(
       title: i18n(context, 'metadata_soundfile'),
       supportedFileTypes: SUPPORTED_SOUND_TYPES,
       suppressGallery: true,
       onLoaded: (_file) {
         if (_file == null) {
-          showSnackBar(i18n(context, 'common_loadfile_exception_notloaded'),
-              context);
+          showSnackBar(
+              i18n(context, 'common_loadfile_exception_notloaded'), context);
           return;
         }
         _soundFileLoaded = true;
         _currentSoundFile = _file;
 
         _ID3TagList = decodeID3MetaData(_currentSoundFile!.bytes);
+        _ID3TagDataSet = ID3MetaInfoToDataSet(_currentSoundFile!.bytes);
 
         setState(() {});
       },
     );
   }
 
-  Widget _buildWidgetModeSwitchReadWrite(){
-    return GCWTwoOptionsSwitch(
-      leftValue: i18n(context, 'metadata_read'),
-      rightValue: i18n(context, 'metadata_write'),
-      value: _currentMode,
-      onChanged: (value) {
-        setState(() {
-          _currentMode = value;
-        });
-      },
-    );
-  }
-
-  Widget _buildWidgetInputStandardTags(){
-    return Column(
-      children: [
-        GCWTextField(
-          hintText: i18n(context, 'metadata_artist'),
-          labelText: i18n(context, 'metadata_artist'),
-          controller: _artistController,
-          onChanged: (text) {
-            setState(() {
-              _currentArtist = text;
-            });
-          },
-        ),
-        GCWTextField(
-          hintText: i18n(context, 'metadata_album'),
-          labelText: i18n(context, 'metadata_album'),
-          controller: _albumController,
-          onChanged: (text) {
-            setState(() {
-              _currentAlbum = text;
-            });
-          },
-        ),
-        GCWTextField(
-          hintText: i18n(context, 'metadata_title'),
-          labelText: i18n(context, 'metadata_title'),
-          controller: _titleController,
-          onChanged: (text) {
-            setState(() {
-              _currentTitle = text;
-            });
-          },
-        ),
-        GCWTextField(
-          hintText: i18n(context, 'metadata_comment'),
-          labelText: i18n(context, 'metadata_comment'),
-          controller: _commentController,
-          onChanged: (text) {
-            setState(() {
-              _currentComment = text;
-            });
-          },
-        ),
-        GCWTextField(
-          hintText: i18n(context, 'metadata_year'),
-          labelText: i18n(context, 'metadata_year'),
-          controller: _yearController,
-          onChanged: (text) {
-            setState(() {
-              _currentYear = text;
-            });
-          },
-        ),
-      ],
-    );
-  }
-
-  Widget _buildWidgetInputUserDefines(){
-    return Container();
-  }
-
-  Future<void> _exportFile(BuildContext context, Uint8List data, String filename) async {
+  Future<void> _exportFile(
+      BuildContext context, Uint8List data, String filename) async {
     await saveByteDataToFile(context, data, filename).then((value) {
-      if (value) showExportedFileDialog(context, );
+      if (value) {
+        showExportedFileDialog(
+          context,
+        );
+      }
     });
   }
-
 }

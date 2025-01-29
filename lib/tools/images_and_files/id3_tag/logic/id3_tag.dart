@@ -9,6 +9,10 @@ part 'package:gc_wizard/tools/images_and_files/id3_tag/logic/id3_tag_data.dart';
 enum ID3_VERSION { NULL, V10, V11, V23, V24 }
 
 ID3TagData ID3MetaInfoToDataSet(Uint8List bytes) {
+  ID3v1Tag ID3v1data = EMPTY_ID3V1TAG;
+  ID3v23Tag ID3v23data = EMPTY_ID3V23TAG;
+  ID3v24Tag ID3v24data = EMPTY_ID3V24TAG;
+
   final decoder = ID3Decoder(bytes);
   final metadata = decoder.decodeSync();
 
@@ -29,8 +33,12 @@ ID3TagData ID3MetaInfoToDataSet(Uint8List bytes) {
   }
 
   switch (version) {
-    case ID3_VERSION.V10: break;
-    case ID3_VERSION.V11: break;
+    case ID3_VERSION.V10:
+    case ID3_VERSION.V11:
+        dataJSON.forEach((key, value) {
+          ID3v1data.tags[key] = value.toString();
+        });
+        break;
     case ID3_VERSION.V23: break;
     case ID3_VERSION.V24: break;
     default: break;
@@ -38,10 +46,9 @@ ID3TagData ID3MetaInfoToDataSet(Uint8List bytes) {
 
   return ID3TagData(
       version: version,
-      ID3v10data: null,
-      ID3v11data: null,
-      ID3v23data: null,
-      ID3v24data: null);
+      ID3v1data: ID3v1data,
+      ID3v23data: ID3v23data,
+      ID3v24data: ID3v24data);
 }
 
 ID3TagList decodeID3MetaData(Uint8List bytes) {
