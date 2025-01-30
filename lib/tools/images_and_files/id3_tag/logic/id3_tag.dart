@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:gc_wizard/utils/collection_utils.dart';
 import 'package:id3_codec/id3_codec.dart';
 
 part 'package:gc_wizard/tools/images_and_files/id3_tag/logic/id3_tag_classes.dart';
@@ -63,9 +64,6 @@ ID3TagList decodeID3MetaData(Uint8List bytes) {
   for (var data in metadata) {
     Map<String, dynamic> dataJSON = data.toTagMap();
     dataJSON.forEach((key, value) {
-      print(key.toString() + ' ' + value.toString());
-      print(
-          '------------------------------------------------------------------');
       switch (key) {
         case "Version":
           break;

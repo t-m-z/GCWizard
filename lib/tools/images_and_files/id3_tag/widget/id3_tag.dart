@@ -5,15 +5,18 @@ import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
 import 'package:gc_wizard/common_widgets/dialogs/gcw_exported_file_dialog.dart';
+import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/common_widgets/gcw_expandable.dart';
 import 'package:gc_wizard/common_widgets/image_viewers/gcw_imageview.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
+import 'package:gc_wizard/common_widgets/textfields/gcw_integer_textfield.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/base/_common/logic/base.dart';
 import 'package:gc_wizard/tools/images_and_files/id3_tag/logic/id3_tag.dart';
 import 'package:gc_wizard/common_widgets/gcw_openfile.dart';
 import 'package:gc_wizard/common_widgets/gcw_snackbar.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
+import 'package:gc_wizard/utils/complex_return_types.dart';
 import 'package:gc_wizard/utils/file_utils/gcw_file.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/file_widget_utils.dart';
 
@@ -36,21 +39,21 @@ class _ID3TagState extends State<ID3Tag> {
   String _currentAlbum = '';
   String _currentYear = '';
   String _currentComment = '';
-  String _currentTrack = '0';
-  String _currentGenre = '0';
+  IntegerText _currentTrack = IntegerText('0', 0);
+  int _currentGenre = 0;
 
   late TextEditingController _artistController;
   late TextEditingController _albumController;
   late TextEditingController _titleController;
   late TextEditingController _commentController;
   late TextEditingController _yearController;
+  late TextEditingController _trackController;
 
   ID3TagList _ID3TagList = EMPTY_ID3TAGLIST;
 
   ID3TagData _ID3TagDataSet = EMPTY_ID3TAGDATASET;
 
   bool _soundFileLoaded = false;
-  bool _imageFileLoaded = false;
 
   @override
   initState() {
@@ -61,6 +64,7 @@ class _ID3TagState extends State<ID3Tag> {
     _titleController = TextEditingController(text: _currentTitle);
     _commentController = TextEditingController(text: _currentComment);
     _yearController = TextEditingController(text: _currentYear);
+    _trackController = TextEditingController(text: _currentTrack.text);
   }
 
   @override
@@ -70,6 +74,7 @@ class _ID3TagState extends State<ID3Tag> {
     _titleController.dispose();
     _commentController.dispose();
     _yearController.dispose();
+    _trackController.dispose();
 
     super.dispose();
   }
@@ -81,10 +86,6 @@ class _ID3TagState extends State<ID3Tag> {
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
         _buildWidgetOpenSoundFile(),
-        //_buildWidgetModeSwitchReadWrite(),
-        //(_currentMode == GCWSwitchPosition.right)
-        //    ? _buildWidgetInputMetaData()
-        //    : Container(),
         _buildOutput()
       ],
     );
@@ -97,18 +98,20 @@ class _ID3TagState extends State<ID3Tag> {
     _currentTitle = _ID3TagDataSet.ID3v1data.tags['Title']!;
     _currentYear = _ID3TagDataSet.ID3v1data.tags['Year']!;
     _currentComment = _ID3TagDataSet.ID3v1data.tags['Comment']!;
-    _currentGenre = _ID3TagDataSet.ID3v1data.tags['Genre']!;
-    _currentTrack = _ID3TagDataSet.ID3v1data.tags['Track']!;
+    _currentGenre = GENRE[_ID3TagDataSet.ID3v1data.tags['Genre']!]!;
+    _currentTrack = IntegerText(_ID3TagDataSet.ID3v1data.tags['Track']!, int.parse(_ID3TagDataSet.ID3v1data.tags['Track']!));
     return Column(
       children: [
         Row(// Artist
           children: [
             Expanded(child: Container(
-              padding: EdgeInsets.only(right: DEFAULT_MARGIN),
+              padding: const EdgeInsets.only(right: DEFAULT_MARGIN),
               child: Text(i18n(context, 'metadata_artist'))
             )),
-            Expanded(child: Container(
-              padding: EdgeInsets.only(left: DEFAULT_MARGIN),
+            Expanded(
+                flex: 3,
+                child: Container(
+              padding: const EdgeInsets.only(left: DEFAULT_MARGIN),
               child: GCWTextField(
                 controller: _artistController,
                 onChanged: (text) {
@@ -123,11 +126,13 @@ class _ID3TagState extends State<ID3Tag> {
         Row(// Artist
           children: [
             Expanded(child: Container(
-                padding: EdgeInsets.only(right: DEFAULT_MARGIN),
+                padding: const EdgeInsets.only(right: DEFAULT_MARGIN),
                 child: Text(i18n(context, 'metadata_title'))
             )),
-            Expanded(child: Container(
-              padding: EdgeInsets.only(left: DEFAULT_MARGIN),
+            Expanded(
+                flex: 3,
+                child: Container(
+              padding: const EdgeInsets.only(left: DEFAULT_MARGIN),
               child: GCWTextField(
                 controller: _titleController,
                 onChanged: (text) {
@@ -142,11 +147,13 @@ class _ID3TagState extends State<ID3Tag> {
         Row(// Artist
           children: [
             Expanded(child: Container(
-                padding: EdgeInsets.only(right: DEFAULT_MARGIN),
+                padding: const EdgeInsets.only(right: DEFAULT_MARGIN),
                 child: Text(i18n(context, 'metadata_album'))
             )),
-            Expanded(child: Container(
-              padding: EdgeInsets.only(left: DEFAULT_MARGIN),
+            Expanded(
+                flex: 3,
+                child: Container(
+              padding: const EdgeInsets.only(left: DEFAULT_MARGIN),
               child: GCWTextField(
                 controller: _albumController,
                 onChanged: (text) {
@@ -161,11 +168,13 @@ class _ID3TagState extends State<ID3Tag> {
         Row(// Artist
           children: [
             Expanded(child: Container(
-                padding: EdgeInsets.only(right: DEFAULT_MARGIN),
+                padding: const EdgeInsets.only(right: DEFAULT_MARGIN),
                 child: Text(i18n(context, 'metadata_comment'))
             )),
-            Expanded(child: Container(
-              padding: EdgeInsets.only(left: DEFAULT_MARGIN),
+            Expanded(
+                flex: 3,
+                child: Container(
+              padding: const EdgeInsets.only(left: DEFAULT_MARGIN),
               child: GCWTextField(
                 controller: _commentController,
                 onChanged: (text) {
@@ -180,11 +189,13 @@ class _ID3TagState extends State<ID3Tag> {
         Row(// Artist
           children: [
             Expanded(child: Container(
-                padding: EdgeInsets.only(right: DEFAULT_MARGIN),
+                padding: const EdgeInsets.only(right: DEFAULT_MARGIN),
                 child: Text(i18n(context, 'metadata_year'))
             )),
-            Expanded(child: Container(
-              padding: EdgeInsets.only(left: DEFAULT_MARGIN),
+            Expanded(
+                flex: 3,
+                child: Container(
+              padding: const EdgeInsets.only(left: DEFAULT_MARGIN),
               child: GCWTextField(
                 controller: _yearController,
                 onChanged: (text) {
@@ -199,24 +210,50 @@ class _ID3TagState extends State<ID3Tag> {
         Row(// Artist
           children: [
             Expanded(child: Container(
-                padding: EdgeInsets.only(right: DEFAULT_MARGIN),
+                padding: const EdgeInsets.only(right: DEFAULT_MARGIN),
                 child: Text(i18n(context, 'metadata_genre'))
             )),
-            Expanded(child: Container(
-              padding: EdgeInsets.only(left: DEFAULT_MARGIN),
-              child: Container(),
+            Expanded(
+                flex: 3,
+                child: Container(
+              padding: const EdgeInsets.only(left: DEFAULT_MARGIN),
+              child: GCWDropDown<int>(
+                value: _currentGenre,
+                onChanged: (value) {
+                  setState(() {
+                    _currentGenre = value;
+                  });
+                },
+                items: genreList.entries.map((set) {
+                  return GCWDropDownMenuItem(
+                    value: set.key,
+                    child: set.value,
+                  );
+                }).toList(),
+              ),
             )),
           ],
         ),  // Genre
         Row(// Artist
           children: [
             Expanded(child: Container(
-                padding: EdgeInsets.only(right: DEFAULT_MARGIN),
+                padding: const EdgeInsets.only(right: DEFAULT_MARGIN),
                 child: Text(i18n(context, 'metadata_track'))
             )),
-            Expanded(child: Container(
-              padding: EdgeInsets.only(left: DEFAULT_MARGIN),
-              child: Container(),
+            Expanded(
+                flex: 3,
+                child: Container(
+              padding: const EdgeInsets.only(left: DEFAULT_MARGIN),
+              child: GCWIntegerTextField(
+                min: 0,
+                max: 255,
+                controller: _trackController,
+                onChanged: (text) {
+                  setState(() {
+                    _currentTrack = text;
+                  });
+                },
+              ),
             )),
           ],
         ),  // Track
@@ -231,8 +268,8 @@ class _ID3TagState extends State<ID3Tag> {
                 album: _currentAlbum,
                 year: _currentYear,
                 comment: _currentComment,
-                track: int.parse(_currentTrack),
-                genre: int.parse(_currentGenre),
+                track: _currentTrack.value,
+                genre: GENRE[_currentGenre],
               ));
 
               _exportFile(context, Uint8List.fromList(resultBytes),
@@ -261,7 +298,6 @@ class _ID3TagState extends State<ID3Tag> {
     }
 
     switch (_ID3TagDataSet.version) {
-      case null:
       case ID3_VERSION.NULL:
         return Container();
       case ID3_VERSION.V10:
@@ -337,7 +373,6 @@ class _ID3TagState extends State<ID3Tag> {
           return;
         }
         _currentImageFile = _imageFile;
-        _imageFileLoaded = true;
         setState(() {});
       },
     );
