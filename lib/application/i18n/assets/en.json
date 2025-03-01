@@ -4752,6 +4752,8 @@
   "segmentdisplay_selection_example": "2 → abdeg",
   "segmentdisplay_7segments_title": "7 Segment Display",
   "segmentdisplay_7segments_example": "2 → abdeg",
+  "segmentdisplay_9segments_title": "9 Segment Display",
+  "segmentdisplay_9segments_example": "2 → abeih",
   "segmentdisplay_14segments_title": "14 Segment Display",
   "segmentdisplay_14segments_example": "2 → abdeg1g2",
   "segmentdisplay_16segments_title": "16 Segment Display",

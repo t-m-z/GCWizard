@@ -7,11 +7,13 @@ import 'package:utility/utility.dart';
 
 enum SegmentDisplayType {
   SEVEN,
+  NINE,
   FOURTEEN,
   SIXTEEN,
   CUSTOM,
   SEVENAUTO,
   SEVEN12345678,
+  NINE123456789,
   FOURTEENAUTO,
   FOURTEEN_HIJ_G1G2_MLK,
   FOURTEEN_PGH_NJ_MLK,
@@ -41,6 +43,7 @@ const Variants16Segment = {
 };
 
 const _baseSegments7Segment = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'dp'];
+const _baseSegments9Segment = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'];
 const _baseSegments14Segment = ['a', 'b', 'c', 'd', 'e', 'f', 'g1', 'g2', 'h', 'i', 'j', 'k', 'l', 'm', 'dp'];
 const _baseSegments16Segment = [
   'a1',
@@ -64,6 +67,8 @@ const _baseSegments16Segment = [
 
 //variants
 const _7SegmentTo12345678 = {'1': 'a', '2': 'b', '3': 'c', '4': 'd', '5': 'e', '6': 'f', '7': 'g', '8': 'dp'};
+
+const _9SegmentTo123456789 = {'1': 'a', '2': 'b', '3': 'c', '4': 'd', '5': 'e', '6': 'f', '7': 'g', '8': 'h', '9':'i'};
 
 const _14SegmentTo_hij_g1g2_mlk = {
   'a': 'a',
@@ -191,6 +196,11 @@ const _16SegmentTo_kmn_up_tsr = {
 final _7SegmentVariants = {
   SegmentDisplayType.SEVEN: _createBaseVariant(_baseSegments7Segment),
   SegmentDisplayType.SEVEN12345678: _7SegmentTo12345678
+};
+
+final _9SegmentVariants = {
+  SegmentDisplayType.NINE: _createBaseVariant(_baseSegments9Segment),
+  SegmentDisplayType.NINE123456789: _9SegmentTo123456789
 };
 
 final _14SegmentVariants = {
@@ -851,11 +861,17 @@ SegmentsText decodeSegment(String input, SegmentDisplayType segmentType) {
     case SegmentDisplayType.SEVEN:
       baseSegments = _createBaseVariant(_baseSegments7Segment);
       break;
+    case SegmentDisplayType.NINE:
+      baseSegments = _createBaseVariant(_baseSegments9Segment);
+      break;
     case SegmentDisplayType.SEVENAUTO:
       baseSegments = _detectVariant(input, _7SegmentVariants.values);
       break;
     case SegmentDisplayType.SEVEN12345678:
       baseSegments = _7SegmentVariants[SegmentDisplayType.SEVEN12345678]!;
+      break;
+    case SegmentDisplayType.NINE123456789:
+      baseSegments = _9SegmentVariants[SegmentDisplayType.NINE123456789]!;
       break;
     case SegmentDisplayType.FOURTEEN:
       baseSegments = _createBaseVariant(_baseSegments14Segment);

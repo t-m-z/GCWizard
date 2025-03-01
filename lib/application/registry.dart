@@ -462,6 +462,7 @@ import 'package:gc_wizard/tools/science_and_technology/resistor/resistor_eia96/w
 import 'package:gc_wizard/tools/science_and_technology/segment_display/14_segment_display/widget/fourteen_segments.dart';
 import 'package:gc_wizard/tools/science_and_technology/segment_display/16_segment_display/widget/sixteen_segments.dart';
 import 'package:gc_wizard/tools/science_and_technology/segment_display/7_segment_display/widget/seven_segments.dart';
+import 'package:gc_wizard/tools/science_and_technology/segment_display/9_segment_display/widget/nine_segments.dart';
 import 'package:gc_wizard/tools/science_and_technology/sort/widget/sort.dart';
 import 'package:gc_wizard/tools/science_and_technology/spelling_alphabets/spelling_alphabets_crypt/widget/spelling_alphabets_crypt.dart';
 import 'package:gc_wizard/tools/science_and_technology/spelling_alphabets/spelling_alphabets_list/widget/spelling_alphabets_list.dart';
@@ -6075,6 +6076,16 @@ void initializeRegistry(BuildContext context) {
         searchKeys: const [
           'segments',
           'segments_seven',
+        ],
+        licenses: const []),
+    GCWTool(
+        tool: const NineSegments(),
+        id: 'segmentdisplay_9segments',
+        iconPath:
+        'lib/tools/science_and_technology/segment_display/9_segment_display/assets/icon_9segment_display.png',
+        searchKeys: const [
+          'segments',
+          'segments_nine',
         ],
         licenses: const []),
     GCWTool(
