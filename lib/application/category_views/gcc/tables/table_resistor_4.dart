@@ -3,7 +3,7 @@ import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 
 class GCCTableResistor4 extends StatefulWidget {
-  const GCCTableResistor4({Key? key}) : super(key: key);
+  const GCCTableResistor4({super.key});
 
   @override
   _GCCTableResistor4State createState() => _GCCTableResistor4State();

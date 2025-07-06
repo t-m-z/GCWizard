@@ -32,7 +32,7 @@ import 'package:gc_wizard/utils/ui_dependent_utils/file_widget_utils.dart';
 import 'package:prefs/prefs.dart';
 
 class OpenAI extends StatefulWidget {
-  const OpenAI({Key? key}) : super(key: key);
+  const OpenAI({super.key});
 
   @override
   _OpenAIState createState() => _OpenAIState();

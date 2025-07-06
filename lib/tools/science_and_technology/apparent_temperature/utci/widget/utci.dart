@@ -27,7 +27,7 @@ import 'package:gc_wizard/utils/complex_return_types.dart';
 import 'package:intl/intl.dart';
 
 class UTCI extends StatefulWidget {
-  const UTCI({Key? key}) : super(key: key);
+  const UTCI({super.key});
 
   @override
   UTCIState createState() => UTCIState();

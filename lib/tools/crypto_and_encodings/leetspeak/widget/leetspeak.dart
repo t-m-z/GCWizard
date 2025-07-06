@@ -6,7 +6,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/leetspeak/logic/leetspeak.d
 
 
 class LeetSpeak extends StatefulWidget {
-  const LeetSpeak({Key? key}) : super(key: key);
+  const LeetSpeak({super.key});
 
   @override
   LeetSpeakState createState() => LeetSpeakState();

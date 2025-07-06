@@ -43,7 +43,7 @@ const String _apiSpecification = '''
 ''';
 
 class RotationWeird extends GCWWebStatefulWidget {
-  RotationWeird({Key? key}) : super(key: key, apiSpecification: _apiSpecification);
+  RotationWeird({super.key}) : super(apiSpecification: _apiSpecification);
 
   @override
   _RotationWeirdState createState() => _RotationWeirdState();

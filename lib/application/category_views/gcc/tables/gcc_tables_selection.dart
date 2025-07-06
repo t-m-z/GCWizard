@@ -12,7 +12,7 @@ import 'package:gc_wizard/application/tools/widget/gcw_toollist.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/common_widget_utils.dart';
 
 class GCCTableSelection extends GCWSelection {
-  const GCCTableSelection({Key? key}) : super(key: key);
+  const GCCTableSelection({super.key});
 
   @override
   Widget build(BuildContext context) {

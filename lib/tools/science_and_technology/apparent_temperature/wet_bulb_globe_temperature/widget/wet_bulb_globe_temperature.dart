@@ -37,7 +37,7 @@ import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:intl/intl.dart';
 
 class WetBulbGlobeTemperature extends StatefulWidget {
-  const WetBulbGlobeTemperature({Key? key}) : super(key: key);
+  const WetBulbGlobeTemperature({super.key});
 
   @override
   WetBulbGlobeTemperatureState createState() => WetBulbGlobeTemperatureState();

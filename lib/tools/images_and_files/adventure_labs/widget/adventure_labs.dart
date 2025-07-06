@@ -26,7 +26,7 @@ import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart';
 
 class AdventureLabs extends StatefulWidget {
-  const AdventureLabs({Key? key}) : super(key: key);
+  const AdventureLabs({super.key});
 
   @override
   AdventureLabsState createState() => AdventureLabsState();

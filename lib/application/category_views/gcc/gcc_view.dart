@@ -71,8 +71,8 @@ import 'package:gc_wizard/utils/ui_dependent_utils/common_widget_utils.dart';
 
 class GCCView extends StatefulWidget {
   const GCCView({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   _GCCViewState createState() => _GCCViewState();
@@ -464,7 +464,7 @@ class _GCCViewState extends State<GCCView> {
                       // Handle icon tap
                       _navigateToSubPage(registeredTools.where((element) {
                         return [
-                          className(const FormulaSolverFormulaGroups()),
+                          className(FormulaSolverFormulaGroups()),
                         ].contains(className(element.tool));
                       }).toList()[0]);
                     },
@@ -1724,7 +1724,7 @@ class _GCCViewState extends State<GCCView> {
                       // Handle icon tap
                       _navigateToSubPage(registeredTools.where((element) {
                         return [
-                          className(const FormulaSolverFormulaGroups()),
+                          className(FormulaSolverFormulaGroups()),
                         ].contains(className(element.tool));
                       }).toList()[0]);
                     },

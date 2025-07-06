@@ -16,7 +16,7 @@ import 'package:gc_wizard/tools/science_and_technology/triangle/logic/triangle.d
 
 
 class Triangle extends StatefulWidget {
-  const Triangle({Key? key}) : super(key: key);
+  const Triangle({super.key});
 
   @override
   TriangleState createState() => TriangleState();

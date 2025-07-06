@@ -1,12 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/category_views/gcc/tables/gcc_symbols_selection.dart';
-import 'package:gc_wizard/application/category_views/gcc/tables/gcc_tables_selection.dart';
-import 'package:gc_wizard/application/category_views/gcc/tables/table_ascii_set.dart';
-import 'package:gc_wizard/application/category_views/gcc/tables/table_morse.dart';
-import 'package:gc_wizard/application/category_views/gcc/tables/table_numeralbases.dart';
-import 'package:gc_wizard/application/category_views/gcc/tables/table_resistor_4.dart';
-import 'package:gc_wizard/application/category_views/gcc/tables/table_resistor_5.dart';
-import 'package:gc_wizard/application/category_views/gcc/tables/table_roman.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/apparent_temperature_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/astronomy_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/babylon_numbers_selection.dart';
@@ -111,7 +103,6 @@ import 'package:gc_wizard/application/main_menu/about.dart';
 import 'package:gc_wizard/application/main_menu/call_for_contribution.dart';
 import 'package:gc_wizard/application/main_menu/changelog.dart';
 import 'package:gc_wizard/application/main_menu/licenses.dart';
-import 'package:gc_wizard/application/main_menu/nightly.dart';
 import 'package:gc_wizard/application/searchstrings/logic/search_strings.dart';
 import 'package:gc_wizard/application/settings/widget/settings_coordinates.dart';
 import 'package:gc_wizard/application/settings/widget/settings_general.dart';
@@ -145,7 +136,6 @@ import 'package:gc_wizard/tools/coords/rhumb_line/widget/rhumbline_waypoint_proj
 import 'package:gc_wizard/tools/coords/segment_bearings/widget/segment_bearings.dart';
 import 'package:gc_wizard/tools/coords/segment_line/widget/segment_line.dart';
 import 'package:gc_wizard/tools/coords/variable_coordinate/widget/variable_coordinate_formulas.dart';
-import 'package:gc_wizard/tools/coords/what3words/widget/w3w.dart';
 import 'package:gc_wizard/tools/coords/waypoint_projection/widget/waypoint_projection_geodetic.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/abaddon/widget/abaddon.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/adfgvx/widget/adfgvx.dart';
@@ -231,7 +221,6 @@ import 'package:gc_wizard/tools/crypto_and_encodings/language_games/duck_speak/w
 import 'package:gc_wizard/tools/crypto_and_encodings/language_games/pig_latin/widget/pig_latin.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/language_games/robber_language/widget/robber_language.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/language_games/spoon_language/widget/spoon_language.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/leetspeak/widget/leetspeak.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/major_system/widget/major_system.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/maya_numbers/widget/maya_numbers.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/mexican_army_cipher_wheel/widget/mexican_army_cipher_wheel.dart';
@@ -264,7 +253,6 @@ import 'package:gc_wizard/tools/crypto_and_encodings/rotation/rot18/widget/rot18
 import 'package:gc_wizard/tools/crypto_and_encodings/rotation/rot47/widget/rot47.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/rotation/rot5/widget/rot5.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/rotation/rotation_general/widget/rotation_general.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/rotation/rotation_weird/widget/rotation_weird.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/rsa/rsa/widget/rsa.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/rsa/rsa_d_calculator/widget/rsa_d_calculator.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/rsa/rsa_d_checker/widget/rsa_d_checker.dart';
@@ -285,7 +273,6 @@ import 'package:gc_wizard/tools/crypto_and_encodings/tomtom/widget/tomtom.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/trifid/widget/trifid.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/trithemius/widget/trithemius.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/universal_product_code/widget/universal_product_code.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/upsidedown/widget/upsidedown.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/vigenere/widget/vigenere.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/wasd/widget/wasd.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/zamonian_numbers/widget/zamonian_numbers.dart';
@@ -296,13 +283,12 @@ import 'package:gc_wizard/tools/games/game_of_life/widget/game_of_life.dart';
 import 'package:gc_wizard/tools/games/logical_supporter/widget/logical_supporter.dart';
 import 'package:gc_wizard/tools/games/nonogram/widget/nonogram_solver.dart';
 import 'package:gc_wizard/tools/games/number_pyramid/widget/number_pyramid_solver.dart';
-import 'package:gc_wizard/tools/games/scrabble/scrabble/widget/scrabble.dart';
-import 'package:gc_wizard/tools/games/scrabble/scrabble_overview/widget/scrabble_overview.dart';
-import 'package:gc_wizard/tools/games/sudoku/sudoku_solver/widget/sudoku_solver.dart';
+import 'package:gc_wizard/tools/games/scrabble/widget/scrabble.dart';
+import 'package:gc_wizard/tools/games/scrabble/widget/scrabble_overview.dart';
+import 'package:gc_wizard/tools/games/sudoku/widget/sudoku_solver.dart';
 import 'package:gc_wizard/tools/games/tower_of_hanoi/widget/tower_of_hanoi.dart';
 import 'package:gc_wizard/tools/games/word_search/widget/word_search.dart';
 import 'package:gc_wizard/tools/general_tools/grid_generator/grid/widget/grid.dart';
-import 'package:gc_wizard/tools/images_and_files/adventure_labs/widget/adventure_labs.dart';
 import 'package:gc_wizard/tools/general_tools/randomizer/widget/randomizer_cards.dart';
 import 'package:gc_wizard/tools/general_tools/randomizer/widget/randomizer_coin.dart';
 import 'package:gc_wizard/tools/general_tools/randomizer/widget/randomizer_color.dart';
@@ -329,8 +315,6 @@ import 'package:gc_wizard/tools/images_and_files/magic_eye_solver/widget/magic_e
 import 'package:gc_wizard/tools/images_and_files/qr_code/widget/qr_code.dart';
 import 'package:gc_wizard/tools/images_and_files/stegano/widget/stegano.dart';
 import 'package:gc_wizard/tools/images_and_files/visual_cryptography/widget/visual_cryptography.dart';
-import 'package:gc_wizard/tools/miscellaneous/openai/widget/openai.dart';
-import 'package:gc_wizard/tools/images_and_files/waveform/widget/waveform.dart';
 import 'package:gc_wizard/tools/general_tools/gcwizardscript/widget/gcwizard_script.dart';
 import 'package:gc_wizard/tools/science_and_technology/alcohol_mass/widget/alcohol_mass.dart';
 import 'package:gc_wizard/tools/science_and_technology/alphabet_number_systems/hebrew/widget/hebrew_number_system.dart';
@@ -351,7 +335,6 @@ import 'package:gc_wizard/tools/science_and_technology/astronomy/seasons/widget/
 import 'package:gc_wizard/tools/science_and_technology/astronomy/shadow_length/widget/shadow_length.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/sun_position/widget/sun_position.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/sun_rise_set/widget/sun_rise_set.dart';
-import 'package:gc_wizard/tools/science_and_technology/ballistics/widget/ballistics.dart';
 import 'package:gc_wizard/tools/science_and_technology/beaufort/widget/beaufort.dart';
 import 'package:gc_wizard/tools/science_and_technology/binary/widget/binary.dart';
 import 'package:gc_wizard/tools/science_and_technology/blood_alcohol_content/widget/blood_alcohol_content.dart';
@@ -496,7 +479,6 @@ import 'package:gc_wizard/tools/science_and_technology/teletypewriter/punchtape/
 import 'package:gc_wizard/tools/science_and_technology/teletypewriter/tts/widget/tts.dart';
 import 'package:gc_wizard/tools/science_and_technology/teletypewriter/z22/widget/z22.dart';
 import 'package:gc_wizard/tools/science_and_technology/teletypewriter/zc1/widget/zc1.dart';
-import 'package:gc_wizard/tools/science_and_technology/triangle/widget/triangle.dart';
 import 'package:gc_wizard/tools/science_and_technology/ufi/widget/ufi.dart';
 import 'package:gc_wizard/tools/science_and_technology/uic_wagoncode/widget/uic_wagoncode.dart';
 import 'package:gc_wizard/tools/science_and_technology/uic_wagoncode/widget/uic_wagoncode_countrycodes.dart';
@@ -538,11 +520,6 @@ void initializeRegistry(BuildContext context) {
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: const [
       'adfgvx',
-    ]),
-    GCWTool(tool: const AdventureLabs(), id: 'adventure_labs', categories: const [
-      ToolCategory.IMAGES_AND_FILES
-    ], searchKeys: const [
-      'adventure_labs',
     ]),
     GCWTool(tool: const Affine(), id: 'affine', categories: const [
       ToolCategory.CRYPTOGRAPHY
@@ -639,11 +616,6 @@ void initializeRegistry(BuildContext context) {
         id: 'babylonnumbers_selection',
         categories: const [ToolCategory.CRYPTOGRAPHY],
         searchKeys: const []),
-    GCWTool(tool: const Ballistics(), id: 'ballistics', categories: const [
-      ToolCategory.SCIENCE_AND_TECHNOLOGY
-    ], searchKeys: const [
-      'ballistics',
-    ]),
     GCWTool(
         tool: const BaconSelection(),
         id: 'bacon_selection',
@@ -889,7 +861,7 @@ void initializeRegistry(BuildContext context) {
       ],
       licenses: const [],
     ),
-    GCWTool(tool: const FormulaSolverFormulaGroups(), id: 'formulasolver', searchKeys: const [
+    GCWTool(tool: FormulaSolverFormulaGroups(), id: 'formulasolver', searchKeys: const [
       'formulasolver',
     ], licenses: const []),
     GCWTool(
@@ -945,17 +917,6 @@ void initializeRegistry(BuildContext context) {
           'https://web.archive.org/web/20240718115628/https://creativecommons.org/licenses/by-sa/4.0/deed.de',
           sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Conways_Spiel_des_Lebens&oldid=246560171'),
     ]),
-
-    //GCC Selection **************************************************************************************
-    GCWTool(tool: const GCCTableSelection(), id: 'gcc_tables', searchKeys: const []),
-    GCWTool(tool: const GCCTableASCIISet(), id: 'gcc_tables_ascii', searchKeys: const []),
-    GCWTool(tool: const GCCTableMorse(), id: 'gcc_tables_morse', searchKeys: const []),
-    GCWTool(tool: const GCCTableNumeralBasesNames(), id: 'gcc_tables_numeralbases', searchKeys: const []),
-    GCWTool(tool: const GCCTableResistor4(), id: 'gcc_tables_resistor4', searchKeys: const []),
-    GCWTool(tool: const GCCTableResistor5(), id: 'gcc_tables_resistor5', searchKeys: const []),
-    GCWTool(tool: const GCCTableRoman(), id: 'gcc_tables_roman', searchKeys: const []),
-    GCWTool(tool: const GCCSymbolsSelection(), id: 'gcc_symbols', searchKeys: const []),
-
     GCWTool(tool: const GCCode(), id: 'gccode', categories: const [
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: const [
@@ -1123,21 +1084,7 @@ void initializeRegistry(BuildContext context) {
         id: 'ipcodes',
         categories: const [ToolCategory.SCIENCE_AND_TECHNOLOGY],
         searchKeys: const ['ipcodes']),
-    GCWTool(tool: const Judoon(), id: 'judoon', categories: const [
-      ToolCategory.CRYPTOGRAPHY
-    ], searchKeys: const [
-      'judoon',
-    ], licenses: [
-      ToolLicenseOnlineArticle(
-        context: context,
-        author: 'Whooligan',
-        title: 'Whooligan\'s Judoon Language Translator',
-        customComment: 'This tool is inspired by the site https://whooligan.weebly.com/index.html'
-            'Whooligan is an index of Doctor Who stuff (It is  a fan forum). '
-            'Last updates were about 4 years ago.',
-        sourceUrl: 'https://web.archive.org/web/20230311235731/http://www.judoon.com/judoon-translator.php',
-      )
-    ]),
+
     GCWTool(tool: const Kamasutra(), id: 'kamasutra', categories: const [
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: const [
@@ -1168,11 +1115,6 @@ void initializeRegistry(BuildContext context) {
         id: 'languagegames_selection',
         categories: const [ToolCategory.CRYPTOGRAPHY],
         searchKeys: const []),
-    GCWTool(tool: const LeetSpeak(), id: 'leetspeak', categories: const [
-      ToolCategory.CRYPTOGRAPHY
-    ], searchKeys: const [
-      'leetspeak',
-    ]),
     GCWTool(tool: const LogicalSupporter(), id: 'logicalsupporter', categories: const [
       ToolCategory.GAMES
     ], searchKeys: const [
@@ -1336,22 +1278,6 @@ void initializeRegistry(BuildContext context) {
     ], searchKeys: const [
       'periodictable',
     ]),
-    GCWTool(tool: const PaperFormats(), id: 'paperformat', categories: const [
-      ToolCategory.SCIENCE_AND_TECHNOLOGY
-    ], searchKeys: const [
-      'paperformat',
-    ]),
-
-    GCWTool(tool: const PeriodicTableSelection(), id: 'periodictable_selection', categories: const [
-      ToolCategory.SCIENCE_AND_TECHNOLOGY
-    ], searchKeys: const [
-      'periodictable',
-    ]),
-    GCWTool(tool: const PeriodicTableSelection(), id: 'periodictable_selection', categories: const [
-      ToolCategory.SCIENCE_AND_TECHNOLOGY
-    ], searchKeys: const [
-      'periodictable',
-    ]),
     GCWTool(tool: const PhiSelection(), id: 'phi_selection', categories: const [
       ToolCategory.SCIENCE_AND_TECHNOLOGY
     ], searchKeys: const [
@@ -1468,14 +1394,12 @@ void initializeRegistry(BuildContext context) {
     ], searchKeys: const [
       'ragbaby',
     ], licenses: [
-      ToolLicenseOnlineArticle(
-          context: context,
+      ToolLicenseOnlineArticle(context: context,
           author: 'Lionel',
           title: 'Ragbaby Cipher Young Tyros',
-          year: 2023,
-          month: 02,
-          day: 24,
-          sourceUrl: 'https://web.archive.org/web/20240415085406/https://youngtyros.com/2023/02/19/ragbaby-cipher/')
+          year: 2023, month: 02, day: 24,
+          sourceUrl: 'https://web.archive.org/web/20240415085406/https://youngtyros.com/2023/02/19/ragbaby-cipher/'
+      )
     ]),
     GCWTool(tool: const RailFence(), id: 'railfence', categories: const [
       ToolCategory.CRYPTOGRAPHY
@@ -1698,13 +1622,6 @@ void initializeRegistry(BuildContext context) {
         id: 'tomtom_selection',
         categories: const [ToolCategory.CRYPTOGRAPHY],
         searchKeys: const []),
-
-    GCWTool(tool: const Triangle(), id: 'triangle', categories: const [
-      ToolCategory.SCIENCE_AND_TECHNOLOGY
-    ], searchKeys: const [
-      'triangle',],
-  ),
-
     GCWTool(tool: const TowerOfHanoi(), id: 'tower_of_hanoi', categories: const [
       ToolCategory.GAMES
     ], searchKeys: const [
@@ -1745,16 +1662,6 @@ void initializeRegistry(BuildContext context) {
       'binary',
       'universalproductcode',
     ]),
-    GCWTool(tool: const UnitConverter(), id: 'unitconverter', categories: const [
-      ToolCategory.SCIENCE_AND_TECHNOLOGY
-    ], searchKeys: const [
-      'unitconverter',
-    ]),
-    GCWTool(tool: const UpsideDown(), id: 'upsidedown', categories: const [
-      ToolCategory.CRYPTOGRAPHY
-    ], searchKeys: const [
-      'upsidedown',
-    ]),
     GCWTool(
         tool: const VelocityAcceleration(),
         id: 'velocity_acceleration',
@@ -1782,18 +1689,6 @@ void initializeRegistry(BuildContext context) {
     ], searchKeys: const [
       'wasd',
     ]),
-    GCWTool(tool: const WaveForm(), id: 'waveform', isBeta: true, categories: const [
-      ToolCategory.IMAGES_AND_FILES
-    ], searchKeys: const [
-      'waveform',
-    ],
-        licenses: [ToolLicensePortedCode(
-            context: context,
-            author: 'Anton, Timur',
-            title: 'Planet calc - Audio file waveform',
-            sourceUrl:
-            'https://web.archive.org/web/20240902215729/https://planetcalc.com/8627/',
-            licenseType: ToolLicenseType.CCBYSA3)]),
     GCWTool(
         tool: const WherigoSelection(),
         id: 'wherigourwigo_selection',
@@ -1967,44 +1862,6 @@ void initializeRegistry(BuildContext context) {
     GCWTool(tool: const EasterSelection(), id: 'astronomy_easter_selection', searchKeys: const [
       'easter_date',
     ]),
-    GCWTool(tool: const SunRiseSet(), id: 'astronomy_sunriseset', searchKeys: const [
-      'astronomy',
-      'astronomy_riseset',
-      'astronomy_sun',
-      'astronomy_sunriseset',
-    ]),
-    GCWTool(tool: const SunPosition(), id: 'astronomy_sunposition', searchKeys: const [
-      'astronomy',
-      'astronomy_position',
-      'astronomy_sun',
-    ], licenses: [
-      stl._toolLicensePracticalAstronomy,
-      stl._toolLicenseAstronomieInfo,
-      stl._toolLicenseNASADeltaT,
-    ]),
-    GCWTool(tool: const MoonRiseSet(), id: 'astronomy_moonriseset', searchKeys: const [
-      'astronomy',
-      'astronomy_riseset',
-      'astronomy_moon',
-    ], licenses: [
-      stl._toolLicensePracticalAstronomy,
-      stl._toolLicenseAstronomieInfo,
-      stl._toolLicenseNASADeltaT,
-    ]),
-    GCWTool(tool: const MoonPosition(), id: 'astronomy_moonposition', searchKeys: const [
-      'astronomy',
-      'astronomy_position',
-      'astronomy_moon',
-      'astronomy_moonposition',
-    ], licenses: [
-      stl._toolLicensePracticalAstronomy,
-      stl._toolLicenseAstronomieInfo,
-      stl._toolLicenseNASADeltaT,
-    ]),
-    GCWTool(tool: const EasterSelection(), id: 'astronomy_easter_selection', searchKeys: const [
-      'easter_date',
-    ]),
-
     GCWTool(tool: const Seasons(), id: 'astronomy_seasons', searchKeys: const [
       'astronomy',
       'astronomy_seasons',
@@ -2672,18 +2529,6 @@ void initializeRegistry(BuildContext context) {
       ],
     ),
     GCWTool(
-        tool: const FormatConverterW3W(),
-        id: 'coords_formatconverter_w3w',
-        iconPath: 'lib/tools/coords/_common/assets/icons/icon_w3w.png',
-        categories: const [
-          ToolCategory.COORDINATES
-        ],
-        searchKeys: const [
-          'coordinates',
-          'coordinates_formatconverter',
-          'coordinates_w3w',
-        ]),
-    GCWTool(
         tool: MapView(),
         autoScroll: false,
         suppressToolMargin: true,
@@ -2865,7 +2710,6 @@ void initializeRegistry(BuildContext context) {
           'coordinates_crossbearing',
         ],
         licenses: const []),
-
     GCWTool(
         tool: const IntersectBearings(),
         id: 'coords_intersectbearings',
@@ -3466,13 +3310,11 @@ void initializeRegistry(BuildContext context) {
         id: 'hashes_overview',
         searchKeys: const ['hashes', 'hashes_overview'],
         licenses: [stl._toolLicensePointyCastle]),
-
     GCWTool(
         tool: const HashIdentification(),
         id: 'hashes_identification',
         searchKeys: const ['hashes', 'hashes_identification'],
         licenses: [stl._toolLicensePointyCastle]),
-
     GCWTool(tool: const SHA1(), id: 'hashes_sha1', searchKeys: const [
       'hashes',
       'hashes_sha1',
@@ -3892,9 +3734,6 @@ void initializeRegistry(BuildContext context) {
     GCWTool(tool: const SaveRestoreSettings(), id: 'settings_saverestore', searchKeys: const []),
     GCWTool(tool: const Changelog(), id: 'mainmenu_changelog', suppressHelpButton: true, searchKeys: const [
       'changelog',
-    ]),
-    GCWTool(tool: const Nightly(), id: 'mainmenu_nightly', suppressHelpButton: true, searchKeys: const [
-      'nightly',
     ]),
     GCWTool(tool: const About(), id: 'mainmenu_about', suppressHelpButton: true, searchKeys: const [
       'about',
@@ -4943,13 +4782,6 @@ void initializeRegistry(BuildContext context) {
       'rot',
       'rotx'
     ]),
-    GCWTool(tool: RotationWeird(), id: 'rotation_weird', searchKeys: const [
-      'rotation',
-    ], deeplinkAlias: const [
-      'rotationweird',
-      'rotweird',
-      'rot?'
-    ]),
 
     // RSA *******************************************************************************************************
     GCWTool(tool: const RSA(), id: 'rsa_rsa', searchKeys: const [
@@ -5043,12 +4875,6 @@ void initializeRegistry(BuildContext context) {
           year: 1991,
           customComment: 'Page 296ff',
           sourceUrl: 'https://archive.org/details/artofcelegantpro0000schi/mode/2up'),
-    ]),
-
-    GCWTool(tool: const OpenAI(), id: 'openai', isBeta: true, categories: const [
-      ToolCategory.MISCELLANEOUS
-    ], searchKeys: const [
-      'openai',
     ]),
 
     //Segments Display *******************************************************************************************
@@ -5169,7 +4995,6 @@ void initializeRegistry(BuildContext context) {
     ]),
 
     //Symbol Tables **********************************************************************************************
-
     // https://docs.google.com/spreadsheets/d/1yPCPTHXHWqRxkAQFCAktz9E1-dGCiQRHmwwh06h9kWs/edit?gid=0#gid=0
     // TODO get/search/request license and add license information
     // TODO keep google sheet up to date
@@ -5391,7 +5216,6 @@ void initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'babylonian_numerals', symbolSearchStrings: const [
       'babylonian_numerals',
     ], licenses: [
-      stl._toolLicenseGeocachingToolbox,
       ToolLicenseOnlineArticle(
           context: context,
           author: 'en.wikipedia.org and contributors',
@@ -5678,15 +5502,6 @@ void initializeRegistry(BuildContext context) {
           title: 'Chinese numerals',
           sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Chinese_numerals&oldid=1233670341',
           licenseType: ToolLicenseType.CCBYSA4)
-    ]),
-    GCWSymbolTableTool(symbolKey: 'chinese_numerals', symbolSearchStrings: const [
-      'symbol_chinese_numerals',
-    ], licenses: [
-      ToolLicenseOnlineArticle(
-          context: context,
-          author: 'en.wikipedia.org and contributors',
-          title: 'Chinese numerals',
-          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Chinese_numerals&oldid=1233670341')
     ]),
     GCWSymbolTableTool(symbolKey: 'christmas', symbolSearchStrings: const [
       'christmas',
@@ -5993,15 +5808,6 @@ void initializeRegistry(BuildContext context) {
           sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Devanagari_numerals&oldid=1220470774',
           licenseType: ToolLicenseType.CCBYSA4)
     ]),
-    GCWSymbolTableTool(symbolKey: 'devanagari_numerals', symbolSearchStrings: const [
-      'symbol_devanagari_numerals',
-    ], licenses: [
-      ToolLicenseOnlineArticle(
-          context: context,
-          author: 'en.wikipedia.org and contributors',
-          title: 'Devanagari numerals',
-          sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Devanagari_numerals&oldid=1220470774')
-    ]),
     GCWSymbolTableTool(symbolKey: 'dinotopia', symbolSearchStrings: const [
       'symbol_dinotopia',
     ], licenses: [
@@ -6081,7 +5887,6 @@ void initializeRegistry(BuildContext context) {
           sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Solresol&oldid=242474951',
           licenseType: ToolLicenseType.CCBYSA4)
     ]),
-
     GCWSymbolTableTool(symbolKey: 'dragon_language', symbolSearchStrings: const [
       'symbol_dragon_language',
     ], licenses: [
@@ -6251,7 +6056,6 @@ void initializeRegistry(BuildContext context) {
           title: 'Die Signalflaggen und Signalbücher deutscher Kriegs- und Handelsmarinen seit 1815',
           sourceUrl: 'https://web.archive.org/web/20240808112049/https://dr-herzfeld.de/signalflaggen/index.htm')
     ]),
-
     GCWSymbolTableTool(symbolKey: 'flags_nato', symbolSearchStrings: const [
       'symbol_flags',
       'symbol_flags_nato',
@@ -6829,7 +6633,6 @@ void initializeRegistry(BuildContext context) {
           sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Baudot_code&oldid=1237256507',
           licenseType: ToolLicenseType.CCBYSA4)
     ]),
-
     GCWSymbolTableTool(symbolKey: 'ita2_1929', symbolSearchStrings: const [
       'ccitt',
       'symbol_murray',
@@ -7351,7 +7154,6 @@ void initializeRegistry(BuildContext context) {
           sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Solresol&oldid=242474951',
           licenseType: ToolLicenseType.CCBYSA4)
     ]),
-
     GCWSymbolTableTool(symbolKey: 'notes_names_altoclef', symbolSearchStrings: const [
       'music',
       'music_notes',
@@ -7364,7 +7166,6 @@ void initializeRegistry(BuildContext context) {
           sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Clef&oldid=1236772573',
           licenseType: ToolLicenseType.CCBYSA4)
     ]),
-
     GCWSymbolTableTool(symbolKey: 'notes_names_bassclef', symbolSearchStrings: const [
       'music',
       'music_notes',
@@ -7377,7 +7178,6 @@ void initializeRegistry(BuildContext context) {
           sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Clef&oldid=1236772573',
           licenseType: ToolLicenseType.CCBYSA4)
     ]),
-
     GCWSymbolTableTool(symbolKey: 'notes_names_trebleclef', symbolSearchStrings: const [
       'music',
       'music_notes',
@@ -7390,7 +7190,6 @@ void initializeRegistry(BuildContext context) {
           sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Clef&oldid=1236772573',
           licenseType: ToolLicenseType.CCBYSA4)
     ]),
-
     GCWSymbolTableTool(symbolKey: 'notes_notevalues', symbolSearchStrings: const [
       'music',
       'music_notes',
@@ -7403,7 +7202,6 @@ void initializeRegistry(BuildContext context) {
           sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Musical_note&oldid=1238867492',
           licenseType: ToolLicenseType.CCBYSA4)
     ]),
-
     GCWSymbolTableTool(symbolKey: 'notes_restvalues', symbolSearchStrings: const [
       'music',
       'music_notes',
@@ -7416,7 +7214,6 @@ void initializeRegistry(BuildContext context) {
           sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Rest_(music)&oldid=1226810233',
           licenseType: ToolLicenseType.CCBYSA4)
     ]),
-
     GCWSymbolTableTool(symbolKey: 'nyctography', symbolSearchStrings: const [
       'symbol_nyctography',
     ], licenses: [
@@ -7462,7 +7259,6 @@ void initializeRegistry(BuildContext context) {
           sourceUrl: 'https://en.wikipedia.org/w/index.php?title=TIA-598-C&oldid=919612867',
           licenseType: ToolLicenseType.CCBYSA4)
     ]),
-
     GCWSymbolTableTool(symbolKey: 'optical_fiber_iec60304', symbolSearchStrings: const [
       'color',
       'symbol_opticalfiber',
@@ -7476,7 +7272,6 @@ void initializeRegistry(BuildContext context) {
         'https://web.archive.org/web/20240808130122/https://www.opternus.de/media/pdf/79/53/b6/LWL-Farbcodes.pdf',
       )
     ]),
-
     GCWSymbolTableTool(symbolKey: 'optical_fiber_swisscom', symbolSearchStrings: const [
       'color',
       'symbol_opticalfiber',
@@ -7977,12 +7772,6 @@ void initializeRegistry(BuildContext context) {
     ], licenses: [
       stl._toolLicenseGeocachingToolbox,
     ]),
-    GCWSymbolTableTool(symbolKey: 'stratego', symbolSearchStrings: const [
-      'symbol_stratego',
-    ]),
-    GCWSymbolTableTool(symbolKey: 'stratego_hierarchy', symbolSearchStrings: const [
-      'symbol_stratego',
-    ]),
     GCWSymbolTableTool(symbolKey: 'suetterlin', symbolSearchStrings: const [
       'symbol_suetterlin',
     ], licenses: [
@@ -8404,7 +8193,6 @@ void initializeRegistry(BuildContext context) {
           licenseType: ToolLicenseType.PUBLIC_DOMAIN,
           licenseUseType: ToolLicenseUseType.COPY)
     ]),
-
     GCWSymbolTableTool(symbolKey: 'webdings', symbolSearchStrings: const [
       'symbol_webdings',
     ], licenses: [
@@ -8458,7 +8246,6 @@ void initializeRegistry(BuildContext context) {
           sourceUrl: 'https://commons.wikimedia.org/w/index.php?title=Wind_speed&oldid=760157124',
           licenseType: ToolLicenseType.PUBLIC_DOMAIN)
     ]),
-
     GCWSymbolTableTool(symbolKey: 'window', symbolSearchStrings: const [
       'window',
     ], licenses: const []),
@@ -8574,7 +8361,6 @@ void initializeRegistry(BuildContext context) {
           sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Zodiac&oldid=1236213028',
           licenseType: ToolLicenseType.CCBYSA4)
     ]),
-
     GCWSymbolTableTool(symbolKey: 'zodiac_z340', symbolSearchStrings: const [
       'symbol_zodiac_z340',
     ], licenses: [
@@ -8740,7 +8526,7 @@ void initializeRegistry(BuildContext context) {
     GCWTool(tool: const SemaphoreTelegraph(), id: 'symboltables_semaphore', searchKeys: const [
       'telegraph',
       'telegraph_semaphore',
-    ], licenses: const []),
+    ]),
     GCWTool(tool: const SteinheilTelegraph(), id: 'telegraph_steinheil', searchKeys: const [
       'telegraph',
       'telegraph_steinheil',

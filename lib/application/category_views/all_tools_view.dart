@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/application/_common/gcw_package_info.dart';
 import 'package:gc_wizard/application/category_views/favorites.dart';
 import 'package:gc_wizard/application/category_views/gcc/gcc_view.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/babylon_numbers_selection.dart';
@@ -51,10 +52,10 @@ import 'package:gc_wizard/application/registry.dart';
 import 'package:gc_wizard/application/searchstrings/logic/search_strings.dart';
 import 'package:gc_wizard/application/settings/logic/preferences.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
-import 'package:gc_wizard/application/webapi/deeplinks/deeplinks.dart';
-import 'package:gc_wizard/common_widgets/dialogs/gcw_dialog.dart';
 import 'package:gc_wizard/application/tools/widget/gcw_tool.dart';
 import 'package:gc_wizard/application/tools/widget/gcw_toollist.dart';
+import 'package:gc_wizard/application/webapi/deeplinks/deeplinks.dart';
+import 'package:gc_wizard/common_widgets/dialogs/gcw_dialog.dart';
 import 'package:gc_wizard/common_widgets/gcw_web_statefulwidget.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/coords/antipodes/widget/antipodes.dart';
@@ -102,6 +103,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/caesar/widget/caesar.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/chao/widget/chao.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/charsets/ascii_values/widget/ascii_values.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/cipher_wheel/widget/cipher_wheel.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/echo/widget/echo.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/enclosed_areas/widget/enclosed_areas.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/enigma/widget/enigma.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_languages/beatnik_language/widget/beatnik_language.dart';
@@ -136,6 +138,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/language_games/judoon/widge
 import 'package:gc_wizard/tools/crypto_and_encodings/language_games/pig_latin/widget/pig_latin.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/language_games/robber_language/widget/robber_language.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/language_games/spoon_language/widget/spoon_language.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/larrabee/widget/larrabee.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/leetspeak/widget/leetspeak.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/major_system/widget/major_system.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/mexican_army_cipher_wheel/widget/mexican_army_cipher_wheel.dart';
@@ -146,8 +149,8 @@ import 'package:gc_wizard/tools/crypto_and_encodings/one_time_pad/widget/one_tim
 import 'package:gc_wizard/tools/crypto_and_encodings/playfair/widget/playfair.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/pokemon/widget/pokemon.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/pollux/widget/pollux.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/porta/widget/porta.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/polybios/widget/polybios.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/porta/widget/porta.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/prime_alphabet/widget/prime_alphabet.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/rabbit/widget/rabbit.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/ragbaby/widget/ragbaby.dart';
@@ -170,6 +173,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/substitution/widget/substit
 import 'package:gc_wizard/tools/crypto_and_encodings/tap_code/widget/tap_code.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/tapir/widget/tapir.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/text_analysis/widget/text_analysis.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/text_analysis/widget/text_analysis_letter_frequencies.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/trifid/widget/trifid.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/trithemius/widget/trithemius.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/universal_product_code/widget/universal_product_code.dart';
@@ -183,11 +187,13 @@ import 'package:gc_wizard/tools/games/catan/widget/catan.dart';
 import 'package:gc_wizard/tools/games/logical_supporter/widget/logical_supporter.dart';
 import 'package:gc_wizard/tools/games/nonogram/widget/nonogram_solver.dart';
 import 'package:gc_wizard/tools/games/number_pyramid/widget/number_pyramid_solver.dart';
-import 'package:gc_wizard/tools/games/sudoku/sudoku_solver/widget/sudoku_solver.dart';
-import 'package:gc_wizard/tools/images_and_files/adventure_labs/widget/adventure_labs.dart';
+import 'package:gc_wizard/tools/games/sudoku/widget/sudoku_solver.dart';
 import 'package:gc_wizard/tools/games/tower_of_hanoi/widget/tower_of_hanoi.dart';
+import 'package:gc_wizard/tools/games/verbal_arithmetic/widget/verbal_arithmetic.dart';
 import 'package:gc_wizard/tools/games/word_search/widget/word_search.dart';
+import 'package:gc_wizard/tools/general_tools/gcwizardscript/widget/gcwizard_script.dart';
 import 'package:gc_wizard/tools/general_tools/randomizer/widget/randomizer_selection.dart';
+import 'package:gc_wizard/tools/images_and_files/adventure_labs/widget/adventure_labs.dart';
 import 'package:gc_wizard/tools/images_and_files/animated_image/widget/animated_image.dart';
 import 'package:gc_wizard/tools/images_and_files/animated_image_morse_code/widget/animated_image_morse_code.dart';
 import 'package:gc_wizard/tools/images_and_files/binary2image/widget/binary2image.dart';
@@ -201,9 +207,10 @@ import 'package:gc_wizard/tools/images_and_files/image_stretch_shrink/widget/ima
 import 'package:gc_wizard/tools/images_and_files/magic_eye_solver/widget/magic_eye_solver.dart';
 import 'package:gc_wizard/tools/images_and_files/qr_code/widget/qr_code.dart';
 import 'package:gc_wizard/tools/images_and_files/stegano/widget/stegano.dart';
+import 'package:gc_wizard/tools/images_and_files/tupper_formula/widget/tupper_formula.dart';
 import 'package:gc_wizard/tools/images_and_files/visual_cryptography/widget/visual_cryptography.dart';
-import 'package:gc_wizard/tools/miscellaneous/openai/widget/openai.dart';
 import 'package:gc_wizard/tools/images_and_files/waveform/widget/waveform.dart';
+import 'package:gc_wizard/tools/miscellaneous/openai/widget/openai.dart';
 import 'package:gc_wizard/tools/general_tools/gcwizardscript/widget/gcwizard_script.dart';
 import 'package:gc_wizard/tools/science_and_technology/alcohol_mass/widget/alcohol_mass.dart';
 import 'package:gc_wizard/tools/science_and_technology/alphabet_number_systems/hebrew/widget/hebrew_number_system.dart';
@@ -224,6 +231,7 @@ import 'package:gc_wizard/tools/science_and_technology/astronomy/sun_position/wi
 import 'package:gc_wizard/tools/science_and_technology/astronomy/sun_rise_set/widget/sun_rise_set.dart';
 import 'package:gc_wizard/tools/science_and_technology/ballistics/widget/ballistics.dart';
 import 'package:gc_wizard/tools/science_and_technology/binary/widget/binary.dart';
+import 'package:gc_wizard/tools/science_and_technology/bingo_calls/widget/bingo_calls.dart';
 import 'package:gc_wizard/tools/science_and_technology/blood_alcohol_content/widget/blood_alcohol_content.dart';
 import 'package:gc_wizard/tools/science_and_technology/colors/color_tool/widget/color_tool.dart';
 import 'package:gc_wizard/tools/science_and_technology/colors/pantone_color_codes/widget/pantone_color_codes.dart';
@@ -248,8 +256,8 @@ import 'package:gc_wizard/tools/science_and_technology/date_and_time/calendar_we
 import 'package:gc_wizard/tools/science_and_technology/date_and_time/day_calculator/widget/day_calculator.dart';
 import 'package:gc_wizard/tools/science_and_technology/date_and_time/day_of_the_year/widget/day_of_the_year.dart';
 import 'package:gc_wizard/tools/science_and_technology/date_and_time/epoch_time/excel_time/widget/excel_time.dart';
-import 'package:gc_wizard/tools/science_and_technology/date_and_time/time_calculator/widget/time_calculator.dart';
 import 'package:gc_wizard/tools/science_and_technology/date_and_time/epoch_time/unix_time/widget/unix_time.dart';
+import 'package:gc_wizard/tools/science_and_technology/date_and_time/time_calculator/widget/time_calculator.dart';
 import 'package:gc_wizard/tools/science_and_technology/date_and_time/weekday/widget/weekday.dart';
 import 'package:gc_wizard/tools/science_and_technology/decabit/widget/decabit.dart';
 import 'package:gc_wizard/tools/science_and_technology/divisor/widget/divisor.dart';
@@ -261,14 +269,19 @@ import 'package:gc_wizard/tools/science_and_technology/gcd/widget/gcd.dart';
 import 'package:gc_wizard/tools/science_and_technology/hexadecimal/widget/hexadecimal.dart';
 import 'package:gc_wizard/tools/science_and_technology/iata_icao_search/widget/iata_icao_search.dart';
 import 'package:gc_wizard/tools/science_and_technology/ieee754/widget/ieee754.dart';
+import 'package:gc_wizard/tools/science_and_technology/ip_address/widget/ip_address.dart';
+import 'package:gc_wizard/tools/science_and_technology/ip_address/widget/ip_address_minimumsubnet.dart';
 import 'package:gc_wizard/tools/science_and_technology/ip_codes/widget/ip_codes.dart';
+import 'package:gc_wizard/tools/science_and_technology/kaprekar/widget/kaprekar.dart';
 import 'package:gc_wizard/tools/science_and_technology/lcm/widget/lcm.dart';
 import 'package:gc_wizard/tools/science_and_technology/mathematical_constants/widget/mathematical_constants.dart';
 import 'package:gc_wizard/tools/science_and_technology/music_notes/music_notes/widget/music_notes.dart';
 import 'package:gc_wizard/tools/science_and_technology/numeral_bases/widget/numeral_bases.dart';
 import 'package:gc_wizard/tools/science_and_technology/paperformat/widget/paperformat.dart';
 import 'package:gc_wizard/tools/science_and_technology/periodic_table/atomic_numbers_to_text/widget/atomic_numbers_to_text.dart';
+import 'package:gc_wizard/tools/science_and_technology/periodic_table/periodic_table/widget/elements_of_geocaching.dart';
 import 'package:gc_wizard/tools/science_and_technology/periodic_table/periodic_table/widget/periodic_table.dart';
+import 'package:gc_wizard/tools/science_and_technology/periodic_table/periodic_table_data_view/widget/elements_of_geocaching_data_view.dart';
 import 'package:gc_wizard/tools/science_and_technology/periodic_table/periodic_table_data_view/widget/periodic_table_data_view.dart';
 import 'package:gc_wizard/tools/science_and_technology/physical_constants/widget/physical_constants.dart';
 import 'package:gc_wizard/tools/science_and_technology/piano/widget/piano.dart';
@@ -317,8 +330,8 @@ import 'package:gc_wizard/utils/ui_dependent_utils/common_widget_utils.dart';
 import 'package:prefs/prefs.dart';
 
 class MainView extends GCWWebStatefulWidget {
-  MainView({Key? key, Map<String, String>? webParameter})
-      : super(key: key, webParameter: webParameter, apiSpecification: null);
+  MainView({super.key, super.webParameter})
+      : super(apiSpecification: null);
 
   @override
   _MainViewState createState() => _MainViewState();
@@ -326,8 +339,9 @@ class MainView extends GCWWebStatefulWidget {
 
 class _MainViewState extends State<MainView> {
   var _isSearching = false;
-  final _searchController = TextEditingController();
+  late TextEditingController _searchController;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
+  final _searchKey = GlobalKey<_MainViewState>();
   var _searchText = '';
   final _SHOW_SUPPORT_HINT_EVERY_N = 50;
 
@@ -335,16 +349,7 @@ class _MainViewState extends State<MainView> {
   void initState() {
     super.initState();
     Prefs.init();
-
-    _searchController.addListener(() {
-      setState(() {
-        if (_searchController.text.isEmpty) {
-          _searchText = '';
-        } else if (_searchText != _searchController.text) {
-          _searchText = _searchController.text;
-        }
-      });
-    });
+    _searchController = TextEditingController(text: _searchText);
 
     _showWhatsNewDialog() {
       const _MAX_ENTRIES = 10;
@@ -392,16 +397,17 @@ class _MainViewState extends State<MainView> {
         return;
       }
 
-      if (countAppOpened > 0 &&
-          (countAppOpened == 10 ||
-              countAppOpened % _SHOW_SUPPORT_HINT_EVERY_N == 0)) {
-        showGCWAlertDialog(
-          context,
-          i18n(context, 'common_support_title'),
-          i18n(context, 'common_support_text',
-              parameters: [Prefs.getInt(PREFERENCE_APP_COUNT_OPENED)]),
-          () => launchUrl(Uri.parse(i18n(context, 'common_support_link'))),
-        );
+      if (countAppOpened > 0 && (countAppOpened == 10 || countAppOpened % _SHOW_SUPPORT_HINT_EVERY_N == 0)) {
+        _checkForGoldVersion().then((value) {
+          if (!value) {
+            showGCWAlertDialog(
+              context,
+              i18n(context, 'common_support_title'),
+              i18n(context, 'common_support_text', parameters: [Prefs.getInt(PREFERENCE_APP_COUNT_OPENED)]),
+                  () => launchUrl(Uri.parse(i18n(context, 'common_support_link'))),
+            );
+          }
+        });
       }
     });
   }
@@ -412,6 +418,11 @@ class _MainViewState extends State<MainView> {
     _searchController.dispose();
 
     super.dispose();
+  }
+
+  Future<bool> _checkForGoldVersion() async {
+    await GCWPackageInfo.init();
+    return GCWPackageInfo.getInstance().appName.toLowerCase().contains('gold');
   }
 
   @override
@@ -486,11 +497,8 @@ class _MainViewState extends State<MainView> {
       icon: Icon(_isSearching ? Icons.close : Icons.search),
       onPressed: () {
         setState(() {
-          if (_isSearching) {
-            _searchController.clear();
-            _searchText = '';
-          }
-
+          _searchController.clear();
+          _searchText = '';
           _isSearching = !_isSearching;
         });
       },
@@ -500,10 +508,16 @@ class _MainViewState extends State<MainView> {
   Widget _buildTitleAndSearchTextField() {
     return _isSearching
         ? GCWTextField(
-            autofocus: true,
+            key: _searchKey,
             controller: _searchController,
+            autofocus: true,
             icon: Icon(Icons.search, color: themeColors().mainFont()),
-            hintText: i18n(context, 'common_search') + '...')
+            hintText: i18n(context, 'common_search') + '...',
+            onChanged: (text) {
+              setState(() {
+                _searchText = text;
+              });
+            })
         : Text(i18n(context, 'common_app_title'));
   }
 
@@ -519,9 +533,7 @@ class _MainViewState extends State<MainView> {
   }
 
   List<GCWTool> _getSearchedList() {
-    var _sanitizedSearchText = removeAccents(_searchText.toLowerCase())
-        .replaceAll(NOT_ALLOWED_SEARCH_CHARACTERS, '');
-
+    String _sanitizedSearchText = removeAccents(_searchText.toLowerCase()).replaceAll(NOT_ALLOWED_SEARCH_CHARACTERS, '');
     if (_sanitizedSearchText.isEmpty) return <GCWTool>[];
 
     Set<String> _queryTexts =
@@ -571,6 +583,7 @@ void _initStaticToolList() {
       className(const Bacon()),
       className(const Ballistics()),
       className(const BaconAnalyze()),
+      className(const Ballistics()),
       className(const BaseSelection()),
       className(const Battleship()),
       className(const BCDSelection()),
@@ -581,6 +594,7 @@ void _initStaticToolList() {
       className(const Bifid()),
       className(const Binary()),
       className(const Binary2Image()),
+      className(const BingoCalls()),
       className(const BloodAlcoholContent()),
       className(const BookCipher()),
       className(const Bowling()),
@@ -637,7 +651,10 @@ void _initStaticToolList() {
       className(const DuckSpeak()),
       className(const EasterSelection()),
       className(const EarwigoTextDeobfuscation()),
+      className(const Echo()),
       className(const EdelcrantzTelegraph()),
+      className(const ElementsOfGeocaching()),
+      className(const ElementsOfGeocachingDataView(atomicNumber: 1)),
       className(const EllipsoidTransform()),
       className(const EnclosedAreas()),
       className(const Enigma()),
@@ -647,7 +664,7 @@ void _initStaticToolList() {
       className(const ESelection()),
       className(const FormatConverter()),
       className(const FormatConverterW3W()),
-      className(const FormulaSolverFormulaGroups()),
+      className(FormulaSolverFormulaGroups()),
       className(const FourteenSegments()),
       className(const Fox()),
       className(const Gade()),
@@ -688,14 +705,18 @@ void _initStaticToolList() {
       className(const Intersection()),
       className(const IntersectThreeCircles()),
       className(const IntersectTwoCircles()),
+      className(const IPAddress()),
+      className(const IPAddressMinimumSubnet()),
       className(const IPCodes()),
       className(const IteratedCrossSumRange()),
       className(const IteratedCrossSumRangeFrequency()),
       className(const Judoon()),
       className(const Kamasutra()),
+      className(const Kaprekar()),
       className(const KarolRobot()),
       className(const Kenny()),
       className(const KeyboardSelection()),
+      className(Larrabee()),
       className(const LCM()),
       className(const LeetSpeak()),
       className(const LogicalSupporter()),
@@ -807,10 +828,12 @@ void _initStaticToolList() {
       className(const TeletypewriterSelection()),
       className(const TeletypewriterPunchTape()),
       className(const TextAnalysis()),
+      className(const TextAnalysisLetterFrequencies()),
       className(const TimeCalculator()),
       className(const TomTomSelection()),
       className(const Triangle()),
       className(const TowerOfHanoi()),
+      className(const TupperFormula()),
       className(const Trifid()),
       className(const Trithemius()),
       className(const TTS()),
@@ -825,6 +848,7 @@ void _initStaticToolList() {
       className(const VanitySelection()),
       className(const VariableCoordinateFormulas()),
       className(const VelocityAcceleration()),
+      className(const VerbalArithmetic()),
       className(Vigenere()),
       className(const VigenereBreaker()),
       className(const VisualCryptography()),
@@ -856,7 +880,7 @@ void _initStaticToolList() {
     return [
       className(const CoordsSelection()),
       className(const CryptographySelection()),
-      className(const FormulaSolverFormulaGroups()),
+      className(FormulaSolverFormulaGroups()),
       className(const GamesSelection()),
       className(const GeneralCodebreakersSelection()),
       className(const ImagesAndFilesSelection()),

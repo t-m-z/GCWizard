@@ -1,7 +1,6 @@
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 
-import 'package:archive/archive.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
@@ -13,7 +12,7 @@ import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 class IAUSingleConstellation extends StatefulWidget {
   final String ConstellationName;
 
-  const IAUSingleConstellation({Key? key, required this.ConstellationName}) : super(key: key);
+  const IAUSingleConstellation({super.key, required this.ConstellationName});
 
   @override
   IAUSingleConstellationState createState() => IAUSingleConstellationState();
@@ -43,7 +42,7 @@ class IAUSingleConstellationState extends State<IAUSingleConstellation> {
     final archive = extractZipArchive(bytes.buffer.asUint8List());
 
     _images = [];
-    for (ArchiveFile file in archive) {
+    for (var file in archive) {
       var key = file.name.split('.png')[0];
 
       var imagePath = (file.isFile && SymbolTableConstants.IMAGE_SUFFIXES.hasMatch(file.name)) ? file.name : null;

@@ -45,9 +45,6 @@ class BundeswehrTalkingBoard {
       {'xAxis': xAxisNumeralCode, 'yAxis': yAxisNumeralCode, 'AuthentificationCode': AuthentificationCode};
 
   BundeswehrTalkingBoard.fromJson(Map<String, dynamic> json)
-      //: xAxisNumeralCode = json['xAxisNumeralCode']!.split(''),
-      //  yAxisNumeralCode = json['yAxisNumeralCode']!.split(''),
-      //  AuthentificationCode = json['AuthentificationCode']!.split(' ');
       : xAxisNumeralCode = (json['xAxisNumeralCode']! as String).split(''),
   yAxisNumeralCode = (json['yAxisNumeralCode']! as String).split(''),
   AuthentificationCode = (json['AuthentificationCode']! as String).split(' ');
@@ -64,8 +61,6 @@ class BundeswehrTalkingBoardAuthentificationTable {
 }
 
 class BundeswehrTalkingBoardAuthentificationOutput {
-  // TODO Thomas: Why is ResponseCode a List, not a simple String?
-  // because there are a couple of errors which can be returned to the user
   final List<String> ResponseCode;
   final List<String>? Tupel1;
   final List<String>? Tupel2;
@@ -395,7 +390,6 @@ BundeswehrTalkingBoardAuthentificationOutput buildAuthBundeswehr(
           tupel3.add(t2 + t1);
         }
       }
-
       return BundeswehrTalkingBoardAuthentificationOutput(
           ResponseCode: [BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_OK],
           Tupel1: tupel1,
@@ -590,7 +584,7 @@ String BundeswehrTalkingBoardCreateAuthTableString(List<String> authCode){
         '  ' +
         authCode[i + 4].toString().padLeft(2, '0') +
         '\n';
-    i = i + 5;
+    i += 5;
   }
   return _authTableString;
 }
