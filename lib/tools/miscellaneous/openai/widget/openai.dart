@@ -32,7 +32,7 @@ import 'package:gc_wizard/utils/ui_dependent_utils/file_widget_utils.dart';
 import 'package:prefs/prefs.dart';
 
 class OpenAI extends StatefulWidget {
-  const OpenAI({Key? key}) : super(key: key);
+  const OpenAI({super.key});
 
   @override
   _OpenAIState createState() => _OpenAIState();
@@ -61,15 +61,15 @@ class _OpenAIState extends State<OpenAI> {
   String _outputModel = '';
 
   List<int> _currentOutputData = [];
-  List<List<String>> _currentChatHistory = [];
+  final List<List<String>> _currentChatHistory = [];
   OPENAI_TASK _currentTask = OPENAI_TASK.CHAT;
 
   bool _loadFile = false;
 
   Widget _outputWidget = Container();
 
-  Map<String, String> _textModelIDs = {};
-  Map<String, String> _imageModelIDs = {};
+  final Map<String, String> _textModelIDs = {};
+  final Map<String, String> _imageModelIDs = {};
 
   GCWSwitchPosition _currentImageMode = GCWSwitchPosition.left;
 

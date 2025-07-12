@@ -74,8 +74,7 @@ class GCWMapView extends StatefulWidget {
   late List<GCWMapPolyline> polylines;
   final bool isEditable;
 
-  GCWMapView({Key? key, required this.points, List<GCWMapPolyline>? polylines, this.isEditable = false})
-      : super(key: key) {
+  GCWMapView({super.key, required this.points, List<GCWMapPolyline>? polylines, this.isEditable = false}) {
     this.polylines = polylines ?? [];
   }
 
@@ -113,7 +112,7 @@ class _GCWMapViewState extends State<GCWMapView> {
   late Timer _timer;
   double _mockLatitude = 0.0;
   double _mockLongitude = 0.0;
-  double _mockAltitude = Prefs.getInt(PREFERENCE_COORD_MOCK_LOCATION_ALTITUDE).toDouble();
+  final double _mockAltitude = Prefs.getInt(PREFERENCE_COORD_MOCK_LOCATION_ALTITUDE).toDouble();
 
   CameraFit _getBounds() {
     if (widget.points.isEmpty) return CameraFit.bounds(bounds: _DEFAULT_BOUNDS);
@@ -1350,25 +1349,18 @@ class _GCWMarker extends Marker {
   _GCWMarker(
       {this.coordinateDescription,
       required this.mapPoint,
-      required Widget child,
-      required double width,
-      required double height,
-      required Alignment alignment})
-      : super(point: mapPoint.point, child: child, width: width, height: height, alignment: alignment);
+      required super.child,
+      required super.width,
+      required super.height,
+      required Alignment super.alignment})
+      : super(point: mapPoint.point);
 }
 
 class _GCWTappablePolyline extends Polyline {
   GCWMapSimpleGeometry child;
 
   _GCWTappablePolyline(
-      {required List<LatLng> points, required double strokeWidth, required Color color, required this.child,
-        Object? hitValue})
-      : super(
-          points: points,
-          strokeWidth: strokeWidth,
-          color: color,
-          hitValue: hitValue
-        );
+      {required super.points, required super.strokeWidth, required super.color, required this.child});
 }
 
 class _GCWMapPopupController {

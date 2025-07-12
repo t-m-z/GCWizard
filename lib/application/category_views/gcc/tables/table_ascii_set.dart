@@ -4,7 +4,7 @@ import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.d
 import 'package:gc_wizard/tools/science_and_technology/numeral_bases/logic/numeral_bases.dart';
 
 class GCCTableASCIISet extends StatefulWidget {
-  const GCCTableASCIISet({Key? key}) : super(key: key);
+  const GCCTableASCIISet({super.key});
 
   @override
   _GCCTableASCIISetState createState() => _GCCTableASCIISetState();

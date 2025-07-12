@@ -21,7 +21,7 @@ import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:gc_wizard/utils/file_utils/gcw_file.dart';
 
 class WaveForm extends StatefulWidget {
-  const WaveForm({Key? key}) : super(key: key);
+  const WaveForm({super.key});
 
   @override
   WaveFormState createState() => WaveFormState();

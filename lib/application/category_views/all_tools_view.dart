@@ -56,8 +56,6 @@ import 'package:gc_wizard/application/tools/widget/gcw_tool.dart';
 import 'package:gc_wizard/application/tools/widget/gcw_toollist.dart';
 import 'package:gc_wizard/application/webapi/deeplinks/deeplinks.dart';
 import 'package:gc_wizard/common_widgets/dialogs/gcw_dialog.dart';
-import 'package:gc_wizard/application/tools/widget/gcw_tool.dart';
-import 'package:gc_wizard/application/tools/widget/gcw_toollist.dart';
 import 'package:gc_wizard/common_widgets/gcw_web_statefulwidget.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/coords/antipodes/widget/antipodes.dart';

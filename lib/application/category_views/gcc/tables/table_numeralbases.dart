@@ -3,7 +3,7 @@ import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 
 class GCCTableNumeralBasesNames extends StatefulWidget {
-  const GCCTableNumeralBasesNames({Key? key}) : super(key: key);
+  const GCCTableNumeralBasesNames({super.key});
 
   @override
   _GCCTableNumeralBasesNamesState createState() => _GCCTableNumeralBasesNamesState();

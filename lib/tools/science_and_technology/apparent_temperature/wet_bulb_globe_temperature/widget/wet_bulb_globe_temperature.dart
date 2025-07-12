@@ -37,7 +37,7 @@ import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:intl/intl.dart';
 
 class WetBulbGlobeTemperature extends StatefulWidget {
-  const WetBulbGlobeTemperature({Key? key}) : super(key: key);
+  const WetBulbGlobeTemperature({super.key});
 
   @override
   WetBulbGlobeTemperatureState createState() => WetBulbGlobeTemperatureState();
@@ -63,7 +63,7 @@ class WetBulbGlobeTemperatureState extends State<WetBulbGlobeTemperature> {
   GCWSwitchPosition _currentSolarMode = GCWSwitchPosition.left;
 
   Unit _currentOutputUnit = TEMPERATURE_CELSIUS;
-  Unit _currentOutputSolDistUnit = LENGTH_METER;
+  final Unit _currentOutputSolDistUnit = LENGTH_METER;
 
   List<Map<String, SymbolData>> _images = [];
   final String _ASSET_PATH = 'lib/tools/symbol_tables/_common/assets/weather_n/weather_n.zip';

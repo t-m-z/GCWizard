@@ -4,7 +4,7 @@ import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 
 class GCCTableMorse extends StatefulWidget {
-  const GCCTableMorse({Key? key}) : super(key: key);
+  const GCCTableMorse({super.key});
 
   @override
   _GCCTableMorseState createState() => _GCCTableMorseState();

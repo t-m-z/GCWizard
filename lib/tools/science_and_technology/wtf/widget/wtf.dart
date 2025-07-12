@@ -15,7 +15,7 @@ import 'package:gc_wizard/tools/science_and_technology/wtf/logic/wtf.dart';
 import 'package:prefs/prefs.dart';
 
 class WTFIs extends StatefulWidget {
-  const WTFIs({Key? key}) : super(key: key);
+  const WTFIs({super.key});
 
   @override
   WTFIsState createState() => WTFIsState();

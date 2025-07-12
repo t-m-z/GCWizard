@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 
 class GCCTableRoman extends StatefulWidget {
-  const GCCTableRoman({Key? key}) : super(key: key);
+  const GCCTableRoman({super.key});
 
   @override
   _GCCTableRomanState createState() => _GCCTableRomanState();

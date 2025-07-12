@@ -6,7 +6,7 @@ import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.d
 
 
 class Nightly extends StatefulWidget {
-  const Nightly({Key? key}) : super(key: key);
+  const Nightly({super.key});
 
   @override
   _NightlyState createState() => _NightlyState();
