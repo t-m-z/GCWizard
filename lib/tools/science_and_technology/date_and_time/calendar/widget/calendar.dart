@@ -16,7 +16,7 @@ import 'package:gc_wizard/utils/ui_dependent_utils/common_widget_utils.dart';
 import 'package:intl/intl.dart';
 
 class Calendar extends StatefulWidget {
-  const Calendar({Key? key}) : super(key: key);
+  const Calendar({super.key});
 
   @override
   _CalendarState createState() => _CalendarState();
@@ -75,7 +75,7 @@ class _CalendarState extends State<Calendar> {
               value: _currentTimeStamp,
               min: 1,
               max:
-                  8640000000000, //max days in seconds according to DateTime https://stackoverflow.com/questions/67144785/flutter-dart-datetime-max-min-value
+                  864000000000, //max days in seconds according to DateTime https://stackoverflow.com/questions/67144785/flutter-dart-datetime-max-min-value
               onChanged: (value) {
                 setState(() {
                   _currentTimeStamp = value;

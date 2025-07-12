@@ -6,6 +6,7 @@ import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart' 
 import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/bosch/logic/bosch.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/dec/logic/dec.dart';
+import 'package:gc_wizard/tools/coords/_common/formats/dfcigrid/logic/dfcigrid.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/dmm/logic/dmm.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/dms/logic/dms.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/dutchgrid/logic/dutchgrid.dart';
@@ -36,6 +37,14 @@ import 'package:latlong2/latlong.dart';
 
 import 'coordinate_format_definition.dart';
 
+enum StateCode {
+  OK,
+  Invalid_Coordinate,
+  Checksum_Error,
+  Outside_Borders,
+  OLC_ShortFormat
+}
+
 abstract class BaseCoordinate {
   CoordinateFormat get format;
   late double latitude;
@@ -46,7 +55,8 @@ abstract class BaseCoordinate {
     this.longitude = longitude ?? defaultCoord.defaultCoordinate.longitude;
   }
 
-  // TODO: Make this null-safe. Some inheriting CoordFormats may return null here. This shall be avoided.
+  StateCode get stateCode => StateCode.OK;
+
   LatLng? toLatLng() {
     return LatLng(latitude, longitude);
   }
@@ -121,6 +131,8 @@ BaseCoordinate buildCoordinate(CoordinateFormat format, LatLng coords, [Ellipsoi
       return SwissGridPlusCoordinate.fromLatLon(coords, ellipsoid);
     case CoordinateFormatKey.DUTCH_GRID:
       return DutchGridCoordinate.fromLatLon(coords);
+    case CoordinateFormatKey.DFCI_GRID:
+      return DfciGridCoordinate.fromLatLon(coords);
     case CoordinateFormatKey.GAUSS_KRUEGER:
       return GaussKruegerCoordinate.fromLatLon(coords, format.subtype!, ellipsoid);
     case CoordinateFormatKey.LAMBERT:

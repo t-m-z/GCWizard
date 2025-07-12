@@ -4,7 +4,7 @@ import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/utils/complex_return_types.dart';
 import 'package:gc_wizard/utils/coordinate_utils.dart';
-import 'package:gc_wizard/utils/data_type_utils/double_type_utils.dart';
+import 'package:gc_wizard/utils/data_type_utils/num_type_utils.dart';
 import 'package:gc_wizard/utils/string_utils.dart';
 import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
@@ -332,15 +332,15 @@ const _PATTERN_DMM_TRAILINGSIGN = '^\\s*?'
     '(\\d{1,3})\\s*?[\\s°]\\s*?' //lat degrees + symbol
     '([0-5]?\\d)\\s*?' //lat minutes
     '(?:\\s*?[.,]\\s*?(\\d+))?\\s*?' //lat milliminutes
-    '[\\s\'´′`’‘]?\\s*?' //lat minute symbol
-    '([NS]$LETTER*?|[\\+\\-])\\s*?' //lat sign
+    '$MINUTES_SYMBOL?\\s*?' //lat minute symbol
+    '([NS]$LETTER*?|[\\+\\-])' //lat sign
 
-    '[,\\s]\\s*?' //delimiter lat lon
+    '\\s*?$DELIMITER_SYMBOL\\s*?' //delimiter lat lon
 
     '(\\d{1,3})\\s*?[\\s°]\\s*?' //lon degrees + symbol
     '([0-5]?\\d)\\s*?' //lon minutes
     '(?:\\s*?[.,]\\s*?(\\d+))?\\s*?' //lon milliminutes
-    '[\\s\'´′`’‘]?\\s*?' //lon minutes symbol
+    '$MINUTES_SYMBOL?\\s*?' //lon minutes symbol
     '([EWO]$LETTER*?|[\\+\\-])' //lon sign;
     '\\s*?';
 
@@ -349,13 +349,13 @@ const _PATTERN_DMM = '^\\s*?'
     '(\\d{1,3})\\s*?[\\s°]\\s*?' //lat degrees + symbol
     '([0-5]?\\d)\\s*?' //lat minutes
     '(?:\\s*?[.,]\\s*?(\\d+))?\\s*?' //lat milliminutes
-    '[\\s\'´′`’‘]?\\s*?' //lat minute symbol
+    '$MINUTES_SYMBOL?' //lat minute symbol
 
-    '\\s*?[,\\s]\\s*?' //delimiter lat lon
+    '\\s*?$DELIMITER_SYMBOL\\s*?' //delimiter lat lon
 
     '([EWO]$LETTER*?|[\\+\\-])?\\s*?' //lon sign
     '(\\d{1,3})\\s*?[\\s°]\\s*?' //lon degrees + symbol
     '([0-5]?\\d)\\s*?' //lon minutes
     '(?:\\s*?[.,]\\s*?(\\d+))?\\s*?' //lon milliminutes
-    '[\\s\'´′`’‘]?' //lon minutes symbol
+    '$MINUTES_SYMBOL?' //lon minutes symbol
     '\\s*?';
