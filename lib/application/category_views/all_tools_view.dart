@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/application/_common/gcw_package_info.dart';
 import 'package:gc_wizard/application/category_views/favorites.dart';
-import 'package:gc_wizard/application/category_views/gcc/gcc_view.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/babylon_numbers_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/base_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/bcd_selection.dart';
@@ -195,6 +195,7 @@ import 'package:gc_wizard/tools/games/verbal_arithmetic/widget/verbal_arithmetic
 import 'package:gc_wizard/tools/games/word_search/widget/word_search.dart';
 import 'package:gc_wizard/tools/general_tools/gcwizardscript/widget/gcwizard_script.dart';
 import 'package:gc_wizard/tools/general_tools/randomizer/widget/randomizer_selection.dart';
+import 'package:gc_wizard/tools/images_and_files/adventure_labs/widget/adventure_labs.dart';
 import 'package:gc_wizard/tools/images_and_files/animated_image/widget/animated_image.dart';
 import 'package:gc_wizard/tools/images_and_files/animated_image_morse_code/widget/animated_image_morse_code.dart';
 import 'package:gc_wizard/tools/images_and_files/binary2image/widget/binary2image.dart';
@@ -211,8 +212,6 @@ import 'package:gc_wizard/tools/images_and_files/stegano/widget/stegano.dart';
 import 'package:gc_wizard/tools/images_and_files/tupper_formula/widget/tupper_formula.dart';
 import 'package:gc_wizard/tools/images_and_files/visual_cryptography/widget/visual_cryptography.dart';
 import 'package:gc_wizard/tools/miscellaneous/openai/widget/openai.dart';
-import 'package:gc_wizard/tools/images_and_files/waveform/widget/waveform.dart';
-import 'package:gc_wizard/tools/general_tools/gcwizardscript/widget/gcwizard_script.dart';
 import 'package:gc_wizard/tools/science_and_technology/alcohol_mass/widget/alcohol_mass.dart';
 import 'package:gc_wizard/tools/science_and_technology/alphabet_number_systems/hebrew/widget/hebrew_number_system.dart';
 import 'package:gc_wizard/tools/science_and_technology/alphabet_number_systems/milesian/widget/milesian_number_system.dart';
@@ -660,7 +659,7 @@ void _initStaticToolList() {
       className(const FormatConverter()),
       className(FormulaSolverFormulaGroups()),
       className(const FormatConverterW3W()),
-      className(const FormulaSolverFormulaGroups()),
+      className(FormulaSolverFormulaGroups()),
       className(const FourteenSegments()),
       className(const Fox()),
       className(const Gade()),

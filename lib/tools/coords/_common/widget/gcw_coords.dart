@@ -27,6 +27,7 @@ import 'package:gc_wizard/tools/coords/_common/formats/dms/logic/dms.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/dutchgrid/logic/dutchgrid.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/gars/logic/gars.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/gausskrueger/logic/gauss_krueger.dart';
+import 'package:gc_wizard/tools/coords/_common/formats/GC8K7RC/logic/GC8K7RC.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/geo3x3/logic/geo3x3.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/geohash/logic/geohash.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/geohex/logic/geohex.dart';
@@ -76,6 +77,7 @@ part 'package:gc_wizard/tools/coords/_common/formats/dms/widget/gcw_coords_dms.d
 part 'package:gc_wizard/tools/coords/_common/formats/dutchgrid/widget/gcw_coords_dutchgrid.dart';
 part 'package:gc_wizard/tools/coords/_common/formats/gars/widget/gcw_coords_gars.dart';
 part 'package:gc_wizard/tools/coords/_common/formats/gausskrueger/widget/gcw_coords_gausskrueger.dart';
+part 'package:gc_wizard/tools/coords/_common/formats/GC8K7RC/widget/gcw_coords_GC8K7RC.dart';
 part 'package:gc_wizard/tools/coords/_common/formats/geo3x3/widget/gcw_coords_geo3x3.dart';
 part 'package:gc_wizard/tools/coords/_common/formats/geo3x3/widget/geo3x3_textinputformatter.dart';
 part 'package:gc_wizard/tools/coords/_common/formats/geohash/widget/gcw_coords_geohash.dart';
@@ -407,6 +409,7 @@ var allCoordinateWidgetInfos = [
   _GCWCoordWidgetInfoMakaney(),
   _GCWCoordWidgetInfoGeoHex(),
   _GCWCoordWidgetInfoGeo3x3(),
+  _GCWCoordWidgetInfoGC8K7RC(),
   _GCWCoordWidgetInfoMapCode(),
   _GCWCoordWidgetInfoGARS(),
   _GCWCoordWidgetInfoS2CellsHilbert(),

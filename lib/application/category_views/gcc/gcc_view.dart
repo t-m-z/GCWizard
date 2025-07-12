@@ -464,7 +464,7 @@ class _GCCViewState extends State<GCCView> {
                       // Handle icon tap
                       _navigateToSubPage(registeredTools.where((element) {
                         return [
-                          className(const FormulaSolverFormulaGroups()),
+                          className(FormulaSolverFormulaGroups()),
                         ].contains(className(element.tool));
                       }).toList()[0]);
                     },
@@ -1724,7 +1724,7 @@ class _GCCViewState extends State<GCCView> {
                       // Handle icon tap
                       _navigateToSubPage(registeredTools.where((element) {
                         return [
-                          className(const FormulaSolverFormulaGroups()),
+                          className(FormulaSolverFormulaGroups()),
                         ].contains(className(element.tool));
                       }).toList()[0]);
                     },
