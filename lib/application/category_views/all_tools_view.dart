@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/_common/gcw_package_info.dart';
 import 'package:gc_wizard/application/category_views/favorites.dart';
+import 'package:gc_wizard/application/category_views/gcc/gcc_view.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/babylon_numbers_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/base_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/bcd_selection.dart';
@@ -434,50 +435,48 @@ class _MainViewState extends State<MainView> {
     if (_mainToolList.isEmpty) _initStaticToolList();
     Favorites.initialize();
 
-    var toolList = (_isSearching && _searchText.isNotEmpty) ? _getSearchedList() : null;
-    if (!(_isSearching && _searchText.isNotEmpty)) {
-      return DefaultTabController(
-        length: 3,
-        initialIndex: Prefs.getBool(PREFERENCE_TABS_USE_DEFAULT_TAB)
-            ? Prefs.getInt(PREFERENCE_TABS_DEFAULT_TAB)
-            : Prefs.getInt(PREFERENCE_TABS_LAST_VIEWED_TAB),
-        child: Scaffold(
-          key: _scaffoldKey,
-          appBar: AppBar(
-              bottom: TabBar(
-                onTap: (value) {
-                  Prefs.setInt(PREFERENCE_TABS_LAST_VIEWED_TAB, value);
-                },
-                tabs: const [
-                  Tab(icon: Icon(Icons.category)),
-                  Tab(icon: Icon(Icons.list)),
-                  Tab(icon: Icon(Icons.star)),
-                ],
-              ),
-              leading: _buildIcon(),
-              title: _buildTitleAndSearchTextField(),
-              actions: <Widget>[_buildSearchActionButton()]),
-          drawer: buildMainMenu(context),
-          body: TabBarView(
-            children: [
-              GCWToolList(toolList: toolList ?? _categoryList),
-              GCWToolList(toolList: toolList ?? _mainToolList),
-              GCWToolList(toolList: toolList ?? Favorites.favoritedGCWTools()),
-            ],
-          ),
+    var toolList =
+    (_isSearching && _searchText.isNotEmpty) ? _getSearchedList() : null;
+
+    return DefaultTabController(
+      length: 4,
+      initialIndex: Prefs.getBool(PREFERENCE_TABS_USE_DEFAULT_TAB)
+          ? Prefs.getInt(PREFERENCE_TABS_DEFAULT_TAB)
+          : Prefs.getInt(PREFERENCE_TABS_LAST_VIEWED_TAB),
+      child: Scaffold(
+        key: _scaffoldKey,
+        appBar: AppBar(
+            bottom: TabBar(
+              onTap: (value) {
+                Prefs.setInt(PREFERENCE_TABS_LAST_VIEWED_TAB, value);
+              },
+              tabs: [
+                const Tab(icon: Icon(Icons.category)),
+                const Tab(icon: Icon(Icons.list)),
+                const Tab(icon: Icon(Icons.star)),
+                Tab(
+                  //text: 'GCC',
+                  child: Image.asset(
+                      'lib/application/category_views/gcc/icons/gcc-logo.png',
+                      width: 25,
+                      height: 25),
+                ),
+              ],
+            ),
+            leading: _buildIcon(),
+            title: _buildTitleAndSearchTextField(),
+            actions: <Widget>[_buildSearchActionButton()]),
+        drawer: buildMainMenu(context),
+        body: TabBarView(
+          children: [
+            GCWToolList(toolList: toolList ?? _categoryList),
+            GCWToolList(toolList: toolList ?? _mainToolList),
+            GCWToolList(toolList: toolList ?? Favorites.favoritedGCWTools()),
+            const GCCView(),
+          ],
         ),
-      );
-    } else {
-      return Scaffold(
-          key: _scaffoldKey,
-          appBar: AppBar(
-              leading: _buildIcon(),
-              title: _buildTitleAndSearchTextField(),
-              actions: <Widget>[_buildSearchActionButton()]
-          ),
-          drawer: buildMainMenu(context),
-          body: GCWToolList(toolList: toolList!));
-    }
+      ),
+    );
   }
 
   NoAnimationMaterialPageRoute<GCWTool>? _checkDeepLink() {
@@ -492,8 +491,11 @@ class _MainViewState extends State<MainView> {
       icon: Icon(_isSearching ? Icons.close : Icons.search),
       onPressed: () {
         setState(() {
-          _searchController.clear();
-          _searchText = '';
+          if (_isSearching) {
+            _searchController.clear();
+            _searchText = '';
+          }
+
           _isSearching = !_isSearching;
         });
       },
@@ -503,23 +505,18 @@ class _MainViewState extends State<MainView> {
   Widget _buildTitleAndSearchTextField() {
     return _isSearching
         ? GCWTextField(
-            key: _searchKey,
-            controller: _searchController,
-            autofocus: true,
-            icon: Icon(Icons.search, color: themeColors().mainFont()),
-            hintText: i18n(context, 'common_search') + '...',
-            onChanged: (text) {
-              setState(() {
-                _searchText = text;
-              });
-            })
+        autofocus: true,
+        controller: _searchController,
+        icon: Icon(Icons.search, color: themeColors().mainFont()),
+        hintText: i18n(context, 'common_search') + '...')
         : Text(i18n(context, 'common_app_title'));
   }
 
   IconButton _buildIcon() {
     return IconButton(
         icon: Image.asset(
-          applogoFilename(),
+          'assets/logo/circle_border_128_tmz_nightly.png',
+          //applogoFilename(),
           width: 35.0,
           height: 35.0,
         ),
@@ -527,10 +524,13 @@ class _MainViewState extends State<MainView> {
   }
 
   List<GCWTool> _getSearchedList() {
-    var _sanitizedSearchText = removeAccents(_searchText.toLowerCase()).replaceAll(NOT_ALLOWED_SEARCH_CHARACTERS, '');
+    var _sanitizedSearchText = removeAccents(_searchText.toLowerCase())
+        .replaceAll(NOT_ALLOWED_SEARCH_CHARACTERS, '');
+
     if (_sanitizedSearchText.isEmpty) return <GCWTool>[];
 
-    Set<String> _queryTexts = _sanitizedSearchText.split(REGEXP_SPLIT_STRINGLIST).toSet();
+    Set<String> _queryTexts =
+    _sanitizedSearchText.split(REGEXP_SPLIT_STRINGLIST).toSet();
 
     return registeredTools.where((tool) {
       if (tool.indexedSearchStrings.isEmpty) return false;

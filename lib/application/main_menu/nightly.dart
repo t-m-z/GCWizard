@@ -38,16 +38,13 @@ class _NightlyState extends State<Nightly> {
         const GCWTextDivider(text: 'Long Term Previews'),
         GCWColumnedMultilineOutput(
           data: [
-            [i18n(context, 'scienceandtechnology_selection_title'), 'Ballistics\nSchiefer Wurf'],
-            [i18n(context, 'scienceandtechnology_selection_title'), 'Triangle\nBerechnungen von Dreiecken'],
+           [i18n(context, 'scienceandtechnology_selection_title'), 'Triangle\nBerechnungen von Dreiecken'],
             [i18n(context, 'scienceandtechnology_selection_title'), 'UTIC\nApparent temperature'],
             [i18n(context, 'scienceandtechnology_selection_title'), 'WBGT\nApparent temperature'],
             [i18n(context, 'imagesandfiles_selection_title'), 'Waveform\nAnalyse von WAV-Dateien'],
             [i18n(context, 'cryptography_selection_title'), 'Leet Speak'],
-            [i18n(context, 'cryptography_selection_title'), 'Upside-Down Text'],
             [i18n(context, 'symboltables_selection_title'), 'Stratego Spielsteine'],
             const ['Enhancement', 'Morse\noutput tones'],
-            const ['Enhancement', 'Bundeswehr Talking board\nLoad/Save'],
           ],
           flexValues: const [3, 7],),
       ],
