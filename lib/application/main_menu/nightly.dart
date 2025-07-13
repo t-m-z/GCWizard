@@ -23,25 +23,24 @@ class _NightlyState extends State<Nightly> {
           data: [
             [i18n(context, 'imagesandfiles_selection_title'), 'Adventure Lab\nAnalyse von Lab Caches'],
             [i18n(context, 'miscellaneous_selection_title'), 'Open AI\nClient für ChatGPT, DALL-E, Whisper'],
-            [i18n(context, 'coords_selection_title'), 'Weird Rotation\nrotiere Buchstaben einzeln'],
+            [i18n(context, 'cryptography_selection_title'), 'Weird Rotation\nrotiere Buchstaben einzeln'],
             [i18n(context, 'coords_selection_title'), 'What 3 Words\nUmwandeln in W33/Suche nach W3W'],
             [i18n(context, 'coords_selection_title'), 'GCX8K7RC\nDas dort genutzte Koordinatenformat'],
             [i18n(context, 'coords_selection_title'), 'GPS Mock Location'],
           ],
           flexValues: const [3, 7],),
         const GCWTextDivider(text: 'Near Term Previews'),
-        const GCWColumnedMultilineOutput(
+        GCWColumnedMultilineOutput(
           data: [
-            ['n/a', '']
+            [i18n(context, 'imagesandfiles_selection_title'), 'Waveform\nAnalyse von WAV-Dateien'],
+            [i18n(context, 'scienceandtechnology_selection_title'), 'Triangle\nBerechnungen von Dreiecken'],
           ],
           flexValues: [3, 7],),
         const GCWTextDivider(text: 'Long Term Previews'),
         GCWColumnedMultilineOutput(
           data: [
-           [i18n(context, 'scienceandtechnology_selection_title'), 'Triangle\nBerechnungen von Dreiecken'],
-            [i18n(context, 'scienceandtechnology_selection_title'), 'UTIC\nApparent temperature'],
+            [i18n(context, 'scienceandtechnology_selection_title'), 'UTCI\nApparent temperature'],
             [i18n(context, 'scienceandtechnology_selection_title'), 'WBGT\nApparent temperature'],
-            [i18n(context, 'imagesandfiles_selection_title'), 'Waveform\nAnalyse von WAV-Dateien'],
             [i18n(context, 'cryptography_selection_title'), 'Leet Speak'],
             [i18n(context, 'symboltables_selection_title'), 'Stratego Spielsteine'],
             const ['Enhancement', 'Morse\noutput tones'],
