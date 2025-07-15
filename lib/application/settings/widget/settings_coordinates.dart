@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/settings/logic/default_settings.dart';
 import 'package:gc_wizard/application/settings/logic/preferences.dart';
-import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/coords/_common/widget/gcw_coords_formatselector.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
@@ -39,21 +38,15 @@ class _CoordinatesSettingsState extends State<CoordinatesSettings> {
   var _currentDefaultHemisphereLongitude = Prefs.getString(PREFERENCE_COORD_DEFAULT_HEMISPHERE_LONGITUDE);
   Ellipsoid _currentDefaultEllipsoid = defaultEllipsoid;
 
-  late TextEditingController _controllerAPIKey;
-
-  var _currentAPIKey = Prefs.getString(PREFERENCE_COORD_DEFAULT_W3W_APIKEY);
-
   @override
   void initState() {
     super.initState();
 
     _currentDefaultFormat = defaultCoordinateFormat;
-    _controllerAPIKey = TextEditingController(text: _currentAPIKey.toString());
   }
 
   @override
   void dispose() {
-    _controllerAPIKey.dispose();
 
     super.dispose();
   }
@@ -141,18 +134,6 @@ class _CoordinatesSettingsState extends State<CoordinatesSettings> {
                 Prefs.setDouble(PREFERENCE_COORD_DEFAULT_ELLIPSOID_INVF, ells.invf);
                 break;
             }
-          },
-        ),
-        GCWTextDivider(
-          text: i18n(context, 'settings_coordinates_defaultw3wapikey'),
-        ),
-        GCWTextField(
-          controller: _controllerAPIKey,
-          onChanged: (value) {
-            setState(() {
-              _currentAPIKey = value;
-              Prefs.setString(PREFERENCE_COORD_DEFAULT_W3W_APIKEY, value);
-            });
           },
         ),
         GCWTextDivider(

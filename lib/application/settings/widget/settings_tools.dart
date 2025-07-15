@@ -35,6 +35,9 @@ class _ToolSettingsState extends State<ToolSettings> {
   late TextEditingController _inputControllerOpenGTINDBApiKey;
   String _currentInputOpenGTINDBApiKey = Prefs.get(PREFERENCE_EAN_DEFAULT_OPENGTIN_APIKEY).toString();
 
+  late TextEditingController _inputControllerW3WAPIKey;
+  String _currentW3WAPIKey = Prefs.getString(PREFERENCE_COORD_DEFAULT_W3W_APIKEY);
+
   @override
   void initState() {
     super.initState();
@@ -50,6 +53,8 @@ class _ToolSettingsState extends State<ToolSettings> {
     _inputControllerGreyNoise = TextEditingController(text: _currentInputGreyNoise);
 
     _inputControllerOpenGTINDBApiKey = TextEditingController(text: _currentInputOpenGTINDBApiKey);
+
+    _inputControllerW3WAPIKey = TextEditingController(text: _currentW3WAPIKey.toString());
   }
 
   @override
@@ -64,6 +69,8 @@ class _ToolSettingsState extends State<ToolSettings> {
     _inputControllerGreyNoise.dispose();
 
     _inputControllerOpenGTINDBApiKey.dispose();
+
+    _inputControllerW3WAPIKey.dispose();
 
     super.dispose();
   }
@@ -178,6 +185,18 @@ class _ToolSettingsState extends State<ToolSettings> {
             setState(() {
               _currentInputOpenGTINDBApiKey = text;
               Prefs.setString(PREFERENCE_EAN_DEFAULT_OPENGTIN_APIKEY, text);
+            });
+          },
+        ),
+        GCWTextDivider(
+          text: i18n(context, 'settings_coordinates_defaultw3wapikey'),
+        ),
+        GCWTextField(
+          controller: _inputControllerW3WAPIKey,
+          onChanged: (value) {
+            setState(() {
+              _currentW3WAPIKey = value;
+              Prefs.setString(PREFERENCE_COORD_DEFAULT_W3W_APIKEY, value);
             });
           },
         ),
