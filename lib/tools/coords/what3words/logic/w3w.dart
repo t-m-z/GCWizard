@@ -202,7 +202,24 @@ List<W3WSuggestion> _analyzeSuggestions(http.Response suggestionsW3W) {
   return result;
 }
 
-W3WResults _analyzeHttpResponse(http.Response response, {http.Response? suggestionsW3W}) {
+W3WResults _analyzeHttpResponse(http.Response? response, {http.Response? suggestionsW3W}) {
+  if (response == null) {
+    return W3WResults(
+      statusCode: 500,
+      errorCode: 'Server not found',
+      errorMessage: 'Are you connected to the internet?',
+      country: '',
+      nearestPlace: '',
+      square_sw: LatLng(0, 0),
+      square_ne: LatLng(0, 0),
+      coordinates: LatLng(0, 0),
+      words: '',
+      map: '',
+      locale: '',
+      language: '',
+      suggestions: [],
+    );
+  }
   if (response.statusCode == 200) {
     String data = response.body;
     var decodedData = json.decode(data);
@@ -247,11 +264,19 @@ Future<W3WResults> convertLatLonFromW3Wasync(GCWAsyncExecuterParameters? jobData
 }
 
 Future<W3WResults> _getLatLonFromW3W(String words, String APIKey, {required SendPort sendAsyncPort}) async {
-  String address = _URL_w3wToCoordinate + '?words=' + words + '&key=' + APIKey + '&format=json';
-  http.Response response = await http.get(Uri.parse(address));
-  address = _URL_autosuggest + '?input=' + words + '&key=' + APIKey + '&format=json';
-  http.Response suggestions = await http.get(Uri.parse(address));
-  return _analyzeHttpResponse(response, suggestionsW3W: suggestions);
+  try {
+    String address = _URL_w3wToCoordinate + '?words=' + words + '&key=' + APIKey + '&format=json';
+    http.Response response = await http.get(Uri.parse(address));
+
+    address = _URL_autosuggest + '?input=' + words + '&key=' + APIKey + '&format=json';
+    http.Response suggestions = await http.get(Uri.parse(address));
+
+    return _analyzeHttpResponse(response, suggestionsW3W: suggestions);
+  } catch (e) {
+    return _analyzeHttpResponse(null, suggestionsW3W: null);
+  }
+
+
 }
 
 Future<W3WResults> convertW3WFromLatLngAsync(GCWAsyncExecuterParameters? jobData) async {
@@ -280,8 +305,13 @@ Future<W3WResults> _getW3WFromLatLng(LatLng coordinates, String APIKey, Coordina
       '&language=' +
       _convertLanguageFromFormatKey(language) +
       '&format=json';
-  http.Response response = await http.get(Uri.parse(address));
-  return _analyzeHttpResponse(
-    response,
-  );
+  try {
+    http.Response response = await http.get(Uri.parse(address));
+    return _analyzeHttpResponse(
+      response,
+    );
+  } catch (e) {
+    return _analyzeHttpResponse(null,);
+  }
+
 }
