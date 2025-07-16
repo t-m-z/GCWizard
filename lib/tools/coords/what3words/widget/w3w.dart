@@ -384,35 +384,63 @@ class FormatConverterW3WState extends State<FormatConverterW3W> {
         ]),
         child: Column(
           children: <Widget>[
-            _currentMode == GCWSwitchPosition.left
-                ? GCWColumnedMultilineOutput(
-                    data: [
-                      [
-                        i18n(context, 'coords_formatconverter_w3w_words'),
-                        '',
-                        _currentW3wToCoordinates.words.toUpperCase()
-                      ],
-                    ],
-                    flexValues: const [2, 1, 3],
-                  )
-                : GCWColumnedMultilineOutput(
-                    data: [
-                      [
-                        i18n(context, 'coords_formatconverter_w3w_location'),
-                        '',
-                        formatCoordOutput(
-                            LatLng(_currentW3wToCoordinates.coordinates.latitude,
-                                _currentW3wToCoordinates.coordinates.longitude),
-                            defaultCoordinateFormat,
-                            defaultEllipsoid)
-                      ],
-                    ],
-                    flexValues: const [2, 1, 3],
-                  ),
+            _currentMode == GCWSwitchPosition.left // encode LatLon => W3W
+                ? _outputW3WOrError()
+                : _outputCoordinatesOrError(),
             _outputDetails(),
             _currentW3wToCoordinates.suggestions.isNotEmpty ? _outputSuggestions() : Container(),
           ],
         ),
+      );
+    }
+  }
+
+  Widget _outputW3WOrError() {
+    if (_currentW3wToCoordinates.statusCode != 200) {
+      return GCWColumnedMultilineOutput(
+        data: [
+          ['Code', _currentW3wToCoordinates.errorCode],
+          ['Message', _currentW3wToCoordinates.errorMessage],
+        ],
+        flexValues: [1, 3],
+      );
+    } else {
+      return GCWColumnedMultilineOutput(
+        data: [
+          [
+            i18n(context, 'coords_formatconverter_w3w_words'),
+            '',
+            _currentW3wToCoordinates.words.toUpperCase()
+          ],
+        ],
+        flexValues: const [2, 1, 3],
+      );
+    }
+  }
+
+  Widget _outputCoordinatesOrError(){
+    if (_currentW3wToCoordinates.statusCode != 200) {
+      return GCWColumnedMultilineOutput(
+        data: [
+          ['Code', _currentW3wToCoordinates.errorCode],
+          ['Message', _currentW3wToCoordinates.errorMessage],
+        ],
+        flexValues: [1,3],
+      );
+    } else {
+      return GCWColumnedMultilineOutput(
+        data: [
+          [
+            i18n(context, 'coords_formatconverter_w3w_location'),
+            '',
+            formatCoordOutput(
+                LatLng(_currentW3wToCoordinates.coordinates.latitude,
+                    _currentW3wToCoordinates.coordinates.longitude),
+                defaultCoordinateFormat,
+                defaultEllipsoid)
+          ],
+        ],
+        flexValues: const [2, 1, 3],
       );
     }
   }

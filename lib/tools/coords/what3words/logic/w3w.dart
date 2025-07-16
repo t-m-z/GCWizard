@@ -76,7 +76,8 @@ class W3WSuggestion {
 
 class W3WResults {
   final int statusCode;
-  final String error;
+  final String errorCode;
+  final String errorMessage;
   final String country;
   final String nearestPlace;
   final LatLng square_sw;
@@ -90,7 +91,8 @@ class W3WResults {
 
   W3WResults({
     required this.statusCode,
-    required this.error,
+    required this.errorCode,
+    required this.errorMessage,
     required this.country,
     required this.nearestPlace,
     required this.square_sw,
@@ -106,7 +108,8 @@ class W3WResults {
 
 final W3WRESULTS_EMPTY = W3WResults(
   statusCode: 0,
-  error: '',
+  errorCode: '',
+  errorMessage: '',
   country: '',
   nearestPlace: '',
   square_sw: const LatLng(0.0, 0.0),
@@ -156,22 +159,31 @@ String _convertLanguageFromFormatKey(CoordinateFormatKey formatKey) {
   }
 }
 
-W3WResults _errorHandlingW3WResults(http.Response response) {
-  String error = '';
-  switch (response.statusCode) {
-    case 400:
-      break;
-    case 401:
-      break;
-    case 404:
-      break;
-    case 405:
-      break;
-    default:
-  }
+W3WResults _errorHandlingW3WResults(http.Response response, {http.Response? suggestionsW3W}) {
+
+  var decodedData = json.decode(response.body);
+  print(decodedData);
+  String errorCode = decodedData['error']['code'] as String;
+  String errorMessage = decodedData['error']['message'] as String;
+  print(errorCode);
+  print(errorMessage);
+  // switch (response.statusCode) {
+  //   case 400: error = '';
+  //     break;
+  //   case 401: error = 'MissingKey or InvalidKey. ';
+  //     break;
+  //   case 402: error = '';
+  //   break;
+  //   case 404: error = "URL not found. Check the URL of the endpoint you're trying to reach.";
+  //     break;
+  //   case 405: error = 'Method not allowed. You must use a GET request.';
+  //     break;
+  //   default: error = 'Internal Server Error.';
+  // }
   return W3WResults(
     statusCode: response.statusCode,
-    error: error,
+    errorCode: errorCode,
+    errorMessage: errorMessage,
     country: '',
     nearestPlace: '',
     square_sw: const LatLng(0.0, 0.0),
@@ -181,7 +193,7 @@ W3WResults _errorHandlingW3WResults(http.Response response) {
     map: '',
     locale: '',
     language: '',
-    suggestions: [],
+    suggestions: suggestionsW3W != null ? _analyzeSuggestions(suggestionsW3W) : [],
   );
 }
 
@@ -207,6 +219,8 @@ List<W3WSuggestion> _analyzeSuggestions(http.Response suggestionsW3W) {
 }
 
 W3WResults _analyzeHttpResponse(http.Response response, {http.Response? suggestionsW3W}) {
+  print('analyze response --------------------------');
+  print(response.statusCode);
   if (response.statusCode == 200) {
     String data = response.body;
     var decodedData = json.decode(data);
@@ -218,7 +232,8 @@ W3WResults _analyzeHttpResponse(http.Response response, {http.Response? suggesti
     double ct_lon = double.parse(decodedData['coordinates']['lng'].toString());
     return W3WResults(
       statusCode: 200,
-      error: '',
+      errorCode: '',
+      errorMessage: '',
       country: decodedData['country'].toString(),
       nearestPlace: decodedData['nearestPlace'].toString(),
       square_sw: LatLng(sw_lat, sw_lon),
@@ -231,7 +246,7 @@ W3WResults _analyzeHttpResponse(http.Response response, {http.Response? suggesti
       suggestions: suggestionsW3W != null ? _analyzeSuggestions(suggestionsW3W) : [],
     );
   } else {
-    return _errorHandlingW3WResults(response);
+    return _errorHandlingW3WResults(response, suggestionsW3W: suggestionsW3W);
   }
 }
 
@@ -251,10 +266,14 @@ Future<W3WResults> convertLatLonFromW3Wasync(GCWAsyncExecuterParameters? jobData
 
 Future<W3WResults> _getLatLonFromW3W(String words, String APIKey, {required SendPort sendAsyncPort}) async {
   String address = _URL_w3wToCoordinate + '?words=' + words + '&key=' + APIKey + '&format=json';
+  print('decode w3s => LatLon ############################################################');
+  print(address);
   http.Response response = await http.get(Uri.parse(address));
-
+  print(response.body);
+  print('suggst w3s => LatLon ############################################################');
   address = _URL_autosuggest + '?input=' + words + '&key=' + APIKey + '&format=json';
   http.Response suggestions = await http.get(Uri.parse(address));
+  print(suggestions.body);
   return _analyzeHttpResponse(response, suggestionsW3W: suggestions);
 }
 
@@ -284,7 +303,10 @@ Future<W3WResults> _getW3WFromLatLng(LatLng coordinates, String APIKey, Coordina
       '&language=' +
       _convertLanguageFromFormatKey(language) +
       '&format=json';
+  print('encode LatLon => w3s ############################################################');
+  print(address);
   http.Response response = await http.get(Uri.parse(address));
+  print(response);
   return _analyzeHttpResponse(
     response,
   );
