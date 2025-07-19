@@ -434,9 +434,61 @@ class _MainViewState extends State<MainView> {
     if (_mainToolList.isEmpty) _initStaticToolList();
     Favorites.initialize();
 
-    var toolList =
-    (_isSearching && _searchText.isNotEmpty) ? _getSearchedList() : null;
+    var toolList = (_isSearching && _searchText.isNotEmpty) ? _getSearchedList() : null;
 
+    if (!(_isSearching && _searchText.isNotEmpty)) {
+      return DefaultTabController(
+        length: 4,
+        initialIndex: Prefs.getBool(PREFERENCE_TABS_USE_DEFAULT_TAB)
+            ? Prefs.getInt(PREFERENCE_TABS_DEFAULT_TAB)
+            : Prefs.getInt(PREFERENCE_TABS_LAST_VIEWED_TAB),
+        child: Scaffold(
+          key: _scaffoldKey,
+          appBar: AppBar(
+              bottom: TabBar(
+                onTap: (value) {
+                  Prefs.setInt(PREFERENCE_TABS_LAST_VIEWED_TAB, value);
+                },
+                tabs: [
+                  const Tab(icon: Icon(Icons.category)),
+                  const Tab(icon: Icon(Icons.list)),
+                  const Tab(icon: Icon(Icons.star)),
+                  Tab(
+                    //text: 'GCC',
+                    child: Image.asset(
+                        'lib/application/category_views/gcc/icons/gcc-logo.png',
+                        width: 25,
+                        height: 25),
+                  ),
+                ],
+              ),
+              leading: _buildIcon(),
+              title: _buildTitleAndSearchTextField(),
+              actions: <Widget>[_buildSearchActionButton()]),
+          drawer: buildMainMenu(context),
+          body: TabBarView(
+            children: [
+              GCWToolList(toolList: toolList ?? _categoryList),
+              GCWToolList(toolList: toolList ?? _mainToolList),
+              GCWToolList(toolList: toolList ?? Favorites.favoritedGCWTools()),
+              const GCCView(),
+            ],
+          ),
+        ),
+      );
+    } else {
+      return Scaffold(
+          key: _scaffoldKey,
+          appBar: AppBar(
+              leading: _buildIcon(),
+              title: _buildTitleAndSearchTextField(),
+              actions: <Widget>[_buildSearchActionButton()]
+          ),
+          drawer: buildMainMenu(context),
+          body: GCWToolList(toolList: toolList!));
+    }
+
+    /*
     return DefaultTabController(
       length: 4,
       initialIndex: Prefs.getBool(PREFERENCE_TABS_USE_DEFAULT_TAB)
@@ -476,6 +528,7 @@ class _MainViewState extends State<MainView> {
         ),
       ),
     );
+    */
   }
 
   NoAnimationMaterialPageRoute<GCWTool>? _checkDeepLink() {
@@ -490,11 +543,8 @@ class _MainViewState extends State<MainView> {
       icon: Icon(_isSearching ? Icons.close : Icons.search),
       onPressed: () {
         setState(() {
-          if (_isSearching) {
-            _searchController.clear();
-            _searchText = '';
-          }
-
+          _searchController.clear();
+          _searchText = '';
           _isSearching = !_isSearching;
         });
       },
@@ -507,7 +557,12 @@ class _MainViewState extends State<MainView> {
         autofocus: true,
         controller: _searchController,
         icon: Icon(Icons.search, color: themeColors().mainFont()),
-        hintText: i18n(context, 'common_search') + '...')
+        hintText: i18n(context, 'common_search') + '...',
+        onChanged: (text) {
+          setState(() {
+            _searchText = text;
+          });
+        })
         : Text(i18n(context, 'common_app_title'));
   }
 

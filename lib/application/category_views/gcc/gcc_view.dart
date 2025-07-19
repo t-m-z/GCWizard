@@ -1353,7 +1353,6 @@ class _GCCViewState extends State<GCCView> {
               ),
             ],
           ),
-
         ],
       ),
     );
@@ -1655,10 +1654,6 @@ class _GCCViewState extends State<GCCView> {
                       ],
                     )),
               ),
-            ],
-          ),
-          TableRow(
-            children: [
               Container(
                   padding: const EdgeInsets.symmetric(vertical: DOUBLE_DEFAULT_MARGIN, horizontal: DOUBLE_DEFAULT_MARGIN),
                   margin: const EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN, right: DOUBLE_DEFAULT_MARGIN),
@@ -1853,10 +1848,6 @@ class _GCCViewState extends State<GCCView> {
                       ],
                     )),
               ),
-            ],
-          ),
-          TableRow(
-            children: [
               Container(
                   padding: const EdgeInsets.symmetric(vertical: DOUBLE_DEFAULT_MARGIN, horizontal: DOUBLE_DEFAULT_MARGIN),
                   margin: const EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN, right: DOUBLE_DEFAULT_MARGIN),
@@ -2051,10 +2042,6 @@ class _GCCViewState extends State<GCCView> {
                       ],
                     )),
               ),
-            ],
-          ),
-          TableRow(
-            children: [
               Container(
                   padding: const EdgeInsets.symmetric(vertical: DOUBLE_DEFAULT_MARGIN, horizontal: DOUBLE_DEFAULT_MARGIN),
                   margin: const EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN, right: DOUBLE_DEFAULT_MARGIN),
@@ -2249,10 +2236,6 @@ class _GCCViewState extends State<GCCView> {
                       ],
                     )),
               ),
-            ],
-          ),
-          TableRow(
-            children: [
               Container(
                   padding: const EdgeInsets.symmetric(vertical: DOUBLE_DEFAULT_MARGIN, horizontal: DOUBLE_DEFAULT_MARGIN),
                   margin: const EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN, right: DOUBLE_DEFAULT_MARGIN),
@@ -2447,10 +2430,6 @@ class _GCCViewState extends State<GCCView> {
                       ],
                     )),
               ),
-            ],
-          ),
-          TableRow(
-            children: [
               Container(
                   padding: const EdgeInsets.symmetric(vertical: DOUBLE_DEFAULT_MARGIN, horizontal: DOUBLE_DEFAULT_MARGIN),
                   margin: const EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN, right: DOUBLE_DEFAULT_MARGIN),
@@ -2623,7 +2602,6 @@ class _GCCViewState extends State<GCCView> {
               ),
             ],
           ),
-
         ],
       ),
     );
