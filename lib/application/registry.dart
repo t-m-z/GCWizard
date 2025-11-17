@@ -1804,7 +1804,7 @@ void initializeRegistry(BuildContext context) {
         tool: const ScrabbleSelection(),
         id: 'scrabble_selection',
         categories: const [ToolCategory.GAMES],
-        searchKeys: const ['games']),
+        searchKeys: const ['games', 'games_scrabble']),
     GCWTool(
         tool: const MiscellaneousSelection(),
         id: 'miscellaneous_selection',
@@ -6602,9 +6602,7 @@ void initializeRegistry(BuildContext context) {
 
     //Scrabble Selection *****************************************************************************************
 
-    GCWTool(tool: const Scrabble(), id: 'scrabble', searchKeys: const [
-      'games_scrabble',
-    ], licenses: [
+    GCWTool(tool: const Scrabble(), id: 'scrabble', licenses: [
       ToolLicenseOnlineArticle(
         context: context,
         author: 'en.wikipedia.org and contributors',
@@ -6628,9 +6626,6 @@ void initializeRegistry(BuildContext context) {
     GCWTool(
         tool: const ScrabbleOverview(),
         id: 'scrabbleoverview',
-        searchKeys: const [
-          'games_scrabble',
-        ],
         licenses: [
           ToolLicenseOnlineArticle(
             context: context,
