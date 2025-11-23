@@ -3303,6 +3303,8 @@
   "image_stretchshrink_stretch": "Stretch",
   "image_stretchshrink_shrink": "Shrink",
   "image_fliprotate_openinfliprotate": "Open in Flip/Rotate",
+  "image2binary_title": "Image to Binary",
+  "image2binary_description": "Creates a b/w Image and calculates Binary representation",
   "imagesandfiles_selection_title": "Images and Files",
   "imagesandfiles_selection_description": "Tools for analyzing images and other file types",
   "imageview_fullscreen_title": "Image View: Fullscreen",
