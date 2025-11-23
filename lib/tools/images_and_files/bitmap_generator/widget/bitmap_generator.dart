@@ -5,22 +5,27 @@ import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_submit_button.dart';
+import 'package:gc_wizard/common_widgets/gcw_openfile.dart';
 import 'package:gc_wizard/common_widgets/gcw_painter_container.dart';
+import 'package:gc_wizard/common_widgets/gcw_snackbar.dart';
 import 'package:gc_wizard/common_widgets/image_viewers/gcw_imageview.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_threeoptions_switch.dart';
-import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
+//import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/images_and_files/binary2image/logic/binary2image.dart';
 import 'package:gc_wizard/tools/images_and_files/bitmap_generator/logic/bitmap_generator.dart';
 import 'package:gc_wizard/tools/images_and_files/bitmap_generator/widget/bitmap_generator_board.dart';
 import 'package:gc_wizard/tools/images_and_files/qr_code/logic/qr_code.dart';
 import 'package:gc_wizard/tools/science_and_technology/numeral_bases/logic/numeral_bases.dart';
+import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:gc_wizard/utils/file_utils/gcw_file.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/image_utils/image_utils.dart';
+
+import 'package:image/image.dart' as Image;
 
 class BitmapGenerator extends StatefulWidget {
   final GCWFile? file;
@@ -43,21 +48,27 @@ class _BitmapGeneratorState extends State<BitmapGenerator> {
   };
   int _currentOption = 1;
 
+  bool _openFromInput = false;
+  bool _openFromImage = false;
+
   late Image2BinaryData _board;
 
   Uint8List? _outData;
   String? _codeData;
 
+  GCWFile? _originalData;
+
+  Image.Image? _currentImage;
+
   BigInt _currentNumber = BigInt.zero;
 
   late TextEditingController _inputController;
-  GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
+  //GCWSwitchPosition _currentMode = GCWSwitchPosition.left;
 
   @override
   void initState() {
     super.initState();
     _inputController = TextEditingController(text: _currentInput);
-
     _board = Image2BinaryData(width: _currentWidth, height: _currentHeight);
   }
 
@@ -71,26 +82,32 @@ class _BitmapGeneratorState extends State<BitmapGenerator> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        _buildWidgetBuildMode(),
+        //_buildWidgetBuildMode(),
         _buildWidgetDimensions(),
-        _currentMode == GCWSwitchPosition.left // encrypt
-            ? _widgetBuildImageToNumber()
-            : _widgetBuildNumberToImage(),
+        //_currentMode == GCWSwitchPosition.left // encrypt
+        //    ? Column(
+        //  children: [
+            _widgetBuildImageToNumber(),
+            _openFromImage ? _widgetBuildOpenFromImage() : Container(),
+            _openFromInput ? _widgetBuildOpenFromNumber() : Container(),
+        //  ],
+        //)
+        //    : _widgetBuildNumberToImage(),
         _buildOutput(),
       ],
     );
   }
 
-  Widget _buildWidgetBuildMode() {
-    return GCWTwoOptionsSwitch(
-      value: _currentMode,
-      onChanged: (value) {
-        setState(() {
-          _currentMode = value;
-        });
-      },
-    );
-  }
+  //Widget _buildWidgetBuildMode() {
+  //  return GCWTwoOptionsSwitch(
+  //    value: _currentMode,
+  //    onChanged: (value) {
+  //      setState(() {
+  //        _currentMode = value;
+  //      });
+  //    },
+  //  );
+  //}
 
   Widget _buildWidgetDimensions() {
     return Row(
@@ -150,6 +167,43 @@ class _BitmapGeneratorState extends State<BitmapGenerator> {
               iconColor: themeColors().dialogText(),
               backgroundColor: themeColors().dialog(),
               size: IconButtonSize.SMALL,
+              icon: Icons.input,
+              onPressed: () {
+                _openFromInput = !_openFromInput;
+                setState(() {});
+              },
+            ),
+          ),
+          Expanded(
+            child: GCWIconButton(
+              iconColor: themeColors().dialogText(),
+              backgroundColor: themeColors().dialog(),
+              size: IconButtonSize.SMALL,
+              icon: Icons.file_download_outlined,
+              onPressed: () {
+                _openFromImage = !_openFromImage;
+                setState(() {});
+              },
+            ),
+          ),
+          Expanded(
+            child: GCWIconButton(
+              iconColor: themeColors().dialogText(),
+              backgroundColor: themeColors().dialog(),
+              size: IconButtonSize.SMALL,
+              icon: Icons.save,
+              onPressed: () {
+                setState(() {
+                  // Save image to file
+                });
+              },
+            ),
+          ),
+          Expanded(
+            child: GCWIconButton(
+              iconColor: themeColors().dialogText(),
+              backgroundColor: themeColors().dialog(),
+              size: IconButtonSize.SMALL,
               icon: Icons.calculate_outlined,
               onPressed: () {
                 setState(() {
@@ -174,6 +228,94 @@ class _BitmapGeneratorState extends State<BitmapGenerator> {
           )
         ]),
       ],
+    );
+  }
+
+  Widget _widgetBuildOpenFromNumber(){
+    return Column(
+      children: [
+        GCWThreeOptionsSwitch(
+          title: i18n(context, 'common_numeralbase'),
+          position: _currentOption,
+          onChanged: (position) {
+            setState(() {
+              _currentOption = position;
+            });
+          },
+          labels: ['10', '2', '16'],
+        ),
+        GCWTextField(
+          controller: _inputController,
+          onChanged: (value) {
+            setState(() {
+              _currentInput = value;
+            });
+          },
+        ),
+        GCWSubmitButton(
+          onPressed: () {
+            setState(() {
+              _createBoardFromNumber();
+            });
+          },
+        ),
+      ],
+    );
+  }
+
+  void _createBoardFromNumber(){
+   String binary = numberToImage(_currentInput, _currentNumberType[_currentOption]!);
+   List<List<bool>> board = List<List<bool>>.generate(
+       _currentHeight, (index) => List<bool>.generate(_currentWidth, (index) => false));
+   for (int row = 0; row < _currentHeight; row++) {
+     for (int column = 0; column < _currentWidth; column++) {
+      board[row][column] = (binary[row * _currentWidth + column] != '0');
+     }
+   }
+   _board = Image2BinaryData(content: board, width: _currentWidth, height: _currentHeight);
+  }
+
+  bool _validateData(Uint8List bytes) {
+    return isImage(bytes);
+  }
+
+  Widget _widgetBuildOpenFromImage(){
+    return GCWOpenFile(
+      supportedFileTypes: SUPPORTED_IMAGE_TYPES,
+      suppressGallery: false,
+      onLoaded: (GCWFile? value) {
+        if (value == null || !_validateData(value.bytes)) {
+          showSnackBar(i18n(context, 'common_loadfile_exception_notloaded'), context);
+          return;
+        }
+
+        setState(() {
+          _originalData = value;
+          _currentImage = _originalData?.bytes == null ? null : Image.decodeImage(_originalData!.bytes);
+
+          _currentWidth = _currentImage!.width;
+          _currentHeight = _currentImage!.height;
+
+          List<List<bool>> board = List.generate(
+            _currentHeight,
+                (y) => List.generate(
+                  _currentWidth,
+                  (x) {
+                Image.Pixel pixel = _currentImage!.getPixel(x, y);
+
+                int r = pixel.r as int;
+                int g = pixel.g as int;
+                int b = pixel.b as int;
+
+                int gray = ((r + g + b) / 3).round();
+
+                return gray < 128;
+              },
+            ),
+          );
+          _board = Image2BinaryData(content: board, width: _currentWidth, height: _currentHeight);
+        });
+      },
     );
   }
 
@@ -210,9 +352,9 @@ class _BitmapGeneratorState extends State<BitmapGenerator> {
   }
 
   Widget _buildOutput() {
-    if (_currentMode == GCWSwitchPosition.right) {
-      return GCWDefaultOutput(child: _buildImageOutput());
-    } else {
+    //if (_currentMode == GCWSwitchPosition.right) {
+    //  return GCWDefaultOutput(child: _buildImageOutput());
+    //} else {
       return GCWDefaultOutput(
         child: GCWColumnedMultilineOutput(
           data: [
@@ -231,7 +373,7 @@ class _BitmapGeneratorState extends State<BitmapGenerator> {
           ],
         ),
       );
-    }
+    //}
   }
 
   void _createImageOutput() {
