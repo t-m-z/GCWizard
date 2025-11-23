@@ -29,7 +29,6 @@ class GCWThreeOptionsSwitch extends StatefulWidget {
 class _GCWThreeOptionsSwitchState extends State<GCWThreeOptionsSwitch> {
   var _currentValue = 0;
   List<bool> _currentStatus = [true, false, false];
-  List<Widget> _buttons = [];
 
   ButtonStyle _inActiveStyle() {
     return ElevatedButton.styleFrom(

@@ -15,23 +15,23 @@ import 'package:gc_wizard/common_widgets/switches/gcw_threeoptions_switch.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/images_and_files/binary2image/logic/binary2image.dart';
-import 'package:gc_wizard/tools/images_and_files/image2binary/logic/image2binary.dart';
-import 'package:gc_wizard/tools/images_and_files/image2binary/widget/image2binary_board.dart';
+import 'package:gc_wizard/tools/images_and_files/bitmap_generator/logic/bitmap_generator.dart';
+import 'package:gc_wizard/tools/images_and_files/bitmap_generator/widget/bitmap_generator_board.dart';
 import 'package:gc_wizard/tools/images_and_files/qr_code/logic/qr_code.dart';
 import 'package:gc_wizard/tools/science_and_technology/numeral_bases/logic/numeral_bases.dart';
 import 'package:gc_wizard/utils/file_utils/gcw_file.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/image_utils/image_utils.dart';
 
-class Image2Binary extends StatefulWidget {
+class BitmapGenerator extends StatefulWidget {
   final GCWFile? file;
 
-  const Image2Binary({super.key, this.file});
+  const BitmapGenerator({super.key, this.file});
 
   @override
-  _Image2BinaryState createState() => _Image2BinaryState();
+  _BitmapGeneratorState createState() => _BitmapGeneratorState();
 }
 
-class _Image2BinaryState extends State<Image2Binary> {
+class _BitmapGeneratorState extends State<BitmapGenerator> {
   String _currentInput = '';
   int _currentWidth = 16;
   int _currentHeight = 10;

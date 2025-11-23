@@ -323,11 +323,11 @@ import 'package:gc_wizard/tools/general_tools/randomizer/widget/randomizer_selec
 import 'package:gc_wizard/tools/images_and_files/animated_image/widget/animated_image.dart';
 import 'package:gc_wizard/tools/images_and_files/animated_image_morse_code/widget/animated_image_morse_code.dart';
 import 'package:gc_wizard/tools/images_and_files/binary2image/widget/binary2image.dart';
+import 'package:gc_wizard/tools/images_and_files/bitmap_generator/widget/bitmap_generator.dart';
 import 'package:gc_wizard/tools/images_and_files/exif_reader/widget/exif_reader.dart';
 import 'package:gc_wizard/tools/images_and_files/hex_viewer/widget/hex_viewer.dart';
 import 'package:gc_wizard/tools/images_and_files/hexstring2file/widget/hexstring2file.dart';
 import 'package:gc_wizard/tools/images_and_files/hidden_data/widget/hidden_data.dart';
-import 'package:gc_wizard/tools/images_and_files/image2binary/widget/image2binary.dart';
 import 'package:gc_wizard/tools/images_and_files/image_colorcorrections/widget/image_colorcorrections.dart';
 import 'package:gc_wizard/tools/images_and_files/image_flip_rotate/widget/image_flip_rotate.dart';
 import 'package:gc_wizard/tools/images_and_files/image_stretch_shrink/widget/image_stretch_shrink.dart';
@@ -760,6 +760,11 @@ void initializeRegistry(BuildContext context) {
       ToolCategory.SCIENCE_AND_TECHNOLOGY
     ], searchKeys: const [
       'bingo_calls',
+    ]),
+    GCWTool(tool: const BitmapGenerator(), id: 'bitmap_generator', categories: const [
+      ToolCategory.IMAGES_AND_FILES
+    ], searchKeys: const [
+      'image',
     ]),
     GCWTool(tool: const BookCipher(), id: 'book_cipher', categories: const [
       ToolCategory.CRYPTOGRAPHY
@@ -1217,11 +1222,6 @@ void initializeRegistry(BuildContext context) {
       ToolCategory.SCIENCE_AND_TECHNOLOGY
     ], searchKeys: const [
       'illiac',
-    ]),
-    GCWTool(tool: const Image2Binary(), id: 'image2binary', categories: const [
-      ToolCategory.IMAGES_AND_FILES
-    ], searchKeys: const [
-      'image',
     ]),
     GCWTool(
         tool: const ImagesAndFilesSelection(),
