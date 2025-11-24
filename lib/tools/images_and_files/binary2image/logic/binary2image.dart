@@ -103,7 +103,7 @@ String _filterInput(String input, String filter) {
   return input.replaceAll(RegExp('[^$filter]'), '');
 }
 
-DrawableImageData? binary2Image(String input, {int customLines = 0, double pointSize = 5} ) {
+DrawableImageData? binary2Image(String input, {int customLines = 0, int bounds = 10, double pointSize = 5} ) {
   if (input.isEmpty) return null;
 
   List<String> lines = [];
@@ -120,5 +120,5 @@ DrawableImageData? binary2Image(String input, {int customLines = 0, double point
     }
   }
 
-  return DrawableImageData(lines, colorMap, pointSize: pointSize);
+  return DrawableImageData(lines, colorMap, bounds: bounds, pointSize: pointSize);
 }

@@ -170,7 +170,7 @@ class _BitmapGeneratorState extends State<BitmapGenerator> {
               icon: Icons.save,
               onPressed: () {
                 setState(() {
-                  var input = binary2Image(convertBase(_board.getNumber().toString(), 10, 2), customLines: _currentHeight, pointSize: 1.0);
+                  var input = binary2Image(convertBase(_board.getNumber().toString(), 10, 2).padLeft(_currentHeight * _currentWidth, '0'), customLines: _currentHeight, bounds: 0, pointSize: 1.0);
                   if (input == null) return;
                   input2Image(input).then((value) {
                     setState(() {
