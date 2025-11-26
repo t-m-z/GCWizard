@@ -167,6 +167,32 @@ class _BitmapGeneratorState extends State<BitmapGenerator> {
               iconColor: themeColors().dialogText(),
               backgroundColor: themeColors().dialog(),
               size: IconButtonSize.SMALL,
+              icon: Icons.swap_vert,
+              onPressed: () {
+                setState(() {
+                  _createBoardFromNumber(_swapVertical(convertBase(_board.getNumber().toString(), 10, 2).padLeft(_currentHeight * _currentWidth, '0')));
+                });
+              },
+            ),
+          ),
+          Expanded(
+            child: GCWIconButton(
+              iconColor: themeColors().dialogText(),
+              backgroundColor: themeColors().dialog(),
+              size: IconButtonSize.SMALL,
+              icon: Icons.swap_horiz,
+              onPressed: () {
+                setState(() {
+                  _createBoardFromNumber(_swapHorizontal(convertBase(_board.getNumber().toString(), 10, 2).padLeft(_currentHeight * _currentWidth, '0')));
+                });
+              },
+            ),
+          ),
+          Expanded(
+            child: GCWIconButton(
+              iconColor: themeColors().dialogText(),
+              backgroundColor: themeColors().dialog(),
+              size: IconButtonSize.SMALL,
               icon: Icons.save,
               onPressed: () {
                 setState(() {
@@ -237,7 +263,7 @@ class _BitmapGeneratorState extends State<BitmapGenerator> {
         GCWSubmitButton(
           onPressed: () {
             setState(() {
-              _createBoardFromNumber();
+              _createBoardFromNumber(numberToImage(_currentInput, _currentNumberType[_currentOption]!));
             });
           },
         ),
@@ -245,9 +271,7 @@ class _BitmapGeneratorState extends State<BitmapGenerator> {
     );
   }
 
-  void _createBoardFromNumber() {
-    String binary =
-        numberToImage(_currentInput, _currentNumberType[_currentOption]!);
+  void _createBoardFromNumber(String binary) {
     List<List<bool>> board = List<List<bool>>.generate(_currentHeight,
         (index) => List<bool>.generate(_currentWidth, (index) => false));
     for (int row = 0; row < _currentHeight; row++) {
@@ -310,6 +334,7 @@ class _BitmapGeneratorState extends State<BitmapGenerator> {
   Widget _buildOutput() {
     return GCWDefaultOutput(
       child: GCWColumnedMultilineOutput(
+        flexValues: [1,4],
         data: [
           [
             i18n(context, 'common_numeralbase_denary'),
@@ -329,7 +354,7 @@ class _BitmapGeneratorState extends State<BitmapGenerator> {
     //}
   }
 
-    Future<void> _exportFile(Uint8List data) async {
+  Future<void> _exportFile(Uint8List data) async {
     await saveByteDataToFile(
             context, data, buildFileNameWithDate('img_', FileType.PNG))
         .then((value) {
@@ -338,5 +363,24 @@ class _BitmapGeneratorState extends State<BitmapGenerator> {
             contentWidget: imageContent(context, data));
       }
     });
+  }
+
+  String _swapHorizontal(String input) {
+    List<String> lines = [];
+    for (int i = 0; i < _currentHeight; i++) {
+      var s = input.substring(i * _currentWidth, i * _currentWidth + _currentWidth);
+      lines.add(s);
+    }
+    return lines.reversed.join('').split('').reversed.join('');
+  }
+
+
+  String _swapVertical(String input) {
+    List<String> lines = [];
+    for (int i = 0; i < _currentHeight; i++) {
+      var s = input.substring(i * _currentWidth, i * _currentWidth + _currentWidth);
+      lines.add(s);
+    }
+    return lines.reversed.join('');
   }
 }
