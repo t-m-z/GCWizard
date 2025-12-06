@@ -65,7 +65,46 @@ Map<String, String> _buildLowe(String input) {
 }
 
 Map<String, String> _buildEwol(String input) {
-  return {};
+  var inputList = <String>[];
+  var oddList = <String>[];
+  var evenList = <String>[];
+  var outputList = <String>[];
+
+  var gadeMap = <String, String>{};
+
+  inputList = input.replaceAll(RegExp(r'\D'), '').split('');
+  inputList.sort();
+  inputList = inputList.reversed.toList();
+
+  for (int i = 0; i < inputList.length; i++) {
+    if (int.parse(inputList[i]) % 2 == 0) {
+      evenList.add(inputList[i]);
+    } else {
+      oddList.add(inputList[i]);
+    }
+  }
+
+  for (int i = 9; i >= 0; i--) {
+    if (i % 2 == 0) {
+      if (!evenList.contains(i.toString())) {
+        evenList.add(i.toString());
+      }
+    } else {
+      if (!oddList.contains(i.toString())) {
+        oddList.add(i.toString());
+      }
+    }
+  }
+
+  outputList.addAll(oddList);
+  outputList.addAll(evenList);
+  for (int index = 0; index < outputList.length; index++) {
+    if (index <= 26) {
+      gadeMap[String.fromCharCode(index + 65)] = outputList[index];
+    }
+  }
+
+  return gadeMap;
 }
 
 Map<String, String> _buildEdag(String input) {
