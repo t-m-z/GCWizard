@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
+import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/common_widgets/gcw_snackbar.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
@@ -25,6 +26,8 @@ class Gade extends StatefulWidget {
 class _GadeState extends State<Gade> {
   late TextEditingController _GadeInputController;
   String _currentGadeInput = '';
+
+  GADE_TYPES _currentType = GADE_TYPES.GADE;
 
   bool _currentParseLetters = true;
 
@@ -52,6 +55,19 @@ class _GadeState extends State<Gade> {
             });
           },
         ),
+        GCWDropDown<GADE_TYPES>(
+            value: _currentType,
+            items: gadeTypes.entries.map((entry) {
+              return GCWDropDownMenuItem(
+                  value: entry.key,
+                  child: entry.value,
+              );
+            }).toList(),
+          onChanged: (value) {
+            setState(() {
+              _currentType = value;
+            });
+          },),
         GCWOnOffSwitch(
           value: _currentParseLetters,
           title: i18n(context, 'gade_parselettervalues'),
@@ -80,7 +96,7 @@ class _GadeState extends State<Gade> {
     var sorted = _input.replaceAll(RegExp(r'\D'), '').split('').toList();
     sorted.sort();
     var sortedStr = sorted.join();
-    var gade = buildGade(_input);
+    var gade = calculateGade(_currentType, _input);
 
     return Column(
       children: [
