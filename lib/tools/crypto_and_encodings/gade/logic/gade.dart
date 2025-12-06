@@ -23,7 +23,45 @@ Map<String, String> calculateGade(GADE_TYPES type, String input){
 }
 
 Map<String, String> _buildLowe(String input) {
-  return {};
+  var inputList = <String>[];
+  var oddList = <String>[];
+  var evenList = <String>[];
+  var outputList = <String>[];
+
+  var gadeMap = <String, String>{};
+
+  inputList = input.replaceAll(RegExp(r'\D'), '').split('');
+  inputList.sort();
+
+  for (int i = 0; i < inputList.length; i++) {
+    if (int.parse(inputList[i]) % 2 == 0) {
+      evenList.add(inputList[i]);
+    } else {
+      oddList.add(inputList[i]);
+    }
+  }
+
+  for (int i = 0; i <= 9; i++) {
+    if (i % 2 == 0) {
+      if (!evenList.contains(i.toString())) {
+        evenList.add(i.toString());
+      }
+    } else {
+      if (!oddList.contains(i.toString())) {
+        oddList.add(i.toString());
+      }
+    }
+  }
+
+  outputList.addAll(evenList);
+  outputList.addAll(oddList);
+  for (int index = 0; index < outputList.length; index++) {
+    if (index <= 26) {
+      gadeMap[String.fromCharCode(index + 65)] = outputList[index];
+    }
+  }
+
+  return gadeMap;
 }
 
 Map<String, String> _buildEwol(String input) {
