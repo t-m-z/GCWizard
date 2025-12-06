@@ -15,26 +15,46 @@ Map<GADE_TYPES, String> gadeTypes = {
 
 Map<String, String> calculateGade(GADE_TYPES type, String input){
   switch (type) {
-    case GADE_TYPES.GADE: return buildGade(input);
-    case GADE_TYPES.EDAG: return buildGade(input);
-    case GADE_TYPES.LOWE: return buildGade(input);
-    case GADE_TYPES.EWOL: return buildGade(input);
+    case GADE_TYPES.GADE: return _buildGade(input);
+    case GADE_TYPES.EDAG: return _buildEdag(input);
+    case GADE_TYPES.LOWE: return _buildLowe(input);
+    case GADE_TYPES.EWOL: return _buildEwol(input);
   }
 }
 
-Map<String, String> buildEdag(String input) {
+Map<String, String> _buildLowe(String input) {
   return {};
 }
 
-Map<String, String> buildEwol(String input) {
+Map<String, String> _buildEwol(String input) {
   return {};
 }
 
-Map<String, String> buildLowe(String input) {
-  return {};
+Map<String, String> _buildEdag(String input) {
+  var outputList = <String>[];
+  var gadeMap = <String, String>{};
+
+  outputList = input.replaceAll(RegExp(r'\D'), '').split('');
+  outputList.sort();
+  outputList = outputList.reversed.toList();
+
+
+  for (int index = 9; index >= 0; index--) {
+    if (!outputList.contains(index.toString())) {
+      outputList.add(index.toString());
+    }
+  }
+
+  for (int index = 0; index < outputList.length; index++) {
+    if (index <= 26) {
+      gadeMap[String.fromCharCode(index + 65)] = outputList[index];
+    }
+  }
+
+  return gadeMap;
 }
 
-Map<String, String> buildGade(String input) {
+Map<String, String> _buildGade(String input) {
   var outputList = <String>[];
   var gadeMap = <String, String>{};
 
@@ -48,7 +68,7 @@ Map<String, String> buildGade(String input) {
   }
 
   for (int index = 0; index < outputList.length; index++) {
-    if (index < 26) {
+    if (index <= 26) {
       gadeMap[String.fromCharCode(index + 65)] = outputList[index];
     }
   }
