@@ -58,60 +58,15 @@ class _GadeState extends State<Gade> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        GCWTextField(
-          controller: _GadeInputController,
-          onChanged: (text) {
-            setState(() {
-              _currentGadeInput = text;
-            });
-          },
-        ),
-        GCWDropDown<GADE_TYPES>(
-            value: _currentType,
-            items: gadeTypes.entries.map((entry) {
-              return GCWDropDownMenuItem(
-                  value: entry.key,
-                  child: entry.value,
-              );
-            }).toList(),
-          onChanged: (value) {
-            setState(() {
-              _currentType = value;
-            });
-          },),
-        GCWExpandableTextDivider(
-          text: i18n(context, 'common_mode_advanced'),
-          suppressTopSpace: false,
-          child: Column(
-            children: [
-              GCWOnOffSwitch(
-                value: _currentParseLetters,
-                title: i18n(context, 'gade_parselettervalues'),
-                onChanged: (mode) {
-                  setState(() {
-                    _currentParseLetters = mode;
-                  });
-                },
-              ),
-              GCWText(text: i18n(context, 'common_advanced_output') + ':'),
-              GCWTextField(
-                  hintText: 'N [EM] [MD-O].[RSY] E [R] [YS.NOR]',
-                  controller: _advancedOutputInputController,
-                  onChanged: (String text) {
-                    setState(() {
-                      _advancedOutputInput = text;
-                    });
-                  }
-              ),
-            ],
-          ),
-        ),
-        _buildOutput()
+        _buildWidgetInputText(),
+        _buildWidgetInputGadeType(),
+        _buildWidgetInputOptions(),
+        _buildWidgetOutput()
       ],
     );
   }
 
-  Widget _buildOutput() {
+  Widget _buildWidgetOutput() {
     String _input;
     if (_currentParseLetters) {
       _input = AlphabetValues(alphabet: alphabetAZ.alphabet)
@@ -138,43 +93,51 @@ class _GadeState extends State<Gade> {
         GCWDefaultOutput(
           child: Column(
             children: [
-              _widgetAdvancedOutput(gade),
+              _buildWidgetOutputAdvancedOutput(gade),
               _advancedOutputInput != ''
                   ? GCWTextDivider(
                       suppressTopSpace: false,
                       text: i18n(context, 'common_details') + ':')
                   : Container(),
-              GCWColumnedMultilineOutput(
-                  data: gade.entries.map((entry) {
-                    return [entry.key, entry.value];
-                  }).toList()),
+              _buildWidgetOutputGade(gade),
             ],
           ),
         ),
-        GCWButton(
-            text: i18n(context, 'gade_exporttoformulasolver'),
-            onPressed: () {
-              var formulaGroup = FormulaGroup('Gade Export');
-
-              for (var entry in gade.entries) {
-                formulaGroup.values.add(FormulaValue(entry.key, entry.value));
-              }
-
-              try {
-                setState(() {
-                  importFormulaGroupFromJson(context, jsonEncode(formulaGroup.toMap()));
-                });
-
-                openInFormulaGroups(context);
-              } catch (e) {
-                showSnackBar(i18n(context, 'formulasolver_groups_importerror'), context);
-              }
-            })
+        _buildWidgetExportToCgeo(gade),
       ],
     );
   }
 
-  Widget _widgetAdvancedOutput(Map<String, String> gade) {
+  Widget _buildWidgetExportToCgeo(Map<String, String> gade){
+    return GCWButton(
+        text: i18n(context, 'gade_exporttoformulasolver'),
+        onPressed: () {
+          var formulaGroup = FormulaGroup('Gade Export');
+
+          for (var entry in gade.entries) {
+            formulaGroup.values.add(FormulaValue(entry.key, entry.value));
+          }
+
+          try {
+            setState(() {
+              importFormulaGroupFromJson(context, jsonEncode(formulaGroup.toMap()));
+            });
+
+            openInFormulaGroups(context);
+          } catch (e) {
+            showSnackBar(i18n(context, 'formulasolver_groups_importerror'), context);
+          }
+        });
+  }
+
+  Widget _buildWidgetOutputGade(Map<String, String> gade){
+    return GCWColumnedMultilineOutput(
+        data: gade.entries.map((entry) {
+          return [entry.key, entry.value];
+        }).toList());
+  }
+
+  Widget _buildWidgetOutputAdvancedOutput(Map<String, String> gade) {
     // getAdvancedOutput(HashMap<String, int> result, String advancedOutputInput)
     // from VerbalArithmetic helper
     if (_advancedOutputInput == '') {
@@ -191,8 +154,60 @@ class _GadeState extends State<Gade> {
     }
   }
 
-  String _interpretAdvancedOutput(String input, Map<String, String> gade) {
-    return '';
+  Widget _buildWidgetInputText() {
+    return GCWTextField(
+      controller: _GadeInputController,
+      onChanged: (text) {
+        setState(() {
+          _currentGadeInput = text;
+        });
+      },
+    );
   }
 
+  Widget _buildWidgetInputGadeType() {
+    return GCWDropDown<GADE_TYPES>(
+      value: _currentType,
+      items: gadeTypes.entries.map((entry) {
+        return GCWDropDownMenuItem(
+          value: entry.key,
+          child: entry.value,
+        );
+      }).toList(),
+      onChanged: (value) {
+        setState(() {
+          _currentType = value;
+        });
+      },);
+  }
+
+  Widget _buildWidgetInputOptions(){
+    return GCWExpandableTextDivider(
+      text: i18n(context, 'common_mode_advanced'),
+      suppressTopSpace: false,
+      child: Column(
+        children: [
+          GCWOnOffSwitch(
+            value: _currentParseLetters,
+            title: i18n(context, 'gade_parselettervalues'),
+            onChanged: (mode) {
+              setState(() {
+                _currentParseLetters = mode;
+              });
+            },
+          ),
+          GCWText(text: i18n(context, 'common_advanced_output') + ':'),
+          GCWTextField(
+              hintText: 'N [EM] [MD-O].[RSY] E [R] [YS.NOR]',
+              controller: _advancedOutputInputController,
+              onChanged: (String text) {
+                setState(() {
+                  _advancedOutputInput = text;
+                });
+              }
+          ),
+        ],
+      ),
+    );
+  }
 }
