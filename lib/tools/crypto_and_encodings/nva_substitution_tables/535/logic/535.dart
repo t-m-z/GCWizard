@@ -26,9 +26,9 @@ const Map<String, String> _NumbersTo535 = {
 };
 final Map<String, String> _535ToNumbers = switchMapKeyValue(_NumbersTo535);
 
-const _NUMBERS_FOLLOW = '89';
-const _LETTERS_FOLLOW = '89';
-const _FILLING = '86';
+const _NUMBERS_FOLLOW = '9';
+const _LETTERS_FOLLOW = '9';
+const _FILLING = '87';
 
 String _encode535(String input) {
   //remove non-encodable chars

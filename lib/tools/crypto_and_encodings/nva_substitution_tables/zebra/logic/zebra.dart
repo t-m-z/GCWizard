@@ -8,16 +8,9 @@ const Map<String, String> _AZToZebra = {
   'G': '51', 'GE': '52', 'H': '53', 'J': '54', 'K': '55', 'L': '56', 'M': '57',
   'O': '58', 'P': '60', 'Q': '61', 'R': '62', 'RE': '63', 'S': '64',
   'SCH': '65', 'SE': '66', 'ST': '67', 'SU': '68', 'T': '69',
-  'TE': '70', 'U': '71', 'UNG': '73', 'V': '74', 'W': '76', 'X': '77', 'Y': '78',
+  'TE': '70', 'U': '71', 'UNG': '73', 'V': '74', 'W': '76', 'X': '77',
+  'Y': '78',
   'Z': '79',
-  '\u00C4': '40', // Ä
-  '\u00D6': '59', // Ö
-  '\u00DC': '72', // Ü
-};
-final Map<String, String> _ZebraToAZ = switchMapKeyValue(_AZToZebra);
-
-const Map<String, String> _NumbersToZebra = {
-  ' ': '86',
   '.': '80',
   ':': '81',
   ',': '82',
@@ -26,6 +19,13 @@ const Map<String, String> _NumbersToZebra = {
   '(': '85',
   ')': '87',
   '"': '88',
+  '\u00C4': '40', // Ä
+  '\u00D6': '59', // Ö
+  '\u00DC': '72', // Ü
+};
+final Map<String, String> _ZebraToAZ = switchMapKeyValue(_AZToZebra);
+
+const Map<String, String> _NumbersToZebra = {
   '0': '000',
   '1': '111',
   '2': '222',
@@ -39,8 +39,7 @@ const Map<String, String> _NumbersToZebra = {
 };
 final Map<String, String> _ZebraToNumbers = switchMapKeyValue(_NumbersToZebra);
 
-const _NUMBERS_FOLLOW = '89';
-const _LETTERS_FOLLOW = '89';
+const _LETTERS_NUMBER_SWITCH = '89';
 const _FILLING = '86';
 
 String _encodeZebra(String input) {
@@ -78,7 +77,7 @@ String _encodeZebra(String input) {
       } else {
         code = _NumbersToZebra[character];
         if (code != null) {
-          out.add(_NUMBERS_FOLLOW);
+          out.add(_LETTERS_NUMBER_SWITCH);
           out.add(code);
           isLetterMode = false;
         }
@@ -90,7 +89,7 @@ String _encodeZebra(String input) {
       } else {
         code = _AZToZebra[character];
         if (code != null) {
-          out.add(_LETTERS_FOLLOW);
+          out.add(_LETTERS_NUMBER_SWITCH);
           out.add(code);
           isLetterMode = true;
         }
@@ -153,20 +152,32 @@ String _decodeZebra(String input) {
   String out = '';
 
   int i = 0;
+  String code = '';
   while (i < input.length) {
     String? character;
 
-    if (i + 1 < input.length) {
-      var code = input.substring(i, i + 2);
-
-      if (code == _LETTERS_FOLLOW) {
-        isLetterMode = true;
+    if (i + 2 < input.length && !isLetterMode) {
+      code = input.substring(i, i + 2);
+      if (code == _LETTERS_NUMBER_SWITCH) {
+        isLetterMode = !isLetterMode;
         i += 2;
         continue;
       }
+      code = input.substring(i, i + 3);
+      character = _checkCode(code, isLetterMode);
+      i += 3;
+      if (character != null) {
+        out += character;
+        //i += 3;
+        continue;
+      }
+    }
 
-      if (code == _NUMBERS_FOLLOW) {
-        isLetterMode = false;
+    if (i + 1 < input.length) {
+      code = input.substring(i, i + 2);
+
+      if (code == _LETTERS_NUMBER_SWITCH) {
+        isLetterMode = !isLetterMode;
         i += 2;
         continue;
       }
@@ -179,8 +190,11 @@ String _decodeZebra(String input) {
       }
     }
 
-    character = _checkCode(input[i++], isLetterMode);
-    if (character != null) out += character;
+    character = _checkCode(input[i], isLetterMode);
+    if (character != null) {
+      out += character;
+    }
+    i++;
   }
 
   return out.trim();
