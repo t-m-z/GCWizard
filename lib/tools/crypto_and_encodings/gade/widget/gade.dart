@@ -77,10 +77,9 @@ class _GadeState extends State<Gade> {
       _input = _currentGadeInput.replaceAll(RegExp(r'\D'), '');
     }
 
-    var sorted = _input.replaceAll(RegExp(r'\D'), '').split('').toList();
-    sorted.sort();
-    var sortedStr = sorted.join();
     var gade = calculateGade(_currentType, _input);
+
+    var sortedStr = gade.values.toList().join('');
 
     return Column(
       children: [
