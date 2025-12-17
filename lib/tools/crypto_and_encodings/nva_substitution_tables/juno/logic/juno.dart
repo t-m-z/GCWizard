@@ -137,11 +137,7 @@ String _decodeJuno(String input) {
       if (i + 4 < input.length) {
         code = input.substring(i + 1, i + 4);
         character = CodeToTITANZ[code];
-        if (character != null) {
-          out += character;
-        } else {
-          out += UNKNOWN_ELEMENT;
-        }
+        out += character ?? UNKNOWN_ELEMENT;
         i += 4;
         continue;
       } else {

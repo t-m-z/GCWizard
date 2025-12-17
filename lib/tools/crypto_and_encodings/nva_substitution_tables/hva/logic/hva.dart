@@ -22,7 +22,7 @@ const Map<String, String> _AZToHVA1950 = {
 };
 final Map<String, String> _HVA1950ToAZ = switchMapKeyValue(_AZToHVA1950);
 
-final Map<String, String> _CodeToHVA1950 = {
+const Map<String, String> _CodeToHVA1950 = {
   'BERICHT': '92',
   'INFORMATION': '99',
   'No': '93',
@@ -48,13 +48,12 @@ const Map<String, String> _NumbersToHVA1950 = {
   '8': '888',
   '9': '999'
 };
-final Map<String, String> _HVA1950ToNumbers =
-    switchMapKeyValue(_NumbersToHVA1950);
+final Map<String, String> _HVA1950ToNumbers = switchMapKeyValue(_NumbersToHVA1950);
 
 const _LETTERS_NUMBER_SWITCH_HVA1950 = '35';
 const _FILLING_HVA1950 = '38';
 
-final Map<String, String> _AZToHVA1970 = {
+const Map<String, String> _AZToHVA1970 = {
   'S': '7', 'E': '9', 'A': '8', 'I': '2', 'T': '5', 'N': '4',
   'B': '69', 'C': '68', 'D': '64', 'F': '66', 'G': '60',
   'H': '07', 'J': '09', 'K': '08', 'L': '02', 'M': '04', 'O': '01', 'P': '03',
@@ -65,7 +64,6 @@ final Map<String, String> _AZToHVA1970 = {
   '\u00D6': '06', // Ö
   '\u00DC': '15', // Ü
   '\u00DF': '18', // ß
-  '.': '32',
   ':': '31',
   '.': '32',
   ',': '35',
@@ -87,7 +85,7 @@ final Map<String, String> _CodeToHVA1970 = {
   'BESTÄTIGEN': '13',
   'TBK': '33',
 };
-final Map<String, String> _HVA1970ToCode = {
+const Map<String, String> _HVA1970ToCode = {
   '62': 'ERHALTEN',
   '65': 'BENÖTIGEN',
   '61': 'MITTEILEN/-UNG',
@@ -111,8 +109,7 @@ const Map<String, String> _NumbersToHVA1970 = {
   '8': '888',
   '9': '999'
 };
-final Map<String, String> _HVA1970ToNumbers =
-switchMapKeyValue(_NumbersToHVA1970);
+final Map<String, String> _HVA1970ToNumbers = switchMapKeyValue(_NumbersToHVA1970);
 
 const _LETTERS_NUMBER_SWITCH_HVA1970 = '38';
 const _FILLING_HVA1970 = '32';
@@ -223,7 +220,6 @@ String _decodeHVA(String input, bool codeHVA1950) {
 
   Map<String, String> _HVAToAZ = {};
   Map<String, String> _HVAToNumbers = {};
-  Map<String, String> _HVAToCode = {};
 
   String _LETTERS_NUMBER_SWITCH = '';
 

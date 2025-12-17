@@ -1,5 +1,5 @@
 
-final Map<String, String> CodeToTITANZ = {
+const Map<String, String> CodeToTITANZ = {
   '000': 'ABGESANDT',
   '253': 'DECKADRESSE',
   '505': 'LAUFEND',
@@ -102,7 +102,7 @@ final Map<String, String> CodeToTITANZ = {
   '992': 'ZENTRALE',
 };
 
-final Map<String, String> TITANZToCode = {
+const Map<String, String> TITANZToCode = {
   'POST NOCH NICHT ERHALTEN': '695',
   'TREFF WIE VEREINBART': '794',
   'GEHEIMSCHREIBMITTEL': '415',
