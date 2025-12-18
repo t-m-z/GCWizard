@@ -1,0 +1,2569 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gpx xmlns="http://www.topografix.com/GPX/1/1" version="1.1" creator="FME(R) 2021.1.0.1">
+	<metadata>
+		<time>2025-10-20T13:46:43+02:00</time>
+		<bounds minlat="49.634643002972268" minlon="5.8619578114038973" maxlat="50.054603606071623" maxlon="6.5073231705398742"/>
+	</metadata>
+	<wpt lat="49.723303039064987" lon="6.4923007067542216">
+		<name>6204-002</name>
+		<cmt/>
+		<desc/>
+		<src>Landesforsten Rheinland-Pfalz</src>
+	</wpt>
+	<wpt lat="49.727627998533364" lon="6.1072259955832919">
+		<name>LI-037</name>
+		<cmt>Waldweg</cmt>
+		<desc>Waldweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.732074532603313" lon="6.4888135585166973">
+		<name>6204-001</name>
+		<cmt/>
+		<desc/>
+		<src>Landesforsten Rheinland-Pfalz</src>
+	</wpt>
+	<wpt lat="49.73229985983599" lon="6.4987275467540853">
+		<name>6204-003</name>
+		<cmt/>
+		<desc/>
+		<src>Landesforsten Rheinland-Pfalz</src>
+	</wpt>
+	<wpt lat="49.727146442616139" lon="6.5073231705398742">
+		<name>6205-089</name>
+		<cmt/>
+		<desc/>
+		<src>Landesforsten Rheinland-Pfalz</src>
+	</wpt>
+	<wpt lat="49.738402187810777" lon="6.0649731155169206">
+		<name>MS-052</name>
+		<cmt>Waldwegkreuzung</cmt>
+		<desc>Waldwegkreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.734880495738366" lon="6.0632419781348403">
+		<name>MS-053</name>
+		<cmt>Waldrand</cmt>
+		<desc>Waldrand</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.737594127167313" lon="6.0559675635522581">
+		<name>MS-054</name>
+		<cmt>Waldwegkreuzung</cmt>
+		<desc>Waldwegkreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.739629308246037" lon="6.0398414404301661">
+		<name>MS-055</name>
+		<cmt>Waldwegkreuzung</cmt>
+		<desc>Waldwegkreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.731896131501344" lon="6.0449810452390693">
+		<name>MS-056</name>
+		<cmt>Picknickplatz im Wald</cmt>
+		<desc>Picknickplatz im Wald</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.72842164933968" lon="6.0538810122989162">
+		<name>MS-057</name>
+		<cmt>An Quelle</cmt>
+		<desc>An Quelle</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.722293276813332" lon="6.0580572273591997">
+		<name>MS-058</name>
+		<cmt>Landesstrasse C.R. 113</cmt>
+		<desc>Landesstrasse C.R. 113</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.722692168408912" lon="6.069843362581139">
+		<name>MS-059</name>
+		<cmt>Pfadfinderchalet</cmt>
+		<desc>Pfadfinderchalet</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.712167998754182" lon="6.0809129962378279">
+		<name>MS-060</name>
+		<cmt>Landesstrasse C.R. 102</cmt>
+		<desc>Landesstrasse C.R. 102</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.704944984923145" lon="6.0773907906524869">
+		<name>MS-061</name>
+		<cmt>Waldwegkreuzung</cmt>
+		<desc>Waldwegkreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.697582193963115" lon="6.0724934434177271">
+		<name>MS-062</name>
+		<cmt>Picknickplatz an C.R. 102</cmt>
+		<desc>Picknickplatz an C.R. 102</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.722985864506086" lon="6.0995233553186381">
+		<name>MS-063</name>
+		<cmt>Fahrradweg</cmt>
+		<desc>Fahrradweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.712846867289159" lon="6.0964835802530501">
+		<name>MS-064</name>
+		<cmt>Waldwegkreuzung</cmt>
+		<desc>Waldwegkreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.710130802294771" lon="6.0849872335739974">
+		<name>MS-065</name>
+		<cmt>Waldweg</cmt>
+		<desc>Waldweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.70228399800817" lon="6.0765379959318011">
+		<name>MS-066</name>
+		<cmt>Waldweg</cmt>
+		<desc>Waldweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.702913534232266" lon="6.0853093356573709">
+		<name>MS-067</name>
+		<cmt>Waldweg</cmt>
+		<desc>Waldweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.698739200553689" lon="6.086469263245931">
+		<name>MS-068</name>
+		<cmt>Feldweg</cmt>
+		<desc>Feldweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.703744184946231" lon="6.0893343512993283">
+		<name>MS-069</name>
+		<cmt>Offenland</cmt>
+		<desc>Offenland</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.701721285908661" lon="6.0931432139881849">
+		<name>MS-070</name>
+		<cmt>Waldwegkreuzung</cmt>
+		<desc>Waldwegkreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.710017335731493" lon="6.1052061380528926">
+		<name>MS-071</name>
+		<cmt>Waldrand</cmt>
+		<desc>Waldrand</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.7047325380762" lon="6.1038890863123356">
+		<name>MS-072</name>
+		<cmt>Waldeingang</cmt>
+		<desc>Waldeingang</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.752050252417291" lon="6.1437687805048427">
+		<name>MS-029</name>
+		<cmt>Waldwegkreuzung</cmt>
+		<desc>Waldwegkreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.751561521247254" lon="6.1370701379765364">
+		<name>MS-030</name>
+		<cmt>Waldwegkreuzung</cmt>
+		<desc>Waldwegkreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.753404227623037" lon="6.138834485523148">
+		<name>MS-031</name>
+		<cmt>Landesstrasse C.R. 118</cmt>
+		<desc>Landesstrasse C.R. 118</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.733667716791729" lon="6.098825191829178">
+		<name>MS-032</name>
+		<cmt>Fahrradweg</cmt>
+		<desc>Fahrradweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.734300031921009" lon="6.0965535897764198">
+		<name>MS-033</name>
+		<cmt>Waldweg</cmt>
+		<desc>Waldweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.736779100375259" lon="6.1003820145184022">
+		<name>MS-034</name>
+		<cmt>Aussichtspunkt neben Bank</cmt>
+		<desc>Aussichtspunkt neben Bank</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.739074200813775" lon="6.0877967183439523">
+		<name>MS-035</name>
+		<cmt>Waldwegkreuzung</cmt>
+		<desc>Waldwegkreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.737579167844387" lon="6.0925143603495258">
+		<name>MS-036</name>
+		<cmt>Waldwegkreuzung</cmt>
+		<desc>Waldwegkreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.735038576768943" lon="6.086298670847043">
+		<name>MS-037</name>
+		<cmt>Offenland Kreuzung</cmt>
+		<desc>Offenland Kreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.733079666293634" lon="6.0901073797518279">
+		<name>MS-038</name>
+		<cmt>Trimmdichpfad</cmt>
+		<desc>Trimmdichpfad</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.724430917652796" lon="6.0895193562333247">
+		<name>MS-039</name>
+		<cmt>Waldwegkreuzung</cmt>
+		<desc>Waldwegkreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.721341922691636" lon="6.0910941815512842">
+		<name>MS-040</name>
+		<cmt>Pavillon im Wald</cmt>
+		<desc>Pavillon im Wald</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.719108491463771" lon="6.0860456924547748">
+		<name>MS-041</name>
+		<cmt>Waldwegkreuzung</cmt>
+		<desc>Waldwegkreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.716254581084115" lon="6.0705222221229178">
+		<name>MS-042</name>
+		<cmt>Waldwegkreuzung</cmt>
+		<desc>Waldwegkreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.729033181136458" lon="6.0785395756409457">
+		<name>MS-044</name>
+		<cmt>Landesstrasse C.R. 105</cmt>
+		<desc>Landesstrasse C.R. 105</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.72892203212615" lon="6.0807055846950107">
+		<name>MS-043</name>
+		<cmt>Infotafel Parkplatz</cmt>
+		<desc>Infotafel Parkplatz</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.741593615552972" lon="6.0842007134921801">
+		<name>MS-046</name>
+		<cmt>Kreuzung</cmt>
+		<desc>Kreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.733897998094164" lon="6.0715309961585717">
+		<name>MS-047</name>
+		<cmt>Waldrand</cmt>
+		<desc>Waldrand</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.748222998592553" lon="6.0717349956735802">
+		<name>MS-048</name>
+		<cmt>Picknickplatz</cmt>
+		<desc>Picknickplatz</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.75939963448559" lon="6.0514817209047465">
+		<name>MS-049</name>
+		<cmt>Kreuzung</cmt>
+		<desc>Kreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.760142041921767" lon="6.0781382064131435">
+		<name>MS-050</name>
+		<cmt>Bank an Kapelle</cmt>
+		<desc>Bank an Kapelle</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.77444599828425" lon="6.0828399960690263">
+		<name>MS-051</name>
+		<cmt>Waldeingang</cmt>
+		<desc>Waldeingang</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.752481998045823" lon="6.1231149962601421">
+		<name>MS-001</name>
+		<cmt>Waldwegkreuzung</cmt>
+		<desc>Waldwegkreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.754740997898807" lon="6.1307409963000055">
+		<name>MS-002</name>
+		<cmt>Waldwegkreuzung</cmt>
+		<desc>Waldwegkreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.758218796760104" lon="6.1316003416824856">
+		<name>MS-003</name>
+		<cmt>Waldwegkreuzung</cmt>
+		<desc>Waldwegkreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.762731998582922" lon="6.1319189957650906">
+		<name>MS-004</name>
+		<cmt>Bank Fahrradweg</cmt>
+		<desc>Bank Fahrradweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.765655883412364" lon="6.1395255443684391">
+		<name>MS-005</name>
+		<cmt>Waldwegkreuzung</cmt>
+		<desc>Waldwegkreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.771101998758297" lon="6.1440629964101845">
+		<name>MS-006</name>
+		<cmt>Waldwegkreuzung</cmt>
+		<desc>Waldwegkreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.772166714222521" lon="6.1358617657079435">
+		<name>MS-007</name>
+		<cmt>Bank Waldwegkreuzung</cmt>
+		<desc>Bank Waldwegkreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.777537998779678" lon="6.1401969961944474">
+		<name>MS-008</name>
+		<cmt>Waldeingang Landesstrasse C.R. 306</cmt>
+		<desc>Waldeingang Landesstrasse C.R. 306</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.773716799190993" lon="6.1242775948351778">
+		<name>MS-009</name>
+		<cmt>Picknickplatz</cmt>
+		<desc>Picknickplatz</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.772713932801821" lon="6.0893096550166206">
+		<name>MS-010</name>
+		<cmt>Picknickplatz Landesstrasse C.R. 306</cmt>
+		<desc>Picknickplatz Landesstrasse C.R. 306</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.775012998351258" lon="6.0968839961994945">
+		<name>MS-011</name>
+		<cmt>Waldeingang</cmt>
+		<desc>Waldeingang</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.783423998618673" lon="6.0988929962148291">
+		<name>MS-012</name>
+		<cmt>Waldkreuzung</cmt>
+		<desc>Waldkreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.787767998394486" lon="6.1059309961186159">
+		<name>MS-013</name>
+		<cmt>Waldkreuzung</cmt>
+		<desc>Waldkreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.790777998705721" lon="6.119098996321668">
+		<name>MS-014</name>
+		<cmt>Fahrradweg</cmt>
+		<desc>Fahrradweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.779233998750101" lon="6.1184909961625635">
+		<name>MS-015</name>
+		<cmt>Waldweg</cmt>
+		<desc>Waldweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.757728373965335" lon="6.144433416369111">
+		<name>MS-016</name>
+		<cmt>Kapelle Waldrand</cmt>
+		<desc>Kapelle Waldrand</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.761403202595773" lon="6.141192695886275">
+		<name>MS-017</name>
+		<cmt>Waldrand</cmt>
+		<desc>Waldrand</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.745990900159995" lon="6.1236529527216135">
+		<name>MS-018</name>
+		<cmt>Waldwegkreuzung</cmt>
+		<desc>Waldwegkreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.745202592225894" lon="6.1300557875446202">
+		<name>MS-019</name>
+		<cmt>Waldwegkreuzung</cmt>
+		<desc>Waldwegkreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.745431051501896" lon="6.13779970309389">
+		<name>MS-020</name>
+		<cmt>Waldwegkreuzung</cmt>
+		<desc>Waldwegkreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.74873678217682" lon="6.1517977730488269">
+		<name>MS-021</name>
+		<cmt>Waldrand</cmt>
+		<desc>Waldrand</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.739861823464423" lon="6.139214024607611">
+		<name>MS-022</name>
+		<cmt>Landesstrasse C.R. 120</cmt>
+		<desc>Landesstrasse C.R. 120</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.735600135937602" lon="6.1313716701665157">
+		<name>MS-023</name>
+		<cmt>Waldweg</cmt>
+		<desc>Waldweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.739320998165567" lon="6.1253614784495198">
+		<name>MS-024</name>
+		<cmt>Waldweg</cmt>
+		<desc>Waldweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.736254872064762" lon="6.1202467389958315">
+		<name>MS-025</name>
+		<cmt>Waldeingang neben Bank</cmt>
+		<desc>Waldeingang neben Bank</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.73375499869428" lon="6.1302599957022608">
+		<name>MS-026</name>
+		<cmt>Waldweg</cmt>
+		<desc>Waldweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.740459426561358" lon="6.1313031436252459">
+		<name>MS-027</name>
+		<cmt>Waldweg</cmt>
+		<desc>Waldweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.765357998273032" lon="6.1309159962762578">
+		<name>MS-028</name>
+		<cmt>Waldeingang neben Bank</cmt>
+		<desc>Waldeingang neben Bank</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.727506295978856" lon="6.0861630935519884">
+		<name>MS-045</name>
+		<cmt>Picknickplatz</cmt>
+		<desc>Picknickplatz</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="50.054603606071623" lon="6.1195559328600666">
+		<name>PH-033</name>
+		<cmt>Waldwegkreuzung</cmt>
+		<desc>Waldwegkreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="50.042157999791925" lon="6.0980939998382837">
+		<name>PH-029</name>
+		<cmt>Kreuzung Offenland</cmt>
+		<desc>Kreuzung Offenland</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="50.029117" lon="6.0564850001826471">
+		<name>PH-030</name>
+		<cmt>Waldrand</cmt>
+		<desc>Waldrand</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="50.025271257062911" lon="6.0552456183906429">
+		<name>PH-034</name>
+		<cmt>Waldwegkreuzung</cmt>
+		<desc>Waldwegkreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="50.020277593336289" lon="6.099987486433406">
+		<name>PH-036</name>
+		<cmt>Kreuzung Offenland neben Bank</cmt>
+		<desc>Kreuzung Offenland neben Bank</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="50.022818000050734" lon="6.0992150002720678">
+		<name>PH-028</name>
+		<cmt>Waldrand</cmt>
+		<desc>Waldrand</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="50.03178861605187" lon="6.1165210294220174">
+		<name>PH-035</name>
+		<cmt>Waldweg</cmt>
+		<desc>Waldweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="50.020960682389614" lon="6.0726057507548603">
+		<name>PH-015</name>
+		<cmt>Picknickplatz</cmt>
+		<desc>Picknickplatz</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="50.007063000157359" lon="6.0421180004453845">
+		<name>PH-014</name>
+		<cmt>Waldeingang</cmt>
+		<desc>Waldeingang</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="50.006045" lon="6.1076319999169186">
+		<name>PH-032</name>
+		<cmt>Waldwegkreuzung</cmt>
+		<desc>Waldwegkreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="50.00863" lon="6.1111559996497249">
+		<name>PH-011</name>
+		<cmt>Waldweg</cmt>
+		<desc>Waldweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="50.012392000390548" lon="6.133593000116889">
+		<name>PH-026</name>
+		<cmt>Parkplatz und Waldeingang Nationalstrasse N.10</cmt>
+		<desc>Parkplatz und Waldeingang Nationalstrasse N.10</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="50.018341961812155" lon="6.1205469533792325">
+		<name>PH-012</name>
+		<cmt>Verlassenes Haus</cmt>
+		<desc>Verlassenes Haus</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="50.021911173162152" lon="6.1273526170297146">
+		<name>PH-027</name>
+		<cmt>Waldwegkreuzung</cmt>
+		<desc>Waldwegkreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.968072999869094" lon="6.03903">
+		<name>PH-016</name>
+		<cmt>Waldwegkreuzung</cmt>
+		<desc>Waldwegkreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.978672000312599" lon="6.0700610003149791">
+		<name>PH-018</name>
+		<cmt>Bank Offenland</cmt>
+		<desc>Bank Offenland</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.996635999551813" lon="6.0667119996591055">
+		<name>PH-010</name>
+		<cmt>Feldweg neben Bank</cmt>
+		<desc>Feldweg neben Bank</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.99386" lon="6.101998">
+		<name>PH-039</name>
+		<cmt>Infotafel Waldeingang</cmt>
+		<desc>Infotafel Waldeingang</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.996480790056467" lon="6.1023197333690291">
+		<name>PH-019</name>
+		<cmt>Picknickplatz</cmt>
+		<desc>Picknickplatz</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.999219911869488" lon="6.1123788815801845">
+		<name>PH-031</name>
+		<cmt>Waldwegkreuzung</cmt>
+		<desc>Waldwegkreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.994533454755185" lon="6.1098989533740564">
+		<name>PH-020</name>
+		<cmt>Waldweg</cmt>
+		<desc>Waldweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="50.000113226444284" lon="6.121871">
+		<name>PH-021</name>
+		<cmt>Waldwegkreuzung neben Bank</cmt>
+		<desc>Waldwegkreuzung neben Bank</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.986774752552833" lon="6.1594868551343325">
+		<name>PH-024</name>
+		<cmt>Waldeingang an Nationalstrasse N.10</cmt>
+		<desc>Waldeingang an Nationalstrasse N.10</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.98350545880993" lon="6.1681662023084414">
+		<name>PH-023</name>
+		<cmt>Nationalstrasse N.10</cmt>
+		<desc>Nationalstrasse N.10</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.983758000131672" lon="6.1431419998035039">
+		<name>PH-040</name>
+		<cmt>Waldwegkreuzung Bank</cmt>
+		<desc>Waldwegkreuzung Bank</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.999363000302253" lon="6.134897">
+		<name>PH-025</name>
+		<cmt>Kreuzung</cmt>
+		<desc>Kreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.976457396391766" lon="6.1342639995839363">
+		<name>PH-022</name>
+		<cmt>Waldrand neben Bank</cmt>
+		<desc>Waldrand neben Bank</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.990988999942431" lon="6.143243">
+		<name>PH-009</name>
+		<cmt>Waldrand neben Bank</cmt>
+		<desc>Waldrand neben Bank</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.93715" lon="6.0870660002957493">
+		<name>PH-041</name>
+		<cmt>Landesstrasse C.R. 320D</cmt>
+		<desc>Landesstrasse C.R. 320D</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.940730999835807" lon="6.06413">
+		<name>PH-002</name>
+		<cmt>Bank Waldwegkreuzung</cmt>
+		<desc>Bank Waldwegkreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.949253263327478" lon="6.0735640161664719">
+		<name>PH-003</name>
+		<cmt>Waldrand</cmt>
+		<desc>Waldrand</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.954425958691104" lon="6.064661750439484">
+		<name>PH-004</name>
+		<cmt>Infotafel alten Mühle</cmt>
+		<desc>Infotafel alten Mühle</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.955322" lon="6.0766819998744381">
+		<name>PH-017</name>
+		<cmt>Kreuzung</cmt>
+		<desc>Kreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.976792" lon="6.0305389997750467">
+		<name>PH-038</name>
+		<cmt>Waldweg</cmt>
+		<desc>Waldweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.97560900025519" lon="6.0517860002237853">
+		<name>PH-007</name>
+		<cmt>Waldweg</cmt>
+		<desc>Waldweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.971472000132735" lon="6.0313710003713936">
+		<name>PH-006</name>
+		<cmt>Bank an Kreuzung</cmt>
+		<desc>Bank an Kreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.953560141787193" lon="6.0423485209674936">
+		<name>PH-005</name>
+		<cmt>Waldrand</cmt>
+		<desc>Waldrand</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.964523999882715" lon="6.081186999880174">
+		<name>PH-001</name>
+		<cmt>Feldweg Offenland</cmt>
+		<desc>Feldweg Offenland</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.966627999782418" lon="6.0630560001343383">
+		<name>PH-008</name>
+		<cmt>Waldrand neben Bank</cmt>
+		<desc>Waldrand neben Bank</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="50.031101664410357" lon="6.1287482362421315">
+		<name>PH-013</name>
+		<cmt>Waldeingang an Nationalstrasse N 10</cmt>
+		<desc>Waldeingang an Nationalstrasse N 10</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="50.006448514987028" lon="6.1420122336776899">
+		<name>PH-037</name>
+		<cmt>Waldeingang</cmt>
+		<desc>Waldeingang</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.853181482439538" lon="5.9705684852474405">
+		<name>GB-001</name>
+		<cmt>Picknickplatz, Kreuzung</cmt>
+		<desc>Picknickplatz, Kreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.864199998631079" lon="5.9597709963344414">
+		<name>GB-002</name>
+		<cmt>Neben Bank</cmt>
+		<desc>Neben Bank</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.854116711716927" lon="5.960740674142869">
+		<name>GB-004</name>
+		<cmt>Waldrand, Kreuzung</cmt>
+		<desc>Waldrand, Kreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.846122262132724" lon="5.9620830480942573">
+		<name>GB-005</name>
+		<cmt>Picknickplatz, Kreuzung</cmt>
+		<desc>Picknickplatz, Kreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.83663107176659" lon="5.971017036507078">
+		<name>GB-007</name>
+		<cmt>Waldrand, Kreuzung</cmt>
+		<desc>Waldrand, Kreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.816379610031049" lon="5.9790639093719733">
+		<name>GB-008</name>
+		<cmt>Waldrand</cmt>
+		<desc>Waldrand</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.813162998573603" lon="5.9626089959085107">
+		<name>GB-009</name>
+		<cmt>Kreuzung</cmt>
+		<desc>Kreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.828510479674947" lon="5.9483380131887884">
+		<name>GB-010</name>
+		<cmt>Neben Bank</cmt>
+		<desc>Neben Bank</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.8432749986423" lon="5.9525779964774301">
+		<name>GB-018</name>
+		<cmt>Waldweg</cmt>
+		<desc>Waldweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.849626957917849" lon="5.9544307060123174">
+		<name>GB-020</name>
+		<cmt>Waldwegkreuzung</cmt>
+		<desc>Waldwegkreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.840537998330035" lon="5.9607279963999531">
+		<name>GB-021</name>
+		<cmt>Waldweg</cmt>
+		<desc>Waldweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.847498110649326" lon="5.9511513875265791">
+		<name>GB-019</name>
+		<cmt>Waldwegkreuzung</cmt>
+		<desc>Waldwegkreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.840519849111786" lon="5.9557333155401011">
+		<name>GB-022</name>
+		<cmt>Parkplatz, Grillplatz</cmt>
+		<desc>Parkplatz, Grillplatz</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.835091028628142" lon="5.9565531303227317">
+		<name>GB-023</name>
+		<cmt>Kreuzung, neben Bank</cmt>
+		<desc>Kreuzung, neben Bank</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.85372644911638" lon="5.9485876577942349">
+		<name>GB-016</name>
+		<cmt>Waldrand, Neben Bank</cmt>
+		<desc>Waldrand, Neben Bank</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.868306998269418" lon="5.9457469962269442">
+		<name>GB-003</name>
+		<cmt>Waldrand, Kreuzung</cmt>
+		<desc>Waldrand, Kreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.843637518956371" lon="5.9675370271121437">
+		<name>GB-006</name>
+		<cmt>Waldwegekreuzung</cmt>
+		<desc>Waldwegekreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.843600117051835" lon="5.9281775862266954">
+		<name>GB-011</name>
+		<cmt>Waldwegekreuzung</cmt>
+		<desc>Waldwegekreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.845575652394473" lon="5.9348889100951965">
+		<name>GB-012</name>
+		<cmt>Kreuzung</cmt>
+		<desc>Kreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.838596998752564" lon="5.9453849957210423">
+		<name>GB-013</name>
+		<cmt>Waldwegekreuzung</cmt>
+		<desc>Waldwegekreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.843428759329811" lon="5.9440380972804405">
+		<name>GB-014</name>
+		<cmt>Waldwegekreuzung, neben Bank</cmt>
+		<desc>Waldwegekreuzung, neben Bank</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.857277381745803" lon="5.9248564807420507">
+		<name>GB-015</name>
+		<cmt>Waldwegekreuzung</cmt>
+		<desc>Waldwegekreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.849380465436184" lon="5.9461914816516241">
+		<name>GB-017</name>
+		<cmt>Kreuzung, Lagerplatz</cmt>
+		<desc>Kreuzung, Lagerplatz</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.831929740764963" lon="5.9277710081255464">
+		<name>WA-004</name>
+		<cmt>Waldwegkreuzung</cmt>
+		<desc>Waldwegkreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.826161609670578" lon="5.9102517083497332">
+		<name>WA-008</name>
+		<cmt>Waldweg</cmt>
+		<desc>Waldweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.829133106407767" lon="5.9061577344918987">
+		<name>WA-010</name>
+		<cmt>Waldwegkreuzung</cmt>
+		<desc>Waldwegkreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.823113827940858" lon="5.9072147850343413">
+		<name>WA-009</name>
+		<cmt>Waldweg</cmt>
+		<desc>Waldweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.850563683667133" lon="5.8783051083941018">
+		<name>WA-016</name>
+		<cmt>Waldrand neben Bank</cmt>
+		<desc>Waldrand neben Bank</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.882844504969967" lon="5.8991351543639325">
+		<name>WA-022</name>
+		<cmt>Waldrand</cmt>
+		<desc>Waldrand</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.873459162110692" lon="5.9080916438143731">
+		<name>WA-021</name>
+		<cmt>Waldwegkreuzung neben Bank</cmt>
+		<desc>Waldwegkreuzung neben Bank</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.866621896283561" lon="5.9150616927429951">
+		<name>WA-019</name>
+		<cmt>Picknickplatz</cmt>
+		<desc>Picknickplatz</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.868550076924578" lon="5.893798348015423">
+		<name>WA-020</name>
+		<cmt>Waldrand</cmt>
+		<desc>Waldrand</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.863652723394523" lon="5.8970974156133025">
+		<name>WA-018</name>
+		<cmt>Neben Monument</cmt>
+		<desc>Neben Monument</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.858058320635052" lon="5.8875355232458446">
+		<name>WA-017</name>
+		<cmt>Waldrand</cmt>
+		<desc>Waldrand</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.848962478535611" lon="5.9047059733021001">
+		<name>WA-015</name>
+		<cmt>Waldweg Abzweigung Wanderweg</cmt>
+		<desc>Waldweg Abzweigung Wanderweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.841588914596798" lon="5.8889632338662068">
+		<name>WA-014</name>
+		<cmt>Fahrradweg</cmt>
+		<desc>Fahrradweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.830757142628102" lon="5.8871911323649329">
+		<name>WA-012</name>
+		<cmt>Waldrand</cmt>
+		<desc>Waldrand</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.836772511742083" lon="5.9164473870373513">
+		<name>WA-007</name>
+		<cmt>Waldeingang</cmt>
+		<desc>Waldeingang</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.832222561821823" lon="5.8944484427414636">
+		<name>WA-011</name>
+		<cmt>Waldrand</cmt>
+		<desc>Waldrand</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.837778329706225" lon="5.8881528637637075">
+		<name>WA-013</name>
+		<cmt>Wald am Teich</cmt>
+		<desc>Wald am Teich</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.818762451925693" lon="5.944912983847189">
+		<name>WA-001</name>
+		<cmt>Waldeingang</cmt>
+		<desc>Waldeingang</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.827968915133397" lon="5.9374240827552853">
+		<name>WA-003</name>
+		<cmt>Waldwegkreuzung</cmt>
+		<desc>Waldwegkreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.835414915865726" lon="5.9316326718104051">
+		<name>WA-005</name>
+		<cmt>Waldwegkreuzung</cmt>
+		<desc>Waldwegkreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.822832900418064" lon="5.9457160019919684">
+		<name>WA-002</name>
+		<cmt>Landesstrasse C.R. 307</cmt>
+		<desc>Landesstrasse C.R. 307</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.665382942069186" lon="6.1458467252462015">
+		<name>WF-001</name>
+		<cmt>Waldeingang "Heedchen"</cmt>
+		<desc>Waldeingang "Heedchen"</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.66335800336924" lon="6.1581779836270698">
+		<name>WF-002</name>
+		<cmt>Parkplatz Trimmdichpfad</cmt>
+		<desc>Parkplatz Trimmdichpfad</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.661832003144468" lon="6.164843983463129">
+		<name>WF-003</name>
+		<cmt>Picknickplatz an Waldwegekreuzung</cmt>
+		<desc>Picknickplatz an Waldwegekreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.665926003082632" lon="6.1508349840473215">
+		<name>WF-004</name>
+		<cmt>Picknickplatz an Waldwegekreuzung</cmt>
+		<desc>Picknickplatz an Waldwegekreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.661562003283905" lon="6.1470639837159524">
+		<name>WF-005</name>
+		<cmt>Wald und Wanderweg</cmt>
+		<desc>Wald und Wanderweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.659332151357773" lon="6.1477581218398996">
+		<name>WF-006</name>
+		<cmt>Wanderweg</cmt>
+		<desc>Wanderweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.654206051667984" lon="6.1431772064629513">
+		<name>WF-007</name>
+		<cmt>Wegekreuzung</cmt>
+		<desc>Wegekreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.655487002822952" lon="6.1559089833129974">
+		<name>WF-008</name>
+		<cmt>Wanderweg "Jaanshaff"</cmt>
+		<desc>Wanderweg "Jaanshaff"</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.655705002983552" lon="6.1136649840518089">
+		<name>WF-009</name>
+		<cmt>Trimmdichpfad</cmt>
+		<desc>Trimmdichpfad</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.653206002854802" lon="6.1091089834928312">
+		<name>WF-010</name>
+		<cmt>Waldeingang an Kreuzung</cmt>
+		<desc>Waldeingang an Kreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.650142002751295" lon="6.1121329835503957">
+		<name>WF-011</name>
+		<cmt>Landesstraße C.R. 181 Eingang zum Wald</cmt>
+		<desc>Landesstraße C.R. 181 Eingang zum Wald</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.65544400263866" lon="6.1033409836994679">
+		<name>WF-012</name>
+		<cmt>Picknickplatz im Wald</cmt>
+		<desc>Picknickplatz im Wald</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.649740003098714" lon="6.1036959838825737">
+		<name>WF-013</name>
+		<cmt>Waldrand</cmt>
+		<desc>Waldrand</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.681418989095107" lon="6.064252017516651">
+		<name>KE-014</name>
+		<cmt>Waldwegkreuzung</cmt>
+		<desc>Waldwegkreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.677433988787584" lon="6.0759210178407557">
+		<name>KE-017</name>
+		<cmt>Waldwegkreuzung</cmt>
+		<desc>Waldwegkreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.688407989437223" lon="6.0822900174703705">
+		<name>KE-012</name>
+		<cmt>Kreuzung Waldwege</cmt>
+		<desc>Kreuzung Waldwege</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.693557989509657" lon="6.0780260177865557">
+		<name>KE-006</name>
+		<cmt>Waldweg Abzweigung Wanderweg</cmt>
+		<desc>Waldweg Abzweigung Wanderweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.683518988810363" lon="6.0800370178940852">
+		<name>KE-015</name>
+		<cmt>Waldwegkreuzung</cmt>
+		<desc>Waldwegkreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.680713988959496" lon="6.0750210177058648">
+		<name>KE-016</name>
+		<cmt>Waldwegkreuzung</cmt>
+		<desc>Waldwegkreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.68563998949395" lon="6.0652790181122214">
+		<name>KE-011</name>
+		<cmt>Waldweg</cmt>
+		<desc>Waldweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.696980989081453" lon="6.0843570174624233">
+		<name>KE-005</name>
+		<cmt>Waldweg Abzweigung Wanderweg</cmt>
+		<desc>Waldweg Abzweigung Wanderweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.695951989292951" lon="6.0662770173705098">
+		<name>KE-004</name>
+		<cmt>Trimmdichpfad</cmt>
+		<desc>Trimmdichpfad</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.689755989547336" lon="6.0447820180757503">
+		<name>KE-007</name>
+		<cmt>Infotafel Waldrand</cmt>
+		<desc>Infotafel Waldrand</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.686323989560549" lon="6.0404870178616079">
+		<name>KE-010</name>
+		<cmt>Waldweg</cmt>
+		<desc>Waldweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.685408989633231" lon="6.0317430175263098">
+		<name>KE-009</name>
+		<cmt>Waldweg</cmt>
+		<desc>Waldweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.667593989171337" lon="5.9969070181444408">
+		<name>KE-018</name>
+		<cmt>Waldwegkreuzung</cmt>
+		<desc>Waldwegkreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.679816988962898" lon="6.0221430181857727">
+		<name>KE-013</name>
+		<cmt>Picknickplatz</cmt>
+		<desc>Picknickplatz</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.684955989427408" lon="6.0215290177500265">
+		<name>KE-008</name>
+		<cmt>Waldweg Brücke über Bach</cmt>
+		<desc>Waldweg Brücke über Bach</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.690520988852597" lon="5.99006301819378">
+		<name>KE-002</name>
+		<cmt>Waldweg</cmt>
+		<desc>Waldweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.693393989141327" lon="5.992000017586804">
+		<name>KE-001</name>
+		<cmt>Waldwegkreuzung</cmt>
+		<desc>Waldwegkreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.653852989523898" lon="6.0599550181096333">
+		<name>KE-025</name>
+		<cmt>Waldwegkreuzung</cmt>
+		<desc>Waldwegkreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.653401989410327" lon="6.0469510173755907">
+		<name>KE-026</name>
+		<cmt>Waldwegkreuzung</cmt>
+		<desc>Waldwegkreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.660568988967725" lon="6.044289017823985">
+		<name>KE-020</name>
+		<cmt>Waldweg</cmt>
+		<desc>Waldweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.656919988866434" lon="6.0528430174912842">
+		<name>KE-024</name>
+		<cmt>Waldwegkreuzung</cmt>
+		<desc>Waldwegkreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.662886988843525" lon="6.0493080181505547">
+		<name>KE-021</name>
+		<cmt>Waldweg</cmt>
+		<desc>Waldweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.665287988949558" lon="6.048375017393198">
+		<name>KE-019</name>
+		<cmt>Trimmdichpfad</cmt>
+		<desc>Trimmdichpfad</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.664568989067618" lon="6.022296018046859">
+		<name>KE-023</name>
+		<cmt>Kreuzung</cmt>
+		<desc>Kreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.653144989249881" lon="6.0004190182231696">
+		<name>KE-022</name>
+		<cmt>Parkplatz</cmt>
+		<desc>Parkplatz</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.695415697476506" lon="6.0571459389339566">
+		<name>KE-003</name>
+		<cmt>Waldwegkreuzung</cmt>
+		<desc>Waldwegkreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.672067036264764" lon="6.055035022348477">
+		<name>KE-027</name>
+		<cmt>Biogasanlage</cmt>
+		<desc>Biogasanlage</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.658854989066526" lon="6.1019620181326673">
+		<name>KO-011</name>
+		<cmt>Waldwegkreuzung</cmt>
+		<desc>Waldwegkreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.668150988777143" lon="6.0934350179118155">
+		<name>KO-008</name>
+		<cmt>Bank</cmt>
+		<desc>Bank</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.671266989480046" lon="6.0873850177044346">
+		<name>KO-004</name>
+		<cmt>Waldwegkreuzung</cmt>
+		<desc>Waldwegkreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.665697813603288" lon="6.0773910613484645">
+		<name>KO-009</name>
+		<cmt>Waldweg</cmt>
+		<desc>Waldweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.668707989282325" lon="6.0797520173417752">
+		<name>KO-007</name>
+		<cmt>Infotafel im Wald</cmt>
+		<desc>Infotafel im Wald</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.666302988991788" lon="6.0687160174302903">
+		<name>KO-006</name>
+		<cmt>Waldweg</cmt>
+		<desc>Waldweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.673748988824855" lon="6.0647140181374652">
+		<name>KO-001</name>
+		<cmt>Waldwegkreuzung</cmt>
+		<desc>Waldwegkreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.669419988841469" lon="6.0627140176378589">
+		<name>KO-003</name>
+		<cmt>Waldweg</cmt>
+		<desc>Waldweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.666576989036855" lon="6.059074017951616">
+		<name>KO-005</name>
+		<cmt>Waldeingang</cmt>
+		<desc>Waldeingang</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.660502989521376" lon="6.0607660177375919">
+		<name>KO-010</name>
+		<cmt>Waldwegkreuzung</cmt>
+		<desc>Waldwegkreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.673386338109083" lon="6.07776">
+		<name>KO-002</name>
+		<cmt>Waldwegkreuzung</cmt>
+		<desc>Waldwegkreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.840113280003948" lon="5.9303015816527136">
+		<name>WA-006</name>
+		<cmt>Waldwegkreuzung</cmt>
+		<desc>Waldwegkreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.769495469640276" lon="6.026367373055848">
+		<name>HK-013</name>
+		<cmt>Bank neben Mardelle</cmt>
+		<desc>Bank neben Mardelle</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.773304988834241" lon="6.0261820182855672">
+		<name>HK-012</name>
+		<cmt>Fahrradweg, Kreuzung und Eingang zum Wald</cmt>
+		<desc>Fahrradweg, Kreuzung und Eingang zum Wald</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.786281590822796" lon="6.0124373197265868">
+		<name>HK-011</name>
+		<cmt>Fahrradweg</cmt>
+		<desc>Fahrradweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.780188988830844" lon="6.0004230175082967">
+		<name>HK-010</name>
+		<cmt>Feldweg Offenalnd</cmt>
+		<desc>Feldweg Offenalnd</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.770794663542915" lon="5.9996466525710161">
+		<name>HK-009</name>
+		<cmt>Waldrand</cmt>
+		<desc>Waldrand</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.754893641628314" lon="5.9900231980122385">
+		<name>HK-008</name>
+		<cmt>Feldweg Offenalnd</cmt>
+		<desc>Feldweg Offenalnd</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.745291989333907" lon="5.9921670180934825">
+		<name>HK-007</name>
+		<cmt>Kreuzung Offenland</cmt>
+		<desc>Kreuzung Offenland</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.751811989631676" lon="6.0185980174845781">
+		<name>HK-020</name>
+		<cmt>Waldwegkreuzung</cmt>
+		<desc>Waldwegkreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.746990989442679" lon="6.0281020177939126">
+		<name>HK-021</name>
+		<cmt>Kreuzung Offenland neben Bank</cmt>
+		<desc>Kreuzung Offenland neben Bank</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.742960988858613" lon="6.0225710181380236">
+		<name>HK-022</name>
+		<cmt>Waldrand</cmt>
+		<desc>Waldrand</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.751528989171561" lon="6.0373360182426836">
+		<name>HK-018</name>
+		<cmt>Waldweg</cmt>
+		<desc>Waldweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.755975185206694" lon="6.0321859021577211">
+		<name>HK-017</name>
+		<cmt>Bank Waldweg</cmt>
+		<desc>Bank Waldweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.753124454829788" lon="6.0274919716771933">
+		<name>HK-019</name>
+		<cmt>Waldweg, Abzweigung Wanderweg</cmt>
+		<desc>Waldweg, Abzweigung Wanderweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.756672988967296" lon="6.0274450180731947">
+		<name>HK-016</name>
+		<cmt>Waldweg, Abzweigung Wanderweg</cmt>
+		<desc>Waldweg, Abzweigung Wanderweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.762366988945416" lon="6.0385320176385449">
+		<name>HK-014</name>
+		<cmt>Infotafel an Tumulus</cmt>
+		<desc>Infotafel an Tumulus</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.737405988995249" lon="6.0389350182365433">
+		<name>HK-023</name>
+		<cmt>Waldweg</cmt>
+		<desc>Waldweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.733119749976538" lon="6.0353756616574969">
+		<name>HK-024</name>
+		<cmt>Wanderweg</cmt>
+		<desc>Wanderweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.731346989272197" lon="6.0388790174527571">
+		<name>HK-025</name>
+		<cmt>Waldweg</cmt>
+		<desc>Waldweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.728381989237448" lon="6.0446370176842947">
+		<name>HK-028</name>
+		<cmt>Waldweg</cmt>
+		<desc>Waldweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.728112144060276" lon="6.0358556864907769">
+		<name>HK-027</name>
+		<cmt>Picknickplatz, Parkplatz, Wald</cmt>
+		<desc>Picknickplatz, Parkplatz, Wald</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.723926988839537" lon="6.0242540175089516">
+		<name>HK-026</name>
+		<cmt>Waldweg</cmt>
+		<desc>Waldweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.721360570134266" lon="6.0366789861463417">
+		<name>HK-031</name>
+		<cmt>Waldweg</cmt>
+		<desc>Waldweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.724613989044428" lon="6.0467240176993187">
+		<name>HK-029</name>
+		<cmt>Waldweg</cmt>
+		<desc>Waldweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.719497989640558" lon="6.04685301825225">
+		<name>HK-030</name>
+		<cmt>Waldweg</cmt>
+		<desc>Waldweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.705203435690066" lon="6.0461604782235554">
+		<name>HK-037</name>
+		<cmt>Feldweg</cmt>
+		<desc>Feldweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.72221286932853" lon="6.0564859462694471">
+		<name>HK-032</name>
+		<cmt>Infotafel an Quelle</cmt>
+		<desc>Infotafel an Quelle</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.715538989632705" lon="6.0610380176904073">
+		<name>HK-033</name>
+		<cmt>Wanderparkplatz, Kreuzung</cmt>
+		<desc>Wanderparkplatz, Kreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.713571032876928" lon="6.0585549841252373">
+		<name>HK-035</name>
+		<cmt>Waldwegkreuzung</cmt>
+		<desc>Waldwegkreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.710840243282632" lon="6.0566927462732565">
+		<name>HK-036</name>
+		<cmt>Waldweg</cmt>
+		<desc>Waldweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.714072989476961" lon="6.0689700174523864">
+		<name>HK-034</name>
+		<cmt>Waldwegkreuzung</cmt>
+		<desc>Waldwegkreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.702346455024951" lon="6.0174553155104604">
+		<name>HK-040</name>
+		<cmt>Wanderweg</cmt>
+		<desc>Wanderweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.707422339269613" lon="6.0131235627023329">
+		<name>HK-039</name>
+		<cmt>Bank neben Kapelle</cmt>
+		<desc>Bank neben Kapelle</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.70223328523798" lon="6.00571951984">
+		<name>HK-041</name>
+		<cmt>Waldrand</cmt>
+		<desc>Waldrand</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.706819174765144" lon="6.0195196580058337">
+		<name>HK-038</name>
+		<cmt>Bank Feldweg</cmt>
+		<desc>Bank Feldweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.726777346897109" lon="6.0042373597663641">
+		<name>HK-005</name>
+		<cmt>Waldrand, Fahrradweg</cmt>
+		<desc>Waldrand, Fahrradweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.743856740596129" lon="6.0037706682817884">
+		<name>HK-006</name>
+		<cmt>Bank Feldweg Offenland</cmt>
+		<desc>Bank Feldweg Offenland</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.758386611153242" lon="6.025755017480094">
+		<name>HK-015</name>
+		<cmt>Bank Waldrand</cmt>
+		<desc>Bank Waldrand</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.728394494310521" lon="6.0189835109803198">
+		<name>HK-004</name>
+		<cmt/>
+		<desc/>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.733105966067512" lon="6.0192049708327886">
+		<name>HK-001</name>
+		<cmt/>
+		<desc/>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.728790740100635" lon="6.0126021645583023">
+		<name>HK-003</name>
+		<cmt/>
+		<desc/>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.729828688143471" lon="6.0089094034462391">
+		<name>HK-002</name>
+		<cmt/>
+		<desc/>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.69563089265165" lon="5.8619578114038973">
+		<name>HA-009</name>
+		<cmt>Waldweg</cmt>
+		<desc>Waldweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.693949110962762" lon="5.8704879178831675">
+		<name>HA-008</name>
+		<cmt>Waldeingang</cmt>
+		<desc>Waldeingang</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.696569089691764" lon="5.8703589515044428">
+		<name>HA-010</name>
+		<cmt>Waldeingang</cmt>
+		<desc>Waldeingang</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.70871914457291" lon="5.8877772160457198">
+		<name>HA-016</name>
+		<cmt>Waldwegkreuzung</cmt>
+		<desc>Waldwegkreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.704742791246872" lon="5.8960284400604905">
+		<name>HA-017</name>
+		<cmt>Trimmdichpfad</cmt>
+		<desc>Trimmdichpfad</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.707262926343049" lon="5.9015826215407969">
+		<name>HA-019</name>
+		<cmt>Fahrradweg</cmt>
+		<desc>Fahrradweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.70762370916691" lon="5.9093905373434836">
+		<name>HA-020</name>
+		<cmt>Parkplatz Wald</cmt>
+		<desc>Parkplatz Wald</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.702382126633893" lon="5.9276274250656797">
+		<name>HA-022</name>
+		<cmt>Bank Waldweg</cmt>
+		<desc>Bank Waldweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.70334380497269" lon="5.9020214259480781">
+		<name>HA-018</name>
+		<cmt>Parkplatz, Spielplatz im Wald</cmt>
+		<desc>Parkplatz, Spielplatz im Wald</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.696200959406781" lon="5.89376945189872">
+		<name>HA-013</name>
+		<cmt>Bank an Waldweg</cmt>
+		<desc>Bank an Waldweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.696935308018112" lon="5.8824754724651029">
+		<name>HA-011</name>
+		<cmt>Waldwegkreuzung</cmt>
+		<desc>Waldwegkreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.701365242511997" lon="5.8848406489768195">
+		<name>HA-012</name>
+		<cmt>Waldeingang</cmt>
+		<desc>Waldeingang</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.697632549702462" lon="5.9034294504088507">
+		<name>HA-015</name>
+		<cmt>Fahrradweg</cmt>
+		<desc>Fahrradweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.693076326111623" lon="5.898812301346652">
+		<name>HA-014</name>
+		<cmt>Waldweg Kreuzung Wanderweg</cmt>
+		<desc>Waldweg Kreuzung Wanderweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.679247814335213" lon="5.8692357567248337">
+		<name>HA-005</name>
+		<cmt>Picknickplatz Wald</cmt>
+		<desc>Picknickplatz Wald</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.691460165254455" lon="5.875239326733606">
+		<name>HA-007</name>
+		<cmt>Kreuzung zum Waldeingang</cmt>
+		<desc>Kreuzung zum Waldeingang</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.686879994516175" lon="5.8644899821269973">
+		<name>HA-006</name>
+		<cmt/>
+		<desc/>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.677475248783765" lon="5.9014936597046699">
+		<name>HA-002</name>
+		<cmt>Waldweg</cmt>
+		<desc>Waldweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.67221176056438" lon="5.8828294672061929">
+		<name>HA-004</name>
+		<cmt>Bank Waldweg</cmt>
+		<desc>Bank Waldweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.677165530365016" lon="5.8877271804650491">
+		<name>HA-003</name>
+		<cmt>Waldweg</cmt>
+		<desc>Waldweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.7033291235403" lon="5.913355152718168">
+		<name>HA-021</name>
+		<cmt>Waldeingang</cmt>
+		<desc>Waldeingang</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.7011090355536" lon="5.9355938364864187">
+		<name>HA-023</name>
+		<cmt>Bank Waldweg</cmt>
+		<desc>Bank Waldweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.688422625903513" lon="5.9375035693342966">
+		<name>HA-024</name>
+		<cmt>Waldwegkreuzung</cmt>
+		<desc>Waldwegkreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.67991227033508" lon="5.933769934035297">
+		<name>HA-025</name>
+		<cmt>Parkplatz, Picknickplatz Wald</cmt>
+		<desc>Parkplatz, Picknickplatz Wald</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.692240001574874" lon="5.9476530481496752">
+		<name>HA-027</name>
+		<cmt>Waldweg</cmt>
+		<desc>Waldweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.701277309500313" lon="5.9588003085873993">
+		<name>HA-028</name>
+		<cmt>Waldweg</cmt>
+		<desc>Waldweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.708999929103527" lon="5.9939613922045396">
+		<name>HA-034</name>
+		<cmt>Kreuzung</cmt>
+		<desc>Kreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.694130657104211" lon="6.0150168379567504">
+		<name>HA-036</name>
+		<cmt>Waldrand, Waldweg</cmt>
+		<desc>Waldrand, Waldweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.697473149366431" lon="6.0002887226464736">
+		<name>HA-035</name>
+		<cmt>Waldrand</cmt>
+		<desc>Waldrand</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.694348454917304" lon="5.9852391149931918">
+		<name>HA-032</name>
+		<cmt>An Landesstrasse C.R. 104</cmt>
+		<desc>An Landesstrasse C.R. 104</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.700252763154538" lon="5.9801271652365244">
+		<name>HA-031</name>
+		<cmt>Picknickplatz Waldrand</cmt>
+		<desc>Picknickplatz Waldrand</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.696407804376747" lon="5.9670699956838007">
+		<name>HA-029</name>
+		<cmt>Waldwegkreuzung</cmt>
+		<desc>Waldwegkreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.6959701951684" lon="5.9721472352067622">
+		<name>HA-030</name>
+		<cmt>Waldweg</cmt>
+		<desc>Waldweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.676328856891303" lon="5.9019525774495492">
+		<name>HA-001</name>
+		<cmt>Picknickplatz an Landesstraße C.R. 108</cmt>
+		<desc>Picknickplatz an Landesstraße C.R. 108</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.689392377456329" lon="5.9458923554478815">
+		<name>HA-026</name>
+		<cmt>Waldeingang</cmt>
+		<desc>Waldeingang</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.709119820423439" lon="5.9818340541983162">
+		<name>HA-033</name>
+		<cmt>Kreuzung</cmt>
+		<desc>Kreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.669103447266309" lon="5.9017026450610501">
+		<name>ST-001</name>
+		<cmt>Waldwegkreuzung</cmt>
+		<desc>Waldwegkreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.668701003348701" lon="5.9094359836837498">
+		<name>ST-002</name>
+		<cmt>Infotafel im Wald</cmt>
+		<desc>Infotafel im Wald</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.654644002618681" lon="5.9060369834201083">
+		<name>ST-003</name>
+		<cmt>Bank Waldrand</cmt>
+		<desc>Bank Waldrand</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.653008002717229" lon="5.9126729836713139">
+		<name>ST-004</name>
+		<cmt>Feldweg</cmt>
+		<desc>Feldweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.642381651192295" lon="5.9482095072630159">
+		<name>ST-005</name>
+		<cmt>Waldweg</cmt>
+		<desc>Waldweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.634643002972268" lon="5.942558984109894">
+		<name>ST-006</name>
+		<cmt>Fahrradweg Infotafel</cmt>
+		<desc>Fahrradweg Infotafel</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.853276032662848" lon="5.9892214461128788">
+		<name>MT-001</name>
+		<cmt>Landesstrasse C.R. 314</cmt>
+		<desc>Landesstrasse C.R. 314</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.850399998061505" lon="5.9884019964550248">
+		<name>MT-002</name>
+		<cmt>Waldweg</cmt>
+		<desc>Waldweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.847873417524227" lon="5.9868302009530794">
+		<name>MT-003</name>
+		<cmt>Waldweg</cmt>
+		<desc>Waldweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.844088912073687" lon="5.9810832066247599">
+		<name>MT-004</name>
+		<cmt>Bank im Wald</cmt>
+		<desc>Bank im Wald</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.842413998507254" lon="5.9773339959671716">
+		<name>MT-005</name>
+		<cmt>Waldwegkreuzung</cmt>
+		<desc>Waldwegkreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.840307838436047" lon="5.9813731543476365">
+		<name>MT-006</name>
+		<cmt>Waldrand neben Kapelle</cmt>
+		<desc>Waldrand neben Kapelle</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.837925998386197" lon="5.9784439958937696">
+		<name>MT-007</name>
+		<cmt>Waldrand</cmt>
+		<desc>Waldrand</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.825482998341727" lon="5.9912719957060858">
+		<name>MT-010</name>
+		<cmt>Waldrand</cmt>
+		<desc>Waldrand</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.822624998744743" lon="5.9854879960741982">
+		<name>MT-011</name>
+		<cmt>Waldrand</cmt>
+		<desc>Waldrand</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.819333522324257" lon="5.9952042031115411">
+		<name>MT-013</name>
+		<cmt>Feldweg</cmt>
+		<desc>Feldweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.818038998600969" lon="5.9822119960867894">
+		<name>MT-012</name>
+		<cmt>Waldrand</cmt>
+		<desc>Waldrand</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.841089998604616" lon="6.0003909962475177">
+		<name>MT-009</name>
+		<cmt>Waldrand neben Bank</cmt>
+		<desc>Waldrand neben Bank</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.842817998252087" lon="5.9982099963942801">
+		<name>MT-008</name>
+		<cmt>Waldwegkreuzung</cmt>
+		<desc>Waldwegkreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.832201997923903" lon="6.0362949963170536">
+		<name>MT-018</name>
+		<cmt>Waldweg</cmt>
+		<desc>Waldweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.835885998739911" lon="6.0276869959581632">
+		<name>MT-017</name>
+		<cmt>Waldrand</cmt>
+		<desc>Waldrand</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.833661952836906" lon="6.0201458802282559">
+		<name>MT-016</name>
+		<cmt>Waldweg</cmt>
+		<desc>Waldweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.829341189744184" lon="6.0232044736076205">
+		<name>MT-015</name>
+		<cmt>Waldrand neben Bank</cmt>
+		<desc>Waldrand neben Bank</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.828204997962359" lon="6.0115299964122642">
+		<name>MT-014</name>
+		<cmt>Waldfriedhof</cmt>
+		<desc>Waldfriedhof</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.684955998420662" lon="5.961695996073388">
+		<name>KR-003</name>
+		<cmt>Waldweg</cmt>
+		<desc>Waldweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.690671998513949" lon="5.9659309962185603">
+		<name>KR-001</name>
+		<cmt>Infotafel Forstlehrpfad Härebesch</cmt>
+		<desc>Infotafel Forstlehrpfad Härebesch</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.685467998649244" lon="5.9526059959699751">
+		<name>KR-004</name>
+		<cmt>Waldweg</cmt>
+		<desc>Waldweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.678587997937825" lon="5.9460369961105357">
+		<name>KR-006</name>
+		<cmt>Infotafel Forstlehrpfad Härebesch</cmt>
+		<desc>Infotafel Forstlehrpfad Härebesch</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.687804998501917" lon="5.969261996044338">
+		<name>KR-002</name>
+		<cmt>Waldweg</cmt>
+		<desc>Waldweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.678208119808914" lon="5.9563544341098691">
+		<name>KR-007</name>
+		<cmt>Waldweg</cmt>
+		<desc>Waldweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.682751998406047" lon="5.9428419962611656">
+		<name>KR-005</name>
+		<cmt>Waldweg</cmt>
+		<desc>Waldweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.680384998069258" lon="5.9749989962067502">
+		<name>KR-008</name>
+		<cmt>Waldrand</cmt>
+		<desc>Waldrand</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.661636226131009" lon="5.9894396270371999">
+		<name>KR-024</name>
+		<cmt>Waldrand</cmt>
+		<desc>Waldrand</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.654257998308026" lon="5.9714929964047201">
+		<name>KR-021</name>
+		<cmt>Waldweg</cmt>
+		<desc>Waldweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.653930782679538" lon="5.9780092267444616">
+		<name>KR-023</name>
+		<cmt>Waldwegkreuzung</cmt>
+		<desc>Waldwegkreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.653907998355521" lon="5.9451429962523434">
+		<name>KR-017</name>
+		<cmt>Waldweg</cmt>
+		<desc>Waldweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.656953998528252" lon="5.9468569961534854">
+		<name>KR-016</name>
+		<cmt>Waldweg</cmt>
+		<desc>Waldweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.663880998709203" lon="5.9450129956532578">
+		<name>KR-015</name>
+		<cmt>Waldwegkreuzung</cmt>
+		<desc>Waldwegkreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.659006997874712" lon="5.9537459963806896">
+		<name>KR-018</name>
+		<cmt>Waldweg</cmt>
+		<desc>Waldweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.657233997950698" lon="5.9539299958726701">
+		<name>KR-019</name>
+		<cmt>Landesstrasse C.R. 110</cmt>
+		<desc>Landesstrasse C.R. 110</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.66297099811311" lon="5.9607419961462256">
+		<name>KR-020</name>
+		<cmt>Waldeingang</cmt>
+		<desc>Waldeingang</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.659765998701914" lon="5.9752309961136234">
+		<name>KR-022</name>
+		<cmt>Waldrand</cmt>
+		<desc>Waldrand</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.679750911275562" lon="5.9865672724616843">
+		<name>KR-010</name>
+		<cmt>Waldwegkreuzung</cmt>
+		<desc>Waldwegkreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.677680998379401" lon="5.9790119960068751">
+		<name>KR-009</name>
+		<cmt>Ruine Villa Rustica</cmt>
+		<desc>Ruine Villa Rustica</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.673202998719489" lon="5.9881099955798618">
+		<name>KR-011</name>
+		<cmt>Bank Waldrand</cmt>
+		<desc>Bank Waldrand</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.676007998570356" lon="5.9313249957519929">
+		<name>KR-012</name>
+		<cmt>Waldweg</cmt>
+		<desc>Waldweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.672118998193241" lon="5.9400659959489985">
+		<name>KR-013</name>
+		<cmt>Bank Waldweg</cmt>
+		<desc>Bank Waldweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.666880998559293" lon="5.9393729963667283">
+		<name>KR-014</name>
+		<cmt>Waldweg</cmt>
+		<desc>Waldweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.823515626145308" lon="6.1595790689189585">
+		<name>VE-001</name>
+		<cmt>Picknickplatz</cmt>
+		<desc>Picknickplatz</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.812731877074498" lon="6.193771226560898">
+		<name>VE-002</name>
+		<cmt>Waldrand</cmt>
+		<desc>Waldrand</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.801082678023249" lon="6.2010357252186168">
+		<name>VE-003</name>
+		<cmt>Campingplatz</cmt>
+		<desc>Campingplatz</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.801830689135045" lon="6.215127197861932">
+		<name>VE-004</name>
+		<cmt>Waldweg</cmt>
+		<desc>Waldweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.800078786406914" lon="6.215966533328924">
+		<name>VE-005</name>
+		<cmt>Picknickplatz</cmt>
+		<desc>Picknickplatz</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.797990286322715" lon="6.2051909033375523">
+		<name>VE-006</name>
+		<cmt>Wanderweg</cmt>
+		<desc>Wanderweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.806716466591695" lon="6.2280253097202944">
+		<name>VE-007</name>
+		<cmt>Kreuzung</cmt>
+		<desc>Kreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.823369380192787" lon="6.2507498126537939">
+		<name>VE-008</name>
+		<cmt>Waldweg</cmt>
+		<desc>Waldweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.810987813736688" lon="6.2366697461119429">
+		<name>VE-009</name>
+		<cmt>Landesstrasse C.R. 358</cmt>
+		<desc>Landesstrasse C.R. 358</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.850089025088494" lon="6.2062001791949797">
+		<name>VE-010</name>
+		<cmt>Bank Waldrand</cmt>
+		<desc>Bank Waldrand</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.833678997687628" lon="6.2321749947802232">
+		<name>VE-011</name>
+		<cmt>Picknickplatz</cmt>
+		<desc>Picknickplatz</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.826346145158539" lon="6.2259945236284011">
+		<name>VE-012</name>
+		<cmt>Landesstrasse C.R. 356</cmt>
+		<desc>Landesstrasse C.R. 356</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.845672997710722" lon="6.261893997410084">
+		<name>VE-013</name>
+		<cmt>Waldrand</cmt>
+		<desc>Waldrand</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.833986410244677" lon="6.2491560970762521">
+		<name>VE-014</name>
+		<cmt>Kreuzung Offenland</cmt>
+		<desc>Kreuzung Offenland</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.808821907205299" lon="6.2019363431877537">
+		<name>VE-015</name>
+		<cmt>Fahrradweg, Kreuzung</cmt>
+		<desc>Fahrradweg, Kreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.843317998826649" lon="6.2343739972621961">
+		<name>VE-016</name>
+		<cmt>Kreuzung Offenland</cmt>
+		<desc>Kreuzung Offenland</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.828486563104434" lon="6.2521649309668419">
+		<name>VE-017</name>
+		<cmt>Bank Kreuzung Offenland</cmt>
+		<desc>Bank Kreuzung Offenland</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.793452997957559" lon="6.2395539960201631">
+		<name>VE-018</name>
+		<cmt>Fahrradweg Kreuzung</cmt>
+		<desc>Fahrradweg Kreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.834425603159104" lon="6.166723909181087">
+		<name>VE-019</name>
+		<cmt>Waldrand</cmt>
+		<desc>Waldrand</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.835912204084991" lon="6.1715137712436103">
+		<name>VE-020</name>
+		<cmt>Waldrand</cmt>
+		<desc>Waldrand</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.840812999320519" lon="6.2215629973345017">
+		<name>VE-021</name>
+		<cmt>Landesstrasse C.R. 356B</cmt>
+		<desc>Landesstrasse C.R. 356B</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.835908819036831" lon="6.2155243816449683">
+		<name>VE-022</name>
+		<cmt>Kreuzung Offenland</cmt>
+		<desc>Kreuzung Offenland</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.828206998953874" lon="6.2075109959357633">
+		<name>VE-023</name>
+		<cmt>Waldspielplatz</cmt>
+		<desc>Waldspielplatz</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.802594361940294" lon="6.2092818815536361">
+		<name>VE-024</name>
+		<cmt>Waldspielplatz</cmt>
+		<desc>Waldspielplatz</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.822893997659889" lon="6.2166849963155641">
+		<name>VE-025</name>
+		<cmt>Waldrand</cmt>
+		<desc>Waldrand</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.819829997556383" lon="6.2073649963975299">
+		<name>VE-026</name>
+		<cmt>Waldweg</cmt>
+		<desc>Waldweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.82438599901468" lon="6.2117289952969372">
+		<name>VE-027</name>
+		<cmt>Waldweg</cmt>
+		<desc>Waldweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.82053499859137" lon="6.1950209964218743">
+		<name>VE-028</name>
+		<cmt>Nationalstraase N.14</cmt>
+		<desc>Nationalstraase N.14</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.817772660779724" lon="6.1993553473714087">
+		<name>VE-029</name>
+		<cmt>Nationalstraase N.14</cmt>
+		<desc>Nationalstraase N.14</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.806545999198534" lon="6.1928779947237445">
+		<name>VE-030</name>
+		<cmt>Fahrradweg</cmt>
+		<desc>Fahrradweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.805857346039716" lon="6.2060750628139658">
+		<name>VE-031</name>
+		<cmt>Waldrand</cmt>
+		<desc>Waldrand</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.801262652149717" lon="6.2069676282534942">
+		<name>VE-032</name>
+		<cmt>Waldweg Abzweigung Wanderweg</cmt>
+		<desc>Waldweg Abzweigung Wanderweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.797106792344664" lon="6.2119221399948401">
+		<name>VE-033</name>
+		<cmt>Waldweg</cmt>
+		<desc>Waldweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.803220361130798" lon="6.219723406210278">
+		<name>VE-034</name>
+		<cmt>Kreuzung</cmt>
+		<desc>Kreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.797133168560947" lon="6.2263364143940407">
+		<name>VE-035</name>
+		<cmt>Wanderweg Waldrand</cmt>
+		<desc>Wanderweg Waldrand</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.800738459812123" lon="6.2281383922730242">
+		<name>VE-036</name>
+		<cmt>Waldrand</cmt>
+		<desc>Waldrand</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.809049998658566" lon="6.2284689956476882">
+		<name>VE-037</name>
+		<cmt>Fahrradweg/Teerstrasse</cmt>
+		<desc>Fahrradweg/Teerstrasse</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.801481537243205" lon="6.2353617640342236">
+		<name>VE-038</name>
+		<cmt>Fahrradweg</cmt>
+		<desc>Fahrradweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.806169700371413" lon="6.2181312527551427">
+		<name>VE-039</name>
+		<cmt>Waldspielplatz</cmt>
+		<desc>Waldspielplatz</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.851607998010763" lon="6.2562619948951692">
+		<name>VE-040</name>
+		<cmt>Kreuzung Offenland</cmt>
+		<desc>Kreuzung Offenland</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.826569999006324" lon="6.2372109958907913">
+		<name>VE-041</name>
+		<cmt>Kreuzung an Chalet</cmt>
+		<desc>Kreuzung an Chalet</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.833553452330023" lon="6.2383401468803186">
+		<name>VE-042</name>
+		<cmt>Feldweg Offenland</cmt>
+		<desc>Feldweg Offenland</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.840998998005432" lon="6.2657409949509884">
+		<name>VE-043</name>
+		<cmt>Waldweg Kreuzung</cmt>
+		<desc>Waldweg Kreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.842244997908381" lon="6.1644009963089843">
+		<name>VE-044</name>
+		<cmt>Feldweg Offenland</cmt>
+		<desc>Feldweg Offenland</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.832240199325781" lon="6.1492010256068852">
+		<name>VE-045</name>
+		<cmt>Landesstrasse C.R. 347</cmt>
+		<desc>Landesstrasse C.R. 347</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.822790550443585" lon="6.1643080666639776">
+		<name>VE-046</name>
+		<cmt>Waldweg</cmt>
+		<desc>Waldweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.823310552839814" lon="6.1801019838195543">
+		<name>VE-047</name>
+		<cmt>Waldrand</cmt>
+		<desc>Waldrand</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.826383745813246" lon="6.1919918729266215">
+		<name>VE-048</name>
+		<cmt>Waldweg</cmt>
+		<desc>Waldweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.831496004037433" lon="6.1907841994313344">
+		<name>VE-049</name>
+		<cmt>Feldweg</cmt>
+		<desc>Feldweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.819357196077817" lon="6.2272419930235969">
+		<name>VE-050</name>
+		<cmt>Waldrand</cmt>
+		<desc>Waldrand</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.716304939521422" lon="6.1307683869515586">
+		<name>LI-001</name>
+		<cmt>Fahrradweg</cmt>
+		<desc>Fahrradweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.71407199842406" lon="6.1347579962845771">
+		<name>LI-002</name>
+		<cmt>Fahrradweg, Kreuzung</cmt>
+		<desc>Fahrradweg, Kreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.719768312357758" lon="6.133752725108252">
+		<name>LI-003</name>
+		<cmt>Waldrand</cmt>
+		<desc>Waldrand</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.718415204997768" lon="6.1361965311450604">
+		<name>LI-004</name>
+		<cmt>Waldrand</cmt>
+		<desc>Waldrand</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.716093127595798" lon="6.1407167485791092">
+		<name>LI-005</name>
+		<cmt>Picknickplatz</cmt>
+		<desc>Picknickplatz</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.715742064644644" lon="6.1484128606650188">
+		<name>LI-007</name>
+		<cmt>Wanderweg</cmt>
+		<desc>Wanderweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.717665063392019" lon="6.1621760088157771">
+		<name>LI-008</name>
+		<cmt>Waldwegkreuzung</cmt>
+		<desc>Waldwegkreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.715136998074058" lon="6.1551239956759218">
+		<name>LI-009</name>
+		<cmt>Waldwegkreuzung, Abzweigung Wanderweg</cmt>
+		<desc>Waldwegkreuzung, Abzweigung Wanderweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.719540320729266" lon="6.1502124148710777">
+		<name>LI-010</name>
+		<cmt>Landesstrasse C.R. 101</cmt>
+		<desc>Landesstrasse C.R. 101</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.720971127715416" lon="6.1551552390230881">
+		<name>LI-011</name>
+		<cmt>Landesstrasse C.R. 101 Zugang zum Wald</cmt>
+		<desc>Landesstrasse C.R. 101 Zugang zum Wald</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.725926106204895" lon="6.1650783503856132">
+		<name>LI-012</name>
+		<cmt>Landesstrasse C.R. 101 Zugang zum Wald</cmt>
+		<desc>Landesstrasse C.R. 101 Zugang zum Wald</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.727265901799967" lon="6.1642418396892253">
+		<name>LI-013</name>
+		<cmt>Kreuzung</cmt>
+		<desc>Kreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.724840169438323" lon="6.1690577668025526">
+		<name>LI-015</name>
+		<cmt>Kreuzung Offenland</cmt>
+		<desc>Kreuzung Offenland</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.728604998621847" lon="6.1611699956987991">
+		<name>LI-014</name>
+		<cmt>Eingang zum Wald</cmt>
+		<desc>Eingang zum Wald</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.732246998400285" lon="6.1618919957190883">
+		<name>LI-016</name>
+		<cmt>Waldwegekreuzung</cmt>
+		<desc>Waldwegekreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.735095998481597" lon="6.1695859961968154">
+		<name>LI-017</name>
+		<cmt>Waldweg</cmt>
+		<desc>Waldweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.736228684706077" lon="6.1523866221449452">
+		<name>LI-019</name>
+		<cmt>Kreuzung Offenland</cmt>
+		<desc>Kreuzung Offenland</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.732502036240021" lon="6.1347708448986396">
+		<name>LI-021</name>
+		<cmt>Waldweg</cmt>
+		<desc>Waldweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.736071110893079" lon="6.1393725355141555">
+		<name>LI-022</name>
+		<cmt>Offenland</cmt>
+		<desc>Offenland</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.723158823920642" lon="6.1351521592447966">
+		<name>LI-023</name>
+		<cmt>Waldweg</cmt>
+		<desc>Waldweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.726919998259348" lon="6.1514619958744561">
+		<name>LI-024</name>
+		<cmt>Waldwegkreuzung bei Teich</cmt>
+		<desc>Waldwegkreuzung bei Teich</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.733401896080693" lon="6.1579636158282369">
+		<name>LI-018</name>
+		<cmt>Picknickplatz</cmt>
+		<desc>Picknickplatz</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.723648592908262" lon="6.1519328242404754">
+		<name>LI-025</name>
+		<cmt>Waldweg</cmt>
+		<desc>Waldweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.731342695908722" lon="6.1762794361471265">
+		<name>LI-026</name>
+		<cmt>Landesstrasse C.R. 125</cmt>
+		<desc>Landesstrasse C.R. 125</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.720908534001694" lon="6.1492797630506857">
+		<name>LI-027</name>
+		<cmt>Bank an Waldwegkreuzung</cmt>
+		<desc>Bank an Waldwegkreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.731788997963918" lon="6.1380629958106283">
+		<name>LI-028</name>
+		<cmt>Bank Feldweg</cmt>
+		<desc>Bank Feldweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.713435595876092" lon="6.1189330660082533">
+		<name>LI-035</name>
+		<cmt>Kreuzung</cmt>
+		<desc>Kreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.708486871272157" lon="6.1110424152752785">
+		<name>LI-036</name>
+		<cmt>Waldrand</cmt>
+		<desc>Waldrand</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.713510998633751" lon="6.1126779960927138">
+		<name>LI-034</name>
+		<cmt>Kreuzung an Quelle</cmt>
+		<desc>Kreuzung an Quelle</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.721928998324643" lon="6.1118259963726587">
+		<name>LI-032</name>
+		<cmt>Picknickplatz</cmt>
+		<desc>Picknickplatz</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.718037316169273" lon="6.1061470600388361">
+		<name>LI-033</name>
+		<cmt>Parkplatz neben Bank</cmt>
+		<desc>Parkplatz neben Bank</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.730675773068526" lon="6.1087324598352097">
+		<name>LI-038</name>
+		<cmt>Feldweg</cmt>
+		<desc>Feldweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.739465717069265" lon="6.1584463871910771">
+		<name>LI-029</name>
+		<cmt>Waldweg</cmt>
+		<desc>Waldweg</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.742848998082877" lon="6.1702409958253384">
+		<name>LI-031</name>
+		<cmt>Waldwegkreuzung</cmt>
+		<desc>Waldwegkreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.74179784349576" lon="6.1652395808420124">
+		<name>LI-030</name>
+		<cmt>Waldwegkreuzung</cmt>
+		<desc>Waldwegkreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.742924394545241" lon="6.157253528227784">
+		<name>LI-020</name>
+		<cmt>Waldeingang</cmt>
+		<desc>Waldeingang</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.712194445117575" lon="6.1453445213326177">
+		<name>LI-006</name>
+		<cmt>Waldwegkreuzung</cmt>
+		<desc>Waldwegkreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+	<wpt lat="49.737171018627635" lon="6.1024890136570775">
+		<name>LI-039</name>
+		<cmt>Waldwegkreuzung</cmt>
+		<desc>Waldwegkreuzung</desc>
+		<src>Lignafor SA</src>
+	</wpt>
+</gpx>

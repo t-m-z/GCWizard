@@ -142,6 +142,7 @@ import 'package:gc_wizard/tools/coords/intersect_three_circles/widget/intersect_
 import 'package:gc_wizard/tools/coords/intersect_two_circles/widget/intersect_two_circles.dart';
 import 'package:gc_wizard/tools/coords/intersection/widget/intersection.dart';
 import 'package:gc_wizard/tools/coords/map_view/widget/map_view.dart';
+import 'package:gc_wizard/tools/coords/rescue_points/widget/rescue_points_map.dart';
 import 'package:gc_wizard/tools/coords/resection/widget/resection.dart';
 import 'package:gc_wizard/tools/coords/rhumb_line/widget/rhumbline_distancebearing.dart';
 import 'package:gc_wizard/tools/coords/rhumb_line/widget/rhumbline_waypoint_projection.dart';
@@ -685,22 +686,22 @@ void initializeRegistry(BuildContext context) {
       ToolCategory.SCIENCE_AND_TECHNOLOGY
     ], searchKeys: const [
       'ballistics',
-    ],
-        licenses: [
-          ToolLicenseCodeLibrary(
-              context: context,
-              author: 'Thomas "KoenigDickbauch" Bornhaupt',
-              title: 'Weitwurf (Mopsos)',
-              privatePermission: ToolLicensePrivatePermission(
-                context: context,
-                medium: 'e-mail',
-                permissionYear: 2022,
-                permissionMonth: 9,
-                permissionDay: 12,
-              ),
-              sourceUrl: 'https://web.archive.org/web/20240811192840/http://mopsos.net/',
-              licenseType: ToolLicenseType.PRIVATE_PERMISSION)
-        ]),
+    ], licenses: [
+      ToolLicenseCodeLibrary(
+          context: context,
+          author: 'Thomas "KoenigDickbauch" Bornhaupt',
+          title: 'Weitwurf (Mopsos)',
+          privatePermission: ToolLicensePrivatePermission(
+            context: context,
+            medium: 'e-mail',
+            permissionYear: 2022,
+            permissionMonth: 9,
+            permissionDay: 12,
+          ),
+          sourceUrl:
+              'https://web.archive.org/web/20240811192840/http://mopsos.net/',
+          licenseType: ToolLicenseType.PRIVATE_PERMISSION)
+    ]),
     GCWTool(
         tool: const BaseSelection(),
         id: 'base_selection',
@@ -926,7 +927,7 @@ void initializeRegistry(BuildContext context) {
         author: 'Oliver Kuhlemann (kryptografie.de)',
         title: 'Echo Chiffre',
         sourceUrl:
-          'https://web.archive.org/web/20250630084348/https://kryptografie.de/kryptografie/chiffre/echo-chiffre.htm',
+            'https://web.archive.org/web/20250630084348/https://kryptografie.de/kryptografie/chiffre/echo-chiffre.htm',
       )
     ]),
     GCWTool(
@@ -1066,16 +1067,14 @@ void initializeRegistry(BuildContext context) {
           licenseType: ToolLicenseType.MIT,
           licenseUrl:
               'https://github.com/tlrobinson/life-gen/commit/005f5cca4a10ab5884983755ddafab2617a90188',
-          sourceUrl:
-              'https://github.com/tlrobinson/life-gen/'),
+          sourceUrl: 'https://github.com/tlrobinson/life-gen/'),
       ToolLicenseCodeLibrary(
           context: context,
           author: 'NovaCrypto',
           title: 'Base58',
           sourceUrl:
-          'https://web.archive.org/web/20240722085432/https://github.com/NovaCrypto/Base58',
+              'https://web.archive.org/web/20240722085432/https://github.com/NovaCrypto/Base58',
           licenseType: ToolLicenseType.GPL3),
-
     ]),
     GCWTool(tool: const GCCode(), id: 'gccode', categories: const [
       ToolCategory.CRYPTOGRAPHY
@@ -1125,21 +1124,23 @@ void initializeRegistry(BuildContext context) {
       'gray',
     ]),
     GCWTool(
-        tool: Grenztruppen535(),
-        id: '535',
-        categories: const [ToolCategory.CRYPTOGRAPHY],
-        searchKeys: const ['535', 'numbers'],
-        licenses: [
-          ToolLicenseOnlineArticle(
-              context: context,
-              author: 'Jörg Drobick',
-              title: 'Der SAS- und Chiffrierdienst (SCD) DDR Seit 1995 - Manuelle Chiffrierverfahren',
-              licenseType: ToolLicenseType.NON_COMMERCIAL,
-              licenseUrl:
-              'https://web.archive.org/web/20251207183924/https://scz.bplaced.net/',
-              sourceUrl:
-              'https://web.archive.org/web/20251207183113/https://scz.bplaced.net/m.html'),
-        ],),
+      tool: Grenztruppen535(),
+      id: '535',
+      categories: const [ToolCategory.CRYPTOGRAPHY],
+      searchKeys: const ['535', 'numbers'],
+      licenses: [
+        ToolLicenseOnlineArticle(
+            context: context,
+            author: 'Jörg Drobick',
+            title:
+                'Der SAS- und Chiffrierdienst (SCD) DDR Seit 1995 - Manuelle Chiffrierverfahren',
+            licenseType: ToolLicenseType.NON_COMMERCIAL,
+            licenseUrl:
+                'https://web.archive.org/web/20251207183924/https://scz.bplaced.net/',
+            sourceUrl:
+                'https://web.archive.org/web/20251207183113/https://scz.bplaced.net/m.html'),
+      ],
+    ),
     GCWTool(tool: const Grid(), id: 'grid', categories: const [
       ToolCategory.GAMES
     ], searchKeys: const [
@@ -1234,13 +1235,15 @@ void initializeRegistry(BuildContext context) {
         ToolLicenseOnlineArticle(
             context: context,
             author: 'Jörg Drobick',
-            title: 'Der SAS- und Chiffrierdienst (SCD) DDR Seit 1995 - Manuelle Chiffrierverfahren',
+            title:
+                'Der SAS- und Chiffrierdienst (SCD) DDR Seit 1995 - Manuelle Chiffrierverfahren',
             licenseType: ToolLicenseType.NON_COMMERCIAL,
             licenseUrl:
-            'https://web.archive.org/web/20251207183924/https://scz.bplaced.net/',
+                'https://web.archive.org/web/20251207183924/https://scz.bplaced.net/',
             sourceUrl:
-            'https://web.archive.org/web/20251207183113/https://scz.bplaced.net/m.html'),
-      ],),
+                'https://web.archive.org/web/20251207183113/https://scz.bplaced.net/m.html'),
+      ],
+    ),
     GCWTool(tool: const IATAICAOSearch(), id: 'iataicao', categories: const [
       ToolCategory.SCIENCE_AND_TECHNOLOGY
     ], searchKeys: const [
@@ -1300,9 +1303,9 @@ void initializeRegistry(BuildContext context) {
         ],
         licenses: const []),
     GCWTool(
-        tool: const IPAddressSelection(),
-        id: 'ipaddress_selection',
-        categories: const [ToolCategory.SCIENCE_AND_TECHNOLOGY],
+      tool: const IPAddressSelection(),
+      id: 'ipaddress_selection',
+      categories: const [ToolCategory.SCIENCE_AND_TECHNOLOGY],
     ),
     GCWTool(
         tool: const IPCodes(),
@@ -1310,63 +1313,70 @@ void initializeRegistry(BuildContext context) {
         categories: const [ToolCategory.SCIENCE_AND_TECHNOLOGY],
         searchKeys: const ['ipcodes']),
     GCWTool(
-        tool: Juno(),
-        id: 'juno',
-        categories: const [ToolCategory.CRYPTOGRAPHY],
-        searchKeys: const ['juno', 'numbers'],
-        licenses: [
-          ToolLicenseOnlineArticle(
+      tool: Juno(),
+      id: 'juno',
+      categories: const [ToolCategory.CRYPTOGRAPHY],
+      searchKeys: const ['juno', 'numbers'],
+      licenses: [
+        ToolLicenseOnlineArticle(
             context: context,
             author: 'Jörg Drobick',
-            title: 'Der SAS- und Chiffrierdienst (SCD) DDR Seit 1995 - Manuelle Chiffrierverfahren',
+            title:
+                'Der SAS- und Chiffrierdienst (SCD) DDR Seit 1995 - Manuelle Chiffrierverfahren',
             licenseType: ToolLicenseType.NON_COMMERCIAL,
             licenseUrl:
-            'https://web.archive.org/web/20251207183924/https://scz.bplaced.net/',
+                'https://web.archive.org/web/20251207183924/https://scz.bplaced.net/',
             sourceUrl:
-            'https://web.archive.org/web/20251207183113/https://scz.bplaced.net/m.html'),
-        ],),
+                'https://web.archive.org/web/20251207183113/https://scz.bplaced.net/m.html'),
+      ],
+    ),
     GCWTool(
-        tool: Jupiter(),
-        id: 'jupiter',
-        categories: const [ToolCategory.CRYPTOGRAPHY],
-        searchKeys: const ['jupiter', 'numbers'],
-        licenses: [
-          ToolLicenseOnlineArticle(
+      tool: Jupiter(),
+      id: 'jupiter',
+      categories: const [ToolCategory.CRYPTOGRAPHY],
+      searchKeys: const ['jupiter', 'numbers'],
+      licenses: [
+        ToolLicenseOnlineArticle(
             context: context,
             author: 'Jörg Drobick',
-            title: 'Der SAS- und Chiffrierdienst (SCD) DDR Seit 1995 - Manuelle Chiffrierverfahren',
+            title:
+                'Der SAS- und Chiffrierdienst (SCD) DDR Seit 1995 - Manuelle Chiffrierverfahren',
             licenseType: ToolLicenseType.NON_COMMERCIAL,
             licenseUrl:
-            'https://web.archive.org/web/20251207183924/https://scz.bplaced.net/',
+                'https://web.archive.org/web/20251207183924/https://scz.bplaced.net/',
             sourceUrl:
-            'https://web.archive.org/web/20251207183113/https://scz.bplaced.net/m.html'),
-        ],),
+                'https://web.archive.org/web/20251207183113/https://scz.bplaced.net/m.html'),
+      ],
+    ),
     GCWTool(tool: const Kamasutra(), id: 'kamasutra', categories: const [
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: const [
       'rotation',
       'kamasutra',
     ]),
-    GCWTool(tool: const Kaprekar(), id: 'kaprekar', categories: const [
-      ToolCategory.SCIENCE_AND_TECHNOLOGY
-    ], searchKeys: const [
-      'mathematical_constants',
-      'kaprekar',
-    ],
-    licenses: [
-      ToolLicenseOnlineArticle(
-          context: context,
-          author: 'en.wikipedia.org and contributors',
-          title: '6174',
-          sourceUrl:
-          'https://en.wikipedia.org/w/index.php?title=6174&oldid=1273658196'),
-      ToolLicenseOnlineArticle(
-          context: context,
-          author: 'en.wikipedia.org and contributors',
-          title: "Kaprekar's routine",
-          sourceUrl:
-          'https://en.wikipedia.org/w/index.php?title=Kaprekar%27s_routine&oldid=1274436905')
-    ],),
+    GCWTool(
+      tool: const Kaprekar(),
+      id: 'kaprekar',
+      categories: const [ToolCategory.SCIENCE_AND_TECHNOLOGY],
+      searchKeys: const [
+        'mathematical_constants',
+        'kaprekar',
+      ],
+      licenses: [
+        ToolLicenseOnlineArticle(
+            context: context,
+            author: 'en.wikipedia.org and contributors',
+            title: '6174',
+            sourceUrl:
+                'https://en.wikipedia.org/w/index.php?title=6174&oldid=1273658196'),
+        ToolLicenseOnlineArticle(
+            context: context,
+            author: 'en.wikipedia.org and contributors',
+            title: "Kaprekar's routine",
+            sourceUrl:
+                'https://en.wikipedia.org/w/index.php?title=Kaprekar%27s_routine&oldid=1274436905')
+      ],
+    ),
     GCWTool(tool: const Kenny(), id: 'kenny', categories: const [
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: const [
@@ -1431,45 +1441,53 @@ void initializeRegistry(BuildContext context) {
         tool: const MajorSystem(),
         id: 'major_system',
         isBeta: true,
-        categories: const [ ToolCategory.CRYPTOGRAPHY ],
-        searchKeys: const [ 'major_system', ]
-    ),
-    GCWTool(tool: const MathematicalConstants(), id: 'mathematical_constants', categories: const [
-      ToolCategory.SCIENCE_AND_TECHNOLOGY
-    ], searchKeys: const [
-      'xkcd',
-      'mathematical_constants',
-      'kaprekar',
-    ], licenses: [
-      ToolLicenseOnlineArticle(
-          context: context,
-          author: 'Randall Munroe (xkcd.com)',
-          title: 'xkcd 221: Random Number',
-          licenseType: ToolLicenseType.CCNC25,
-          licenseUrl:
-          'https://web.archive.org/web/20240715221350/https://creativecommons.org/licenses/by-nc/2.5/',
-          sourceUrl:
-          'https://web.archive.org/web/20250201070150/https://xkcd.com/221/'),
-      ToolLicenseOnlineArticle(
-          context: context,
-          author: 'Physical Measurement Laboratory of NIST',
-          title: 'Fundamental Physical Constants',
-          sourceUrl:
-          'https://web.archive.org/web/20240926130440/https://physics.nist.gov/cuu/Constants/index.html',
-          licenseType: ToolLicenseType.PUBLIC_DOMAIN),
-      ToolLicenseOnlineArticle(
-          context: context,
-          author: 'en.wikipedia.org and contributors',
-          title: '6174',
-          sourceUrl:
-          'https://en.wikipedia.org/w/index.php?title=6174&oldid=1273658196'),
-      ToolLicenseOnlineArticle(
-          context: context,
-          author: 'en.wikipedia.org and contributors',
-          title: "Kaprekar's routine",
-          sourceUrl:
-          'https://en.wikipedia.org/w/index.php?title=Kaprekar%27s_routine&oldid=1274436905')
-    ]),
+        categories: const [
+          ToolCategory.CRYPTOGRAPHY
+        ],
+        searchKeys: const [
+          'major_system',
+        ]),
+    GCWTool(
+        tool: const MathematicalConstants(),
+        id: 'mathematical_constants',
+        categories: const [
+          ToolCategory.SCIENCE_AND_TECHNOLOGY
+        ],
+        searchKeys: const [
+          'xkcd',
+          'mathematical_constants',
+          'kaprekar',
+        ],
+        licenses: [
+          ToolLicenseOnlineArticle(
+              context: context,
+              author: 'Randall Munroe (xkcd.com)',
+              title: 'xkcd 221: Random Number',
+              licenseType: ToolLicenseType.CCNC25,
+              licenseUrl:
+                  'https://web.archive.org/web/20240715221350/https://creativecommons.org/licenses/by-nc/2.5/',
+              sourceUrl:
+                  'https://web.archive.org/web/20250201070150/https://xkcd.com/221/'),
+          ToolLicenseOnlineArticle(
+              context: context,
+              author: 'Physical Measurement Laboratory of NIST',
+              title: 'Fundamental Physical Constants',
+              sourceUrl:
+                  'https://web.archive.org/web/20240926130440/https://physics.nist.gov/cuu/Constants/index.html',
+              licenseType: ToolLicenseType.PUBLIC_DOMAIN),
+          ToolLicenseOnlineArticle(
+              context: context,
+              author: 'en.wikipedia.org and contributors',
+              title: '6174',
+              sourceUrl:
+                  'https://en.wikipedia.org/w/index.php?title=6174&oldid=1273658196'),
+          ToolLicenseOnlineArticle(
+              context: context,
+              author: 'en.wikipedia.org and contributors',
+              title: "Kaprekar's routine",
+              sourceUrl:
+                  'https://en.wikipedia.org/w/index.php?title=Kaprekar%27s_routine&oldid=1274436905')
+        ]),
     GCWTool(
         tool: const MayaCalendarSelection(),
         categories: const [ToolCategory.CRYPTOGRAPHY],
@@ -1557,36 +1575,34 @@ void initializeRegistry(BuildContext context) {
         title: 'NEMA (machine)',
         licenseType: ToolLicenseType.CCBYSA4,
         licenseUrl:
-        'https://en.wikipedia.org/w/index.php?title=Wikipedia:Text_of_the_Creative_Commons_Attribution-ShareAlike_4.0_International_License&oldid=1162946924',
+            'https://en.wikipedia.org/w/index.php?title=Wikipedia:Text_of_the_Creative_Commons_Attribution-ShareAlike_4.0_International_License&oldid=1162946924',
         sourceUrl:
-        'https://en.wikipedia.org/w/index.php?title=NEMA_(machine)&oldid=1239630258',
+            'https://en.wikipedia.org/w/index.php?title=NEMA_(machine)&oldid=1239630258',
       ),
       ToolLicenseOnlineArticle(
           context: context,
-          author:
-          'Walter Schmid',
+          author: 'Walter Schmid',
           title: 'Die Chiffriermaschine Nema',
           year: 2005,
           month: 2,
           sourceUrl:
-          'https://web.archive.org/web/20250211181906/https://www.cryptomuseum.com/pub/files/WS_nema.pdf',
-      privatePermission: ToolLicensePrivatePermission(
-          context: context,
-          medium: 'E-Mail',
-          permissionAuthor: 'Walter Schmid',
-          permissionYear: 2025,
-          permissionMonth: 2,
-          permissionDay: 11)),
+              'https://web.archive.org/web/20250211181906/https://www.cryptomuseum.com/pub/files/WS_nema.pdf',
+          privatePermission: ToolLicensePrivatePermission(
+              context: context,
+              medium: 'E-Mail',
+              permissionAuthor: 'Walter Schmid',
+              permissionYear: 2025,
+              permissionMonth: 2,
+              permissionDay: 11)),
       ToolLicenseOnlineArticle(
-          context: context,
-          author:
-          'Geoff Sullivan, Frode Weierud',
-          title: 'The Swiss NEMA Cipher Machine',
-          year: 1999,
-          month: 10,
-          sourceUrl:
-          'https://web.archive.org/web/20250209205344/https://cryptocellar.org/pubs/nema.pdf',
-          ),
+        context: context,
+        author: 'Geoff Sullivan, Frode Weierud',
+        title: 'The Swiss NEMA Cipher Machine',
+        year: 1999,
+        month: 10,
+        sourceUrl:
+            'https://web.archive.org/web/20250209205344/https://cryptocellar.org/pubs/nema.pdf',
+      ),
     ]),
     GCWTool(
         tool: const NonogramSolver(),
@@ -1704,19 +1720,24 @@ void initializeRegistry(BuildContext context) {
       'pi',
       'irrationalnumbers',
     ]),
-    GCWTool(tool: const PhysicalConstants(), id: 'physical_constants', categories: const [
-      ToolCategory.SCIENCE_AND_TECHNOLOGY
-    ], searchKeys: const [
-      'physical_constants',
-    ], licenses: [
-      ToolLicenseOnlineArticle(
-          context: context,
-          author: 'Physical Measurement Laboratory of NIST',
-          title: 'Fundamental Physical Constants',
-          sourceUrl:
-          'https://web.archive.org/web/20240926130440/https://physics.nist.gov/cuu/Constants/index.html',
-          licenseType: ToolLicenseType.PUBLIC_DOMAIN),
-    ]),
+    GCWTool(
+        tool: const PhysicalConstants(),
+        id: 'physical_constants',
+        categories: const [
+          ToolCategory.SCIENCE_AND_TECHNOLOGY
+        ],
+        searchKeys: const [
+          'physical_constants',
+        ],
+        licenses: [
+          ToolLicenseOnlineArticle(
+              context: context,
+              author: 'Physical Measurement Laboratory of NIST',
+              title: 'Fundamental Physical Constants',
+              sourceUrl:
+                  'https://web.archive.org/web/20240926130440/https://physics.nist.gov/cuu/Constants/index.html',
+              licenseType: ToolLicenseType.PUBLIC_DOMAIN),
+        ]),
     GCWTool(tool: Playfair(), id: 'playfair', categories: const [
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: const [
@@ -1769,19 +1790,20 @@ void initializeRegistry(BuildContext context) {
           'primealphabet',
         ]),
     GCWTool(
-        tool: const PrimesSelection(),
-        id: 'primes_selection',
-        categories: const [ToolCategory.SCIENCE_AND_TECHNOLOGY],
-        searchKeys: const [],
+      tool: const PrimesSelection(),
+      id: 'primes_selection',
+      categories: const [ToolCategory.SCIENCE_AND_TECHNOLOGY],
+      searchKeys: const [],
       licenses: [
         ToolLicenseOnlineArticle(
           context: context,
           author: 'numbergenerator.org',
           title: 'Prime Number List 1 - 10000000',
           sourceUrl:
-          'https://web.archive.org/web/20250508131535/https://numbergenerator.org/numberlist/prime-numbers/1-10000000#',
+              'https://web.archive.org/web/20250508131535/https://numbergenerator.org/numberlist/prime-numbers/1-10000000#',
         ),
-      ],),
+      ],
+    ),
     GCWTool(tool: const Projectiles(), id: 'projectiles', categories: const [
       ToolCategory.SCIENCE_AND_TECHNOLOGY
     ], searchKeys: const [
@@ -1852,6 +1874,23 @@ void initializeRegistry(BuildContext context) {
     ], searchKeys: const [
       'regex',
     ]),
+    GCWTool(
+      tool: RescuePointsMapView(),
+      id: 'rescue_points',
+      categories: const [ToolCategory.COORDINATES],
+      searchKeys: const [
+        'rescueile(nts',
+      ],
+      licenses: [
+        ToolLicenseFile(
+            context: context,
+            author: ' Kuratorium für Waldarbeit und Forsttechnik e.V. (KWF)',
+            title: 'KWF-Rettungspunkte',
+            sourceUrl: 'https://kwf2020.kwf-online.de/wp-content/uploads/2025/01/Metadaten_KWF_Rettungspunkte.pdf',
+            licenseType: ToolLicenseType.CCBYNCND40,
+            licenseUseType: null),
+      ],
+    ),
     GCWTool(
         tool: const ResistorSelection(),
         id: 'resistor_selection',
@@ -2077,29 +2116,37 @@ void initializeRegistry(BuildContext context) {
           'symbol_baudot'
         ],
         licenses: const []),
-    GCWTool(
-        tool: const TextAnalysis(),
-        id: 'textanalysis',
-        categories: const [ToolCategory.CRYPTOGRAPHY],
-        searchKeys: const ['alphabetvalues', 'asciivalues', 'textanalysis', 'textanalysis_letterfrequencies']),
+    GCWTool(tool: const TextAnalysis(), id: 'textanalysis', categories: const [
+      ToolCategory.CRYPTOGRAPHY
+    ], searchKeys: const [
+      'alphabetvalues',
+      'asciivalues',
+      'textanalysis',
+      'textanalysis_letterfrequencies'
+    ]),
     GCWTool(
         tool: const TextAnalysisLetterFrequencies(),
         id: 'textanalysis_letterfrequencies',
-        categories: const [ToolCategory.CRYPTOGRAPHY],
-        searchKeys: const ['alphabetvalues', 'textanalysis', 'textanalysis_letterfrequencies'],
+        categories: const [
+          ToolCategory.CRYPTOGRAPHY
+        ],
+        searchKeys: const [
+          'alphabetvalues',
+          'textanalysis',
+          'textanalysis_letterfrequencies'
+        ],
         licenses: [
           ToolLicensePortedCode(
-              context: context,
-              author: 'en.wikipedia.org and contributors',
-              title: 'Letter frequency',
-              licenseType: ToolLicenseType.CCBYSA4,
-              licenseUrl:
+            context: context,
+            author: 'en.wikipedia.org and contributors',
+            title: 'Letter frequency',
+            licenseType: ToolLicenseType.CCBYSA4,
+            licenseUrl:
                 'https://en.wikipedia.org/w/index.php?title=Wikipedia:Text_of_the_Creative_Commons_Attribution-ShareAlike_4.0_International_License&oldid=1162946924',
-              sourceUrl:
+            sourceUrl:
                 'https://en.wikipedia.org/w/index.php?title=Letter_frequency&oldid=1295211904',
           ),
-        ]
-    ),
+        ]),
     GCWTool(tool: const Trifid(), id: 'trifid', categories: const [
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: const [
@@ -2158,12 +2205,13 @@ void initializeRegistry(BuildContext context) {
                   'https://en.wikipedia.org/w/index.php?title=Tupper%27s_self-referential_formula&oldid=1268384498',
               licenseType: ToolLicenseType.CCBYSA4),
           ToolLicenseOnlineArticle(
-              context: context,
-              author: 'Jeff Tupper',
-              title: "Reliable Two-Dimensional Graphing Methods for Mathematical Formulae with Two Free Variables",
-              sourceUrl:
-              'https://web.archive.org/web/20250122201114/https://www.dgp.toronto.edu/~mooncake/papers/SIGGRAPH2001_Tupper.pdf',
-              ),
+            context: context,
+            author: 'Jeff Tupper',
+            title:
+                "Reliable Two-Dimensional Graphing Methods for Mathematical Formulae with Two Free Variables",
+            sourceUrl:
+                'https://web.archive.org/web/20250122201114/https://www.dgp.toronto.edu/~mooncake/papers/SIGGRAPH2001_Tupper.pdf',
+          ),
           ToolLicenseOnlineArticle(
             context: context,
             author: 'Ellen Rudolph',
@@ -2173,16 +2221,16 @@ void initializeRegistry(BuildContext context) {
             day: 12,
             publisher: 'Universität Bremen',
             sourceUrl:
-            'https://web.archive.org/web/20250320184629/https://www.uni-bremen.de/fileadmin/user_upload/fachbereiche/fb3/analysis/feb-tupper-formula.pdf',
+                'https://web.archive.org/web/20250320184629/https://www.uni-bremen.de/fileadmin/user_upload/fachbereiche/fb3/analysis/feb-tupper-formula.pdf',
             licenseType: ToolLicenseType.PRIVATE_PERMISSION,
-              privatePermission: ToolLicensePrivatePermission(
-                context: context,
-                medium: 'e-Mail',
-                permissionYear: 2025,
-                permissionMonth: 4,
-                permissionDay: 1,
-                permissionAuthor: 'Ellen Rudolph',
-              ),
+            privatePermission: ToolLicensePrivatePermission(
+              context: context,
+              medium: 'e-Mail',
+              permissionYear: 2025,
+              permissionMonth: 4,
+              permissionDay: 1,
+              permissionAuthor: 'Ellen Rudolph',
+            ),
           )
         ]),
     GCWTool(tool: const UFI(), id: 'ufi', categories: const [
@@ -2303,21 +2351,23 @@ void initializeRegistry(BuildContext context) {
       'zc1',
     ]),
     GCWTool(
-        tool: Zebra(),
-        id: 'zebra',
-        categories: const [ToolCategory.CRYPTOGRAPHY],
-        searchKeys: const ['zebra', 'numbers'],
-        licenses: [
-          ToolLicenseOnlineArticle(
+      tool: Zebra(),
+      id: 'zebra',
+      categories: const [ToolCategory.CRYPTOGRAPHY],
+      searchKeys: const ['zebra', 'numbers'],
+      licenses: [
+        ToolLicenseOnlineArticle(
             context: context,
             author: 'Jörg Drobick',
-            title: 'Der SAS- und Chiffrierdienst (SCD) DDR Seit 1995 - Manuelle Chiffrierverfahren',
+            title:
+                'Der SAS- und Chiffrierdienst (SCD) DDR Seit 1995 - Manuelle Chiffrierverfahren',
             licenseType: ToolLicenseType.NON_COMMERCIAL,
             licenseUrl:
-            'https://web.archive.org/web/20251207183924/https://scz.bplaced.net/',
+                'https://web.archive.org/web/20251207183924/https://scz.bplaced.net/',
             sourceUrl:
-            'https://web.archive.org/web/20251207183113/https://scz.bplaced.net/m.html'),
-        ],),
+                'https://web.archive.org/web/20251207183113/https://scz.bplaced.net/m.html'),
+      ],
+    ),
     GCWTool(
         tool: const ZodiacSelection(),
         id: 'zodiac_selection',
@@ -2557,7 +2607,9 @@ void initializeRegistry(BuildContext context) {
         ]),
 
     //Babylon Numbers Selection **************************************************************************************
-    GCWTool(tool: const BabylonNumbers(), id: 'babylonnumbers',
+    GCWTool(
+        tool: const BabylonNumbers(),
+        id: 'babylonnumbers',
         searchKeys: const [
           'babylonian_numerals',
         ],
@@ -2799,10 +2851,11 @@ void initializeRegistry(BuildContext context) {
         ]),
 
     //Braille Selection ****************************************************************
-    GCWTool(tool: const Braille(), id: 'braille', searchKeys: const [
-      'braille',
-      'symbol_fakoo'
-    ], licenses: const []),
+    GCWTool(
+        tool: const Braille(),
+        id: 'braille',
+        searchKeys: const ['braille', 'symbol_fakoo'],
+        licenses: const []),
     GCWTool(
         tool: const BrailleDotNumbers(),
         id: 'brailledotnumbers',
@@ -2816,11 +2869,11 @@ void initializeRegistry(BuildContext context) {
               author: 'Alexander Fakoó',
               title: '9-Punkt-Decoder',
               sourceUrl:
-                'https://web.archive.org/web/20240415000000*/https://fakoo.de/fakoo/9-punkt-decoder.html',
+                  'https://web.archive.org/web/20240415000000*/https://fakoo.de/fakoo/9-punkt-decoder.html',
               licenseType: ToolLicenseType.CCBYNCND40,
               licenseUrl:
-                'https://web.archive.org/web/20240415000000*/https://creativecommons.org/licenses/by-nc-nd/4.0/deed.de')
-    ]),
+                  'https://web.archive.org/web/20240415000000*/https://creativecommons.org/licenses/by-nc-nd/4.0/deed.de')
+        ]),
 
     //CCITT Selection **********************************************************************************************
     GCWTool(
@@ -3259,7 +3312,8 @@ void initializeRegistry(BuildContext context) {
             context: context,
             author: 'Patrick \'PattuX\' Wienhöft (GitHub)',
             title: 'Auto Reverse Wherigo Solver',
-            sourceUrl: 'https://web.archive.org/web/20201111160230/https://github.com/PattuX/auto_reverse_wig_solver',
+            sourceUrl:
+                'https://web.archive.org/web/20201111160230/https://github.com/PattuX/auto_reverse_wig_solver',
             licenseType: ToolLicenseType.MIT,
             licenseUrl:
                 'https://web.archive.org/web/20250630134152/https://github.com/PattuX/auto_reverse_wig_solver/blob/master/LICENSE.txt'),
@@ -3267,7 +3321,8 @@ void initializeRegistry(BuildContext context) {
             context: context,
             author: 'MZCacheHunter',
             title: 'The Reverse Cache (10Y) ',
-            sourceUrl: 'https://web.archive.org/web/20251105192200/https://www.wherigo.com/cartridge/details.aspx?CGUID=62e80ba9-8ce2-4c1b-90d3-64740526966b',
+            sourceUrl:
+                'https://web.archive.org/web/20251105192200/https://www.wherigo.com/cartridge/details.aspx?CGUID=62e80ba9-8ce2-4c1b-90d3-64740526966b',
             licenseType: ToolLicenseType.REPRODUCTION_NEEDED),
         ToolLicensePortedCode(
             context: context,
@@ -3862,18 +3917,26 @@ void initializeRegistry(BuildContext context) {
         ]),
 
     //Elements of Geocaching Selection ***********************************************************************
-    GCWTool(tool: const ElementsOfGeocaching(), id: 'elementsofgeocaching', searchKeys: const [
-    ], licenses: [
-      stl._toolLicenseElementsOfGeocachingGeocacherMagazine,
-      stl._toolLicenseElementsOfGeocachingGeocachenBE,
-    ],),
-    GCWTool(tool: const ElementsOfGeocachingDataView(atomicNumber: 1), id: 'elementsofgeocaching_dataview',
-        searchKeys: const [
-      'elementsofgeocaching_dataview',
-    ], licenses: [
+    GCWTool(
+      tool: const ElementsOfGeocaching(),
+      id: 'elementsofgeocaching',
+      searchKeys: const [],
+      licenses: [
         stl._toolLicenseElementsOfGeocachingGeocacherMagazine,
         stl._toolLicenseElementsOfGeocachingGeocachenBE,
-      ],),
+      ],
+    ),
+    GCWTool(
+      tool: const ElementsOfGeocachingDataView(atomicNumber: 1),
+      id: 'elementsofgeocaching_dataview',
+      searchKeys: const [
+        'elementsofgeocaching_dataview',
+      ],
+      licenses: [
+        stl._toolLicenseElementsOfGeocachingGeocacherMagazine,
+        stl._toolLicenseElementsOfGeocachingGeocachenBE,
+      ],
+    ),
 
     //Easter Selection ***************************************************************************************
     GCWTool(
@@ -3954,10 +4017,11 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'Fabian Mastenbroek',
           title: 'brainfuck',
-          sourceUrl: 'https://web.archive.org/web/20250511150306/https://github.com/fabianishere/brainfuck',
+          sourceUrl:
+              'https://web.archive.org/web/20250511150306/https://github.com/fabianishere/brainfuck',
           licenseType: ToolLicenseType.APACHE2,
-          licenseUrl: 'https://web.archive.org/web/20221209052016/https://github.com/fabianishere/brainfuck/blob/master/LICENSE.txt'
-      ),
+          licenseUrl:
+              'https://web.archive.org/web/20221209052016/https://github.com/fabianishere/brainfuck/blob/master/LICENSE.txt'),
       ToolLicensePortedCode(
           context: context,
           author: 'Anar Software',
@@ -3965,8 +4029,8 @@ void initializeRegistry(BuildContext context) {
           sourceUrl:
               'https://web.archive.org/web/20250630135425/https://github.com/anars/BrainJuck/blob/master/source/com/anars/brainjuck/Generator.java',
           licenseType: ToolLicenseType.GPL3,
-          licenseUrl: 'https://web.archive.org/web/20250630135314/https://github.com/anars/BrainJuck/blob/master/license.txt'
-      ),
+          licenseUrl:
+              'https://web.archive.org/web/20250630135314/https://github.com/anars/BrainJuck/blob/master/license.txt'),
     ]),
     GCWTool(tool: const Cow(), id: 'cow', searchKeys: const [
       'esotericprogramminglanguage',
@@ -4751,60 +4815,56 @@ void initializeRegistry(BuildContext context) {
     ]),
 
     // IPAddressSelection ************************************************************************************
-    GCWTool(
-      tool: const IPAddress(),
-      id: 'ipaddress',
-      searchKeys: const ['ipaddress'],
-      licenses: [
-        ToolLicenseOnlineArticle(
-            context: context,
-            author: 'Krischan Jodies',
-            title: 'IP Calculator',
-            sourceUrl:
-            'https://web.archive.org/web/20250701101320/https://jodies.de/ipcalc',
-            licenseType: ToolLicenseType.GPL2,
-            licenseUrl:
-            'https://web.archive.org/web/20250702124344/https://github.com/kjokjo/ipcalc?tab=License-1-ov-file'
-        ),
-        ToolLicenseOnlineArticle(
+    GCWTool(tool: const IPAddress(), id: 'ipaddress', searchKeys: const [
+      'ipaddress'
+    ], licenses: [
+      ToolLicenseOnlineArticle(
           context: context,
-          author: 'de.wikipedia.org and contributors',
-          title: 'Netzmaske',
+          author: 'Krischan Jodies',
+          title: 'IP Calculator',
           sourceUrl:
-          'https://de.wikipedia.org/w/index.php?title=Netzmaske&oldid=256171407',
-          licenseType: ToolLicenseType.CCBYSA4,
+              'https://web.archive.org/web/20250701101320/https://jodies.de/ipcalc',
+          licenseType: ToolLicenseType.GPL2,
           licenseUrl:
-          'https://web.archive.org/web/20240718115628/https://creativecommons.org/licenses/by-sa/4.0/deed.de',
-        ),
-      ]
-    ),
+              'https://web.archive.org/web/20250702124344/https://github.com/kjokjo/ipcalc?tab=License-1-ov-file'),
+      ToolLicenseOnlineArticle(
+        context: context,
+        author: 'de.wikipedia.org and contributors',
+        title: 'Netzmaske',
+        sourceUrl:
+            'https://de.wikipedia.org/w/index.php?title=Netzmaske&oldid=256171407',
+        licenseType: ToolLicenseType.CCBYSA4,
+        licenseUrl:
+            'https://web.archive.org/web/20240718115628/https://creativecommons.org/licenses/by-sa/4.0/deed.de',
+      ),
+    ]),
     GCWTool(
-      tool: const IPAddressMinimumSubnet(),
-      id: 'ipaddress_minimumsubnet',
-      searchKeys: const ['ipaddress'],
-      licenses: [
-        ToolLicenseOnlineArticle(
+        tool: const IPAddressMinimumSubnet(),
+        id: 'ipaddress_minimumsubnet',
+        searchKeys: const [
+          'ipaddress'
+        ],
+        licenses: [
+          ToolLicenseOnlineArticle(
+              context: context,
+              author: 'Krischan Jodies',
+              title: 'IP Calculator',
+              sourceUrl:
+                  'https://web.archive.org/web/20250701101320/https://jodies.de/ipcalc',
+              licenseType: ToolLicenseType.GPL2,
+              licenseUrl:
+                  'https://web.archive.org/web/20250702124344/https://github.com/kjokjo/ipcalc?tab=License-1-ov-file'),
+          ToolLicenseOnlineArticle(
             context: context,
-            author: 'Krischan Jodies',
-            title: 'IP Calculator',
+            author: 'de.wikipedia.org and contributors',
+            title: 'Netzmaske',
             sourceUrl:
-            'https://web.archive.org/web/20250701101320/https://jodies.de/ipcalc',
-            licenseType: ToolLicenseType.GPL2,
+                'https://de.wikipedia.org/w/index.php?title=Netzmaske&oldid=256171407',
+            licenseType: ToolLicenseType.CCBYSA4,
             licenseUrl:
-            'https://web.archive.org/web/20250702124344/https://github.com/kjokjo/ipcalc?tab=License-1-ov-file'
-        ),
-        ToolLicenseOnlineArticle(
-          context: context,
-          author: 'de.wikipedia.org and contributors',
-          title: 'Netzmaske',
-          sourceUrl:
-          'https://de.wikipedia.org/w/index.php?title=Netzmaske&oldid=256171407',
-          licenseType: ToolLicenseType.CCBYSA4,
-          licenseUrl:
-          'https://web.archive.org/web/20240718115628/https://creativecommons.org/licenses/by-sa/4.0/deed.de',
-        ),
-      ]
-    ),
+                'https://web.archive.org/web/20240718115628/https://creativecommons.org/licenses/by-sa/4.0/deed.de',
+          ),
+        ]),
 
     //Language Games Selection *******************************************************************************
     GCWTool(
@@ -4981,40 +5041,42 @@ void initializeRegistry(BuildContext context) {
           'numbersequence_mersenneprimesselection',
         ]),
     GCWTool(
-        tool: const NumberSequencePrimesSelection(),
-        id: 'numbersequence_primes',
-        searchKeys: const [
-          'numbers',
-          'numbersequence',
-          'primes',
-        ],
+      tool: const NumberSequencePrimesSelection(),
+      id: 'numbersequence_primes',
+      searchKeys: const [
+        'numbers',
+        'numbersequence',
+        'primes',
+      ],
       licenses: [
         ToolLicenseOnlineArticle(
           context: context,
           author: 'numbergenerator.org',
           title: 'Prime Number List 1 - 10000000',
           sourceUrl:
-          'https://web.archive.org/web/20250508131535/https://numbergenerator.org/numberlist/prime-numbers/1-10000000#',
+              'https://web.archive.org/web/20250508131535/https://numbergenerator.org/numberlist/prime-numbers/1-10000000#',
         ),
-      ],),
+      ],
+    ),
     GCWTool(
-        tool: const NumberSequenceMersenneExponentsSelection(),
-        id: 'numbersequence_mersenneexponents',
-        searchKeys: const [
-          'numbers',
-          'primes',
-          'numbersequence',
-          'numbersequence_mersenneexponentsselection',
-        ],
+      tool: const NumberSequenceMersenneExponentsSelection(),
+      id: 'numbersequence_mersenneexponents',
+      searchKeys: const [
+        'numbers',
+        'primes',
+        'numbersequence',
+        'numbersequence_mersenneexponentsselection',
+      ],
       licenses: [
         ToolLicenseOnlineArticle(
           context: context,
           author: 'Great Internet Mersenne Prime Seach (GIMPS)',
           title: 'List of Known Mersenne Prime Numbers',
           sourceUrl:
-          'https://web.archive.org/web/20250505191859/https://www.mersenne.org/primes/',
+              'https://web.archive.org/web/20250505191859/https://www.mersenne.org/primes/',
         ),
-      ],),
+      ],
+    ),
     GCWTool(
         tool: const NumberSequenceMersenneFermatSelection(),
         id: 'numbersequence_mersennefermat',
@@ -5045,7 +5107,7 @@ void initializeRegistry(BuildContext context) {
             author: 'The On-Line Encyclopedia of Integer Sequences (OEIS)',
             title: 'A000396',
             sourceUrl:
-            'https://web.archive.org/web/20250401030223/https://oeis.org/A000396/b000396.txt',
+                'https://web.archive.org/web/20250401030223/https://oeis.org/A000396/b000396.txt',
           ),
         ]),
     GCWTool(
@@ -5062,7 +5124,7 @@ void initializeRegistry(BuildContext context) {
             author: 'The On-Line Encyclopedia of Integer Sequences (OEIS)',
             title: 'A019279',
             sourceUrl:
-            'https://web.archive.org/web/20241110082329/https://oeis.org/A019279/b019279.txt',
+                'https://web.archive.org/web/20241110082329/https://oeis.org/A019279/b019279.txt',
           ),
         ]),
     GCWTool(
@@ -5087,7 +5149,7 @@ void initializeRegistry(BuildContext context) {
             author: 'The On-Line Encyclopedia of Integer Sequences (OEIS)',
             title: 'A006037',
             sourceUrl:
-            'https://web.archive.org/web/20230326022112/https://oeis.org/A006037/b006037.txt',
+                'https://web.archive.org/web/20230326022112/https://oeis.org/A006037/b006037.txt',
           ),
         ]),
     GCWTool(
@@ -5100,13 +5162,13 @@ void initializeRegistry(BuildContext context) {
         ],
         licenses: [
           ToolLicenseOnlineArticle(
-          context: context,
-          author: 'The On-Line Encyclopedia of Integer Sequences (OEIS)',
-          title: 'A081357',
-          sourceUrl:
-          'https://web.archive.org/web/20240917152812/https://oeis.org/A081357/b081357.txt',
-        ),
-    ]),
+            context: context,
+            author: 'The On-Line Encyclopedia of Integer Sequences (OEIS)',
+            title: 'A081357',
+            sourceUrl:
+                'https://web.archive.org/web/20240917152812/https://oeis.org/A081357/b081357.txt',
+          ),
+        ]),
     GCWTool(
         tool: const NumberSequencePermutablePrimesSelection(),
         id: 'numbersequence_permutableprimes',
@@ -5115,18 +5177,19 @@ void initializeRegistry(BuildContext context) {
           'numbersequence',
           'primes',
           'numbersequence_permutableprimesselection',
-        ], licenses: [
+        ],
+        licenses: [
           ToolLicenseOnlineArticle(
-          context: context,
-          author: 'en.wikipedia.org and contributors',
-          title: 'Permutable prime',
-          licenseType: ToolLicenseType.CCBYSA4,
-          licenseUrl:
-          'https://en.wikipedia.org/w/index.php?title=Wikipedia:Text_of_the_Creative_Commons_Attribution-ShareAlike_4.0_International_License&oldid=1162946924',
-          sourceUrl:
-          'https://en.wikipedia.org/w/index.php?title=Permutable_prime&oldid=1247788259',
-        )
-    ]),
+            context: context,
+            author: 'en.wikipedia.org and contributors',
+            title: 'Permutable prime',
+            licenseType: ToolLicenseType.CCBYSA4,
+            licenseUrl:
+                'https://en.wikipedia.org/w/index.php?title=Wikipedia:Text_of_the_Creative_Commons_Attribution-ShareAlike_4.0_International_License&oldid=1162946924',
+            sourceUrl:
+                'https://en.wikipedia.org/w/index.php?title=Permutable_prime&oldid=1247788259',
+          )
+        ]),
     GCWTool(
       tool: const NumberSequenceMemorablePrimesSelection(),
       id: 'numbersequence_memorableprimes',
@@ -5189,26 +5252,27 @@ void initializeRegistry(BuildContext context) {
             author: 'The On-Line Encyclopedia of Integer Sequences (OEIS)',
             title: 'A007770',
             sourceUrl:
-            'https://web.archive.org/web/20250107001844/https://oeis.org/A007770/b007770.txt',
+                'https://web.archive.org/web/20250107001844/https://oeis.org/A007770/b007770.txt',
           ),
         ]),
     GCWTool(
-        tool: const NumberSequenceBellSelection(),
-        id: 'numbersequence_bell',
-        searchKeys: const [
-          'numbers',
-          'numbersequence',
-          'numbersequence_bellselection',
-        ],
+      tool: const NumberSequenceBellSelection(),
+      id: 'numbersequence_bell',
+      searchKeys: const [
+        'numbers',
+        'numbersequence',
+        'numbersequence_bellselection',
+      ],
       licenses: [
         ToolLicenseOnlineArticle(
           context: context,
           author: 'John Sokol',
           title: 'The First 1000 Bells numbers',
           sourceUrl:
-          'https://web.archive.org/web/20231206110849/https://www.dnull.com/bells/bell1000.html',
+              'https://web.archive.org/web/20231206110849/https://www.dnull.com/bells/bell1000.html',
         ),
-      ],),
+      ],
+    ),
     GCWTool(
         tool: const NumberSequencePellSelection(),
         id: 'numbersequence_pell',
@@ -5287,7 +5351,7 @@ void initializeRegistry(BuildContext context) {
             author: 'The On-Line Encyclopedia of Integer Sequences (OEIS)',
             title: 'A023108',
             sourceUrl:
-            'https://web.archive.org/web/20250219235747/https://oeis.org/A023108/b023108.txt',
+                'https://web.archive.org/web/20250219235747/https://oeis.org/A023108/b023108.txt',
           ),
         ]),
     GCWTool(
@@ -5313,7 +5377,7 @@ void initializeRegistry(BuildContext context) {
             publisher: 'OAIS',
             title: 'A007304',
             sourceUrl:
-            'https://web.archive.org/web/20250114133913/https://oeis.org/A007304/b007304.txt',
+                'https://web.archive.org/web/20250114133913/https://oeis.org/A007304/b007304.txt',
           ),
         ]),
     GCWTool(
@@ -5330,7 +5394,7 @@ void initializeRegistry(BuildContext context) {
             author: 'The On-Line Encyclopedia of Integer Sequences (OEIS)',
             title: 'A002997',
             sourceUrl:
-            'https://web.archive.org/web/20241217192642/https://oeis.org/A002997/b002997.txt',
+                'https://web.archive.org/web/20241217192642/https://oeis.org/A002997/b002997.txt',
           ),
         ]),
     GCWTool(
@@ -5347,7 +5411,7 @@ void initializeRegistry(BuildContext context) {
             author: 'The On-Line Encyclopedia of Integer Sequences (OEIS)',
             title: 'A005349',
             sourceUrl:
-            'https://web.archive.org/web/20250114224547/https://oeis.org/A005349/b005349.txt',
+                'https://web.archive.org/web/20250114224547/https://oeis.org/A005349/b005349.txt',
           ),
         ]),
     GCWTool(
@@ -5364,14 +5428,14 @@ void initializeRegistry(BuildContext context) {
             author: 'The On-Line Encyclopedia of Integer Sequences (OEIS)',
             title: 'A011541',
             sourceUrl:
-            'https://web.archive.org/web/20250407200104/https://oeis.org/A011541/b011541.txt',
+                'https://web.archive.org/web/20250407200104/https://oeis.org/A011541/b011541.txt',
           ),
           ToolLicenseOnlineArticle(
             context: context,
             author: 'Manon Bischof',
             title: 'Vergesst die 42, die Lieblingszahl von Nerds ist 1729',
             sourceUrl:
-            'https://web.archive.org/web/20250426232004/https://www.spektrum.de/kolumne/srinivasa-ramanujan-und-die-taxicab-zahl-1729/2261407',
+                'https://web.archive.org/web/20250426232004/https://www.spektrum.de/kolumne/srinivasa-ramanujan-und-die-taxicab-zahl-1729/2261407',
           ),
         ]),
     GCWTool(
@@ -5388,7 +5452,7 @@ void initializeRegistry(BuildContext context) {
             author: 'The On-Line Encyclopedia of Integer Sequences (OEIS)',
             title: 'A051650',
             sourceUrl:
-            'https://web.archive.org/web/20250226124743/https://oeis.org/A051650/b051650.txt',
+                'https://web.archive.org/web/20250226124743/https://oeis.org/A051650/b051650.txt',
           ),
         ]),
     GCWTool(
@@ -5407,7 +5471,7 @@ void initializeRegistry(BuildContext context) {
             publisher: 'The On-Line Encyclopedia of Integer Sequences (OEIS)',
             title: 'A002385',
             sourceUrl:
-            'https://web.archive.org/web/20241229231226/https://oeis.org/A002385/b002385.txt',
+                'https://web.archive.org/web/20241229231226/https://oeis.org/A002385/b002385.txt',
           ),
         ]),
     GCWTool(
@@ -5425,7 +5489,7 @@ void initializeRegistry(BuildContext context) {
             publisher: 'OEIS',
             title: 'A000926',
             sourceUrl:
-            'https://web.archive.org/web/20241229231226/https://oeis.org/A002385/b002385.txt',
+                'https://web.archive.org/web/20241229231226/https://oeis.org/A002385/b002385.txt',
           ),
           ToolLicenseOnlineArticle(
             context: context,
@@ -5433,9 +5497,9 @@ void initializeRegistry(BuildContext context) {
             title: 'Idoneal number',
             licenseType: ToolLicenseType.CCBYSA4,
             licenseUrl:
-            'https://en.wikipedia.org/w/index.php?title=Wikipedia:Text_of_the_Creative_Commons_Attribution-ShareAlike_4.0_International_License&oldid=1162946924',
+                'https://en.wikipedia.org/w/index.php?title=Wikipedia:Text_of_the_Creative_Commons_Attribution-ShareAlike_4.0_International_License&oldid=1162946924',
             sourceUrl:
-            'https://en.wikipedia.org/w/index.php?title=Idoneal_number&oldid=1283811656',
+                'https://en.wikipedia.org/w/index.php?title=Idoneal_number&oldid=1283811656',
           ),
           ToolLicenseOnlineArticle(
             context: context,
@@ -5443,7 +5507,7 @@ void initializeRegistry(BuildContext context) {
             publisher: 'Spektrum.de',
             title: 'Das Geheimnis um geeignete Zahlen',
             sourceUrl:
-            'https://web.archive.org/web/20251105212042/https://www.spektrum.de/kolumne/das-geheimnis-um-geeignete-zahlen/2283662',
+                'https://web.archive.org/web/20251105212042/https://www.spektrum.de/kolumne/das-geheimnis-um-geeignete-zahlen/2283662',
           ),
         ]),
 
@@ -5473,7 +5537,6 @@ void initializeRegistry(BuildContext context) {
         id: 'numbersequence_containsdigits',
         id_prefix: 'suitablenumbers_',
         searchKeys: const []),
-
 
     //NumberSequenceSelection LonelyNumbers ****************************************************************************************
     GCWTool(
@@ -6275,7 +6338,7 @@ void initializeRegistry(BuildContext context) {
             author: 'The On-Line Encyclopedia of Integer Sequences (OEIS)',
             title: 'A054377',
             sourceUrl:
-            'https://web.archive.org/web/20241110161323/https://oeis.org/A054377/b054377.txt',
+                'https://web.archive.org/web/20241110161323/https://oeis.org/A054377/b054377.txt',
           ),
         ]),
     GCWTool(
@@ -6722,30 +6785,27 @@ void initializeRegistry(BuildContext context) {
           sourceUrl:
               'https://de.wikipedia.org/w/index.php?title=Scrabble&oldid=245686434'),
     ]),
-    GCWTool(
-        tool: const ScrabbleOverview(),
-        id: 'scrabbleoverview',
-        licenses: [
-          ToolLicenseOnlineArticle(
-            context: context,
-            author: 'en.wikipedia.org and contributors',
-            title: 'Scrabble letter distributions',
-            licenseType: ToolLicenseType.CCBYSA4,
-            licenseUrl:
-                'https://en.wikipedia.org/w/index.php?title=Wikipedia:Text_of_the_Creative_Commons_Attribution-ShareAlike_4.0_International_License&oldid=1162946924',
-            sourceUrl:
-                'https://en.wikipedia.org/w/index.php?title=Scrabble_letter_distributions&oldid=1231431837',
-          ),
-          ToolLicenseOnlineArticle(
-              context: context,
-              author: 'de.wikipedia.org and contributors',
-              title: 'Scrabble',
-              licenseType: ToolLicenseType.CCBYSA4,
-              licenseUrl:
-                  'https://web.archive.org/web/20240718115628/https://creativecommons.org/licenses/by-sa/4.0/deed.de',
-              sourceUrl:
-                  'https://de.wikipedia.org/w/index.php?title=Scrabble&oldid=245686434'),
-        ]),
+    GCWTool(tool: const ScrabbleOverview(), id: 'scrabbleoverview', licenses: [
+      ToolLicenseOnlineArticle(
+        context: context,
+        author: 'en.wikipedia.org and contributors',
+        title: 'Scrabble letter distributions',
+        licenseType: ToolLicenseType.CCBYSA4,
+        licenseUrl:
+            'https://en.wikipedia.org/w/index.php?title=Wikipedia:Text_of_the_Creative_Commons_Attribution-ShareAlike_4.0_International_License&oldid=1162946924',
+        sourceUrl:
+            'https://en.wikipedia.org/w/index.php?title=Scrabble_letter_distributions&oldid=1231431837',
+      ),
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'de.wikipedia.org and contributors',
+          title: 'Scrabble',
+          licenseType: ToolLicenseType.CCBYSA4,
+          licenseUrl:
+              'https://web.archive.org/web/20240718115628/https://creativecommons.org/licenses/by-sa/4.0/deed.de',
+          sourceUrl:
+              'https://de.wikipedia.org/w/index.php?title=Scrabble&oldid=245686434'),
+    ]),
 
     //Miscellaneous Selection *****************************************************************************************
 
@@ -7567,21 +7627,18 @@ void initializeRegistry(BuildContext context) {
     ], licenses: [
       stl._toolLicenseOnlineBookPolygraphieTrithemius
     ]),
-    GCWSymbolTableTool(
-        symbolKey: 'chinese',
-        symbolSearchStrings: const [
-          'symbol_chinese',
-        ],
-        licenses: [
-          ToolLicenseImage(
-              context: context,
-              author: 'dCode (dCode.fr)',
-              title: 'Chinese Code',
-              licenseType: ToolLicenseType.CCBY,
-              sourceUrl:
+    GCWSymbolTableTool(symbolKey: 'chinese', symbolSearchStrings: const [
+      'symbol_chinese',
+    ], licenses: [
+      ToolLicenseImage(
+          context: context,
+          author: 'dCode (dCode.fr)',
+          title: 'Chinese Code',
+          licenseType: ToolLicenseType.CCBY,
+          sourceUrl:
               'https://web.archive.org/web/20250328085306/https://www.dcode.fr/chinese-code',
-              licenseUseType: ToolLicenseUseType.REPRODUCTION),
-        ]),
+          licenseUseType: ToolLicenseUseType.REPRODUCTION),
+    ]),
     GCWSymbolTableTool(symbolKey: 'cirth_erebor', symbolSearchStrings: const [
       'symbol_runes',
       'symbol_lordoftherings',
@@ -8059,16 +8116,13 @@ void initializeRegistry(BuildContext context) {
                   'https://de.wikipedia.org/w/index.php?title=Arabische_Zahlschrift&oldid=246917272',
               licenseType: ToolLicenseType.CCBYSA4)
         ]),
-    GCWSymbolTableTool(
-        symbolKey: 'egypt',
-        symbolSearchStrings: const [
-          'symbol_egypt',
-          'symbol_egyptian_numerals',
-          'gcmuseum',
-        ],
-        licenses: [
-          stl._toolLicenseGCMuseum
-        ]),
+    GCWSymbolTableTool(symbolKey: 'egypt', symbolSearchStrings: const [
+      'symbol_egypt',
+      'symbol_egyptian_numerals',
+      'gcmuseum',
+    ], licenses: [
+      stl._toolLicenseGCMuseum
+    ]),
     GCWSymbolTableTool(
         symbolKey: 'egyptian_numerals',
         symbolSearchStrings: const [
@@ -8499,34 +8553,42 @@ void initializeRegistry(BuildContext context) {
               'https://web.archive.org/web/20200906044202/https://www.deviantart.com/sarinilli/art/Gerudo-Typography-Font-278213135',
           licenseType: ToolLicenseType.PERSONAL_USE)
     ]),
-    GCWSymbolTableTool(symbolKey: 'gesture_numbers_01', symbolSearchStrings: const [
-      'symbol_signlanguage',
-      'symbol_finger_numbers',
-    ], licenses: [
-      ToolLicenseOnlineBook(
-          context: context,
-          author: 'Jakob Leupold',
-          title: 'Theatrum Arithmetico-Geometricum',
-          publisher: 'Breitkopf',
-          year: 1774,
-          customComment: 'urn:nbn:de:bsz:14-db-id3372953791',
-          sourceUrl:'https://web.archive.org/web/20250124215104/https://digital.slub-dresden.de/werkansicht/dlf/26205/1',
-          licenseType: ToolLicenseType.PUBLIC_DOMAIN)
-    ]),
-    GCWSymbolTableTool(symbolKey: 'gesture_numbers_02', symbolSearchStrings: const [
-      'symbol_signlanguage',
-      'symbol_finger_numbers',
-    ], licenses: [
-      ToolLicenseOnlineBook(
-          context: context,
-          author: 'Jakob Leupold',
-          title: 'Theatrum Arithmetico-Geometricum',
-          publisher: 'Breitkopf',
-          year: 1774,
-          customComment: 'urn:nbn:de:bsz:14-db-id3372953791',
-          sourceUrl:'https://web.archive.org/web/20250124215104/https://digital.slub-dresden.de/werkansicht/dlf/26205/1',
-          licenseType: ToolLicenseType.PUBLIC_DOMAIN)
-    ]),
+    GCWSymbolTableTool(
+        symbolKey: 'gesture_numbers_01',
+        symbolSearchStrings: const [
+          'symbol_signlanguage',
+          'symbol_finger_numbers',
+        ],
+        licenses: [
+          ToolLicenseOnlineBook(
+              context: context,
+              author: 'Jakob Leupold',
+              title: 'Theatrum Arithmetico-Geometricum',
+              publisher: 'Breitkopf',
+              year: 1774,
+              customComment: 'urn:nbn:de:bsz:14-db-id3372953791',
+              sourceUrl:
+                  'https://web.archive.org/web/20250124215104/https://digital.slub-dresden.de/werkansicht/dlf/26205/1',
+              licenseType: ToolLicenseType.PUBLIC_DOMAIN)
+        ]),
+    GCWSymbolTableTool(
+        symbolKey: 'gesture_numbers_02',
+        symbolSearchStrings: const [
+          'symbol_signlanguage',
+          'symbol_finger_numbers',
+        ],
+        licenses: [
+          ToolLicenseOnlineBook(
+              context: context,
+              author: 'Jakob Leupold',
+              title: 'Theatrum Arithmetico-Geometricum',
+              publisher: 'Breitkopf',
+              year: 1774,
+              customComment: 'urn:nbn:de:bsz:14-db-id3372953791',
+              sourceUrl:
+                  'https://web.archive.org/web/20250124215104/https://digital.slub-dresden.de/werkansicht/dlf/26205/1',
+              licenseType: ToolLicenseType.PUBLIC_DOMAIN)
+        ]),
     GCWSymbolTableTool(symbolKey: 'glagolitic', symbolSearchStrings: const [
       'symbol_gnommish',
     ], licenses: [
@@ -8637,7 +8699,7 @@ void initializeRegistry(BuildContext context) {
           author: 'de.wikipedia.org and contributors',
           title: 'Ägyptische Hieroglyphen',
           sourceUrl:
-          'https://de.wikipedia.org/w/index.php?title=%C3%84gyptische_Hieroglyphen&oldid=256091998',
+              'https://de.wikipedia.org/w/index.php?title=%C3%84gyptische_Hieroglyphen&oldid=256091998',
           licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(symbolKey: 'hobbit_runes', symbolSearchStrings: const [
@@ -8943,22 +9005,20 @@ void initializeRegistry(BuildContext context) {
         symbolKey: 'ita2_1931',
         symbolSearchStrings: const ['ccitt', 'symbol_murray', 'teletypewriter'],
         licenses: const []),
-    GCWSymbolTableTool(
-        symbolKey: 'jacobite',
-        symbolSearchStrings: const [
-          'symbol_jacobite',
-        ],
-        licenses: [
-          ToolLicenseOnlineBook(
-              context: context,
-              author: 'Edmund Fry',
-              title: 'Pantographia: Containing Accurate Copies of All the Known Alphabets in the World; Together With an English Explanation of the Peculiar Force or Power of each letter to which are added: specimens of all well-authenticated Oral Languages; Forming a Comprehensive digest of phonology',
-              publisher: '',
-              year: 1799,
-              sourceUrl:
-              'https://ia600900.us.archive.org/19/items/pantographiacont00fryeiala/pantographiacont00fryeiala.pdf',
-          )
-        ]),
+    GCWSymbolTableTool(symbolKey: 'jacobite', symbolSearchStrings: const [
+      'symbol_jacobite',
+    ], licenses: [
+      ToolLicenseOnlineBook(
+        context: context,
+        author: 'Edmund Fry',
+        title:
+            'Pantographia: Containing Accurate Copies of All the Known Alphabets in the World; Together With an English Explanation of the Peculiar Force or Power of each letter to which are added: specimens of all well-authenticated Oral Languages; Forming a Comprehensive digest of phonology',
+        publisher: '',
+        year: 1799,
+        sourceUrl:
+            'https://ia600900.us.archive.org/19/items/pantographiacont00fryeiala/pantographiacont00fryeiala.pdf',
+      )
+    ]),
     GCWSymbolTableTool(
         symbolKey: 'japanese_numerals',
         symbolSearchStrings: const [
@@ -9190,30 +9250,38 @@ void initializeRegistry(BuildContext context) {
               'https://web.archive.org/web/20240801172315/https://fontstruct.com/fontstructions/show/1445997/marain-dots',
           licenseType: ToolLicenseType.CCBYSA3)
     ]),
-    GCWSymbolTableTool(symbolKey: 'mary_stuart_babington', symbolSearchStrings: const [
-      'symbol_mary_stuart',
-    ], licenses: [
-      ToolLicenseOnlineArticle(
-        context: context,
-        author: 'Emilio Barone, Gaia Barone',
-        title: 'Unscrambling Codes: From Hieroglyphs to Market News',
-        sourceUrl:
-        'https://web.archive.org/web/20250117200927/https://www.researchgate.net/publication/359543315_Unscrambling_Codes_From_Hieroglyphs_to_Market_News',
-        customComment: 'DOI:10.2139/ssrn.4049797',)
-    ]),
-    GCWSymbolTableTool(symbolKey: 'mary_stuart_castelnau', symbolSearchStrings: const [
-      'symbol_mary_stuart',
-    ], licenses: [
-      ToolLicenseOnlineArticle(
-          context: context,
-          author: 'George Lasry, Norbert Biermann, Satoshi Tomokiyo',
-          title: 'Deciphering Mary Stuart’s lost letters from 1578-1584',
-          year: 2023,
-          sourceUrl:
-          'https://web.archive.org/web/20250117200108/https://www.tandfonline.com/doi/full/10.1080/01611194.2022.2160677',
-          licenseType: ToolLicenseType.CCBYNCND40,
-          customComment: 'DOI: https://doi.org/10.1080/01611194.2022.2160677'),
-      ]),
+    GCWSymbolTableTool(
+        symbolKey: 'mary_stuart_babington',
+        symbolSearchStrings: const [
+          'symbol_mary_stuart',
+        ],
+        licenses: [
+          ToolLicenseOnlineArticle(
+            context: context,
+            author: 'Emilio Barone, Gaia Barone',
+            title: 'Unscrambling Codes: From Hieroglyphs to Market News',
+            sourceUrl:
+                'https://web.archive.org/web/20250117200927/https://www.researchgate.net/publication/359543315_Unscrambling_Codes_From_Hieroglyphs_to_Market_News',
+            customComment: 'DOI:10.2139/ssrn.4049797',
+          )
+        ]),
+    GCWSymbolTableTool(
+        symbolKey: 'mary_stuart_castelnau',
+        symbolSearchStrings: const [
+          'symbol_mary_stuart',
+        ],
+        licenses: [
+          ToolLicenseOnlineArticle(
+              context: context,
+              author: 'George Lasry, Norbert Biermann, Satoshi Tomokiyo',
+              title: 'Deciphering Mary Stuart’s lost letters from 1578-1584',
+              year: 2023,
+              sourceUrl:
+                  'https://web.archive.org/web/20250117200108/https://www.tandfonline.com/doi/full/10.1080/01611194.2022.2160677',
+              licenseType: ToolLicenseType.CCBYNCND40,
+              customComment:
+                  'DOI: https://doi.org/10.1080/01611194.2022.2160677'),
+        ]),
     GCWSymbolTableTool(symbolKey: 'matoran', symbolSearchStrings: const [
       'symbol_matoran',
       'circle'
@@ -9713,7 +9781,7 @@ void initializeRegistry(BuildContext context) {
           author: 'en.wikipedia.org and contributors',
           title: 'Old Hungarian script',
           sourceUrl:
-          'https://en.wikipedia.org/w/index.php?title=Old_Hungarian_script&oldid=1276174822',
+              'https://en.wikipedia.org/w/index.php?title=Old_Hungarian_script&oldid=1276174822',
           licenseType: ToolLicenseType.CCBYSA4)
     ]),
     GCWSymbolTableTool(
@@ -9963,21 +10031,18 @@ void initializeRegistry(BuildContext context) {
               'https://web.archive.org/web/20240808130803/https://fakoo.de/quadoo.html',
           licenseType: ToolLicenseType.CCBYNCND40)
     ]),
-    GCWSymbolTableTool(
-        symbolKey: 'qonos',
-        symbolSearchStrings: const [
-          'symbol_qonos',
-        ],
-        licenses: [
-          ToolLicenseOnlineArticle(
-            context: context,
-            author: 'Mike H. Lee & Josh Dixon',
-            title: "Klingon® Qo'nos",
-            sourceUrl:
+    GCWSymbolTableTool(symbolKey: 'qonos', symbolSearchStrings: const [
+      'symbol_qonos',
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+        context: context,
+        author: 'Mike H. Lee & Josh Dixon',
+        title: "Klingon® Qo'nos",
+        sourceUrl:
             'https://web.archive.org/web/20250328202611/http://www.oocities.org/timessquare/4965/qonos.zip',
-            licenseType: ToolLicenseType.CHARITYWARE,
-          )
-        ]),
+        licenseType: ToolLicenseType.CHARITYWARE,
+      )
+    ]),
     GCWSymbolTableTool(
         symbolKey: 'rainbow_gc_muzeum',
         symbolSearchStrings: const [
@@ -10123,37 +10188,30 @@ void initializeRegistry(BuildContext context) {
     ], licenses: [
       stl._toolLicenseMyGeoToolsCodeTabellen,
     ]),
-    GCWSymbolTableTool(
-        symbolKey: 'samurai',
-        symbolSearchStrings: const [
-          'symbol_chinese',
-        ],
-        licenses: [
-          ToolLicenseImage(
-              context: context,
-              author: 'dCode (dCode.fr)',
-              title: 'Chinese Code',
-              licenseType: ToolLicenseType.CCBY,
-              sourceUrl:
+    GCWSymbolTableTool(symbolKey: 'samurai', symbolSearchStrings: const [
+      'symbol_chinese',
+    ], licenses: [
+      ToolLicenseImage(
+          context: context,
+          author: 'dCode (dCode.fr)',
+          title: 'Chinese Code',
+          licenseType: ToolLicenseType.CCBY,
+          sourceUrl:
               'https://web.archive.org/web/20250328085306/https://www.dcode.fr/chinese-code',
-              licenseUseType: ToolLicenseUseType.REPRODUCTION),
+          licenseUseType: ToolLicenseUseType.REPRODUCTION),
     ]),
-    GCWSymbolTableTool(
-        symbolKey: 'samurai2',
-        symbolSearchStrings: const [
-          'symbol_chinese',
-
-        ],
-        licenses: [
-          ToolLicenseImage(
-              context: context,
-              author: 'dCode (dCode.fr)',
-              title: 'Chinese Code',
-              licenseType: ToolLicenseType.CCBY,
-              sourceUrl:
+    GCWSymbolTableTool(symbolKey: 'samurai2', symbolSearchStrings: const [
+      'symbol_chinese',
+    ], licenses: [
+      ToolLicenseImage(
+          context: context,
+          author: 'dCode (dCode.fr)',
+          title: 'Chinese Code',
+          licenseType: ToolLicenseType.CCBY,
+          sourceUrl:
               'https://web.archive.org/web/20250328085306/https://www.dcode.fr/chinese-code',
-              licenseUseType: ToolLicenseUseType.REPRODUCTION)
-        ]),
+          licenseUseType: ToolLicenseUseType.REPRODUCTION)
+    ]),
     GCWSymbolTableTool(symbolKey: 'sanluca', symbolSearchStrings: const [
       'symbol_sanluca',
     ], licenses: [
@@ -10182,9 +10240,9 @@ void initializeRegistry(BuildContext context) {
           title: 'xkcd 3054: Scream Cipher',
           licenseType: ToolLicenseType.CCNC25,
           licenseUrl:
-          'https://web.archive.org/web/20240715221350/https://creativecommons.org/licenses/by-nc/2.5/',
+              'https://web.archive.org/web/20240715221350/https://creativecommons.org/licenses/by-nc/2.5/',
           sourceUrl:
-          'https://web.archive.org/web/20250221182516/https://xkcd.com/3054/'),
+              'https://web.archive.org/web/20250221182516/https://xkcd.com/3054/'),
     ]),
     GCWSymbolTableTool(symbolKey: 'semaphore', symbolSearchStrings: const [
       'symbol_semaphore',
@@ -10310,23 +10368,20 @@ void initializeRegistry(BuildContext context) {
                   'https://en.wikipedia.org/w/index.php?title=Gregor_and_the_Code_of_Claw&oldid=1176094103',
               licenseType: ToolLicenseType.CCBYSA4)
         ]),
-    GCWSymbolTableTool(
-        symbolKey: 'snooker',
-        symbolSearchStrings: const [
-          'symbol_snooker',
-          'symbol_billiard_balls',
-          'color',
-          'circle',
-        ],
-        licenses: [
-          ToolLicenseOnlineArticle(
-              context: context,
-              author: 'de.wikipedia and contributors',
-              title: 'Liste der Snooker-Begriffe',
-              sourceUrl:
+    GCWSymbolTableTool(symbolKey: 'snooker', symbolSearchStrings: const [
+      'symbol_snooker',
+      'symbol_billiard_balls',
+      'color',
+      'circle',
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'de.wikipedia and contributors',
+          title: 'Liste der Snooker-Begriffe',
+          sourceUrl:
               'https://de.m.wikipedia.org/w/index.php?title=Liste_der_Snooker-Begriffe&oldid=256502442',
-              licenseType: ToolLicenseType.CCBYSA4)
-        ]),
+          licenseType: ToolLicenseType.CCBYSA4)
+    ]),
     GCWSymbolTableTool(symbolKey: 'solmisation', symbolSearchStrings: const [
       'symbol_solmisation',
     ], licenses: [
@@ -10376,23 +10431,26 @@ void initializeRegistry(BuildContext context) {
               'https://web.archive.org/web/20210306061331/https://www.1001fonts.com/sprykski-font.html',
           licenseType: ToolLicenseType.PERSONAL_USE)
     ]),
-    GCWSymbolTableTool(symbolKey: 'standardgalacticalphabet', symbolSearchStrings: const [
-      'symbol_standardgalacticalphabet',
-    ], licenses: [
-      ToolLicenseOnlineArticle(
-          context: context,
-          author: 'Keen Wiki and contributors',
-          title: 'Standard Galactic Alphabet',
-          sourceUrl:
-          'https://web.archive.org/web/20250130012447/https://keenwiki.shikadi.net/wiki/Standard_Galactic_Alphabet'),
-      ToolLicenseFont(
-          context: context,
-          author: 'Aaqil A. Azhar (Foneer)',
-          title: 'Robotica SGA',
-          sourceUrl:
-          'https://web.archive.org/web/20240730195127/https://fontstruct.com/fontstructions/show/2324755/robotica-sga',
-          licenseType: ToolLicenseType.NON_COMMERCIAL)
-    ]),
+    GCWSymbolTableTool(
+        symbolKey: 'standardgalacticalphabet',
+        symbolSearchStrings: const [
+          'symbol_standardgalacticalphabet',
+        ],
+        licenses: [
+          ToolLicenseOnlineArticle(
+              context: context,
+              author: 'Keen Wiki and contributors',
+              title: 'Standard Galactic Alphabet',
+              sourceUrl:
+                  'https://web.archive.org/web/20250130012447/https://keenwiki.shikadi.net/wiki/Standard_Galactic_Alphabet'),
+          ToolLicenseFont(
+              context: context,
+              author: 'Aaqil A. Azhar (Foneer)',
+              title: 'Robotica SGA',
+              sourceUrl:
+                  'https://web.archive.org/web/20240730195127/https://fontstruct.com/fontstructions/show/2324755/robotica-sga',
+              licenseType: ToolLicenseType.NON_COMMERCIAL)
+        ]),
     GCWSymbolTableTool(symbolKey: 'steinheil', symbolSearchStrings: const [
       'symbol_steinheil',
       'telegraph',
@@ -10948,7 +11006,7 @@ void initializeRegistry(BuildContext context) {
       'weather',
       'weather_n',
       'weather_clouds'
-      'circle'
+          'circle'
     ], licenses: [
       ToolLicenseImage(
           context: context,
@@ -10996,23 +11054,21 @@ void initializeRegistry(BuildContext context) {
               'https://commons.wikimedia.org/w/index.php?title=File:Webdings-big.png&oldid=899647144',
           licenseType: ToolLicenseType.PUBLIC_DOMAIN)
     ]),
-    GCWSymbolTableTool(
-        symbolKey: 'weldon',
-        symbolSearchStrings: const [
-          'symbol_weldon',
-          'symbol_zodiac_z408',
-          'gcmuseum'
-        ],
-        licenses: [
-          stl._toolLicenseGCMuseum,
-          ToolLicenseImage(
-              context: context,
-              author: 'nickpelling (ciphermysteries.com)',
-              title: "Weldon Ciphers resolved (it would seem)…",
-              sourceUrl: 'https://web.archive.org/web/20250523031800/https://ciphermysteries.com/2014/04/05/weldon-ciphers-resolved-seem',
-              licenseType: ToolLicenseType.FREE_TO_USE,
-              licenseUseType: ToolLicenseUseType.REPRODUCTION)
-        ]),
+    GCWSymbolTableTool(symbolKey: 'weldon', symbolSearchStrings: const [
+      'symbol_weldon',
+      'symbol_zodiac_z408',
+      'gcmuseum'
+    ], licenses: [
+      stl._toolLicenseGCMuseum,
+      ToolLicenseImage(
+          context: context,
+          author: 'nickpelling (ciphermysteries.com)',
+          title: "Weldon Ciphers resolved (it would seem)…",
+          sourceUrl:
+              'https://web.archive.org/web/20250523031800/https://ciphermysteries.com/2014/04/05/weldon-ciphers-resolved-seem',
+          licenseType: ToolLicenseType.FREE_TO_USE,
+          licenseUseType: ToolLicenseUseType.REPRODUCTION)
+    ]),
     GCWSymbolTableTool(symbolKey: 'westernunion', symbolSearchStrings: const [
       'symbol_westernunion',
       'teletypewriter'
@@ -11040,28 +11096,37 @@ void initializeRegistry(BuildContext context) {
                   'https://commons.wikimedia.org/w/index.php?title=Wind_speed&oldid=760157124',
               licenseType: ToolLicenseType.CCBYSA4)
         ]),
-    GCWSymbolTableTool(symbolKey: 'wind_mill_signals_v1', symbolSearchStrings: const [
-      'symbol_wind_mill_signals_v1',
-    ], licenses: [
-      ToolLicenseOnlineArticle(
-          context: context,
-          author: 'Unknown',
-          title: 'Braunsmühle Webpage',
-          sourceUrl: 'https://web.archive.org/web/20221103091143/https://www.braunsmuehle.de/muehle/technik/Muehlensprache-Die-Stellung-der-Fluegel--25/',
-          licenseType: ToolLicenseType.FREE_TO_USE,
-          customComment: 'Allowed by web admin via personal email 9.10.2024'),
-    ]),
-    GCWSymbolTableTool(symbolKey: 'wind_mill_signals_v2', symbolSearchStrings: const [
-      'symbol_wind_mill_signals_v2',
-    ], licenses: [
-      ToolLicenseOnlineArticle(
-          context: context,
-          author: 'Unknown authors',
-          title: 'https://geocachen.be',
-          sourceUrl: 'https://web.archive.org/web/20241004220413/https://geocachen.be/geocaching/geocache-puzzels-oplossen/molentaal/',
-          licenseType: ToolLicenseType.FREE_TO_USE,
-          customComment: 'Pending'), // todo ask for License
-    ]),
+    GCWSymbolTableTool(
+        symbolKey: 'wind_mill_signals_v1',
+        symbolSearchStrings: const [
+          'symbol_wind_mill_signals_v1',
+        ],
+        licenses: [
+          ToolLicenseOnlineArticle(
+              context: context,
+              author: 'Unknown',
+              title: 'Braunsmühle Webpage',
+              sourceUrl:
+                  'https://web.archive.org/web/20221103091143/https://www.braunsmuehle.de/muehle/technik/Muehlensprache-Die-Stellung-der-Fluegel--25/',
+              licenseType: ToolLicenseType.FREE_TO_USE,
+              customComment:
+                  'Allowed by web admin via personal email 9.10.2024'),
+        ]),
+    GCWSymbolTableTool(
+        symbolKey: 'wind_mill_signals_v2',
+        symbolSearchStrings: const [
+          'symbol_wind_mill_signals_v2',
+        ],
+        licenses: [
+          ToolLicenseOnlineArticle(
+              context: context,
+              author: 'Unknown authors',
+              title: 'https://geocachen.be',
+              sourceUrl:
+                  'https://web.archive.org/web/20241004220413/https://geocachen.be/geocaching/geocache-puzzels-oplossen/molentaal/',
+              licenseType: ToolLicenseType.FREE_TO_USE,
+              customComment: 'Pending'), // todo ask for License
+        ]),
     GCWSymbolTableTool(
         symbolKey: 'windforce_knots',
         symbolSearchStrings: const [
@@ -11114,16 +11179,17 @@ void initializeRegistry(BuildContext context) {
           licenseType: ToolLicenseType.PUBLIC_DOMAIN)
     ]),
     GCWSymbolTableTool(
-      symbolKey: 'xelbet', symbolSearchStrings: const [
-      'symbol_xelbet',
-    ],
+      symbolKey: 'xelbet',
+      symbolSearchStrings: const [
+        'symbol_xelbet',
+      ],
       licenses: [
         ToolLicenseImage(
           context: context,
           author: 'Alex Gomez',
           title: 'Xelbet',
           sourceUrl:
-          'https://web.archive.org/web/20250328202024/https://www.omniglot.com/conscripts/xelbet.htm',
+              'https://web.archive.org/web/20250328202024/https://www.omniglot.com/conscripts/xelbet.htm',
           licenseUseType: ToolLicenseUseType.COPY,
           licenseType: ToolLicenseType.PRIVATE_PERMISSION,
           privatePermission: ToolLicensePrivatePermission(
@@ -11136,21 +11202,17 @@ void initializeRegistry(BuildContext context) {
         )
       ],
     ),
-    GCWSymbolTableTool(
-        symbolKey: 'yavin',
-        symbolSearchStrings: const [
-          'symbol_yavin',
-        ],
-        licenses: [
-          ToolLicenseOnlineArticle(
-            context: context,
-            author: 'Tommy of Escondido',
-            title: "StarWars Yavin 4 temple font",
-            sourceUrl:
-            'https://www.oocities.org/timessquare/4965/swyavin4.zip',
-            licenseType: ToolLicenseType.CHARITYWARE,
-          )
-        ]),
+    GCWSymbolTableTool(symbolKey: 'yavin', symbolSearchStrings: const [
+      'symbol_yavin',
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+        context: context,
+        author: 'Tommy of Escondido',
+        title: "StarWars Yavin 4 temple font",
+        sourceUrl: 'https://www.oocities.org/timessquare/4965/swyavin4.zip',
+        licenseType: ToolLicenseType.CHARITYWARE,
+      )
+    ]),
 
     GCWSymbolTableTool(symbolKey: 'yan_koryani', symbolSearchStrings: const [
       'symbol_yan_koryani',
@@ -11731,7 +11793,7 @@ void initializeRegistry(BuildContext context) {
             sourceUrl:
                 'https://web.archive.org/web/20240414052702/https://guballa.de/bits-and-bytes/implementierung-des-vigenere-solvers',
           )
-      ]),
+        ]),
     GCWTool(tool: Vigenere(), id: 'vigenere', searchKeys: const [
       'vigenere',
       'rotation',
@@ -11750,15 +11812,13 @@ void initializeRegistry(BuildContext context) {
       'vigenere',
       'rotation',
       'larrabee',
-      ],
-      licenses: [
-        ToolLicenseOnlineBook(
+    ], licenses: [
+      ToolLicenseOnlineBook(
           context: context,
           author: 'Charles Hathaway Larrabee',
-          title:
-            'CIPHER, LETTER AND TELEGRAPH CODE',
+          title: 'CIPHER, LETTER AND TELEGRAPH CODE',
           sourceUrl:
-            'https://web.archive.org/web/20250328183717/https://people.duke.edu/~ng46/collections/larrabees-cipher-1884.pdf')
+              'https://web.archive.org/web/20250328183717/https://people.duke.edu/~ng46/collections/larrabees-cipher-1884.pdf')
     ]),
     GCWTool(
         tool: const WeddingAnniversaries(),

@@ -1,0 +1,553 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gpx xmlns="http://www.topografix.com/GPX/1/1" version="1.1" creator="FME(R) 2021.1.0.1">
+	<metadata>
+		<time>2025-10-20T13:45:50+02:00</time>
+		<bounds minlat="50.288949460126872" minlon="9.8866387793284076" maxlat="51.526774656355506" maxlon="12.239464091168221"/>
+	</metadata>
+	<wpt lat="51.32798748823496" lon="11.042324325899214">
+		<name>KYF 7259</name>
+		<cmt>Seega &amp;gt; an abbiegender Hauptstraße Zufahrt Standortübungsplatz</cmt>
+		<desc>Seega &amp;gt; an abbiegender Hauptstraße Zufahrt Standortübungsplatz</desc>
+		<src>Bundesforst</src>
+	</wpt>
+	<wpt lat="50.902581044433049" lon="10.523983499482423">
+		<name>GTH 7231</name>
+		<cmt>Tabarz Richtung Waltershausen &amp;gt;auf Höhe Langenhain links in Ort abbiegen &amp;gt; Straßenverlauf (Marktstraße) folgen bis Kreuzung Lauchaer Straße</cmt>
+		<desc>Tabarz Richtung Waltershausen &amp;gt;auf Höhe Langenhain links in Ort abbiegen &amp;gt; Straßenverlauf (Marktstraße) folgen bis Kreuzung Lauchaer Straße</desc>
+		<src>Bundesforst</src>
+	</wpt>
+	<wpt lat="50.902815995410954" lon="10.961127973550418">
+		<name>EF 7254</name>
+		<cmt>Molsdorf &amp;gt; Kreuzung Graf-Gotter-Straße und Keilsgasse</cmt>
+		<desc>Molsdorf &amp;gt; Kreuzung Graf-Gotter-Straße und Keilsgasse</desc>
+		<src>Bundesforst</src>
+	</wpt>
+	<wpt lat="50.587629270352579" lon="10.71630551440073">
+		<name>HBN 7237</name>
+		<cmt>Einfahrt Gewerbepark Friedberg &amp;gt; Hauptstraße gegenüber BMW-Autohaus</cmt>
+		<desc>Einfahrt Gewerbepark Friedberg &amp;gt; Hauptstraße gegenüber BMW-Autohaus</desc>
+		<src>Bundesforst</src>
+	</wpt>
+	<wpt lat="51.223194564724821" lon="10.365744509779361">
+		<name>UH 7229</name>
+		<cmt>Hauptstraße Dörna Richtg. Eigenrieden &amp;gt; Brücke Tiefenbach</cmt>
+		<desc>Hauptstraße Dörna Richtg. Eigenrieden &amp;gt; Brücke Tiefenbach</desc>
+		<src>Bundesforst</src>
+	</wpt>
+	<wpt lat="50.522575749066462" lon="11.796605277146071">
+		<name>SOK 7301</name>
+		<cmt>in Raila nach Ortseingang nächster Abzweig links Richtung A 9</cmt>
+		<desc>in Raila nach Ortseingang nächster Abzweig links Richtung A 9</desc>
+		<src>Bundesforst</src>
+	</wpt>
+	<wpt lat="50.903747555453002" lon="11.066268761710688">
+		<name>IK 7260</name>
+		<cmt>Bechstedt/ Wagd &amp;gt; Ortsdurchfahrt in südl. Richtung 200 m links &amp;gt; Schotterweg &amp;gt; 100 m vor Wendestelle</cmt>
+		<desc>Bechstedt/ Wagd &amp;gt; Ortsdurchfahrt in südl. Richtung 200 m links &amp;gt; Schotterweg &amp;gt; 100 m vor Wendestelle</desc>
+		<src>Bundesforst</src>
+	</wpt>
+	<wpt lat="50.572926394383522" lon="10.729701724120773">
+		<name>HBN 7238</name>
+		<cmt>ehem. B 247 am Fuße des Friedberges &amp;gt; am Beginn des 3-spurigen Ausbaus aus Richtung Hirschbach links</cmt>
+		<desc>ehem. B 247 am Fuße des Friedberges &amp;gt; am Beginn des 3-spurigen Ausbaus aus Richtung Hirschbach links</desc>
+		<src>Bundesforst</src>
+	</wpt>
+	<wpt lat="50.678408059394727" lon="9.9875139505206398">
+		<name>WAK 7219</name>
+		<cmt>Kranlucken über Oberrothhof &amp;gt; 1km bis Abzweig Motzlar</cmt>
+		<desc>Kranlucken über Oberrothhof &amp;gt; 1km bis Abzweig Motzlar</desc>
+		<src>Bundesforst</src>
+	</wpt>
+	<wpt lat="51.250165298314066" lon="10.473393268089241">
+		<name>UH 7230</name>
+		<cmt>L 2040 Mühlhausen Richtg. Reiser &amp;gt; Zufahrt Gaststätte "Zum Flachstal"</cmt>
+		<desc>L 2040 Mühlhausen Richtg. Reiser &amp;gt; Zufahrt Gaststätte "Zum Flachstal"</desc>
+		<src>Bundesforst</src>
+	</wpt>
+	<wpt lat="50.860227843671986" lon="10.797910125850004">
+		<name>GTH 7243</name>
+		<cmt>Mühlberg Richtung Wechmar hinter Agrargesellschaft links &amp;gt; Schotterweg (Golfplatz vorbei) folgen &amp;gt; ca. 2 km bis Schranke</cmt>
+		<desc>Mühlberg Richtung Wechmar hinter Agrargesellschaft links &amp;gt; Schotterweg (Golfplatz vorbei) folgen &amp;gt; ca. 2 km bis Schranke</desc>
+		<src>Bundesforst</src>
+	</wpt>
+	<wpt lat="50.778216996648297" lon="10.291939301402731">
+		<name>WAK 7228</name>
+		<cmt>K 87 Ortsmitte Immelborn OT Hauenhof von Immelborn kommend rechts Abzweig zur Pleßstraße</cmt>
+		<desc>K 87 Ortsmitte Immelborn OT Hauenhof von Immelborn kommend rechts Abzweig zur Pleßstraße</desc>
+		<src>Bundesforst</src>
+	</wpt>
+	<wpt lat="51.086374623446588" lon="10.168883561353043">
+		<name>WAK 7221</name>
+		<cmt>Straße Ifta Richtung Willershausen &amp;gt; Landesgrenze</cmt>
+		<desc>Straße Ifta Richtung Willershausen &amp;gt; Landesgrenze</desc>
+		<src>Bundesforst</src>
+	</wpt>
+	<wpt lat="50.654201038105022" lon="9.8866387793284076">
+		<name>WAK 7215</name>
+		<cmt>Kreisstraße Spahl Richtung Mittelaschenbach &amp;gt; Landesgrenze</cmt>
+		<desc>Kreisstraße Spahl Richtung Mittelaschenbach &amp;gt; Landesgrenze</desc>
+		<src>Bundesforst</src>
+	</wpt>
+	<wpt lat="51.397864972674043" lon="10.623363857633356">
+		<name>NDH 7234</name>
+		<cmt>Landstraße L 1033 Friedrichslohra Richtung Kleinberndten &amp;gt; nach Steinbruch nächste Waldeinfahrt rechts</cmt>
+		<desc>Landstraße L 1033 Friedrichslohra Richtung Kleinberndten &amp;gt; nach Steinbruch nächste Waldeinfahrt rechts</desc>
+		<src>Bundesforst</src>
+	</wpt>
+	<wpt lat="50.708595765559174" lon="11.614202381012753">
+		<name>SOK 7279</name>
+		<cmt>B 281 Triptis Richtg. Pösneck &amp;gt; in Pösneck rechts auf L 1108 Richtg. Steinmühle abbiegen &amp;gt; rechts auf Orlaweg &amp;gt; Rehmer See &amp;gt; RP am Wegekreuz</cmt>
+		<desc>B 281 Triptis Richtg. Pösneck &amp;gt; in Pösneck rechts auf L 1108 Richtg. Steinmühle abbiegen &amp;gt; rechts auf Orlaweg &amp;gt; Rehmer See &amp;gt; RP am Wegekreuz</desc>
+		<src>Bundesforst</src>
+	</wpt>
+	<wpt lat="50.74349050725727" lon="11.797778003020674">
+		<name>SOK 7305</name>
+		<cmt>in Ortschaft Dreitzsch Richtung Alsmannsdorf Ortstraße folgen &amp;gt; RP Höhe LPG</cmt>
+		<desc>in Ortschaft Dreitzsch Richtung Alsmannsdorf Ortstraße folgen &amp;gt; RP Höhe LPG</desc>
+		<src>Bundesforst</src>
+	</wpt>
+	<wpt lat="50.612387574641772" lon="11.916300599794168">
+		<name>GRZ 7196</name>
+		<cmt>B 94 Richtung Schleiz hinter Weckersdorf in einer ansteigenden Linkskurve &amp;gt; linker Abzweig</cmt>
+		<desc>B 94 Richtung Schleiz hinter Weckersdorf in einer ansteigenden Linkskurve &amp;gt; linker Abzweig</desc>
+		<src>Bundesforst</src>
+	</wpt>
+	<wpt lat="50.654638986236904" lon="12.042665724267183">
+		<name>GRZ 7200</name>
+		<cmt>B 94 Zeulenroda Richtung Neuärgerniß &amp;gt; in scharfer Linkskurve rechter Abzweig &amp;gt; RP an Schranke</cmt>
+		<desc>B 94 Zeulenroda Richtung Neuärgerniß &amp;gt; in scharfer Linkskurve rechter Abzweig &amp;gt; RP an Schranke</desc>
+		<src>Bundesforst</src>
+	</wpt>
+	<wpt lat="50.665489142381958" lon="12.209089786776863">
+		<name>GRZ 7213</name>
+		<cmt>Greiz Richtung Greiz-Pohlitz &amp;gt; oben am Berg kurz vor Supermarkt Neubaublöcke &amp;gt; links Abzweig Garagenkomplex</cmt>
+		<desc>Greiz Richtung Greiz-Pohlitz &amp;gt; oben am Berg kurz vor Supermarkt Neubaublöcke &amp;gt; links Abzweig Garagenkomplex</desc>
+		<src>Bundesforst</src>
+	</wpt>
+	<wpt lat="50.517315502821546" lon="11.792690538641351">
+		<name>SOK 7297</name>
+		<cmt>Raila Richtung Wernsdorf bis Gaststätte Wetteraperle links</cmt>
+		<desc>Raila Richtung Wernsdorf bis Gaststätte Wetteraperle links</desc>
+		<src>Bundesforst</src>
+	</wpt>
+	<wpt lat="50.484169837406618" lon="11.875877252556284">
+		<name>SOK 7312</name>
+		<cmt>in Tanna Richtung Willersdorf &amp;gt; in Tanna in Bahnhofsstraße abbiegen &amp;gt; bis auf rechter Seite eine Wiese kommt, dem Waldweg folgen</cmt>
+		<desc>in Tanna Richtung Willersdorf &amp;gt; in Tanna in Bahnhofsstraße abbiegen &amp;gt; bis auf rechter Seite eine Wiese kommt, dem Waldweg folgen</desc>
+		<src>Bundesforst</src>
+	</wpt>
+	<wpt lat="51.385336230329031" lon="10.90997934219682">
+		<name>KYF 7250</name>
+		<cmt>Sondershausen Richtung Badra L 1040 &amp;gt; nach Ortsausgang Sondershausen ca. 500 m Einfahrt Schersengut links</cmt>
+		<desc>Sondershausen Richtung Badra L 1040 &amp;gt; nach Ortsausgang Sondershausen ca. 500 m Einfahrt Schersengut links</desc>
+		<src>Bundesforst</src>
+	</wpt>
+	<wpt lat="50.652562247705262" lon="11.450301852861854">
+		<name>SLF 7275</name>
+		<cmt>B 281 Abfahrt Kampsdorf/Unterwellenborn - links auf L 1105 abbiegen, nächsten Feldweg links abbiegen</cmt>
+		<desc>B 281 Abfahrt Kampsdorf/Unterwellenborn - links auf L 1105 abbiegen, nächsten Feldweg links abbiegen</desc>
+		<src>Bundesforst</src>
+	</wpt>
+	<wpt lat="50.420018920879379" lon="11.794669923389268">
+		<name>SOK 7298</name>
+		<cmt>Ullersreuth Richtung A 9 erste Abfahrt links &amp;gt; RP an nächster Gabelung</cmt>
+		<desc>Ullersreuth Richtung A 9 erste Abfahrt links &amp;gt; RP an nächster Gabelung</desc>
+		<src>Bundesforst</src>
+	</wpt>
+	<wpt lat="50.834839677918232" lon="10.740483586569704">
+		<name>GTH 7240</name>
+		<cmt>B 247 Schwabhausen Richtung Ohrdruf &amp;gt; in Ohrdruf erste Ampel links &amp;gt; Richtung TrÜPl Kaserneneinfahrt (Wache)</cmt>
+		<desc>B 247 Schwabhausen Richtung Ohrdruf &amp;gt; in Ohrdruf erste Ampel links &amp;gt; Richtung TrÜPl Kaserneneinfahrt (Wache)</desc>
+		<src>Bundesforst</src>
+	</wpt>
+	<wpt lat="50.90274329610866" lon="11.115073920991682">
+		<name>AP 7264</name>
+		<cmt>von RP AP 6938 südlich auf Schotterweg 1,8 km &amp;gt; Abzweig rechts beginn Plattenweg</cmt>
+		<desc>von RP AP 6938 südlich auf Schotterweg 1,8 km &amp;gt; Abzweig rechts beginn Plattenweg</desc>
+		<src>Bundesforst</src>
+	</wpt>
+	<wpt lat="50.432399366229724" lon="10.8972341336002">
+		<name>HBN 7247</name>
+		<cmt>Eisfeld Richtung A 73 &amp;gt; AS Eisfeld-Nord am Kreisverkehr B 4/ B 281</cmt>
+		<desc>Eisfeld Richtung A 73 &amp;gt; AS Eisfeld-Nord am Kreisverkehr B 4/ B 281</desc>
+		<src>Bundesforst</src>
+	</wpt>
+	<wpt lat="50.777787768430372" lon="10.200633598224561">
+		<name>WAK 7223</name>
+		<cmt>B 285 Langenfeld Richtung Urnshausen &amp;gt; hinter Langenfeld links Wanderparkplatz Polsambach</cmt>
+		<desc>B 285 Langenfeld Richtung Urnshausen &amp;gt; hinter Langenfeld links Wanderparkplatz Polsambach</desc>
+		<src>Bundesforst</src>
+	</wpt>
+	<wpt lat="50.667494672976176" lon="10.057805504279127">
+		<name>WAK 7220</name>
+		<cmt>Adenhausen Richtung Theobaldshof &amp;gt; Landesgrenze</cmt>
+		<desc>Adenhausen Richtung Theobaldshof &amp;gt; Landesgrenze</desc>
+		<src>Bundesforst</src>
+	</wpt>
+	<wpt lat="50.780094773165402" lon="11.20196981306229">
+		<name>SLF 7656</name>
+		<cmt>Von Breitenheerda nach Remda über L1050 - am Ortsausgang Breitenheerda rechts in den Wald - am Schlagbaum treffen</cmt>
+		<desc>Von Breitenheerda nach Remda über L1050 - am Ortsausgang Breitenheerda rechts in den Wald - am Schlagbaum treffen</desc>
+		<src>Bundesforst</src>
+	</wpt>
+	<wpt lat="51.526774656355506" lon="10.821125198174197">
+		<name>NDH 7244</name>
+		<cmt>L 1038 von NDH nach Petersdorf &amp;gt; Ortseingang Petersdorf links Zufahrt China-Restaurant "King Harzrigi"</cmt>
+		<desc>L 1038 von NDH nach Petersdorf &amp;gt; Ortseingang Petersdorf links Zufahrt China-Restaurant "King Harzrigi"</desc>
+		<src>Bundesforst</src>
+	</wpt>
+	<wpt lat="50.628638255149724" lon="12.048398500956557">
+		<name>GRZ 7203</name>
+		<cmt>Pöllwitz Richtung Friedhof/ Badeteich &amp;gt; RP am Waldrand/ Schranke</cmt>
+		<desc>Pöllwitz Richtung Friedhof/ Badeteich &amp;gt; RP am Waldrand/ Schranke</desc>
+		<src>Bundesforst</src>
+	</wpt>
+	<wpt lat="50.540574874243944" lon="11.799943472521324">
+		<name>SOK 7303</name>
+		<cmt>Heinrichsruh Richtung Zollgrün &amp;gt; an Abfahrt Raila rechts über A 9 &amp;gt; ca. 300 m nächste Abfahrt links (Waldweg/ Abfuhrstraße)</cmt>
+		<desc>Heinrichsruh Richtung Zollgrün &amp;gt; an Abfahrt Raila rechts über A 9 &amp;gt; ca. 300 m nächste Abfahrt links (Waldweg/ Abfuhrstraße)</desc>
+		<src>Bundesforst</src>
+	</wpt>
+	<wpt lat="50.448678584227743" lon="11.798210212982733">
+		<name>SOK 7302</name>
+		<cmt>von Blintendorf unter A 9 an Autobahnmeisterei</cmt>
+		<desc>von Blintendorf unter A 9 an Autobahnmeisterei</desc>
+		<src>Bundesforst</src>
+	</wpt>
+	<wpt lat="51.356932554662016" lon="10.94746134877013">
+		<name>KYF 7253</name>
+		<cmt>Sondershausen Richtung Bendeleben nach Abzweig Hachelbich bis Waldrand &amp;gt; RP Abzweig links</cmt>
+		<desc>Sondershausen Richtung Bendeleben nach Abzweig Hachelbich bis Waldrand &amp;gt; RP Abzweig links</desc>
+		<src>Bundesforst</src>
+	</wpt>
+	<wpt lat="51.062274119758648" lon="11.520800493420539">
+		<name>AP 7276</name>
+		<cmt>B 87 Apolda Richtung Rannstedt zur Poche Parkplatz</cmt>
+		<desc>B 87 Apolda Richtung Rannstedt zur Poche Parkplatz</desc>
+		<src>Bundesforst</src>
+	</wpt>
+	<wpt lat="50.658982013104506" lon="11.378430909397066">
+		<name>SLF 7273</name>
+		<cmt>B281 Richtung Saalfeld - Ausfahrt Gorndorf/ Kronnach - nächste rechts in Industriestraße - Treffpunkt Parkplatz linker Hand</cmt>
+		<desc>B281 Richtung Saalfeld - Ausfahrt Gorndorf/ Kronnach - nächste rechts in Industriestraße - Treffpunkt Parkplatz linker Hand</desc>
+		<src>Bundesforst</src>
+	</wpt>
+	<wpt lat="50.288949460126872" lon="11.167294005729564">
+		<name>SON 7268</name>
+		<cmt>Dorfplatz Mogger (am Teich)</cmt>
+		<desc>Dorfplatz Mogger (am Teich)</desc>
+		<src>Bundesforst</src>
+	</wpt>
+	<wpt lat="50.875599309407036" lon="10.73372343751076">
+		<name>GTH 7239</name>
+		<cmt>B 247 Schwabhausen Richtung Ohrdruf &amp;gt; nach ca. 1,5 km links abbiegen &amp;gt; an Motorrad-Crossstrecke nach 600 m Schranke TrÜbPl-Einfahrt</cmt>
+		<desc>B 247 Schwabhausen Richtung Ohrdruf &amp;gt; nach ca. 1,5 km links abbiegen &amp;gt; an Motorrad-Crossstrecke nach 600 m Schranke TrÜbPl-Einfahrt</desc>
+		<src>Bundesforst</src>
+	</wpt>
+	<wpt lat="50.918332330746587" lon="10.676792128811261">
+		<name>GTH 7236</name>
+		<cmt>Gotha Richtung Boilstädt &amp;gt; rechts nach Boilstädt abbiegen &amp;gt; über Ortsmitte Straße folgen und über Kirchstraße Ort verlassen &amp;gt; 200 m nach Ort scharf links</cmt>
+		<desc>Gotha Richtung Boilstädt &amp;gt; rechts nach Boilstädt abbiegen &amp;gt; über Ortsmitte Straße folgen und über Kirchstraße Ort verlassen &amp;gt; 200 m nach Ort scharf links</desc>
+		<src>Bundesforst</src>
+	</wpt>
+	<wpt lat="50.957712133026185" lon="10.947342564248219">
+		<name>EF 7252</name>
+		<cmt>B 7 Erfurt Richtung Gotha (Parkplatz Ikea) &amp;gt; nähe Eingang</cmt>
+		<desc>B 7 Erfurt Richtung Gotha (Parkplatz Ikea) &amp;gt; nähe Eingang</desc>
+		<src>Bundesforst</src>
+	</wpt>
+	<wpt lat="50.989959641011282" lon="10.924468503011155">
+		<name>EF 7251</name>
+		<cmt>Alach Ortsausgang Richtung Zimmernsupra</cmt>
+		<desc>Alach Ortsausgang Richtung Zimmernsupra</desc>
+		<src>Bundesforst</src>
+	</wpt>
+	<wpt lat="50.850500761756805" lon="10.999502952659185">
+		<name>IK 7257</name>
+		<cmt>A 71 AS Arnstadt-Nord &amp;gt; von Arnstadt kommend vor AS links unbefestigter Parkplatz</cmt>
+		<desc>A 71 AS Arnstadt-Nord &amp;gt; von Arnstadt kommend vor AS links unbefestigter Parkplatz</desc>
+		<src>Bundesforst</src>
+	</wpt>
+	<wpt lat="50.506203695341" lon="11.629315092598548">
+		<name>SOK 7282</name>
+		<cmt>Friesau &amp;gt; Ortsteich &amp;gt; Weg zum Katzenberg über Feldflur &amp;gt; Schranke Bundesforst</cmt>
+		<desc>Friesau &amp;gt; Ortsteich &amp;gt; Weg zum Katzenberg über Feldflur &amp;gt; Schranke Bundesforst</desc>
+		<src>Bundesforst</src>
+	</wpt>
+	<wpt lat="50.605819606348312" lon="12.035357246751989">
+		<name>GRZ 7199</name>
+		<cmt>Pöllwitz Richtung Wolfshain &amp;gt; nächster Abzweig links &amp;gt; RP vor Schranke</cmt>
+		<desc>Pöllwitz Richtung Wolfshain &amp;gt; nächster Abzweig links &amp;gt; RP vor Schranke</desc>
+		<src>Bundesforst</src>
+	</wpt>
+	<wpt lat="50.622267468696094" lon="12.048006290959705">
+		<name>GRZ 7204</name>
+		<cmt>Pöllwitz Ortsausgang Friedenstraße Richtung Dobia &amp;gt; RP am kleinen Forsthaus</cmt>
+		<desc>Pöllwitz Ortsausgang Friedenstraße Richtung Dobia &amp;gt; RP am kleinen Forsthaus</desc>
+		<src>Bundesforst</src>
+	</wpt>
+	<wpt lat="50.947937053264027" lon="11.398207125620065">
+		<name>AP 7274</name>
+		<cmt>B 87 Mellingen von Umpferstedt an der Bahnbrücke</cmt>
+		<desc>B 87 Mellingen von Umpferstedt an der Bahnbrücke</desc>
+		<src>Bundesforst</src>
+	</wpt>
+	<wpt lat="50.411432652451523" lon="11.739028896789558">
+		<name>SOK 7287</name>
+		<cmt>Ortschaft Pottiga Kreuzung Waldstraße Birkenweg</cmt>
+		<desc>Ortschaft Pottiga Kreuzung Waldstraße Birkenweg</desc>
+		<src>Bundesforst</src>
+	</wpt>
+	<wpt lat="50.822916809783464" lon="11.007792439842666">
+		<name>IK 7258</name>
+		<cmt>A 71 AS Arnstadt-Süd &amp;gt; Ortseingang Marlishausen rechts unbefestigter Parkplatz</cmt>
+		<desc>A 71 AS Arnstadt-Süd &amp;gt; Ortseingang Marlishausen rechts unbefestigter Parkplatz</desc>
+		<src>Bundesforst</src>
+	</wpt>
+	<wpt lat="50.934609292990544" lon="9.957259305603495">
+		<name>WAK 7218</name>
+		<cmt>Ortsverbindung Großensee nach Hönebach &amp;gt; Landesgrenze</cmt>
+		<desc>Ortsverbindung Großensee nach Hönebach &amp;gt; Landesgrenze</desc>
+		<src>Bundesforst</src>
+	</wpt>
+	<wpt lat="50.619874636745152" lon="11.809141561060249">
+		<name>SOK 7308</name>
+		<cmt>Dittersdorf Richtung L 1077 Öttersdorf rechts auf lanswirtschaftl. Weg in Richtung Pörmitz &amp;gt; RP an Schranke Hauptteich</cmt>
+		<desc>Dittersdorf Richtung L 1077 Öttersdorf rechts auf lanswirtschaftl. Weg in Richtung Pörmitz &amp;gt; RP an Schranke Hauptteich</desc>
+		<src>Bundesforst</src>
+	</wpt>
+	<wpt lat="50.599336971560511" lon="11.894672291431956">
+		<name>SOK 7313</name>
+		<cmt>B 94 Weckersdorf Richtung Schleiz &amp;gt; Abzweig Kirschkau</cmt>
+		<desc>B 94 Weckersdorf Richtung Schleiz &amp;gt; Abzweig Kirschkau</desc>
+		<src>Bundesforst</src>
+	</wpt>
+	<wpt lat="50.617210460594556" lon="12.064082431348695">
+		<name>GRZ 7207</name>
+		<cmt>Pöllwitz Richtung Dobia über Ochsenberg &amp;gt; zweite Einfahrt links &amp;gt; RP an Schranke</cmt>
+		<desc>Pöllwitz Richtung Dobia über Ochsenberg &amp;gt; zweite Einfahrt links &amp;gt; RP an Schranke</desc>
+		<src>Bundesforst</src>
+	</wpt>
+	<wpt lat="50.649106173863984" lon="12.239464091168221">
+		<name>GRZ 7214</name>
+		<cmt>Greiz Richtung Schönfeld &amp;gt; gegenüber Autohaus (Opel-Dengler) links zur ehemaligen Schule &amp;gt; RP am Gebäude</cmt>
+		<desc>Greiz Richtung Schönfeld &amp;gt; gegenüber Autohaus (Opel-Dengler) links zur ehemaligen Schule &amp;gt; RP am Gebäude</desc>
+		<src>Bundesforst</src>
+	</wpt>
+	<wpt lat="50.443951359462964" lon="11.800919495310685">
+		<name>SOK 7306</name>
+		<cmt>Autobahnabfahrt Blintendorf Richtung Frössen &amp;gt; nächster Abzweig links Richtung Göritz</cmt>
+		<desc>Autobahnabfahrt Blintendorf Richtung Frössen &amp;gt; nächster Abzweig links Richtung Göritz</desc>
+		<src>Bundesforst</src>
+	</wpt>
+	<wpt lat="50.433846767729563" lon="11.800541350302984">
+		<name>SOK 7304</name>
+		<cmt>Ortseingang Göritz von Autobahn kommend &amp;gt; links unter A 9</cmt>
+		<desc>Ortseingang Göritz von Autobahn kommend &amp;gt; links unter A 9</desc>
+		<src>Bundesforst</src>
+	</wpt>
+	<wpt lat="50.932048154791502" lon="11.086553645440134">
+		<name>EF 7262</name>
+		<cmt>Erfurt-Windischholzhausen Richtung Schellroda nach Märchenwaldsiedlung rechts &amp;gt; an Gartenkolonie entlag über Trasse bis zur Wegspinne</cmt>
+		<desc>Erfurt-Windischholzhausen Richtung Schellroda nach Märchenwaldsiedlung rechts &amp;gt; an Gartenkolonie entlag über Trasse bis zur Wegspinne</desc>
+		<src>Bundesforst</src>
+	</wpt>
+	<wpt lat="50.658872134549512" lon="11.348914456717864">
+		<name>SLF 7272</name>
+		<cmt>Kreuzung B281 VCF Ost Gewerbegebiet und Christian-Wagner-Str.  -Treffpunkt an der Star Tankstelle</cmt>
+		<desc>Kreuzung B281 VCF Ost Gewerbegebiet und Christian-Wagner-Str.  -Treffpunkt an der Star Tankstelle</desc>
+		<src>Bundesforst</src>
+	</wpt>
+	<wpt lat="51.331808189414552" lon="11.107617029687608">
+		<name>KYF 7265</name>
+		<cmt>B 85 Seehausen Seegaer Straße (Nackenstraße) hinter Kaserne &amp;gt; RP an Schranke (Waldeinfahrt)</cmt>
+		<desc>B 85 Seehausen Seegaer Straße (Nackenstraße) hinter Kaserne &amp;gt; RP an Schranke (Waldeinfahrt)</desc>
+		<src>Bundesforst</src>
+	</wpt>
+	<wpt lat="50.81254170041057" lon="10.788299504004877">
+		<name>GTH 7242</name>
+		<cmt>Wölfis süd-östl. Richtung (Arnstädter Str.) &amp;gt; Ortsende TrÜPl Ohrdruf rot-weiße Schranke</cmt>
+		<desc>Wölfis süd-östl. Richtung (Arnstädter Str.) &amp;gt; Ortsende TrÜPl Ohrdruf rot-weiße Schranke</desc>
+		<src>Bundesforst</src>
+	</wpt>
+	<wpt lat="50.922688893383558" lon="10.738256025770619">
+		<name>GTH 7241</name>
+		<cmt>B 247 Gotha Richtung Ohrdruf &amp;gt; an Ampelkreuzung (Höhe McDonalds) links Richtung Töpfleben &amp;gt; erste Abfahrt Kreisel Richtung Arnstadt &amp;gt; nach 500 m links &amp;gt; nach 800 m rechts Schranke</cmt>
+		<desc>B 247 Gotha Richtung Ohrdruf &amp;gt; an Ampelkreuzung (Höhe McDonalds) links Richtung Töpfleben &amp;gt; erste Abfahrt Kreisel Richtung Arnstadt &amp;gt; nach 500 m links &amp;gt; nach 800 m rechts Schranke</desc>
+		<src>Bundesforst</src>
+	</wpt>
+	<wpt lat="50.652168446251814" lon="11.577648483358981">
+		<name>SOK 7277</name>
+		<cmt>in Ranis Richtung Schmorda &amp;gt; auf halber Strecke in einer ansteigenden Linkskurve RP</cmt>
+		<desc>in Ranis Richtung Schmorda &amp;gt; auf halber Strecke in einer ansteigenden Linkskurve RP</desc>
+		<src>Bundesforst</src>
+	</wpt>
+	<wpt lat="50.913366329440521" lon="10.668559868297933">
+		<name>GTH 7235</name>
+		<cmt>Gotha Richtung Leina &amp;gt; links ab Richtung Rennbahn Boxberg &amp;gt; an Rennbahn links (Feldweg geteert) &amp;gt; nach Unterführung links halten &amp;gt; nach 600 m rechts</cmt>
+		<desc>Gotha Richtung Leina &amp;gt; links ab Richtung Rennbahn Boxberg &amp;gt; an Rennbahn links (Feldweg geteert) &amp;gt; nach Unterführung links halten &amp;gt; nach 600 m rechts</desc>
+		<src>Bundesforst</src>
+	</wpt>
+	<wpt lat="50.834051411341768" lon="10.881079105754978">
+		<name>IK 7246</name>
+		<cmt>Bittstätt &amp;gt; Plattenweg folgen &amp;gt; Einfahrt Kieswerk</cmt>
+		<desc>Bittstätt &amp;gt; Plattenweg folgen &amp;gt; Einfahrt Kieswerk</desc>
+		<src>Bundesforst</src>
+	</wpt>
+	<wpt lat="50.809147745497995" lon="10.849575879904048">
+		<name>IK 7245</name>
+		<cmt>Arnstadt/ Jonastal Richtung Crawinkel &amp;gt; ca. 2 km nach Gedenkstätte an Straße rechts &amp;gt; 20 m Schranke</cmt>
+		<desc>Arnstadt/ Jonastal Richtung Crawinkel &amp;gt; ca. 2 km nach Gedenkstätte an Straße rechts &amp;gt; 20 m Schranke</desc>
+		<src>Bundesforst</src>
+	</wpt>
+	<wpt lat="50.905082656266543" lon="11.941609625950345">
+		<name>GRZ 7314</name>
+		<cmt>Rüdersdorf Gasthaus Stübnitz &amp;gt; roter Berg &amp;gt; Bungalow &amp;gt; links bis zur Schranke Bundesforst</cmt>
+		<desc>Rüdersdorf Gasthaus Stübnitz &amp;gt; roter Berg &amp;gt; Bungalow &amp;gt; links bis zur Schranke Bundesforst</desc>
+		<src>Bundesforst</src>
+	</wpt>
+	<wpt lat="50.612965143476544" lon="12.042351672159535">
+		<name>GRZ 7201</name>
+		<cmt>Pöllwitz Richtung Wolfshain &amp;gt; Abzweig links Lerchenberg bis Wasserturm &amp;gt; RP am Waldsaum</cmt>
+		<desc>Pöllwitz Richtung Wolfshain &amp;gt; Abzweig links Lerchenberg bis Wasserturm &amp;gt; RP am Waldsaum</desc>
+		<src>Bundesforst</src>
+	</wpt>
+	<wpt lat="50.56105323666511" lon="11.788540974991909">
+		<name>SOK 7296</name>
+		<cmt>Oschitz Richtung Gräfenwarth &amp;gt; vor Unterführung der A 9 linker Abzweig</cmt>
+		<desc>Oschitz Richtung Gräfenwarth &amp;gt; vor Unterführung der A 9 linker Abzweig</desc>
+		<src>Bundesforst</src>
+	</wpt>
+	<wpt lat="50.445069153152737" lon="11.807449742035397">
+		<name>SOK 7307</name>
+		<cmt>Autobahnabfahrt Blintendorf Richtung Gefell &amp;gt; nächster Abzweig rechts</cmt>
+		<desc>Autobahnabfahrt Blintendorf Richtung Gefell &amp;gt; nächster Abzweig rechts</desc>
+		<src>Bundesforst</src>
+	</wpt>
+	<wpt lat="50.446308823209002" lon="11.786555699516237">
+		<name>SOK 7295</name>
+		<cmt>Blintendorf Richtung Frössen &amp;gt; RP am ersten Waldstück rechts</cmt>
+		<desc>Blintendorf Richtung Frössen &amp;gt; RP am ersten Waldstück rechts</desc>
+		<src>Bundesforst</src>
+	</wpt>
+	<wpt lat="51.375652012756639" lon="10.896796982704119">
+		<name>KYF 7248</name>
+		<cmt>Sondershausen Einfahrt Hasenholz durch Kleingartenanlage bis zum Waldrand; Hochspannungsleitung</cmt>
+		<desc>Sondershausen Einfahrt Hasenholz durch Kleingartenanlage bis zum Waldrand; Hochspannungsleitung</desc>
+		<src>Bundesforst</src>
+	</wpt>
+	<wpt lat="51.391230059736685" lon="10.952188145024707">
+		<name>KYF 7255</name>
+		<cmt>Sondershausen Richtung Badra L 1040 &amp;gt; Abfahrt rechts nach 4,5 km zum Segelteich (Müllertal) bis an Schlagbaum Segelteich</cmt>
+		<desc>Sondershausen Richtung Badra L 1040 &amp;gt; Abfahrt rechts nach 4,5 km zum Segelteich (Müllertal) bis an Schlagbaum Segelteich</desc>
+		<src>Bundesforst</src>
+	</wpt>
+	<wpt lat="50.780692968736531" lon="10.270055310095444">
+		<name>WAK 7227</name>
+		<cmt>in Ortsmitte Übelroda weiter auf Pleßstraße Richtung Standortübungsplatz bis zur Schranke</cmt>
+		<desc>in Ortsmitte Übelroda weiter auf Pleßstraße Richtung Standortübungsplatz bis zur Schranke</desc>
+		<src>Bundesforst</src>
+	</wpt>
+	<wpt lat="50.689870714791702" lon="9.9144733269775003">
+		<name>WAK 7216</name>
+		<cmt>Geismar Richtung Stetzelbach &amp;gt; Landesgrenze</cmt>
+		<desc>Geismar Richtung Stetzelbach &amp;gt; Landesgrenze</desc>
+		<src>Bundesforst</src>
+	</wpt>
+	<wpt lat="50.917480208397151" lon="11.96083261116228">
+		<name>GRZ 7315</name>
+		<cmt>Bad Köstritz &amp;gt; Reichardtsdorf &amp;gt; in Reichardtsdorfdem Bach  folgen bis zur Schranke Bundesforst</cmt>
+		<desc>Bad Köstritz &amp;gt; Reichardtsdorf &amp;gt; in Reichardtsdorfdem Bach  folgen bis zur Schranke Bundesforst</desc>
+		<src>Bundesforst</src>
+	</wpt>
+	<wpt lat="50.743464333014536" lon="11.781000778073407">
+		<name>SOK 7294</name>
+		<cmt>nördl. Verbindungsstraße von Dreitzsch Richtung Molbitz &amp;gt; RP am 1. Abzweig links</cmt>
+		<desc>nördl. Verbindungsstraße von Dreitzsch Richtung Molbitz &amp;gt; RP am 1. Abzweig links</desc>
+		<src>Bundesforst</src>
+	</wpt>
+	<wpt lat="50.615438662731918" lon="11.910445540153576">
+		<name>GRZ 7195</name>
+		<cmt>in Weckersdorf Richtung Ferienhof Lautenschläger &amp;gt; letztes Anwesen</cmt>
+		<desc>in Weckersdorf Richtung Ferienhof Lautenschläger &amp;gt; letztes Anwesen</desc>
+		<src>Bundesforst</src>
+	</wpt>
+	<wpt lat="50.624085335702517" lon="12.090188564217753">
+		<name>GRZ 7211</name>
+		<cmt>Wellsdorf Richtung Dobia hinter Ortsausgangsschild rechts Einfahrt Richtung Wald &amp;gt; RP an Schranke</cmt>
+		<desc>Wellsdorf Richtung Dobia hinter Ortsausgangsschild rechts Einfahrt Richtung Wald &amp;gt; RP an Schranke</desc>
+		<src>Bundesforst</src>
+	</wpt>
+	<wpt lat="50.632636254558498" lon="12.0274789994494">
+		<name>GRZ 7198</name>
+		<cmt>Zeulenroda Richtung Pöllwitz L 2346 &amp;gt; kurz vor ehem. Getreidewirtschaft links auf Feldweg &amp;gt; RP an Schranke</cmt>
+		<desc>Zeulenroda Richtung Pöllwitz L 2346 &amp;gt; kurz vor ehem. Getreidewirtschaft links auf Feldweg &amp;gt; RP an Schranke</desc>
+		<src>Bundesforst</src>
+	</wpt>
+	<wpt lat="50.648311587719824" lon="12.099857266954768">
+		<name>GRZ 7212</name>
+		<cmt>Naitschau Richtung Erbengrün erster Abzweig rechts (Weihnachtsbaumplantage) Bitumenweg bis zur KGA &amp;gt; RP an ersten Schranke</cmt>
+		<desc>Naitschau Richtung Erbengrün erster Abzweig rechts (Weihnachtsbaumplantage) Bitumenweg bis zur KGA &amp;gt; RP an ersten Schranke</desc>
+		<src>Bundesforst</src>
+	</wpt>
+	<wpt lat="50.513562619145496" lon="11.636573137716109">
+		<name>SOK 7283</name>
+		<cmt>vom RP SOK 4588 (Verbindungdstraße Remptendorf-Friesau) in Richtung ehem. Forstwerkstatt &amp;gt; abbiegen, dem Feld-/ Waldrand folgen &amp;gt; nach Feldüberquerung RP (Walddeingang)</cmt>
+		<desc>vom RP SOK 4588 (Verbindungdstraße Remptendorf-Friesau) in Richtung ehem. Forstwerkstatt &amp;gt; abbiegen, dem Feld-/ Waldrand folgen &amp;gt; nach Feldüberquerung RP (Walddeingang)</desc>
+		<src>Bundesforst</src>
+	</wpt>
+	<wpt lat="50.566357832773008" lon="11.776051498670329">
+		<name>SOK 7293</name>
+		<cmt>Oschitz Richtung Möschlitz &amp;gt; unter A 9 durch nächster Abzweig rechts</cmt>
+		<desc>Oschitz Richtung Möschlitz &amp;gt; unter A 9 durch nächster Abzweig rechts</desc>
+		<src>Bundesforst</src>
+	</wpt>
+	<wpt lat="50.429451076312361" lon="11.794763516537333">
+		<name>SOK 7300</name>
+		<cmt>Frössen Richtung Ullersreuth &amp;gt; ca. 100 m vor A 9 Überquerung RP am Abzweig links</cmt>
+		<desc>Frössen Richtung Ullersreuth &amp;gt; ca. 100 m vor A 9 Überquerung RP am Abzweig links</desc>
+		<src>Bundesforst</src>
+	</wpt>
+	<wpt lat="50.434814601039946" lon="11.794664073581268">
+		<name>SOK 7299</name>
+		<cmt>in Göritz von Blintendorf kommend an 1. Kreuzung</cmt>
+		<desc>in Göritz von Blintendorf kommend an 1. Kreuzung</desc>
+		<src>Bundesforst</src>
+	</wpt>
+	<wpt lat="50.444625853625041" lon="11.765695805532912">
+		<name>SOK 7290</name>
+		<cmt>Blintendorf Richtung Frössen &amp;gt; RP auf Höhe Frössen am Abzweig Richtung  Langgrün</cmt>
+		<desc>Blintendorf Richtung Frössen &amp;gt; RP auf Höhe Frössen am Abzweig Richtung  Langgrün</desc>
+		<src>Bundesforst</src>
+	</wpt>
+	<wpt lat="50.946639468742525" lon="11.172937137069436">
+		<name>AP 7269</name>
+		<cmt>A4 Richtung Frankfurt a.M.- Abfahrt 47 EF-Vieselbach, Eichelborn- Links an L1058 Treffen 100m rechter Hand.</cmt>
+		<desc>A4 Richtung Frankfurt a.M.- Abfahrt 47 EF-Vieselbach, Eichelborn- Links an L1058 Treffen 100m rechter Hand.</desc>
+		<src>Bundesforst</src>
+	</wpt>
+	<wpt lat="51.327143967446958" lon="11.13172803170997">
+		<name>KYF 7267</name>
+		<cmt>B 85 Seehausen Richtung Oldisleben &amp;gt; 300 m nach Ortsausgang Seehausen rechts Einfahrt Grube</cmt>
+		<desc>B 85 Seehausen Richtung Oldisleben &amp;gt; 300 m nach Ortsausgang Seehausen rechts Einfahrt Grube</desc>
+		<src>Bundesforst</src>
+	</wpt>
+	<wpt lat="50.892910918335147" lon="11.087007613140942">
+		<name>IK 7263</name>
+		<cmt>Ortsdurchfahrt Werningsleben Richtung Erfurt &amp;gt; an Gaststätte "Lindenhof" rechts befestigter Schotterweg Richtung Wald &amp;gt; ca. 2,5 km  bis Schranke</cmt>
+		<desc>Ortsdurchfahrt Werningsleben Richtung Erfurt &amp;gt; an Gaststätte "Lindenhof" rechts befestigter Schotterweg Richtung Wald &amp;gt; ca. 2,5 km  bis Schranke</desc>
+		<src>Bundesforst</src>
+	</wpt>
+	<wpt lat="51.051846379779882" lon="10.171686517191009">
+		<name>WAK 7222</name>
+		<cmt>Wolfmannsgehau /Ortsmitte (nördlich Ifta)</cmt>
+		<desc>Wolfmannsgehau /Ortsmitte (nördlich Ifta)</desc>
+		<src>Bundesforst</src>
+	</wpt>
+	<wpt lat="50.773702512782663" lon="11.173600277809175">
+		<name>IK 7655</name>
+		<cmt>Von Breitendeerda nach Remda über L1050 am Ortsausgang Breitenheerda rechts in den Wald, Kalmbergstrasse folgen bis zum Funktmast, rechts umfahren, rechts an Gabelung, übernächste Gabelung Treffpunkt</cmt>
+		<desc>Von Breitendeerda nach Remda über L1050 am Ortsausgang Breitenheerda rechts in den Wald, Kalmbergstrasse folgen bis zum Funktmast, rechts umfahren, rechts an Gabelung, übernächste Gabelung Treffpunkt</desc>
+		<src>Bundesforst</src>
+	</wpt>
+</gpx>

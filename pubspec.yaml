@@ -109,6 +109,7 @@ flutter:
     - lib/application/i18n/assets/
     - lib/application/searchstrings/assets/
     - lib/tools/coords/_common/assets/icons/
+    - lib/tools/coords/rescue_points/assets/
     - lib/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/assets/quadgrams/
     - lib/tools/science_and_technology/astronomy/iau_constellation/assets/
     - lib/tools/science_and_technology/segment_display/7_segment_display/assets/

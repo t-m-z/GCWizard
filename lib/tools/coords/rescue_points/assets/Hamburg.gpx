@@ -1,0 +1,505 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gpx xmlns="http://www.topografix.com/GPX/1/1" version="1.1" creator="FME(R) 2021.1.0.1">
+	<metadata>
+		<time>2025-10-20T13:45:33+02:00</time>
+		<bounds minlat="53.42251569963986" minlon="9.74632" maxlat="53.724367000236953" maxlon="10.31647"/>
+	</metadata>
+	<wpt lat="53.445363399801124" lon="9.8697197998289425">
+		<name>HH-H-8009</name>
+		<cmt>Falkenbergsweg - Buskehre Waldfrieden - über Buskehre der Verlängerung des Falkenbergsweges  450 m Richtung Süden folgen. RP an der Wegegabelung Richtung Wildpark(nach SO), bzw. Moisburger Stein(nach SW).</cmt>
+		<desc>Falkenbergsweg - Buskehre Waldfrieden - über Buskehre der Verlängerung des Falkenbergsweges  450 m Richtung Süden folgen. RP an der Wegegabelung Richtung Wildpark(nach SO), bzw. Moisburger Stein(nach SW).</desc>
+		<src>Hansestadt Hamburg</src>
+	</wpt>
+	<wpt lat="53.467998400405918" lon="9.9100070002229472">
+		<name>HH-H-8010</name>
+		<cmt>Höhe Cuxhavener Straße 55C über den Parkplatz "Kärntner Hütte" durch den Schlagbaum sofort links abbiegen (Findling "Skigebiet Reiherberg") - Weg  400 m über den "Totenkeller" bis zum Fuß des Reiherberg folgen und wenden Vorsicht bei nassem Wetter</cmt>
+		<desc>Höhe Cuxhavener Straße 55C über den Parkplatz "Kärntner Hütte" durch den Schlagbaum sofort links abbiegen (Findling "Skigebiet Reiherberg") - Weg  400 m über den "Totenkeller" bis zum Fuß des Reiherberg folgen und wenden Vorsicht bei nassem Wetter</desc>
+		<src>Hansestadt Hamburg</src>
+	</wpt>
+	<wpt lat="53.464127499784354" lon="9.9061201995875763">
+		<name>HH-H-8011</name>
+		<cmt>Höhe Cuxhavener Straße 55C über den Parkplatz "Kärntner Hütte" der Stadtscheide 800 m folgen - Wegekreuzung =&amp;gt; RP. 2. Anfahrt: Ehestorfer Heuweg -Revierförsterei Hausbruch - dem Mardergrund 500 m folgen - rechts auf Schäferstieg 800 m folgen =&amp;gt;RP</cmt>
+		<desc>Höhe Cuxhavener Straße 55C über den Parkplatz "Kärntner Hütte" der Stadtscheide 800 m folgen - Wegekreuzung =&amp;gt; RP. 2. Anfahrt: Ehestorfer Heuweg -Revierförsterei Hausbruch - dem Mardergrund 500 m folgen - rechts auf Schäferstieg 800 m folgen =&amp;gt;RP</desc>
+		<src>Hansestadt Hamburg</src>
+	</wpt>
+	<wpt lat="53.457521400192491" lon="9.9043902996726274">
+		<name>HH-H-8012</name>
+		<cmt>Höhe Cuxhavener Straße 55C - Parkplatz "Kärntner Hütte" - Stadtscheide  ca. 1,7 km  folgen. RP auf Höhe des links abgehenden Kaiserstuhlweges. 2. Anfahrt: Ehestorfer Weg - Parkplatz "Elf Buchen" durch den Schlagbaum Stadtscheide 1,6 km folgen ==&amp;gt;RP</cmt>
+		<desc>Höhe Cuxhavener Straße 55C - Parkplatz "Kärntner Hütte" - Stadtscheide  ca. 1,7 km  folgen. RP auf Höhe des links abgehenden Kaiserstuhlweges. 2. Anfahrt: Ehestorfer Weg - Parkplatz "Elf Buchen" durch den Schlagbaum Stadtscheide 1,6 km folgen ==&amp;gt;RP</desc>
+		<src>Hansestadt Hamburg</src>
+	</wpt>
+	<wpt lat="53.425698299636849" lon="9.9223440997004673">
+		<name>HH-H-8018</name>
+		<cmt>Kreuzung Eißendorfer Waldweg/Vahrendorfer Stadtweg, dann Langkuhlenweg weiter bis Querweg</cmt>
+		<desc>Kreuzung Eißendorfer Waldweg/Vahrendorfer Stadtweg, dann Langkuhlenweg weiter bis Querweg</desc>
+		<src>Hansestadt Hamburg</src>
+	</wpt>
+	<wpt lat="53.465369799876441" lon="9.9379770004382522">
+		<name>HH-H-8020</name>
+		<cmt>von der Stader Strasse Hausnummer 203 nach S, Reitstall bleibt auf der rechten Seite</cmt>
+		<desc>von der Stader Strasse Hausnummer 203 nach S, Reitstall bleibt auf der rechten Seite</desc>
+		<src>Hansestadt Hamburg</src>
+	</wpt>
+	<wpt lat="53.474648000205093" lon="10.253841000262014">
+		<name>HH-B-7001</name>
+		<cmt>Anfahrt über B5 Rothenauschaussee, Höhe Haus Nr. 85 = Einfahrt, bis Forstschranke ca. 100m Fahren</cmt>
+		<desc>Anfahrt über B5 Rothenauschaussee, Höhe Haus Nr. 85 = Einfahrt, bis Forstschranke ca. 100m Fahren</desc>
+		<src>Hansestadt Hamburg</src>
+	</wpt>
+	<wpt lat="53.492492000205687" lon="10.228703000243343">
+		<name>HH-B-7002</name>
+		<cmt>Anfahrt über Reinbeker Weg. bis Luisen-Gymnasium (Haus.-Nr. 76), weiter gerade aus in die Sackgasse Richtung Wald ca. 50m bis zur Forstschranke und Kinderspielplatz</cmt>
+		<desc>Anfahrt über Reinbeker Weg. bis Luisen-Gymnasium (Haus.-Nr. 76), weiter gerade aus in die Sackgasse Richtung Wald ca. 50m bis zur Forstschranke und Kinderspielplatz</desc>
+		<src>Hansestadt Hamburg</src>
+	</wpt>
+	<wpt lat="53.497160999680432" lon="10.195344999771976">
+		<name>HH-B-7003</name>
+		<cmt>Anfahrt über Riehlstr. Bis Haus Nr. 64 = Christopherus Kirche - auf dieser Ecke = Eingang Waldweg</cmt>
+		<desc>Anfahrt über Riehlstr. Bis Haus Nr. 64 = Christopherus Kirche - auf dieser Ecke = Eingang Waldweg</desc>
+		<src>Hansestadt Hamburg</src>
+	</wpt>
+	<wpt lat="53.478875" lon="10.11317">
+		<name>HH-B-7004</name>
+		<cmt>Anfahrt über Reithbrooker Westerdeich, von dort abbiegen in den Reithdeich ca. 400m bis zur Schranke NSG</cmt>
+		<desc>Anfahrt über Reithbrooker Westerdeich, von dort abbiegen in den Reithdeich ca. 400m bis zur Schranke NSG</desc>
+		<src>Hansestadt Hamburg</src>
+	</wpt>
+	<wpt lat="53.44472499985892" lon="10.31647">
+		<name>HH-B-7005</name>
+		<cmt>Anfahrt über Escheburger Weg, Höhe Escheburger Weg Haus-Nr. 4 abbiegen in Borghorster Hauptdeich, ca. 400m bis zum Wendeplatz fahren</cmt>
+		<desc>Anfahrt über Escheburger Weg, Höhe Escheburger Weg Haus-Nr. 4 abbiegen in Borghorster Hauptdeich, ca. 400m bis zum Wendeplatz fahren</desc>
+		<src>Hansestadt Hamburg</src>
+	</wpt>
+	<wpt lat="53.477186000333688" lon="10.25181799960103">
+		<name>HH-B-7008</name>
+		<cmt>Anfahrt über Justus-Brinkmann-Str.  (Bethesta Krankenhaus), dann in die August-Bebel-Str. bis Haus-Nr. 205 (Alstergärtner), dann gerade weiter in den erdgebundenen Weg ca. 100m</cmt>
+		<desc>Anfahrt über Justus-Brinkmann-Str.  (Bethesta Krankenhaus), dann in die August-Bebel-Str. bis Haus-Nr. 205 (Alstergärtner), dann gerade weiter in den erdgebundenen Weg ca. 100m</desc>
+		<src>Hansestadt Hamburg</src>
+	</wpt>
+	<wpt lat="53.664883000050452" lon="10.111713000254781">
+		<name>HH-W-6057</name>
+		<cmt>Iland HausNr.46 vor Wegsperre</cmt>
+		<desc>Iland HausNr.46 vor Wegsperre</desc>
+		<src>Hansestadt Hamburg</src>
+	</wpt>
+	<wpt lat="53.720880999558517" lon="10.140668">
+		<name>HH-W-6005</name>
+		<cmt>Vom Duvenstedter Damm (22397 HH) in den Duvenstedter Triftweg abbiegen, 1,8 km folgen, links abbiegen auf Wiemerskamper Weg, ca. 700 m folgen, links Abzw. Alter Rader Weg (Waldparkplatz)==&amp;gt; RP</cmt>
+		<desc>Vom Duvenstedter Damm (22397 HH) in den Duvenstedter Triftweg abbiegen, 1,8 km folgen, links abbiegen auf Wiemerskamper Weg, ca. 700 m folgen, links Abzw. Alter Rader Weg (Waldparkplatz)==&amp;gt; RP</desc>
+		<src>Hansestadt Hamburg</src>
+	</wpt>
+	<wpt lat="53.714454" lon="10.140747000074043">
+		<name>HH-W-6006</name>
+		<cmt>Vom Duvenstedter Damm (22397 HH) in den Duvenstedter Triftweg abbiegen, 1,8 km folgen, Zufahrt Duvenstedter Brook (Durchfahrt verboten)=&amp;gt; RP</cmt>
+		<desc>Vom Duvenstedter Damm (22397 HH) in den Duvenstedter Triftweg abbiegen, 1,8 km folgen, Zufahrt Duvenstedter Brook (Durchfahrt verboten)=&amp;gt; RP</desc>
+		<src>Hansestadt Hamburg</src>
+	</wpt>
+	<wpt lat="53.724367000236953" lon="10.178315000436953">
+		<name>HH-W-6009</name>
+		<cmt>von HH: Duvenstedter Damm-Duvenstedter Triftweg geradeaus ins NSG 2,9 km , links Rfö. ==&amp;gt; RP; von Bargteheide: Richtung Jersbek, links Richtung Wiemerskamp, Straße "Langereihe" 2,9 km folgen, links abbiegen (1. Zufahrt Försterei), Waldweg folgen =&amp;gt; RP</cmt>
+		<desc>von HH: Duvenstedter Damm-Duvenstedter Triftweg geradeaus ins NSG 2,9 km , links Rfö. ==&amp;gt; RP; von Bargteheide: Richtung Jersbek, links Richtung Wiemerskamp, Straße "Langereihe" 2,9 km folgen, links abbiegen (1. Zufahrt Försterei), Waldweg folgen =&amp;gt; RP</desc>
+		<src>Hansestadt Hamburg</src>
+	</wpt>
+	<wpt lat="53.72049" lon="10.167596999901662">
+		<name>HH-W-6010</name>
+		<cmt>von HH:Duv. Damm,Duv. Triftweg in NSG ca. 2 km,Betriebshof ==&amp;gt; RP;von Bargteheide:Richtung Wiemerskamp,Straße "Langereihe" 2,9 km folgen,links abbiegen (Zufahrt Försterei),Waldweg 1,4 km folgen,rechts in Duv. Triftweg 900 m folgen,Betriebshof==&amp;gt; RP</cmt>
+		<desc>von HH:Duv. Damm,Duv. Triftweg in NSG ca. 2 km,Betriebshof ==&amp;gt; RP;von Bargteheide:Richtung Wiemerskamp,Straße "Langereihe" 2,9 km folgen,links abbiegen (Zufahrt Försterei),Waldweg 1,4 km folgen,rechts in Duv. Triftweg 900 m folgen,Betriebshof==&amp;gt; RP</desc>
+		<src>Hansestadt Hamburg</src>
+	</wpt>
+	<wpt lat="53.62742" lon="9.76573">
+		<name>HH-A-3001</name>
+		<cmt>Über den Rollbarg oder die Schenefelder Landstraße bis zur Haus-Nr. Rollbarg 40/42. Dort in die Stichstraße 440 Meter über Teerstraße, dann rechts abiegen und dem Waldweg 760 Meter folgen bis zur Försterei Klövensteen.</cmt>
+		<desc>Über den Rollbarg oder die Schenefelder Landstraße bis zur Haus-Nr. Rollbarg 40/42. Dort in die Stichstraße 440 Meter über Teerstraße, dann rechts abiegen und dem Waldweg 760 Meter folgen bis zur Försterei Klövensteen.</desc>
+		<src>Hansestadt Hamburg</src>
+	</wpt>
+	<wpt lat="53.61506" lon="9.76669">
+		<name>HH-A-3002</name>
+		<cmt>Über den Klövensteenweg Kreuzung Babenwischenweg - Klövensteenweg passieren. Nach 660 Metern Waldkreuzung - Klövensteeneck</cmt>
+		<desc>Über den Klövensteenweg Kreuzung Babenwischenweg - Klövensteenweg passieren. Nach 660 Metern Waldkreuzung - Klövensteeneck</desc>
+		<src>Hansestadt Hamburg</src>
+	</wpt>
+	<wpt lat="53.60515" lon="9.76918">
+		<name>HH-A-3005</name>
+		<cmt>Über den Klövensteenweg zur Ponywaldschenke</cmt>
+		<desc>Über den Klövensteenweg zur Ponywaldschenke</desc>
+		<src>Hansestadt Hamburg</src>
+	</wpt>
+	<wpt lat="53.59883" lon="9.7659">
+		<name>HH-A-3006</name>
+		<cmt>Über den Klövensteenweg bis zum Waldspielplatz Klövensteenweg - Höhe Parkplatz. Aus Rissen kommenden 600 Meter bis Höhe Waldspielplatz.</cmt>
+		<desc>Über den Klövensteenweg bis zum Waldspielplatz Klövensteenweg - Höhe Parkplatz. Aus Rissen kommenden 600 Meter bis Höhe Waldspielplatz.</desc>
+		<src>Hansestadt Hamburg</src>
+	</wpt>
+	<wpt lat="53.59642" lon="9.74632">
+		<name>HH-A-3007</name>
+		<cmt>Über den Sandmoorweg bis zum Wildgehege Klövensteen</cmt>
+		<desc>Über den Sandmoorweg bis zum Wildgehege Klövensteen</desc>
+		<src>Hansestadt Hamburg</src>
+	</wpt>
+	<wpt lat="53.589839" lon="10.173972999854129">
+		<name>HH-W-6041</name>
+		<cmt>Kittelweg, gegenüber Hauke-Haien-Weg auf den Waldparkplatz</cmt>
+		<desc>Kittelweg, gegenüber Hauke-Haien-Weg auf den Waldparkplatz</desc>
+		<src>Hansestadt Hamburg</src>
+	</wpt>
+	<wpt lat="53.600318000275536" lon="10.168681999574687">
+		<name>HH-W-6042</name>
+		<cmt>Wehlbrook, Waldeinfahrt gegenüber HausNr. 36/38</cmt>
+		<desc>Wehlbrook, Waldeinfahrt gegenüber HausNr. 36/38</desc>
+		<src>Hansestadt Hamburg</src>
+	</wpt>
+	<wpt lat="53.629261000394933" lon="10.20323800043343">
+		<name>HH-W-6043</name>
+		<cmt>Hagenweg, Ecke Ahrensfelder Weg, Schlagbaum mit B-Schließung zwischen Fattsbarg und Ahrensfelder Weg</cmt>
+		<desc>Hagenweg, Ecke Ahrensfelder Weg, Schlagbaum mit B-Schließung zwischen Fattsbarg und Ahrensfelder Weg</desc>
+		<src>Hansestadt Hamburg</src>
+	</wpt>
+	<wpt lat="53.643976" lon="10.191857999946762">
+		<name>HH-W-6044</name>
+		<cmt>Ende Eulenkrugstr. östl. Ende, hinter Tonradsmoor, mittlere Waldeinfahrt links</cmt>
+		<desc>Ende Eulenkrugstr. östl. Ende, hinter Tonradsmoor, mittlere Waldeinfahrt links</desc>
+		<src>Hansestadt Hamburg</src>
+	</wpt>
+	<wpt lat="53.630037000207437" lon="10.127235000195128">
+		<name>HH-W-6045</name>
+		<cmt>Kleine Wiese, Wendehammer vor Wald</cmt>
+		<desc>Kleine Wiese, Wendehammer vor Wald</desc>
+		<src>Hansestadt Hamburg</src>
+	</wpt>
+	<wpt lat="53.634982999865599" lon="10.147588999932452">
+		<name>HH-W-6046</name>
+		<cmt>Farmsener Landstraße, Waldeinfahrt gegenüber HausNr.10</cmt>
+		<desc>Farmsener Landstraße, Waldeinfahrt gegenüber HausNr.10</desc>
+		<src>Hansestadt Hamburg</src>
+	</wpt>
+	<wpt lat="53.641146999934165" lon="10.157617000124503">
+		<name>HH-W-6047</name>
+		<cmt>Farmsener Landstraße 100, Försterei Volksdorf</cmt>
+		<desc>Farmsener Landstraße 100, Försterei Volksdorf</desc>
+		<src>Hansestadt Hamburg</src>
+	</wpt>
+	<wpt lat="53.637573999740368" lon="10.171463000117399">
+		<name>HH-W-6048</name>
+		<cmt>Im Wald, Ausgang zur Ringstraße zwischen den HausNr´n. 199 und 201a</cmt>
+		<desc>Im Wald, Ausgang zur Ringstraße zwischen den HausNr´n. 199 und 201a</desc>
+		<src>Hansestadt Hamburg</src>
+	</wpt>
+	<wpt lat="53.639344999572131" lon="10.175453999802301">
+		<name>HH-W-6049</name>
+		<cmt>Mellenbergweg, kleiner Waldparkplatz gegenüber  HausNr.77</cmt>
+		<desc>Mellenbergweg, kleiner Waldparkplatz gegenüber  HausNr.77</desc>
+		<src>Hansestadt Hamburg</src>
+	</wpt>
+	<wpt lat="53.64461" lon="10.162912999735227">
+		<name>HH-W-6050</name>
+		<cmt>Mellenbergweg, gegenüber HausNr.19 in Kurve/ Waldeinfahrt</cmt>
+		<desc>Mellenbergweg, gegenüber HausNr.19 in Kurve/ Waldeinfahrt</desc>
+		<src>Hansestadt Hamburg</src>
+	</wpt>
+	<wpt lat="53.638078999646154" lon="10.161714000201016">
+		<name>HH-W-6051</name>
+		<cmt>Meiendorfer Weg, Waldparkplatz am Kletterpark</cmt>
+		<desc>Meiendorfer Weg, Waldparkplatz am Kletterpark</desc>
+		<src>Hansestadt Hamburg</src>
+	</wpt>
+	<wpt lat="53.647360999610498" lon="10.136618000320482">
+		<name>HH-W-6052</name>
+		<cmt>Volksdorfer Weg, gegenüber Saseler Kamp Waldeinfahrt</cmt>
+		<desc>Volksdorfer Weg, gegenüber Saseler Kamp Waldeinfahrt</desc>
+		<src>Hansestadt Hamburg</src>
+	</wpt>
+	<wpt lat="53.652755000143202" lon="10.145738">
+		<name>HH-W-6053</name>
+		<cmt>(Straße) Waldweg auf Waldparkplatz neben der Einfahrt zur Stadtentwässerung HausNr.225</cmt>
+		<desc>(Straße) Waldweg auf Waldparkplatz neben der Einfahrt zur Stadtentwässerung HausNr.225</desc>
+		<src>Hansestadt Hamburg</src>
+	</wpt>
+	<wpt lat="53.662325999944983" lon="10.1496">
+		<name>HH-W-6055</name>
+		<cmt>Streekweg gegenüber Einfahrt Timmermoor</cmt>
+		<desc>Streekweg gegenüber Einfahrt Timmermoor</desc>
+		<src>Hansestadt Hamburg</src>
+	</wpt>
+	<wpt lat="53.662426000059895" lon="10.10903">
+		<name>HH-W-6056</name>
+		<cmt>Schönsberg, Einfahrt Schönsbergredder</cmt>
+		<desc>Schönsberg, Einfahrt Schönsbergredder</desc>
+		<src>Hansestadt Hamburg</src>
+	</wpt>
+	<wpt lat="53.674987000149997" lon="10.07903">
+		<name>HH-W-6058</name>
+		<cmt>Ohlendieksredder, Parkplatz Hundeauslauf/ Spielplatz Richtung Kupferteich</cmt>
+		<desc>Ohlendieksredder, Parkplatz Hundeauslauf/ Spielplatz Richtung Kupferteich</desc>
+		<src>Hansestadt Hamburg</src>
+	</wpt>
+	<wpt lat="53.645494999894368" lon="10.084947999850385">
+		<name>HH-W-6059</name>
+		<cmt>Friedrich-Kirsten-Straße, Waldparkplatz neben HausNr. 56</cmt>
+		<desc>Friedrich-Kirsten-Straße, Waldparkplatz neben HausNr. 56</desc>
+		<src>Hansestadt Hamburg</src>
+	</wpt>
+	<wpt lat="53.66289600015034" lon="10.152463999913721">
+		<name>HH-W-6060</name>
+		<cmt>Volksdorfer Damm, Waldparkplatz rechtsseitig nach Haus Nr.72 gen Westen</cmt>
+		<desc>Volksdorfer Damm, Waldparkplatz rechtsseitig nach Haus Nr.72 gen Westen</desc>
+		<src>Hansestadt Hamburg</src>
+	</wpt>
+	<wpt lat="53.667446999579397" lon="10.160288000091157">
+		<name>HH-W-6061</name>
+		<cmt>Schmalenremen westl. Übergang zum Duvenwischen, Waldeinfahrt neben dem Friedhof</cmt>
+		<desc>Schmalenremen westl. Übergang zum Duvenwischen, Waldeinfahrt neben dem Friedhof</desc>
+		<src>Hansestadt Hamburg</src>
+	</wpt>
+	<wpt lat="53.660092000345571" lon="10.18282799991232">
+		<name>HH-W-6064</name>
+		<cmt>Moorbekweg 100 (Sommerbad), Waldparkplatz</cmt>
+		<desc>Moorbekweg 100 (Sommerbad), Waldparkplatz</desc>
+		<src>Hansestadt Hamburg</src>
+	</wpt>
+	<wpt lat="53.668798999874014" lon="10.108294">
+		<name>HH-W-6067</name>
+		<cmt>Saselhörn nördl. Waldeinfahrt links vor Schönsbergredder (neben Tennisanlage Klubhaus- der Beschilderung folgen)</cmt>
+		<desc>Saselhörn nördl. Waldeinfahrt links vor Schönsbergredder (neben Tennisanlage Klubhaus- der Beschilderung folgen)</desc>
+		<src>Hansestadt Hamburg</src>
+	</wpt>
+	<wpt lat="53.669964999685021" lon="10.154689">
+		<name>HH-W-6068</name>
+		<cmt>Ohlendorffs Tannen, Parkplatz Friedhof Übergang zur Heinrich von Ohlendorff Straße</cmt>
+		<desc>Ohlendorffs Tannen, Parkplatz Friedhof Übergang zur Heinrich von Ohlendorff Straße</desc>
+		<src>Hansestadt Hamburg</src>
+	</wpt>
+	<wpt lat="53.627226000079872" lon="10.124634999905368">
+		<name>HH-W-6070</name>
+		<cmt>Berner Allee neben HausNr. 67 südl. Waldeinfahrt/an Brücke über die Berner Au</cmt>
+		<desc>Berner Allee neben HausNr. 67 südl. Waldeinfahrt/an Brücke über die Berner Au</desc>
+		<src>Hansestadt Hamburg</src>
+	</wpt>
+	<wpt lat="53.625114999857431" lon="10.1819479998004">
+		<name>HH-W-6071</name>
+		<cmt>Hagenweg, Einfahrt Fattsbarg</cmt>
+		<desc>Hagenweg, Einfahrt Fattsbarg</desc>
+		<src>Hansestadt Hamburg</src>
+	</wpt>
+	<wpt lat="53.650403999644936" lon="10.17305599983456">
+		<name>HH-W-6072</name>
+		<cmt>Waldredder, Kreuzung Pastorenstieg</cmt>
+		<desc>Waldredder, Kreuzung Pastorenstieg</desc>
+		<src>Hansestadt Hamburg</src>
+	</wpt>
+	<wpt lat="53.651173" lon="10.136078999746076">
+		<name>HH-W-6073</name>
+		<cmt>Straßen Ecke Bekwisch/ Erlengrund</cmt>
+		<desc>Straßen Ecke Bekwisch/ Erlengrund</desc>
+		<src>Hansestadt Hamburg</src>
+	</wpt>
+	<wpt lat="53.664301000191074" lon="10.117699000208745">
+		<name>HH-W-6074</name>
+		<cmt>Iland, Ecke Heindaal, Nähe Iland HausNr.6</cmt>
+		<desc>Iland, Ecke Heindaal, Nähe Iland HausNr.6</desc>
+		<src>Hansestadt Hamburg</src>
+	</wpt>
+	<wpt lat="53.65629" lon="10.083182000249167">
+		<name>HH-W-6075</name>
+		<cmt>Poppenbütteler Weg, gegenüber HausNr. 228</cmt>
+		<desc>Poppenbütteler Weg, gegenüber HausNr. 228</desc>
+		<src>Hansestadt Hamburg</src>
+	</wpt>
+	<wpt lat="53.66527400009511" lon="10.172381000183066">
+		<name>HH-W-6076</name>
+		<cmt>von Süden in die Rittmeisterkoppel nach Norden bis Siedlungsbeginn, dann rechts in Richtung Greelkamp ( Stadt Ahrensburg, Wulfsdorf )</cmt>
+		<desc>von Süden in die Rittmeisterkoppel nach Norden bis Siedlungsbeginn, dann rechts in Richtung Greelkamp ( Stadt Ahrensburg, Wulfsdorf )</desc>
+		<src>Hansestadt Hamburg</src>
+	</wpt>
+	<wpt lat="53.65906799988835" lon="10.167335999556769">
+		<name>HH-W-6077</name>
+		<cmt>in die Gussau zwischen den HausNrn 25 A und 25 nördliche Durchfahrt zum Sorenremen zur Kirche St. Gabriel</cmt>
+		<desc>in die Gussau zwischen den HausNrn 25 A und 25 nördliche Durchfahrt zum Sorenremen zur Kirche St. Gabriel</desc>
+		<src>Hansestadt Hamburg</src>
+	</wpt>
+	<wpt lat="53.671809000185249" lon="10.108711000312439">
+		<name>HH-W-6078</name>
+		<cmt>von der Twietenkoppel nach Süden in die Straße Baben de Möhl ( bis zum Wendehammer (zwischen HausNrn 21 und 26))</cmt>
+		<desc>von der Twietenkoppel nach Süden in die Straße Baben de Möhl ( bis zum Wendehammer (zwischen HausNrn 21 und 26))</desc>
+		<src>Hansestadt Hamburg</src>
+	</wpt>
+	<wpt lat="53.636469" lon="10.159826000369662">
+		<name>HH-W-6079</name>
+		<cmt>vom Meiendorfer Weg in die Ringstr. ( Richtung Berne ) zwischen den HausNrn. 127 und 131 Parkweg nördlich bis zum Waldbeginn</cmt>
+		<desc>vom Meiendorfer Weg in die Ringstr. ( Richtung Berne ) zwischen den HausNrn. 127 und 131 Parkweg nördlich bis zum Waldbeginn</desc>
+		<src>Hansestadt Hamburg</src>
+	</wpt>
+	<wpt lat="53.674772000127746" lon="10.046498000182623">
+		<name>HH-W-6021</name>
+		<cmt>Hummelsee - Zufahrt über die Glashütter Landstraße</cmt>
+		<desc>Hummelsee - Zufahrt über die Glashütter Landstraße</desc>
+		<src>Hansestadt Hamburg</src>
+	</wpt>
+	<wpt lat="53.673126999811245" lon="10.0546">
+		<name>HH-W-6022</name>
+		<cmt>Kiwittredder - Hummelsee - Zufahrt über die Straße Kupferteichweg</cmt>
+		<desc>Kiwittredder - Hummelsee - Zufahrt über die Straße Kupferteichweg</desc>
+		<src>Hansestadt Hamburg</src>
+	</wpt>
+	<wpt lat="53.692282" lon="10.072979000080863">
+		<name>HH-W-6023</name>
+		<cmt>Westl. Fiersbarg Waldeingang - Zufahrt über die Lemsahler Landstraße</cmt>
+		<desc>Westl. Fiersbarg Waldeingang - Zufahrt über die Lemsahler Landstraße</desc>
+		<src>Hansestadt Hamburg</src>
+	</wpt>
+	<wpt lat="53.685238999879971" lon="10.117396999771756">
+		<name>HH-W-6024</name>
+		<cmt>Nördl. Rodenbeker Straße - Waldeingang Quellenhof - Zufahrt über die Bergstedter Chaussee</cmt>
+		<desc>Nördl. Rodenbeker Straße - Waldeingang Quellenhof - Zufahrt über die Bergstedter Chaussee</desc>
+		<src>Hansestadt Hamburg</src>
+	</wpt>
+	<wpt lat="53.692476" lon="10.123606000116865">
+		<name>HH-W-6025</name>
+		<cmt>Am Ende der Straße Haselknick - Waldeingang - Zufahrt über die Bredenbekstraße</cmt>
+		<desc>Am Ende der Straße Haselknick - Waldeingang - Zufahrt über die Bredenbekstraße</desc>
+		<src>Hansestadt Hamburg</src>
+	</wpt>
+	<wpt lat="53.699735000170165" lon="10.127086999665323">
+		<name>HH-W-6026</name>
+		<cmt>Bredenbekstraße südl. Beginn Mühlenredder - Zufahrt über die Bredenbekstraße</cmt>
+		<desc>Bredenbekstraße südl. Beginn Mühlenredder - Zufahrt über die Bredenbekstraße</desc>
+		<src>Hansestadt Hamburg</src>
+	</wpt>
+	<wpt lat="53.6992130003797" lon="10.137186999580422">
+		<name>HH-W-6027</name>
+		<cmt>Melhopweg Ecke Kupferredder - Zufahrt über die Straße Timms Hege</cmt>
+		<desc>Melhopweg Ecke Kupferredder - Zufahrt über die Straße Timms Hege</desc>
+		<src>Hansestadt Hamburg</src>
+	</wpt>
+	<wpt lat="53.706151000168575" lon="10.13021900020675">
+		<name>HH-W-6028</name>
+		<cmt>Mühlenredder Ecke Schleusenredder - Zufahrt über die Straße Alsterblick</cmt>
+		<desc>Mühlenredder Ecke Schleusenredder - Zufahrt über die Straße Alsterblick</desc>
+		<src>Hansestadt Hamburg</src>
+	</wpt>
+	<wpt lat="53.708791999651112" lon="10.154491999905929">
+		<name>HH-W-6030</name>
+		<cmt>Ole Boomgaarden - Eingang zum Waldfriedhof - Zufahrt über die Straße Brügkamp</cmt>
+		<desc>Ole Boomgaarden - Eingang zum Waldfriedhof - Zufahrt über die Straße Brügkamp</desc>
+		<src>Hansestadt Hamburg</src>
+	</wpt>
+	<wpt lat="53.640859429119416" lon="10.144594605556676">
+		<name>HH-W-6066</name>
+		<cmt>Tannenkamp, westl. Wendehammer Einfahrt Wald</cmt>
+		<desc>Tannenkamp, westl. Wendehammer Einfahrt Wald</desc>
+		<src>Hansestadt Hamburg</src>
+	</wpt>
+	<wpt lat="53.655935523605592" lon="10.148575694712576">
+		<name>HH-W-6054</name>
+		<cmt>Rögenweg, an Waldeinfahrt</cmt>
+		<desc>Rögenweg, an Waldeinfahrt</desc>
+		<src>Hansestadt Hamburg</src>
+	</wpt>
+	<wpt lat="53.612536837105381" lon="9.9385905278306268">
+		<name>HH-E-4002</name>
+		<cmt>Von Friedrich-Ebert-Straße (B447) auf  Straße Niendorfer Gehege abbiegen, in die Straße „Bondenwald“ einbiegen und 500 m folgen, am Waldparkplatz rechts in Richtung Försterei ==&amp;gt; RP</cmt>
+		<desc>Von Friedrich-Ebert-Straße (B447) auf  Straße Niendorfer Gehege abbiegen, in die Straße „Bondenwald“ einbiegen und 500 m folgen, am Waldparkplatz rechts in Richtung Försterei ==&amp;gt; RP</desc>
+		<src>Hansestadt Hamburg</src>
+	</wpt>
+	<wpt lat="53.616662860102963" lon="9.941438948748555">
+		<name>HH-E-4001</name>
+		<cmt>Friedrich-Ebert-Straße (B447) auf Straße Niendorfer Gehege abbiegen bis Straße „Bondenwald“ fahren, Waldspielplatz ==&amp;gt; RP</cmt>
+		<desc>Friedrich-Ebert-Straße (B447) auf Straße Niendorfer Gehege abbiegen bis Straße „Bondenwald“ fahren, Waldspielplatz ==&amp;gt; RP</desc>
+		<src>Hansestadt Hamburg</src>
+	</wpt>
+	<wpt lat="53.455528900038757" lon="9.9237162996675465">
+		<name>HH-H-8014</name>
+		<cmt>Anfahrt über Buskehre „Heimfelder Straße“, dann Waldweg „Schießbahn“ folgen und die erste Abzweigung links hinter der Autobahnbrücke nehmen und den Waldweg „Hellkuhle“ berghoch fahren.</cmt>
+		<desc>Anfahrt über Buskehre „Heimfelder Straße“, dann Waldweg „Schießbahn“ folgen und die erste Abzweigung links hinter der Autobahnbrücke nehmen und den Waldweg „Hellkuhle“ berghoch fahren.</desc>
+		<src>Hansestadt Hamburg</src>
+	</wpt>
+	<wpt lat="53.498413035832982" lon="10.190739022088223">
+		<name>HH-B-7009</name>
+		<cmt>Anfahrt 1: Ecke Höperfeld, Riehlstraße 62, Einfahrt Erdweg = Walter-Hammer-Weg, 400m bis Spielplatz (Sackgasse); Anfahrt2: Richard Lindeweg 21D, 40m vor Turm Sander Dickkoop zweite Waldeinfahrt links, in 230m an Kreuzung rechts, Spielplatz in 130m.</cmt>
+		<desc>Anfahrt 1: Ecke Höperfeld, Riehlstraße 62, Einfahrt Erdweg = Walter-Hammer-Weg, 400m bis Spielplatz (Sackgasse); Anfahrt2: Richard Lindeweg 21D, 40m vor Turm Sander Dickkoop zweite Waldeinfahrt links, in 230m an Kreuzung rechts, Spielplatz in 130m.</desc>
+		<src>Hansestadt Hamburg</src>
+	</wpt>
+	<wpt lat="53.46262" lon="9.8430807998390719">
+		<name>HH-H-8001</name>
+		<cmt>Scheideholztwiete - rechts in Scheideholzweg - links in Kiesbarg - rechts in Schnuckendrift bis Ende - Parkplatzzufahrt links durch den Schlagbaum - unbefestigten Sandweg "Fischbektal" folgen - nach 470 m erste Abfahrt links - Sandweg 250 m folgen ==&amp;gt; RP</cmt>
+		<desc>Scheideholztwiete - rechts in Scheideholzweg - links in Kiesbarg - rechts in Schnuckendrift bis Ende - Parkplatzzufahrt links durch den Schlagbaum - unbefestigten Sandweg "Fischbektal" folgen - nach 470 m erste Abfahrt links - Sandweg 250 m folgen ==&amp;gt; RP</desc>
+		<src>Hansestadt Hamburg</src>
+	</wpt>
+	<wpt lat="53.457135600027982" lon="9.8424978997583139">
+		<name>HH-H-8002</name>
+		<cmt>Scheideholztwiete - in Scheideholzweg - in Kiesbarg - rechts in Schnuckendrift bis Ende - Vor Parkplatzzufahrt links durch Schlagbaum, Sandweg "Fischbektal" nach ca. 1,2 km ==&amp;gt; RP</cmt>
+		<desc>Scheideholztwiete - in Scheideholzweg - in Kiesbarg - rechts in Schnuckendrift bis Ende - Vor Parkplatzzufahrt links durch Schlagbaum, Sandweg "Fischbektal" nach ca. 1,2 km ==&amp;gt; RP</desc>
+		<src>Hansestadt Hamburg</src>
+	</wpt>
+	<wpt lat="53.454229799665598" lon="9.8374421000729058">
+		<name>HH-H-8003</name>
+		<cmt>Scharlbarg  rechts in Scharlbargstieg - in Richtung Segelfluggelände am Parkplatz links durch den Schlagbaum - Hauptweg folgen - nach 300 m rechts halten - am Ende nach links abbiegen - unbefestigten Start-/Landebahn 900 m folgen -Aussichtsplateau==&amp;gt; RP</cmt>
+		<desc>Scharlbarg  rechts in Scharlbargstieg - in Richtung Segelfluggelände am Parkplatz links durch den Schlagbaum - Hauptweg folgen - nach 300 m rechts halten - am Ende nach links abbiegen - unbefestigten Start-/Landebahn 900 m folgen -Aussichtsplateau==&amp;gt; RP</desc>
+		<src>Hansestadt Hamburg</src>
+	</wpt>
+	<wpt lat="53.450572700269959" lon="9.8447069">
+		<name>HH-H-8004</name>
+		<cmt>Scheideholztwiete - rechts in Scheideholzweg -links in Kiesbarg - rechts in Schnuckendrift bis Ende - Parkplatzzufahrt links durch den Schlagbaum, dem unbefestigten Sandweg "Fischbektal" ca. 2,0 km bis zum Rettungspunkt folgen.</cmt>
+		<desc>Scheideholztwiete - rechts in Scheideholzweg -links in Kiesbarg - rechts in Schnuckendrift bis Ende - Parkplatzzufahrt links durch den Schlagbaum, dem unbefestigten Sandweg "Fischbektal" ca. 2,0 km bis zum Rettungspunkt folgen.</desc>
+		<src>Hansestadt Hamburg</src>
+	</wpt>
+	<wpt lat="53.442936299570647" lon="9.8544741003994432">
+		<name>HH-H-8005</name>
+		<cmt>Falkenbergsweg, Verlauf 2,1 km folgen - rechts in Quellgrund, links in Wettloop -Verlauf in NSG folgen -zweiten Weg links "Bei den Heidehütten" 500 m bis ==&amp;gt; RP. Bei schlechter Witterung die erste Abfahrt links vor dem Langhügelgrab, Verlauf 700 m==&amp;gt;RP</cmt>
+		<desc>Falkenbergsweg, Verlauf 2,1 km folgen - rechts in Quellgrund, links in Wettloop -Verlauf in NSG folgen -zweiten Weg links "Bei den Heidehütten" 500 m bis ==&amp;gt; RP. Bei schlechter Witterung die erste Abfahrt links vor dem Langhügelgrab, Verlauf 700 m==&amp;gt;RP</desc>
+		<src>Hansestadt Hamburg</src>
+	</wpt>
+	<wpt lat="53.463326300068729" lon="9.8698447003726528">
+		<name>HH-H-8006</name>
+		<cmt>von B73 in den Falkenbergsweg abbiegen und dem Verlauf ca. 900 m folgen - dann links durch den Schlagbaum dem Neugrabener Heideweg ca. 300 m bis zum Rettungspunkt folgen.</cmt>
+		<desc>von B73 in den Falkenbergsweg abbiegen und dem Verlauf ca. 900 m folgen - dann links durch den Schlagbaum dem Neugrabener Heideweg ca. 300 m bis zum Rettungspunkt folgen.</desc>
+		<src>Hansestadt Hamburg</src>
+	</wpt>
+	<wpt lat="53.459707799575369" lon="9.877862699603952">
+		<name>HH-H-8007</name>
+		<cmt>von B73 in den Falkenbergsweg abbiegen 1,5 km folgen, links durch den Schlagbaum dem Bredenbergsweg 800 m folgen. Zweite Anfahrt: B73 in den Ehestorfer Heuweg 1. Abfahrt rechts in den Bredenbergsweg -duch Schlagbaum in das Naturschutzgebiet 300 m ==&amp;gt; RP</cmt>
+		<desc>von B73 in den Falkenbergsweg abbiegen 1,5 km folgen, links durch den Schlagbaum dem Bredenbergsweg 800 m folgen. Zweite Anfahrt: B73 in den Ehestorfer Heuweg 1. Abfahrt rechts in den Bredenbergsweg -duch Schlagbaum in das Naturschutzgebiet 300 m ==&amp;gt; RP</desc>
+		<src>Hansestadt Hamburg</src>
+	</wpt>
+	<wpt lat="53.453408699751719" lon="9.8772518998553664">
+		<name>HH-H-8008</name>
+		<cmt>von B73 in den Falkenbergsweg,Verlauf ca. 2,0 km folgen - hinter der Bushaltestelle links in das Bauernholztal  - Am Beginn der Kehre gerade durch den Schlagbaum in das Naturschutzgebiet und dem Weg  450 m bis zum Wendepunkt folgen.</cmt>
+		<desc>von B73 in den Falkenbergsweg,Verlauf ca. 2,0 km folgen - hinter der Bushaltestelle links in das Bauernholztal  - Am Beginn der Kehre gerade durch den Schlagbaum in das Naturschutzgebiet und dem Weg  450 m bis zum Wendepunkt folgen.</desc>
+		<src>Hansestadt Hamburg</src>
+	</wpt>
+	<wpt lat="53.461051800400298" lon="9.9206716997392164">
+		<name>HH-H-8013</name>
+		<cmt>Höhe Cuxhavener Straße 55C - Parkplatz "Kärntner Hütte" Stadtscheide 1,2 km folgen -links in Stadtweg abbiegen 900 m folgen. Kreuzung =&amp;gt; RP.  2. Anfahrt: Kuhtrift durch Tunnel A7 links - Häuser an der Kuhtrift rechts auf Kaiserstuhlweg-Kreuzung =&amp;gt;RP</cmt>
+		<desc>Höhe Cuxhavener Straße 55C - Parkplatz "Kärntner Hütte" Stadtscheide 1,2 km folgen -links in Stadtweg abbiegen 900 m folgen. Kreuzung =&amp;gt; RP.  2. Anfahrt: Kuhtrift durch Tunnel A7 links - Häuser an der Kuhtrift rechts auf Kaiserstuhlweg-Kreuzung =&amp;gt;RP</desc>
+		<src>Hansestadt Hamburg</src>
+	</wpt>
+	<wpt lat="53.447005200329784" lon="9.9166581999160144">
+		<name>HH-H-8015</name>
+		<cmt>Parkplatz "11-Buchen" Ehestorfer Weg/Stadtscheide</cmt>
+		<desc>Parkplatz "11-Buchen" Ehestorfer Weg/Stadtscheide</desc>
+		<src>Hansestadt Hamburg</src>
+	</wpt>
+	<wpt lat="53.442814800262852" lon="9.9287696001370023">
+		<name>HH-H-8016</name>
+		<cmt>Beerentalweg bis zum Ende, dann dem Waldweg folgen</cmt>
+		<desc>Beerentalweg bis zum Ende, dann dem Waldweg folgen</desc>
+		<src>Hansestadt Hamburg</src>
+	</wpt>
+	<wpt lat="53.432470200039745" lon="9.9229903003621303">
+		<name>HH-H-8017</name>
+		<cmt>Kreuzung Eißendorfer Waldweg/Vahrendorfer Stadtweg</cmt>
+		<desc>Kreuzung Eißendorfer Waldweg/Vahrendorfer Stadtweg</desc>
+		<src>Hansestadt Hamburg</src>
+	</wpt>
+	<wpt lat="53.42251569963986" lon="9.912767300170799">
+		<name>HH-H-8019</name>
+		<cmt>von Sottorf Straße Am Grassol Richtung O bis zum Waldrand</cmt>
+		<desc>von Sottorf Straße Am Grassol Richtung O bis zum Waldrand</desc>
+		<src>Hansestadt Hamburg</src>
+	</wpt>
+	<wpt lat="53.707999" lon="10.144822">
+		<name>HH-W-6029</name>
+		<cmt>Nördl. Bereich Kupferredder - Waldeingang - Zufahrt über die Straße Herrenhausallee</cmt>
+		<desc>Nördl. Bereich Kupferredder - Waldeingang - Zufahrt über die Straße Herrenhausallee</desc>
+		<src>Hansestadt Hamburg</src>
+	</wpt>
+</gpx>
