@@ -1877,9 +1877,11 @@ void initializeRegistry(BuildContext context) {
     GCWTool(
       tool: RescuePointsMapView(),
       id: 'rescue_points',
+      iconPath:
+      'lib/tools/coords/_common/assets/icons/icon_rescue_points.png',
       categories: const [ToolCategory.COORDINATES],
       searchKeys: const [
-        'rescueile(nts',
+        'rescue_points',
       ],
       licenses: [
         ToolLicenseFile(
