@@ -22,20 +22,25 @@ class RescuePointJobData {
   });
 }
 
-Future<List<GCWMapPoint>> getRescuePointsAsync(GCWAsyncExecuterParameters? jobData) async {
+Future<List<GCWMapPoint>> getRescuePointsAsync(
+    GCWAsyncExecuterParameters? jobData) async {
   if (jobData?.parameters is! RescuePointJobData) return Future.value([]);
   var data = jobData!.parameters as RescuePointJobData;
-  var output = await _getRescuePoints(data.jobDataCenter, data.jobDataRadius, data.jobDataFilename, sendAsyncPort: jobData.sendAsyncPort);
+  var output = await _getRescuePoints(
+      data.jobDataCenter, data.jobDataRadius, data.jobDataFilename,
+      sendAsyncPort: jobData.sendAsyncPort);
 
   jobData.sendAsyncPort?.send(output);
   return output;
 }
 
-Future<List<GCWMapPoint>> _getRescuePoints(BaseCoordinate center, int radius, String filename, {SendPort? sendAsyncPort}) async {
-
+Future<List<GCWMapPoint>> _getRescuePoints(
+    BaseCoordinate center, int radius, String filename,
+    {SendPort? sendAsyncPort}) async {
   final bytes = await rootBundle.load(filename);
 
-  return _importRescuePointFile(bytes.buffer.asUint8List(), center.toLatLng()!, radius);
+  return _importRescuePointFile(
+      bytes.buffer.asUint8List(), center.toLatLng()!, radius);
 }
 
 bool _inRange(LatLng coord1, LatLng coord2, int distance) {
@@ -43,54 +48,46 @@ bool _inRange(LatLng coord1, LatLng coord2, int distance) {
       distance);
 }
 
-List<GCWMapPoint> _importRescuePointFile(Uint8List bytes, LatLng center, int radius)  {
-  var xml = utf8.decode(bytes);
-  return _parseRescuePointFile(xml, center, radius);
+List<GCWMapPoint> _importRescuePointFile(
+    Uint8List bytes, LatLng center, int radius) {
+  var xmlDoc = XmlDocument.parse(utf8.decode(bytes));
+  return _parse(xmlDoc, center, radius);
 }
 
-List<GCWMapPoint> _parseRescuePointFile(String xml, LatLng center, int radius) {
-  List<GCWMapPoint> result;
-  var xmlDoc = XmlDocument.parse(xml);
-  result = _GpxReader()._parse(xmlDoc, center, radius);
-  return result;
+List<GCWMapPoint> _parse(XmlDocument xmlDocument, LatLng center, int radius) {
+  var parent = xmlDocument.getElement('gpx');
+  if (parent != null) {
+    var points = <GCWMapPoint>[];
+
+    parent.findAllElements('wpt').forEach((xmlWpt) {
+      var wpt = _readPoint(xmlWpt, center, radius);
+      if (wpt != null) points.add(wpt);
+    });
+
+    return points;
+  }
+  return [];
 }
 
-/// Convert RescuePoints GPX-XML into points
-class _GpxReader {
-  List<GCWMapPoint> _parse(XmlDocument xmlDocument, LatLng center, int radius) {
-    var parent = xmlDocument.getElement('gpx');
-    if (parent != null) {
-      var points = <GCWMapPoint>[];
+GCWMapPoint? _readPoint(XmlElement xmlElement, LatLng center, int radius) {
+  var lat = xmlElement.getAttribute('lat');
+  var lon = xmlElement.getAttribute('lon');
 
-      parent.findAllElements('wpt').forEach((xmlWpt) {
-        var wpt = _readPoint(xmlWpt, center, radius);
-        if (wpt != null) points.add(wpt);
-      });
+  if (lat != null && lon != null) {
+    if (_inRange(
+        LatLng(double.parse(lat), double.parse(lon)), center, radius)) {
+      var wpt = GCWMapPoint(
+          point: LatLng(double.tryParse(lat) ?? 0, double.tryParse(lon) ?? 0),
+          isEditable: true);
+      var name = xmlElement.getElement('name')?.innerText ?? '';
+      var desc = xmlElement.getElement('desc')?.innerText ?? '';
+      var src = xmlElement.getElement('src')?.innerText ?? '';
 
-      return points;
+      wpt.markerText = name + '\n' + desc + '\n' + src;
+      wpt.color = COLOR_MAP_POINT;
+
+      return wpt;
     }
-    return [];
   }
-
-  GCWMapPoint? _readPoint(XmlElement xmlElement, LatLng center, int radius) {
-    var lat = xmlElement.getAttribute('lat');
-    var lon = xmlElement.getAttribute('lon');
-
-    if (lat != null && lon != null) {
-      if (_inRange(LatLng(double.parse(lat), double.parse(lon)), center, radius)) {
-        var wpt = GCWMapPoint(
-            point: LatLng(double.tryParse(lat) ?? 0, double.tryParse(lon) ?? 0),
-            isEditable: true);
-        var name = xmlElement.getElement('name')?.innerText ?? '';
-        var desc = xmlElement.getElement('desc')?.innerText ?? '';
-        var src = xmlElement.getElement('src')?.innerText ?? '';
-
-        wpt.markerText = name + '\n' +  desc + '\n' + src;
-        wpt.color = COLOR_MAP_GPX_IMPORT_WAYPOINT;
-
-        return wpt;
-      }
-    }
-    return null;
-  }
+  return null;
 }
