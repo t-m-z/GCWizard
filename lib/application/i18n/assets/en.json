@@ -4743,6 +4743,7 @@
   "regex_error": "Error: Invalid Syntax of Regular Expression",
   "rescue_points_title": "Rescue Points (Germany)",
   "rescue_points_description": "Shows Rescue Points",
+  "rescue_points_message": "Rescue Points found",
   "resistor_selection_title": "Resistor",
   "resistor_selection_description": "Electrical Resistor",
   "resistor_colorcodecalculator_title": "Resistor Color Calculator",
