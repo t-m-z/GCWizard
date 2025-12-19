@@ -83,6 +83,18 @@ class _MapViewState extends State<RescuePointsMapView> {
     return result;
   }
 
+  List<GCWMapPoint> _normalizedMapPoints(List<GCWMapPoint> points) {
+    List<GCWMapPoint> result = [];
+    for (GCWMapPoint point in points) {
+      result.add(
+          GCWMapPoint(point: point.point,
+              markerText: point.markerText?.split('\n')[0],
+              color: point.color,
+              isEditable: point.isEditable));
+    }
+    return result;
+  }
+
   Widget _buildOutput() {
     return GCWDefaultOutput(
         child: Column(children: [
@@ -93,7 +105,7 @@ class _MapViewState extends State<RescuePointsMapView> {
       GCWButton(
         text: i18n(context, 'coords_show_on_map'),
         onPressed: () {
-          openInMap(context, List<GCWMapPoint>.from(points), isCommonMap: true);
+          openInMap(context, _normalizedMapPoints(points), isCommonMap: true);
         },
       ),
     ]));
