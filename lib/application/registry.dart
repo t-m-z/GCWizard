@@ -1886,7 +1886,7 @@ void initializeRegistry(BuildContext context) {
       licenses: [
         ToolLicenseFile(
             context: context,
-            author: ' Kuratorium für Waldarbeit und Forsttechnik e.V. (KWF)',
+            author: 'Kuratorium für Waldarbeit und Forsttechnik e.V. (KWF)',
             title: 'KWF-Rettungspunkte',
             sourceUrl: 'https://kwf2020.kwf-online.de/wp-content/uploads/2025/01/Metadaten_KWF_Rettungspunkte.pdf',
             licenseType: ToolLicenseType.CCBYNCND40,
