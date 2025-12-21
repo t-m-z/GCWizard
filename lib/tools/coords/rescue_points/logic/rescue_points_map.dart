@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:isolate';
 import 'package:gc_wizard/application/theme/fixed_colors.dart';
 import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
-import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
 import 'package:flutter/services.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
@@ -11,62 +10,63 @@ import 'package:latlong2/latlong.dart';
 import 'package:xml/xml.dart';
 
 class RescuePointJobData {
-  final BaseCoordinate jobDataCenter;
+  final LatLng jobDataCenter;
   final int jobDataRadius;
   final String jobDataFilename;
+  final int jobDataCount;
+
 
   RescuePointJobData({
     required this.jobDataCenter,
     required this.jobDataRadius,
     required this.jobDataFilename,
+    required this.jobDataCount,
   });
 }
 
 Future<List<GCWMapPoint>> getRescuePointsAsync(
     GCWAsyncExecuterParameters? jobData) async {
   if (jobData?.parameters is! RescuePointJobData) return Future.value([]);
+
   var data = jobData!.parameters as RescuePointJobData;
   var output = await _getRescuePoints(
-      data.jobDataCenter, data.jobDataRadius, data.jobDataFilename,
+      data.jobDataCenter, data.jobDataRadius, data.jobDataFilename, data.jobDataCount,
       sendAsyncPort: jobData.sendAsyncPort);
 
   jobData.sendAsyncPort?.send(output);
-  return output;
+  return Future.value(output);
 }
 
 Future<List<GCWMapPoint>> _getRescuePoints(
-    BaseCoordinate center, int radius, String filename,
+    LatLng center, int radius, String filename, int count,
     {SendPort? sendAsyncPort}) async {
   final bytes = await rootBundle.load(filename);
 
-  return _importRescuePointFile(
-      bytes.buffer.asUint8List(), center.toLatLng()!, radius);
+  var xmlDoc = XmlDocument.parse(utf8.decode(bytes.buffer.asUint8List()));
+  int step = (count / 100).toInt();
+
+  var parent = xmlDoc.getElement('gpx');
+  if (parent != null) {
+    var points = <GCWMapPoint>[];
+    int index = 1;
+    parent.findAllElements('wpt').forEach((xmlWpt) {
+      var wpt = _readPoint(xmlWpt, center, radius);
+      if (wpt != null) points.add(wpt);
+      if (sendAsyncPort != null) {
+        if (index % step == 0) {
+          sendAsyncPort.send(index);
+        }
+      }
+      index++;
+    });
+    return points;
+  }
+  return [];
 }
 
 bool _inRange(LatLng coord1, LatLng coord2, int distance) {
   return (distanceBearing(coord1, coord2, Ellipsoid.WGS84).distance <=
       distance);
-}
-
-List<GCWMapPoint> _importRescuePointFile(
-    Uint8List bytes, LatLng center, int radius) {
-  var xmlDoc = XmlDocument.parse(utf8.decode(bytes));
-  return _parse(xmlDoc, center, radius);
-}
-
-List<GCWMapPoint> _parse(XmlDocument xmlDocument, LatLng center, int radius) {
-  var parent = xmlDocument.getElement('gpx');
-  if (parent != null) {
-    var points = <GCWMapPoint>[];
-
-    parent.findAllElements('wpt').forEach((xmlWpt) {
-      var wpt = _readPoint(xmlWpt, center, radius);
-      if (wpt != null) points.add(wpt);
-    });
-
-    return points;
-  }
-  return [];
 }
 
 GCWMapPoint? _readPoint(XmlElement xmlElement, LatLng center, int radius) {

@@ -15,6 +15,10 @@ import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
 import 'package:gc_wizard/tools/coords/map_view/widget/gcw_mapview.dart';
 import 'package:gc_wizard/tools/coords/rescue_points/logic/rescue_points_map.dart';
 
+const String _ASSET_PATH =
+    'lib/tools/coords/rescue_points/assets/GPX_KWF_RP.gpx';
+const int _ASSET_COUNT = 66365;
+
 class RescuePointsMapView extends StatefulWidget {
   RescuePointsMapView({super.key}) : super();
 
@@ -30,15 +34,12 @@ class _MapViewState extends State<RescuePointsMapView> {
   var _currentCoords = defaultBaseCoordinate;
   int _currentRange = 1000;
 
-  final String _ASSET_PATH =
-      'lib/tools/coords/rescue_points/assets/GPX_KWF_RP.gpx';
-
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         GCWCoords(
-          title: i18n(context, 'coords_antipodes_coorda'),
+          title: i18n(context, 'coords_common_centerpoint'),
           coordsFormat: _currentCoords.format,
           onChanged: (ret) {
             setState(() {
@@ -134,9 +135,10 @@ class _MapViewState extends State<RescuePointsMapView> {
 
   Future<GCWAsyncExecuterParameters?> _buildRescuePointsJobData() async {
     return GCWAsyncExecuterParameters(RescuePointJobData(
-        jobDataCenter: _currentCoords,
+        jobDataCenter: _currentCoords.toLatLng()!,
         jobDataRadius: _currentRange,
         jobDataFilename: _ASSET_PATH,
+        jobDataCount: _ASSET_COUNT,
     ));
   }
 
