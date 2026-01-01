@@ -56,7 +56,15 @@ Map<String, Map<String, String>> LINKLIST_DATA = {
     'letter_anagram': 'https://www.kreuzwortraetsel.de/anagramm',
   },
   'linklist_divider_misc_tools' : {
-    'misc_': '',
+    'misc_coords': 'https://www.koordinaten-umrechner.de',
+    'misc_lab2gpx': 'https://gcutils.de/lab2gpx/',
+    'misc_flopp': 'https://flopp.net/',
+    'misc_cyberchef': 'https://gchq.github.io/CyberChef/',
+    'misc_steno': 'https://steno.tu-clausthal.de/',
+    'misc_minizinc': 'https://www.minizinc.org/',
+    'misc_samuraisudoko': 'https://www.invik.xyz/samurai/',
+    'misc_qrcode': 'https://merricx.github.io/qrazybox/',
+    'misc_jigidi': 'https://solvedjigidi.com/',
   },
   'linklist_divider_browser_tools' : {
     'browser_extensions_gclittlehelper': 'https://github.com/2Abendsegler/GClh/',
