@@ -14,7 +14,9 @@ Map<String, Map<String, String>> LINKLIST_DATA = {
     'image_': '',
   },
   'linklist_divider_audio_tools' : {
-    'audio_': '',
+    'audio_oscilloscope': 'https://oscilloscopemusic.com/software/oscilloscope/',
+    'audio_morse': 'http://dxsoft.com/de/products/cwget/',
+    'audio_audacity': 'https://www.audacity.de/downloads/',
   },
   'linklist_divider_math_tools' : {
     'math_': '',

@@ -348,8 +348,6 @@ class _MainViewState extends State<MainView> {
   var _searchText = '';
   final _SHOW_SUPPORT_HINT_EVERY_N = 50;
 
-  final _PADDING_CONTAINER = EdgeInsets.only(top: 15, bottom: 10);
-
   @override
   void initState() {
     super.initState();
@@ -550,7 +548,8 @@ class _MainViewState extends State<MainView> {
   Widget _mainURLList() {
     List<Widget> linkList = [
       Container(
-          padding: _PADDING_CONTAINER,
+          padding: EdgeInsets.only(left: DEFAULT_MARGIN, right: DEFAULT_MARGIN, top: 15, bottom: 10),
+          margin: EdgeInsets.only(left: DEFAULT_MARGIN, right: DEFAULT_MARGIN, top: 15, bottom: 10),
           child: Row(children: <Widget>[
             Expanded(
                 flex: 2,
@@ -570,18 +569,21 @@ class _MainViewState extends State<MainView> {
       linkList.add(GCWExpandableTextDivider(
         text: i18n(context, linkMap.key),
         suppressBottomSpace: false,
+        expanded: false,
         child: Column(children: sectionList),
       ));
     });
 
-    return ListView(
-      children: linkList,
-    );
+    return Container(
+        padding: EdgeInsets.only(left: DEFAULT_MARGIN, right: DEFAULT_MARGIN, top: 5, bottom: 5),
+        margin: EdgeInsets.only(left: DEFAULT_MARGIN, right: DEFAULT_MARGIN, top: 5, bottom: 5),
+        child: ListView(children: linkList));
   }
 
   Container _buildUrl(String key, String value) {
     return Container(
-        padding: _PADDING_CONTAINER,
+        padding: EdgeInsets.only(left: DEFAULT_MARGIN, right: DEFAULT_MARGIN, top: 5, bottom: 5),
+        margin: EdgeInsets.only(left: DEFAULT_MARGIN, right: DEFAULT_MARGIN, top: 5, bottom: 5),
         child: Row(children: <Widget>[
           Expanded(
               flex: 2, child: GCWText(text: i18n(context, 'linklist_$key'))),
