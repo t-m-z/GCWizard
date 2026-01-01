@@ -1,6 +1,21 @@
 Map<String, Map<String, String>> LINKLIST_DATA = {
   'linklist_divider_common_tools' : {
-    'common_': '',
+    'common_gctoolbox': 'https://www.geocachingtoolbox.com/',
+    'common_netteleuthe': 'https://gc.de/gc/',
+    'common_mysterytoolbox': 'https://mysterytoolbox.organisingchaos.com/Home/About',
+    'common_multisolver': 'https://geocaching.dennistreysa.de/multisolver/',
+    'common_mysterymaster': 'https://gps-cache.de/geocaching/mystery-master/mysterymaster.htm',
+    'common_dcode': 'https://www.dcode.fr/en',
+    'common_kryptografie': 'https://kryptografie.de/kryptografie/index.htm',
+    'common_codeknacker': 'https://www.code-knacker.de/sitemap_ck.htm',
+    'common_vigenere': 'https://guballa.de/vigenere-solver',
+    'common_substitution': 'https://guballa.de/substitution-solver',
+    'common_cryptool': 'https://www.cryptool.org/de/cto/',
+    'common_cryptii': 'https://cryptii.com/',
+    'common_boxentriq': 'https://www.boxentriq.com/',
+    'common_cachesleuth': 'https://www.cachesleuth.com/',
+    'common_piet': 'http://www.bertnase.de/npiet/npiet-execute.php/',
+    'common_punchcard': 'http://laighside.com/punchcard.htm',
   },
   'linklist_divider_stegano_tools' : {
     'stegano_online': 'https://stegonline.georgeom.net/upload',
