@@ -26,7 +26,12 @@ Map<String, Map<String, String>> LINKLIST_DATA = {
     'stegano_bergziege': 'https://www.bergziege-owl.de/steganografie-solver/',
   },
   'linklist_divider_image_tools' : {
-    'image_': '',
+    'image_magiceye': 'http://magiceye.ecksdee.co.uk/',
+    'image_ezgif': 'https://ezgif.com/split',
+    'image_imageonline': 'http://decrypt.imageonline.co/index-de.php',
+    'image_photopea': 'https://www.photopea.com/',
+    'image_forensics': 'https://29a.ch/photo-forensics/',
+    'image_photokako': 'https://www.photo-kako.com/de/swirl/',
   },
   'linklist_divider_audio_tools' : {
     'audio_oscilloscope': 'https://oscilloscopemusic.com/software/oscilloscope/',
