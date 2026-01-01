@@ -39,7 +39,11 @@ Map<String, Map<String, String>> LINKLIST_DATA = {
     'audio_audacity': 'https://www.audacity.de/downloads/',
   },
   'linklist_divider_math_tools' : {
-    'math_': '',
+    'math_wolfram': 'https://www.wolframalpha.com/',
+    'math_qrcode': 'https://bahamas10.github.io/binary-to-qrcode/',
+    'math_brunner': 'https://www.arndt-bruenner.de/mathe/mathekurse.htm',
+    'math_pi': 'https://www.angio.net/pi/bigpi.cgi',
+    'math_numbers': 'https://de.numberempire.com/1024',
   },
   'linklist_divider_science_tools' : {
     'science_sun': 'https://www.sonnenverlauf.de/',
