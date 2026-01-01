@@ -1,6 +1,8 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/_common/gcw_package_info.dart';
 import 'package:gc_wizard/application/category_views/favorites.dart';
+import 'package:gc_wizard/application/category_views/linklist_data.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/babylon_numbers_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/base_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/bcd_selection.dart';
@@ -56,6 +58,8 @@ import 'package:gc_wizard/application/tools/widget/gcw_tool.dart';
 import 'package:gc_wizard/application/tools/widget/gcw_toollist.dart';
 import 'package:gc_wizard/application/webapi/deeplinks/deeplinks.dart';
 import 'package:gc_wizard/common_widgets/dialogs/gcw_dialog.dart';
+import 'package:gc_wizard/common_widgets/gcw_expandable.dart';
+import 'package:gc_wizard/common_widgets/gcw_text.dart';
 import 'package:gc_wizard/common_widgets/gcw_web_statefulwidget.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/_test_widgets/widget/test_widgets.dart';
@@ -327,6 +331,7 @@ import 'package:gc_wizard/tools/wherigo/urwigo_text_deobfuscation/widget/urwigo_
 import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/utils/string_utils.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/common_widget_utils.dart';
+import 'package:gc_wizard/utils/ui_dependent_utils/text_widget_utils.dart';
 import 'package:prefs/prefs.dart';
 
 class MainView extends GCWWebStatefulWidget {
@@ -342,6 +347,8 @@ class _MainViewState extends State<MainView> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   var _searchText = '';
   final _SHOW_SUPPORT_HINT_EVERY_N = 50;
+
+  final _PADDING_CONTAINER = EdgeInsets.only(top: 15, bottom: 10);
 
   @override
   void initState() {
@@ -373,7 +380,8 @@ class _MainViewState extends State<MainView> {
 
       showGCWDialog(
           context,
-          i18n(context, 'common_newversion_title', parameters: [mostRecentChangelogVersion]),
+          i18n(context, 'common_newversion_title',
+              parameters: [mostRecentChangelogVersion]),
           Text(entries.join('\n')),
           [
             GCWDialogButton(
@@ -382,8 +390,10 @@ class _MainViewState extends State<MainView> {
                   Navigator.push(
                       context,
                       NoAnimationMaterialPageRoute<GCWTool>(
-                          builder: (context) => registeredTools
-                              .firstWhere((tool) => className(tool.tool) == className(const Changelog()))));
+                          builder: (context) => registeredTools.firstWhere(
+                              (tool) =>
+                                  className(tool.tool) ==
+                                  className(const Changelog()))));
                 }),
             GCWDialogButton(text: i18n(context, 'common_ok'))
           ],
@@ -393,19 +403,28 @@ class _MainViewState extends State<MainView> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       var countAppOpened = Prefs.getInt(PREFERENCE_APP_COUNT_OPENED);
 
-      if (countAppOpened > 1 && Prefs.getString(PREFERENCE_CHANGELOG_DISPLAYED) != CHANGELOG.keys.first) {
+      if (countAppOpened > 1 &&
+          Prefs.getString(PREFERENCE_CHANGELOG_DISPLAYED) !=
+              CHANGELOG.keys.first) {
         _showWhatsNewDialog();
         Prefs.setString(PREFERENCE_CHANGELOG_DISPLAYED, CHANGELOG.keys.first);
         return;
       }
 
-      if (countAppOpened > 0 && (countAppOpened == 10 || countAppOpened % _SHOW_SUPPORT_HINT_EVERY_N == 0)) {
-        showGCWAlertDialog(
-          context,
-          i18n(context, 'common_support_title'),
-          i18n(context, 'common_support_text', parameters: [Prefs.getInt(PREFERENCE_APP_COUNT_OPENED)]),
-          () => launchUrl(Uri.parse(i18n(context, 'common_support_link'))),
-        );
+      if (countAppOpened > 0 &&
+          (countAppOpened == 10 ||
+              countAppOpened % _SHOW_SUPPORT_HINT_EVERY_N == 0)) {
+        _checkForGoldVersion().then((value) {
+          if (!value && !kIsWeb) {
+            showGCWAlertDialog(
+              context,
+              i18n(context, 'common_support_title'),
+              i18n(context, 'common_support_text',
+                  parameters: [Prefs.getInt(PREFERENCE_APP_COUNT_OPENED)]),
+              () => launchUrl(Uri.parse(i18n(context, 'common_support_link'))),
+            );
+          }
+        });
       }
     });
   }
@@ -451,24 +470,24 @@ class _MainViewState extends State<MainView> {
         appBar: AppBar(
           centerTitle: false,
           toolbarHeight: 120,
-            bottom: TabBar(
-              onTap: (value) {
-                Prefs.setInt(PREFERENCE_TABS_LAST_VIEWED_TAB, value);
-              },
-              tabs: const [
-                Tab(icon: Icon(Icons.category)),
-                Tab(icon: Icon(Icons.list)),
-                Tab(icon: Icon(Icons.star)),
-              ],
-            ),
-            leading: _buildIcon(),
-            title: _buildTitleAndSearchTextField(),
+          bottom: TabBar(
+            onTap: (value) {
+              Prefs.setInt(PREFERENCE_TABS_LAST_VIEWED_TAB, value);
+            },
+            tabs: const [
+              Tab(icon: Icon(Icons.category)),
+              Tab(icon: Icon(Icons.list)),
+              Tab(icon: Icon(Icons.star)),
+            ],
+          ),
+          leading: _buildIcon(),
+          title: _buildTitleAndSearchTextField(),
         ),
         drawer: buildMainMenu(context),
         body: TabBarView(
           children: [
             GCWToolList(toolList: toolList ?? _categoryList),
-            GCWToolList(toolList: toolList ?? _mainToolList),
+            _mainURLList(),
             GCWToolList(toolList: toolList ?? Favorites.favoritedGCWTools()),
           ],
         ),
@@ -493,27 +512,27 @@ class _MainViewState extends State<MainView> {
             controller: _searchController,
             icon: Icon(Icons.search, color: themeColors().mainFont()),
             hintText: i18n(context, 'common_search') + '...')
-
       ],
     );
   }
 
   Widget _buildIcon() {
     return IconButton(
-          alignment: Alignment(1.0, 0.0),
-          icon: Image.asset(
-            applogoFilename(),
-          ),
-          onPressed: () => _scaffoldKey.currentState?.openDrawer()
-    );
+        alignment: Alignment(1.0, 0.0),
+        icon: Image.asset(
+          applogoFilename(),
+        ),
+        onPressed: () => _scaffoldKey.currentState?.openDrawer());
   }
 
   List<GCWTool> _getSearchedList() {
-    var _sanitizedSearchText = removeAccents(_searchText.toLowerCase()).replaceAll(NOT_ALLOWED_SEARCH_CHARACTERS, '');
+    var _sanitizedSearchText = removeAccents(_searchText.toLowerCase())
+        .replaceAll(NOT_ALLOWED_SEARCH_CHARACTERS, '');
 
     if (_sanitizedSearchText.isEmpty) return <GCWTool>[];
 
-    Set<String> _queryTexts = _sanitizedSearchText.split(REGEXP_SPLIT_STRINGLIST).toSet();
+    Set<String> _queryTexts =
+        _sanitizedSearchText.split(REGEXP_SPLIT_STRINGLIST).toSet();
 
     return registeredTools.where((tool) {
       if (tool.indexedSearchStrings.isEmpty) return false;
@@ -526,6 +545,50 @@ class _MainViewState extends State<MainView> {
       }
       return true;
     }).toList();
+  }
+
+  Widget _mainURLList() {
+    List<Widget> linkList = [
+      Container(
+          padding: _PADDING_CONTAINER,
+          child: Row(children: <Widget>[
+            Expanded(
+                flex: 2,
+                child: GCWText(text: i18n(context, 'linklist_manual'))),
+            Expanded(
+                flex: 3,
+                child: buildUrl(i18n(context, 'linklist_manual_url'),
+                    i18n(context, 'linklist_manual_url')))
+          ]))
+    ];
+
+    LINKLIST_DATA.entries.forEach((linkMap) {
+      List<Widget> sectionList = [];
+      linkMap.value.entries.forEach((linkEntry) {
+        sectionList.add(_buildUrl(linkEntry.key, linkEntry.value));
+      });
+      linkList.add(GCWExpandableTextDivider(
+        text: i18n(context, linkMap.key),
+        suppressBottomSpace: false,
+        child: Column(children: sectionList),
+      ));
+    });
+
+    return ListView(
+      children: linkList,
+    );
+  }
+
+  Container _buildUrl(String key, String value) {
+    return Container(
+        padding: _PADDING_CONTAINER,
+        child: Row(children: <Widget>[
+          Expanded(
+              flex: 2, child: GCWText(text: i18n(context, 'linklist_$key'))),
+          Expanded(
+              flex: 3,
+              child: buildUrl(value, value))
+        ]));
   }
 }
 
@@ -844,7 +907,6 @@ void _initStaticToolList() {
       className(const ZC1()),
       className(Zebra()),
       className(const Zodiac()),
-
       className(const A_TestWidgets()),
     ].contains(className(element.tool));
   }).toList();

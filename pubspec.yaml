@@ -90,7 +90,6 @@ flutter:
         - asset: lib/application/_common/assets/fonts/Noto/NotoSans_SemiCondensed-Italic.ttf
         - asset: lib/application/_common/assets/fonts/Noto/NotoSans_SemiCondensed-Regular.ttf
         - asset: lib/application/_common/assets/fonts/Noto/NotoSansRegular.ttf
-        - asset: lib/application/_common/assets/fonts/DejaVu/NotoSansRegular.ttf
     - family: MyFlutterApp
       fonts:
         - asset: lib/application/_common/assets/fonts/Icons/MyFlutterApp.ttf
