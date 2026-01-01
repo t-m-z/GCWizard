@@ -1,4 +1,4 @@
-/***********************************************************************
+/*
     Dart port of C++ implementation of
     ======================
     GeographicLib
@@ -10,7 +10,7 @@
  * Copyright (c) Charles Karney (2010, 2011) <charles@karney.com> and licensed
  * under the MIT/X11 License.  For more information, see
  * http://geographiclib.sourceforge.net/
- **********************************************************************/
+*/
 part of 'package:gc_wizard/tools/coords/_common/logic/external_libs/karney.geographic_lib/geographic_lib.dart';
 
 /*
@@ -517,7 +517,7 @@ class LambertConformalConic {
    * this.
    **********************************************************************/
 
-  GeographicLibLambertLatLon Reverse(double lon0, double x, double y) {
+  GeographicLibLambertLatLon reverse(double lon0, double x, double y) {
     // From Snyder, we have
     //
     //        x = rho * sin(theta)

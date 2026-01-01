@@ -1,5 +1,6 @@
 import 'package:gc_wizard/tools/coords/_common/formats/bosch/logic/bosch.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/dec/logic/dec.dart';
+import 'package:gc_wizard/tools/coords/_common/formats/dfcigrid/logic/dfcigrid.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/dmm/logic/dmm.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/dms/logic/dms.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/dutchgrid/logic/dutchgrid.dart';
@@ -19,6 +20,7 @@ import 'package:gc_wizard/tools/coords/_common/formats/openlocationcode/logic/op
 import 'package:gc_wizard/tools/coords/_common/formats/quadtree/logic/quadtree.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/reversewherigo_10y_waldmeister/logic/reverse_wherigo_10y_waldmeister.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/reversewherigo_day1976/logic/reverse_wherigo_day1976.dart';
+import 'package:gc_wizard/tools/coords/_common/formats/reversewherigo_hebi63/logic/reverse_wherigo_hebi63.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/reversewherigo_waldmeister/logic/reverse_wherigo_waldmeister.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/s2cells_hilbert/logic/s2cells_hilbert.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/slippymap/logic/slippy_map.dart';
@@ -39,6 +41,7 @@ enum CoordinateFormatKey {
   SWISS_GRID,
   SWISS_GRID_PLUS,
   DUTCH_GRID,
+  DFCI_GRID,
   GAUSS_KRUEGER,
   LAMBERT,
   MAIDENHEAD,
@@ -55,6 +58,7 @@ enum CoordinateFormatKey {
   MAPCODE,
   QUADTREE,
   REVERSE_WIG_WALDMEISTER,
+  REVERSE_WIG_HEBI63,
   REVERSE_WIG_DAY1976,
   REVERSE_WIG_10Y_WALDMEISTER,
   //GaussKrueger Subtypes
@@ -77,6 +81,7 @@ enum CoordinateFormatKey {
   LAMBERT93_CC48,
   LAMBERT93_CC49,
   LAMBERT93_CC50,
+  LAMBERT_EPSG27572,
   //S2Cells
   S2CELLS_HILBERT_QUADRATIC,
   S2CELLS_HILBERT_TAN,
@@ -115,7 +120,7 @@ enum CoordinateFormatKey {
   SLIPPYMAP_30,
   //MapCode Subtypes
   MAPCODE_LOCAL,
-  MAPCODE_INTERNATIONAL
+  MAPCODE_INTERNATIONAL,
 }
 
 /// sorted by priority (parse coordinates)
@@ -129,6 +134,7 @@ final allCoordinateFormatDefinitions = [
   ReverseWherigoDay1976FormatDefinition,
   ReverseWherigo10YWaldmeisterFormatDefinition,
   XYZFormatDefinition,
+  ReverseWherigoHebi63FormatDefinition, // lower as XYZ
   SwissGridFormatDefinition,
   SwissGridPlusFormatDefinition,
   GaussKruegerFormatDefinition,
@@ -147,6 +153,7 @@ final allCoordinateFormatDefinitions = [
   BoschFormatDefinition,
   GARSFormatDefinition,
   S2CellsHilbertFormatDefinition,
+  DfciGridFormatDefinition,
 
   GeohashFormatDefinition, // Must be last one in list!
 ];
