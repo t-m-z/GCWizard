@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/_common/gcw_package_info.dart';
 import 'package:gc_wizard/application/category_views/favorites.dart';
-import 'package:gc_wizard/application/category_views/linklist_data.dart';
+import 'package:gc_wizard/application/category_views/hyperlinks.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/main_menu/changelog.dart';
 import 'package:gc_wizard/application/main_menu/main_menu.dart';
@@ -16,7 +16,6 @@ import 'package:gc_wizard/application/tools/widget/gcw_tool.dart';
 import 'package:gc_wizard/application/tools/widget/gcw_toollist.dart';
 import 'package:gc_wizard/application/webapi/deeplinks/deeplinks.dart';
 import 'package:gc_wizard/common_widgets/dialogs/gcw_dialog.dart';
-import 'package:gc_wizard/common_widgets/gcw_expandable.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
 import 'package:gc_wizard/common_widgets/gcw_web_statefulwidget.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
@@ -177,7 +176,7 @@ class _MainViewState extends State<MainView> {
         body: TabBarView(
           children: [
             GCWToolList(toolList: toolList ?? _categoryList),
-            _mainURLList(),
+            MainURLList(context),
             GCWToolList(toolList: toolList ?? Favorites.favoritedGCWTools()),
           ],
         ),
@@ -235,41 +234,6 @@ class _MainViewState extends State<MainView> {
       }
       return true;
     }).toList();
-  }
-
-  Widget _mainURLList() {
-    List<Widget> linkList = [
-      Container(
-          padding: EdgeInsets.only(left: DEFAULT_MARGIN, right: DEFAULT_MARGIN, top: 15, bottom: 10),
-          margin: EdgeInsets.only(left: DEFAULT_MARGIN, right: DEFAULT_MARGIN, top: 15, bottom: 10),
-          child: Row(children: <Widget>[
-            Expanded(
-                flex: 2,
-                child: GCWText(text: i18n(context, 'linklist_manual'))),
-            Expanded(
-                flex: 3,
-                child: buildUrl(i18n(context, 'linklist_manual_url'),
-                    i18n(context, 'linklist_manual_url')))
-          ]))
-    ];
-
-    LINKLIST_DATA.entries.forEach((linkMap) {
-      List<Widget> sectionList = [];
-      linkMap.value.entries.forEach((linkEntry) {
-        sectionList.add(_buildUrl(linkEntry.key, linkEntry.value));
-      });
-      linkList.add(GCWExpandableTextDivider(
-        text: i18n(context, linkMap.key),
-        suppressBottomSpace: false,
-        expanded: false,
-        child: Column(children: sectionList),
-      ));
-    });
-
-    return Container(
-        padding: EdgeInsets.only(left: DEFAULT_MARGIN, right: DEFAULT_MARGIN, top: 5, bottom: 5),
-        margin: EdgeInsets.only(left: DEFAULT_MARGIN, right: DEFAULT_MARGIN, top: 5, bottom: 5),
-        child: ListView(children: linkList));
   }
 
   Container _buildUrl(String key, String value) {

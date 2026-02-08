@@ -1,3 +1,59 @@
+import 'package:flutter/material.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
+import 'package:gc_wizard/application/theme/theme.dart';
+import 'package:gc_wizard/common_widgets/gcw_expandable.dart';
+import 'package:gc_wizard/common_widgets/gcw_text.dart';
+import 'package:gc_wizard/utils/ui_dependent_utils/text_widget_utils.dart';
+
+Container _buildUrl(BuildContext context, String key, String value) {
+  return Container(
+      padding: EdgeInsets.only(left: DEFAULT_MARGIN, right: DEFAULT_MARGIN, top: 5, bottom: 5),
+      margin: EdgeInsets.only(left: DEFAULT_MARGIN, right: DEFAULT_MARGIN, top: 5, bottom: 5),
+      child: Row(children: <Widget>[
+        Expanded(
+            flex: 2, child: GCWText(text: i18n(context, 'linklist_$key'), style: TextStyle(fontWeight: FontWeight.normal))),
+        Expanded(
+            flex: 3,
+            child: buildUrl(value, value))
+      ]));
+}
+
+Widget MainURLList(BuildContext context) {
+  List<Widget> linkList = [
+    Container(
+        padding: EdgeInsets.only(left: DEFAULT_MARGIN, right: DEFAULT_MARGIN, top: 15, bottom: 10),
+        margin: EdgeInsets.only(left: DEFAULT_MARGIN, right: DEFAULT_MARGIN, top: 15, bottom: 10),
+        child: Row(children: <Widget>[
+          Expanded(
+              flex: 2,
+              child: GCWText(text: i18n(context, 'linklist_manual'))),
+          Expanded(
+              flex: 3,
+              child: buildUrl(i18n(context, 'linklist_manual_url'),
+                  i18n(context, 'linklist_manual_url')))
+        ]))
+  ];
+
+  LINKLIST_DATA.entries.forEach((linkMap) {
+    List<Widget> sectionList = [];
+    linkMap.value.entries.forEach((linkEntry) {
+      sectionList.add(_buildUrl(context, linkEntry.key, linkEntry.value));
+    });
+    linkList.add(GCWExpandableTextDivider(
+      text: i18n(context, linkMap.key),
+      suppressBottomSpace: false,
+      expanded: false,
+      child: Column(children: sectionList),
+    ));
+  });
+
+  return Container(
+      padding: EdgeInsets.only(left: DEFAULT_MARGIN, right: DEFAULT_MARGIN, top: 5, bottom: 5),
+      margin: EdgeInsets.only(left: DEFAULT_MARGIN, right: DEFAULT_MARGIN, top: 5, bottom: 5),
+      child: ListView(children: linkList));
+}
+
+
 Map<String, Map<String, String>> LINKLIST_DATA = {
   'linklist_divider_common_tools' : {
     'common_gctoolbox': 'https://www.geocachingtoolbox.com/',
