@@ -3605,7 +3605,7 @@
   "midi_latin": "Latin",
   "midi_keyboard": "Keyboard key",
   "midi_piano": "Piano key",
-  "midi_percussion": "Percussion",
+  "midi_percussions": "Percussion",
   "midi_instruments": "Instruments",
   "midi_notes": "Notes",
   "midi_load_error": "Failed to initialize MIDI",
