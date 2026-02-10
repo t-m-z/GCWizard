@@ -283,7 +283,8 @@ class WaveFormState extends State<WaveForm> {
         List.filled(_soundfileMorsecode.length, 1),
         _invertMorseCode(_soundfileMorsecode),
         tolerance: 1.2 + (_currentTolerance - 12) / 10,
-      );    } else {
+      );
+    } else {
       _decodedMorse = decodeMorseCode(
         List.filled(_soundfileMorsecode.length, 1),
         _soundfileMorsecode,

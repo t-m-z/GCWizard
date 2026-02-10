@@ -50,10 +50,12 @@ Future<MorseData> PCMamplitudes2Image({
   double analyseBar = maxAmplitude - (maxAmplitude - minAmplitude) / 2;
 
   final canvasRecorderPolygon = ui.PictureRecorder();
-  final canvasPolygon = ui.Canvas(canvasRecorderPolygon, ui.Rect.fromLTWH(0, 0, width, height));
+  final canvasPolygon =
+      ui.Canvas(canvasRecorderPolygon, ui.Rect.fromLTWH(0, 0, width, height));
 
   final canvasRecorderRectangle = ui.PictureRecorder();
-  final canvasRectangle = ui.Canvas(canvasRecorderRectangle, ui.Rect.fromLTWH(0, 0, width, height));
+  final canvasRectangle =
+      ui.Canvas(canvasRecorderRectangle, ui.Rect.fromLTWH(0, 0, width, height));
 
   final paint = Paint()
     ..color = Colors.black87
@@ -63,32 +65,17 @@ Future<MorseData> PCMamplitudes2Image({
   canvasRectangle.drawRect(Rect.fromLTWH(0, 0, width, height), paint);
 
   paint.color = Colors.black;
-  canvasPolygon.drawRect(Rect.fromLTWH(BOUNDS, BOUNDS, RMSperPoint.length.toDouble(), maxAmplitude), paint);
-  canvasRectangle.drawRect(Rect.fromLTWH(BOUNDS, BOUNDS, RMSperPoint.length.toDouble(), maxAmplitude), paint);
+  canvasPolygon.drawRect(
+      Rect.fromLTWH(
+          BOUNDS, BOUNDS, RMSperPoint.length.toDouble(), maxAmplitude),
+      paint);
+  canvasRectangle.drawRect(
+      Rect.fromLTWH(
+          BOUNDS, BOUNDS, RMSperPoint.length.toDouble(), maxAmplitude),
+      paint);
 
   paint.strokeWidth = 2.0;
   paint.style = PaintingStyle.stroke;
-  // paint.color = Colors.white;
-  // canvasPolygon.drawLine(
-  //     Offset(BOUNDS, _transform(height, BOUNDS, 0)),
-  //     Offset(width - BOUNDS, _transform(height, BOUNDS, 0)), paint);
-  // canvasRectangle.drawLine(
-  //     Offset(BOUNDS, _transform(height, BOUNDS, 0)),
-  //     Offset(width, _transform(height, BOUNDS, 0)), paint);
-  // paint.color = Colors.green;
-  // canvasPolygon.drawLine(
-  //     Offset(BOUNDS, _transform(height, BOUNDS, minAmplitude)),
-  //     Offset(width - BOUNDS, _transform(height, BOUNDS, minAmplitude)), paint);
-  // canvasRectangle.drawLine(
-  //     Offset(BOUNDS, _transform(height, BOUNDS, minAmplitude)),
-  //     Offset(width - BOUNDS, _transform(height, BOUNDS, minAmplitude)), paint);
-  // paint.color = Colors.red;
-  // canvasPolygon.drawLine(
-  //     Offset(BOUNDS, _transform(height, BOUNDS, maxAmplitude)),
-  //     Offset(width - BOUNDS, _transform(height, BOUNDS, maxAmplitude)), paint);
-  // canvasRectangle.drawLine(
-  //     Offset(BOUNDS, _transform(height, BOUNDS, maxAmplitude)),
-  //     Offset(width - BOUNDS, _transform(height, BOUNDS, maxAmplitude)), paint);
 
   paint.color = Colors.orangeAccent;
 
@@ -106,30 +93,22 @@ Future<MorseData> PCMamplitudes2Image({
   paint.style = PaintingStyle.fill;
   canvasRectangle.drawPath(path, paint);
 
-  // paint.color = Colors.blue;
-  // paint.strokeWidth = 1.0;
-  // canvasPolygon.drawLine(
-  //     Offset(BOUNDS, _transform(height, BOUNDS, analyseBar - 2)),
-  //     Offset(width - BOUNDS, _transform(height, BOUNDS, analyseBar - 2)), paint);
-  // canvasPolygon.drawLine(
-  //     Offset(BOUNDS, _transform(height, BOUNDS, analyseBar + 2)),
-  //     Offset(width - BOUNDS, _transform(height, BOUNDS, analyseBar + 2)), paint);
-  // canvasRectangle.drawLine(
-  //     Offset(BOUNDS, _transform(height, BOUNDS, analyseBar - 2)),
-  //     Offset(width - BOUNDS, _transform(height, BOUNDS, analyseBar - 2)), paint);
-  // canvasRectangle.drawLine(
-  //     Offset(BOUNDS, _transform(height, BOUNDS, analyseBar + 2)),
-  //     Offset(width - BOUNDS, _transform(height, BOUNDS, analyseBar + 2)), paint);
+  final imgPolygon = await canvasRecorderPolygon
+      .endRecording()
+      .toImage(width.floor(), height.floor());
+  final dataPolygon =
+      await imgPolygon.toByteData(format: ui.ImageByteFormat.png);
 
-  final imgPolygon = await canvasRecorderPolygon.endRecording().toImage(width.floor(), height.floor());
-  final dataPolygon = await imgPolygon.toByteData(format: ui.ImageByteFormat.png);
-
-  final imgRectangle = await canvasRecorderRectangle.endRecording().toImage(width.floor(), height.floor());
-  final dataRectangle = await imgRectangle.toByteData(format: ui.ImageByteFormat.png);
+  final imgRectangle = await canvasRecorderRectangle
+      .endRecording()
+      .toImage(width.floor(), height.floor());
+  final dataRectangle =
+      await imgRectangle.toByteData(format: ui.ImageByteFormat.png);
 
   // get pixel info and build morse code
   List<bool> morseCode = [];
-  final byteData = await imgRectangle.toByteData(format: ui.ImageByteFormat.rawRgba);
+  final byteData =
+      await imgRectangle.toByteData(format: ui.ImageByteFormat.rawRgba);
   if (byteData != null) {
     final buffer = byteData.buffer.asUint8List();
     // Calculate the index for the pixel at (x, y)
@@ -144,8 +123,7 @@ Future<MorseData> PCMamplitudes2Image({
       final g = buffer[pixelIndex + 1];
       final b = buffer[pixelIndex + 2];
       //final a = buffer[pixelIndex + 3];
-      morseCode.add(!_isBlack(r, g, b));
-
+      morseCode.add(_isBlack(r, g, b));
     }
   }
 
@@ -160,5 +138,6 @@ bool _isBlack(int r, int g, int b) {
 }
 
 double _transform(double height, double bounds, double y) {
-  return height - bounds - y;
+  return y + bounds;
+  //return height - bounds - y;
 }
