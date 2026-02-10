@@ -195,10 +195,11 @@ const Map<String, String> _SCHILLING_CANSTATT = {
   '&': 'rrlr',
   'schillingcanstatt_stop': 'lrll',
   'schillingcanstatt_goon': 'lrrl',
-  'schillingcanntatt_finish': 'llrl'
+  'schillingcanstatt_finish': 'llrl'
 };
 
 const Map<String, String> _WHEATSTONE_COOKE_5 = {
+  // https://en.wikipedia.org/wiki/Cooke_and_Wheatstone_telegraph
   'A': '/|||\\',
   'B': '/||\\|',
   'D': '|/||\\',
@@ -206,7 +207,7 @@ const Map<String, String> _WHEATSTONE_COOKE_5 = {
   'F': '|/|\\|',
   'G': '||/|\\',
   'H': '/\\|||',
-  'I': '|/|||',
+  'I': '|/\\||',
   'K': '||/\\|',
   'L': '|||/\\',
   'M': '\\/|||',
@@ -222,6 +223,7 @@ const Map<String, String> _WHEATSTONE_COOKE_5 = {
 };
 
 const Map<String, String> _WHEATSTONE_COOKE_2 = {
+  // https://en.wikipedia.org/wiki/Cooke_and_Wheatstone_telegraph
   'A': '[\\\\  |]',
   'B': '[\\\\\\ |]',
   'C': '[\\/ |]',
@@ -341,8 +343,6 @@ String decodeGaussWeberTelegraph(String input, GaussWeberTelegraphMode mode) {
     case GaussWeberTelegraphMode.WHEATSTONE_COOKE_1:
       map = switchMapKeyValue(_WHEATSTONE_COOKE_1);
       break;
-    default:
-      return '';
   }
 
   if (mode == GaussWeberTelegraphMode.WHEATSTONE_COOKE_1) {
@@ -414,8 +414,6 @@ String encodeGaussWeberTelegraph(String input, GaussWeberTelegraphMode mode) {
     case GaussWeberTelegraphMode.WHEATSTONE_COOKE_1:
       map = _WHEATSTONE_COOKE_1;
       break;
-    default:
-      return '';
   }
 
   if (mode == GaussWeberTelegraphMode.WHEATSTONE_COOKE_1) {

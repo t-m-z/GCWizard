@@ -19,14 +19,14 @@ import 'package:gc_wizard/utils/complex_return_types.dart';
 import 'package:intl/intl.dart';
 
 class ShadowLength extends StatefulWidget {
-  const ShadowLength({Key? key}) : super(key: key);
+  const ShadowLength({super.key});
 
   @override
   _ShadowLengthState createState() => _ShadowLengthState();
 }
 
 class _ShadowLengthState extends State<ShadowLength> {
-  var _currentDateTime = DateTimeTimezone(datetime: DateTime.now(), timezone: DateTime.now().timeZoneOffset);
+  var _currentDateTime = DateTimeTZ.now();
   var _currentInputCoords = defaultBaseCoordinate;
   var _currentHeight = 0.0;
 

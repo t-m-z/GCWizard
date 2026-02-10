@@ -1,5 +1,6 @@
 import 'package:gc_wizard/tools/coords/_common/formats/bosch/logic/bosch.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/dec/logic/dec.dart';
+import 'package:gc_wizard/tools/coords/_common/formats/dfcigrid/logic/dfcigrid.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/dmm/logic/dmm.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/dms/logic/dms.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/dutchgrid/logic/dutchgrid.dart';
@@ -17,7 +18,9 @@ import 'package:gc_wizard/tools/coords/_common/formats/mgrs_utm/logic/mgrs.dart'
 import 'package:gc_wizard/tools/coords/_common/formats/natural_area_code/logic/natural_area_code.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/openlocationcode/logic/open_location_code.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/quadtree/logic/quadtree.dart';
+import 'package:gc_wizard/tools/coords/_common/formats/reversewherigo_10y_waldmeister/logic/reverse_wherigo_10y_waldmeister.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/reversewherigo_day1976/logic/reverse_wherigo_day1976.dart';
+import 'package:gc_wizard/tools/coords/_common/formats/reversewherigo_hebi63/logic/reverse_wherigo_hebi63.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/reversewherigo_waldmeister/logic/reverse_wherigo_waldmeister.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/s2cells_hilbert/logic/s2cells_hilbert.dart';
 import 'package:gc_wizard/tools/coords/_common/formats/slippymap/logic/slippy_map.dart';
@@ -33,6 +36,14 @@ import 'package:latlong2/latlong.dart';
 
 import 'coordinate_format_definition.dart';
 
+enum StateCode {
+  OK,
+  Invalid_Coordinate,
+  Checksum_Error,
+  Outside_Borders,
+  OLC_ShortFormat
+}
+
 abstract class BaseCoordinate {
   CoordinateFormat get format;
   late double latitude;
@@ -43,7 +54,8 @@ abstract class BaseCoordinate {
     this.longitude = longitude ?? defaultCoord.defaultCoordinate.longitude;
   }
 
-  // TODO: Make this null-safe. Some inheriting CoordFormats may return null here. This shall be avoided.
+  StateCode get stateCode => StateCode.OK;
+
   LatLng? toLatLng() {
     return LatLng(latitude, longitude);
   }
@@ -118,6 +130,8 @@ BaseCoordinate buildCoordinate(CoordinateFormat format, LatLng coords, [Ellipsoi
       return SwissGridPlusCoordinate.fromLatLon(coords, ellipsoid);
     case CoordinateFormatKey.DUTCH_GRID:
       return DutchGridCoordinate.fromLatLon(coords);
+    case CoordinateFormatKey.DFCI_GRID:
+      return DfciGridCoordinate.fromLatLon(coords);
     case CoordinateFormatKey.GAUSS_KRUEGER:
       return GaussKruegerCoordinate.fromLatLon(coords, format.subtype!, ellipsoid);
     case CoordinateFormatKey.LAMBERT:
@@ -144,8 +158,12 @@ BaseCoordinate buildCoordinate(CoordinateFormat format, LatLng coords, [Ellipsoi
       return QuadtreeCoordinate.fromLatLon(coords);
     case CoordinateFormatKey.REVERSE_WIG_WALDMEISTER:
       return ReverseWherigoWaldmeisterCoordinate.fromLatLon(coords);
+    case CoordinateFormatKey.REVERSE_WIG_HEBI63:
+      return ReverseWherigoHebi63Coordinate.fromLatLon(coords);
     case CoordinateFormatKey.REVERSE_WIG_DAY1976:
       return ReverseWherigoDay1976Coordinate.fromLatLon(coords);
+    case CoordinateFormatKey.REVERSE_WIG_10Y_WALDMEISTER:
+      return ReverseWherigo10YWaldmeisterCoordinate.fromLatLon(coords);
     case CoordinateFormatKey.MAPCODE:
       return MapCode.fromLatLon(coords, format.subtype!);
     case CoordinateFormatKey.BOSCH:

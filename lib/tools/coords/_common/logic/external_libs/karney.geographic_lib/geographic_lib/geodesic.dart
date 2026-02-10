@@ -1,4 +1,4 @@
-/***********************************************************************
+/*
     Dart port of Java implementation of
     ======================
     GeographicLib
@@ -8,8 +8,7 @@
  * under the MIT/X11 License.  For more information, see
  * https://geographiclib.sourceforge.io/
  * https://sourceforge.net/projects/geographiclib/
-
- **********************************************************************/
+ */
 part of 'package:gc_wizard/tools/coords/_common/logic/external_libs/karney.geographic_lib/geographic_lib.dart';
 
 /*
@@ -312,10 +311,11 @@ class _Geodesic {
    * prolate ellipsoid, an additional condition is necessary for a shortest
    * path: the longitudinal extent must not exceed of 180&deg;.)
    **********************************************************************/
-  GeodesicData direct(double lat1, double lon1, double azi1, double s12) {
-    return _direct(lat1, lon1, azi1, false, s12,
+  GeodesicData direct(double lat1, double lon1, double azi1, bool arcmode, double s12) {
+    return _direct(lat1, lon1, azi1, arcmode, s12,
         _GeodesicMask.LATITUDE | _GeodesicMask.LONGITUDE | _GeodesicMask.AZIMUTH |
-        _GeodesicMask.REDUCEDLENGTH | _GeodesicMask.GEODESICSCALE | _GeodesicMask.AREA
+        _GeodesicMask.REDUCEDLENGTH | _GeodesicMask.GEODESICSCALE | _GeodesicMask.AREA |
+        _GeodesicMask.DISTANCE
     );
   }
 
@@ -548,7 +548,9 @@ class _Geodesic {
         // Need at least 2, to handle 90 0 90 180
         if (sig12 < 3 * tiny_ ||
             // Prevent negative s12 or m12 for short lines
-            (sig12 < _tol0_ && (s12x < 0 || m12x < 0))) sig12 = m12x = s12x = 0;
+            (sig12 < _tol0_ && (s12x < 0 || m12x < 0))) {
+          sig12 = m12x = s12x = 0;
+        }
         m12x *= b;
         s12x *= b;
         a12 = _toDegrees(sig12);
@@ -639,7 +641,9 @@ class _Geodesic {
           // Reversed test to allow escape with NaNs
           if (tripb ||
               !(v.abs() >= (tripn ? 8 : 1) * _tol0_) ||
-              numit == _maxit2_) break;
+              numit == _maxit2_) {
+            break;
+          }
           // Update bracketing values
           if (v > 0 && (numit > _maxit1_ || calp1 / salp1 > _calp1b / _salp1b)) {
             _salp1b = salp1;
@@ -1488,6 +1492,7 @@ class _InverseData {
 }
 
 class _LengthsReturn {
+  // ignore: unused_field
   late double _s12b, _m12b, _m0, _M12, _M21;
 }
 

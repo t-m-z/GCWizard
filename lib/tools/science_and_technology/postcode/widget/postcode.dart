@@ -14,7 +14,7 @@ import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/science_and_technology/postcode/logic/postcode.dart';
 
 class Postcode extends StatefulWidget {
-  const Postcode({Key? key}) : super(key: key);
+  const Postcode({super.key});
 
   @override
   PostcodeState createState() => PostcodeState();
@@ -275,8 +275,6 @@ class PostcodeState extends State<Postcode> {
           }
         case ErrorCode.Character:
           return GCWDefaultOutput(child: i18n(context, 'postcode_invalid_character'));
-        default:
-          return GCWDefaultOutput(child: i18n(context, 'postcode_invalid_data'));
       }
     }
   }

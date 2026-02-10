@@ -36,7 +36,7 @@ class Substitution extends StatefulWidget {
   final String? input;
   final Map<String, String>? substitutions;
 
-  const Substitution({Key? key, this.input, this.substitutions}) : super(key: key);
+  const Substitution({super.key, this.input, this.substitutions});
 
   @override
   _SubstitutionState createState() => _SubstitutionState();
@@ -206,8 +206,11 @@ class _SubstitutionState extends State<Substitution> {
     _toList.shuffle();
 
     var rand = Random();
-    var _min = min<int>(fromAlphabet.length, _toList.length);
-    for (int i = 0; i < _min; i++) {
+    var len = fromAlphabet.length;
+    if (_currentUniqueResults) {
+      len = min<int>(fromAlphabet.length, _toList.length);
+    }
+    for (int i = 0; i < len; i++) {
       _addEntry(KeyValueBase(null, fromAlphabet[i], _toList[_currentUniqueResults ? i : rand.nextInt(_toList.length)]));
     }
   }
@@ -284,7 +287,7 @@ class _SubstitutionState extends State<Substitution> {
               )
             : Container(),
         GCWDropDown(
-          title: i18n(context, 'common_to'),
+          title: i18n(context, 'substitution_generate_to'),
           value: _currentToLetters,
           items: _generateToList().map((value) {
             return GCWDropDownMenuItem(
@@ -315,7 +318,7 @@ class _SubstitutionState extends State<Substitution> {
 
         GCWTextDivider(text: titleNumerals),
         GCWDropDown(
-          title: i18n(context, 'common_to'),
+          title: i18n(context, 'substitution_generate_to'),
           value: _currentToNumerals,
           items: _generateToList().map((value) {
             return GCWDropDownMenuItem(
@@ -338,7 +341,7 @@ class _SubstitutionState extends State<Substitution> {
 
         GCWTextDivider(text: titleCharacters),
         GCWDropDown(
-          title: i18n(context, 'common_to'),
+          title: i18n(context, 'substitution_generate_to'),
           value: _currentToCharacters,
           items: _generateToList().map((value) {
             return GCWDropDownMenuItem(

@@ -216,8 +216,8 @@ int countElements(List<int> list) {
   return list.length;
 }
 
-int countDistinctCharacters(List<int> list) {
-  return list.toSet().length;
+int countDistinctCharacters(String text) {
+  return text.split('').toSet().length;
 }
 
 int countLetters(String text) {
@@ -226,4 +226,8 @@ int countLetters(String text) {
 
 int countDigits(String text) {
   return text.replaceAll(RegExp(r'\D'), '').length;
+}
+
+double average(List<int> list) {
+  return sum(list).toDouble() / list.length;
 }

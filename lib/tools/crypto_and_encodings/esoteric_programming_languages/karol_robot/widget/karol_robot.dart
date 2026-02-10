@@ -20,7 +20,7 @@ import 'package:gc_wizard/utils/ui_dependent_utils/file_widget_utils.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/image_utils/image_utils.dart';
 
 class KarolRobot extends StatefulWidget {
-  const KarolRobot({Key? key}) : super(key: key);
+  const KarolRobot({super.key});
 
   @override
   _KarolRobotState createState() => _KarolRobotState();
@@ -133,7 +133,7 @@ class _KarolRobotState extends State<KarolRobot> {
               trailing: GCWIconButton(
                 icon: Icons.save,
                 size: IconButtonSize.SMALL,
-                iconColor: _outDecodeData == null ? themeColors().inActive() : null,
+                iconColor: _outDecodeData == null ? themeColors().inactive() : null,
                 onPressed: () {
                   _outDecodeData == null ? null : _exportFile(context, _outDecodeData!);
                 },

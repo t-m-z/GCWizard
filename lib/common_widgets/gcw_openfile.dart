@@ -1,11 +1,8 @@
 import 'dart:async';
-import 'dart:io';
 import 'dart:isolate';
 import 'dart:math';
 
 import 'package:file_picker/file_picker.dart' as filePicker;
-import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
-import 'package:image_picker/image_picker.dart' as imagePicker;
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -15,6 +12,7 @@ import 'package:gc_wizard/application/theme/theme_colors.dart';
 import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer.dart';
 import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
+import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/dialogs/gcw_dialog.dart';
 import 'package:gc_wizard/common_widgets/gcw_expandable.dart';
 import 'package:gc_wizard/common_widgets/gcw_snackbar.dart';
@@ -24,6 +22,7 @@ import 'package:gc_wizard/utils/complex_return_types.dart';
 import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:gc_wizard/utils/file_utils/gcw_file.dart';
 import 'package:http/http.dart' as http;
+import 'package:image_picker/image_picker.dart' as imagePicker;
 
 final SUPPORTED_IMAGE_TYPES = fileTypesByFileClass(FileClass.IMAGE);
 
@@ -39,7 +38,7 @@ class GCWOpenFile extends StatefulWidget {
   final bool suppressGallery;
 
   const GCWOpenFile(
-      {Key? key,
+      {super.key,
       required this.onLoaded,
       this.supportedFileTypes,
       this.title,
@@ -47,8 +46,7 @@ class GCWOpenFile extends StatefulWidget {
       this.file,
       this.suppressHeader = false,
       this.suppressGallery = true}
-      )
-      : super(key: key);
+      );
 
   @override
   _GCWOpenFileState createState() => _GCWOpenFileState();
@@ -130,7 +128,7 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
                   height: GCW_ASYNC_EXECUTER_INDICATOR_HEIGHT,
                   width: GCW_ASYNC_EXECUTER_INDICATOR_WIDTH,
                   child: GCWAsyncExecuter<Uint8ListText?>(
-                    isolatedFunction: _downloadFileAsync,
+                    isolatedFunction: downloadFileAsync,
                     parameter: _buildJobDataDownload,
                     onReady: (data) => _saveDownload(data),
                     isOverlay: true,
@@ -151,7 +149,7 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
       return null;
     }
 
-    await _getAndValidateUri(_currentUrl!.trim()).then((uri) {
+    await getAndValidateUri(_currentUrl!.trim()).then((uri) {
       if (uri == null) {
         showSnackBar(i18n(context, 'common_loadfile_exception_url'), context);
         return null;
@@ -225,8 +223,9 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
 
     var content = Column(children: [
       Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-        (!widget.suppressGallery)
-            ? GCWIconButton(
+        (widget.suppressGallery || kIsWeb)
+            ? const SizedBox()
+            : GCWIconButton(
                 icon: Icons.photo_library,
                 iconColor: widget.isDialog ? themeColors().dialogText() : themeColors().mainFont(),
                 size: IconButtonSize.LARGE,
@@ -235,8 +234,7 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
                     _currentMode = OpenFileType.GALLERY;
                   });
                   _buildOpenFromGallery();
-                })
-            : const SizedBox(),
+                }),
         Container(width: widget.suppressGallery ? null : DOUBLE_DEFAULT_MARGIN),
         GCWIconButton(
             icon: Icons.folder,
@@ -293,60 +291,15 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
       ],
     );
   }
-
-  bool _validateContentType(String contentType) {
-    if (widget.supportedFileTypes == null || widget.supportedFileTypes!.isEmpty) return true;
-    for (FileType fileType in widget.supportedFileTypes ?? []) {
-      var mimeTypeList = mimeTypes(fileType);
-      if (mimeTypeList != null && mimeTypeList.contains(contentType)) return true;
-    }
-
-    var _fileName = _currentUrl?.split('?').first;
-    var _urlFileType = _fileName == null ? null : fileTypeByFilename(_fileName);
-
-    if (_urlFileType != null && (widget.supportedFileTypes ?? []).contains(_urlFileType)) {
-      return true;
-    }
-
-    return false;
-  }
-
-  Future<Uri?> _getAndValidateUri(String url) async {
-    const _HTTP = 'http://';
-    const _HTTPS = 'https://';
-
-    var prefixes = [_HTTP, _HTTPS];
-    if (url.startsWith(_HTTP)) {
-      url = url.replaceAll(_HTTP, '');
-    } else if (url.startsWith(_HTTPS)) {
-      prefixes = [''];
-    }
-
-    for (var prefix in prefixes) {
-      try {
-        Uri uri = Uri.parse(prefix + url);
-        var response = await http.head(uri);
-
-        if (response.statusCode ~/ 100 == 2) {
-          var contentType = response.headers[HttpHeaders.contentTypeHeader];
-          if ((contentType != null) && _validateContentType(contentType)) {
-            return uri;
-          } else {
-            showSnackBar(i18n(context, 'common_loadfile_exception_supportedfiletype'), context);
-          }
-        }
-      } catch (e) {}
-    }
-
-    return null;
-  }
 }
 
 void showOpenFileDialog(BuildContext context, List<FileType> supportedFileTypes, void Function(GCWFile?) onLoaded) {
+  var text_style = gcwDialogTextStyle();
   showGCWDialog(
       context,
       i18n(context, 'common_loadfile_showopen'),
       Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           GCWOpenFile(
             supportedFileTypes: supportedFileTypes,
@@ -357,20 +310,49 @@ void showOpenFileDialog(BuildContext context, List<FileType> supportedFileTypes,
               Navigator.of(context).pop();
             },
           ),
+          GCWText(
+            text: i18n(context, 'common_exportfile_supported_formats') +':',
+            style: text_style),
+          GCWText(
+            text: supportedFileTypes.map((element) => element.name).toList().join(', '),
+            style: text_style),
         ],
       ),
       []);
 }
 
-Future<Uint8ListText?> _downloadFileAsync(GCWAsyncExecuterParameters? jobData) async {
+Future<Uri?> getAndValidateUri(String url) async {
+  const _HTTP = 'http://';
+  const _HTTPS = 'https://';
+
+  if (url.startsWith(_HTTP) || url.startsWith(_HTTPS)) {
+  } else {
+    url = _HTTPS + url;
+  }
+  return Future<Uri?>.value(Uri.parse(url));
+}
+
+const _PROXY_SERVER  = 'https://corsproxy.io/?';
+Future<Uint8ListText?> downloadFileAsync(GCWAsyncExecuterParameters? jobData) async {
   if (jobData?.parameters is! Uri) return null;
+
+  SendPort? sendAsyncPort = jobData?.sendAsyncPort;
+  Uri? uri = jobData!.parameters as Uri;
+  
+  var result = await _downloadWithStream(uri, sendAsyncPort);
+  if (result.text.isNotEmpty) result = await _downloadWithProxyStream(uri, sendAsyncPort);
+  if (result.text.isNotEmpty) result = await _downloadWithGet(uri, sendAsyncPort);
+  if (result.text.isNotEmpty) result = await _downloadWithGetProxy(uri, sendAsyncPort);
+
+  sendAsyncPort?.send(result);
+  return Future.value(result);
+}
+
+Future<Uint8ListText> _downloadWithStream(Uri uri, SendPort? sendAsyncPort) async {
   int _total = 0;
   int _received = 0;
   List<int> _bytes = [];
-  SendPort? sendAsyncPort = jobData?.sendAsyncPort;
-  Uri? uri = jobData!.parameters as Uri;
   var result = Uint8ListText('', Uint8List.fromList(_bytes));
-
   var request = http.Request("GET", uri);
   var client = http.Client();
 
@@ -385,46 +367,65 @@ Future<Uint8ListText?> _downloadFileAsync(GCWAsyncExecuterParameters? jobData) a
         _total = response.contentLength ?? 0;
         int progressStep = max(_total ~/ 100, 1);
 
-        response.stream.listen(
-          (value) async {
-            _bytes.addAll(value);
+        await for (final value in response.stream) {
+          _bytes.addAll(value);
 
-            if (_total != 0 &&
-                sendAsyncPort != null &&
-                (_received % progressStep > (_received + value.length) % progressStep)) {
-              sendAsyncPort.send(DoubleText(PROGRESS, (_received + value.length) / _total));
-            }
-            _received += value.length;
-          },
-          onDone: () {
-            if (_bytes.isEmpty) {
-              result = Uint8ListText('common_loadfile_exception_nofile', Uint8List(0));
-            } else {
-              sendAsyncPort?.send(Uint8ListText('', Uint8List.fromList(_bytes)));
-              result = Uint8ListText('', Uint8List.fromList(_bytes));
-            }
-          },
-        );
+          if (_total != 0 &&
+              sendAsyncPort != null &&
+              (_received % progressStep > (_received + value.length) % progressStep)) {
+            sendAsyncPort.send(DoubleText(PROGRESS, (_received + value.length) / _total));
+          }
+          _received += value.length;
+        }
+        if (_bytes.isEmpty) {
+          result = Uint8ListText('common_loadfile_exception_nofile', Uint8List(0));
+        } else {
+          result = Uint8ListText('', Uint8List.fromList(_bytes));
+        }
       }
       return response;
     });
   } on TimeoutException catch (_) {
     result = Uint8ListText('common_loadfile_exception_responsestatus', Uint8List(0));
-  } on SocketException catch (_) {
+  } catch (_) {
     result = Uint8ListText('common_loadfile_exception_nofile', Uint8List(0));
   }
+  return result;
+}
 
-// ToDo only working with AsyncPort (await not working)
-  if (result.text.isNotEmpty) {
-    sendAsyncPort?.send(result);
+Future<Uint8ListText> _downloadWithGet(Uri uri, SendPort? sendAsyncPort) async {
+  var result = Uint8ListText('',  Uint8List(0));
+  var client = http.Client();
+
+  try {
+    var response = await client.get(uri);
+    if (response.statusCode != 200) {
+      result = Uint8ListText('common_loadfile_exception_responsestatus', Uint8List(0));
+    } else {
+      result = Uint8ListText('', response.bodyBytes);
+    }
+  } on TimeoutException catch (_) {
+    result = Uint8ListText('common_loadfile_exception_responsestatus', Uint8List(0));
+  } catch (_) {
+    result = Uint8ListText('common_loadfile_exception_nofile', Uint8List(0));
   }
-  return Future.value(result);
+  return result;
+}
+
+Future<Uint8ListText> _downloadWithGetProxy(Uri uri, SendPort? sendAsyncPort) async {
+  var proxyUri = Uri.parse(_PROXY_SERVER + uri.toString());
+
+  return _downloadWithGet(proxyUri, sendAsyncPort);
+}
+
+Future<Uint8ListText> _downloadWithProxyStream(Uri uri, SendPort? sendAsyncPort) async {
+  var proxyUri = Uri.parse(_PROXY_SERVER + uri.toString());
+
+  return _downloadWithStream(proxyUri, sendAsyncPort);
 }
 
 /// Open File Picker dialog
-///
 /// Returns null if nothing was selected.
-///
 Future<GCWFile?> openFileExplorer({List<FileType>? allowedFileTypes}) async {
   try {
      var files = (await filePicker.FilePicker.platform.pickFiles(

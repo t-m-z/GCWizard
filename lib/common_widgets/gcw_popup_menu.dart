@@ -14,14 +14,14 @@ class GCWPopupMenu extends StatefulWidget {
   final Color? iconColor;
   final Color? backgroundColor;
   final bool isTextSelectionToolBarButton;
-  final EdgeInsets? textSelectionToolBarButtonPadding;
+  final EdgeInsetsGeometry? textSelectionToolBarButtonPadding;
   final String? textSelectionToolBarButtonLabel;
   final bool? buttonNoBorder;
 
   final Function? onBeforePressed;
 
   const GCWPopupMenu({
-    Key? key,
+    super.key,
     required this.menuItemBuilder,
     this.icon,
     this.customIcon,
@@ -34,7 +34,7 @@ class GCWPopupMenu extends StatefulWidget {
     this.textSelectionToolBarButtonPadding,
     this.textSelectionToolBarButtonLabel,
     this.buttonNoBorder,
-  }) : super(key: key);
+  });
 
   @override
   _GCWPopupMenuState createState() => _GCWPopupMenuState();
@@ -142,7 +142,12 @@ Row iconedGCWPopupMenuItem(BuildContext context, IconData icon, String title,
         ),
         onLongPress: () => onLongPress,
       ),
-      Text(i18n(context, title, ifTranslationNotExists: title), style: TextStyle(color: themeColors().dialogText()))
+      Expanded(
+        child: Text(i18n(context, title, ifTranslationNotExists: title),
+          style: TextStyle(color: themeColors().dialogText()),
+          softWrap: true,
+        )
+      )
     ],
   );
 }

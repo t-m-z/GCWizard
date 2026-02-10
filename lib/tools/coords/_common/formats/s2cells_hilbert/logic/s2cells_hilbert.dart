@@ -1,18 +1,18 @@
 import 'dart:math';
 
 import 'package:fixnum/fixnum.dart';
-import 'package:gc_wizard/utils/string_utils.dart';
-import 'package:latlong2/latlong.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_constants.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
+import 'package:gc_wizard/utils/string_utils.dart';
+import 'package:latlong2/latlong.dart';
 
+part 'package:gc_wizard/tools/coords/_common/formats/s2cells_hilbert/logic/external_libs/google.s2-geometry-library-java/s2-geometry-library-java.dart';
 part 'package:gc_wizard/tools/coords/_common/formats/s2cells_hilbert/logic/external_libs/google.s2-geometry-library-java/s2-geometry-library-java/s2.dart';
 part 'package:gc_wizard/tools/coords/_common/formats/s2cells_hilbert/logic/external_libs/google.s2-geometry-library-java/s2-geometry-library-java/s2cellid.dart';
 part 'package:gc_wizard/tools/coords/_common/formats/s2cells_hilbert/logic/external_libs/google.s2-geometry-library-java/s2-geometry-library-java/s2latlng.dart';
 part 'package:gc_wizard/tools/coords/_common/formats/s2cells_hilbert/logic/external_libs/google.s2-geometry-library-java/s2-geometry-library-java/s2point.dart';
 part 'package:gc_wizard/tools/coords/_common/formats/s2cells_hilbert/logic/external_libs/google.s2-geometry-library-java/s2-geometry-library-java/s2projections.dart';
-part 'package:gc_wizard/tools/coords/_common/formats/s2cells_hilbert/logic/external_libs/google.s2-geometry-library-java/s2-geometry-library-java.dart';
 
 const defaultS2CellsHilbertType = CoordinateFormatKey.S2CELLS_HILBERT_QUADRATIC;
 const s2CellsHilbertKey = 'coords_s2cellshilbert';
@@ -50,7 +50,7 @@ class S2CellsHilbertCoordinate extends BaseCoordinateWithSubtypes {
   }
 
   @override
-  LatLng toLatLng() {
+  LatLng? toLatLng() {
     return _s2CellsHilbertToLatLng(this);
   }
 
@@ -93,7 +93,8 @@ S2CellsHilbertCoordinate _latLonToS2CellsHilbert(LatLng coord, CoordinateFormatK
   return S2CellsHilbertCoordinate(token, subtype);
 }
 
-LatLng _s2CellsHilbertToLatLng(S2CellsHilbertCoordinate s2cells) {
+LatLng? _s2CellsHilbertToLatLng(S2CellsHilbertCoordinate s2cells) {
+  if (s2cells.token.isEmpty) return null;
   return _s2cellsToLatLng(s2cells.token, projection: _subtypeToProjection(s2cells.format.subtype!));
 }
 

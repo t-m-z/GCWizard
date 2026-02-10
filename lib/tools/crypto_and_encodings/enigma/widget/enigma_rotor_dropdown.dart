@@ -6,8 +6,7 @@ class EnigmaRotorDropDown extends StatefulWidget {
   final int position;
 
   const EnigmaRotorDropDown(
-      {Key? key, required this.position, this.type = EnigmaRotorType.STANDARD, required this.onChanged})
-      : super(key: key);
+      {super.key, required this.position, this.type = EnigmaRotorType.STANDARD, required this.onChanged});
 
   @override
   _EnigmaRotorDropDownState createState() => _EnigmaRotorDropDownState();
@@ -32,8 +31,6 @@ class _EnigmaRotorDropDownState extends State<EnigmaRotorDropDown> {
       case EnigmaRotorType.REFLECTOR:
         _currentRotor = defaultRotorReflector;
         break;
-      default:
-        _currentRotor = '';
     }
   }
 

@@ -1,10 +1,10 @@
 import 'dart:convert';
-import 'dart:typed_data';
 import 'dart:ui' as ui;
 
 import 'package:archive/archive.dart';
 import 'package:archive/archive_io.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/tools/symbol_tables/_common/logic/symbol_table_data_specialsorts.dart';
 import 'package:gc_wizard/utils/data_type_utils/object_type_utils.dart';
@@ -14,6 +14,7 @@ import 'package:gc_wizard/utils/json_utils.dart';
 part 'package:gc_wizard/tools/symbol_tables/_common/logic/common_symbols.dart';
 
 const SYMBOLTABLES_ASSETPATH = 'lib/tools/symbol_tables/_common/assets/';
+const MAX_PARALLEL_LOADS = 5;
 
 class SymbolTableConstants {
   static final IMAGE_SUFFIXES = RegExp(r'\.(png|jpg|bmp|gif)', caseSensitive: false);
@@ -58,19 +59,20 @@ class _SymbolTableConfig {
 }
 
 class SymbolTableData {
-  final BuildContext _context;
   final String symbolKey;
 
-  SymbolTableData(this._context, this.symbolKey);
+  SymbolTableData(this.symbolKey);
 
   final _config = _SymbolTableConfig();
   List<Map<String, SymbolData>> images = [];
   int maxSymbolTextLength = 0;
 
-  Future<void> initialize({bool importEncryption = true}) async {
-    await _loadConfig();
-    await _initializeImages(importEncryption);
-  }
+  Future<void> initialize(BuildContext context, {bool importEncryption = true}) async {
+    if (images.isEmpty) {
+      await _loadConfig(context);
+      await _initializeImages(context, importEncryption);
+    }
+   }
 
   Size? imageSize() {
     return images.first.values.first.imageSize();
@@ -84,10 +86,10 @@ class SymbolTableData {
     return SYMBOLTABLES_ASSETPATH + symbolKey + '/';
   }
 
-  Future<void> _loadConfig() async {
+  Future<void> _loadConfig(BuildContext context) async {
     String? file;
     try {
-      file = await DefaultAssetBundle.of(_context).loadString(_pathKey() + SymbolTableConstants.CONFIG_FILENAME);
+      file = await DefaultAssetBundle.of(context).loadString(_pathKey() + SymbolTableConstants.CONFIG_FILENAME);
     } catch (e) {}
 
     file ??= '{}';
@@ -139,7 +141,7 @@ class SymbolTableData {
     }
   }
 
-  String _createKey(String filename) {
+  String _createKey(BuildContext context, String filename) {
     var imageKey = filenameWithoutSuffix(filename);
     imageKey = imageKey.replaceAll(RegExp(r'(^_*|_*$)'), '');
 
@@ -151,9 +153,9 @@ class SymbolTableData {
       key = _COMMON_SYMBOLS[imageKey]!;
     } else if ((_config.translate.contains(imageKey))) {
       if (_config.translationPrefix.isNotEmpty) {
-        key = i18n(_context, _config.translationPrefix + imageKey);
+        key = i18n(context, _config.translationPrefix + imageKey);
       } else {
-        key = i18n(_context, 'symboltables_' + symbolKey + '_' + imageKey);
+        key = i18n(context, 'symboltables_' + symbolKey + '_' + imageKey);
       }
       setTranslateable = true;
     } else {
@@ -171,12 +173,12 @@ class SymbolTableData {
     return key;
   }
 
-  Future<void> _initializeImages(bool importEncryption) async {
+  Future<void> _initializeImages(BuildContext context, bool importEncryption) async {
     //AssetManifest.json holds the information about all asset files
-    final manifestContent = await DefaultAssetBundle.of(_context).loadString('AssetManifest.json');
-    final manifestMap = asJsonMap(json.decode(manifestContent));
+    final manifestContent = await AssetManifest.loadFromAssetBundle(rootBundle);
+    final assets = manifestContent.listAssets();
 
-    final imageArchivePaths = manifestMap.keys
+    final imageArchivePaths = assets
         .where((String key) => key.contains(_pathKey()))
         .where((String key) => SymbolTableConstants.ARCHIVE_SUFFIX.hasMatch(key))
         .toList();
@@ -184,26 +186,24 @@ class SymbolTableData {
     if (imageArchivePaths.isEmpty) return;
 
     // Read the Zip file from disk.
-    final bytes = await DefaultAssetBundle.of(_context)
+    final bytes = await DefaultAssetBundle.of(context)
         .load(imageArchivePaths.firstWhere((path) => !path.contains('_encryption')));
-    InputStream input = InputStream(bytes.buffer.asByteData());
     // Decode the Zip file
-    final Archive archive = ZipDecoder().decodeBuffer(input);
+    final archive = extractZipArchive(bytes.buffer.asUint8List());
 
     Archive? encryptionArchive;
     if (importEncryption) {
       ByteData encryptionBytes;
       var encryptionImageArchivePaths = imageArchivePaths.where((path) => path.contains('_encryption')).toList();
       if (encryptionImageArchivePaths.isNotEmpty) {
-        encryptionBytes = await DefaultAssetBundle.of(_context).load(encryptionImageArchivePaths.first);
-        input = InputStream(encryptionBytes.buffer.asByteData());
-        encryptionArchive = ZipDecoder().decodeBuffer(input);
+        encryptionBytes = await DefaultAssetBundle.of(context).load(encryptionImageArchivePaths.first);
+        encryptionArchive = extractZipArchive(encryptionBytes.buffer.asUint8List());
       }
     }
 
     images = [];
     for (ArchiveFile file in archive) {
-      var key = _createKey(file.name);
+      var key = _createKey(context, file.name);
 
       if (_config.ignore.contains(key)) continue;
 
@@ -279,5 +279,5 @@ String filenameWithoutSuffix(String filename) {
 }
 
 class defaultSymbolTableData extends SymbolTableData {
-  defaultSymbolTableData(BuildContext context) : super(context, '');
+  defaultSymbolTableData() : super('');
 }

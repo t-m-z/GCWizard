@@ -23,7 +23,7 @@ import 'package:gc_wizard/utils/ui_dependent_utils/image_utils/image_utils.dart'
 class QrCode extends StatefulWidget {
   final GCWFile? file;
 
-  const QrCode({Key? key, this.file}) : super(key: key);
+  const QrCode({super.key, this.file});
 
   @override
   _QrCodeState createState() => _QrCodeState();
@@ -127,7 +127,7 @@ class _QrCodeState extends State<QrCode> {
                 : GCWIconButton(
                     icon: Icons.save,
                     size: IconButtonSize.SMALL,
-                    iconColor: _outDataEncrypt == null ? themeColors().inActive() : null,
+                    iconColor: _outDataEncrypt == null ? themeColors().inactive() : null,
                     onPressed: () {
                       _outDataEncrypt == null ? null : _exportFile(context, _outDataEncrypt!);
                     },

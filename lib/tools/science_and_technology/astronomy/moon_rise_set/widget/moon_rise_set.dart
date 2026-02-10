@@ -11,14 +11,14 @@ import 'package:gc_wizard/utils/complex_return_types.dart';
 import 'package:gc_wizard/utils/datetime_utils.dart';
 
 class MoonRiseSet extends StatefulWidget {
-  const MoonRiseSet({Key? key}) : super(key: key);
+  const MoonRiseSet({super.key});
 
   @override
   _MoonRiseSetState createState() => _MoonRiseSetState();
 }
 
 class _MoonRiseSetState extends State<MoonRiseSet> {
-  var _currentDateTime = DateTimeTimezone(datetime: DateTime.now(), timezone: DateTime.now().timeZoneOffset);
+  var _currentDateTime = DateTimeTZ.now();
   var _currentCoords = defaultBaseCoordinate;
 
   @override

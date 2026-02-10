@@ -1,17 +1,10 @@
 part of 'package:gc_wizard/common_widgets/color_pickers/gcw_colors.dart';
 
-class GCWColorValue {
-  ColorSpaceKey colorSpace;
-  GCWBaseColor color;
-
-  GCWColorValue(this.colorSpace, this.color);
-}
-
 class _GCWColorValuesPicker extends StatefulWidget {
   final void Function(GCWColorValue) onChanged;
   final GCWColorValue colorsValue;
 
-  const _GCWColorValuesPicker({Key? key, required this.onChanged, required this.colorsValue}) : super(key: key);
+  const _GCWColorValuesPicker({required this.onChanged, required this.colorsValue});
 
   @override
   _GCWColorValuesPickerState createState() => _GCWColorValuesPickerState();

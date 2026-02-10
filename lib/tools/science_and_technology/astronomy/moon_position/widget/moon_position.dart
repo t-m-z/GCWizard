@@ -13,14 +13,14 @@ import 'package:gc_wizard/utils/datetime_utils.dart';
 import 'package:intl/intl.dart';
 
 class MoonPosition extends StatefulWidget {
-  const MoonPosition({Key? key}) : super(key: key);
+  const MoonPosition({super.key});
 
   @override
   _MoonPositionState createState() => _MoonPositionState();
 }
 
 class _MoonPositionState extends State<MoonPosition> {
-  var _currentDateTime = DateTimeTimezone(datetime: DateTime.now(), timezone: DateTime.now().timeZoneOffset);
+  var _currentDateTime = DateTimeTZ.now();
   var _currentCoords = defaultBaseCoordinate;
 
   @override

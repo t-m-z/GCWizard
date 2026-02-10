@@ -1,4 +1,4 @@
-/***********************************************************************
+/*
     Dart port of Java implementation of
     ======================
     GeographicLib
@@ -9,7 +9,7 @@
  * https://geographiclib.sourceforge.io/
  * https://sourceforge.net/projects/geographiclib/
 
- **********************************************************************/
+*/
 part of 'package:gc_wizard/tools/coords/_common/logic/external_libs/karney.geographic_lib/geographic_lib.dart';
 
 /*
@@ -63,6 +63,7 @@ class _GeodesicMask {
   /*
    * All of the above, the "standard" output and capabilities.
    **********************************************************************/
+  // ignore: unused_field
   static const int STANDARD = LATITUDE | LONGITUDE | AZIMUTH | DISTANCE;
   /*
    * Allow distance <i>s12</i> to be used as <i>input</i> in the direct

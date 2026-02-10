@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/app_builder.dart';
 import 'package:gc_wizard/application/settings/logic/preferences.dart';
@@ -254,6 +255,12 @@ void _initDefaultSettings(PreferencesInitMode mode, {String reinitSinglePreferen
     refreshMultiDecoderTools();
   }
 
+  if (reinitSinglePreference == PREFERENCE_RANDOMIZER_LISTS ||
+      _reinitAll ||
+      Prefs.get(PREFERENCE_RANDOMIZER_LISTS) == null) {
+    Prefs.setString(PREFERENCE_RANDOMIZER_LISTS, '{}');
+  }
+
   if (reinitSinglePreference == PREFERENCE_SYMBOLTABLES_COUNTCOLUMNS_PORTRAIT ||
       _reinitAll ||
       Prefs.get(PREFERENCE_SYMBOLTABLES_COUNTCOLUMNS_PORTRAIT) == null) {
@@ -269,19 +276,19 @@ void _initDefaultSettings(PreferencesInitMode mode, {String reinitSinglePreferen
   if (reinitSinglePreference == PREFERENCE_TABS_USE_DEFAULT_TAB ||
       _reinitAll ||
       Prefs.get(PREFERENCE_TABS_USE_DEFAULT_TAB) == null) {
-    Prefs.setBool(PREFERENCE_TABS_USE_DEFAULT_TAB, false);
+    Prefs.setBool(PREFERENCE_TABS_USE_DEFAULT_TAB, kIsWeb);
   }
 
   if (reinitSinglePreference == PREFERENCE_TABS_DEFAULT_TAB ||
       _reinitAll ||
       Prefs.get(PREFERENCE_TABS_DEFAULT_TAB) == null) {
-    Prefs.setInt(PREFERENCE_TABS_DEFAULT_TAB, 2);
+      Prefs.setInt(PREFERENCE_TABS_DEFAULT_TAB, kIsWeb ? 0: 2);
   }
 
   if (reinitSinglePreference == PREFERENCE_TABS_LAST_VIEWED_TAB ||
       _reinitAll ||
       Prefs.get(PREFERENCE_TABS_LAST_VIEWED_TAB) == null) {
-    Prefs.setInt(PREFERENCE_TABS_LAST_VIEWED_TAB, 2);
+    Prefs.setInt(PREFERENCE_TABS_LAST_VIEWED_TAB, _favorites.isEmpty ? 0 : 2);
   }
 
   if (reinitSinglePreference == PREFERENCE_THEME_COLOR || _reinitAll ||

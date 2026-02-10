@@ -9,7 +9,7 @@ import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/tools/science_and_technology/spelling_alphabets/_common/spelling_alphabets_data.dart';
 
 class SpellingAlphabetsList extends StatefulWidget {
-  const SpellingAlphabetsList({Key? key}) : super(key: key);
+  const SpellingAlphabetsList({super.key});
 
   @override
   SpellingAlphabetsListState createState() => SpellingAlphabetsListState();
@@ -63,11 +63,11 @@ class SpellingAlphabetsListState extends State<SpellingAlphabetsList> {
   }
 
   Widget _buildOutput(BuildContext context) {
-    Map<String, String> spellingOverview = <String, String>{};
+    var spellingOverview = <MapEntry<String, String>>[];
     spellingOverview = SPELLING_ALPHABETS[_currentLanguage]!;
     return GCWDefaultOutput(
       child: GCWColumnedMultilineOutput(
-        data: spellingOverview.entries.map((entry) {
+        data: spellingOverview.map((entry) {
           return [entry.key, entry.value];
         }).toList(),
         flexValues: const [1, 3],

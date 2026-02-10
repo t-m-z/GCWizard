@@ -37,7 +37,7 @@ void main() {
 
   group("DNA.decodeRNANucleobaseSequenceWithStop:", () {
     List<Map<String, Object?>> _inputsToExpected = [
-      {'expectedOutput' : [NucleobaseSequenceType.STOP, NucleobaseSequenceType.NORMAL, NucleobaseSequenceType.START], 'input' : 'UAACACGUG'},
+      {'expectedOutput' : [NucleobaseSequenceType.STOP, NucleobaseSequenceType.NORMAL, NucleobaseSequenceType.START], 'input' : 'UAACACAUG'},
     ];
 
     for (var elem in _inputsToExpected) {

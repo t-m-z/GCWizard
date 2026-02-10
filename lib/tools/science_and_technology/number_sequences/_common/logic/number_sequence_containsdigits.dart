@@ -102,9 +102,9 @@ PositionOfSequenceOutput numberSequencesGetFirstPositionOfSequence(
         while (!numberString.substring(j).startsWith(check)) {
           j++;
         }
-        return PositionOfSequenceOutput(numberString, index, (j + 1));
+        return PositionOfSequenceOutput(numberString, index + 1, (j + 1));
       }
-      index = index + 1;
+      index++;
     }
   } else if (sequence == NumberSequencesMode.FIBONACCI) {
     pn0 = Zero;
@@ -116,7 +116,7 @@ PositionOfSequenceOutput numberSequencesGetFirstPositionOfSequence(
       return PositionOfSequenceOutput('1', 1, 1);
     } else {
       index = 2;
-      while ((index <= maxIndex) && (BigInt.parse(check) > number)) {
+      while (index <= maxIndex) {
         number = pn1 + pn0;
         pn0 = pn1;
         pn1 = number;
@@ -126,9 +126,9 @@ PositionOfSequenceOutput numberSequencesGetFirstPositionOfSequence(
           while (!numberString.substring(j).startsWith(check)) {
             j++;
           }
-          return PositionOfSequenceOutput(numberString, index, j + 1);
+          return PositionOfSequenceOutput(numberString, index + 1, j + 1);
         }
-        index = index + 1;
+        index++;
       }
     }
   } else if (sequence == NumberSequencesMode.PELL) {
@@ -141,7 +141,7 @@ PositionOfSequenceOutput numberSequencesGetFirstPositionOfSequence(
       return PositionOfSequenceOutput('1', 1, 1);
     } else {
       index = 2;
-      while ((index <= maxIndex) && (BigInt.parse(check) > number)) {
+      while (index <= maxIndex) {
         number = Two * pn1 + pn0;
         pn0 = pn1;
         pn1 = number;
@@ -151,9 +151,9 @@ PositionOfSequenceOutput numberSequencesGetFirstPositionOfSequence(
           while (!numberString.substring(j).startsWith(check)) {
             j++;
           }
-          return PositionOfSequenceOutput(numberString, index, j + 1);
+          return PositionOfSequenceOutput(numberString, index + 1, j + 1);
         }
-        index = index + 1;
+        index++;
       }
     }
   } else if (sequence == NumberSequencesMode.PELL_LUCAS) {
@@ -164,7 +164,7 @@ PositionOfSequenceOutput numberSequencesGetFirstPositionOfSequence(
     pn1 = Two;
     number = pn1;
     index = 2;
-    while ((index <= maxIndex) && (BigInt.parse(check) > number)) {
+    while (index <= maxIndex) {
       number = Two * pn1 + pn0;
       pn0 = pn1;
       pn1 = number;
@@ -174,30 +174,30 @@ PositionOfSequenceOutput numberSequencesGetFirstPositionOfSequence(
         while (!numberString.substring(j).startsWith(check)) {
           j++;
         }
-        return PositionOfSequenceOutput(numberString, index, j + 1);
+        return PositionOfSequenceOutput(numberString, index + 1, j + 1);
       }
-      index = index + 1;
+      index++;
     }
   } else if (sequence == NumberSequencesMode.LUCAS) {
     pn0 = Two;
     pn1 = One;
     if (check == Two.toString()) {
       return PositionOfSequenceOutput('2', 0, 1);
-    } else if ((check == One.toString())) {
+    } else if (check == One.toString()) {
       return PositionOfSequenceOutput('1', 1, 1);
     } else {
       index = 1;
       number = Three;
-      while ((index <= maxIndex) && (BigInt.parse(check) > number)) {
+      while (index <= maxIndex) {
         numberString = number.toString();
         if (expr.hasMatch(numberString)) {
           int j = 0;
           while (!numberString.substring(j).startsWith(check)) {
             j++;
           }
-          return PositionOfSequenceOutput(numberString, index, j + 1);
+          return PositionOfSequenceOutput(numberString, index + 1, j + 1);
         }
-        index = index + 1;
+        index++;
         number = pn1 + pn0;
         pn0 = pn1;
         pn1 = number;
@@ -210,7 +210,7 @@ PositionOfSequenceOutput numberSequencesGetFirstPositionOfSequence(
     int pn0 = 0;
     int number = 0;
     recamanSequence.add(0);
-    while ((index <= maxIndex) && (BigInt.parse(check) > BigInt.from(number))) {
+    while (index <= maxIndex) {
       if (index == 0) {
         number = 0;
       } else if ((pn0 - index) > 0 && !recamanSequence.contains(pn0 - index)) {
@@ -226,9 +226,9 @@ PositionOfSequenceOutput numberSequencesGetFirstPositionOfSequence(
         while (!numberString.substring(j).startsWith(check)) {
           j++;
         }
-        return PositionOfSequenceOutput(numberString, index, j + 1);
+        return PositionOfSequenceOutput(numberString, index + 1, j + 1);
       }
-      index = index + 1;
+      index++;
     }
   } else if (sequence == NumberSequencesMode.FACTORIAL) {
     number = One;
@@ -238,7 +238,7 @@ PositionOfSequenceOutput numberSequencesGetFirstPositionOfSequence(
       return PositionOfSequenceOutput('1', 1, 1);
     } else {
       index = 2;
-      while ((index <= maxIndex) && (BigInt.parse(check) > number)) {
+      while (index <= maxIndex) {
         number = number * BigInt.from(index);
         numberString = number.toString();
         if (expr.hasMatch(numberString)) {
@@ -246,32 +246,9 @@ PositionOfSequenceOutput numberSequencesGetFirstPositionOfSequence(
           while (!numberString.substring(j).startsWith(check)) {
             j++;
           }
-          return PositionOfSequenceOutput(numberString, index, j + 1);
+          return PositionOfSequenceOutput(numberString, index + 1, j + 1);
         }
-        index = index + 1;
-      }
-    }
-  } else if (sequence == NumberSequencesMode.BELL) {
-    List<BigInt> bellList = <BigInt>[];
-    if (check == Zero.toString()) {} else {
-      while ((index <= maxIndex) && (BigInt.parse(check) > number)) {
-        if (index == 0) {
-          number = One;
-        } else {
-          for (int k = 0; k <= index - 1; k++) {
-            number = number + _getBinomialCoefficient(index - 1, k) * bellList[k];
-          }
-        }
-        bellList.add(number);
-        numberString = number.toString();
-        if (expr.hasMatch(numberString)) {
-          int j = 0;
-          while (!numberString.substring(j).startsWith(check)) {
-            j++;
-          }
-          return PositionOfSequenceOutput(numberString, index, j + 1);
-        }
-        index = index + 1;
+        index++;
       }
     }
   } else {
@@ -306,6 +283,12 @@ PositionOfSequenceOutput numberSequencesGetFirstPositionOfSequence(
       case NumberSequencesMode.PERMUTABLE_PRIMES:
         sequenceList.addAll(permutable_primes);
         break;
+      case NumberSequencesMode.MEMORABLE_PRIMES:
+        sequenceList.addAll(memorable_primes);
+        break;
+      case NumberSequencesMode.MEMORABLE_PRIMES_INDEXES:
+        sequenceList.addAll(memorable_primes_indexes);
+        break;
       case NumberSequencesMode.LUCKY_NUMBERS:
         sequenceList.addAll(lucky_numbers);
         break;
@@ -314,6 +297,30 @@ PositionOfSequenceOutput numberSequencesGetFirstPositionOfSequence(
         break;
       case NumberSequencesMode.BUSY_BEAVER:
         sequenceList.addAll(busy_beaver_numbers);
+        break;
+      case NumberSequencesMode.CARMICHAEL:
+        sequenceList.addAll(carmichael_numbers);
+        break;
+      case NumberSequencesMode.HARSHAD:
+        sequenceList.addAll(harshad_numbers);
+        break;
+      case NumberSequencesMode.TAXICAB:
+        sequenceList.addAll(taxicab_numbers);
+        break;
+      case NumberSequencesMode.SPHENIC:
+        sequenceList.addAll(sphenic_numbers);
+        break;
+      case NumberSequencesMode.BELL:
+        sequenceList.addAll(bell_numbers);
+        break;
+      case NumberSequencesMode.LONELY:
+        sequenceList.addAll(lonely_numbers);
+        break;
+      case NumberSequencesMode.PALINDROME_PRIMES:
+        sequenceList.addAll(palindrome_primes);
+        break;
+      case NumberSequencesMode.SUITABLE_NUMBERS:
+        sequenceList.addAll(suitable_numbers);
         break;
       default:
         {}
@@ -324,7 +331,7 @@ PositionOfSequenceOutput numberSequencesGetFirstPositionOfSequence(
         while (!sequenceList[i].substring(j).startsWith(check)) {
           j++;
         }
-        return PositionOfSequenceOutput(sequenceList[i], i, j + 1);
+        return PositionOfSequenceOutput(sequenceList[i], i + 1, j + 1);
       }
     }
   }

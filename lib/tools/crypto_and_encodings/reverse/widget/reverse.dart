@@ -9,7 +9,7 @@ import 'package:gc_wizard/utils/string_utils.dart';
 enum _ReverseMode { ALL, BLOCK, KEEP_BLOCK_ORDER }
 
 class Reverse extends StatefulWidget {
-  const Reverse({Key? key}) : super(key: key);
+  const Reverse({super.key});
 
   @override
   _ReverseState createState() => _ReverseState();
@@ -61,8 +61,6 @@ class _ReverseState extends State<Reverse> {
                 case _ReverseMode.KEEP_BLOCK_ORDER:
                   example = '123 4567 → 321 7654';
                   break;
-                default:
-                  break;
               }
 
               return GCWDropDownMenuItem<_ReverseMode>(
@@ -88,8 +86,6 @@ class _ReverseState extends State<Reverse> {
         return reverseBlocks(_currentInput);
       case _ReverseMode.KEEP_BLOCK_ORDER:
         return reverseKeepBlockOrder(_currentInput);
-      default:
-        return _currentInput;
     }
   }
 }

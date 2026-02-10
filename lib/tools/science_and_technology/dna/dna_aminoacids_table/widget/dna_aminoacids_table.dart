@@ -4,7 +4,7 @@ import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.d
 import 'package:gc_wizard/tools/science_and_technology/dna/logic/dna.dart';
 
 class DNAAminoAcidsTable extends StatefulWidget {
-  const DNAAminoAcidsTable({Key? key}) : super(key: key);
+  const DNAAminoAcidsTable({super.key});
 
   @override
   _DNAAminoAcidsTableState createState() => _DNAAminoAcidsTableState();
@@ -32,7 +32,7 @@ class _DNAAminoAcidsTableState extends State<DNAAminoAcidsTable> {
 
       if (acid.symbolShort == 'M') name += '\n${i18n(context, 'dna_start')}';
 
-      var sequences = acid.nucleobaseSequences;
+      var sequences = List<String>.from(acid.nucleobaseSequences);
       sequences.sort();
 
       return [name, acid.symbolLong ?? '-', acid.symbolShort ?? '-', sequences.join(', ')];

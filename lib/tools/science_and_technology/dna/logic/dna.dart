@@ -9,10 +9,10 @@ class AminoAcid {
   final List<String> nucleobaseSequences;
   final NucleobaseSequenceType type;
 
-  AminoAcid(this.name, this.symbolShort, this.symbolLong, this.nucleobaseSequences, this.type);
+  const AminoAcid(this.name, this.symbolShort, this.symbolLong, this.nucleobaseSequences, this.type);
 }
 
-List<AminoAcid> aminoAcids = [
+const List<AminoAcid> aminoAcids = [
   AminoAcid('dna_aminoacid_phenylalanine', 'F', 'Phe', ['UUC', 'UUU'], NucleobaseSequenceType.NORMAL),
   AminoAcid(
       'dna_aminoacid_leucine', 'L', 'Leu', ['UUA', 'UUG', 'CUU', 'CUC', 'CUA', 'CUG'], NucleobaseSequenceType.NORMAL),
@@ -97,7 +97,7 @@ List<AminoAcid> decodeRNANucleobaseSequence(String input) {
   if (input.isEmpty) return [];
 
   var out = <AminoAcid>[];
-  for (int i = 0; i < input.length; i = i + 3) {
+  for (int i = 0; i < input.length; i += 3) {
     var sequence = input.substring(i, i + 3);
     var aminoAcid = aminoAcidByNucleobaseSequence(sequence);
     if (aminoAcid != null) out.add(aminoAcid);

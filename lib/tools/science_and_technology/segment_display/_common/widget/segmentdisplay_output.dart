@@ -28,7 +28,7 @@ class SegmentDisplayOutput extends StatefulWidget {
   final double? horizontalSymbolPadding;
 
   const SegmentDisplayOutput(
-      {Key? key,
+      {super.key,
       this.upsideDownButton = false,
       required this.segmentFunction,
       required this.segments,
@@ -36,8 +36,7 @@ class SegmentDisplayOutput extends StatefulWidget {
       this.trailing,
       this.showZoomButtons = true,
       this.verticalSymbolPadding,
-      this.horizontalSymbolPadding})
-      : super(key: key);
+      this.horizontalSymbolPadding});
 
   @override
   _SegmentDisplayOutputState createState() => _SegmentDisplayOutputState();
@@ -82,7 +81,7 @@ class _SegmentDisplayOutputState extends State<SegmentDisplayOutput> {
               child: GCWIconButton(
                 size: IconButtonSize.SMALL,
                 icon: Icons.save,
-                iconColor: (widget.segments.displays.isEmpty) ? themeColors().inActive() : null,
+                iconColor: (widget.segments.displays.isEmpty) ? themeColors().inactive() : null,
                 onPressed: () async {
                   await buildSegmentDisplayImage(countColumns, _displays, _currentUpsideDown,
                           horizontalPadding: widget.horizontalSymbolPadding,

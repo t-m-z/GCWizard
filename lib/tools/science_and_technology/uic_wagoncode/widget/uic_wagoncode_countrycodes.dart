@@ -8,7 +8,7 @@ import 'package:gc_wizard/tools/science_and_technology/uic_wagoncode/logic/uic_w
 enum _GCWWagonCodesCountryCodesSortBy {NUMBER_CODE, LETTER_CODE, NAME}
 
 class UICWagonCodeCountryCodes extends StatefulWidget {
-  const UICWagonCodeCountryCodes({Key? key}) : super(key: key);
+  const UICWagonCodeCountryCodes({super.key});
 
   @override
   _UICWagonCodeCountryCodesState createState() => _UICWagonCodeCountryCodesState();
@@ -28,9 +28,6 @@ class _UICWagonCodeCountryCodesState extends State<UICWagonCodeCountryCodes> {
         break;
       case _GCWWagonCodesCountryCodesSortBy.NAME:
         out = 'common_name';
-        break;
-      default:
-        out = '';
         break;
     }
 
@@ -72,8 +69,6 @@ class _UICWagonCodeCountryCodesState extends State<UICWagonCodeCountryCodes> {
           return [country.letterCode, name, country.numberCode];
         case _GCWWagonCodesCountryCodesSortBy.NAME:
           return [name, country.numberCode, country.letterCode];
-        default:
-          return <String>[];
       }
     }).toList();
     data.sort((a, b) => a[0].compareTo(b[0]));
@@ -94,8 +89,6 @@ class _UICWagonCodeCountryCodesState extends State<UICWagonCodeCountryCodes> {
       case _GCWWagonCodesCountryCodesSortBy.NAME:
         flexValues = [2, 1, 1];
         data.insert(0, [nameHeader, numberCodeHeader, letterCodeHeader]);
-        break;
-      default:
         break;
     }
 

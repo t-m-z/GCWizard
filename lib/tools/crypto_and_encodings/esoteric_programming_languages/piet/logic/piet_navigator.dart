@@ -76,8 +76,6 @@ class _PietNavigator {
             case _Direction.North:
               exitPoint = Point<int>(exitPoint.x, exitPoint.y - 1);
               break;
-            default:
-              return throw const FormatException('common_programming_error_invalid_opcode');
           }
         }
         // we've crossed the boundary, one step back to be on the edge
@@ -131,9 +129,7 @@ class _PietNavigator {
         block.containsPixel(Point<int>(exitPoint.x, exitPoint.y));
   }
 
-  /// <summary>
   /// Rotates abs(turns) times. In turns is positive rotates clockwise otherwise counter clockwise
-  /// </summary>
   /// <param name="turns">I</param>
   void rotateDirectionPointer(int turns) {
     _direction = _Direction.values[(direction.index + turns) % 4];

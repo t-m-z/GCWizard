@@ -9,7 +9,7 @@ import 'package:gc_wizard/tools/symbol_tables/_common/widget/gcw_symbol_containe
 const _WEATHERSYMBOL_CLASSES = ['ww', 'w', 'a', 'n', 'c', 'cl', 'cm', 'ch'];
 
 class WeatherSymbols extends StatefulWidget {
-  const WeatherSymbols({Key? key}) : super(key: key);
+  const WeatherSymbols({super.key});
 
   @override
   _WeatherSymbolsState createState() => _WeatherSymbolsState();
@@ -29,8 +29,8 @@ class _WeatherSymbolsState extends State<WeatherSymbols> {
 
   Future<void> _initialize() async {
     for (String clazz in _WEATHERSYMBOL_CLASSES) {
-      var symbolTableData = SymbolTableData(context, 'weather_$clazz');
-      await symbolTableData.initialize();
+      var symbolTableData = SymbolTableData('weather_$clazz');
+      await symbolTableData.initialize(context);
 
       _data.putIfAbsent(clazz, () => symbolTableData);
     }

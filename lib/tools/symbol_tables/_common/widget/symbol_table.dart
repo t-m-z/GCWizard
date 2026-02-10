@@ -12,8 +12,7 @@ class SymbolTable extends StatefulWidget {
   final String Function(String)? onEncrypt;
   final bool alwaysIgnoreUnknown;
 
-  const SymbolTable({Key? key, this.symbolKey = '', this.onDecrypt, this.onEncrypt, this.alwaysIgnoreUnknown = false})
-      : super(key: key);
+  const SymbolTable({super.key, this.symbolKey = '', this.onDecrypt, this.onEncrypt, this.alwaysIgnoreUnknown = false});
 
   @override
   _SymbolTableState createState() => _SymbolTableState();
@@ -27,13 +26,13 @@ class _SymbolTableState extends State<SymbolTable> {
   void initState() {
     super.initState();
 
-    _data = defaultSymbolTableData(context);
+    _data = defaultSymbolTableData();
     _initialize();
   }
 
   Future<void> _initialize() async {
-    var symbolTableData = SymbolTableData(context, widget.symbolKey);
-    symbolTableData.initialize().then((value) {
+    var symbolTableData = SymbolTableData( widget.symbolKey);
+    symbolTableData.initialize(context).then((value) {
       setState(() {
         _data = symbolTableData;
       });

@@ -31,9 +31,9 @@ double _modcrs(double crs) {
 double _modpos(double x, double y) {
   /* returns positive remainder of x/y. */
 
-  x = x % y;
+  x %= y;
   if (x < 0.0) {
-    x = x + y;
+    x += y;
   }
   return x;
 }
@@ -126,6 +126,7 @@ _LLPoint _geodeticToGeocentric(_LLPoint pt, Ellipsoid ellipsoid) {
   return newPt;
 }
 
+// ignore: unused_element
 _LLPoint _geocentricToGeodetic(_LLPoint pt, Ellipsoid ellipsoid) {
   _LLPoint newPt = _LLPoint(pt.latitude, pt.longitude);
   newPt.latitude = _geodeticLat(newPt.latitude, ellipsoid);
