@@ -47,8 +47,6 @@ Future<MorseData> PCMamplitudes2Image({
   var width = BOUNDS + RMSperPoint.length + BOUNDS;
   var height = BOUNDS + maxAmplitude + BOUNDS;
 
-  double analyseBar = maxAmplitude - (maxAmplitude - minAmplitude) / 2;
-
   final canvasRecorderPolygon = ui.PictureRecorder();
   final canvasPolygon =
       ui.Canvas(canvasRecorderPolygon, ui.Rect.fromLTWH(0, 0, width, height));
@@ -81,17 +79,37 @@ Future<MorseData> PCMamplitudes2Image({
 
   final path = Path();
 
-  path.moveTo(BOUNDS, _transform(height, BOUNDS, 0));
+  path.moveTo(BOUNDS, _transform(height, BOUNDS, maxAmplitude));
   for (var i = 0; i < RMSperPoint.length; i++) {
     RMSperPoint[i] = RMSperPoint[i] * vScaleFactor;
     path.lineTo(BOUNDS + i, _transform(height, BOUNDS, RMSperPoint[i]));
   }
-  path.lineTo(BOUNDS + RMSperPoint.length, _transform(height, BOUNDS, 0));
+  path.lineTo(BOUNDS + RMSperPoint.length, _transform(height, BOUNDS, maxAmplitude));
+  path.lineTo(BOUNDS, _transform(height, BOUNDS, maxAmplitude));
 
   canvasPolygon.drawPath(path, paint);
 
   paint.style = PaintingStyle.fill;
   canvasRectangle.drawPath(path, paint);
+
+  double analyseBar = maxAmplitude - (maxAmplitude - minAmplitude) / 2;
+
+/*
+  paint.strokeWidth = 2.0;
+  paint.style = PaintingStyle.stroke;
+  paint.color = Colors.green;
+  canvasPolygon.drawLine(
+      Offset(BOUNDS, _transform(height, BOUNDS, minAmplitude)),
+      Offset(width - BOUNDS, _transform(height, BOUNDS, minAmplitude)), paint);
+  paint.color = Colors.red;
+  canvasPolygon.drawLine(
+      Offset(BOUNDS, _transform(height, BOUNDS, maxAmplitude)),
+      Offset(width - BOUNDS, _transform(height, BOUNDS, maxAmplitude)), paint);
+  paint.color = Colors.blue;
+  canvasPolygon.drawLine(
+      Offset(BOUNDS, _transform(height, BOUNDS, analyseBar)),
+      Offset(width - BOUNDS, _transform(height, BOUNDS, analyseBar)), paint);
+  */
 
   final imgPolygon = await canvasRecorderPolygon
       .endRecording()
@@ -138,6 +156,6 @@ bool _isBlack(int r, int g, int b) {
 }
 
 double _transform(double height, double bounds, double y) {
-  return y + bounds;
-  //return height - bounds - y;
+  //return y + bounds;
+  return height - bounds - y;
 }

@@ -278,7 +278,7 @@ class WaveFormState extends State<WaveForm> {
   }
 
   void _decodeMorseData(){
-    if (_currentInvert == GCWSwitchPosition.right) {
+    if (_currentInvert == GCWSwitchPosition.left) {
       _decodedMorse = decodeMorseCode(
         List.filled(_soundfileMorsecode.length, 1),
         _invertMorseCode(_soundfileMorsecode),
