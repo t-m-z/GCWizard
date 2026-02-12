@@ -14,8 +14,6 @@ import 'package:gc_wizard/utils/ui_dependent_utils/text_widget_utils.dart';
 
 part 'about_data.dart';
 
-const _ABOUT_MAINTAINER = 'Thomas \'TMZ\' Zimmermann';
-
 class About extends StatefulWidget {
   const About({super.key});
 
@@ -89,6 +87,7 @@ class _AboutState extends State<About> {
           child: Column(
             children: <Widget>[
               _buildOthersEntries('about_creator', _ABOUT_CREATOR, '\n'),
+              _buildOthersEntries('about_maintainer', _ABOUT_MAINTAINER, '\n'),
             ]
           ),
         ),
