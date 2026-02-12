@@ -1,49 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
-import 'package:gc_wizard/common_widgets/gcw_web_statefulwidget.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/rotation/logic/rotation.dart';
 
-const String _apiSpecification = '''
-{
-  "/rotation_general" : {
-    "alternative_paths": ["rotation", "rot", "rotx"],
-    "get": {
-      "summary": "Rotation Tool",
-      "responses": {
-        "204": {
-          "description": "Tool loaded. No response data."
-        }
-      },
-      "parameters" : [
-        {
-          "in": "query",
-          "name": "input",
-          "required": true,
-          "description": "Input data for rotate text",
-          "schema": {
-            "type": "string"
-          }
-        },
-        {
-          "in": "query",
-          "name": "key",
-          "description": "Shifts the input for n alphabet places",
-          "schema": {
-            "type": "integer",
-            "default": 13
-          }
-        }
-      ]
-    }
-  }
-}
-''';
-
-class RotationWeird extends GCWWebStatefulWidget {
-  RotationWeird({super.key}) : super(apiSpecification: _apiSpecification);
+class RotationWeird extends StatefulWidget {
+  const RotationWeird({super.key});
 
   @override
   _RotationWeirdState createState() => _RotationWeirdState();
@@ -56,18 +18,12 @@ class _RotationWeirdState extends State<RotationWeird> {
   String _currentInput = '';
   String _currentRotate = '';
 
+  final defaultAlphabetAlpha = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  final extendedAlphabetDigits = 'ABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÜß';
+
   @override
   void initState() {
     super.initState();
-
-    if (widget.hasWebParameter()) {
-      _currentInput = widget.getWebParameter('input') ?? _currentInput;
-
-      var key = widget.getWebParameter('key');
-      if (key != null) _currentRotate = key;
-
-      widget.webParameter = null;
-    }
 
     _controller = TextEditingController(text: _currentInput);
     _rotateController = TextEditingController(text: _currentRotate);
@@ -86,7 +42,6 @@ class _RotationWeirdState extends State<RotationWeird> {
         GCWTextField(
           controller: _controller,
           hintText: i18n(context, 'rotation_weird_text'),
-          inputFormatters: [FilteringTextInputFormatter.allow(RegExp('[a-z A-Z]')),],
           onChanged: (text) {
             setState(() {
               _currentInput = text;
@@ -108,38 +63,64 @@ class _RotationWeirdState extends State<RotationWeird> {
     );
   }
 
+  String _rotate(String char, int key, String alphabet) {
+    var alphabetLength = alphabet.length;
+    var index = alphabet.indexOf(char);
+    var newIndex = (index + key) % alphabetLength;
+    return alphabet[newIndex];
+  }
+
   Widget _buildOutput() {
     if (_currentInput.isEmpty) return const GCWDefaultOutput();
-    List<int?> rotateData = _currentRotate.split(' ').map((character) {
-      if (int.tryParse(character) != null){
-        return int.parse(character);
-      }
-    }).toList();
+    if (_currentRotate.isEmpty) return const GCWDefaultOutput();
 
-    _currentInput = _currentInput.replaceAll(' ', '');
-
-    String result = '';
-    if (_currentInput.length != rotateData.length) {
-      if (_currentInput.length > rotateData.length) {
-        result = i18n(context, 'rotation_weird_text_g_rotation');
-      } else {
-        result = i18n(context, 'rotation_weird_text_g_rotation');
-      }
-      return GCWDefaultOutput(
-        child: result,
-      );
+    List<int?> rotateData = [];
+    try {
+      rotateData = _currentRotate.split(' ').map((character) {
+        if (int.tryParse(character) != null){
+          return int.parse(character);
+        }
+      }).toList();
+    } catch (e) {
+      rotateData = [];
     }
 
-    for (int i = 0; i < _currentInput.length; i++){
-      if (i < rotateData.length && rotateData[i] != null) {
-        result = result + Rotator().rotate(_currentInput[i], rotateData[i]!);
+
+    String alphabet = defaultAlphabetAlpha;
+
+    _currentInput = _currentInput.toUpperCase();
+
+    if (_currentInput.contains('Ä') || _currentInput.contains('Ö') || _currentInput.contains('Ü')) {
+      alphabet = extendedAlphabetDigits;
+    }
+
+    String resultAdd = '';
+    String resultSub = '';
+
+    int key = rotateData.length;
+
+    int i = 0;
+    int j = 0;
+    while (i < _currentInput.length) {
+
+      if (alphabet.contains(_currentInput[i])) {
+        resultAdd = resultAdd + _rotate(_currentInput[i], rotateData[j % key]!, alphabet);
+        resultSub = resultSub + _rotate(_currentInput[i], -rotateData[j % key]!, alphabet);
+        j++;
+      } else {
+        resultAdd = resultAdd + _currentInput[i];
+        resultSub = resultSub + _currentInput[i];
       }
+      i++;
     }
 
     return Column(
       children: [
         GCWDefaultOutput(
-          child: result,
+          child: resultAdd,
+        ),
+        GCWDefaultOutput(
+          child: resultSub,
         ),
       ],
     );
