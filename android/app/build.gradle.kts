@@ -10,10 +10,8 @@ plugins {
 
 android {
     namespace = "de.tmz.sman42.gc_wizard.nightly"
-    compileSdk = 35
-    //ndkVersion = flutter.ndkVersion
-    ndkVersion = "27.0.12077973"
-
+    compileSdk = 36
+    ndkVersion = flutter.ndkVersion
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
@@ -22,8 +20,8 @@ android {
     defaultConfig {
         applicationId = "de.tmz.sman42.gc_wizard.nightly"
 
-        minSdk = 21
-        targetSdk = 35
+        minSdk = flutter.minSdkVersion
+        targetSdk = 36
         versionCode = flutter.versionCode
         versionName = flutter.versionName
     }

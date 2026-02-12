@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/_common/gcw_package_info.dart';
 import 'package:gc_wizard/application/category_views/favorites.dart';
-import 'package:gc_wizard/application/category_views/gcc/gcc_view.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/babylon_numbers_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/base_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/bcd_selection.dart';
@@ -51,6 +50,7 @@ import 'package:gc_wizard/application/navigation/no_animation_material_page_rout
 import 'package:gc_wizard/application/registry.dart';
 import 'package:gc_wizard/application/searchstrings/logic/search_strings.dart';
 import 'package:gc_wizard/application/settings/logic/preferences.dart';
+import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
 import 'package:gc_wizard/application/tools/widget/gcw_tool.dart';
 import 'package:gc_wizard/application/tools/widget/gcw_toollist.dart';
@@ -81,7 +81,6 @@ import 'package:gc_wizard/tools/coords/resection/widget/resection.dart';
 import 'package:gc_wizard/tools/coords/rhumb_line/widget/rhumbline_distancebearing.dart';
 import 'package:gc_wizard/tools/coords/rhumb_line/widget/rhumbline_waypoint_projection.dart';
 import 'package:gc_wizard/tools/coords/variable_coordinate/widget/variable_coordinate_formulas.dart';
-import 'package:gc_wizard/tools/coords/what3words/widget/w3w.dart';
 import 'package:gc_wizard/tools/coords/waypoint_projection/widget/waypoint_projection_geodetic.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/abaddon/widget/abaddon.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/adfgvx/widget/adfgvx.dart';
@@ -138,7 +137,6 @@ import 'package:gc_wizard/tools/crypto_and_encodings/language_games/judoon/widge
 import 'package:gc_wizard/tools/crypto_and_encodings/language_games/pig_latin/widget/pig_latin.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/language_games/robber_language/widget/robber_language.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/language_games/spoon_language/widget/spoon_language.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/leetspeak/widget/leetspeak.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/larrabee/widget/larrabee.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/major_system/widget/major_system.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/mexican_army_cipher_wheel/widget/mexican_army_cipher_wheel.dart';
@@ -171,7 +169,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/solitaire/widget/solitaire.
 import 'package:gc_wizard/tools/crypto_and_encodings/straddling_checkerboard/widget/straddling_checkerboard.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/substitution/widget/substitution.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/tap_code/widget/tap_code.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/tapir/widget/tapir.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/nva_substitution_tables/tapir/widget/tapir.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/text_analysis/widget/text_analysis.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/text_analysis/widget/text_analysis_letter_frequencies.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/trifid/widget/trifid.dart';
@@ -193,7 +191,6 @@ import 'package:gc_wizard/tools/games/verbal_arithmetic/widget/verbal_arithmetic
 import 'package:gc_wizard/tools/games/word_search/widget/word_search.dart';
 import 'package:gc_wizard/tools/general_tools/gcwizardscript/widget/gcwizard_script.dart';
 import 'package:gc_wizard/tools/general_tools/randomizer/widget/randomizer_selection.dart';
-import 'package:gc_wizard/tools/images_and_files/adventure_labs/widget/adventure_labs.dart';
 import 'package:gc_wizard/tools/images_and_files/animated_image/widget/animated_image.dart';
 import 'package:gc_wizard/tools/images_and_files/animated_image_morse_code/widget/animated_image_morse_code.dart';
 import 'package:gc_wizard/tools/images_and_files/binary2image/widget/binary2image.dart';
@@ -209,7 +206,6 @@ import 'package:gc_wizard/tools/images_and_files/qr_code/widget/qr_code.dart';
 import 'package:gc_wizard/tools/images_and_files/stegano/widget/stegano.dart';
 import 'package:gc_wizard/tools/images_and_files/tupper_formula/widget/tupper_formula.dart';
 import 'package:gc_wizard/tools/images_and_files/visual_cryptography/widget/visual_cryptography.dart';
-import 'package:gc_wizard/tools/miscellaneous/openai/widget/openai.dart';
 import 'package:gc_wizard/tools/science_and_technology/alcohol_mass/widget/alcohol_mass.dart';
 import 'package:gc_wizard/tools/science_and_technology/alphabet_number_systems/hebrew/widget/hebrew_number_system.dart';
 import 'package:gc_wizard/tools/science_and_technology/alphabet_number_systems/milesian/widget/milesian_number_system.dart';
@@ -312,7 +308,6 @@ import 'package:gc_wizard/tools/science_and_technology/teletypewriter/punchtape/
 import 'package:gc_wizard/tools/science_and_technology/teletypewriter/tts/widget/tts.dart';
 import 'package:gc_wizard/tools/science_and_technology/teletypewriter/z22/widget/z22.dart';
 import 'package:gc_wizard/tools/science_and_technology/teletypewriter/zc1/widget/zc1.dart';
-import 'package:gc_wizard/tools/science_and_technology/triangle/widget/triangle.dart';
 import 'package:gc_wizard/tools/science_and_technology/ufi/widget/ufi.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/widget/unit_converter.dart';
 import 'package:gc_wizard/tools/science_and_technology/velocity_acceleration/widget/velocity_acceleration.dart';
@@ -435,10 +430,9 @@ class _MainViewState extends State<MainView> {
     Favorites.initialize();
 
     var toolList = (_isSearching && _searchText.isNotEmpty) ? _getSearchedList() : null;
-
     if (!(_isSearching && _searchText.isNotEmpty)) {
       return DefaultTabController(
-        length: 4,
+        length: 3,
         initialIndex: Prefs.getBool(PREFERENCE_TABS_USE_DEFAULT_TAB)
             ? Prefs.getInt(PREFERENCE_TABS_DEFAULT_TAB)
             : Prefs.getInt(PREFERENCE_TABS_LAST_VIEWED_TAB),
@@ -449,30 +443,26 @@ class _MainViewState extends State<MainView> {
                 onTap: (value) {
                   Prefs.setInt(PREFERENCE_TABS_LAST_VIEWED_TAB, value);
                 },
-                tabs: [
-                  const Tab(icon: Icon(Icons.category)),
-                  const Tab(icon: Icon(Icons.list)),
-                  const Tab(icon: Icon(Icons.star)),
-                  Tab(
-                    //text: 'GCC',
-                    child: Image.asset(
-                        'lib/application/category_views/gcc/icons/gcc-logo.png',
-                        width: 25,
-                        height: 25),
-                  ),
+                tabs: const [
+                  Tab(icon: Icon(Icons.category)),
+                  Tab(icon: Icon(Icons.list)),
+                  Tab(icon: Icon(Icons.star)),
                 ],
               ),
               leading: _buildIcon(),
               title: _buildTitleAndSearchTextField(),
               actions: <Widget>[_buildSearchActionButton()]),
           drawer: buildMainMenu(context),
-          body: TabBarView(
-            children: [
-              GCWToolList(toolList: toolList ?? _categoryList),
-              GCWToolList(toolList: toolList ?? _mainToolList),
-              GCWToolList(toolList: toolList ?? Favorites.favoritedGCWTools()),
-              const GCCView(),
-            ],
+          body: SafeArea(
+            bottom: true,
+            top: false,
+            child: TabBarView(
+              children: [
+                GCWToolList(toolList: toolList ?? _categoryList),
+                GCWToolList(toolList: toolList ?? _mainToolList),
+                GCWToolList(toolList: toolList ?? Favorites.favoritedGCWTools()),
+              ],
+            ),
           ),
         ),
       );
@@ -487,48 +477,6 @@ class _MainViewState extends State<MainView> {
           drawer: buildMainMenu(context),
           body: GCWToolList(toolList: toolList!));
     }
-
-    /*
-    return DefaultTabController(
-      length: 4,
-      initialIndex: Prefs.getBool(PREFERENCE_TABS_USE_DEFAULT_TAB)
-          ? Prefs.getInt(PREFERENCE_TABS_DEFAULT_TAB)
-          : Prefs.getInt(PREFERENCE_TABS_LAST_VIEWED_TAB),
-      child: Scaffold(
-        key: _scaffoldKey,
-        appBar: AppBar(
-            bottom: TabBar(
-              onTap: (value) {
-                Prefs.setInt(PREFERENCE_TABS_LAST_VIEWED_TAB, value);
-              },
-              tabs: [
-                const Tab(icon: Icon(Icons.category)),
-                const Tab(icon: Icon(Icons.list)),
-                const Tab(icon: Icon(Icons.star)),
-                Tab(
-                  //text: 'GCC',
-                  child: Image.asset(
-                      'lib/application/category_views/gcc/icons/gcc-logo.png',
-                      width: 25,
-                      height: 25),
-                ),
-              ],
-            ),
-            leading: _buildIcon(),
-            title: _buildTitleAndSearchTextField(),
-            actions: <Widget>[_buildSearchActionButton()]),
-        drawer: buildMainMenu(context),
-        body: TabBarView(
-          children: [
-            GCWToolList(toolList: toolList ?? _categoryList),
-            GCWToolList(toolList: toolList ?? _mainToolList),
-            GCWToolList(toolList: toolList ?? Favorites.favoritedGCWTools()),
-            const GCCView(),
-          ],
-        ),
-      ),
-    );
-    */
   }
 
   NoAnimationMaterialPageRoute<GCWTool>? _checkDeepLink() {
@@ -554,23 +502,23 @@ class _MainViewState extends State<MainView> {
   Widget _buildTitleAndSearchTextField() {
     return _isSearching
         ? GCWTextField(
-        autofocus: true,
-        controller: _searchController,
-        icon: Icon(Icons.search, color: themeColors().mainFont()),
-        hintText: i18n(context, 'common_search') + '...',
-        onChanged: (text) {
-          setState(() {
-            _searchText = text;
-          });
-        })
+            key: _searchKey,
+            controller: _searchController,
+            autofocus: true,
+            icon: Icon(Icons.search, color: themeColors().mainFont()),
+            hintText: i18n(context, 'common_search') + '...',
+            onChanged: (text) {
+              setState(() {
+                _searchText = text;
+              });
+            })
         : Text(i18n(context, 'common_app_title'));
   }
 
   IconButton _buildIcon() {
     return IconButton(
         icon: Image.asset(
-          'assets/logo/circle_border_128_tmz_nightly.png',
-          //applogoFilename(),
+          applogoFilename(),
           width: 35.0,
           height: 35.0,
         ),
@@ -578,13 +526,10 @@ class _MainViewState extends State<MainView> {
   }
 
   List<GCWTool> _getSearchedList() {
-    var _sanitizedSearchText = removeAccents(_searchText.toLowerCase())
-        .replaceAll(NOT_ALLOWED_SEARCH_CHARACTERS, '');
-
+    var _sanitizedSearchText = removeAccents(_searchText.toLowerCase()).replaceAll(NOT_ALLOWED_SEARCH_CHARACTERS, '');
     if (_sanitizedSearchText.isEmpty) return <GCWTool>[];
 
-    Set<String> _queryTexts =
-    _sanitizedSearchText.split(REGEXP_SPLIT_STRINGLIST).toSet();
+    Set<String> _queryTexts = _sanitizedSearchText.split(REGEXP_SPLIT_STRINGLIST).toSet();
 
     return registeredTools.where((tool) {
       if (tool.indexedSearchStrings.isEmpty) return false;
@@ -613,7 +558,6 @@ void _initStaticToolList() {
     return [
       className(const Abaddon()),
       className(const ADFGVX()),
-      className(const AdventureLabs()),
       className(const Affine()),
       className(const AlcoholMass()),
       className(const ALGOL()),
@@ -659,7 +603,6 @@ void _initStaticToolList() {
       className(const CentroidCenterOfGravity()),
       className(const Chao()),
       className(const ChappeTelegraph()),
-      className(const OpenAI()),
       className(const CheckDigitsSelection()),
       className(const Chef()),
       className(const ChickenLanguage()),
@@ -709,8 +652,6 @@ void _initStaticToolList() {
       className(const EquilateralTriangle()),
       className(const ESelection()),
       className(const FormatConverter()),
-      className(FormulaSolverFormulaGroups()),
-      className(const FormatConverterW3W()),
       className(FormulaSolverFormulaGroups()),
       className(const FourteenSegments()),
       className(const Fox()),
@@ -765,7 +706,6 @@ void _initStaticToolList() {
       className(const KeyboardSelection()),
       className(Larrabee()),
       className(const LCM()),
-      className(const LeetSpeak()),
       className(const LogicalSupporter()),
       className(const MagicEyeSolver()),
       className(const MajorSystem()),
@@ -878,7 +818,6 @@ void _initStaticToolList() {
       className(const TextAnalysisLetterFrequencies()),
       className(const TimeCalculator()),
       className(const TomTomSelection()),
-      className(const Triangle()),
       className(const TowerOfHanoi()),
       className(const TupperFormula()),
       className(const Trifid()),

@@ -59,7 +59,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/skytale/widget/skytale.dart
 import 'package:gc_wizard/tools/crypto_and_encodings/solitaire/widget/solitaire.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/substitution/widget/substitution.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/tap_code/widget/tap_code.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/tapir/widget/tapir.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/nva_substitution_tables/tapir/widget/tapir.dart';
 import 'package:gc_wizard/tools/formula_solver/widget/formula_solver_formulagroups.dart';
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/heat_index/widget/heat_index.dart';
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/windchill/widget/windchill.dart';
