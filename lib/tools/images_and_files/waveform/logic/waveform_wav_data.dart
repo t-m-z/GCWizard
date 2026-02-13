@@ -549,6 +549,7 @@ AmplitudeData calculateRMSAmplitudes(
 
       if (sample % samplBlocksize == 0) {
         RMSamplitude = sqrt(RMS / sampleRate) * vScalefactor;
+        RMSamplitude = sqrt(RMS) * vScalefactor;
         RMSperPoint.add(RMSamplitude);
         RMS = 0;
 
@@ -565,7 +566,8 @@ AmplitudeData calculateRMSAmplitudes(
       }
     }
   }
-  RMSperPoint.add(sqrt(RMS / sampleRate) * vScalefactor);
+  RMSamplitude = sqrt(RMS) * vScalefactor;
+  RMSperPoint.add(sqrt(RMSamplitude));
 
   List<MapEntry<double, int>> mapEntries = RMSCount.entries.toList();
   mapEntries.sort((a, b) => a.key.compareTo(b.key));

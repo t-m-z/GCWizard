@@ -18,6 +18,7 @@ import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/tools/images_and_files/animated_image_morse_code/logic/animated_image_morse_code.dart';
 import 'package:gc_wizard/tools/images_and_files/hex_viewer/widget/hex_viewer.dart';
 import 'package:gc_wizard/tools/images_and_files/waveform/logic/waveform.dart';
+import 'package:gc_wizard/tools/images_and_files/waveform/logic/waveform_fft.dart';
 import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:gc_wizard/utils/file_utils/gcw_file.dart';
 
@@ -40,16 +41,36 @@ class WaveFormState extends State<WaveForm> {
       structure: [],
       duration: 0.0,
       amplitudesData: Uint8List.fromList([]));
-  AmplitudeData _amplitudesData = AmplitudeData(maxAmplitude: 0.0, minAmplitude: 0.0, Amplitudes: []);
+  AmplitudeData _amplitudesData =
+      AmplitudeData(maxAmplitude: 0.0, minAmplitude: 0.0, Amplitudes: []);
   MorseCodeOutput? _decodedMorse = MorseCodeOutput('', '');
   List<bool> _soundfileMorsecode = [];
 
   int _currentTolerance = 12;
   int _currentBlocksize = 4;
-  final _blocksizes = [1, 2, 4, 8, 16, 32, 64, 128, 256, 384, 441, 512, 1024, 2048];
+  final _blocksizes = [
+    1,
+    2,
+    4,
+    8,
+    16,
+    32,
+    64,
+    128,
+    256,
+    384,
+    441,
+    512,
+    1024,
+    2048
+  ];
 
   GCWSwitchPosition _currentDisplayMode = GCWSwitchPosition.left;
   GCWSwitchPosition _currentInvert = GCWSwitchPosition.left;
+
+  late WavSpectrum _spectrum;
+  late List<double> _rmsTimeline;
+  bool _spectrumCreated = false;
 
   @override
   void initState() {
@@ -73,10 +94,19 @@ class WaveFormState extends State<WaveForm> {
           supportedFileTypes: const [FileType.WAV],
           onLoaded: (_file) {
             if (_file == null) {
-              showSnackBar(i18n(context, 'common_loadfile_exception_notloaded'), context);
+              showSnackBar(i18n(context, 'common_loadfile_exception_notloaded'),
+                  context);
               return;
             }
             _setData(_file.bytes);
+            _spectrum = computeWavSpectrum(_bytes);
+            _rmsTimeline = computeRmsTimeline(
+              _spectrum.magnitudes, // oder wav.samples, je nachdem was du willst
+   windowSize: 1024,
+   hopSize: 256,
+ );
+            _spectrumCreated = true;
+
             _soundfileData = getSoundfileData(_bytes);
             _amplitudesData = calculateRMSAmplitudes(
               PCMformat: _soundfileData.PCMformat,
@@ -107,7 +137,9 @@ class WaveFormState extends State<WaveForm> {
         GCWDropDownSpinner(
           title: i18n(context, 'waveform_settings_waveform_blocksize'),
           index: _currentBlocksize,
-          items: _blocksizes.map((item) => Text(item.toString(), style: gcwTextStyle())).toList(),
+          items: _blocksizes
+              .map((item) => Text(item.toString(), style: gcwTextStyle()))
+              .toList(),
           onChanged: (value) {
             setState(() {
               _currentBlocksize = value;
@@ -144,6 +176,17 @@ class WaveFormState extends State<WaveForm> {
 
   Widget _buildOutputWaveFormImage() {
     return Column(children: [
+      (_spectrumCreated)
+          ? Column(
+              children: [
+                RmsSpectrogramImage(
+   rmsValues: _rmsTimeline,
+   width: 1200,
+   height: 200,
+ )
+              ],
+            )
+          : Container(),
       (_soundfileImagePolygon.isNotEmpty)
           ? GCWExpandableTextDivider(
               text: i18n(context, 'waveform_output_amplitudes_graph'),
@@ -152,25 +195,35 @@ class WaveFormState extends State<WaveForm> {
                 children: <Widget>[
                   GCWTwoOptionsSwitch(
                     value: _currentDisplayMode,
-                      leftValue: i18n(context, 'waveform_output_image_polygon'),
-                      rightValue: i18n(context, 'waveform_output_image_rectangle'),
+                    leftValue: i18n(context, 'waveform_output_image_polygon'),
+                    rightValue:
+                        i18n(context, 'waveform_output_image_rectangle'),
                     onChanged: (value) {
                       setState(() {
                         _currentDisplayMode = value;
                       });
-                    },),
-                  _currentDisplayMode == GCWSwitchPosition.left
-                  ? GCWImageView(
-                    imageData: GCWImageViewData(GCWFile(bytes: _soundfileImagePolygon)),
-                    suppressOpenInTool: const {GCWImageViewOpenInTools.METADATA},
-                  )
-                  : GCWImageView(
-                    imageData: GCWImageViewData(GCWFile(bytes: _soundfileImageRectangle)),
-                    suppressOpenInTool: const {GCWImageViewOpenInTools.METADATA},
+                    },
                   ),
+                  _currentDisplayMode == GCWSwitchPosition.left
+                      ? GCWImageView(
+                          imageData: GCWImageViewData(
+                              GCWFile(bytes: _soundfileImagePolygon)),
+                          suppressOpenInTool: const {
+                            GCWImageViewOpenInTools.METADATA
+                          },
+                        )
+                      : GCWImageView(
+                          imageData: GCWImageViewData(
+                              GCWFile(bytes: _soundfileImageRectangle)),
+                          suppressOpenInTool: const {
+                            GCWImageViewOpenInTools.METADATA
+                          },
+                        ),
                 ],
               ))
-          : GCWOutputText(text: i18n(context, 'waveform_output_image_error'),),
+          : GCWOutputText(
+              text: i18n(context, 'waveform_output_image_error'),
+            ),
     ]);
   }
 
@@ -178,39 +231,42 @@ class WaveFormState extends State<WaveForm> {
     return Column(children: [
       (_soundfileImagePolygon.isNotEmpty)
           ? GCWExpandableTextDivider(
-        text: i18n(context, 'waveform_output_morsecode'),
-        expanded: false,
-        suppressTopSpace: false,
-        child: Column(
-          children: <Widget>[
-            GCWTwoOptionsSwitch(
-                leftValue: i18n(context, 'waveform_output_image_normal'),
-                rightValue: i18n(context, 'waveform_output_image_inverted'),
-                value: _currentInvert,
-                onChanged: (value) {
-                  setState(() {
-                    _currentInvert = value;
-                    _decodeMorseData();
-                    });
-                }),
-            GCWIntegerSpinner(
-              title: i18n(context, 'waveform_settings_morse_tolerance'),
-              min: 0,
-              max: 24,
-              value: _currentTolerance,
-              onChanged: (value) {
-                setState(() {
-                  _currentTolerance = value;
-                  _decodeMorseData();
-                });
-              },
+              text: i18n(context, 'waveform_output_morsecode'),
+              expanded: false,
+              suppressTopSpace: false,
+              child: Column(
+                children: <Widget>[
+                  GCWTwoOptionsSwitch(
+                      leftValue: i18n(context, 'waveform_output_image_normal'),
+                      rightValue:
+                          i18n(context, 'waveform_output_image_inverted'),
+                      value: _currentInvert,
+                      onChanged: (value) {
+                        setState(() {
+                          _currentInvert = value;
+                          _decodeMorseData();
+                        });
+                      }),
+                  GCWIntegerSpinner(
+                    title: i18n(context, 'waveform_settings_morse_tolerance'),
+                    min: 0,
+                    max: 24,
+                    value: _currentTolerance,
+                    onChanged: (value) {
+                      setState(() {
+                        _currentTolerance = value;
+                        _decodeMorseData();
+                      });
+                    },
+                  ),
+                  GCWOutputText(text: _decodedMorse!.morseCode),
+                  GCWOutputText(text: _decodedMorse!.text),
+                ],
+              ),
+            )
+          : GCWOutputText(
+              text: i18n(context, 'waveform_output_image_error'),
             ),
-            GCWOutputText(text: _decodedMorse!.morseCode),
-            GCWOutputText(text: _decodedMorse!.text),
-          ],
-        ),
-      )
-          : GCWOutputText(text: i18n(context, 'waveform_output_image_error'),),
     ]);
   }
 
@@ -260,7 +316,11 @@ class WaveFormState extends State<WaveForm> {
         ]
       ];
       for (var element in section.SectionContent) {
-        content.add([i18n(context, 'waveform_output_' + element.Meaning), element.Bytes, element.Value]);
+        content.add([
+          i18n(context, 'waveform_output_' + element.Meaning),
+          element.Bytes,
+          element.Value
+        ]);
       }
       result.add(GCWExpandableTextDivider(
         text: i18n(context, 'waveform_output_section_' + section.SectionTitle),
@@ -277,7 +337,7 @@ class WaveFormState extends State<WaveForm> {
     return result;
   }
 
-  void _decodeMorseData(){
+  void _decodeMorseData() {
     if (_currentInvert == GCWSwitchPosition.left) {
       _decodedMorse = decodeMorseCode(
         List.filled(_soundfileMorsecode.length, 1),
@@ -295,9 +355,9 @@ class WaveFormState extends State<WaveForm> {
 
   List<bool> _invertMorseCode(List<bool> soundfileMorsecode) {
     List<bool> result = [];
-          soundfileMorsecode.forEach((element) {
-        result.add(!element);
-      });
-     return result;
+    soundfileMorsecode.forEach((element) {
+      result.add(!element);
+    });
+    return result;
   }
 }
