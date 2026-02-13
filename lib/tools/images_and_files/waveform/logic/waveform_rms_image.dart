@@ -6,7 +6,7 @@ import 'dart:async';
 
 
 class WaveformAndMorseResult {
-  final Uint8List rgbaBytes;
+  // final Uint8List rgbaBytes;
   final Uint8List pngBytes;
   final int width;
   final int height;
@@ -16,7 +16,7 @@ class WaveformAndMorseResult {
   final String text;
 
   WaveformAndMorseResult({
-    required this.rgbaBytes,
+    // required this.rgbaBytes,
     required this.pngBytes,
     required this.width,
     required this.height,
@@ -26,7 +26,6 @@ class WaveformAndMorseResult {
   });
 }
 
-/// Struktur mit den normalisierten Samples pro Kanal.
 class WavData {
   final int sampleRate;
   final int numChannels;
@@ -41,20 +40,20 @@ class WavData {
   int get length => channels.isEmpty ? 0 : channels[0].length;
 }
 
-/// Parser für einfache PCM/Float-WAV-Dateien.
+// Parser to handle simple PCM/Float-WAV-Files
 class WavParser {
   static Future<WavData> parse(Uint8List bytes) async {
     final bd = ByteData.sublistView(bytes);
 
-    // Minimaler RIFF/WAVE-Check
+    // simple RIFF/WAVE-Check
     if (bytes.length < 44) {
-      throw FormatException('Datei zu kurz für WAV-Header');
+      throw FormatException('File to short');
     }
     if (String.fromCharCodes(bytes.sublist(0, 4)) != 'RIFF') {
-      throw FormatException('Kein RIFF-Header');
+      throw FormatException('Missing RIFF-Header');
     }
     if (String.fromCharCodes(bytes.sublist(8, 12)) != 'WAVE') {
-      throw FormatException('Kein WAVE-Header');
+      throw FormatException('Missing WAVE-Header');
     }
 
     int offset = 12;
@@ -65,7 +64,7 @@ class WavParser {
     int? dataOffset;
     int? dataSize;
 
-    // Chunks durchlaufen
+    // analyzing Chunks
     while (offset + 8 <= bytes.length) {
       final chunkId = String.fromCharCodes(bytes.sublist(offset, offset + 4));
       final chunkSize = bd.getUint32(offset + 4, Endian.little);
@@ -94,11 +93,11 @@ class WavParser {
         bitsPerSample == null ||
         dataOffset == null ||
         dataSize == null) {
-      throw FormatException('Unvollständiger WAV-Header');
+      throw FormatException('Malformed WAV-Header');
     }
 
     if (!(audioFormat == 1 || audioFormat == 3)) {
-      throw FormatException('Nur PCM (1) oder IEEE Float (3) wird unterstützt');
+      throw FormatException('Unsupported Format - only PCM (1) or IEEE Float (3) are supported');
     }
 
     final bytesPerSample = bitsPerSample ~/ 8;
@@ -160,7 +159,7 @@ class WavParser {
           final v = bd.getInt32(offset, Endian.little);
           return v / 2147483648.0; // 2^31
         default:
-          throw FormatException('Nicht unterstützte PCM-Bittiefe: $bitsPerSample');
+          throw FormatException('unsupported PCM-Bit-depth: $bitsPerSample');
       }
     }
 
@@ -168,20 +167,19 @@ class WavParser {
     if (audioFormat == 3) {
       if (bitsPerSample == 32) {
         final v = bd.getFloat32(offset, Endian.little);
-        // typischerweise schon in [-1,1], aber wir clampen sicherheitshalber
         return v.clamp(-1.0, 1.0);
       } else {
-        throw FormatException('Nicht unterstützte Float-Bittiefe: $bitsPerSample');
+        throw FormatException('unsupported Float-Bit-depth: $bitsPerSample');
       }
     }
 
-    throw FormatException('Unbekanntes Audioformat: $audioFormat');
+    throw FormatException('unsupported Audioformat: $audioFormat');
   }
 }
 
-/// Painter für die Wellenform.
-/// - Mehrkanal: Kanäle werden vertikal gestapelt.
-/// - Pro Kanal: mittige Nulllinie, Ausschläge nach oben/unten.
+// Painter to draw waveform
+// - Multichannel: channels are stacked vertically
+// - per channel: centerline
 class WavWaveformPainter extends CustomPainter {
   final WavData data;
   final Color backgroundColor;
@@ -234,7 +232,7 @@ class WavWaveformPainter extends CustomPainter {
     final top = channelIndex * channelHeight;
     final midY = top + channelHeight / 2;
 
-    // Nulllinie
+    // Centerline
     final zeroPaint = Paint()
       ..color = waveformColor.withOpacity(0.3)
       ..style = PaintingStyle.stroke
@@ -245,7 +243,7 @@ class WavWaveformPainter extends CustomPainter {
       zeroPaint,
     );
 
-    // Downsampling: pro Pixel eine Min/Max-Aggregation
+    // Downsampling: for every pixel a Min/Max-Aggregation
     final width = size.width;
     if (width <= 0) return;
 
@@ -285,46 +283,6 @@ class WavWaveformPainter extends CustomPainter {
   }
 }
 
-// // Beispiel: Bytes aus File oder Asset laden und anzeigen
-// class WavDemoPage extends StatelessWidget {
-//   final Uint8List wavBytes;
-//
-//   const WavDemoPage({super.key, required this.wavBytes});
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(title: const Text('WAV Waveform')),
-//       body: Center(
-//         child: WavWaveformWidget(
-//           wavBytes: wavBytes,
-//           height: 240,
-//           backgroundColor: Colors.black,
-//           waveformColor: Colors.orange,
-//           strokeWidth: 1.0,
-//         ),
-//       ),
-//     );
-//   }
-// }
-
-
-
-
-/// Rendert die Wellenform als ui.Image und gibt sowohl RGBA als auch PNG zurück.
-class WaveformRenderResult {
-  final Uint8List rgbaBytes;
-  final Uint8List pngBytes;
-  final int width;
-  final int height;
-
-  WaveformRenderResult({
-    required this.rgbaBytes,
-    required this.pngBytes,
-    required this.width,
-    required this.height,
-  });
-}
 
 class MorseAnalysisResult {
   final String bits;          // z.B. "111000111000000..."
@@ -441,7 +399,6 @@ List<_Run> _compressRunsClean(List<int> bits, {int minRun = 3}) {
   for (final r in raw) {
     if (r.length < minRun) continue; // kurze Zipper ignorieren
     if (cleaned.isNotEmpty && cleaned.last.value == r.value) {
-      // zusammenführen, falls wir durch das Filtern Lücken erzeugen
       final last = cleaned.removeLast();
       cleaned.add(_Run(last.value, last.length + r.length));
     } else {
@@ -458,7 +415,7 @@ String _runsToMorse(List<_Run> runs, _Units units) {
   for (final r in runs) {
     if (r.value == 1) {
       final u = r.length / units.toneUnit;
-      final k = u.round().clamp(1, 3); // 1 = Punkt, 3 = Strich
+      final k = u.round().clamp(1, 3); // 1 = dot, 3 = dash
       buf.write(k == 1 ? '.' : '-');
       lastWasTone = true;
     } else {
@@ -469,9 +426,9 @@ String _runsToMorse(List<_Run> runs, _Units units) {
       if (k <= 1) {
         // intra-symbol
       } else if (k <= 3) {
-        buf.write(' '); // Buchstabenende
+        buf.write(' '); // letter space
       } else {
-        buf.write(' / '); // Wortende
+        buf.write(' | '); // word space
       }
       lastWasTone = false;
     }
@@ -483,7 +440,7 @@ String _runsToMorse(List<_Run> runs, _Units units) {
 String _decodeMorse(String morse) {
   if (morse.isEmpty) return '';
 
-  final words = morse.split(' / ');
+  final words = morse.split(' | ');
   final out = StringBuffer();
 
   for (int w = 0; w < words.length; w++) {
@@ -518,30 +475,14 @@ List<double> _smoothEnvelope(List<double> env, {int window = 5}) {
 
 Future<MorseAnalysisResult> analyzeMorseFromWavBytes(Uint8List wavBytes) async {
   final wav = await WavParser.parse(wavBytes);
-
-  // 1. Mono
   final mono = _toMono(wav);
-
-  // 2. Envelope
   final envRaw = mono.map((v) => v.abs()).toList(growable: false);
   final env = _smoothEnvelope(envRaw, window: 5);
-
-  // 3. Schwelle
   final threshold = _estimateThreshold(env);
-
-  // 4. Binärsignal
   final bits = env.map((v) => v > threshold ? 1 : 0).toList(growable: false);
-
-  // 5. Läufe
   final runs = _compressRunsClean(bits, minRun: 3);
-
-  // 6. Zeiteinheit
   final units = _estimateUnits(runs);
-
-  // 7. Läufe → Morse
   final morse = _runsToMorse(runs, units);
-
-  // 8. Morse → Text
   final text = _decodeMorse(morse);
 
   return MorseAnalysisResult(
@@ -561,12 +502,9 @@ Future<WaveformAndMorseResult> renderAndAnalyzeWav({
   double strokeWidth = 1.0,
 }) async {
 
-  // 1. WAV parsen
   final wavData = await WavParser.parse(wavBytes);
 
-  // 2. Breite abhängig von Sample-Anzahl
-  // WebGL Limit
-  const int webMaxTextureSize = 8192;
+  const int webMaxTextureSize = 8192; // WebGL Limit
 
   final totalSamples = wavData.length;
 
@@ -579,10 +517,8 @@ Future<WaveformAndMorseResult> renderAndAnalyzeWav({
 
   int width = math.min(totalSamples, webMaxTextureSize);
 
-  // Optional: minWidth beachten
   if (width < minWidth) width = minWidth;
 
-  // 3. Waveform rendern
   final recorder = ui.PictureRecorder();
   final canvas = Canvas(recorder, Rect.fromLTWH(0, 0, width.toDouble(), height));
 
@@ -598,21 +534,18 @@ Future<WaveformAndMorseResult> renderAndAnalyzeWav({
   final picture = recorder.endRecording();
   final uiImage = await picture.toImage(width, height.toInt());
 
-  // 4. RGBA erzeugen
-  final rgbaData = await uiImage.toByteData(format: ui.ImageByteFormat.rawRgba);
-  if (rgbaData == null) throw StateError("RGBA fehlgeschlagen");
-  final rgbaBytes = rgbaData.buffer.asUint8List();
+  // final rgbaData = await uiImage.toByteData(format: ui.ImageByteFormat.rawRgba);
+  // if (rgbaData == null) throw StateError("unable to create RGBA");
+  // final rgbaBytes = rgbaData.buffer.asUint8List();
 
-  // 5. PNG erzeugen
   final pngData = await uiImage.toByteData(format: ui.ImageByteFormat.png);
-  if (pngData == null) throw StateError("PNG fehlgeschlagen");
+  if (pngData == null) throw StateError("unable to create PNG");
   final pngBytes = pngData.buffer.asUint8List();
 
-  // 6. Morse analysieren
   final morse = await analyzeMorseFromWavBytes(wavBytes);
 
   return WaveformAndMorseResult(
-    rgbaBytes: rgbaBytes,
+    // rgbaBytes: rgbaBytes,
     pngBytes: pngBytes,
     width: width,
     height: height.toInt(),
