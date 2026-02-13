@@ -1,64 +1,9 @@
 import 'dart:math' as math;
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
+import 'dart:ui' as ui;
+import 'dart:async';
 
-/// Public widget: zeigt die Wellenform eines WAV-Files aus Bytes.
-class WavWaveformWidget extends StatelessWidget {
-  final Uint8List wavBytes;
-  final double height;
-  final Color backgroundColor;
-  final Color waveformColor;
-  final double strokeWidth;
-
-  const WavWaveformWidget({
-    super.key,
-    required this.wavBytes,
-    this.height = 200,
-    this.backgroundColor = Colors.black,
-    this.waveformColor = Colors.orange,
-    this.strokeWidth = 1.0,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return FutureBuilder<WavData>(
-      future: WavParser.parse(wavBytes),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState != ConnectionState.done) {
-          return SizedBox(
-            height: height,
-            child: const Center(child: CircularProgressIndicator()),
-          );
-        }
-        if (snapshot.hasError || !snapshot.hasData) {
-          return SizedBox(
-            height: height,
-            child: Center(
-              child: Text(
-                'Fehler beim Lesen der WAV-Datei',
-                style: TextStyle(color: Theme.of(context).colorScheme.error),
-              ),
-            ),
-          );
-        }
-
-        final data = snapshot.data!;
-        return SizedBox(
-          height: height,
-          width: double.infinity,
-          child: CustomPaint(
-            painter: WavWaveformPainter(
-              data: data,
-              backgroundColor: backgroundColor,
-              waveformColor: waveformColor,
-              strokeWidth: strokeWidth,
-            ),
-          ),
-        );
-      },
-    );
-  }
-}
 
 /// Struktur mit den normalisierten Samples pro Kanal.
 class WavData {
@@ -334,10 +279,92 @@ class WavWaveformPainter extends CustomPainter {
 //           wavBytes: wavBytes,
 //           height: 240,
 //           backgroundColor: Colors.black,
-//           waveformColor: Colors.lightGreenAccent,
+//           waveformColor: Colors.orange,
 //           strokeWidth: 1.0,
 //         ),
 //       ),
 //     );
 //   }
 // }
+
+
+
+
+/// Rendert die Wellenform als ui.Image und gibt sowohl RGBA als auch PNG zurück.
+class WaveformRenderResult {
+  final Uint8List rgbaBytes;
+  final Uint8List pngBytes;
+  final int width;
+  final int height;
+
+  WaveformRenderResult({
+    required this.rgbaBytes,
+    required this.pngBytes,
+    required this.width,
+    required this.height,
+  });
+}
+
+Future<WaveformRenderResult> renderWavWaveformAsRgbaAndPng({
+  required Uint8List wavBytes,
+  required double width,
+  required double height,
+  Color backgroundColor = Colors.black,
+  Color waveformColor = Colors.greenAccent,
+  double strokeWidth = 1.0,
+}) async {
+  // 1. WAV parsen
+  final wavData = await WavParser.parse(wavBytes);
+
+  // 2. Offscreen-Canvas
+  final recorder = ui.PictureRecorder();
+  final canvas = Canvas(recorder, Rect.fromLTWH(0, 0, width, height));
+
+  // 3. Painter ausführen
+  final painter = WavWaveformPainter(
+    data: wavData,
+    backgroundColor: backgroundColor,
+    waveformColor: waveformColor,
+    strokeWidth: strokeWidth,
+  );
+
+  painter.paint(canvas, Size(width, height));
+
+  // 4. Picture → ui.Image
+  final picture = recorder.endRecording();
+  final uiImage = await picture.toImage(width.toInt(), height.toInt());
+
+  // 5. RGBA erzeugen
+  final rgbaData = await uiImage.toByteData(
+    format: ui.ImageByteFormat.rawRgba,
+  );
+  if (rgbaData == null) {
+    throw StateError('RGBA-Konvertierung fehlgeschlagen');
+  }
+  final rgbaBytes = rgbaData.buffer.asUint8List();
+
+  // 6. PNG erzeugen
+  final pngData = await uiImage.toByteData(
+    format: ui.ImageByteFormat.png,
+  );
+  if (pngData == null) {
+    throw StateError('PNG-Konvertierung fehlgeschlagen');
+  }
+  final pngBytes = pngData.buffer.asUint8List();
+
+  return WaveformRenderResult(
+    rgbaBytes: rgbaBytes,
+    pngBytes: pngBytes,
+    width: width.toInt(),
+    height: height.toInt(),
+  );
+}
+
+// final result = await renderWavWaveformAsRgbaAndPng(
+//   wavBytes: wavBytes,
+//   width: 1200,
+//   height: 400,
+// );
+//
+// final rgba = result.rgbaBytes;
+// final png  = result.pngBytes;
