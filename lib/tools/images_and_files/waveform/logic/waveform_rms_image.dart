@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'dart:ui' as ui;
 import 'dart:async';
 
+enum PARSE_STATUS {OK, ERROR}
 
 class WaveformAndMorseResult {
   // final Uint8List rgbaBytes;
@@ -15,6 +16,9 @@ class WaveformAndMorseResult {
   final String morse;
   final String text;
 
+  final PARSE_STATUS status;
+  final String error;
+
   WaveformAndMorseResult({
     // required this.rgbaBytes,
     required this.pngBytes,
@@ -23,6 +27,8 @@ class WaveformAndMorseResult {
     required this.bits,
     required this.morse,
     required this.text,
+    required this.status,
+    required this.error,
   });
 }
 
@@ -30,11 +36,15 @@ class WavData {
   final int sampleRate;
   final int numChannels;
   final List<List<double>> channels; // channels[c][i] in [-1, 1]
+  final PARSE_STATUS status;
+  final String error;
 
   WavData({
     required this.sampleRate,
     required this.numChannels,
     required this.channels,
+    required this.status,
+    required this.error,
   });
 
   int get length => channels.isEmpty ? 0 : channels[0].length;
@@ -42,17 +52,39 @@ class WavData {
 
 // Parser to handle simple PCM/Float-WAV-Files
 class WavParser {
+
   static Future<WavData> parse(Uint8List bytes) async {
     final bd = ByteData.sublistView(bytes);
 
     // simple RIFF/WAVE-Check
     if (bytes.length < 44) {
+      return WavData(
+        sampleRate: 0,
+        numChannels: 0,
+        channels: [],
+        status: PARSE_STATUS.ERROR,
+        error: 'waveform_error_file_to_short',
+      );
       throw FormatException('File to short');
     }
     if (String.fromCharCodes(bytes.sublist(0, 4)) != 'RIFF') {
+      return WavData(
+        sampleRate: 0,
+        numChannels: 0,
+        channels: [],
+        status: PARSE_STATUS.ERROR,
+        error: 'waveform_error_missing_riff_header',
+      );
       throw FormatException('Missing RIFF-Header');
     }
     if (String.fromCharCodes(bytes.sublist(8, 12)) != 'WAVE') {
+      return WavData(
+        sampleRate: 0,
+        numChannels: 0,
+        channels: [],
+        status: PARSE_STATUS.ERROR,
+        error: 'waveform_error_missing_wav_header',
+      );
       throw FormatException('Missing WAVE-Header');
     }
 
@@ -93,10 +125,24 @@ class WavParser {
         bitsPerSample == null ||
         dataOffset == null ||
         dataSize == null) {
+      return WavData(
+        sampleRate: 0,
+        numChannels: 0,
+        channels: [],
+        status: PARSE_STATUS.ERROR,
+        error: 'waveform_error_malformed_wav_header',
+      );
       throw FormatException('Malformed WAV-Header');
     }
 
     if (!(audioFormat == 1 || audioFormat == 3)) {
+      return WavData(
+        sampleRate: 0,
+        numChannels: 0,
+        channels: [],
+        status: PARSE_STATUS.ERROR,
+        error: 'waveform_error_unsupported_format',
+      );
       throw FormatException('Unsupported Format - only PCM (1) or IEEE Float (3) are supported');
     }
 
@@ -127,6 +173,8 @@ class WavParser {
       sampleRate: sampleRate,
       numChannels: numChannels,
       channels: channels,
+      status: PARSE_STATUS.OK,
+      error: '',
     );
   }
 
@@ -159,7 +207,7 @@ class WavParser {
           final v = bd.getInt32(offset, Endian.little);
           return v / 2147483648.0; // 2^31
         default:
-          throw FormatException('unsupported PCM-Bit-depth: $bitsPerSample');
+          throw FormatException('waveform_error_unsupported_pcm_bit_depth: $bitsPerSample');
       }
     }
 
@@ -169,11 +217,11 @@ class WavParser {
         final v = bd.getFloat32(offset, Endian.little);
         return v.clamp(-1.0, 1.0);
       } else {
-        throw FormatException('unsupported Float-Bit-depth: $bitsPerSample');
+        throw FormatException('waveform_error_unsupported_float_bit_depth: $bitsPerSample');
       }
     }
 
-    throw FormatException('unsupported Audioformat: $audioFormat');
+    throw FormatException('waveform_error_unsupported_audioformat: $audioFormat');
   }
 }
 
@@ -234,7 +282,7 @@ class WavWaveformPainter extends CustomPainter {
 
     // Centerline
     final zeroPaint = Paint()
-      ..color = waveformColor.withOpacity(0.3)
+      ..color = Colors.green
       ..style = PaintingStyle.stroke
       ..strokeWidth = 0.5;
     canvas.drawLine(
@@ -498,11 +546,25 @@ Future<WaveformAndMorseResult> renderAndAnalyzeWav({
   int? maxWidth,
   int minWidth = 300,
   Color backgroundColor = Colors.black,
-  Color waveformColor = Colors.greenAccent,
+  Color waveformColor = Colors.orange,
   double strokeWidth = 1.0,
 }) async {
 
   final wavData = await WavParser.parse(wavBytes);
+
+  if (wavData.status == PARSE_STATUS.ERROR) {
+    return WaveformAndMorseResult(
+      // rgbaBytes: rgbaBytes,
+      pngBytes: Uint8List.fromList([]),
+      width: 0,
+      height: 0,
+      bits: '',
+      morse: '',
+      text: '',
+      status: PARSE_STATUS.ERROR,
+      error: wavData.error,
+    );
+  }
 
   const int webMaxTextureSize = 8192; // WebGL Limit
 
@@ -539,7 +601,20 @@ Future<WaveformAndMorseResult> renderAndAnalyzeWav({
   // final rgbaBytes = rgbaData.buffer.asUint8List();
 
   final pngData = await uiImage.toByteData(format: ui.ImageByteFormat.png);
-  if (pngData == null) throw StateError("unable to create PNG");
+  if (pngData == null) {
+    return WaveformAndMorseResult(
+      // rgbaBytes: rgbaBytes,
+      pngBytes: Uint8List.fromList([]),
+      width: 0,
+      height: 0,
+      bits: '',
+      morse: '',
+      text: '',
+      status: PARSE_STATUS.ERROR,
+      error: 'waveform_error_png_not_created',
+    );
+    throw StateError("unable to create PNG");
+  }
   final pngBytes = pngData.buffer.asUint8List();
 
   final morse = await analyzeMorseFromWavBytes(wavBytes);
@@ -552,6 +627,8 @@ Future<WaveformAndMorseResult> renderAndAnalyzeWav({
     bits: morse.bits,
     morse: morse.morse,
     text: morse.text,
+    status: PARSE_STATUS.OK,
+    error: '',
   );
 }
 

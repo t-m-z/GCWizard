@@ -39,7 +39,9 @@ class WaveFormState extends State<WaveForm> {
 
   String _decodedMorseCode = '';
   String _decodedMorseText = '';
+  String _currentError = '';
 
+  bool _parseError = false;
   bool _spectrumCreated = false;
 
   @override
@@ -69,17 +71,25 @@ class WaveFormState extends State<WaveForm> {
               return;
             }
             _setData(_file.bytes);
-
+// TODO GCWAsyncExecuter
+// TODO Errorhandling
             _soundfileData = getSoundfileData(_bytes);
             renderAndAnalyzeWav(
               wavBytes: _bytes,
               height: 400,
             ).then((value) {
               setState(() {
-                _soundfilePNGImage = value.pngBytes;
-                _decodedMorseCode = value.morse;
-                _decodedMorseText= value.text;
-                _spectrumCreated = true;
+                if (value.status == PARSE_STATUS.OK) {
+                  _soundfilePNGImage = value.pngBytes;
+                  _decodedMorseCode = value.morse;
+                  _decodedMorseText = value.text;
+                  _spectrumCreated = true;
+                  _parseError = false;
+                } else {
+                  _spectrumCreated = false;
+                  _currentError = value.error;
+                  _parseError = true;
+                }
               });
             });
           },
@@ -102,7 +112,7 @@ class WaveFormState extends State<WaveForm> {
               suppressOpenInTool: const {GCWImageViewOpenInTools.METADATA},
             )
           : GCWOutputText(
-              text: i18n(context, 'waveform_output_image_error'),
+              text: _parseError ? i18n(context, _currentError) : i18n(context, 'waveform_output_image_error'),
             ),
     ]);
   }
@@ -122,7 +132,7 @@ class WaveFormState extends State<WaveForm> {
               ),
             )
           : GCWOutputText(
-              text: i18n(context, 'waveform_output_image_error'),
+        text: _parseError ? i18n(context, _currentError) : i18n(context, 'waveform_output_image_error'),
             ),
     ]);
   }
