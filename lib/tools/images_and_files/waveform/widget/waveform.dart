@@ -12,8 +12,6 @@ import 'package:gc_wizard/common_widgets/image_viewers/gcw_imageview.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output_text.dart';
-import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
-import 'package:gc_wizard/tools/images_and_files/animated_image_morse_code/logic/animated_image_morse_code.dart';
 import 'package:gc_wizard/tools/images_and_files/hex_viewer/widget/hex_viewer.dart';
 import 'package:gc_wizard/tools/images_and_files/waveform/logic/waveform.dart';
 import 'package:gc_wizard/tools/images_and_files/waveform/logic/waveform_rms_image.dart';
@@ -29,7 +27,6 @@ class WaveForm extends StatefulWidget {
 
 class WaveFormState extends State<WaveForm> {
   Uint8List _bytes = Uint8List.fromList([]);
-  Uint8List _soundfileRGBAImage = Uint8List.fromList([]);
   Uint8List _soundfilePNGImage = Uint8List.fromList([]);
   SoundfileData _soundfileData = SoundfileData(
       PCMformat: 0,
@@ -40,12 +37,8 @@ class WaveFormState extends State<WaveForm> {
       duration: 0.0,
       amplitudesData: Uint8List.fromList([]));
 
-  MorseCodeOutput? _decodedMorse = MorseCodeOutput('', '');
-  List<bool> _soundfileMorsecode = [];
-
-  int _currentTolerance = 12;
-
-  GCWSwitchPosition _currentInvert = GCWSwitchPosition.left;
+  String _decodedMorseCode = '';
+  String _decodedMorseText = '';
 
   bool _spectrumCreated = false;
 
@@ -78,16 +71,15 @@ class WaveFormState extends State<WaveForm> {
             _setData(_file.bytes);
 
             _soundfileData = getSoundfileData(_bytes);
-            renderWavWaveformAsRgbaAndPng(
+            renderAndAnalyzeWav(
               wavBytes: _bytes,
-              width: 1200,
               height: 400,
             ).then((value) {
               setState(() {
-                _soundfileRGBAImage = value.rgbaBytes;
                 _soundfilePNGImage = value.pngBytes;
+                _decodedMorseCode = value.morse;
+                _decodedMorseText= value.text;
                 _spectrumCreated = true;
-                _decodeMorseData();
               });
             });
           },
@@ -95,7 +87,6 @@ class WaveFormState extends State<WaveForm> {
         GCWSoundPlayer(
           file: GCWFile(bytes: _bytes),
         ),
-
         _buildOutputWaveFormImage(),
         _buildOutputWaveFormMorse(),
         _buildOutputWaveFormStructure(),
@@ -106,64 +97,27 @@ class WaveFormState extends State<WaveForm> {
   Widget _buildOutputWaveFormImage() {
     return Column(children: [
       (_spectrumCreated)
-      ? GCWImageView(
-                           imageData: GCWImageViewData(
-                               GCWFile(bytes: _soundfilePNGImage)),
-                           suppressOpenInTool: const {
-                             GCWImageViewOpenInTools.METADATA
-                           },
-                         )
-          //? WavWaveformWidget(
-          //    wavBytes: _bytes,
-          //    height: 240,
-          //    backgroundColor: Colors.black,
-          //    waveformColor: Colors.orange,
-          //    strokeWidth: 1.0,
-          //  )
+          ? GCWImageView(
+              imageData: GCWImageViewData(GCWFile(bytes: _soundfilePNGImage)),
+              suppressOpenInTool: const {GCWImageViewOpenInTools.METADATA},
+            )
           : GCWOutputText(
-        text: i18n(context, 'waveform_output_image_error'),
-      ),
-      // (_soundfileImagePolygon.isNotEmpty)
-      //     ? GCWExpandableTextDivider(
-      //         text: i18n(context, 'waveform_output_amplitudes_graph'),
-      //         suppressTopSpace: false,
-      //         child: Column(
-      //           children: <Widget>[
-      //
-      //             _currentDisplayMode == GCWSwitchPosition.left
-      //                 ? GCWImageView(
-      //                     imageData: GCWImageViewData(
-      //                         GCWFile(bytes: _soundfileImagePolygon)),
-      //                     suppressOpenInTool: const {
-      //                       GCWImageViewOpenInTools.METADATA
-      //                     },
-      //                   )
-      //                 : GCWImageView(
-      //                     imageData: GCWImageViewData(
-      //                         GCWFile(bytes: _soundfileImageRectangle)),
-      //                     suppressOpenInTool: const {
-      //                       GCWImageViewOpenInTools.METADATA
-      //                     },
-      //                   ),
-      //           ],
-      //         ))
-      //     : GCWOutputText(
-      //         text: i18n(context, 'waveform_output_image_error'),
-      //       ),
+              text: i18n(context, 'waveform_output_image_error'),
+            ),
     ]);
   }
 
   Widget _buildOutputWaveFormMorse() {
     return Column(children: [
-      (_soundfileRGBAImage.isNotEmpty)
+      (_soundfilePNGImage.isNotEmpty)
           ? GCWExpandableTextDivider(
               text: i18n(context, 'waveform_output_morsecode'),
               expanded: false,
               suppressTopSpace: false,
               child: Column(
                 children: <Widget>[
-                  GCWOutputText(text: _decodedMorse!.morseCode),
-                  GCWOutputText(text: _decodedMorse!.text),
+                  GCWOutputText(text: _decodedMorseCode),
+                  GCWOutputText(text: _decodedMorseText),
                 ],
               ),
             )
@@ -174,7 +128,7 @@ class WaveFormState extends State<WaveForm> {
   }
 
   Widget _buildOutputWaveFormStructure() {
-    List<Widget> output = _SoundfileStructure(_bytes);
+    List<Widget> output = _buildOutputSoundfileStructure(_bytes);
     return Column(children: [
       GCWExpandableTextDivider(
         text: i18n(context, 'waveform_output_section_structure'),
@@ -206,7 +160,7 @@ class WaveFormState extends State<WaveForm> {
     ]);
   }
 
-  List<Widget> _SoundfileStructure(Uint8List bytes) {
+  List<Widget> _buildOutputSoundfileStructure(Uint8List bytes) {
     List<Widget> result = [];
 
     for (var section in _soundfileData.structure) {
@@ -237,30 +191,6 @@ class WaveFormState extends State<WaveForm> {
       ));
     }
 
-    return result;
-  }
-
-  void _decodeMorseData() {
-    // if (_currentInvert == GCWSwitchPosition.left) {
-    //   _decodedMorse = decodeMorseCode(
-    //     List.filled(_soundfileMorsecode.length, 1),
-    //     _invertMorseCode(_soundfileMorsecode),
-    //     tolerance: 1.2 + (_currentTolerance - 12) / 10,
-    //   );
-    // } else {
-    //   _decodedMorse = decodeMorseCode(
-    //     List.filled(_soundfileMorsecode.length, 1),
-    //     _soundfileMorsecode,
-    //     tolerance: 1.2 + (_currentTolerance - 12) / 10,
-    //   );
-    // }
-  }
-
-  List<bool> _invertMorseCode(List<bool> soundfileMorsecode) {
-    List<bool> result = [];
-    soundfileMorsecode.forEach((element) {
-      result.add(!element);
-    });
     return result;
   }
 }

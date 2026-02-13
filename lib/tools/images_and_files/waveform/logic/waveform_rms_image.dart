@@ -5,6 +5,27 @@ import 'dart:ui' as ui;
 import 'dart:async';
 
 
+class WaveformAndMorseResult {
+  final Uint8List rgbaBytes;
+  final Uint8List pngBytes;
+  final int width;
+  final int height;
+
+  final String bits;
+  final String morse;
+  final String text;
+
+  WaveformAndMorseResult({
+    required this.rgbaBytes,
+    required this.pngBytes,
+    required this.width,
+    required this.height,
+    required this.bits,
+    required this.morse,
+    required this.text,
+  });
+}
+
 /// Struktur mit den normalisierten Samples pro Kanal.
 class WavData {
   final int sampleRate;
@@ -305,22 +326,266 @@ class WaveformRenderResult {
   });
 }
 
-Future<WaveformRenderResult> renderWavWaveformAsRgbaAndPng({
+class MorseAnalysisResult {
+  final String bits;          // z.B. "111000111000000..."
+  final String morse;         // z.B. "... --- ..."
+  final String text;          // z.B. "SOS"
+
+  MorseAnalysisResult({
+    required this.bits,
+    required this.morse,
+    required this.text,
+  });
+}
+
+const Map<String, String> _morseToChar = {
+  '.-': 'A', '-...': 'B', '-.-.': 'C', '-..': 'D', '.': 'E',
+  '..-.': 'F', '--.': 'G', '....': 'H', '..': 'I', '.---': 'J',
+  '-.-': 'K', '.-..': 'L', '--': 'M', '-.': 'N', '---': 'O',
+  '.--.': 'P', '--.-': 'Q', '.-.': 'R', '...': 'S', '-': 'T',
+  '..-': 'U', '...-': 'V', '.--': 'W', '-..-': 'X', '-.--': 'Y',
+  '--..': 'Z',
+  '-----': '0', '.----': '1', '..---': '2', '...--': '3',
+  '....-': '4', '.....': '5', '-....': '6', '--...': '7',
+  '---..': '8', '----.': '9',
+};
+
+List<double> _toMono(WavData data) {
+  final n = data.length;
+  if (n == 0) return const [];
+
+  if (data.numChannels == 1) {
+    return List<double>.from(data.channels[0], growable: false);
+  }
+
+  final mono = List<double>.filled(n, 0.0, growable: false);
+  for (int i = 0; i < n; i++) {
+    double sum = 0.0;
+    for (int ch = 0; ch < data.numChannels; ch++) {
+      sum += data.channels[ch][i];
+    }
+    mono[i] = sum / data.numChannels;
+  }
+  return mono;
+}
+
+double _estimateThreshold(List<double> env) {
+  if (env.isEmpty) return 0.1;
+
+  final sorted = List<double>.from(env)..sort();
+  final median = sorted[sorted.length ~/ 2];
+
+  return (median * 4).clamp(0.02, 0.5);
+}
+
+class _Run {
+  final int value; // 0 oder 1
+  final int length;
+  _Run(this.value, this.length);
+}
+
+class _Units {
+  final double toneUnit;
+  final double silenceUnit;
+  _Units(this.toneUnit, this.silenceUnit);
+}
+
+_Units _estimateUnits(List<_Run> runs) {
+  final tones = <int>[];
+  final silences = <int>[];
+
+  for (final r in runs) {
+    if (r.value == 1) {
+      tones.add(r.length);
+    } else {
+      silences.add(r.length);
+    }
+  }
+
+  double median(List<int> xs) {
+    if (xs.isEmpty) return 1.0;
+    xs.sort();
+    return xs[xs.length ~/ 2].toDouble().clamp(1.0, double.infinity);
+  }
+
+  return _Units(
+    median(tones),
+    median(silences),
+  );
+}
+
+List<_Run> _compressRuns(List<int> bits) {
+  final out = <_Run>[];
+  if (bits.isEmpty) return out;
+
+  int cur = bits[0];
+  int len = 1;
+
+  for (int i = 1; i < bits.length; i++) {
+    if (bits[i] == cur) {
+      len++;
+    } else {
+      out.add(_Run(cur, len));
+      cur = bits[i];
+      len = 1;
+    }
+  }
+  out.add(_Run(cur, len));
+  return out;
+}
+
+List<_Run> _compressRunsClean(List<int> bits, {int minRun = 3}) {
+  final raw = _compressRuns(bits);
+  final cleaned = <_Run>[];
+
+  for (final r in raw) {
+    if (r.length < minRun) continue; // kurze Zipper ignorieren
+    if (cleaned.isNotEmpty && cleaned.last.value == r.value) {
+      // zusammenführen, falls wir durch das Filtern Lücken erzeugen
+      final last = cleaned.removeLast();
+      cleaned.add(_Run(last.value, last.length + r.length));
+    } else {
+      cleaned.add(r);
+    }
+  }
+  return cleaned;
+}
+
+String _runsToMorse(List<_Run> runs, _Units units) {
+  final buf = StringBuffer();
+  bool lastWasTone = false;
+
+  for (final r in runs) {
+    if (r.value == 1) {
+      final u = r.length / units.toneUnit;
+      final k = u.round().clamp(1, 3); // 1 = Punkt, 3 = Strich
+      buf.write(k == 1 ? '.' : '-');
+      lastWasTone = true;
+    } else {
+      if (!lastWasTone) continue;
+      final u = r.length / units.silenceUnit;
+      final k = u.round().clamp(1, 7);
+
+      if (k <= 1) {
+        // intra-symbol
+      } else if (k <= 3) {
+        buf.write(' '); // Buchstabenende
+      } else {
+        buf.write(' / '); // Wortende
+      }
+      lastWasTone = false;
+    }
+  }
+
+  return buf.toString().trim();
+}
+
+String _decodeMorse(String morse) {
+  if (morse.isEmpty) return '';
+
+  final words = morse.split(' / ');
+  final out = StringBuffer();
+
+  for (int w = 0; w < words.length; w++) {
+    final letters = words[w].split(' ');
+    for (final l in letters) {
+      if (l.isEmpty) continue;
+      out.write(_morseToChar[l] ?? '?');
+    }
+    if (w < words.length - 1) out.write(' ');
+  }
+
+  return out.toString();
+}
+
+List<double> _smoothEnvelope(List<double> env, {int window = 5}) {
+  if (env.isEmpty || window <= 1) return env;
+  final out = List<double>.filled(env.length, 0.0);
+  final half = window ~/ 2;
+
+  for (int i = 0; i < env.length; i++) {
+    double sum = 0.0;
+    int count = 0;
+    for (int j = i - half; j <= i + half; j++) {
+      if (j < 0 || j >= env.length) continue;
+      sum += env[j];
+      count++;
+    }
+    out[i] = sum / count;
+  }
+  return out;
+}
+
+Future<MorseAnalysisResult> analyzeMorseFromWavBytes(Uint8List wavBytes) async {
+  final wav = await WavParser.parse(wavBytes);
+
+  // 1. Mono
+  final mono = _toMono(wav);
+
+  // 2. Envelope
+  final envRaw = mono.map((v) => v.abs()).toList(growable: false);
+  final env = _smoothEnvelope(envRaw, window: 5);
+
+  // 3. Schwelle
+  final threshold = _estimateThreshold(env);
+
+  // 4. Binärsignal
+  final bits = env.map((v) => v > threshold ? 1 : 0).toList(growable: false);
+
+  // 5. Läufe
+  final runs = _compressRunsClean(bits, minRun: 3);
+
+  // 6. Zeiteinheit
+  final units = _estimateUnits(runs);
+
+  // 7. Läufe → Morse
+  final morse = _runsToMorse(runs, units);
+
+  // 8. Morse → Text
+  final text = _decodeMorse(morse);
+
+  return MorseAnalysisResult(
+    bits: bits.join(),
+    morse: morse,
+    text: text,
+  );
+}
+
+Future<WaveformAndMorseResult> renderAndAnalyzeWav({
   required Uint8List wavBytes,
-  required double width,
   required double height,
+  int? maxWidth,
+  int minWidth = 300,
   Color backgroundColor = Colors.black,
   Color waveformColor = Colors.greenAccent,
   double strokeWidth = 1.0,
 }) async {
+
   // 1. WAV parsen
   final wavData = await WavParser.parse(wavBytes);
 
-  // 2. Offscreen-Canvas
-  final recorder = ui.PictureRecorder();
-  final canvas = Canvas(recorder, Rect.fromLTWH(0, 0, width, height));
+  // 2. Breite abhängig von Sample-Anzahl
+  // WebGL Limit
+  const int webMaxTextureSize = 8192;
 
-  // 3. Painter ausführen
+  final totalSamples = wavData.length;
+
+  // Downsampling-Faktor
+  double samplesPerPixel = 1.0;
+
+  if (totalSamples > webMaxTextureSize) {
+    samplesPerPixel = totalSamples / webMaxTextureSize;
+  }
+
+  int width = math.min(totalSamples, webMaxTextureSize);
+
+  // Optional: minWidth beachten
+  if (width < minWidth) width = minWidth;
+
+  // 3. Waveform rendern
+  final recorder = ui.PictureRecorder();
+  final canvas = Canvas(recorder, Rect.fromLTWH(0, 0, width.toDouble(), height));
+
   final painter = WavWaveformPainter(
     data: wavData,
     backgroundColor: backgroundColor,
@@ -328,43 +593,32 @@ Future<WaveformRenderResult> renderWavWaveformAsRgbaAndPng({
     strokeWidth: strokeWidth,
   );
 
-  painter.paint(canvas, Size(width, height));
+  painter.paint(canvas, Size(width.toDouble(), height));
 
-  // 4. Picture → ui.Image
   final picture = recorder.endRecording();
-  final uiImage = await picture.toImage(width.toInt(), height.toInt());
+  final uiImage = await picture.toImage(width, height.toInt());
 
-  // 5. RGBA erzeugen
-  final rgbaData = await uiImage.toByteData(
-    format: ui.ImageByteFormat.rawRgba,
-  );
-  if (rgbaData == null) {
-    throw StateError('RGBA-Konvertierung fehlgeschlagen');
-  }
+  // 4. RGBA erzeugen
+  final rgbaData = await uiImage.toByteData(format: ui.ImageByteFormat.rawRgba);
+  if (rgbaData == null) throw StateError("RGBA fehlgeschlagen");
   final rgbaBytes = rgbaData.buffer.asUint8List();
 
-  // 6. PNG erzeugen
-  final pngData = await uiImage.toByteData(
-    format: ui.ImageByteFormat.png,
-  );
-  if (pngData == null) {
-    throw StateError('PNG-Konvertierung fehlgeschlagen');
-  }
+  // 5. PNG erzeugen
+  final pngData = await uiImage.toByteData(format: ui.ImageByteFormat.png);
+  if (pngData == null) throw StateError("PNG fehlgeschlagen");
   final pngBytes = pngData.buffer.asUint8List();
 
-  return WaveformRenderResult(
+  // 6. Morse analysieren
+  final morse = await analyzeMorseFromWavBytes(wavBytes);
+
+  return WaveformAndMorseResult(
     rgbaBytes: rgbaBytes,
     pngBytes: pngBytes,
-    width: width.toInt(),
+    width: width,
     height: height.toInt(),
+    bits: morse.bits,
+    morse: morse.morse,
+    text: morse.text,
   );
 }
 
-// final result = await renderWavWaveformAsRgbaAndPng(
-//   wavBytes: wavBytes,
-//   width: 1200,
-//   height: 400,
-// );
-//
-// final rgba = result.rgbaBytes;
-// final png  = result.pngBytes;
