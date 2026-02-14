@@ -93,7 +93,7 @@ class WaveFormState extends State<WaveForm> {
       (_spectrumCreated)
           ? GCWImageView(
               imageData: GCWImageViewData(GCWFile(bytes: _soundfilePNGImage)),
-              suppressOpenInTool: const {GCWImageViewOpenInTools.METADATA},
+              suppressOpenInTool: const {GCWImageViewOpenInTools.COLORCORRECTIONS, GCWImageViewOpenInTools.HIDDENDATA, GCWImageViewOpenInTools.FLIPROTATE},
             )
           : GCWOutputText(
               text: _errorText('waveform_output_image_error'),
