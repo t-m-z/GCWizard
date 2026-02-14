@@ -7400,6 +7400,7 @@
   "waveform_settings": "Settings for calculating/decoding Waveform",
   "waveform_settings_morse_tolerance": "Morse: Tolerance",
   "waveform_settings_waveform_blocksize": "Waveform: Blocksize",
+  "waveform_output_success": "Wave file was analyzed successfully",
   "waveform_output_meaning": "Meaning",
   "waveform_output_bytes": "Bytes",
   "waveform_output_bits": "Bits",
