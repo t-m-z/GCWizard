@@ -1,11 +1,7 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
-
 import 'package:gc_wizard/application/theme/theme_colors.dart';
-import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer.dart';
-import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/gcw_expandable.dart';
 import 'package:gc_wizard/common_widgets/gcw_openfile.dart';
@@ -74,8 +70,19 @@ class WaveFormState extends State<WaveForm> {
               return;
             }
             _setData(_file.bytes);
-            _analyseWaveFileAsync();
             _soundfileData = getSoundfileData(_bytes);
+            await renderAndAnalyzeWav(wavBytes: _bytes, height: 400).then((value){
+              if (value.status == PARSE_STATUS.ERROR) {
+                _spectrumCreated = false;
+                _parseError = true;
+              } else {
+               _soundfilePNGImage = value.pngBytes;
+                _decodedMorseCode = value.morse;
+                _decodedMorseText = value.text;
+                _spectrumCreated = true;
+                _parseError = false;
+              }
+            });
           },
         ),
         GCWSoundPlayer(
@@ -201,63 +208,6 @@ class WaveFormState extends State<WaveForm> {
 
     return result;
   }
-
-  void _analyseWaveFileAsync() async {
-    await showDialog<bool>(
-      context: context,
-      barrierDismissible: false,
-      builder: (context) {
-        return Center(
-          child: SizedBox(
-            height: GCW_ASYNC_EXECUTER_INDICATOR_HEIGHT,
-            width: GCW_ASYNC_EXECUTER_INDICATOR_WIDTH,
-            child: GCWAsyncExecuter<WaveformAndMorseResult>(
-              isolatedFunction: getWaveFileAsync,
-              parameter: _buildWaveFileJobData,
-              onReady: (data) => _showWaveFileOutput(data),
-              isOverlay: true,
-            ),
-          ),
-        );
-      },
-    );
-  }
-
-  Future<GCWAsyncExecuterParameters?> _buildWaveFileJobData() async {
-    return GCWAsyncExecuterParameters(WaveFileJobData(
-        jobDataBytes: _bytes,
-        jobDataHeight: 400,
-    ));
-  }
-
-  void _showWaveFileOutput(WaveformAndMorseResult output) {
-    String toastMessage = '';
-    int toastDuration = 3;
-
-    if (output.status == PARSE_STATUS.ERROR) {
-      toastMessage = i18n(context, output.error);
-      toastDuration = 5;
-      _spectrumCreated = false;
-      _parseError = true;
-    } else {
-      toastMessage = i18n(context, 'waveform_output_success');
-      toastDuration = 5;
-      _soundfilePNGImage = output.pngBytes;
-      _decodedMorseCode = output.morse;
-      _decodedMorseText = output.text;
-      _spectrumCreated = true;
-      _parseError = false;
-    }
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      setState(() {});
-    });
-
-    SchedulerBinding.instance.addPostFrameCallback((_) {
-      showSnackBar(toastMessage, duration: toastDuration, context);
-    });
-  }
-
 }
 
 

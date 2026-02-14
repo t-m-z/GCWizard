@@ -1,11 +1,8 @@
-import 'dart:isolate';
 import 'dart:math' as math;
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'dart:ui' as ui;
 import 'dart:async';
-
-import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
 
 enum PARSE_STATUS {OK, ERROR}
 
@@ -599,7 +596,6 @@ Future<WaveformAndMorseResult> renderAndAnalyzeWav({
   Color backgroundColor = Colors.black,
   Color waveformColor = Colors.orange,
   double strokeWidth = 1.0,
-  SendPort? sendAsyncPort
 }) async {
 
   final wavData = await WavParser.parse(wavBytes);
@@ -682,34 +678,4 @@ Future<WaveformAndMorseResult> renderAndAnalyzeWav({
     status: PARSE_STATUS.OK,
     error: '',
   );
-}
-
-class WaveFileJobData {
-  final Uint8List jobDataBytes;
-  final double jobDataHeight;
-
-  WaveFileJobData({
-    required this.jobDataBytes,
-    required this.jobDataHeight,
-  });
-}
-
-Future<WaveformAndMorseResult> getWaveFileAsync(GCWAsyncExecuterParameters? jobData) async {
-  if (jobData?.parameters is! WaveFileJobData) {
-    return Future.value(
-        WaveformAndMorseResult(
-            pngBytes: Uint8List.fromList([]),
-            width: 0,
-            height: 0,
-            bits: '',
-            morse: '',
-            text: '',
-            status: PARSE_STATUS.ERROR,
-            error: ''));
-  }
-  var data = jobData!.parameters as WaveFileJobData;
-  var output = await renderAndAnalyzeWav(height: data.jobDataHeight, wavBytes: data.jobDataBytes,  sendAsyncPort: jobData.sendAsyncPort, );
-
-  jobData.sendAsyncPort?.send(output);
-  return output;
 }
