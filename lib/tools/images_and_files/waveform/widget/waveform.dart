@@ -96,7 +96,7 @@ class WaveFormState extends State<WaveForm> {
               suppressOpenInTool: const {GCWImageViewOpenInTools.METADATA},
             )
           : GCWOutputText(
-              text: _parseError ? i18n(context, _currentError) : i18n(context, 'waveform_output_image_error'),
+              text: _errorText('waveform_output_image_error'),
             ),
     ]);
   }
@@ -116,11 +116,25 @@ class WaveFormState extends State<WaveForm> {
               ),
             )
           : GCWOutputText(
-        text: _parseError ? i18n(context, _currentError) : i18n(context, 'waveform_output_image_error'),
+              text: _errorText('waveform_output_image_error'),
             ),
     ]);
   }
 
+  String _errorText(String text){
+    String result = '';
+    if (_parseError) {
+      if (_currentError.contains('depth') || _currentError.contains('audioformat')) {
+        var errorcode = _currentError.split(':');
+        result = i18n(context, errorcode[0]) + errorcode[1];
+      } else {
+        result = i18n(context, _currentError);
+      }
+    } else {
+      result = i18n(context, text);
+    }
+    return result;
+  }
   Widget _buildOutputWaveFormStructure() {
     List<Widget> output = _buildOutputSoundfileStructure(_bytes);
     return Column(children: [

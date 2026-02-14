@@ -53,6 +53,19 @@ class WavData {
   int get length => channels.isEmpty ? 0 : channels[0].length;
 }
 
+class _SampleResult {
+  final double sample;
+  final PARSE_STATUS status;
+  final String error;
+
+  _SampleResult({
+    required this.sample,
+    required this.status,
+    required this.error,
+  });
+
+}
+
 // Parser to handle simple PCM/Float-WAV-Files
 class WavParser {
 
@@ -68,7 +81,7 @@ class WavParser {
         status: PARSE_STATUS.ERROR,
         error: 'waveform_error_file_to_short',
       );
-      throw FormatException('File to short');
+      // throw FormatException('File to short');
     }
     if (String.fromCharCodes(bytes.sublist(0, 4)) != 'RIFF') {
       return WavData(
@@ -78,7 +91,7 @@ class WavParser {
         status: PARSE_STATUS.ERROR,
         error: 'waveform_error_missing_riff_header',
       );
-      throw FormatException('Missing RIFF-Header');
+      // throw FormatException('Missing RIFF-Header');
     }
     if (String.fromCharCodes(bytes.sublist(8, 12)) != 'WAVE') {
       return WavData(
@@ -88,7 +101,7 @@ class WavParser {
         status: PARSE_STATUS.ERROR,
         error: 'waveform_error_missing_wav_header',
       );
-      throw FormatException('Missing WAVE-Header');
+      // throw FormatException('Missing WAVE-Header');
     }
 
     int offset = 12;
@@ -135,7 +148,7 @@ class WavParser {
         status: PARSE_STATUS.ERROR,
         error: 'waveform_error_malformed_wav_header',
       );
-      throw FormatException('Malformed WAV-Header');
+      // throw FormatException('Malformed WAV-Header');
     }
 
     if (!(audioFormat == 1 || audioFormat == 3)) {
@@ -146,7 +159,7 @@ class WavParser {
         status: PARSE_STATUS.ERROR,
         error: 'waveform_error_unsupported_format',
       );
-      throw FormatException('Unsupported Format - only PCM (1) or IEEE Float (3) are supported');
+      // throw FormatException('Unsupported Format - only PCM (1) or IEEE Float (3) are supported');
     }
 
     final bytesPerSample = bitsPerSample ~/ 8;
@@ -167,7 +180,16 @@ class WavParser {
           bitsPerSample,
           audioFormat,
         );
-        channels[ch][i] = sample;
+        if (sample.status == PARSE_STATUS.ERROR) {
+          return WavData(
+            sampleRate: 0,
+            numChannels: 0,
+            channels: [],
+            status: PARSE_STATUS.ERROR,
+            error: sample.error,
+          );
+        }
+        channels[ch][i] = sample.sample;
         pos += bytesPerSample;
       }
     }
@@ -181,7 +203,7 @@ class WavParser {
     );
   }
 
-  static double _readSample(
+  static _SampleResult _readSample(
       ByteData bd,
       int offset,
       int bitsPerSample,
@@ -192,10 +214,16 @@ class WavParser {
       switch (bitsPerSample) {
         case 8:
           final v = bd.getUint8(offset);
-          return (v - 128) / 128.0;
+          return _SampleResult(
+            sample: (v - 128) / 128.0,
+            status: PARSE_STATUS.OK,
+            error: '',);
         case 16:
           final v = bd.getInt16(offset, Endian.little);
-          return v / 32768.0;
+          return _SampleResult(
+            sample: v / 32768.0,
+            status: PARSE_STATUS.OK,
+            error: '',);
         case 24:
         // 24-bit little endian, sign-extend auf 32-bit
           final b0 = bd.getUint8(offset);
@@ -205,12 +233,22 @@ class WavParser {
           if (v & 0x800000 != 0) {
             v |= 0xFF000000;
           }
-          return v / 8388608.0; // 2^23
+          return _SampleResult(
+            sample: v / 8388608.0, // 2^23
+            status: PARSE_STATUS.OK,
+            error: '',);
         case 32:
           final v = bd.getInt32(offset, Endian.little);
-          return v / 2147483648.0; // 2^31
+          return _SampleResult(
+            sample: v / 2147483648.0, // 2^31
+            status: PARSE_STATUS.OK,
+            error: '',);
         default:
-          throw FormatException('waveform_error_unsupported_pcm_bit_depth: $bitsPerSample');
+          return _SampleResult(
+            sample: 0.0,
+            status: PARSE_STATUS.ERROR,
+            error: 'waveform_error_unsupported_pcm_bit_depth' + ':' + bitsPerSample.toString());
+          // throw FormatException('waveform_error_unsupported_pcm_bit_depth: $bitsPerSample');
       }
     }
 
@@ -218,13 +256,23 @@ class WavParser {
     if (audioFormat == 3) {
       if (bitsPerSample == 32) {
         final v = bd.getFloat32(offset, Endian.little);
-        return v.clamp(-1.0, 1.0);
+        return _SampleResult(
+          sample: v.clamp(-1.0, 1.0),
+          status: PARSE_STATUS.OK,
+          error: '',);
       } else {
-        throw FormatException('waveform_error_unsupported_float_bit_depth: $bitsPerSample');
+        return _SampleResult(
+          sample: 0.0,
+          status: PARSE_STATUS.ERROR,
+          error: 'waveform_error_unsupported_float_bit_depth' + ':' + bitsPerSample.toString());
+        // throw FormatException('waveform_error_unsupported_float_bit_depth: $bitsPerSample');
       }
     }
-
-    throw FormatException('waveform_error_unsupported_audioformat: $audioFormat');
+    return _SampleResult(
+      sample: 0.0,
+      status: PARSE_STATUS.ERROR,
+      error: 'waveform_error_unsupported_audioformat' + ':' + audioFormat.toString());
+    // throw FormatException('waveform_error_unsupported_audioformat: $audioFormat');
   }
 }
 
@@ -617,7 +665,7 @@ Future<WaveformAndMorseResult> renderAndAnalyzeWav({
       status: PARSE_STATUS.ERROR,
       error: 'waveform_error_png_not_created',
     );
-    throw StateError("unable to create PNG");
+    // throw StateError("unable to create PNG");
   }
   final pngBytes = pngData.buffer.asUint8List();
 
