@@ -525,6 +525,7 @@ import 'package:gc_wizard/tools/science_and_technology/teletypewriter/punchtape/
 import 'package:gc_wizard/tools/science_and_technology/teletypewriter/tts/widget/tts.dart';
 import 'package:gc_wizard/tools/science_and_technology/teletypewriter/z22/widget/z22.dart';
 import 'package:gc_wizard/tools/science_and_technology/teletypewriter/zc1/widget/zc1.dart';
+import 'package:gc_wizard/tools/science_and_technology/time_converter/widget/time_converter.dart';
 import 'package:gc_wizard/tools/science_and_technology/ufi/widget/ufi.dart';
 import 'package:gc_wizard/tools/science_and_technology/uic_wagoncode/widget/uic_wagoncode.dart';
 import 'package:gc_wizard/tools/science_and_technology/uic_wagoncode/widget/uic_wagoncode_countrycodes.dart';
@@ -3812,6 +3813,9 @@ void initializeRegistry(BuildContext context) {
           'dates',
           'dates_timecalculator',
         ]),
+    GCWTool(tool: const TimeConverter(), id: 'time_converter', searchKeys: const [
+      'dates',
+    ]),
     GCWTool(tool: const Weekday(), id: 'dates_weekday', searchKeys: const [
       'dates',
       'dates_weekday',
