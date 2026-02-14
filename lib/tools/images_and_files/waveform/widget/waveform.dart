@@ -71,16 +71,20 @@ class WaveFormState extends State<WaveForm> {
             }
             _setData(_file.bytes);
             _soundfileData = getSoundfileData(_bytes);
-            await renderAndAnalyzeWav(wavBytes: _bytes, height: 400).then((value){
+            renderAndAnalyzeWav(wavBytes: _bytes, height: 400).then((value){
               if (value.status == PARSE_STATUS.ERROR) {
-                _spectrumCreated = false;
-                _parseError = true;
+                setState(() {
+                  _spectrumCreated = false;
+                  _parseError = true;
+                });
               } else {
-               _soundfilePNGImage = value.pngBytes;
-                _decodedMorseCode = value.morse;
-                _decodedMorseText = value.text;
-                _spectrumCreated = true;
-                _parseError = false;
+                setState(() {
+                  _soundfilePNGImage = value.pngBytes;
+                  _decodedMorseCode = value.morse;
+                  _decodedMorseText = value.text;
+                  _spectrumCreated = true;
+                  _parseError = false;
+                });
               }
             });
           },
