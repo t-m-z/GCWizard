@@ -33,18 +33,4 @@ class SoundfileDataSectionContent {
   SoundfileDataSectionContent({required this.Meaning, required this.Bytes, required this.Value});
 }
 
-class MorseData {
-  final Uint8List MorseImagePolygon;
-  final Uint8List MorseImageRectangle;
-  final List<bool> MorseCode;
 
-  MorseData({required this.MorseImagePolygon, required this.MorseCode, required this.MorseImageRectangle});
-}
-
-class AmplitudeData {
-  final double maxAmplitude;
-  final double minAmplitude;
-  final List<double> Amplitudes;
-
-  AmplitudeData({required this.maxAmplitude, required this.minAmplitude, required this.Amplitudes});
-}
