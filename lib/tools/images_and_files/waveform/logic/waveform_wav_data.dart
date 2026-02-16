@@ -1,6 +1,7 @@
 part of 'package:gc_wizard/tools/images_and_files/waveform/logic/waveform.dart';
 
 const Map<int, String> _WAV_FORMAT_CODE = {
+  // https://web.archive.org/web/20101207002408/http://www.it.fht-esslingen.de/~schmidt/vorlesungen/mm/seminar/ss00/HTML/node107.html
   // http://www-mmsp.ece.mcgill.ca/Documents/AudioFormats/WAVE/Docs/rfc2361.txt
   0: '?',
   1: 'PCM',
@@ -134,9 +135,10 @@ SoundfileData WAVContent(Uint8List bytes) {
 
   int index = 0;
   while (index < bytes.length) {
-    switch (index + 4 < bytes.length
+    String chunkIdentifier = index + 4 < bytes.length
         ? String.fromCharCodes(bytes.sublist(index, index + 4))
-        : String.fromCharCodes(bytes.sublist(index))) {
+        : String.fromCharCodes(bytes.sublist(index));
+    switch (chunkIdentifier) {
       case 'RIFF':
         sectionContentList = [];
         sectionContentList.add(SoundfileDataSectionContent(
@@ -387,15 +389,13 @@ SoundfileData WAVContent(Uint8List bytes) {
                 ' Byte')); // 4 Byte
         int size =
             ByteData.sublistView(bytes).getInt32(index + 4, Endian.little);
-//        sectionContentList.add(SoundfileDataSectionContent(Meaning: 'data', Bytes: bytes.sublist(index + 8, index + 8 + size).join(' '), Value: String.fromCharCodes(bytes.sublist(index + 8, index + 8 + size)))); // 4 Byte
+        //sectionContentList.add(SoundfileDataSectionContent(Meaning: 'data', Bytes: bytes.sublist(index + 8, index + 8 + size).join(' '), Value: String.fromCharCodes(bytes.sublist(index + 8, index + 8 + size)))); // 4 Byte
         //sectionContentList.addAll(analyzeID3Chunk(bytes.sublist(index + 8, index + 8 + size)));
         section = SoundfileDataSection(
             SectionTitle: 'id3_chunk', SectionContent: sectionContentList);
         WaveFormDataSectionList.add(section);
         index = index + 8 + size;
         break;
-      default:
-        index++;
     } // switch
   } // while
 
