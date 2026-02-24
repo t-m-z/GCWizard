@@ -3,6 +3,14 @@ import 'dart:typed_data';
 import 'package:gc_wizard/tools/images_and_files/waveform/logic/waveform.dart';
 import 'package:gc_wizard/tools/science_and_technology/numeral_bases/logic/numeral_bases.dart';
 
+enum ID3FLAGS { UNSYNCHRONISATION, EXTENDED_HEADER, EXPERIMENTAL_TAGS }
+
+final Map<ID3FLAGS, String> ID3Flags = {
+  ID3FLAGS.UNSYNCHRONISATION: 'Unsynchronisation is used',
+  ID3FLAGS.EXTENDED_HEADER: 'Extended Header is used',
+  ID3FLAGS.EXPERIMENTAL_TAGS: 'Experimental tags are used',
+};
+
 final Map<String, String> ID3_FRAMES = {
   'AENC': 'Audio encryption',
   'APIC': 'Attached picture',
@@ -80,19 +88,63 @@ final Map<String, String> ID3_FRAMES = {
   'WXXX': 'User defined URL link frame',
 };
 
-final List<String> ID3_TEXT_FRAMES = ['TALB', 'TBPM', 'TCOM', 'TCON', 'TCOP', 'TDAT', 'TDLY', 'TENC', 'TEXT', 'TFLT', 'TIME', 'TIT1', 'TIT2', 'TIT3', 'TKEY', 'TLAN', 'TLEN', 'TMED', 'TOAL', 'TOFN', 'TOLY', 'TOPE', 'TORY', 'TOWN', 'TPE1', 'TPE2', 'TPE3', 'TPE4', 'TPOS', 'TPUB', 'TRCK', 'TRDA', 'TRSN', 'TRSO', 'TSIZ', 'TSRC', 'TSSE', 'TYER', 'TXXX',];
+final List<String> ID3_TEXT_FRAMES = [
+  'TALB',
+  'TBPM',
+  'TCOM',
+  'TCON',
+  'TCOP',
+  'TDAT',
+  'TDLY',
+  'TENC',
+  'TEXT',
+  'TFLT',
+  'TIME',
+  'TIT1',
+  'TIT2',
+  'TIT3',
+  'TKEY',
+  'TLAN',
+  'TLEN',
+  'TMED',
+  'TOAL',
+  'TOFN',
+  'TOLY',
+  'TOPE',
+  'TORY',
+  'TOWN',
+  'TPE1',
+  'TPE2',
+  'TPE3',
+  'TPE4',
+  'TPOS',
+  'TPUB',
+  'TRCK',
+  'TRDA',
+  'TRSN',
+  'TRSO',
+  'TSIZ',
+  'TSRC',
+  'TSSE',
+  'TYER',
+  'TXXX',
+];
 
 int sizeID3(Uint8List bytes) {
   // The ID3v2 tag size is encoded with four bytes where the most significant bit (bit 7) is set to zero in every byte,
   // making a total of 28 bits. The zeroed bits are ignored, so a 257 bytes long tag is represented as $00 00 02 01.
-  String byte0 = convertBase(bytes[0].toString(), 10, 2).padLeft(8,'0').substring(1);
-  String byte1 = convertBase(bytes[1].toString(), 10, 2).padLeft(8,'0').substring(1);
-  String byte2 = convertBase(bytes[2].toString(), 10, 2).padLeft(8,'0').substring(1);
-  String byte3 = convertBase(bytes[3].toString(), 10, 2).padLeft(8,'0').substring(1);
+  String byte0 =
+      convertBase(bytes[0].toString(), 10, 2).padLeft(8, '0').substring(1);
+  String byte1 =
+      convertBase(bytes[1].toString(), 10, 2).padLeft(8, '0').substring(1);
+  String byte2 =
+      convertBase(bytes[2].toString(), 10, 2).padLeft(8, '0').substring(1);
+  String byte3 =
+      convertBase(bytes[3].toString(), 10, 2).padLeft(8, '0').substring(1);
   return int.parse(convertBase(byte0 + byte1 + byte2 + byte3, 2, 10));
 }
 
-String ID3HeaderFlags(Uint8List bytes){
+String ID3HeaderFlags(Uint8List bytes) {
   List<String> flags = [];
   if (bytes[0] & 128 == 128) flags.add('Unsynchronisation is used');
   if (bytes[0] & 64 == 64) flags.add('Extended Header is used');
@@ -100,9 +152,15 @@ String ID3HeaderFlags(Uint8List bytes){
   return flags.join('\n');
 }
 
-String ID3FrameFlags(Uint8List bytes){
+bool checkID3ExtendedHeader(Uint8List bytes) {
+  return (bytes[0] & 64 == 64);
+}
+
+String ID3FrameFlags(Uint8List bytes) {
   List<String> flags = [];
-  if (bytes[0] & 128 == 128) flags.add('Unknown frame: Frame should be discarded');
+  if (bytes[0] & 128 == 128) {
+    flags.add('Unknown frame: Frame should be discarded');
+  }
   if (bytes[0] & 64 == 64) flags.add('Frame should be discarded');
   if (bytes[0] & 32 == 128) flags.add('Frame is read only');
   if (bytes[1] & 128 == 128) flags.add('Frame is compressed');
@@ -111,73 +169,140 @@ String ID3FrameFlags(Uint8List bytes){
   return flags.join('\n');
 }
 
-String ID3TextEncoding(Uint8List bytes){
-  if (bytes[0] == 0) {
-    return 'ISO 8859-1';
+String _getBOM(String bom) {
+  if (bom == '255 255') {
+    return 'big endian';
   } else {
-    return 'Unicode';
+    return 'little endian';
   }
 }
 
-List<SoundfileDataSectionContent> analyzeID3Chunk(Uint8List bytes){
+List<SoundfileDataSectionContent> _analyzeFrameChunk(Uint8List bytes) {
   List<SoundfileDataSectionContent> result = [];
-  result.add(SoundfileDataSectionContent(Meaning: 'sign', Bytes: bytes.sublist(0, 3).join(' '), Value: String.fromCharCodes(bytes.sublist(0, 3)))); // 3 Byte ASCII
-  result.add(SoundfileDataSectionContent(Meaning: 'version', Bytes: bytes.sublist(3, 5).join(' '), Value: bytes[3].toString() + '.' + bytes[4].toString())); // 2 Byte
-  result.add(SoundfileDataSectionContent(Meaning: 'flags', Bytes: bytes.sublist(5, 6).join(' '), Value: '')); // 1 Byte
-  if (ID3HeaderFlags(bytes.sublist(5, 6)) != '') {
-    result.add(SoundfileDataSectionContent(
-        Meaning: '', Bytes: ID3HeaderFlags(bytes.sublist(5, 6)), Value: '')); // 4 Byte ASCII
-  }
-  result.add(SoundfileDataSectionContent(Meaning: 'size', Bytes: bytes.sublist(6, 10).join(' '), Value: sizeID3(bytes.sublist(6, 10)).toString() + ' Byte')); // 4 Bytes, special Format
+  int index = 0;
 
-  int index = 10;
-//  int indexText = 0;
-  int size = 0;
-  String frame = '';
-//  String frameText = '';
   while (index < bytes.length) {
-    result.add(SoundfileDataSectionContent(Meaning: 'frame',
-        Bytes: bytes.sublist(index, index + 4).join(' '),
-        Value: String.fromCharCodes(bytes.sublist(index, index + 4)))); // 4 Byte ASCII
-    index = index + 4;
-
-    frame = String.fromCharCodes(bytes.sublist(index, index + 4));
-    result.add(SoundfileDataSectionContent(Meaning: '',
-        Bytes: ID3_FRAMES[String.fromCharCodes(bytes.sublist(index, index + 4))].toString(),
-        Value: '')); // 4 Byte ASCII
-    index = index + 4;
-
-    size = sizeID3(bytes.sublist(index, index + 4));
-    result.add(SoundfileDataSectionContent(Meaning: 'size',
-        Bytes: bytes.sublist(index, index + 4).join(' '),
-        Value: size.toString() + ' Byte')); // 4 Bytes, special Format
-    index = index + 4;
+    String frame = String.fromCharCodes(bytes.sublist(index, index + 4));
+    String flags = '';
 
     result.add(SoundfileDataSectionContent(
-        Meaning: 'flags', Bytes: bytes.sublist(index, index + 2).join(' '), Value: '')); // 4 Bytes, special Format
-    index = index + 2;
+      Meaning: 'frame',
+      Bytes: bytes.sublist(0, 4).join(' '),
+      Value: frame,
+    ));
 
-    if (ID3FrameFlags(bytes.sublist(index + 8, index + 10)) != '') {
-      result.add(SoundfileDataSectionContent(
-          Meaning: '', Bytes: ID3FrameFlags(bytes.sublist(index + 8, index + 10)), Value: '')); // 4 Byte ASCII}
-      if (ID3_TEXT_FRAMES.contains(frame)) {
-        result.add(SoundfileDataSectionContent(Meaning: 'encoding',
-            Bytes: bytes.sublist(index + 10, index + 11).join(' '),
-            Value: ID3TextEncoding(bytes.sublist(index + 10, index + 11)))); // 1 Byte
-//      indexText = 0;
-//      while (bytes[index + 11 + indexText] != 0 && indexText < size) {
-//        frameText = frameText + String.fromCharCode(bytes[indexText == 0 ? 32 : indexText]);
-//        indexText++;
-//      }
-//      result.add(SoundfileDataSectionContent(Meaning: 'data', Bytes: bytes.sublist(index + 11, index + 11 + indexText).join(' '), Value: frameText)); // ? Byte
+    int size = ByteData.sublistView(bytes).getInt32(index + 4, Endian.big);
+    result.add(SoundfileDataSectionContent(
+      Meaning: 'size',
+      Bytes: bytes.sublist(index + 4, index + 8).join(' '),
+      Value: size.toString(),
+    ));
+
+    flags = convertBase(bytes.sublist(index + 8, index + 9).join(), 10, 2).padLeft(8, '0') +
+        ' ' +
+        convertBase(bytes.sublist(index + 9, index + 10).join(), 10, 2).padLeft(8, '0');
+    result.add(SoundfileDataSectionContent(
+        Meaning: 'flags', Bytes: bytes.sublist(index + 8, index + 10).join(' '), Value: flags));
+
+    if (frame.startsWith('T')) {
+      // Txxx Frames
+      int encoding = bytes[index + 10];
+
+      if (encoding == 0) {
+        size = size - 1;
+        result.add(SoundfileDataSectionContent(
+            Meaning: 'encoding', Bytes: '0', Value: 'ISO 8859-1'));
+
+        result.add(SoundfileDataSectionContent(
+            Meaning: 'data',
+            Bytes: bytes.sublist(index + 11, index + 11 + size).join(' '),
+            Value: String.fromCharCodes(bytes.sublist(index + 11, index + 11 + size))));
       } else {
+        result.add(SoundfileDataSectionContent(
+            Meaning: 'encoding', Bytes: '1', Value: 'UTF-16'));
 
-      }
-      result.add(SoundfileDataSectionContent(Meaning: 'data',
-          Bytes: bytes.sublist(index + 11, index + 11 + size).join(' '),
-          Value: String.fromCharCodes(bytes.sublist(index + 11, index + 11 + size)))); // 4 Byte
-      index = index + 11 + size;
-    }
+        String BOM = _getBOM(bytes.sublist(index + 11, index + 13).join(' '));
+        result.add(SoundfileDataSectionContent(
+            Meaning: 'BOM', Bytes: bytes.sublist(index + 11, index + 13).join(' '), Value: BOM));
+
+        String text = '';
+
+        size = size - 3;
+
+        if (BOM == 'big endian') {
+
+        } else { // little endian
+          final codeUnits = <int>[];
+          for (var i = 13; i < 13 + size; i += 2) {
+            codeUnits.add(bytes[i] + bytes[i + 1] * 256);
+          }
+          text = String.fromCharCodes(codeUnits);
+          text = text.substring(0, text.length - 1);
+
+          result.add(SoundfileDataSectionContent(
+              Meaning: 'data',
+              Bytes: bytes.sublist(index + 13, index + 13 + size).join(' '),
+              Value: text)
+          );
+        }
+      } // encoding = 1
+    } // Txxx
+    index = index + 13 + size;
   }
+
   return result;
+}
+
+List<SoundfileDataSectionContent> analyzeID3Chunk(Uint8List bytes) {
+  List<SoundfileDataSectionContent> result = [];
+  String flags = '';
+
+  try {
+    int index = 0;
+    result.add(SoundfileDataSectionContent(
+        Meaning: 'sign',
+        Bytes: bytes.sublist(0, 3).join(' '),
+        Value: String.fromCharCodes(bytes.sublist(0, 3)))); // 3 Byte ASCII
+
+    result.add(SoundfileDataSectionContent(
+        Meaning: 'version',
+        Bytes: bytes.sublist(3, 5).join(' '),
+        Value: bytes[3].toString() + '.' + bytes[4].toString())); // 2 Byte
+
+    flags = convertBase(bytes.sublist(5, 6).join(''), 10, 2).padLeft(8, '0');
+    result.add(SoundfileDataSectionContent(
+        Meaning: 'flags',
+        Bytes: bytes.sublist(5, 6).join(' '),
+        Value: flags)); // 1 Byte
+
+    if (ID3HeaderFlags(bytes.sublist(5, 6)) != '') {
+      result.add(SoundfileDataSectionContent(
+          Meaning: '',
+          Bytes: ID3HeaderFlags(bytes.sublist(5, 6)),
+          Value: '')); // 1 Byte binary
+    }
+
+    result.add(SoundfileDataSectionContent(
+        Meaning: 'size',
+        Bytes: bytes.sublist(6, 10).join(' '),
+        Value: sizeID3(bytes.sublist(6, 10)).toString() +
+            ' Byte')); // 4 Bytes, special Format
+
+    if (checkID3ExtendedHeader(bytes.sublist(5, 6))) {
+      // Extended header size   $xx xx xx xx
+      // Extended Flags         $xx xx
+      // Size of padding        $xx xx xx xx
+      index = 20;
+    } else {
+      index = 10;
+    }
+
+    int size = sizeID3(bytes.sublist(6, 10));
+    result.addAll(_analyzeFrameChunk(bytes.sublist(index, index + size)));
+
+    return result;
+  } catch (e) {
+    print(e.toString());
+    return result;
+  }
 }
