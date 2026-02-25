@@ -644,14 +644,9 @@ Future<WaveformAndMorseResult> renderAndAnalyzeWav({
   final picture = recorder.endRecording();
   final uiImage = await picture.toImage(width, height.toInt());
 
-  // final rgbaData = await uiImage.toByteData(format: ui.ImageByteFormat.rawRgba);
-  // if (rgbaData == null) throw StateError("unable to create RGBA");
-  // final rgbaBytes = rgbaData.buffer.asUint8List();
-
   final pngData = await uiImage.toByteData(format: ui.ImageByteFormat.png);
   if (pngData == null) {
     return WaveformAndMorseResult(
-      // rgbaBytes: rgbaBytes,
       pngBytes: Uint8List.fromList([]),
       width: 0,
       height: 0,
@@ -661,7 +656,6 @@ Future<WaveformAndMorseResult> renderAndAnalyzeWav({
       status: PARSE_STATUS.ERROR,
       error: 'waveform_error_png_not_created',
     );
-    // throw StateError("unable to create PNG");
   }
   final pngBytes = pngData.buffer.asUint8List();
 

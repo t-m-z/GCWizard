@@ -269,32 +269,33 @@ print(BOM);
 List<SoundfileDataSectionContent> analyzeID3Chunk(Uint8List bytes) {
   List<SoundfileDataSectionContent> result = [];
   String flags = '';
-
+print('analyze id3 chunk');
+print(bytes);
   try {
     int index = 0;
     result.add(SoundfileDataSectionContent(
         Meaning: 'sign',
         Bytes: bytes.sublist(0, 3).join(' '),
         Value: String.fromCharCodes(bytes.sublist(0, 3)))); // 3 Byte ASCII
-
+print(bytes.sublist(0, 3).join(' '));
     result.add(SoundfileDataSectionContent(
         Meaning: 'version',
         Bytes: bytes.sublist(3, 5).join(' '),
         Value: bytes[3].toString() + '.' + bytes[4].toString())); // 2 Byte
-
+    print(bytes.sublist(3, 5).join(' '));
     flags = convertBase(bytes.sublist(5, 6).join(''), 10, 2).padLeft(8, '0');
     result.add(SoundfileDataSectionContent(
         Meaning: 'flags',
         Bytes: bytes.sublist(5, 6).join(' '),
         Value: flags)); // 1 Byte
-
+    print(bytes.sublist(5, 6).join(' '));
     if (ID3HeaderFlags(bytes.sublist(5, 6)) != '') {
       result.add(SoundfileDataSectionContent(
           Meaning: '',
           Bytes: ID3HeaderFlags(bytes.sublist(5, 6)),
           Value: '')); // 1 Byte binary
     }
-
+    print(bytes.sublist(6, 10).join(' '));
     result.add(SoundfileDataSectionContent(
         Meaning: 'size',
         Bytes: bytes.sublist(6, 10).join(' '),
