@@ -3,13 +3,15 @@ import 'dart:typed_data';
 import 'package:gc_wizard/tools/images_and_files/waveform/logic/waveform.dart';
 import 'package:gc_wizard/tools/science_and_technology/numeral_bases/logic/numeral_bases.dart';
 
-enum ID3FLAGS { UNSYNCHRONISATION, EXTENDED_HEADER, EXPERIMENTAL_TAGS }
+class ID3v4extendedHeader{
+  final String header;
+  final bool extHeaderB;
+  final bool extHeaderC;
+  final bool extHeaderD;
 
-final Map<ID3FLAGS, String> ID3Flags = {
-  ID3FLAGS.UNSYNCHRONISATION: 'Unsynchronisation is used',
-  ID3FLAGS.EXTENDED_HEADER: 'Extended Header is used',
-  ID3FLAGS.EXPERIMENTAL_TAGS: 'Experimental tags are used',
-};
+  ID3v4extendedHeader(this.header, this.extHeaderB, this.extHeaderC, this.extHeaderD);
+}
+enum ID3v3FLAGS { UNSYNCHRONISATION, EXTENDED_HEADER, EXPERIMENTAL_TAGS }
 
 final Map<String, String> ID3_FRAMES = {
   'AENC': 'Audio encryption',
@@ -144,15 +146,73 @@ int sizeID3(Uint8List bytes) {
   return int.parse(convertBase(byte0 + byte1 + byte2 + byte3, 2, 10));
 }
 
-String ID3HeaderFlags(Uint8List bytes) {
+ID3v4extendedHeader ID4HeaderFlags(Uint8List bytes) {
+  List<String> flags = [];
+  print('get header flags');
+  print(bytes);
+  bool b = false;
+  bool c = false;
+  bool d = false;
+  if (bytes[0] & 64 == 64) {
+    flags.add('Tag is an update');
+    b = true;
+  }
+  if (bytes[0] & 32 == 32) {
+    flags.add('CRC data present');
+    c = true;
+  }
+  if (bytes[0] & 16 == 16) {
+    flags.add('UTag restrictions');
+    d = true;
+  }
+  return ID3v4extendedHeader(flags.join('\n'), b, c, d);
+}
+
+String ID3v4TagRestrictions(int tag){
+  String result = 'Tag size restrictions\n';
+  String binaryTag = convertBase(tag.toString(), 10, 2).padLeft(8, '0');
+  switch (binaryTag.substring(0, 2))  {
+    case '00' : result = result + ' - No more than 128 frames and 1 MB total tag size\n'; break;
+    case '01' : result = result + ' - No more than 64 frames and 128 KB total tag size\n'; break;
+    case '10' : result = result + ' - No more than 32 frames and 40 KB total tag size\n'; break;
+    case '11' : result = result + ' - No more than 32 frames and 4 KB total tag size\n'; break;
+  }
+  result = result + 'Text encoding restrictions\n';
+  switch (binaryTag.substring(0, 2))  {
+    case '0' : result = result + ' - No restrictions\n'; break;
+    case '1' : result = result + ' - Strings are encoded with ISO-8859-1 or UTF-8\n'; break;
+  }
+  result = result + 'Text field size restrictions\n';
+  switch (binaryTag.substring(0, 2))  {
+    case '00' : result = result + ' - No restrictions\n'; break;
+    case '01' : result = result + ' - No string is longer than 1024 characters\n'; break;
+    case '10' : result = result + ' - NNo string is longer than 128 characters\n'; break;
+    case '11' : result = result + ' - No string is longer than 30 characters\n'; break;
+  }
+  result = result + 'Image encoding restrictions\n';
+  switch (binaryTag.substring(0, 2))  {
+    case '0' : result = result + ' - No restrictions\n'; break;
+    case '1' : result = result + ' - Images are encoded only with PNG [PNG] or JPEG [JFIF]\n'; break;
+  }
+  result = result + 'Image size restrictions\n';
+  switch (binaryTag.substring(0, 2))  {
+    case '00' : result = result + ' - No restrictions\n'; break;
+    case '01' : result = result + ' - All images are 256x256 pixels or smaller\n'; break;
+    case '10' : result = result + ' - All images are 64x64 pixels or smaller\n'; break;
+    case '11' : result = result + ' - All images are exactly 64x64 pixels, unless required otherwise\n'; break;
+  }
+  return result;
+}
+
+String ID3v3HeaderFlags(Uint8List bytes) {
   List<String> flags = [];
   if (bytes[0] & 128 == 128) flags.add('Unsynchronisation is used');
   if (bytes[0] & 64 == 64) flags.add('Extended Header is used');
-  if (bytes[0] & 32 == 128) flags.add('Experimental tags are used');
+  if (bytes[0] & 32 == 32) flags.add('Experimental tags are used');
   return flags.join('\n');
 }
 
-bool checkID3ExtendedHeader(Uint8List bytes) {
+bool checkID3v3ExtendedHeader(Uint8List bytes) {
   return (bytes[0] & 64 == 64);
 }
 
@@ -269,6 +329,8 @@ print(BOM);
 List<SoundfileDataSectionContent> analyzeID3Chunk(Uint8List bytes) {
   List<SoundfileDataSectionContent> result = [];
   String flags = '';
+  int version = 3;
+  int size = 0;
 print('analyze id3 chunk');
 print(bytes);
   try {
@@ -282,6 +344,7 @@ print(bytes.sublist(0, 3).join(' '));
         Meaning: 'version',
         Bytes: bytes.sublist(3, 5).join(' '),
         Value: bytes[3].toString() + '.' + bytes[4].toString())); // 2 Byte
+    version = bytes[3];
     print(bytes.sublist(3, 5).join(' '));
     flags = convertBase(bytes.sublist(5, 6).join(''), 10, 2).padLeft(8, '0');
     result.add(SoundfileDataSectionContent(
@@ -289,30 +352,81 @@ print(bytes.sublist(0, 3).join(' '));
         Bytes: bytes.sublist(5, 6).join(' '),
         Value: flags)); // 1 Byte
     print(bytes.sublist(5, 6).join(' '));
-    if (ID3HeaderFlags(bytes.sublist(5, 6)) != '') {
+    if (ID3v3HeaderFlags(bytes.sublist(5, 6)) != '') {
       result.add(SoundfileDataSectionContent(
           Meaning: '',
-          Bytes: ID3HeaderFlags(bytes.sublist(5, 6)),
+          Bytes: ID3v3HeaderFlags(bytes.sublist(5, 6)),
           Value: '')); // 1 Byte binary
     }
     print(bytes.sublist(6, 10).join(' '));
+    size = sizeID3(bytes.sublist(6, 10));
     result.add(SoundfileDataSectionContent(
         Meaning: 'size',
         Bytes: bytes.sublist(6, 10).join(' '),
-        Value: sizeID3(bytes.sublist(6, 10)).toString() +
+        Value: size.toString() +
             ' Byte')); // 4 Bytes, special Format
 
-    if (checkID3ExtendedHeader(bytes.sublist(5, 6))) {
-      // Extended header size   $xx xx xx xx
-      // Extended Flags         $xx xx
-      // Size of padding        $xx xx xx xx
-      index = 20;
+    if (version == 3) {
+      if (checkID3v3ExtendedHeader(bytes.sublist(5, 6))) {
+        // Extended header size   $xx xx xx xx
+        // Extended Flags         $xx xx
+        // Size of padding        $xx xx xx xx
+        index = 20;
+      } else {
+        index = 10;
+      }
     } else {
-      index = 10;
-    }
+      if (checkID3v3ExtendedHeader(bytes.sublist(5, 6))) {
+        index = 10;
+        int extHeaderSize = sizeID3(bytes.sublist(index, index + 4));
+        print('extHaderSize $extHeaderSize');
+        result.add(SoundfileDataSectionContent(
+          Meaning: 'extended header size',
+          Bytes: bytes.sublist(index, index + 4).join(' '),
+          Value: extHeaderSize.toString() + ' Byte'));
 
-    int size = sizeID3(bytes.sublist(6, 10));
-    result.addAll(_analyzeFrameChunk(bytes.sublist(index, index + size)));
+        index = index + 4;
+        print(bytes.sublist(index, index + 1).join(' '));
+        result.add(SoundfileDataSectionContent(
+          Meaning: 'extended flags',
+          Bytes: bytes.sublist(index, index + 1).join(' '),
+          Value: convertBase(bytes[index].toString(), 10, 2)));
+
+        index = index + 1;
+        print(bytes.sublist(index, index + 1));
+        var headerFlags = ID4HeaderFlags(bytes.sublist(index, index + 1));
+        print(headerFlags.header);
+        index = index + 1;
+        result.add(SoundfileDataSectionContent(
+          Meaning: '',
+          Bytes: '',
+          Value: headerFlags.header));
+        if (headerFlags.extHeaderB) {
+          index = index + 1;
+        }
+        if (headerFlags.extHeaderC) {
+          print(bytes[index]);
+          int crcByte = bytes[index];
+          result.add(SoundfileDataSectionContent(
+            Meaning: 'Number of CRC bytes',
+            Bytes: bytes[index].toString(),
+            Value: bytes.sublist(index + 1, index + 1 + crcByte).join(' ')));
+          print(bytes.sublist(index + 1, index + 1 + crcByte).join(' '));
+          index = index + 1 + crcByte;
+        }
+        if (headerFlags.extHeaderD) {
+          index = index + 2;
+          result.add(SoundfileDataSectionContent(
+            Meaning: 'Tag restrictions',
+            Bytes: bytes[index].toString(),
+            Value: ID3v4TagRestrictions(bytes[index])));
+          index = index + 1;
+       }
+        print('index $index');
+      }
+    }
+    print(bytes.sublist(index));
+    result.addAll(_analyzeFrameChunk(bytes.sublist(index)));
 
     return result;
   } catch (e) {
