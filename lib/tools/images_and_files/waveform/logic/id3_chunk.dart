@@ -3,136 +3,10 @@ import 'dart:typed_data';
 import 'package:gc_wizard/tools/images_and_files/waveform/logic/waveform.dart';
 import 'package:gc_wizard/tools/science_and_technology/numeral_bases/logic/numeral_bases.dart';
 
-class ID3v4extendedHeader{
-  final String header;
-  final bool extHeaderB;
-  final bool extHeaderC;
-  final bool extHeaderD;
+part 'package:gc_wizard/tools/images_and_files/waveform/logic/id3_chunk_data.dart';
 
-  ID3v4extendedHeader(this.header, this.extHeaderB, this.extHeaderC, this.extHeaderD);
-}
-enum ID3v3FLAGS { UNSYNCHRONISATION, EXTENDED_HEADER, EXPERIMENTAL_TAGS }
 
-final Map<String, String> ID3_FRAMES = {
-  'AENC': 'Audio encryption',
-  'APIC': 'Attached picture',
-  'COMM': 'Comments',
-  'COMR': 'Commercial frame',
-  'ENCR': 'Encryption method registration',
-  'EQUA': 'Equalization',
-  'ETCO': 'Event timing codes',
-  'GEOB': 'General encapsulated object',
-  'GRID': 'Group identificationtion',
-  'IPLS': 'Involved people list',
-  'LINK': 'Linked information',
-  'MCDI': 'Music CD identifier',
-  'MLLT': 'MPEG location lookup table',
-  'OWNE': 'Ownership frame',
-  'PRIV': 'Private frame',
-  'PCNT': 'Play counter',
-  'POPM': 'Popularimeter',
-  'POSS': 'Position synchronisation frame',
-  'RBUF': 'Recommended buffer size',
-  'RVAD': 'Relative volume adjustment',
-  'RVRB': 'Reverb',
-  'SYLT': 'Synchronized lyric/text',
-  'SYTC': 'Synchronized tempo codes',
-  'TALB': 'Album/Movie/Show title',
-  'TBPM': 'BPM (beats per minute)',
-  'TCOM': 'Composer',
-  'TCON': 'Content type',
-  'TCOP': 'Copyright message',
-  'TDAT': 'Date',
-  'TDLY': 'Playlist delay',
-  'TENC': 'Encoded by',
-  'TEXT': 'Lyricist/Text writer',
-  'TFLT': 'File type',
-  'TIME': 'Time',
-  'TIT1': 'Content group description',
-  'TIT2': 'Title/songname/content ion',
-  'TIT3': 'Subtitle/Description refinement',
-  'TKEY': 'Initial key',
-  'TLAN': 'Language(s)',
-  'TLEN': 'Length',
-  'TMED': 'Media type',
-  'TOAL': 'Original album/movie/show title',
-  'TOFN': 'Original filename',
-  'TOLY': 'Original lyricist(s)/text',
-  'TOPE': 'Original artist(s)/performer(s)',
-  'TORY': 'Original release year',
-  'TOWN': 'File owner/licensee',
-  'TPE1': 'Lead performer(s)/Soloist(s)',
-  'TPE2': 'Band/orchestra/accompaniment',
-  'TPE3': 'Conductor/performer refinement',
-  'TPE4': 'Interpreted, remixed, or otherwise modified by',
-  'TPOS': 'Part of a set',
-  'TPUB': 'Publisher',
-  'TRCK': 'Track number/Position in set',
-  'TRDA': 'Recording dates',
-  'TRSN': 'Internet radio station name',
-  'TRSO': 'Internet radio station owner',
-  'TSIZ': 'Size',
-  'TSRC': 'ISRC (international standard g code)',
-  'TSSE': 'Software/Hardware and settings  encoding',
-  'TYER': 'Year',
-  'TXXX': 'User defined text information',
-  'UFID': 'Unique file identifier',
-  'USER': 'Terms of use',
-  'USLT': 'Unsychronized lyric/text transcription',
-  'WCOM': 'Commercial information',
-  'WCOP': 'Copyright/Legal information',
-  'WOAF': 'Official audio file webpage',
-  'WOAR': 'Official artist/performer webpage',
-  'WOAS': 'Official audio source webpage',
-  'WORS': 'Official internet radio station',
-  'WPAY': 'Payment',
-  'WPUB': 'Publishers official webpage',
-  'WXXX': 'User defined URL link frame',
-};
-
-final List<String> ID3_TEXT_FRAMES = [
-  'TALB',
-  'TBPM',
-  'TCOM',
-  'TCON',
-  'TCOP',
-  'TDAT',
-  'TDLY',
-  'TENC',
-  'TEXT',
-  'TFLT',
-  'TIME',
-  'TIT1',
-  'TIT2',
-  'TIT3',
-  'TKEY',
-  'TLAN',
-  'TLEN',
-  'TMED',
-  'TOAL',
-  'TOFN',
-  'TOLY',
-  'TOPE',
-  'TORY',
-  'TOWN',
-  'TPE1',
-  'TPE2',
-  'TPE3',
-  'TPE4',
-  'TPOS',
-  'TPUB',
-  'TRCK',
-  'TRDA',
-  'TRSN',
-  'TRSO',
-  'TSIZ',
-  'TSRC',
-  'TSSE',
-  'TYER',
-  'TXXX',
-];
-
-int sizeID3(Uint8List bytes) {
+int _sizeID3(Uint8List bytes) {
   // The ID3v2 tag size is encoded with four bytes where the most significant bit (bit 7) is set to zero in every byte,
   // making a total of 28 bits. The zeroed bits are ignored, so a 257 bytes long tag is represented as $00 00 02 01.
   String byte0 =
@@ -146,7 +20,7 @@ int sizeID3(Uint8List bytes) {
   return int.parse(convertBase(byte0 + byte1 + byte2 + byte3, 2, 10));
 }
 
-ID3v4extendedHeader ID4HeaderFlags(Uint8List bytes) {
+_ID3v4extendedHeader _ID3v4HeaderFlags(Uint8List bytes) {
   List<String> flags = [];
   bool b = false;
   bool c = false;
@@ -163,10 +37,10 @@ ID3v4extendedHeader ID4HeaderFlags(Uint8List bytes) {
     flags.add('UTag restrictions');
     d = true;
   }
-  return ID3v4extendedHeader(flags.join('\n'), b, c, d);
+  return _ID3v4extendedHeader(flags.join('\n'), b, c, d);
 }
 
-String ID3v4TagRestrictions(int tag){
+String _ID3v4TagRestrictions(int tag){
   String result = 'Tag size restrictions\n';
   String binaryTag = convertBase(tag.toString(), 10, 2).padLeft(8, '0');
   switch (binaryTag.substring(0, 2))  {
@@ -202,7 +76,7 @@ String ID3v4TagRestrictions(int tag){
   return result;
 }
 
-String ID3v3HeaderFlags(Uint8List bytes) {
+String _ID3v3HeaderFlags(Uint8List bytes) {
   List<String> flags = [];
   if (bytes[0] & 128 == 128) flags.add('Unsynchronisation is used');
   if (bytes[0] & 64 == 64) flags.add('Extended Header is used');
@@ -210,11 +84,11 @@ String ID3v3HeaderFlags(Uint8List bytes) {
   return flags.join('\n');
 }
 
-bool checkID3v3ExtendedHeader(Uint8List bytes) {
+bool _checkID3ExtendedHeader(Uint8List bytes) {
   return (bytes[0] & 64 == 64);
 }
 
-String ID3FrameFlags(Uint8List bytes) {
+String _ID3FrameFlags(Uint8List bytes) {
   List<String> flags = [];
   if (bytes[0] & 128 == 128) {
     flags.add('Unknown frame: Frame should be discarded');
@@ -235,12 +109,14 @@ String _getBOM(String bom) {
   }
 }
 
-List<SoundfileDataSectionContent> _analyzeFrameChunk(Uint8List bytes) {
+SoundfileDataSectionContentAnalyze _analyzeID3ChunkFrames(Uint8List bytes) {
   List<SoundfileDataSectionContent> result = [];
   int index = 0;
   int encoding = 0;
   String text = '';
   String BOM = '';
+  String frame = '';
+  String flags = '';
   List <int> content = [];
 
   try {
@@ -248,20 +124,21 @@ List<SoundfileDataSectionContent> _analyzeFrameChunk(Uint8List bytes) {
       //  Frame ID   $xx xx xx xx  (four characters)
       //  Size       $xx xx xx xx
       //  Flags      $xx xx
-      String frame = String.fromCharCodes(bytes.sublist(index, index + 4));
-      String flags = '';
+      frame = String.fromCharCodes(bytes.sublist(index, index + 4));
 
       result.add(SoundfileDataSectionContent(
         Meaning: 'frame',
         Bytes: bytes.sublist(index, index + 4).join(' '),
         Value: frame,
       ));
+
       int size = ByteData.sublistView(bytes).getInt32(index + 4, Endian.big);
       result.add(SoundfileDataSectionContent(
         Meaning: 'size',
         Bytes: bytes.sublist(index + 4, index + 8).join(' '),
         Value: size.toString(),
       ));
+
       flags = convertBase(bytes.sublist(index + 8, index + 9).join(), 10, 2).padLeft(8, '0') +
           ' ' +
           convertBase(bytes.sublist(index + 9, index + 10).join(), 10, 2).padLeft(8, '0');
@@ -318,10 +195,10 @@ List<SoundfileDataSectionContent> _analyzeFrameChunk(Uint8List bytes) {
         } // encoding = 1
       } else if (frame == 'COMM') {
         // <Header for 'Comment', ID: "COMM">
-        //      Text encoding          $xx
-        //      Language               $xx xx xx
-        //      Short content descrip. <text string according to encoding> $00 (00)
-        //      The actual text        <full text string according to encoding>
+        // Text encoding          $xx
+        // Language               $xx xx xx
+        // Short content descrip. <text string according to encoding> $00 (00)
+        // The actual text        <full text string according to encoding>
         encoding = bytes[10];
         String language = bytes.sublist(11, 14).join(' '); // Byte 11 12 13
         result.add(SoundfileDataSectionContent(
@@ -345,7 +222,7 @@ List<SoundfileDataSectionContent> _analyzeFrameChunk(Uint8List bytes) {
           text = String.fromCharCodes(codeUnits);
           text = text.substring(0, text.length - 1);
           result.add(SoundfileDataSectionContent(
-              Meaning: 'short content',
+              Meaning: 'shortcontent',
               Bytes: content.join(' '),
               Value: text)
           );
@@ -374,102 +251,156 @@ List<SoundfileDataSectionContent> _analyzeFrameChunk(Uint8List bytes) {
         }
       }// COMM
     }
-    return result;
+    return SoundfileDataSectionContentAnalyze(
+        output: result,
+        status: SoundfileStatus.OK,
+        error: ''
+    );
   } catch (e) {
-    return result;
+    return SoundfileDataSectionContentAnalyze(
+        output: result,
+        status: SoundfileStatus.ERROR,
+        error: 'waveform_error_unsupported_structure'
+    );
   }
 }
 
-List<SoundfileDataSectionContent> analyzeID3Chunk(Uint8List bytes) {
+SoundfileDataSectionContentAnalyze analyzeID3Chunk(Uint8List bytes) {
   List<SoundfileDataSectionContent> result = [];
   String flags = '';
   int version = 3;
   int size = 0;
+  int index = 0;
+
   try {
-    int index = 0;
+
     result.add(SoundfileDataSectionContent(
         Meaning: 'sign',
         Bytes: bytes.sublist(0, 3).join(' '),
         Value: String.fromCharCodes(bytes.sublist(0, 3)))); // 3 Byte ASCII
+
     result.add(SoundfileDataSectionContent(
         Meaning: 'version',
         Bytes: bytes.sublist(3, 5).join(' '),
         Value: bytes[3].toString() + '.' + bytes[4].toString())); // 2 Byte
+
     version = bytes[3];
     flags = convertBase(bytes.sublist(5, 6).join(''), 10, 2).padLeft(8, '0');
-    result.add(SoundfileDataSectionContent(
+        result.add(SoundfileDataSectionContent(
         Meaning: 'flags',
         Bytes: bytes.sublist(5, 6).join(' '),
         Value: flags)); // 1 Byte
-    if (ID3v3HeaderFlags(bytes.sublist(5, 6)) != '') {
+
+    if (_ID3v3HeaderFlags(bytes.sublist(5, 6)) != '') {
       result.add(SoundfileDataSectionContent(
           Meaning: '',
-          Bytes: ID3v3HeaderFlags(bytes.sublist(5, 6)),
+          Bytes: _ID3v3HeaderFlags(bytes.sublist(5, 6)),
           Value: '')); // 1 Byte binary
     }
-    size = sizeID3(bytes.sublist(6, 10));
+
+    size = _sizeID3(bytes.sublist(6, 10));
     result.add(SoundfileDataSectionContent(
         Meaning: 'size',
         Bytes: bytes.sublist(6, 10).join(' '),
         Value: size.toString() +
             ' Byte')); // 4 Bytes, special Format
 
-    if (version == 3) {
-      if (checkID3v3ExtendedHeader(bytes.sublist(5, 6))) {
-        // Extended header size   $xx xx xx xx
-        // Extended Flags         $xx xx
-        // Size of padding        $xx xx xx xx
-        index = 20;
-      } else {
-        index = 10;
-      }
-    } else {
-      if (checkID3v3ExtendedHeader(bytes.sublist(5, 6))) {
-        index = 10;
-        int extHeaderSize = sizeID3(bytes.sublist(index, index + 4));
-        result.add(SoundfileDataSectionContent(
-          Meaning: 'extended header size',
+    index = 10;
+
+    if (_checkID3ExtendedHeader(bytes.sublist(5, 6))) {
+      // Extended header size   $xx xx xx xx
+      int extHeaderSize = _sizeID3(bytes.sublist(index, index + 4));
+      result.add(SoundfileDataSectionContent(
+          Meaning: 'extendedheadersize',
           Bytes: bytes.sublist(index, index + 4).join(' '),
           Value: extHeaderSize.toString() + ' Byte'));
 
-        index = index + 4;
+      index = index + 4;
+
+      if (version == 3) {
+        // Extended Flags         $xx xx
+        // Size of padding        $xx xx xx xx
         result.add(SoundfileDataSectionContent(
-          Meaning: 'extended flags',
-          Bytes: bytes.sublist(index, index + 1).join(' '),
-          Value: convertBase(bytes[index].toString(), 10, 2)));
+            Meaning: 'extendedflags',
+            Bytes: bytes.sublist(index, index + 2).join(' '),
+            Value: convertBase(bytes[index].toString(), 10, 2)));
+
+        var headerFlags = _ID3v3HeaderFlags(bytes.sublist(index, index + 2));
+        result.add(SoundfileDataSectionContent(
+            Meaning: '',
+            Bytes: '',
+            Value: headerFlags));
+        index = index + 2;
+
+        result.add(SoundfileDataSectionContent(
+            Meaning: 'padding',
+            Bytes: bytes.sublist(index, index + 4).join(' '),
+            Value: ByteData.sublistView(bytes)
+                .getInt32(index + 4, Endian.little).toString()));
+        index = index + 4;
+
+        if (headerFlags.startsWith('1')) {
+          result.add(SoundfileDataSectionContent(
+              Meaning: 'numberofcrcbytes',
+              Bytes: bytes.sublist(index, index + 4).join(' '),
+              Value: ''));
+          index = index + 4;
+        }
+
+      } else { // version == 4
+        // Number of flag bytes       $01
+        // Extended Flags             $xx
+        result.add(SoundfileDataSectionContent(
+            Meaning: 'extendedflags',
+            Bytes: bytes.sublist(index, index + 1).join(' '),
+            Value: convertBase(bytes[index].toString(), 10, 2)));
 
         index = index + 1;
-        var headerFlags = ID4HeaderFlags(bytes.sublist(index, index + 1));
+        var headerFlags = _ID3v4HeaderFlags(bytes.sublist(index, index + 1));
         index = index + 1;
         result.add(SoundfileDataSectionContent(
-          Meaning: '',
-          Bytes: '',
-          Value: headerFlags.header));
+            Meaning: '',
+            Bytes: '',
+            Value: headerFlags.header));
+
         if (headerFlags.extHeaderB) {
           index = index + 1;
         }
+
         if (headerFlags.extHeaderC) {
           int crcByte = bytes[index];
           result.add(SoundfileDataSectionContent(
-            Meaning: 'Number of CRC bytes',
-            Bytes: bytes[index].toString(),
-            Value: bytes.sublist(index + 1, index + 1 + crcByte).join(' ')));
+              Meaning: 'numberofcrcbytes',
+              Bytes: bytes[index].toString(),
+              Value: bytes.sublist(index + 1, index + 1 + crcByte).join(' ')));
           index = index + 1 + crcByte;
         }
+
         if (headerFlags.extHeaderD) {
           index = index + 2;
           result.add(SoundfileDataSectionContent(
-            Meaning: 'Tag restrictions',
-            Bytes: bytes[index].toString(),
-            Value: ID3v4TagRestrictions(bytes[index])));
+              Meaning: 'tagrestrictions',
+              Bytes: bytes[index].toString(),
+              Value: _ID3v4TagRestrictions(bytes[index])));
           index = index + 1;
-       }
+        }
+
       }
     }
-    result.addAll(_analyzeFrameChunk(bytes.sublist(index)));
 
-    return result;
+    SoundfileDataSectionContentAnalyze data = _analyzeID3ChunkFrames(bytes.sublist(index));
+    result.addAll(data.output);
+
+    return SoundfileDataSectionContentAnalyze(
+      output: result,
+      status: SoundfileStatus.OK,
+      error: '',
+    );
   } catch (e) {
-    return result;
+    return SoundfileDataSectionContentAnalyze(
+      output: result,
+      status: SoundfileStatus.ERROR,
+      error: 'waveform_error_unsupported_structure',
+    );
   }
 }

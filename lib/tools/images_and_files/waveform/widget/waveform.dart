@@ -34,7 +34,10 @@ class WaveFormState extends State<WaveForm> {
       sampleRate: 0,
       structure: [],
       duration: 0.0,
-      amplitudesData: Uint8List.fromList([]));
+      amplitudesData: Uint8List.fromList([]),
+      status: SoundfileStatus.ZERO,
+      error: '',
+  );
 
   String _decodedMorseCode = '';
   String _decodedMorseText = '';
@@ -147,6 +150,7 @@ class WaveFormState extends State<WaveForm> {
     }
     return result;
   }
+
   Widget _buildOutputWaveFormStructure() {
     List<Widget> output = _buildOutputSoundfileStructure(_bytes);
     return Column(children: [
@@ -182,6 +186,12 @@ class WaveFormState extends State<WaveForm> {
 
   List<Widget> _buildOutputSoundfileStructure(Uint8List bytes) {
     List<Widget> result = [];
+
+    if (_soundfileData.status == SoundfileStatus.ERROR) {
+      return [GCWOutputText(
+        text: i18n(context, 'waveform_output_error'),
+      )];
+    }
 
     for (var section in _soundfileData.structure) {
       List<List<dynamic>> content = [];

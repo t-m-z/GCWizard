@@ -6,6 +6,8 @@ class SoundfileOutput {
   SoundfileOutput({required this.Widgets});
 }
 
+enum SoundfileStatus {OK, ERROR, ZERO}
+
 class SoundfileData {
   final List<SoundfileDataSection> structure;
   final int PCMformat;
@@ -14,8 +16,10 @@ class SoundfileData {
   final int sampleRate;
   final double duration;
   final Uint8List amplitudesData;
+  final SoundfileStatus status;
+  final String error;
 
-  SoundfileData({required this.PCMformat, required this.bits, required this.channels, required this.sampleRate, required this.structure, required this.duration, required this.amplitudesData});
+  SoundfileData({required this.PCMformat, required this.bits, required this.channels, required this.sampleRate, required this.structure, required this.duration, required this.amplitudesData, required this.status, required this.error});
 }
 
 class SoundfileDataSection {
@@ -32,5 +36,15 @@ class SoundfileDataSectionContent {
 
   SoundfileDataSectionContent({required this.Meaning, required this.Bytes, required this.Value});
 }
+
+class SoundfileDataSectionContentAnalyze {
+  final List<SoundfileDataSectionContent> output;
+  final SoundfileStatus status;
+  final String error;
+
+  SoundfileDataSectionContentAnalyze({required this.output, required this.status, required this.error});
+
+}
+
 
 

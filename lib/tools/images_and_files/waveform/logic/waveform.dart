@@ -1,7 +1,7 @@
 import 'dart:math';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/tools/images_and_files/waveform/logic/id3_data.dart';
+import 'package:gc_wizard/tools/images_and_files/waveform/logic/id3_chunk.dart';
 import 'package:gc_wizard/tools/science_and_technology/numeral_bases/logic/numeral_bases.dart';
 import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 
@@ -23,6 +23,8 @@ SoundfileData getSoundfileData(Uint8List bytes) {
           channels: 0,
           sampleRate: 0,
           duration: 0.0,
-          amplitudesData: Uint8List.fromList([]));
+          amplitudesData: Uint8List.fromList([]),
+          status: SoundfileStatus.ZERO,
+          error: '');
   }
 }
