@@ -10,7 +10,6 @@ List<SoundfileDataSectionContent> _textFrame(
   int encoding = frameBytes[0];
   String text = '';
   String BOM = '';
-  List<int> content = [];
 
   List<SoundfileDataSectionContent> result = [];
 
@@ -21,36 +20,36 @@ List<SoundfileDataSectionContent> _textFrame(
   result.add(SoundfileDataSectionContent(
       Meaning: 'data', Bytes: frameBytes.sublist(1).join(' '), Value: _getEncodedString(encoding, frameBytes.sublist(1))));
 
-  if (encoding == 0) { // ISO 8859-1
-    text = String.fromCharCodes(frameBytes.sublist(1));
-    result.add(SoundfileDataSectionContent(
-        Meaning: 'data', Bytes: frameBytes.sublist(1).join(' '), Value: text));
-  } else {
-    BOM = _getBOM(frameBytes.sublist(index + 1, index + 3).join(' '));
-    result.add(SoundfileDataSectionContent(
-        Meaning: 'BOM',
-        Bytes: frameBytes.sublist(index + 1, index + 3).join(' '),
-        Value: BOM));
-    text = '';
-
-    size = size - 3;
-
-    if (BOM == 'big endian') {
-    } else {
-      // little endian
-      final codeUnits = <int>[];
-      for (var i = 3; i < 3 + size; i += 2) {
-        codeUnits.add(frameBytes[i] + frameBytes[i + 1] * 256);
-      }
-      text = String.fromCharCodes(codeUnits);
-      text = text.substring(0, text.length - 1);
-
+  switch (encoding) {
+    case 0: // ISO 8859-1
+      text = _getEncodedString(encoding, frameBytes.sublist(1));
       result.add(SoundfileDataSectionContent(
-          Meaning: 'data',
-          Bytes: frameBytes.sublist(index + 3, index + 3 + size).join(' '),
-          Value: text));
-    }
-    index = index + 3 + size;
-  } // encoding = 1
+          Meaning: 'data', Bytes: frameBytes.sublist(1).join(' '), Value: text));
+      break;
+    case 1: // UNICODE with BOM
+      BOM = _getBOM(frameBytes.sublist(index + 1, index + 3).join(' '));
+      result.add(SoundfileDataSectionContent(
+          Meaning: 'BOM',
+          Bytes: frameBytes.sublist(index + 1, index + 3).join(' '),
+          Value: BOM));
+
+        text = _getEncodedString(encoding, frameBytes.sublist(1));
+
+        result.add(SoundfileDataSectionContent(
+            Meaning: 'data',
+            Bytes: frameBytes.sublist(1).join(' '),
+            Value: text));
+      break;
+    case 2: // UNICODE BigEndian
+      text = _getEncodedString(encoding, frameBytes.sublist(1));
+      result.add(SoundfileDataSectionContent(
+          Meaning: 'data', Bytes: frameBytes.sublist(1).join(' '), Value: text));
+      break;
+    case 3: // UTF-8
+      text = _getEncodedString(encoding, frameBytes.sublist(1));
+      result.add(SoundfileDataSectionContent(
+          Meaning: 'data', Bytes: frameBytes.sublist(1).join(' '), Value: text));
+      break;
+  }
   return result;
 }

@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:gc_wizard/tools/images_and_files/waveform/logic/waveform.dart';

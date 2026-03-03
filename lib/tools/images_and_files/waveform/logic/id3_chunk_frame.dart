@@ -18,9 +18,44 @@ String _getBOM(String bom) {
   }
 }
 
-String _getEncodedString(int encoding, List<int> content) {
-  String text = '';
-  return text;
+String _utf16beToString(Uint8List bytes) {
+  final codeUnits = <int>[];
+
+  for (var i = 0; i < bytes.length; i += 2) {
+    final high = bytes[i];
+    final low = bytes[i + 1];
+    final unit = (high << 8) | low; // Big Endian: High Byte zuerst
+    codeUnits.add(unit);
+  }
+
+  return String.fromCharCodes(codeUnits);
+}
+
+String _decodeUtf16(Uint8List bytes, {required bool bigEndian}) {
+  if (bytes.length % 2 != 0) { throw ArgumentError('Ungültige UTF‑16 Byte-Länge'); }
+  final codeUnits = <int>[];
+  for (var i = 0; i < bytes.length; i += 2) {
+    final b1 = bytes[i];
+    final b2 = bytes[i + 1];
+    final unit = bigEndian ? (b1 << 8) | b2 : (b2 << 8) | b1;
+    codeUnits.add(unit);
+  }
+  return String.fromCharCodes(codeUnits);
+}
+
+String _getEncodedString(int encoding, Uint8List content) {
+  switch (encoding) {
+    case 0: return String.fromCharCodes(content);
+    case 1: final bom = (content[0] << 8) | content[1]; // UTF‑16BE BOM: FE FF
+            if (bom == 0xFEFF) {
+              return _decodeUtf16(content.sublist(2), bigEndian: true);
+            } else {
+              return _decodeUtf16(content.sublist(2), bigEndian: false);
+            }
+    case 2: return _utf16beToString(content);
+    case 3: return utf8.decode(content);
+    default: return 'unknown';
+  }
 }
 
 String _ID3FrameFlags(Uint8List bytes) {
