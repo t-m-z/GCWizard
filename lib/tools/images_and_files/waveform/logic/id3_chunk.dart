@@ -4,6 +4,14 @@ import 'package:gc_wizard/tools/images_and_files/waveform/logic/waveform.dart';
 import 'package:gc_wizard/tools/science_and_technology/numeral_bases/logic/numeral_bases.dart';
 
 part 'package:gc_wizard/tools/images_and_files/waveform/logic/id3_chunk_data.dart';
+part 'package:gc_wizard/tools/images_and_files/waveform/logic/id3_chunk_frame.dart';
+part 'package:gc_wizard/tools/images_and_files/waveform/logic/id3_chunk_frame_apic.dart';
+part 'package:gc_wizard/tools/images_and_files/waveform/logic/id3_chunk_frame_comm.dart';
+part 'package:gc_wizard/tools/images_and_files/waveform/logic/id3_chunk_frame_link.dart';
+part 'package:gc_wizard/tools/images_and_files/waveform/logic/id3_chunk_frame_owne.dart';
+part 'package:gc_wizard/tools/images_and_files/waveform/logic/id3_chunk_frame_text.dart';
+part 'package:gc_wizard/tools/images_and_files/waveform/logic/id3_chunk_frame_user.dart';
+part 'package:gc_wizard/tools/images_and_files/waveform/logic/id3_chunk_frame_wxxx.dart';
 
 
 int _sizeID3(Uint8List bytes) {
@@ -88,36 +96,14 @@ bool _checkID3ExtendedHeader(Uint8List bytes) {
   return (bytes[0] & 64 == 64);
 }
 
-String _ID3FrameFlags(Uint8List bytes) {
-  List<String> flags = [];
-  if (bytes[0] & 128 == 128) {
-    flags.add('Unknown frame: Frame should be discarded');
-  }
-  if (bytes[0] & 64 == 64) flags.add('Frame should be discarded');
-  if (bytes[0] & 32 == 128) flags.add('Frame is read only');
-  if (bytes[1] & 128 == 128) flags.add('Frame is compressed');
-  if (bytes[1] & 64 == 64) flags.add('Frame is encrypted');
-  if (bytes[1] & 32 == 128) flags.add('Frame contains group information');
-  return flags.join('\n');
-}
-
-String _getBOM(String bom) {
-  if (bom == '255 255') {
-    return 'big endian';
-  } else {
-    return 'little endian';
-  }
-}
-
 SoundfileDataSectionContentAnalyze _analyzeID3ChunkFrames(Uint8List bytes) {
   List<SoundfileDataSectionContent> result = [];
   int index = 0;
-  int encoding = 0;
-  String text = '';
-  String BOM = '';
   String frame = '';
   String flags = '';
-  List <int> content = [];
+  int size = 0;
+  Uint8List frameData = Uint8List.fromList([]);
+
 
   try {
     while (index < bytes.length) {
@@ -125,14 +111,19 @@ SoundfileDataSectionContentAnalyze _analyzeID3ChunkFrames(Uint8List bytes) {
       //  Size       $xx xx xx xx
       //  Flags      $xx xx
       frame = String.fromCharCodes(bytes.sublist(index, index + 4));
-
       result.add(SoundfileDataSectionContent(
         Meaning: 'frame',
         Bytes: bytes.sublist(index, index + 4).join(' '),
         Value: frame,
       ));
 
-      int size = ByteData.sublistView(bytes).getInt32(index + 4, Endian.big);
+      result.add(SoundfileDataSectionContent(
+        Meaning: '',
+        Bytes: '',
+        Value: _ID3_FRAMES[frame].toString(),
+      ));
+
+      size = ByteData.sublistView(bytes).getInt32(index + 4, Endian.big);
       result.add(SoundfileDataSectionContent(
         Meaning: 'size',
         Bytes: bytes.sublist(index + 4, index + 8).join(' '),
@@ -145,111 +136,10 @@ SoundfileDataSectionContentAnalyze _analyzeID3ChunkFrames(Uint8List bytes) {
       result.add(SoundfileDataSectionContent(
           Meaning: 'flags', Bytes: bytes.sublist(index + 8, index + 10).join(' '), Value: flags));
 
-      if (frame.startsWith('T')) {
-        // Txxx Frames
-        encoding = bytes[index + 10];
-        if (encoding == 0) {
-          size = size - 1;
-          result.add(SoundfileDataSectionContent(
-              Meaning: 'encoding', Bytes: '0', Value: 'ISO 8859-1'));
-          if (bytes[index + 11 + size - 1] == 0) {
-            size--;
-          }
-          result.add(SoundfileDataSectionContent(
-              Meaning: 'data',
-              Bytes: bytes.sublist(index + 11, index + 11 + size).join(' '),
-              Value: String.fromCharCodes(bytes.sublist(index + 11, index + 11 + size))));
-
-          index = index + 11 + size;
-          if (bytes[index] == 0) {
-            index++;
-          }
-        } else {
-          result.add(SoundfileDataSectionContent(
-              Meaning: 'encoding', Bytes: '1', Value: 'UTF-16'));
-
-          String BOM = _getBOM(bytes.sublist(index + 11, index + 13).join(' '));
-          result.add(SoundfileDataSectionContent(
-              Meaning: 'BOM', Bytes: bytes.sublist(index + 11, index + 13).join(' '), Value: BOM));
-          String text = '';
-
-          size = size - 3;
-
-          if (BOM == 'big endian') {
-
-          } else { // little endian
-            final codeUnits = <int>[];
-            for (var i = 13; i < 13 + size; i += 2) {
-              codeUnits.add(bytes[i] + bytes[i + 1] * 256);
-            }
-            text = String.fromCharCodes(codeUnits);
-            text = text.substring(0, text.length - 1);
-
-            result.add(SoundfileDataSectionContent(
-                Meaning: 'data',
-                Bytes: bytes.sublist(index + 13, index + 13 + size).join(' '),
-                Value: text)
-            );
-          }
-          index = index + 13 + size;
-        } // encoding = 1
-      } else if (frame == 'COMM') {
-        // <Header for 'Comment', ID: "COMM">
-        // Text encoding          $xx
-        // Language               $xx xx xx
-        // Short content descrip. <text string according to encoding> $00 (00)
-        // The actual text        <full text string according to encoding>
-        encoding = bytes[10];
-        String language = bytes.sublist(11, 14).join(' '); // Byte 11 12 13
-        result.add(SoundfileDataSectionContent(
-            Meaning: 'language',
-            Bytes: language,
-            Value: language));
-        BOM = _getBOM(bytes.sublist(14, 16).join(' '));
-        content = [];
-        index = 16;
-        while (bytes[index] != 255) {
-          content.add(bytes[index]);
-          index++;
-        }
-        if (BOM == 'big endian') {
-
-        } else { // little endian
-          final codeUnits = <int>[];
-          for (var i = 0; i < content.length; i += 2) {
-            codeUnits.add(content[i] + content[i + 1] * 256);
-          }
-          text = String.fromCharCodes(codeUnits);
-          text = text.substring(0, text.length - 1);
-          result.add(SoundfileDataSectionContent(
-              Meaning: 'shortcontent',
-              Bytes: content.join(' '),
-              Value: text)
-          );
-        }
-        BOM = _getBOM(bytes.sublist(index, index + 2).join(' '));
-        content = [];
-        index = index + 2;
-        while (index < size + 10) {
-          content.add(bytes[index]);
-          index++;
-        }
-        if (BOM == 'big endian') {
-
-        } else { // little endian
-          final codeUnits = <int>[];
-          for (var i = 0; i < content.length; i += 2) {
-            codeUnits.add(content[i] + content[i + 1] * 256);
-          }
-          text = String.fromCharCodes(codeUnits);
-          codeUnits.last == 0 ? text = text.substring(0, text.length - 1) : text = text.substring(0, text.length);
-          result.add(SoundfileDataSectionContent(
-              Meaning: 'comment',
-              Bytes: content.join(' '),
-              Value: text)
-          );
-        }
-      }// COMM
+      // analyze frame
+      frameData = bytes.sublist(index + 10, index + 10 + size);
+      result.addAll(_getFrameData(frame, frameData));
+      index = index + 10 + size;
     }
     return SoundfileDataSectionContentAnalyze(
         output: result,
