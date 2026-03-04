@@ -4,7 +4,7 @@ String _getEncoding(int encoding) {
   switch (encoding) {
     case 0: return 'ISO 8859-1';
     case 1: return 'UTF-16 BOM';
-    case 2: return 'UTF-16 Big Endian';
+    case 2: return 'UTF-16 Big Endian'; // FE FF
     case 3: return 'UTF-8';
     default: return 'unknown';
   }

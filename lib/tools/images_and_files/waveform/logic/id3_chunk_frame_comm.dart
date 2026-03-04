@@ -9,7 +9,6 @@ List<SoundfileDataSectionContent> _commFrame(Uint8List frameBytes,) {
 
   List<SoundfileDataSectionContent> result = [];
   int index = 0;
-  int size = frameBytes.length;
   int encoding = frameBytes[0];
   String text = '';
   String BOM = '';
@@ -27,56 +26,60 @@ List<SoundfileDataSectionContent> _commFrame(Uint8List frameBytes,) {
       Bytes: language,
       Value: language));
 
-  switch (encoding) {
-    case 0: break;
-    case 1: break;
-    case 2: break;
-    case 3: break;
-  }
-
-  BOM = _getBOM(frameBytes.sublist(4, 6).join(' '));
-  content = [];
-  index = 6;
-  while (frameBytes[index] != 255) {
-    content.add(frameBytes[index]);
-    index++;
-  }
-  if (BOM == 'big endian') {
-
-  } else { // little endian
-    final codeUnits = <int>[];
-    for (var i = 0; i < content.length; i += 2) {
-      codeUnits.add(content[i] + content[i + 1] * 256);
-    }
-    text = String.fromCharCodes(codeUnits);
-    text = text.substring(0, text.length - 1);
+  index = 4;
+  if (encoding == 1) {
+    BOM = _getBOM(frameBytes.sublist(index, index + 2).join(' '));
     result.add(SoundfileDataSectionContent(
-        Meaning: 'shortcontent',
-        Bytes: content.join(' '),
-        Value: text)
-    );
+        Meaning: 'bom',
+        Bytes: frameBytes.sublist(index, index + 2).join(' '),
+        Value: BOM));
   }
-  BOM = _getBOM(frameBytes.sublist(index, index + 2).join(' '));
-  content = [];
-  index = index + 2;
-  while (index < size) {
-    content.add(frameBytes[index]);
-    index++;
-  }
-  if (BOM == 'big endian') {
 
-  } else { // little endian
-    final codeUnits = <int>[];
-    for (var i = 0; i < content.length; i += 2) {
-      codeUnits.add(content[i] + content[i + 1] * 256);
+  if (encoding == 1) { // UTF-16 with BOM
+    while (!(frameBytes[index] == 0 && frameBytes[index + 1] == 0) ) {
+      content.add(frameBytes[index]);
+      content.add(frameBytes[index + 1]);
+      index = index + 2;
     }
-    text = String.fromCharCodes(codeUnits);
-    codeUnits.last == 0 ? text = text.substring(0, text.length - 1) : text = text.substring(0, text.length);
-    result.add(SoundfileDataSectionContent(
-        Meaning: 'comment',
-        Bytes: content.join(' '),
-        Value: text)
-    );
+    content.add(frameBytes[index]);
+    content.add(frameBytes[index + 1]);
+    index = index + 2;
+  } else if (encoding == 2){ // UTF-16BE without BOM
+    while (!(frameBytes[index] == 0 && frameBytes[index + 1] == 0)) {
+      content.add(frameBytes[index]);
+      content.add(frameBytes[index + 1]);
+      index = index + 2;
+    }
+    content.add(frameBytes[index]);
+    content.add(frameBytes[index + 1]);
+    index = index + 2;
+  } else { //UTF-8, ISO-8859-1
+    while (frameBytes[index] != 0) {
+      content.add(frameBytes[index]);
+      index++;
+    }
   }
+
+  text = _getEncodedString(encoding, Uint8List.fromList(content));
+  result.add(SoundfileDataSectionContent(
+      Meaning: 'shortcontent',
+      Bytes: content.join(' '),
+      Value: text));
+
+  content = [];
+  if (encoding == 1) {
+    BOM = _getBOM(frameBytes.sublist(index, index + 2).join(' '));
+    result.add(SoundfileDataSectionContent(
+        Meaning: 'bom',
+        Bytes: frameBytes.sublist(index, index + 2).join(' '),
+        Value: BOM));
+  }
+
+  text = _getEncodedString(encoding, frameBytes.sublist(index, ));
+  result.add(SoundfileDataSectionContent(
+      Meaning: 'comment',
+      Bytes: content.join(' '),
+      Value: text));
+
   return result;
 }

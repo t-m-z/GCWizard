@@ -7426,6 +7426,7 @@
   "waveform_output_numberofcrcbytes": "Number of CRC bytes",
   "waveform_output_tagrestrictions": "Tag restrictions",
   "waveform_output_comment": "Comment",
+  "waveform_output_bom": "Byte Order Mark",
   "waveform_output_shortcontent": "Short content",
   "waveform_output_language": "Language",
   "waveform_output_encoding": "Encoding",
