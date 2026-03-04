@@ -66,7 +66,6 @@ List<SoundfileDataSectionContent> _commFrame(Uint8List frameBytes,) {
       Bytes: content.join(' '),
       Value: text));
 
-  content = [];
   if (encoding == 1) {
     BOM = _getBOM(frameBytes.sublist(index, index + 2).join(' '));
     result.add(SoundfileDataSectionContent(

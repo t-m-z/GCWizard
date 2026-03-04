@@ -118,9 +118,6 @@ List<SoundfileDataSectionContent> _getFrameData(
     case 'TYER':
     case 'TXXX': return _textFrame(frameBytes);
     case 'COMM': return _commFrame(frameBytes);
-    case 'APIC':
-    case 'USER':
-    case 'OWNE':
     case 'WCOM':
     case 'WCOP':
     case 'WOAF':
@@ -129,7 +126,12 @@ List<SoundfileDataSectionContent> _getFrameData(
     case 'WORS':
     case 'WPAY':
     case 'WPUB':
-    case 'WXXX':
+    case 'WXXX': return _wurlFrame(frameBytes);
+    case 'USER': return _userFrame(frameBytes);
+    case 'UFID': // return _ufidFrame(frameBytes)
+    case 'OWNE': // return _owneFrame(frameBytes);
+    case 'PRIV': // return _privFrame(frameBytes);
+    case 'APIC': // return _apicFrame(frameBytes);
     default:
       return [];
   }
