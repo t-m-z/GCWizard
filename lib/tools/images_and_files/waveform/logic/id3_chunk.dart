@@ -155,6 +155,68 @@ SoundfileDataSectionContentAnalyze _analyzeID3ChunkFrames(Uint8List bytes) {
     );
   }
 }
+List<SoundfileDataSectionContent> getID3v1Chunk(Uint8List bytes) {
+  // https://de.wikipedia.org/wiki/ID3-Tag
+  // Offset	Länge	Bedeutung
+  // 0	      3	  Kennung „TAG“ zur Kennzeichnung eines ID3v1-Blocks
+  // 3	     30	  Titel des Musikstücks
+  // 33	     30	  Künstler/Interpret
+  // 63	     30	  Album
+  // 93	      4	  Erscheinungsjahr
+  // 97	     30	  Beliebiger Kommentar                28   Beliebiger Kommentar
+  //                                         125       1   Nullbyte
+  //                                         126       1   Titelnummer
+  // 127	    1 	Genre
+  List<SoundfileDataSectionContent> result = [];
+
+  result.add(SoundfileDataSectionContent(
+      Meaning: 'sign',
+      Bytes: bytes.sublist(0, 3).join(' '),
+      Value: String.fromCharCodes(bytes.sublist(0, 3))));
+
+  result.add(SoundfileDataSectionContent(
+      Meaning: 'title',
+      Bytes: bytes.sublist(3, 33).join(' '),
+      Value: String.fromCharCodes(bytes.sublist(3, 33))));
+
+  result.add(SoundfileDataSectionContent(
+      Meaning: 'artist',
+      Bytes: bytes.sublist(33, 63).join(' '),
+      Value: String.fromCharCodes(bytes.sublist(33, 63))));
+
+  result.add(SoundfileDataSectionContent(
+      Meaning: 'album',
+      Bytes: bytes.sublist(63, 93).join(' '),
+      Value: String.fromCharCodes(bytes.sublist(63, 93))));
+
+  result.add(SoundfileDataSectionContent(
+      Meaning: 'year',
+      Bytes: bytes.sublist(93, 97).join(' '),
+      Value: String.fromCharCodes(bytes.sublist(93, 97))));
+
+  if (bytes[125] == 0) { // ID3v1.1
+    result.add(SoundfileDataSectionContent(
+        Meaning: 'comment',
+        Bytes: bytes.sublist(97, 125).join(' '),
+        Value: String.fromCharCodes(bytes.sublist(97, 127))));
+
+    result.add(SoundfileDataSectionContent(
+        Meaning: 'titlenumbertitlenumber',
+        Bytes: bytes.sublist(126, 127).join(' '),
+        Value: String.fromCharCodes(bytes.sublist(97, 127))));
+  } else {
+    result.add(SoundfileDataSectionContent(
+        Meaning: 'comment',
+        Bytes: bytes.sublist(97, 127).join(' '),
+        Value: String.fromCharCodes(bytes.sublist(97, 127))));
+  }
+  result.add(SoundfileDataSectionContent(
+      Meaning: 'genre',
+      Bytes: bytes.sublist(27, 128).join(' '),
+      Value: _ID3_GENRE[bytes.sublist(127, 128)]!));
+
+  return result;
+}
 
 SoundfileDataSectionContentAnalyze analyzeID3Chunk(Uint8List bytes) {
   List<SoundfileDataSectionContent> result = [];

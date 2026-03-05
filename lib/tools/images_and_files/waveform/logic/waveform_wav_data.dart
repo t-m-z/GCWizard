@@ -137,11 +137,24 @@ SoundfileData WAVContent(Uint8List bytes) {
   String meaningData = '';
   String byteData = '';
   String valueData = '';
+  String chunkIdentifier = '';
 
   int index = 0;
   try {
     while (index < bytes.length) {
-      String chunkIdentifier = index + 4 < bytes.length
+      chunkIdentifier = index + 3 < bytes.length
+          ? String.fromCharCodes(bytes.sublist(index, index + 3))
+          : String.fromCharCodes(bytes.sublist(index));
+
+      if (chunkIdentifier == 'TAG') {
+        section = SoundfileDataSection(
+            SectionTitle: 'id3_chunk',
+            SectionContent: getID3v1Chunk(bytes.sublist(index, index + 128)));
+
+        WaveFormDataSectionList.add(section);
+        index = index + 128;
+      }
+      chunkIdentifier = index + 4 < bytes.length
           ? String.fromCharCodes(bytes.sublist(index, index + 4))
           : String.fromCharCodes(bytes.sublist(index));
       switch (chunkIdentifier) {
