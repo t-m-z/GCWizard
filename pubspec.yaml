@@ -8,6 +8,7 @@ environment:
 
 dependencies:
   archive: ^4.0.5
+  audio_decoder: ^0.7.3
   audioplayers: ^6.5.1
   auto_size_text: ^3.0.0
   base32: ^2.2.0

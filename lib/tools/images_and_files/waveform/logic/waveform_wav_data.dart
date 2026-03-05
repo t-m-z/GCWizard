@@ -476,24 +476,30 @@ SoundfileData WAVContent(Uint8List bytes) {
       } // switch
     } // while
     return SoundfileData(
-      PCMformat: PCMformat,
-      bits: bits,
-      channels: channels,
-      sampleRate: sampleRate,
+      wavFile: wavFileData(
+        PCMformat: PCMformat,
+        bits: bits,
+        channels: channels,
+        sampleRate: sampleRate,
+        duration: dataSize / dataRate,
+      ),
+      mp3File: mp3FileData(id: 0, layer: 0, protection: 0, bitrate: 0, sampleRate: 0, padding: 0, private: 0, channelMode: 0, modeExtension: 0, copyright: 0, original: 0, emphasis: 0),
       amplitudesData: amplitudesData,
-      duration: dataSize / dataRate,
       structure: WaveFormDataSectionList,
       status: SoundfileStatus.OK,
       error: '',
     );
   } catch (e) {
     return SoundfileData(
-      PCMformat: PCMformat,
-      bits: bits,
-      channels: channels,
-      sampleRate: sampleRate,
+      wavFile: wavFileData(
+        PCMformat: PCMformat,
+        bits: bits,
+        channels: channels,
+        sampleRate: sampleRate,
+        duration: dataSize / dataRate,
+      ),
+      mp3File: mp3FileData(id: 0, layer: 0, protection: 0, bitrate: 0, sampleRate: 0, padding: 0, private: 0, channelMode: 0, modeExtension: 0, copyright: 0, original: 0, emphasis: 0),
       amplitudesData: amplitudesData,
-      duration: dataSize / dataRate,
       structure: WaveFormDataSectionList,
       status: SoundfileStatus.ERROR,
       error: 'waveform_error_unsupported_structure',

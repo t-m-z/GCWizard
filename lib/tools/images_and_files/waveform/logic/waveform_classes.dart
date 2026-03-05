@@ -6,27 +6,76 @@ class SoundfileOutput {
   SoundfileOutput({required this.Widgets});
 }
 
-enum SoundfileStatus {OK, ERROR, ZERO}
+enum SoundfileStatus { OK, ERROR, ZERO }
 
-class SoundfileData {
-  final List<SoundfileDataSection> structure;
+class wavFileData {
   final int PCMformat;
   final int bits;
   final int channels;
   final int sampleRate;
   final double duration;
+
+  wavFileData(
+      {required this.PCMformat,
+      required this.bits,
+      required this.channels,
+      required this.sampleRate,
+      required this.duration});
+}
+
+class mp3FileData {
+  final int id;
+  final int layer;
+  final int protection;
+  final int bitrate;
+  final double sampleRate;
+  final int padding;
+  final int private;
+  final int channelMode;
+  final int modeExtension;
+  final int copyright;
+  final int original;
+  final int emphasis;
+
+  mp3FileData({
+    required this.id,
+    required this.layer,
+    required this.protection,
+    required this.bitrate,
+    required this.sampleRate,
+    required this.padding,
+    required this.private,
+    required this.channelMode,
+    required this.modeExtension,
+    required this.copyright,
+    required this.original,
+    required this.emphasis,
+  });
+}
+
+class SoundfileData {
+  final wavFileData wavFile;
+  final mp3FileData mp3File;
+  final List<SoundfileDataSection> structure;
   final Uint8List amplitudesData;
   final SoundfileStatus status;
   final String error;
 
-  SoundfileData({required this.PCMformat, required this.bits, required this.channels, required this.sampleRate, required this.structure, required this.duration, required this.amplitudesData, required this.status, required this.error});
+  SoundfileData(
+      {required this.wavFile,
+      required this.mp3File,
+      required this.structure,
+      required this.amplitudesData,
+      required this.status,
+      required this.error});
 }
 
 class SoundfileDataSection {
   final String SectionTitle;
   final List<SoundfileDataSectionContent> SectionContent;
 
-  SoundfileDataSection({required this.SectionTitle, required this.SectionContent});
+  SoundfileDataSection(
+      {required this.SectionTitle, required this.SectionContent});
 }
 
 class SoundfileDataSectionContent {
@@ -34,7 +83,8 @@ class SoundfileDataSectionContent {
   final String Bytes;
   final String Value;
 
-  SoundfileDataSectionContent({required this.Meaning, required this.Bytes, required this.Value});
+  SoundfileDataSectionContent(
+      {required this.Meaning, required this.Bytes, required this.Value});
 }
 
 class SoundfileDataSectionContentAnalyze {
@@ -42,9 +92,6 @@ class SoundfileDataSectionContentAnalyze {
   final SoundfileStatus status;
   final String error;
 
-  SoundfileDataSectionContentAnalyze({required this.output, required this.status, required this.error});
-
+  SoundfileDataSectionContentAnalyze(
+      {required this.output, required this.status, required this.error});
 }
-
-
-

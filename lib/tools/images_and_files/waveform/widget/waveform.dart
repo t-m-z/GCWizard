@@ -28,15 +28,25 @@ class WaveFormState extends State<WaveForm> {
   Uint8List _bytes = Uint8List.fromList([]);
   Uint8List _soundfilePNGImage = Uint8List.fromList([]);
   SoundfileData _soundfileData = SoundfileData(
-      PCMformat: 0,
-      bits: 0,
-      channels: 0,
-      sampleRate: 0,
-      structure: [],
-      duration: 0.0,
-      amplitudesData: Uint8List.fromList([]),
-      status: SoundfileStatus.ZERO,
-      error: '',
+    wavFile: wavFileData(
+        PCMformat: 0, bits: 0, channels: 0, sampleRate: 0, duration: 0),
+    mp3File: mp3FileData(
+        id: 0,
+        layer: 0,
+        protection: 0,
+        bitrate: 0,
+        sampleRate: 0,
+        padding: 0,
+        private: 0,
+        channelMode: 0,
+        modeExtension: 0,
+        copyright: 0,
+        original: 0,
+        emphasis: 0),
+    structure: [],
+    amplitudesData: Uint8List.fromList([]),
+    status: SoundfileStatus.ZERO,
+    error: '',
   );
 
   String _decodedMorseCode = '';
@@ -65,7 +75,7 @@ class WaveFormState extends State<WaveForm> {
     return Column(
       children: <Widget>[
         GCWOpenFile(
-          supportedFileTypes: const [FileType.WAV],
+          supportedFileTypes: const [FileType.WAV, FileType.MP3],
           onLoaded: (_file) async {
             if (_file == null) {
               showSnackBar(i18n(context, 'common_loadfile_exception_notloaded'),
@@ -74,7 +84,7 @@ class WaveFormState extends State<WaveForm> {
             }
             _setData(_file.bytes);
             _soundfileData = getSoundfileData(_bytes);
-            renderAndAnalyzeWav(wavBytes: _bytes, height: 400).then((value){
+            renderAndAnalyzeWav(wavBytes: _bytes, height: 400).then((value) {
               if (value.status == PARSE_STATUS.ERROR) {
                 setState(() {
                   _spectrumCreated = false;
@@ -108,7 +118,11 @@ class WaveFormState extends State<WaveForm> {
       (_spectrumCreated)
           ? GCWImageView(
               imageData: GCWImageViewData(GCWFile(bytes: _soundfilePNGImage)),
-              suppressOpenInTool: const {GCWImageViewOpenInTools.COLORCORRECTIONS, GCWImageViewOpenInTools.HIDDENDATA, GCWImageViewOpenInTools.FLIPROTATE},
+              suppressOpenInTool: const {
+                GCWImageViewOpenInTools.COLORCORRECTIONS,
+                GCWImageViewOpenInTools.HIDDENDATA,
+                GCWImageViewOpenInTools.FLIPROTATE
+              },
             )
           : GCWOutputText(
               text: _errorText('waveform_output_image_error'),
@@ -136,10 +150,11 @@ class WaveFormState extends State<WaveForm> {
     ]);
   }
 
-  String _errorText(String text){
+  String _errorText(String text) {
     String result = '';
     if (_parseError) {
-      if (_currentError.contains('depth') || _currentError.contains('audioformat')) {
+      if (_currentError.contains('depth') ||
+          _currentError.contains('audioformat')) {
         var errorcode = _currentError.split(':');
         result = i18n(context, errorcode[0]) + errorcode[1];
       } else {
@@ -188,9 +203,11 @@ class WaveFormState extends State<WaveForm> {
     List<Widget> result = [];
 
     if (_soundfileData.status == SoundfileStatus.ERROR) {
-      return [GCWOutputText(
-        text: i18n(context, 'waveform_output_error'),
-      )];
+      return [
+        GCWOutputText(
+          text: i18n(context, 'waveform_output_error'),
+        )
+      ];
     }
 
     for (var section in _soundfileData.structure) {
@@ -224,5 +241,3 @@ class WaveFormState extends State<WaveForm> {
     return result;
   }
 }
-
-
