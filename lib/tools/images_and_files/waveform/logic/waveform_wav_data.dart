@@ -132,7 +132,7 @@ SoundfileData WAVContent(Uint8List bytes) {
   int bits = ByteData.sublistView(bytes).getInt16(34, Endian.little);
   int dataSize = 0;
   int PCMformat = 0;
-  Uint8List amplitudesData = Uint8List.fromList([]);
+  Uint8List amplitudesData = bytes;
 
   String meaningData = '';
   String byteData = '';
@@ -314,7 +314,6 @@ SoundfileData WAVContent(Uint8List bytes) {
           dataSize =
               ByteData.sublistView(bytes).getInt32(index + 4, Endian.little);
           dataSize = min(bytes.length - index - 8, dataSize);
-          amplitudesData = bytes.sublist(index + 8, index + 8 + dataSize);
           if (dataSize % 2 == 0) {
             sectionContentList.add(SoundfileDataSectionContent(
                 Meaning: 'padding', Bytes: 'no padding', Value: ''));
@@ -322,7 +321,6 @@ SoundfileData WAVContent(Uint8List bytes) {
           else {
             sectionContentList.add(SoundfileDataSectionContent(
                 Meaning: 'padding', Bytes: '1 Byte', Value: '')); // 4 Byte
-            amplitudesData.add(0);
           }
 
           sectionContentList.add(SoundfileDataSectionContent(

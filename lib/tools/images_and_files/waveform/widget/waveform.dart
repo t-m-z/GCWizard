@@ -83,8 +83,11 @@ class WaveFormState extends State<WaveForm> {
               return;
             }
             _setData(_file.bytes);
-            _soundfileData = getSoundfileData(_bytes);
-            renderAndAnalyzeWav(wavBytes: _bytes, height: 400).then((value) {
+            await getSoundfileData(_bytes).then((value){
+              _soundfileData = value;
+            });
+            //renderAndAnalyzeWav(wavBytes: _bytes, height: 400).then((value) {
+            renderAndAnalyzeWav(wavBytes: _soundfileData.amplitudesData, height: 400).then((value) {
               if (value.status == PARSE_STATUS.ERROR) {
                 setState(() {
                   _spectrumCreated = false;

@@ -67,6 +67,7 @@ class _SampleResult {
 class WavParser {
 
   static Future<WavData> parse(Uint8List bytes) async {
+    print('parse bytes magic '+bytes.sublist(0, 4).toString());
     final bd = ByteData.sublistView(bytes);
 
     // simple RIFF/WAVE-Check
@@ -81,6 +82,7 @@ class WavParser {
       // throw FormatException('File to short');
     }
     if (String.fromCharCodes(bytes.sublist(0, 4)) != 'RIFF') {
+      print('waveform_error_unsupported_format -no RIFF');
       return WavData(
         sampleRate: 0,
         numChannels: 0,
@@ -91,6 +93,7 @@ class WavParser {
       // throw FormatException('Missing RIFF-Header');
     }
     if (String.fromCharCodes(bytes.sublist(8, 12)) != 'WAVE') {
+      print('waveform_error_unsupported_format -no WAVE');
       return WavData(
         sampleRate: 0,
         numChannels: 0,
@@ -138,6 +141,7 @@ class WavParser {
         bitsPerSample == null ||
         dataOffset == null ||
         dataSize == null) {
+      print('waveform_error_unsupported_format - no format data');
       return WavData(
         sampleRate: 0,
         numChannels: 0,
@@ -149,6 +153,7 @@ class WavParser {
     }
 
     if (!(audioFormat == 1 || audioFormat == 3)) {
+      print('waveform_error_unsupported_format - unsupported format');
       return WavData(
         sampleRate: 0,
         numChannels: 0,
@@ -178,6 +183,7 @@ class WavParser {
           audioFormat,
         );
         if (sample.status == PARSE_STATUS.ERROR) {
+          print('waveform_error_unsupported_format - parse error');
           return WavData(
             sampleRate: 0,
             numChannels: 0,
@@ -241,6 +247,7 @@ class WavParser {
             status: PARSE_STATUS.OK,
             error: '',);
         default:
+          print('waveform_error_unsupported_format - unsupported bit depth');
           return _SampleResult(
             sample: 0.0,
             status: PARSE_STATUS.ERROR,
@@ -597,10 +604,11 @@ Future<WaveformAndMorseResult> renderAndAnalyzeWav({
   Color waveformColor = Colors.orange,
   double strokeWidth = 1.0,
 }) async {
-
+  print('renderAndAnalyzeWav');
   final wavData = await WavParser.parse(wavBytes);
 
   if (wavData.status == PARSE_STATUS.ERROR) {
+    print('parse error');
     return WaveformAndMorseResult(
       // rgbaBytes: rgbaBytes,
       pngBytes: Uint8List.fromList([]),

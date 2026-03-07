@@ -10,7 +10,7 @@ part 'package:gc_wizard/tools/images_and_files/waveform/logic/waveform_classes.d
 part 'package:gc_wizard/tools/images_and_files/waveform/logic/waveform_wav_data.dart';
 part 'package:gc_wizard/tools/images_and_files/waveform/logic/waveform_mp3_data.dart';
 
-SoundfileData getSoundfileData(Uint8List bytes) {
+Future<SoundfileData> getSoundfileData(Uint8List bytes) async {
   switch (getFileType(bytes)) {
     case FileType.WAV:
     case FileType.WMV:
