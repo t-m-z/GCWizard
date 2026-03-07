@@ -7,28 +7,43 @@ import 'package:gc_wizard/tools/science_and_technology/numeral_bases/logic/numer
 import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 
 part 'package:gc_wizard/tools/images_and_files/waveform/logic/waveform_classes.dart';
+part 'package:gc_wizard/tools/images_and_files/waveform/logic/waveform_ogg_data.dart';
 part 'package:gc_wizard/tools/images_and_files/waveform/logic/waveform_wav_data.dart';
 part 'package:gc_wizard/tools/images_and_files/waveform/logic/waveform_mp3_data.dart';
+part 'package:gc_wizard/tools/images_and_files/waveform/logic/waveform_ogg_amplitudes.dart';
+part 'package:gc_wizard/tools/images_and_files/waveform/logic/waveform_wav_amplitudes.dart';
+part 'package:gc_wizard/tools/images_and_files/waveform/logic/waveform_mp3_amplitudes.dart';
 
 Future<SoundfileData> getSoundfileData(Uint8List bytes) async {
   switch (getFileType(bytes)) {
     case FileType.WAV:
     case FileType.WMV:
-      return WAVContent(bytes);
+      return wavContent(bytes);
     case FileType.MP3:
-      return MP3Content(bytes);
+      return mp3Content(bytes);
     case FileType.OGG:
+      return oggContent(bytes);
     default:
       return SoundfileData(
-          wavFile: wavFileData(PCMformat: 0,
-            bits: 0,
-            channels: 0,
-            sampleRate: 0,
-            duration: 0.0,),
-          mp3File: mp3FileData(id: 0, layer: 0, protection: 0, bitrate: 0, sampleRate: 0, padding: 0, private: 0, channelMode: 0, modeExtension: 0, copyright: 0, original: 0, emphasis: 0),
+          wavFile: null,
+          mp3File: null,
+          oggFile: null,
           structure: [],
-          amplitudesData: Uint8List.fromList([]),
           status: SoundfileStatus.ZERO,
           error: '');
+  }
+}
+
+Future<Uint8List> getSoundfileAmplitudes(Uint8List bytes) async {
+  switch (getFileType(bytes)) {
+    case FileType.WAV:
+    case FileType.WMV:
+      return wavAmplitudes(bytes);
+    case FileType.MP3:
+      return mp3Amplitudes(bytes);
+    case FileType.OGG:
+      return oggAmplitudes(bytes);
+    default:
+      return Uint8List.fromList([]);
   }
 }

@@ -116,7 +116,7 @@ String _WAVchannelMaskAnalyze(int channels) {
   return result.join('\n');
 }
 
-SoundfileData WAVContent(Uint8List bytes) {
+SoundfileData wavContent(Uint8List bytes) {
   // http://www-mmsp.ece.mcgill.ca/Documents/AudioFormats/WAVE/WAVE.html
   // https://de.wikipedia.org/wiki/RIFF_WAVE
   // https://web.archive.org/web/20101207002408/http://www.it.fht-esslingen.de/~schmidt/vorlesungen/mm/seminar/ss00/HTML/node107.html
@@ -462,7 +462,7 @@ SoundfileData WAVContent(Uint8List bytes) {
                   bytes.sublist(index + 8, index + 8 + size)))); // 4 Byte
 
           SoundfileDataSectionContentAnalyze data =
-              analyzeID3Chunk(bytes.sublist(index + 8, index + 8 + size));
+              analyzeID3v2Chunk(bytes.sublist(index + 8, index + 8 + size));
           sectionContentList.addAll(data.output);
 
           section = SoundfileDataSection(
@@ -481,8 +481,8 @@ SoundfileData WAVContent(Uint8List bytes) {
         sampleRate: sampleRate,
         duration: dataSize / dataRate,
       ),
-      mp3File: mp3FileData(id: 0, layer: 0, protection: 0, bitrate: 0, sampleRate: 0, padding: 0, private: 0, channelMode: 0, modeExtension: 0, copyright: 0, original: 0, emphasis: 0),
-      amplitudesData: amplitudesData,
+      mp3File: null,
+      oggFile: null,
       structure: WaveFormDataSectionList,
       status: SoundfileStatus.OK,
       error: '',
@@ -496,8 +496,8 @@ SoundfileData WAVContent(Uint8List bytes) {
         sampleRate: sampleRate,
         duration: dataSize / dataRate,
       ),
-      mp3File: mp3FileData(id: 0, layer: 0, protection: 0, bitrate: 0, sampleRate: 0, padding: 0, private: 0, channelMode: 0, modeExtension: 0, copyright: 0, original: 0, emphasis: 0),
-      amplitudesData: amplitudesData,
+      mp3File: null,
+      oggFile: null,
       structure: WaveFormDataSectionList,
       status: SoundfileStatus.ERROR,
       error: 'waveform_error_unsupported_structure',

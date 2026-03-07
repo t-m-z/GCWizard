@@ -27,24 +27,12 @@ class WaveForm extends StatefulWidget {
 class WaveFormState extends State<WaveForm> {
   Uint8List _bytes = Uint8List.fromList([]);
   Uint8List _soundfilePNGImage = Uint8List.fromList([]);
+  Uint8List _soundfileAmplitudes = Uint8List.fromList([]);
   SoundfileData _soundfileData = SoundfileData(
-    wavFile: wavFileData(
-        PCMformat: 0, bits: 0, channels: 0, sampleRate: 0, duration: 0),
-    mp3File: mp3FileData(
-        id: 0,
-        layer: 0,
-        protection: 0,
-        bitrate: 0,
-        sampleRate: 0,
-        padding: 0,
-        private: 0,
-        channelMode: 0,
-        modeExtension: 0,
-        copyright: 0,
-        original: 0,
-        emphasis: 0),
+    wavFile: null,
+    mp3File: null,
+    oggFile: null,
     structure: [],
-    amplitudesData: Uint8List.fromList([]),
     status: SoundfileStatus.ZERO,
     error: '',
   );
@@ -75,7 +63,7 @@ class WaveFormState extends State<WaveForm> {
     return Column(
       children: <Widget>[
         GCWOpenFile(
-          supportedFileTypes: const [FileType.WAV, FileType.MP3],
+          supportedFileTypes: const [FileType.WAV, FileType.MP3, FileType.OGG],
           onLoaded: (_file) async {
             if (_file == null) {
               showSnackBar(i18n(context, 'common_loadfile_exception_notloaded'),
@@ -83,11 +71,9 @@ class WaveFormState extends State<WaveForm> {
               return;
             }
             _setData(_file.bytes);
-            await getSoundfileData(_bytes).then((value){
-              _soundfileData = value;
-            });
-            //renderAndAnalyzeWav(wavBytes: _bytes, height: 400).then((value) {
-            renderAndAnalyzeWav(wavBytes: _soundfileData.amplitudesData, height: 400).then((value) {
+            _soundfileData = await getSoundfileData(_bytes);
+            _soundfileAmplitudes = await getSoundfileAmplitudes(_bytes);
+            renderAndAnalyzeWav(wavBytes: _soundfileAmplitudes, height: 400).then((value) {
               if (value.status == PARSE_STATUS.ERROR) {
                 setState(() {
                   _spectrumCreated = false;

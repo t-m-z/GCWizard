@@ -152,16 +152,7 @@ double _getMP3SampleRate(int id, int sampleRate) {
   return _mp3SampleRate[sampleRate]![id]!;
 }
 
-Future<Uint8List> _mp3ToPCM(Uint8List mp3Bytes) async {
-  final Uint8List pcmBytes = await AudioDecoder.convertToWavBytes(
-    mp3Bytes,
-    formatHint: 'mp3',
-    includeHeader: true,
-  );
-  return pcmBytes;
-}
-
-Future<SoundfileData> MP3Content(Uint8List bytes) async {
+Future<SoundfileData> mp3Content(Uint8List bytes) async {
   // http://mpgedit.org/mpgedit/mpeg_format/MP3Format.html
   // https://de.wikipedia.org/wiki/MP3
   // Frame Header 4 Bytes
@@ -170,13 +161,6 @@ Future<SoundfileData> MP3Content(Uint8List bytes) async {
   List<SoundfileDataSection> WaveFormDataSectionList = [];
   SoundfileDataSection section;
   List<SoundfileDataSectionContent> sectionContentList = [];
-
-  Uint8List amplitudesData = Uint8List.fromList([]);
-
-  await _mp3ToPCM(bytes).then((value) {
-    amplitudesData = value;
-    print('_mp3TpPCM bytes => '+String.fromCharCodes(amplitudesData.sublist(0, 4)));
-  });
 
   String header = '';
   int id = 0;
@@ -221,8 +205,8 @@ Future<SoundfileData> MP3Content(Uint8List bytes) async {
     index = index + frameSize;
   }
   return SoundfileData(
-    wavFile: wavFileData(
-        PCMformat: 0, bits: 0, channels: 0, sampleRate: 0, duration: 0),
+    wavFile: null,
+    oggFile: null,
     mp3File: mp3FileData(
       id: id,
       layer: layer,
@@ -237,7 +221,6 @@ Future<SoundfileData> MP3Content(Uint8List bytes) async {
       original: original,
       emphasis: emphasis,
     ),
-    amplitudesData: amplitudesData,
     structure: WaveFormDataSectionList,
     status: SoundfileStatus.OK,
     error: '',

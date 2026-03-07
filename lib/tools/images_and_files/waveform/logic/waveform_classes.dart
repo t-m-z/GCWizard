@@ -53,19 +53,49 @@ class mp3FileData {
   });
 }
 
+class oggFileData {
+  final int id;
+  final int layer;
+  final int protection;
+  final int bitrate;
+  final double sampleRate;
+  final int padding;
+  final int private;
+  final int channelMode;
+  final int modeExtension;
+  final int copyright;
+  final int original;
+  final int emphasis;
+
+  oggFileData({
+    required this.id,
+    required this.layer,
+    required this.protection,
+    required this.bitrate,
+    required this.sampleRate,
+    required this.padding,
+    required this.private,
+    required this.channelMode,
+    required this.modeExtension,
+    required this.copyright,
+    required this.original,
+    required this.emphasis,
+  });
+}
+
 class SoundfileData {
-  final wavFileData wavFile;
-  final mp3FileData mp3File;
+  final wavFileData? wavFile;
+  final mp3FileData? mp3File;
+  final oggFileData? oggFile;
   final List<SoundfileDataSection> structure;
-  final Uint8List amplitudesData;
   final SoundfileStatus status;
   final String error;
 
   SoundfileData(
       {required this.wavFile,
       required this.mp3File,
+      required this.oggFile,
       required this.structure,
-      required this.amplitudesData,
       required this.status,
       required this.error});
 }

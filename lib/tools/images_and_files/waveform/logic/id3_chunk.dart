@@ -213,12 +213,21 @@ List<SoundfileDataSectionContent> getID3v1Chunk(Uint8List bytes) {
   result.add(SoundfileDataSectionContent(
       Meaning: 'genre',
       Bytes: bytes.sublist(27, 128).join(' '),
-      Value: _ID3_GENRE[bytes.sublist(127, 128)]!));
+      Value: _ID3_GENRE[bytes[127]]!));
 
   return result;
 }
 
-SoundfileDataSectionContentAnalyze analyzeID3Chunk(Uint8List bytes) {
+SoundfileDataSectionContentAnalyze analyzeID3v2Chunk(Uint8List bytes) {
+  // https://de.wikipedia.org/wiki/ID3-Tag
+  // https://web.archive.org/web/20150309021728/http://id3.org/id3v2.4.0-structure
+  // Header - 10 Bytes
+  // Offset	Länge	Bedeutung
+  // 0	      3	  Kennung „ID3“ zur Kennzeichnung eines ID3v1-Blocks
+  // 3	      2	  Version
+  // 5	      1	  Flag
+  // 6	      4   Länge
+
   List<SoundfileDataSectionContent> result = [];
   String flags = '';
   int version = 3;
