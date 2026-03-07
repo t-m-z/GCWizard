@@ -12,6 +12,9 @@ import 'package:gc_wizard/common_widgets/image_viewers/gcw_imageview.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output_text.dart';
+import 'package:gc_wizard/common_widgets/spinners/gcw_double_spinner.dart';
+import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
+import 'package:gc_wizard/common_widgets/switches/gcw_threeoptionsswitch.dart';
 import 'package:gc_wizard/tools/images_and_files/hex_viewer/widget/hex_viewer.dart';
 import 'package:gc_wizard/tools/images_and_files/waveform/logic/waveform.dart';
 import 'package:gc_wizard/tools/images_and_files/waveform/logic/waveform_rms_image.dart';
@@ -52,6 +55,13 @@ class WaveFormState extends State<WaveForm> {
   bool _parseError = false;
   bool _spectrumCreated = false;
 
+  int _currentSmoothingWindow = 5;
+  double _currentThresholdFactor = 4.0;
+  int _currentMinRunLength = 3;
+  double _currentUnitTolerance = 0.40;
+
+  int _currentMode = 1;
+
   @override
   void initState() {
     super.initState();
@@ -80,7 +90,10 @@ class WaveFormState extends State<WaveForm> {
             }
             _setData(_file.bytes);
             _audioInfo = await getSoundfileAudioInfo(_bytes);
-            renderAndAnalyzeWav(wavBytes: _audioInfo.bytes, height: 400)
+            renderAndAnalyzeWav(
+                    wavBytes: _audioInfo.bytes,
+                    height: 400,
+                    params: MorseParams())
                 .then((value) {
               if (value.status == PARSE_STATUS.ERROR) {
                 setState(() {
@@ -104,12 +117,17 @@ class WaveFormState extends State<WaveForm> {
           file: GCWFile(bytes: _bytes),
         ),
         _buildOutputWaveFormImage(),
+        _buildOutputDecodingParameter(),
         _buildOutputWaveFormMorse(),
         _buildOutputWaveFormInfo(),
         GCWButton(
           text: i18n(context, 'waveform_output_metadata'),
           onPressed: () {
-            setState(() {});
+            setState(() {
+              getSoundfileData(_bytes).then((value) {
+                _soundfileData = value;
+              });
+            });
           },
         ),
         _buildOutputWaveFormStructure(),
@@ -132,6 +150,214 @@ class WaveFormState extends State<WaveForm> {
               text: _errorText('waveform_output_image_error'),
             ),
     ]);
+  }
+
+  Widget _buildOutputDecodingParameter() {
+    // Morse‑Decoder – Einstellungen
+    // Signalverarbeitung
+    // smoothingWindow  Slider (1–25)     Standard: 5
+    //
+    // thresholdFactor  Slider (1.0–10.0) Standard: 4.0
+    // (höher = weniger empfindlich)
+    //
+    // minRunLength     Stepper (1–20)    Standard: 3
+    // (entfernt kurze Störimpulse)
+    //
+    // Morse‑Interpretation
+    // unitTolerance    Slider (0–0.8)    Standard: 0.40
+    // (höher = toleranter gegenüber unregelmäßigem Morse)
+    //
+    return GCWExpandableTextDivider(
+      suppressTopSpace: false,
+      text: i18n(context, 'waveform_settings'),
+      expanded: false,
+      child: Column(
+        children: [
+          GCWThreeOptionsSwitch(
+              notitle: true,
+              labels: [
+                i18n(context, 'waveform_settings_threshold'),
+                i18n(context, 'waveform_settings_mode_tolerant'),
+                i18n(context, 'waveform_settings_mode_cluster')
+              ],
+              position: _currentMode,
+              onChanged: (position) {
+                setState(() {
+                  _currentMode = position;
+                  renderAndAnalyzeWav(
+                      wavBytes: _audioInfo.bytes,
+                      height: 400,
+                      params: MorseParams(
+                          smoothingWindow: _currentSmoothingWindow,
+                          thresholdFactor: _currentThresholdFactor,
+                          minRunLength: _currentMinRunLength,
+                          unitTolerance: _currentUnitTolerance,
+                          mode: morseUnitModeMap[_currentMode]!))
+                      .then((value) {
+                    if (value.status == PARSE_STATUS.ERROR) {
+                      setState(() {
+                        _spectrumCreated = false;
+                        _parseError = true;
+                        _currentError = value.error;
+                      });
+                    } else {
+                      setState(() {
+                        _soundfilePNGImage = value.pngBytes;
+                        _decodedMorseCode = value.morse;
+                        _decodedMorseText = value.text;
+                        _spectrumCreated = true;
+                        _parseError = false;
+                      });
+                    }
+                  });
+                });
+              }),
+          GCWIntegerSpinner(
+              title: i18n(context, 'waveform_settings_smoothing'),
+              min: 1,
+              max: 25,
+              value: _currentSmoothingWindow,
+              onChanged: (value) {
+                setState(() {
+                  _currentSmoothingWindow = value;
+                  renderAndAnalyzeWav(
+                          wavBytes: _audioInfo.bytes,
+                          height: 400,
+                          params: MorseParams(
+                              smoothingWindow: _currentSmoothingWindow,
+                              thresholdFactor: _currentThresholdFactor,
+                              minRunLength: _currentMinRunLength,
+                              unitTolerance: _currentUnitTolerance,
+                              mode: morseUnitModeMap[_currentMode]!))
+                      .then((value) {
+                    if (value.status == PARSE_STATUS.ERROR) {
+                      setState(() {
+                        _spectrumCreated = false;
+                        _parseError = true;
+                        _currentError = value.error;
+                      });
+                    } else {
+                      setState(() {
+                        _soundfilePNGImage = value.pngBytes;
+                        _decodedMorseCode = value.morse;
+                        _decodedMorseText = value.text;
+                        _spectrumCreated = true;
+                        _parseError = false;
+                      });
+                    }
+                  });
+                });
+              }),
+          GCWDoubleSpinner(
+              title: i18n(context, 'waveform_settings_threshold'),
+              min: 1.0,
+              max: 10.0,
+              value: _currentThresholdFactor,
+              onChanged: (value) {
+                setState(() {
+                  _currentThresholdFactor = value;
+                  renderAndAnalyzeWav(
+                          wavBytes: _audioInfo.bytes,
+                          height: 400,
+                          params: MorseParams(
+                              smoothingWindow: _currentSmoothingWindow,
+                              thresholdFactor: _currentThresholdFactor,
+                              minRunLength: _currentMinRunLength,
+                              unitTolerance: _currentUnitTolerance,
+                              mode: morseUnitModeMap[_currentMode]!))
+                      .then((value) {
+                    if (value.status == PARSE_STATUS.ERROR) {
+                      setState(() {
+                        _spectrumCreated = false;
+                        _parseError = true;
+                        _currentError = value.error;
+                      });
+                    } else {
+                      setState(() {
+                        _soundfilePNGImage = value.pngBytes;
+                        _decodedMorseCode = value.morse;
+                        _decodedMorseText = value.text;
+                        _spectrumCreated = true;
+                        _parseError = false;
+                      });
+                    }
+                  });
+                });
+              }),
+          GCWIntegerSpinner(
+              title: i18n(context, 'waveform_settings_minrunlength'),
+              min: 1,
+              max: 20,
+              value: _currentMinRunLength,
+              onChanged: (value) {
+                setState(() {
+                  _currentMinRunLength = value;
+                  renderAndAnalyzeWav(
+                          wavBytes: _audioInfo.bytes,
+                          height: 400,
+                          params: MorseParams(
+                              smoothingWindow: _currentSmoothingWindow,
+                              thresholdFactor: _currentThresholdFactor,
+                              minRunLength: _currentMinRunLength,
+                              unitTolerance: _currentUnitTolerance,
+                              mode: morseUnitModeMap[_currentMode]!))
+                      .then((value) {
+                    if (value.status == PARSE_STATUS.ERROR) {
+                      setState(() {
+                        _spectrumCreated = false;
+                        _parseError = true;
+                        _currentError = value.error;
+                      });
+                    } else {
+                      setState(() {
+                        _soundfilePNGImage = value.pngBytes;
+                        _decodedMorseCode = value.morse;
+                        _decodedMorseText = value.text;
+                        _spectrumCreated = true;
+                        _parseError = false;
+                      });
+                    }
+                  });
+                });
+              }),
+          GCWDoubleSpinner(
+              title: i18n(context, 'waveform_settings_tolerance'),
+              min: 0,
+              max: 0.8,
+              value: _currentUnitTolerance,
+              onChanged: (value) {
+                setState(() {
+                  _currentUnitTolerance = value;
+                  renderAndAnalyzeWav(
+                          wavBytes: _audioInfo.bytes,
+                          height: 400,
+                          params: MorseParams(
+                              smoothingWindow: _currentSmoothingWindow,
+                              thresholdFactor: _currentThresholdFactor,
+                              minRunLength: _currentMinRunLength,
+                              unitTolerance: _currentUnitTolerance))
+                      .then((value) {
+                    if (value.status == PARSE_STATUS.ERROR) {
+                      setState(() {
+                        _spectrumCreated = false;
+                        _parseError = true;
+                        _currentError = value.error;
+                      });
+                    } else {
+                      setState(() {
+                        _soundfilePNGImage = value.pngBytes;
+                        _decodedMorseCode = value.morse;
+                        _decodedMorseText = value.text;
+                        _spectrumCreated = true;
+                        _parseError = false;
+                      });
+                    }
+                  });
+                });
+              }),
+        ],
+      ),
+    );
   }
 
   Widget _buildOutputWaveFormMorse() {
@@ -182,7 +408,7 @@ class WaveFormState extends State<WaveForm> {
       ],
       [
         i18n(context, 'waveform_output_samplerate'),
-        _audioInfo.sampleRate.toString()
+        _audioInfo.sampleRate.toString() + ' Hz'
       ],
       [
         i18n(context, 'waveform_output_channel'),
@@ -190,7 +416,7 @@ class WaveFormState extends State<WaveForm> {
       ],
       [
         i18n(context, 'waveform_output_bitrate'),
-        _audioInfo.bitRate.toString() + ' Hz'
+        _audioInfo.bitRate.toString() + ' bit/s'
       ],
       [i18n(context, 'waveform_output_format'), _audioInfo.format],
     ];
@@ -272,7 +498,7 @@ class WaveFormState extends State<WaveForm> {
     return result;
   }
 
-  Future<void> _showMetaData(Uint8List bytes) async {
+  Future<void> _getMetaData(Uint8List bytes) async {
     _soundfileData = await getSoundfileData(_bytes);
   }
 }

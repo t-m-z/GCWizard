@@ -132,7 +132,6 @@ SoundfileData wavContent(Uint8List bytes) {
   int bits = ByteData.sublistView(bytes).getInt16(34, Endian.little);
   int dataSize = 0;
   int PCMformat = 0;
-  Uint8List amplitudesData = bytes;
 
   String meaningData = '';
   String byteData = '';
