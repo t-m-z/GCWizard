@@ -10,7 +10,7 @@ Future<Uint8List> _mp3ToPCM(Uint8List mp3Bytes) async {
   return pcmBytes;
 }
 
-Future<Uint8List> mp3Amplitudes(Uint8List bytes) async {
+Future<AudioInfo> mp3AudioInfo(Uint8List bytes) async {
 
   Uint8List amplitudesData = Uint8List.fromList([]);
 
@@ -18,5 +18,12 @@ Future<Uint8List> mp3Amplitudes(Uint8List bytes) async {
     amplitudesData = value;
   });
 
-  return amplitudesData;
+  final info = await AudioDecoder.getAudioInfoBytes(bytes, formatHint: 'mp3');
+  return AudioInfo(
+      duration: info.duration,
+      sampleRate: info.sampleRate,
+      channels: info.channels,
+      bitRate: info.bitRate,
+      format: info.format,
+      bytes: amplitudesData);
 }

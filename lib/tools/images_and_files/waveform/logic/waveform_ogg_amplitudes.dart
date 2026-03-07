@@ -10,7 +10,7 @@ Future<Uint8List> _oggToPCM(Uint8List oggBytes) async {
   return pcmBytes;
 }
 
-Future<Uint8List> oggAmplitudes(Uint8List bytes) async {
+Future<AudioInfo> oggAudioInfo(Uint8List bytes) async {
 
   Uint8List amplitudesData = Uint8List.fromList([]);
 
@@ -18,5 +18,13 @@ Future<Uint8List> oggAmplitudes(Uint8List bytes) async {
     amplitudesData = value;
   });
 
-  return amplitudesData;
+  final info = await AudioDecoder.getAudioInfoBytes(bytes, formatHint: 'ogg');
+  return AudioInfo(
+      duration: info.duration,
+      sampleRate: info.sampleRate,
+      channels: info.channels,
+      bitRate: info.bitRate,
+      format: info.format,
+      bytes: amplitudesData);
 }
+

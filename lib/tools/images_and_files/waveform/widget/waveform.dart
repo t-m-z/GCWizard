@@ -2,6 +2,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
+import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/gcw_expandable.dart';
 import 'package:gc_wizard/common_widgets/gcw_openfile.dart';
@@ -27,7 +28,14 @@ class WaveForm extends StatefulWidget {
 class WaveFormState extends State<WaveForm> {
   Uint8List _bytes = Uint8List.fromList([]);
   Uint8List _soundfilePNGImage = Uint8List.fromList([]);
-  Uint8List _soundfileAmplitudes = Uint8List.fromList([]);
+
+  AudioInfo _audioInfo = AudioInfo(
+      duration: Duration(milliseconds: 0),
+      sampleRate: 0,
+      channels: 0,
+      bitRate: 0,
+      format: '',
+      bytes: Uint8List.fromList([]));
   SoundfileData _soundfileData = SoundfileData(
     wavFile: null,
     mp3File: null,
@@ -71,9 +79,9 @@ class WaveFormState extends State<WaveForm> {
               return;
             }
             _setData(_file.bytes);
-            _soundfileData = await getSoundfileData(_bytes);
-            _soundfileAmplitudes = await getSoundfileAmplitudes(_bytes);
-            renderAndAnalyzeWav(wavBytes: _soundfileAmplitudes, height: 400).then((value) {
+            _audioInfo = await getSoundfileAudioInfo(_bytes);
+            renderAndAnalyzeWav(wavBytes: _audioInfo.bytes, height: 400)
+                .then((value) {
               if (value.status == PARSE_STATUS.ERROR) {
                 setState(() {
                   _spectrumCreated = false;
@@ -97,6 +105,13 @@ class WaveFormState extends State<WaveForm> {
         ),
         _buildOutputWaveFormImage(),
         _buildOutputWaveFormMorse(),
+        _buildOutputWaveFormInfo(),
+        GCWButton(
+          text: i18n(context, 'waveform_output_metadata'),
+          onPressed: () {
+            setState(() {});
+          },
+        ),
         _buildOutputWaveFormStructure(),
       ],
     );
@@ -153,6 +168,33 @@ class WaveFormState extends State<WaveForm> {
       result = i18n(context, text);
     }
     return result;
+  }
+
+  Widget _buildOutputWaveFormInfo() {
+    List<List<String>> data = [
+      [
+        i18n(context, 'waveform_output_size'),
+        _bytes.length.toString() + ' Bytes'
+      ],
+      [
+        i18n(context, 'waveform_output_duration'),
+        _audioInfo.duration.toString() + ' ms'
+      ],
+      [
+        i18n(context, 'waveform_output_samplerate'),
+        _audioInfo.sampleRate.toString()
+      ],
+      [
+        i18n(context, 'waveform_output_channel'),
+        _audioInfo.channels.toString()
+      ],
+      [
+        i18n(context, 'waveform_output_bitrate'),
+        _audioInfo.bitRate.toString() + ' Hz'
+      ],
+      [i18n(context, 'waveform_output_format'), _audioInfo.format],
+    ];
+    return GCWColumnedMultilineOutput(data: data);
   }
 
   Widget _buildOutputWaveFormStructure() {
@@ -228,5 +270,9 @@ class WaveFormState extends State<WaveForm> {
     }
 
     return result;
+  }
+
+  Future<void> _showMetaData(Uint8List bytes) async {
+    _soundfileData = await getSoundfileData(_bytes);
   }
 }

@@ -34,16 +34,23 @@ Future<SoundfileData> getSoundfileData(Uint8List bytes) async {
   }
 }
 
-Future<Uint8List> getSoundfileAmplitudes(Uint8List bytes) async {
+Future<AudioInfo> getSoundfileAudioInfo(Uint8List bytes) async {
   switch (getFileType(bytes)) {
     case FileType.WAV:
     case FileType.WMV:
-      return wavAmplitudes(bytes);
+      return wavAudioInfo(bytes);
     case FileType.MP3:
-      return mp3Amplitudes(bytes);
+      return mp3AudioInfo(bytes);
     case FileType.OGG:
-      return oggAmplitudes(bytes);
+      return oggAudioInfo(bytes);
     default:
-      return Uint8List.fromList([]);
+      return AudioInfo(
+          duration: Duration(milliseconds: 0),
+          sampleRate: 0,
+          channels: 0,
+          bitRate: 0,
+          format: '',
+          bytes: Uint8List.fromList([]),
+      );
   }
 }
