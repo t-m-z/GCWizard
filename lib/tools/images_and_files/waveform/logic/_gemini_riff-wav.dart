@@ -1,6 +1,8 @@
 import 'dart:typed_data';
 import 'dart:convert';
 
+import '_gemini_id3.dart';
+
 
 class RiffChunk {
   final String id;
@@ -187,6 +189,7 @@ class WavFile {
   final List<WavCuePoint> cue;
   final WavSmpl? smpl;
   final WavFact? fact;
+  final Id3v2Tag? id3;
   final List<RiffChunk> otherChunks;
 
   WavFile({
@@ -197,6 +200,7 @@ class WavFile {
     required this.cue,
     required this.smpl,
     required this.fact,
+    required this.id3,
     required this.otherChunks,
   });
 }
@@ -213,6 +217,8 @@ class WavParser {
     WavBext? bext;
     WavSmpl? smpl;
     WavFact? fact;
+    Id3v2Tag? id3;
+
     final cue = <WavCuePoint>[];
     final info = <String, String>{};
     final others = <RiffChunk>[];
@@ -250,6 +256,10 @@ class WavParser {
           fact = _parseFact(chunk.data);
           break;
 
+        case "id3 ":
+          id3 = _parseId3(chunk.data);
+          break;
+
         default:
           others.add(chunk);
       }
@@ -263,8 +273,16 @@ class WavParser {
       cue: cue,
       smpl: smpl,
       fact: fact,
+      id3: id3,
       otherChunks: others,
     );
+  }
+
+  // --------------------------------------------------------------------------
+  // id3 CHUNK
+  // --------------------------------------------------------------------------
+  static Id3v2Tag _parseId3(Uint8List d) {
+    return Id3Parser.parse(d);
   }
 
   // --------------------------------------------------------------------------

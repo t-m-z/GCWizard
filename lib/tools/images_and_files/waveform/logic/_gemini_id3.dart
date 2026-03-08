@@ -30,7 +30,9 @@ class Id3v1Decoder {
     if (bytes.length < 128) return null;
 
     final tag = bytes.sublist(bytes.length - 128);
-    if (tag[0] != 0x54 || tag[1] != 0x41 || tag[2] != 0x47) return null; // "TAG"
+    if (tag[0] != 0x54 || tag[1] != 0x41 || tag[2] != 0x47) {
+      return null; // "TAG"
+    }
 
     String _str(int start, int len) =>
         latin1.decode(tag.sublist(start, start + len)).trimRight();
@@ -74,12 +76,14 @@ class Id3v2Frame {
   final int size;
   final int flags;
   final int offset;
+  final Map<String, dynamic> data;
 
   Id3v2Frame({
     required this.id,
     required this.size,
     required this.flags,
     required this.offset,
+    required this.data,
   });
 }
 
@@ -99,13 +103,52 @@ class Id3v2Tag {
   });
 }
 
+class Id3Parser {
+  static Id3v2Tag parse(Uint8List bytes) {
+    final frames = <Id3v2Frame>[];
+    final size = bytes.length;
+    int pos = 10;
+    final end = size;
+
+    while (pos + 10 <= end) {
+      final id = String.fromCharCodes(bytes.sublist(pos, pos + 4));
+      final frameSize = _u32(bytes, pos + 4);
+      final flags = (bytes[pos + 8] << 8) | bytes[pos + 9];
+
+      if (frameSize == 0 || id.trim().isEmpty) break;
+
+      frames.add(Id3v2Frame(
+          id: id,
+          size: frameSize,
+          flags: flags,
+          offset: pos,
+          data: Id3Decoder.decodeFrame(
+              Id3v2Frame(
+                  id: id, size: frameSize, flags: flags, offset: pos, data: {}),
+              bytes)));
+      pos += 10 + frameSize;
+    }
+
+    return Id3v2Tag(
+      versionMajor: bytes[3],
+      versionMinor: bytes[4],
+      flags: bytes[5],
+      size: size,
+      frames: frames,
+    );
+  }
+
+  static int _u32(Uint8List b, int p) =>
+      (b[p] << 24) | (b[p + 1] << 16) | (b[p + 2] << 8) | b[p + 3];
+}
 ///////////////////////////////////////////////////////////////////////////////
 // ID3v2 DECODER (ALL IMPORTANT FRAMES)
 ///////////////////////////////////////////////////////////////////////////////
 
 class Id3Decoder {
   static Map<String, dynamic> decodeFrame(Id3v2Frame frame, Uint8List bytes) {
-    final data = bytes.sublist(frame.offset + 10, frame.offset + 10 + frame.size);
+    final data =
+        bytes.sublist(frame.offset + 10, frame.offset + 10 + frame.size);
 
     if (frame.id.startsWith('T') && frame.id != 'TXXX') {
       return _decodeTextFrame(frame.id, data);
@@ -335,7 +378,8 @@ class Id3Decoder {
   }
 
   static List<String> _splitEncoded(Uint8List bytes, int encoding) {
-    final term = encoding == 1 ? Uint8List.fromList([0, 0]) : Uint8List.fromList([0]);
+    final term =
+        encoding == 1 ? Uint8List.fromList([0, 0]) : Uint8List.fromList([0]);
 
     int idx = _findTerminator(bytes, 0, encoding);
     if (idx < 0) return [_decodeString(bytes, encoding)];
