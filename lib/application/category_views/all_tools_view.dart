@@ -81,6 +81,14 @@ import 'package:gc_wizard/tools/coords/map_view/widget/map_view.dart';
 import 'package:gc_wizard/tools/coords/resection/widget/resection.dart';
 import 'package:gc_wizard/tools/coords/rhumb_line/widget/rhumbline_distancebearing.dart';
 import 'package:gc_wizard/tools/coords/rhumb_line/widget/rhumbline_waypoint_projection.dart';
+import 'package:gc_wizard/tools/coords/triangles/centerofgravity/widget/centerofgravity.dart';
+import 'package:gc_wizard/tools/coords/triangles/circumcircle/widget/circumcircle.dart';
+import 'package:gc_wizard/tools/coords/triangles/excircles/widget/excircles.dart';
+import 'package:gc_wizard/tools/coords/triangles/gergonne/widget/gergonne.dart';
+import 'package:gc_wizard/tools/coords/triangles/incircle/widget/incircle.dart';
+import 'package:gc_wizard/tools/coords/triangles/napoleon/widget/napoleon.dart';
+import 'package:gc_wizard/tools/coords/triangles/orthocenter/widget/orthocenter.dart';
+import 'package:gc_wizard/tools/coords/triangles/sidesmidpoint/widget/sidesmidpoint.dart';
 import 'package:gc_wizard/tools/coords/variable_coordinate/widget/variable_coordinate_formulas.dart';
 import 'package:gc_wizard/tools/coords/waypoint_projection/widget/waypoint_projection_geodetic.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/abaddon/widget/abaddon.dart';
@@ -89,6 +97,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/affine/widget/affine.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/alphabet_values/widget/alphabet_values.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/amsco/widget/amsco.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/atbash/widget/atbash.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/autokey/widget/autokey.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/avemaria/widget/avemaria.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/bacon/widget/bacon.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/bacon/widget/bacon_analyze.dart';
@@ -170,6 +179,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/rotation/rot18/widget/rot18
 import 'package:gc_wizard/tools/crypto_and_encodings/rotation/rot47/widget/rot47.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/rotation/rot5/widget/rot5.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/rotation/rotation_general/widget/rotation_general.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/rotation/rotxyz/widget/rotxyz.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/skytale/widget/skytale.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/slash_and_pipe/widget/slash_and_pipe.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/solitaire/widget/solitaire.dart';
@@ -318,6 +328,7 @@ import 'package:gc_wizard/tools/science_and_technology/teletypewriter/punchtape/
 import 'package:gc_wizard/tools/science_and_technology/teletypewriter/tts/widget/tts.dart';
 import 'package:gc_wizard/tools/science_and_technology/teletypewriter/z22/widget/z22.dart';
 import 'package:gc_wizard/tools/science_and_technology/teletypewriter/zc1/widget/zc1.dart';
+import 'package:gc_wizard/tools/science_and_technology/euclidic_triangle/widget/triangle.dart';
 import 'package:gc_wizard/tools/science_and_technology/ufi/widget/ufi.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/widget/unit_converter.dart';
 import 'package:gc_wizard/tools/science_and_technology/velocity_acceleration/widget/velocity_acceleration.dart';
@@ -583,6 +594,7 @@ void _initStaticToolList() {
       className(const Antipodes()),
       className(const ASCIIValues()),
       className(Atbash()),
+      className(const Autokey()),
       className(const AtomicNumbersToText()),
       className(const AveMaria()),
       className(const BabylonNumbersSelection()),
@@ -666,6 +678,7 @@ void _initStaticToolList() {
       className(const ExifReader()),
       className(const EquilateralTriangle()),
       className(const ESelection()),
+      className(const EuclidicTriangle()),
       className(const FormatConverter()),
       className(FormulaSolverFormulaGroups()),
       className(const FourteenSegments()),
@@ -801,6 +814,7 @@ void _initStaticToolList() {
       className(Rot18()),
       className(Rot5()),
       className(Rot47()),
+      className(RotXYZ()),
       className(RotationGeneral()),
       className(const RSASelection()),
       className(const SchillingCanstattTelegraph()),
@@ -842,6 +856,14 @@ void _initStaticToolList() {
       className(const TomTomSelection()),
       className(const TowerOfHanoi()),
       className(const TupperFormula()),
+      className(const TriangleCenterOfGravity()),
+      className(const TriangleCircumCircle()),
+      className(const TriangleExcircles()),
+      className(const TriangleGergonnePoint()),
+      className(const TriangleIncircle()),
+      className(const TriangleNapoleonPoints()),
+      className(const TriangleOrthocenter()),
+      className(const TriangleSideMidPoints()),
       className(const Trifid()),
       className(const Trithemius()),
       className(const TTS()),
