@@ -28,16 +28,10 @@ enum FileType {
   GIF,
   TIFF,
   WEBP,
-  WEBM,
-  AIF,
-  AIFF,
   WMV,
-  WMA,
   WAV,
   MP3,
-  MP4,
   OGG,
-  OGA,
   SND,
   FDL,
   MIDI,
@@ -56,7 +50,7 @@ enum FileType {
   GEOJSON
 }
 
-enum FileClass { IMAGE, ARCHIVE, SOUND, DATA, TEXT, BINARY, VIDEO }
+enum FileClass { IMAGE, ARCHIVE, SOUND, DATA, TEXT, BINARY }
 
 class FileTypeInfo {
   final List<String> extensions;
@@ -140,14 +134,6 @@ const Map<FileType, FileTypeInfo> _FILE_TYPES = {
     'image/tiff'
   ], file_class: FileClass.IMAGE),
 
-  FileType.WEBM: FileTypeInfo(extensions: [
-    'webM'
-  ], magic_bytes: <List<int>>[
-    [0x1A, 0x45, 0xDF, 0xA3] // identically to WAV - check details
-  ], mime_types: [
-    'image/webm'
-  ], file_class: FileClass.IMAGE),
-
   FileType.WEBP: FileTypeInfo(extensions: [
     'webp'
   ], magic_bytes: <List<int>>[
@@ -219,23 +205,7 @@ const Map<FileType, FileTypeInfo> _FILE_TYPES = {
   ], file_class: FileClass.ARCHIVE),
 
   FileType.WMV: FileTypeInfo(extensions: [
-    'wmv',
-    'wma'
-  ], mime_types: [
-    'video/x-ms-wmv',
-    'video/wmv'
-  ], magic_bytes: <List<int>>[
-    [0x30, 0x26, 0xB2, 0x75],
-  ], magic_bytes_detail: <int>[
-    0x57,
-    0x41,
-    0x56,
-    0x45
-  ], file_class: FileClass.VIDEO),
-
-  FileType.WMA: FileTypeInfo(extensions: [
-    'wmv',
-    'wma'
+    'wmv'
   ], mime_types: [
     'audio/x-ms-wmv',
     'audio/wmv'
@@ -246,28 +216,6 @@ const Map<FileType, FileTypeInfo> _FILE_TYPES = {
     0x41,
     0x56,
     0x45
-  ], file_class: FileClass.SOUND),
-
-  FileType.AIF: FileTypeInfo(extensions: [
-    'aif',
-    'aiff'
-  ], mime_types: [
-    'audio/x-ms-wmv',
-    'audio/wmv'
-  ], magic_bytes: <List<int>>[
-    [0x46, 0x4F, 0x52, 0x4D],
-    [0x41, 0x49, 0x46, 0x46]
-  ], file_class: FileClass.SOUND),
-
-  FileType.AIFF: FileTypeInfo(extensions: [
-    'aif',
-    'aiff'
-  ], mime_types: [
-    'audio/x-ms-wmv',
-    'audio/wmv'
-  ], magic_bytes: <List<int>>[
-    [0x46, 0x4F, 0x52, 0x4D],
-    [0x41, 0x49, 0x46, 0x46]
   ], file_class: FileClass.SOUND),
 
   FileType.WAV: FileTypeInfo(extensions: [
@@ -310,35 +258,9 @@ const Map<FileType, FileTypeInfo> _FILE_TYPES = {
     'audio/x-mpeg-3'
   ], file_class: FileClass.SOUND),
 
-  FileType.MP4: FileTypeInfo(extensions: [
-    'mp4'
-  ], magic_bytes: <List<int>>[
-    [0x66, 0x74, 0x79, 0x70, 0x69, 0x73, 0x6F, 0x6D],
-    [0x66, 0x74, 0x79, 0x70, 0x4D9, 0x53, 0x4E, 0x56],
-  ], mime_types: [
-    'audio/mpeg',
-    'audio/mp4',
-    'audio/mpeg4',
-    'audio/x-mpeg-4'
-  ], file_class: FileClass.VIDEO),
-
-  FileType.OGA: FileTypeInfo(extensions: [
-    'ogg',
-    'oga',
-    'ogv',
-    'ogx'
-  ], magic_bytes: <List<int>>[
-    [0x4F, 0x67, 0x67, 0x53]
-  ], mime_types: [
-    'audio/ogg',
-    'application/ogg'
-  ], file_class: FileClass.SOUND),
-
   FileType.OGG: FileTypeInfo(extensions: [
     'ogg',
-    'oga',
-    'ogv',
-    'ogx'
+    'oga'
   ], magic_bytes: <List<int>>[
     [0x4F, 0x67, 0x67, 0x53]
   ], mime_types: [

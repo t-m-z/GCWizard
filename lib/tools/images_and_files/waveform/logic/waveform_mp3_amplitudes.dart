@@ -10,7 +10,7 @@ Future<Uint8List> _mp3ToPCM(Uint8List mp3Bytes) async {
   return pcmBytes;
 }
 
-Future<AudioInfo> _mp3AudioInfo(Uint8List bytes) async {
+Future<AudioInfo> mp3AudioInfo(Uint8List bytes) async {
 
   Uint8List amplitudesData = Uint8List.fromList([]);
 
