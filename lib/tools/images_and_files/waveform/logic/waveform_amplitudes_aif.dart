@@ -1,24 +1,24 @@
 part of 'package:gc_wizard/tools/images_and_files/waveform/logic/waveform.dart';
 
 
-Future<Uint8List> _oggToPCM(Uint8List oggBytes) async {
+Future<Uint8List> _aifToPCM(Uint8List mp3Bytes) async {
   final Uint8List pcmBytes = await AudioDecoder.convertToWavBytes(
-    oggBytes,
-    formatHint: 'ogg',
+    mp3Bytes,
+    formatHint: 'aif',
     includeHeader: true,
   );
   return pcmBytes;
 }
 
-Future<AudioInfo> oggAudioInfo(Uint8List bytes) async {
+Future<AudioInfo> _aifAudioInfo(Uint8List bytes) async {
 
   Uint8List amplitudesData = Uint8List.fromList([]);
 
-  await _oggToPCM(bytes).then((value) {
+  await _aifToPCM(bytes).then((value) {
     amplitudesData = value;
   });
 
-  final info = await AudioDecoder.getAudioInfoBytes(bytes, formatHint: 'ogg');
+  final info = await AudioDecoder.getAudioInfoBytes(bytes, formatHint: 'aif');
   return AudioInfo(
       duration: info.duration,
       sampleRate: info.sampleRate,
@@ -27,4 +27,3 @@ Future<AudioInfo> oggAudioInfo(Uint8List bytes) async {
       format: info.format,
       bytes: amplitudesData);
 }
-

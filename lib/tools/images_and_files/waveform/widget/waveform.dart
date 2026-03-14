@@ -2,7 +2,6 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
-import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/gcw_expandable.dart';
 import 'package:gc_wizard/common_widgets/gcw_openfile.dart';
@@ -17,7 +16,7 @@ import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_threeoptionsswitch.dart';
 import 'package:gc_wizard/tools/images_and_files/hex_viewer/widget/hex_viewer.dart';
 import 'package:gc_wizard/tools/images_and_files/waveform/logic/waveform.dart';
-import 'package:gc_wizard/tools/images_and_files/waveform/logic/waveform_rms_image.dart';
+import 'package:gc_wizard/tools/images_and_files/waveform/logic/waveform_image_rms.dart';
 import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:gc_wizard/utils/file_utils/gcw_file.dart';
 
@@ -39,14 +38,6 @@ class WaveFormState extends State<WaveForm> {
       bitRate: 0,
       format: '',
       bytes: Uint8List.fromList([]));
-  SoundfileData _soundfileData = SoundfileData(
-    wavFile: null,
-    mp3File: null,
-    oggFile: null,
-    structure: [],
-    status: SoundfileStatus.ZERO,
-    error: '',
-  );
 
   String _decodedMorseCode = '';
   String _decodedMorseText = '';
@@ -81,7 +72,7 @@ class WaveFormState extends State<WaveForm> {
     return Column(
       children: <Widget>[
         GCWOpenFile(
-          supportedFileTypes: const [FileType.WAV, FileType.MP3, FileType.OGG],
+          supportedFileTypes: const [FileType.WAV, FileType.WMA, FileType.MP3, FileType.OGG, FileType.OGA, FileType.AIF, FileType.AIFF],
           onLoaded: (_file) async {
             if (_file == null) {
               showSnackBar(i18n(context, 'common_loadfile_exception_notloaded'),
@@ -120,17 +111,25 @@ class WaveFormState extends State<WaveForm> {
         _buildOutputDecodingParameter(),
         _buildOutputWaveFormMorse(),
         _buildOutputWaveFormInfo(),
-        GCWButton(
-          text: i18n(context, 'waveform_output_metadata'),
-          onPressed: () {
-            setState(() {
-              getSoundfileData(_bytes).then((value) {
-                _soundfileData = value;
-              });
-            });
-          },
-        ),
-        _buildOutputWaveFormStructure(),
+        GCWOutput(
+          title: i18n(context, 'waveform_output_hexview'),
+          child: i18n(context, 'waveform_output_size') +
+              ': ' +
+              _bytes.length.toString() +
+              '\n\n' +
+              i18n(context, 'waveform_hint_openinhexviewer'),
+          suppressCopyButton: true,
+          trailing: Row(children: <Widget>[
+            GCWIconButton(
+              iconColor: themeColors().mainFont(),
+              size: IconButtonSize.SMALL,
+              icon: Icons.input,
+              onPressed: () {
+                openInHexViewer(context, GCWFile(bytes: _bytes));
+              },
+            ),
+          ]),
+        )
       ],
     );
   }
@@ -423,82 +422,4 @@ class WaveFormState extends State<WaveForm> {
     return GCWColumnedMultilineOutput(data: data);
   }
 
-  Widget _buildOutputWaveFormStructure() {
-    List<Widget> output = _buildOutputSoundfileStructure(_bytes);
-    return Column(children: [
-      GCWExpandableTextDivider(
-        text: i18n(context, 'waveform_output_section_structure'),
-        expanded: false,
-        suppressTopSpace: false,
-        child: Column(
-          children: output,
-        ),
-      ),
-      GCWOutput(
-        title: i18n(context, 'waveform_output_hexview'),
-        child: i18n(context, 'waveform_output_size') +
-            ': ' +
-            _bytes.length.toString() +
-            '\n\n' +
-            i18n(context, 'waveform_hint_openinhexviewer'),
-        suppressCopyButton: true,
-        trailing: Row(children: <Widget>[
-          GCWIconButton(
-            iconColor: themeColors().mainFont(),
-            size: IconButtonSize.SMALL,
-            icon: Icons.input,
-            onPressed: () {
-              openInHexViewer(context, GCWFile(bytes: _bytes));
-            },
-          ),
-        ]),
-      )
-    ]);
-  }
-
-  List<Widget> _buildOutputSoundfileStructure(Uint8List bytes) {
-    List<Widget> result = [];
-
-    if (_soundfileData.status == SoundfileStatus.ERROR) {
-      return [
-        GCWOutputText(
-          text: i18n(context, 'waveform_output_error'),
-        )
-      ];
-    }
-
-    for (var section in _soundfileData.structure) {
-      List<List<dynamic>> content = [];
-      content = [
-        [
-          i18n(context, 'waveform_output_meaning'),
-          i18n(context, 'waveform_output_bytes'),
-          i18n(context, 'waveform_output_value'),
-        ]
-      ];
-      for (var element in section.SectionContent) {
-        content.add([
-          i18n(context, 'waveform_output_' + element.Meaning),
-          element.Bytes,
-          element.Value
-        ]);
-      }
-      result.add(GCWExpandableTextDivider(
-        text: i18n(context, 'waveform_output_section_' + section.SectionTitle),
-        expanded: false,
-        child: GCWColumnedMultilineOutput(
-          data: content,
-          flexValues: const [2, 3, 2],
-          suppressCopyButtons: true,
-          hasHeader: true,
-        ),
-      ));
-    }
-
-    return result;
-  }
-
-  Future<void> _getMetaData(Uint8List bytes) async {
-    _soundfileData = await getSoundfileData(_bytes);
-  }
 }
