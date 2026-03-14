@@ -18,5 +18,5 @@ XYPoint foot(XYPoint P, XYPoint U, XYPoint V) {
     return U;
   }
   final t = ((P.x - U.x) * dx + (P.y - U.y) * dy) / den;
-  return XYPoint(x: U.x + t * dx, y: U.y + t * dy); }
-
+  return XYPoint(x: U.x + t * dx, y: U.y + t * dy);
+}

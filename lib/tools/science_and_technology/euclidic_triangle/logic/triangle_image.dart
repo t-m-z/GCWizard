@@ -1084,7 +1084,6 @@ Future<Uint8List> triangleData2Image({
 
     return trimNullBytes(data!.buffer.asUint8List());
   } catch (e) {
-    print(e);
     return Uint8List.fromList([]);
   }
 }
