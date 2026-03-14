@@ -10,7 +10,7 @@ Future<Uint8List> _oggToPCM(Uint8List oggBytes) async {
   return pcmBytes;
 }
 
-Future<AudioInfo> oggAudioInfo(Uint8List bytes) async {
+Future<AudioInfo> _oggAudioInfo(Uint8List bytes) async {
 
   Uint8List amplitudesData = Uint8List.fromList([]);
 
