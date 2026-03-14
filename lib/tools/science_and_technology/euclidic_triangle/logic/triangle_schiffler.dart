@@ -25,3 +25,5 @@ BarycentricPoint _schifflerBarycentricFromSides(
 
   return BarycentricPoint(a: alpha, b: beta, c: gamma);
 }
+
+
