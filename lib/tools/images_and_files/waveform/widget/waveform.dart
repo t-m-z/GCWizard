@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
+import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/gcw_expandable.dart';
 import 'package:gc_wizard/common_widgets/gcw_openfile.dart';
 import 'package:gc_wizard/common_widgets/gcw_snackbar.dart';
@@ -37,7 +38,9 @@ class WaveFormState extends State<WaveForm> {
       channels: 0,
       bitRate: 0,
       format: '',
-      bytes: Uint8List.fromList([]));
+      bytes: Uint8List.fromList([]),
+      status: AUDIO_INFO_STATUS.ERROR,
+      error: '');
 
   String _decodedMorseCode = '';
   String _decodedMorseText = '';
@@ -113,11 +116,7 @@ class WaveFormState extends State<WaveForm> {
         _buildOutputWaveFormInfo(),
         GCWOutput(
           title: i18n(context, 'waveform_output_hexview'),
-          child: i18n(context, 'waveform_output_size') +
-              ': ' +
-              _bytes.length.toString() +
-              '\n\n' +
-              i18n(context, 'waveform_hint_openinhexviewer'),
+          child: i18n(context, 'waveform_output_hexview_hint'),
           suppressCopyButton: true,
           trailing: Row(children: <Widget>[
             GCWIconButton(
@@ -136,6 +135,8 @@ class WaveFormState extends State<WaveForm> {
 
   Widget _buildOutputWaveFormImage() {
     return Column(children: [
+      GCWTextDivider(text: i18n(context, 'waveform_output_amplitudes_graph'),
+      suppressTopSpace: false,),
       (_spectrumCreated)
           ? GCWImageView(
               imageData: GCWImageViewData(GCWFile(bytes: _soundfilePNGImage)),
@@ -146,7 +147,7 @@ class WaveFormState extends State<WaveForm> {
               },
             )
           : GCWOutputText(
-              text: _errorText('waveform_output_image_error'),
+              text: _errorText('waveform_error_image_no_data'),
             ),
     ]);
   }
@@ -374,7 +375,7 @@ class WaveFormState extends State<WaveForm> {
               ),
             )
           : GCWOutputText(
-              text: _errorText('waveform_output_image_error'),
+              text: _errorText('waveform_error_png_not_created'),
             ),
     ]);
   }
@@ -398,26 +399,26 @@ class WaveFormState extends State<WaveForm> {
   Widget _buildOutputWaveFormInfo() {
     List<List<String>> data = [
       [
-        i18n(context, 'waveform_output_size'),
+        i18n(context, 'waveform_output_metadata_size'),
         _bytes.length.toString() + ' Bytes'
       ],
       [
-        i18n(context, 'waveform_output_duration'),
+        i18n(context, 'waveform_output_metadata_duration'),
         _audioInfo.duration.toString() + ' ms'
       ],
       [
-        i18n(context, 'waveform_output_samplerate'),
+        i18n(context, 'waveform_output_metadata_samplerate'),
         _audioInfo.sampleRate.toString() + ' Hz'
       ],
       [
-        i18n(context, 'waveform_output_channel'),
+        i18n(context, 'waveform_output_metadata_channel'),
         _audioInfo.channels.toString()
       ],
       [
-        i18n(context, 'waveform_output_bitrate'),
+        i18n(context, 'waveform_output_metadata_bitrate'),
         _audioInfo.bitRate.toString() + ' bit/s'
       ],
-      [i18n(context, 'waveform_output_format'), _audioInfo.format],
+      [i18n(context, 'waveform_output_metadata_format'), _audioInfo.format],
     ];
     return GCWColumnedMultilineOutput(data: data);
   }

@@ -72,7 +72,7 @@ class WavParser {
         numChannels: 0,
         channels: [],
         status: PARSE_STATUS.ERROR,
-        error: 'waveform_error_file_to_short',
+        error: 'waveform_error_parse_file_to_short',
       );
       // throw FormatException('File to short');
     }
@@ -94,7 +94,7 @@ class WavParser {
         numChannels: 0,
         channels: [],
         status: PARSE_STATUS.ERROR,
-        error: 'waveform_error_missing_riff_header',
+        error: 'waveform_error_parse_missing_riff_header',
       );
       // throw FormatException('Missing RIFF-Header');
     }
@@ -104,7 +104,7 @@ class WavParser {
         numChannels: 0,
         channels: [],
         status: PARSE_STATUS.ERROR,
-        error: 'waveform_error_missing_wav_header',
+        error: 'waveform_error_parse_missing_wav_header',
       );
       // throw FormatException('Missing WAVE-Header');
     }
@@ -151,7 +151,7 @@ class WavParser {
         numChannels: 0,
         channels: [],
         status: PARSE_STATUS.ERROR,
-        error: 'waveform_error_malformed_wav_header',
+        error: 'waveform_error_parse_malformed_wav_header',
       );
       // throw FormatException('Malformed WAV-Header');
     }
@@ -162,7 +162,7 @@ class WavParser {
         numChannels: 0,
         channels: [],
         status: PARSE_STATUS.ERROR,
-        error: 'waveform_error_unsupported_format',
+        error: 'waveform_error_parse_unsupported_format',
       );
       // throw FormatException('Unsupported Format - only PCM (1) or IEEE Float (3) are supported');
     }
@@ -256,7 +256,7 @@ class WavParser {
           return _SampleResult(
               sample: 0.0,
               status: PARSE_STATUS.ERROR,
-              error: 'waveform_error_unsupported_pcm_bit_depth' +
+              error: 'waveform_error_parse_unsupported_pcm_bit_depth' +
                   ':' +
                   bitsPerSample.toString());
         // throw FormatException('waveform_error_unsupported_pcm_bit_depth: $bitsPerSample');
@@ -276,7 +276,7 @@ class WavParser {
         return _SampleResult(
             sample: 0.0,
             status: PARSE_STATUS.ERROR,
-            error: 'waveform_error_unsupported_float_bit_depth' +
+            error: 'waveform_error_parse_unsupported_float_bit_depth' +
                 ':' +
                 bitsPerSample.toString());
         // throw FormatException('waveform_error_unsupported_float_bit_depth: $bitsPerSample');
@@ -285,7 +285,7 @@ class WavParser {
     return _SampleResult(
         sample: 0.0,
         status: PARSE_STATUS.ERROR,
-        error: 'waveform_error_unsupported_audioformat' +
+        error: 'waveform_error_parse_unsupported_audioformat' +
             ':' +
             audioFormat.toString());
     // throw FormatException('waveform_error_unsupported_audioformat: $audioFormat');
