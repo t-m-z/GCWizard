@@ -2375,6 +2375,7 @@ void initializeRegistry(BuildContext context) {
     GCWTool(
       tool: const WaveForm(),
       id: 'waveform',
+      isBeta: true,
       categories: const [ToolCategory.IMAGES_AND_FILES],
       searchKeys: const [
         'waveform',
