@@ -105,7 +105,7 @@ class _AboutState extends State<About> {
         _buildUrl('webversion'),
         const GCWDivider(suppressTopSpace: true, suppressBottomSpace: true),
         _buildUrl('license'),
-        _buildUrl('github'),
+        _buildUrl('codeberg'),
         _buildUrl('crowdin'),
         const GCWDivider(suppressTopSpace: true, suppressBottomSpace: true),
         _buildUrl('privacypolicy'),
