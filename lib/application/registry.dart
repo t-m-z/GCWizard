@@ -2916,7 +2916,26 @@ void initializeRegistry(BuildContext context) {
     GCWTool(tool: const Braille(), id: 'braille', searchKeys: const [
       'braille',
       'symbol_fakoo'
-    ], licenses: const []),
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'Alexander Fakoó',
+          title: 'FAKOO.DE',
+          sourceUrl:
+          'https://web.archive.org/web/20240624043412/https://fakoo.de/fakoo.html',
+          licenseType: ToolLicenseType.CCBYNCND40,
+          licenseUrl: 'https://web.archive.org/web/20240415000000*/https://creativecommons.org/licenses/by-nc-nd/4.0/deed.de'
+      ),
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'Alexander Fakoó',
+          title: '9-Punkt-Decoder',
+          sourceUrl:
+          'https://web.archive.org/web/20240415000000*/https://fakoo.de/fakoo/9-punkt-decoder.html',
+          licenseType: ToolLicenseType.CCBYNCND40,
+          licenseUrl:
+          'https://web.archive.org/web/20240415000000*/https://creativecommons.org/licenses/by-nc-nd/4.0/deed.de')
+    ]),
     GCWTool(
         tool: const BrailleDotNumbers(),
         id: 'brailledotnumbers',
@@ -2925,6 +2944,15 @@ void initializeRegistry(BuildContext context) {
           'symbol_fakoo'
         ],
         licenses: [
+          ToolLicenseOnlineArticle(
+              context: context,
+              author: 'Alexander Fakoó',
+              title: 'FAKOO.DE',
+              sourceUrl:
+              'https://web.archive.org/web/20240624043412/https://fakoo.de/fakoo.html',
+              licenseType: ToolLicenseType.CCBYNCND40,
+              licenseUrl: 'https://web.archive.org/web/20240415000000*/https://creativecommons.org/licenses/by-nc-nd/4.0/deed.de'
+          ),
           ToolLicenseOnlineArticle(
               context: context,
               author: 'Alexander Fakoó',
@@ -8429,8 +8457,9 @@ void initializeRegistry(BuildContext context) {
           author: 'Alexander Fakoó',
           title: 'FAKOO.DE',
           sourceUrl:
-              'https://web.archive.org/web/20240808105937/https://fakoo.de/',
-          licenseType: ToolLicenseType.CCBYNCND40)
+              'https://web.archive.org/web/20240624043412/https://fakoo.de/fakoo.html',
+          licenseType: ToolLicenseType.CCBYNCND40,
+          licenseUrl: 'https://web.archive.org/web/20240415000000*/https://creativecommons.org/licenses/by-nc-nd/4.0/deed.de')
     ]),
     GCWSymbolTableTool(symbolKey: 'fantastic', symbolSearchStrings: const [
       'symbol_fantastic',
