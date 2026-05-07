@@ -2814,6 +2814,8 @@
   "grid_description": "Provides a configurable grid or boxes in a grid to be used for any task which requires a sheet of squared paper. Incl. Chess Board or Lottery Tickets",
   "grid_custom": "Custom Grid",
   "grid_cleargrid": "Clear Grid",
+  "grid_modes_points": "Points/Boxes",
+  "grid_modes_lines": "Lines",
   "grid_intersections_5x5": "Intersections 5x5",
   "grid_intersections_6x6": "Intersections 6x6",
   "grid_intersections_7x7": "Intersections 7x7",
