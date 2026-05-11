@@ -799,7 +799,7 @@ void initializeRegistry(BuildContext context) {
       'images',
     ]),
     GCWTool(tool: const BingoCalls(), id: 'bingo_calls', categories: const [
-      ToolCategory.SCIENCE_AND_TECHNOLOGY
+      ToolCategory.GAMES
     ], searchKeys: const [
       'bingo_calls',
     ]),
