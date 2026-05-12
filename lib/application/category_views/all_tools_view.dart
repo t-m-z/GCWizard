@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:gc_wizard/application/_common/gcw_package_info.dart';
 import 'package:gc_wizard/application/category_views/favorites.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/babylon_numbers_selection.dart';
@@ -44,6 +45,7 @@ import 'package:gc_wizard/application/category_views/selector_lists/tomtom_selec
 import 'package:gc_wizard/application/category_views/selector_lists/uic_wagoncode_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/vanity_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/wherigo_urwigo_selection.dart';
+import 'package:gc_wizard/application/category_views/tabs.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/main_menu/changelog.dart';
 import 'package:gc_wizard/application/main_menu/main_menu.dart';
@@ -84,14 +86,14 @@ import 'package:gc_wizard/tools/coords/resection/widget/resection.dart';
 import 'package:gc_wizard/tools/coords/rhumb_line/widget/rhumbline_distancebearing.dart';
 import 'package:gc_wizard/tools/coords/rhumb_line/widget/rhumbline_waypoint_projection.dart';
 import 'package:gc_wizard/tools/coords/triangles/area/widget/ellipsoidtriangle_area.dart';
-import 'package:gc_wizard/tools/coords/triangles/special_points/centerofgravity/widget/ellipsoidtriangle_centerofgravity.dart';
+import 'package:gc_wizard/tools/coords/triangles/circles/circumcircle/widget/circumcircle.dart';
 import 'package:gc_wizard/tools/coords/triangles/circles/excircles/widget/ellipsoidtriangle_excircles.dart';
 import 'package:gc_wizard/tools/coords/triangles/circles/incircle/widget/ellipsoidtriangle_incircle.dart';
-import 'package:gc_wizard/tools/coords/triangles/circles/circumcircle/widget/circumcircle.dart';
+import 'package:gc_wizard/tools/coords/triangles/medians/widget/ellipsoidtriangle_medians.dart';
+import 'package:gc_wizard/tools/coords/triangles/special_points/centerofgravity/widget/ellipsoidtriangle_centerofgravity.dart';
 import 'package:gc_wizard/tools/coords/triangles/special_points/gergonne/widget/ellipsoidtriangle_gergonne.dart';
 import 'package:gc_wizard/tools/coords/triangles/special_points/napoleon/widget/ellipsoidtriangle_napoleon.dart';
 import 'package:gc_wizard/tools/coords/triangles/special_points/orthocenter/widget/ellipsoidtriangle_orthocenter.dart';
-import 'package:gc_wizard/tools/coords/triangles/medians/widget/ellipsoidtriangle_medians.dart';
 import 'package:gc_wizard/tools/coords/variable_coordinate/widget/variable_coordinate_formulas.dart';
 import 'package:gc_wizard/tools/coords/waypoint_projection/widget/waypoint_projection_geodetic.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/abaddon/widget/abaddon.dart';
@@ -279,6 +281,7 @@ import 'package:gc_wizard/tools/science_and_technology/dna/dna_aminoacids/widget
 import 'package:gc_wizard/tools/science_and_technology/dna/dna_aminoacids_table/widget/dna_aminoacids_table.dart';
 import 'package:gc_wizard/tools/science_and_technology/dna/dna_nucleicacidsequence/widget/dna_nucleicacidsequence.dart';
 import 'package:gc_wizard/tools/science_and_technology/dtmf/widget/dtmf.dart';
+import 'package:gc_wizard/tools/science_and_technology/euclidic_triangle/widget/triangle.dart';
 import 'package:gc_wizard/tools/science_and_technology/gcd/widget/gcd.dart';
 import 'package:gc_wizard/tools/science_and_technology/hexadecimal/widget/hexadecimal.dart';
 import 'package:gc_wizard/tools/science_and_technology/iata_icao_search/widget/iata_icao_search.dart';
@@ -333,7 +336,6 @@ import 'package:gc_wizard/tools/science_and_technology/teletypewriter/punchtape/
 import 'package:gc_wizard/tools/science_and_technology/teletypewriter/tts/widget/tts.dart';
 import 'package:gc_wizard/tools/science_and_technology/teletypewriter/z22/widget/z22.dart';
 import 'package:gc_wizard/tools/science_and_technology/teletypewriter/zc1/widget/zc1.dart';
-import 'package:gc_wizard/tools/science_and_technology/euclidic_triangle/widget/triangle.dart';
 import 'package:gc_wizard/tools/science_and_technology/ufi/widget/ufi.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/widget/unit_converter.dart';
 import 'package:gc_wizard/tools/science_and_technology/velocity_acceleration/widget/velocity_acceleration.dart';
@@ -347,6 +349,7 @@ import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/utils/string_utils.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/common_widget_utils.dart';
 import 'package:prefs/prefs.dart';
+import 'package:provider/provider.dart';
 
 class MainView extends GCWWebStatefulWidget {
   MainView({super.key, super.webParameter})
@@ -441,6 +444,9 @@ class _MainViewState extends State<MainView> {
 
   @override
   Widget build(BuildContext context) {
+    final model = context.watch<TabsModel>();
+    final activeTab = model.tabs[model.currentTabIndex];
+
     if (registeredTools.isEmpty) {
       initializeRegistry(context);
 
@@ -457,40 +463,80 @@ class _MainViewState extends State<MainView> {
 
     var toolList = (_isSearching && _searchText.isNotEmpty) ? _getSearchedList() : null;
     if (!(_isSearching && _searchText.isNotEmpty)) {
-      return DefaultTabController(
-        length: 3,
-        initialIndex: Prefs.getBool(PREFERENCE_TABS_USE_DEFAULT_TAB)
-            ? Prefs.getInt(PREFERENCE_TABS_DEFAULT_TAB)
-            : Prefs.getInt(PREFERENCE_TABS_LAST_VIEWED_TAB),
-        child: Scaffold(
-          key: _scaffoldKey,
-          appBar: AppBar(
-              bottom: TabBar(
-                onTap: (value) {
-                  Prefs.setInt(PREFERENCE_TABS_LAST_VIEWED_TAB, value);
-                },
-                tabs: const [
-                  Tab(icon: Icon(Icons.category)),
-                  Tab(icon: Icon(Icons.list)),
-                  Tab(icon: Icon(Icons.star)),
+      model.setDefaultTab(
+        DefaultTabController(
+          length: 3,
+          initialIndex: Prefs.getBool(PREFERENCE_TABS_USE_DEFAULT_TAB)
+              ? Prefs.getInt(PREFERENCE_TABS_DEFAULT_TAB)
+              : Prefs.getInt(PREFERENCE_TABS_LAST_VIEWED_TAB),
+          child: Scaffold(
+            key: _scaffoldKey,
+            appBar: AppBar(
+                bottom: TabBar(
+                  onTap: (value) {
+                    Prefs.setInt(PREFERENCE_TABS_LAST_VIEWED_TAB, value);
+                  },
+                  tabs: const [
+                    Tab(icon: Icon(Icons.category)),
+                    Tab(icon: Icon(Icons.list)),
+                    Tab(icon: Icon(Icons.star)),
+                  ],
+                ),
+                leading: _buildIcon(),
+                title: _buildTitleAndSearchTextField(),
+                actions: <Widget>[
+                  _buildSearchActionButton(),
+                  _isSearching ? Container() : GCWTabMenu()
+                ]),
+            drawer: buildMainMenu(context, _scaffoldKey),
+            body: SafeArea(
+              bottom: true,
+              top: false,
+              child: TabBarView(
+                children: [
+                  GCWToolList(toolList: toolList ?? _categoryList),
+                  GCWToolList(toolList: toolList ?? _mainToolList),
+                  GCWToolList(toolList: toolList ?? Favorites.favoritedGCWTools()),
                 ],
               ),
-              leading: _buildIcon(),
-              title: _buildTitleAndSearchTextField(),
-              actions: <Widget>[_buildSearchActionButton()]),
-          drawer: buildMainMenu(context),
-          body: SafeArea(
-            bottom: true,
-            top: false,
-            child: TabBarView(
-              children: [
-                GCWToolList(toolList: toolList ?? _categoryList),
-                GCWToolList(toolList: toolList ?? _mainToolList),
-                GCWToolList(toolList: toolList ?? Favorites.favoritedGCWTools()),
-              ],
             ),
           ),
-        ),
+        )
+      );
+
+      return PopScope(
+          canPop: false,
+          onPopInvokedWithResult: (didPop, result) async {
+            if (didPop) return;
+
+            final navigator = activeTab.navKey.currentState;
+
+            if (navigator != null && navigator.canPop()) {
+              navigator.pop();
+            } else { // ROOT Level
+              if (model.tabs.length == 1) {
+                SystemNavigator.pop();
+                return;
+              }
+
+              showGCWAlertDialog(
+                context,
+                i18n(context, 'tabs_closetab_title'),
+                i18n(context, 'tabs_closetab_text', parameters: [(activeTab.tool as GCWTool).toolName]),
+                () {
+                  if (context.mounted) {
+                    context.read<TabsModel>().removeTab(activeTab.id);
+                  }
+                }
+              );
+            }
+          },
+        child: IndexedStack(
+          index: model.currentTabIndex,
+          children: model.tabs.map((tabInfo) {
+            return TabNavigator(tabInfo: tabInfo);
+          }).toList()
+        )
       );
     } else {
       return Scaffold(
@@ -500,7 +546,7 @@ class _MainViewState extends State<MainView> {
               title: _buildTitleAndSearchTextField(),
               actions: <Widget>[_buildSearchActionButton()]
           ),
-          drawer: buildMainMenu(context),
+          drawer: buildMainMenu(context, _scaffoldKey),
           body: SafeArea(
               bottom: true,
               top: false,

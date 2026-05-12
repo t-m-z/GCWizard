@@ -5111,13 +5111,17 @@ void initializeRegistry(BuildContext context) {
     GCWTool(
         tool: const GeneralSettings(),
         id: 'settings_general',
+        suppressCopyToTab: true,
         searchKeys: const []),
     GCWTool(
         tool: const CoordinatesSettings(),
         id: 'settings_coordinates',
         searchKeys: const []),
     GCWTool(
-        tool: const ToolSettings(), id: 'settings_tools', searchKeys: const []),
+        tool: const ToolSettings(),
+        id: 'settings_tools',
+        suppressCopyToTab: true,
+        searchKeys: const []),
     GCWTool(
         tool: const SaveRestoreSettings(),
         id: 'settings_saverestore',
@@ -5125,6 +5129,7 @@ void initializeRegistry(BuildContext context) {
     GCWTool(
         tool: const Changelog(),
         id: 'mainmenu_changelog',
+        suppressCopyToTab: true,
         suppressHelpButton: true,
         searchKeys: const [
           'changelog',
@@ -5132,6 +5137,7 @@ void initializeRegistry(BuildContext context) {
     GCWTool(
         tool: const About(),
         id: 'mainmenu_about',
+        suppressCopyToTab: true,
         suppressHelpButton: true,
         searchKeys: const [
           'about',
@@ -5139,6 +5145,7 @@ void initializeRegistry(BuildContext context) {
     GCWTool(
         tool: const CallForContribution(),
         id: 'mainmenu_callforcontribution',
+        suppressCopyToTab: true,
         suppressHelpButton: true,
         searchKeys: const [
           'callforcontribution',
@@ -5146,6 +5153,7 @@ void initializeRegistry(BuildContext context) {
     GCWTool(
         tool: const Licenses(),
         id: 'licenses',
+        suppressCopyToTab: true,
         suppressHelpButton: true,
         searchKeys: const [
           'licenses',

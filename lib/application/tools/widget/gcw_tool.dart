@@ -4,6 +4,7 @@ import 'package:diacritic/diacritic.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/category_views/favorites.dart';
+import 'package:gc_wizard/application/category_views/tabs.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/i18n/logic/supported_locales.dart';
 import 'package:gc_wizard/application/navigation/no_animation_material_page_route.dart';
@@ -21,6 +22,7 @@ import 'package:gc_wizard/utils/json_utils.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/common_widget_utils.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/deeplink_utils.dart';
 import 'package:prefs/prefs.dart';
+import 'package:provider/provider.dart';
 
 enum ToolCategory {
   CRYPTOGRAPHY,
@@ -99,6 +101,7 @@ class GCWTool extends StatefulWidget {
   final bool isBeta;
   final List<String>? deeplinkAlias;
   final List<ToolLicenseEntry>? licenses;
+  final bool suppressCopyToTab;
 
   GCWSymbolContainer? icon;
   var longId = '';
@@ -125,6 +128,7 @@ class GCWTool extends StatefulWidget {
       this.isBeta = false,
       this.suppressHelpButton = false,
       this.suppressAppBarButtons = false,
+      this.suppressCopyToTab = false,
       this.deeplinkAlias,
       this.licenses,
       this.toolBarItemList = const []}) {
@@ -177,14 +181,15 @@ class _GCWToolState extends State<GCWTool> {
         widget.defaultLanguageToolName ?? i18n(context, widget.id + '_title', useDefaultLanguage: true);
 
     return Scaffold(
-        resizeToAvoidBottomInset: widget.autoScroll,
-        appBar: AppBar(title: Text(_toolName), actions: [
-          widget.suppressAppBarButtons == false ? GCWPopupMenu(
-            icon: Icons.more_vert,
-            buttonNoBorder: true,
-            menuItemBuilder: (context) => _buildToolBarItems(),
-          ) : Container()
-        ]),
+      resizeToAvoidBottomInset: widget.autoScroll,
+      appBar: AppBar(title: Text(_toolName), actions: [
+        widget.suppressAppBarButtons == false ? GCWPopupMenu(
+          icon: Icons.more_vert,
+          buttonNoBorder: true,
+          menuItemBuilder: (context) => _buildToolBarItems(),
+        ) : Container(),
+        GCWTabMenu(),
+      ]),
       body: SafeArea(
         bottom: true,
         top: false,
@@ -257,9 +262,19 @@ class _GCWToolState extends State<GCWTool> {
   }
 
   List<GCWPopupMenuItem> _buildToolBarItems() {
+    final model = context.read<TabsModel>();
     var menuItems = <GCWPopupMenuItem>[];
 
     menuItems.addAll(widget.toolBarItemList);
+
+    if (!widget.suppressCopyToTab) {
+      menuItems.add(GCWPopupMenuItem(
+        child: iconedGCWPopupMenuItem(context, Icons.open_in_new, 'tabs_copytotab'),
+        action: (index) => setState(() {
+              model.addTab(widget);
+            }))
+      );
+    }
 
     menuItems.add(GCWPopupMenuItem(
         child: iconedGCWPopupMenuItem(context, Icons.link, kIsWeb ? 'gcwtool_weblink' : 'gcwtool_copyweblink'),
