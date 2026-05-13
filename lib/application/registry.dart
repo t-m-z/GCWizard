@@ -799,7 +799,7 @@ void initializeRegistry(BuildContext context) {
       'images',
     ]),
     GCWTool(tool: const BingoCalls(), id: 'bingo_calls', categories: const [
-      ToolCategory.SCIENCE_AND_TECHNOLOGY
+      ToolCategory.GAMES
     ], searchKeys: const [
       'bingo_calls',
     ]),
@@ -1929,7 +1929,7 @@ void initializeRegistry(BuildContext context) {
         tool: const RandomizerSelection(),
         id: 'randomizer_selection',
         categories: const [
-          ToolCategory.GAMES
+          ToolCategory.MISCELLANEOUS
         ],
         searchKeys: const [
           'randomizer',
@@ -2916,7 +2916,26 @@ void initializeRegistry(BuildContext context) {
     GCWTool(tool: const Braille(), id: 'braille', searchKeys: const [
       'braille',
       'symbol_fakoo'
-    ], licenses: const []),
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'Alexander Fakoó',
+          title: 'FAKOO.DE',
+          sourceUrl:
+          'https://web.archive.org/web/20240624043412/https://fakoo.de/fakoo.html',
+          licenseType: ToolLicenseType.CCBYNCND40,
+          licenseUrl: 'https://web.archive.org/web/20240415000000*/https://creativecommons.org/licenses/by-nc-nd/4.0/deed.de'
+      ),
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'Alexander Fakoó',
+          title: '9-Punkt-Decoder',
+          sourceUrl:
+          'https://web.archive.org/web/20240415000000*/https://fakoo.de/fakoo/9-punkt-decoder.html',
+          licenseType: ToolLicenseType.CCBYNCND40,
+          licenseUrl:
+          'https://web.archive.org/web/20240415000000*/https://creativecommons.org/licenses/by-nc-nd/4.0/deed.de')
+    ]),
     GCWTool(
         tool: const BrailleDotNumbers(),
         id: 'brailledotnumbers',
@@ -2925,6 +2944,15 @@ void initializeRegistry(BuildContext context) {
           'symbol_fakoo'
         ],
         licenses: [
+          ToolLicenseOnlineArticle(
+              context: context,
+              author: 'Alexander Fakoó',
+              title: 'FAKOO.DE',
+              sourceUrl:
+              'https://web.archive.org/web/20240624043412/https://fakoo.de/fakoo.html',
+              licenseType: ToolLicenseType.CCBYNCND40,
+              licenseUrl: 'https://web.archive.org/web/20240415000000*/https://creativecommons.org/licenses/by-nc-nd/4.0/deed.de'
+          ),
           ToolLicenseOnlineArticle(
               context: context,
               author: 'Alexander Fakoó',
@@ -5083,13 +5111,17 @@ void initializeRegistry(BuildContext context) {
     GCWTool(
         tool: const GeneralSettings(),
         id: 'settings_general',
+        suppressCopyToTab: true,
         searchKeys: const []),
     GCWTool(
         tool: const CoordinatesSettings(),
         id: 'settings_coordinates',
         searchKeys: const []),
     GCWTool(
-        tool: const ToolSettings(), id: 'settings_tools', searchKeys: const []),
+        tool: const ToolSettings(),
+        id: 'settings_tools',
+        suppressCopyToTab: true,
+        searchKeys: const []),
     GCWTool(
         tool: const SaveRestoreSettings(),
         id: 'settings_saverestore',
@@ -5097,6 +5129,7 @@ void initializeRegistry(BuildContext context) {
     GCWTool(
         tool: const Changelog(),
         id: 'mainmenu_changelog',
+        suppressCopyToTab: true,
         suppressHelpButton: true,
         searchKeys: const [
           'changelog',
@@ -5104,6 +5137,7 @@ void initializeRegistry(BuildContext context) {
     GCWTool(
         tool: const About(),
         id: 'mainmenu_about',
+        suppressCopyToTab: true,
         suppressHelpButton: true,
         searchKeys: const [
           'about',
@@ -5111,6 +5145,7 @@ void initializeRegistry(BuildContext context) {
     GCWTool(
         tool: const CallForContribution(),
         id: 'mainmenu_callforcontribution',
+        suppressCopyToTab: true,
         suppressHelpButton: true,
         searchKeys: const [
           'callforcontribution',
@@ -5118,6 +5153,7 @@ void initializeRegistry(BuildContext context) {
     GCWTool(
         tool: const Licenses(),
         id: 'licenses',
+        suppressCopyToTab: true,
         suppressHelpButton: true,
         searchKeys: const [
           'licenses',
@@ -8429,8 +8465,9 @@ void initializeRegistry(BuildContext context) {
           author: 'Alexander Fakoó',
           title: 'FAKOO.DE',
           sourceUrl:
-              'https://web.archive.org/web/20240808105937/https://fakoo.de/',
-          licenseType: ToolLicenseType.CCBYNCND40)
+              'https://web.archive.org/web/20240624043412/https://fakoo.de/fakoo.html',
+          licenseType: ToolLicenseType.CCBYNCND40,
+          licenseUrl: 'https://web.archive.org/web/20240415000000*/https://creativecommons.org/licenses/by-nc-nd/4.0/deed.de')
     ]),
     GCWSymbolTableTool(symbolKey: 'fantastic', symbolSearchStrings: const [
       'symbol_fantastic',
