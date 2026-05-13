@@ -1929,7 +1929,7 @@ void initializeRegistry(BuildContext context) {
         tool: const RandomizerSelection(),
         id: 'randomizer_selection',
         categories: const [
-          ToolCategory.GAMES
+          ToolCategory.MISCELLANEOUS
         ],
         searchKeys: const [
           'randomizer',
