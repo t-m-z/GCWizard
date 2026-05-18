@@ -8,7 +8,7 @@ environment:
 
 dependencies:
   archive: ^4.0.9
-  audio_decoder: ^0.7.4
+  audio_decoder: ^0.8.0
   audioplayers: ^6.5.1
   auto_size_text: ^3.0.0
   base32: ^2.2.0
@@ -34,7 +34,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   flutter_map: ^8.3.0
-  flutter_map_marker_popup: ^8.1.0
+  flutter_map_marker_popup: ^8.1.1
   flutter_midi_engine: ^0.1.3
   highlight: ^0.7.0
   http: ^1.6.0
@@ -55,7 +55,7 @@ dependencies:
   prefs: ^4.2.0
   proj4dart: ^3.0.0
   provider: ^6.1.5+1
-  qr: ^3.0.2
+  qr: ^4.0.0
   r_scan:
     git:
       url: https://github.com/masewo/r_scan.git
