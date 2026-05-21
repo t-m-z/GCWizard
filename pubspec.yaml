@@ -55,7 +55,7 @@ dependencies:
   prefs: ^4.2.0
   proj4dart: ^3.0.0
   provider: ^6.1.5+1
-  qr: ^3.0.2
+  qr: ^4.0.0
   r_scan:
     git:
       url: https://github.com/masewo/r_scan.git
