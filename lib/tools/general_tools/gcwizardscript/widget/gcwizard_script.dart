@@ -58,6 +58,9 @@ class GCWizardScriptState extends State<GCWizardScript> {
   bool _loadCoords = false;
   var _currentCoords = defaultBaseCoordinate;
 
+  var _isClosingDialogShowing = false;
+  var _canClosePopReady = false;
+
   @override
   void initState() {
     super.initState();
@@ -84,15 +87,20 @@ class GCWizardScriptState extends State<GCWizardScript> {
     // https://stackoverflow.com/questions/77500680/willpopscope-is-deprecated-after-flutter-3-12
     // https://api.flutter.dev/flutter/widgets/PopScope-class.html
     return PopScope(
-      canPop: false,
-      onPopInvokedWithResult: (didPop, result) {
+      canPop: _canClosePopReady,
+      onPopInvokedWithResult: (didPop, result) async {
         // show the confirm dialog
         if (didPop) {
           return;
         } else {
-          showDialog<bool>(
+          if (_isClosingDialogShowing) return;
+          _isClosingDialogShowing = true;
+
+          if (!context.mounted) return;
+
+          final bool? shouldExit = await showDialog<bool>(
               context: context,
-              builder: (_) => AlertDialog(
+              builder: (dialogContext) => AlertDialog(
                 title: Text(i18n(context, 'gcwizard_script_exit_title')),
                 titleTextStyle: const TextStyle(color: Colors.black, fontSize: 16.0, fontWeight: FontWeight.bold),
                 content: Text(i18n(context, 'gcwizard_script_exit_message')),
@@ -100,18 +108,28 @@ class GCWizardScriptState extends State<GCWizardScript> {
                 backgroundColor: themeColors().dialog(),
                 actions: [
                   TextButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                        Navigator.pop(context);
-                      },
-                      child: Text(i18n(context, 'common_yes'))),
+                    onPressed: () {
+                      Navigator.pop(dialogContext, true);
+                    },
+                    child: Text(i18n(context, 'common_yes'))),
                   ElevatedButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      child: Text(i18n(context, 'common_no')))
+                    onPressed: () {
+                      Navigator.pop(dialogContext, false);
+                    },
+                    child: Text(i18n(context, 'common_no')))
                 ],
               ));
+
+          _isClosingDialogShowing = false;
+
+          if (shouldExit == true) {
+            setState(() {
+              _canClosePopReady = true;
+            });
+
+            Navigator.pop(context);
+          }
+
           return;
         }
       },

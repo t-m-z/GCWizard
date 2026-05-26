@@ -104,7 +104,7 @@ class _MultiDecoderState extends State<MultiDecoder> {
               onPressed: () {
                 Navigator.push(
                         context,
-                        NoAnimationMaterialPageRoute<GCWTool>(
+                        NoAnimationMaterialPageRoute<Object?>(
                             builder: (context) =>
                                 GCWTool(tool: _MultiDecoderConfiguration(), id: 'multidecoder_configuration')))
                     .whenComplete(() {

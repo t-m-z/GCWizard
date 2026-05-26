@@ -221,7 +221,7 @@ class _SubstitutionBreakerState extends State<SubstitutionBreaker> {
 
                 Navigator.push(
                     context,
-                    NoAnimationMaterialPageRoute<GCWTool>(
+                    NoAnimationMaterialPageRoute<Object?>(
                         builder: (context) => GCWTool(
                             tool: Substitution(input: _currentOutput!.ciphertext, substitutions: substitutions),
                             id: 'substitution')));

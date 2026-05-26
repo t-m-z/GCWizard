@@ -572,7 +572,7 @@ class _SymbolReplacerState extends State<SymbolReplacer> {
         id: 'symbol_replacer',
         searchKeys: const ['symbol_replacer']);
 
-    Navigator.push(context, NoAnimationMaterialPageRoute<GCWTool>(builder: (context) => subPageTool)).whenComplete(() {
+    Navigator.push(context, NoAnimationMaterialPageRoute<Object?>(builder: (context) => subPageTool)).whenComplete(() {
       setState(() {});
     });
   }

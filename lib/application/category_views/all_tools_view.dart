@@ -396,7 +396,7 @@ class _MainViewState extends State<MainView> {
                 onPressed: () {
                   Navigator.push(
                       context,
-                      NoAnimationMaterialPageRoute<GCWTool>(
+                      NoAnimationMaterialPageRoute<Object?>(
                           builder: (context) => registeredTools
                               .firstWhere((tool) => className(tool.tool) == className(const Changelog()))));
                 }),
@@ -444,8 +444,8 @@ class _MainViewState extends State<MainView> {
 
   @override
   Widget build(BuildContext context) {
-    final model = context.watch<TabsModel>();
-    final activeTab = model.tabs[model.currentTabIndex];
+    final tabModel = context.watch<TabsModel>();
+    final activeTab = tabModel.tabs[tabModel.currentTabIndex];
 
     if (registeredTools.isEmpty) {
       initializeRegistry(context);
@@ -463,31 +463,31 @@ class _MainViewState extends State<MainView> {
 
     var toolList = (_isSearching && _searchText.isNotEmpty) ? _getSearchedList() : null;
     if (!(_isSearching && _searchText.isNotEmpty)) {
-      model.setDefaultTab(
+      tabModel.setDefaultTab(
         DefaultTabController(
           length: 3,
           initialIndex: Prefs.getBool(PREFERENCE_TABS_USE_DEFAULT_TAB)
-              ? Prefs.getInt(PREFERENCE_TABS_DEFAULT_TAB)
-              : Prefs.getInt(PREFERENCE_TABS_LAST_VIEWED_TAB),
+            ? Prefs.getInt(PREFERENCE_TABS_DEFAULT_TAB)
+            : Prefs.getInt(PREFERENCE_TABS_LAST_VIEWED_TAB),
           child: Scaffold(
             key: _scaffoldKey,
             appBar: AppBar(
-                bottom: TabBar(
-                  onTap: (value) {
-                    Prefs.setInt(PREFERENCE_TABS_LAST_VIEWED_TAB, value);
-                  },
-                  tabs: const [
-                    Tab(icon: Icon(Icons.category)),
-                    Tab(icon: Icon(Icons.list)),
-                    Tab(icon: Icon(Icons.star)),
-                  ],
-                ),
-                leading: _buildIcon(),
-                title: _buildTitleAndSearchTextField(),
-                actions: <Widget>[
-                  _buildSearchActionButton(),
-                  _isSearching ? Container() : GCWTabMenu()
-                ]),
+              bottom: TabBar(
+                onTap: (value) {
+                  Prefs.setInt(PREFERENCE_TABS_LAST_VIEWED_TAB, value);
+                },
+                tabs: const [
+                  Tab(icon: Icon(Icons.category)),
+                  Tab(icon: Icon(Icons.list)),
+                  Tab(icon: Icon(Icons.star)),
+                ],
+              ),
+              leading: _buildIcon(),
+              title: _buildTitleAndSearchTextField(),
+              actions: <Widget>[
+                _buildSearchActionButton(),
+                _isSearching ? Container() : GCWTabMenu()
+              ]),
             drawer: buildMainMenu(context, _scaffoldKey),
             body: SafeArea(
               bottom: true,
@@ -503,60 +503,62 @@ class _MainViewState extends State<MainView> {
           ),
         )
       );
-
-      return PopScope(
-          canPop: false,
-          onPopInvokedWithResult: (didPop, result) async {
-            if (didPop) return;
-
-            final navigator = activeTab.navKey.currentState;
-
-            if (navigator != null && navigator.canPop()) {
-              navigator.pop();
-            } else { // ROOT Level
-              if (model.tabs.length == 1) {
-                SystemNavigator.pop();
-                return;
-              }
-
-              showGCWAlertDialog(
-                context,
-                i18n(context, 'tabs_closetab_title'),
-                i18n(context, 'tabs_closetab_text', parameters: [(activeTab.tool as GCWTool).toolName]),
-                () {
-                  if (context.mounted) {
-                    context.read<TabsModel>().removeTab(activeTab.id);
-                  }
-                }
-              );
-            }
-          },
-        child: IndexedStack(
-          index: model.currentTabIndex,
-          children: model.tabs.map((tabInfo) {
-            return TabNavigator(tabInfo: tabInfo);
-          }).toList()
-        )
-      );
     } else {
-      return Scaffold(
+      tabModel.setDefaultTab(
+        Scaffold(
           key: _scaffoldKey,
           appBar: AppBar(
-              leading: _buildIcon(),
-              title: _buildTitleAndSearchTextField(),
-              actions: <Widget>[_buildSearchActionButton()]
+            leading: _buildIcon(),
+            title: _buildTitleAndSearchTextField(),
+            actions: <Widget>[_buildSearchActionButton()]
           ),
           drawer: buildMainMenu(context, _scaffoldKey),
           body: SafeArea(
-              bottom: true,
-              top: false,
-              child: GCWToolList(toolList: toolList!)
+            bottom: true,
+            top: false,
+            child: GCWToolList(toolList: toolList!)
           )
-        );
+        )
+      );
     }
+
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) async {
+        if (didPop) return;
+
+        final navigator = activeTab.navKey.currentState;
+
+        if (navigator != null && navigator.canPop()) { // Subpage of a tab
+          navigator.maybePop();
+        } else { // ROOT Level of a tab
+          if (tabModel.tabs.length == 1) {
+            SystemNavigator.pop();
+            return;
+          }
+
+          showGCWAlertDialog(
+            context,
+            i18n(context, 'tabs_closetab_title'),
+            i18n(context, 'tabs_closetab_text', parameters: [(activeTab.tool as GCWTool).toolName]),
+                () {
+              if (context.mounted) {
+                context.read<TabsModel>().removeTab(activeTab.id);
+              }
+            }
+          );
+        }
+      },
+      child: IndexedStack(
+        index: tabModel.currentTabIndex,
+        children: tabModel.tabs.map((tabInfo) {
+          return TabNavigator(tabInfo: tabInfo);
+        }).toList()
+      )
+    );
   }
 
-  NoAnimationMaterialPageRoute<GCWTool>? _checkDeepLink() {
+  NoAnimationMaterialPageRoute<Object?>? _checkDeepLink() {
     if (widget.hasWebParameter()) {
       return createStartDeepLinkRoute(context, widget.webParameter!);
     }

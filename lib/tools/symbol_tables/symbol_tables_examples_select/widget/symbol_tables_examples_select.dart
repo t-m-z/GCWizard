@@ -162,7 +162,7 @@ class _SymbolTableExamplesSelectState extends State<SymbolTableExamplesSelect> {
   void _openInSymbolSearch() {
     Navigator.push(
         context,
-        NoAnimationMaterialPageRoute<GCWTool>(
+        NoAnimationMaterialPageRoute<Object?>(
             builder: (context) => GCWTool(
                   tool: SymbolTableExamples(
                     symbolKeys: selectedSymbolTables,

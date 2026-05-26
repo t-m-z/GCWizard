@@ -290,7 +290,7 @@ class _ElementsOfGeocachingDataViewState extends State<ElementsOfGeocachingDataV
   }
 
   void _showElement(int atomicNumber) {
-    Navigator.of(context).push(NoAnimationMaterialPageRoute<GCWTool>(
+    Navigator.of(context).push(NoAnimationMaterialPageRoute<Object?>(
         builder: (context) =>
             GCWTool(tool: ElementsOfGeocachingDataView(atomicNumber: atomicNumber), id: 'elementsofgeocaching_dataview')));
   }

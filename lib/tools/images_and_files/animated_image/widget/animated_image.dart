@@ -407,7 +407,7 @@ class _AnimatedImageState extends State<AnimatedImage> {
 void openInAnimatedImage(BuildContext context, GCWFile file) {
   Navigator.push(
       context,
-      NoAnimationMaterialPageRoute<GCWTool>(
+      NoAnimationMaterialPageRoute<Object?>(
           builder: (context) => GCWTool(
               tool: AnimatedImage(file: file), toolName: i18n(context, 'animated_image_title'), id: 'animated_image')));
 }

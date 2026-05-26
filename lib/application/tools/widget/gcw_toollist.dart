@@ -62,8 +62,8 @@ class _GCWToolListState extends State<GCWToolList> {
     Future<void> _navigateToSubPage(BuildContext context) async {
       Navigator.push(
         context,
-        NoAnimationMaterialPageRoute<GCWTool>(
-          settings: RouteSettings(name: tool.toolName),
+        NoAnimationMaterialPageRoute<Object?>(
+          settings: RouteSettings(name: Uri.encodeComponent(tool.toolName ?? '')),
           builder: (context) => tool
         )
       );

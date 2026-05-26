@@ -308,7 +308,7 @@ class _UICWagonCodeState extends State<UICWagonCode> {
 void openInUICWagonCode(BuildContext context, String uicNumber) {
   Navigator.push(
       context,
-      NoAnimationMaterialPageRoute<GCWTool>(
+      NoAnimationMaterialPageRoute<Object?>(
           builder: (context) => GCWTool(
               tool: UICWagonCode(
                 uicNumber: uicNumber,

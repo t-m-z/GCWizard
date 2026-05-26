@@ -322,7 +322,7 @@ class _ExifReaderState extends State<ExifReader> {
 void openInMetadataViewer(BuildContext context, GCWFile file) {
   Navigator.push(
       context,
-      NoAnimationMaterialPageRoute<GCWTool>(
+      NoAnimationMaterialPageRoute<Object?>(
           builder: (context) =>
               GCWTool(tool: ExifReader(file: file), toolName: i18n(context, 'exif_title'), id: 'exif')));
 }

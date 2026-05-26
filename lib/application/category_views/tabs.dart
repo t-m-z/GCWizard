@@ -16,100 +16,6 @@ int _nextUniqueTabIndex() {
   return _currentMaxTabIndex;
 }
 
-class GCWTabMenu extends StatelessWidget {
-  const GCWTabMenu({super.key});
-
-  String _getDynamicName(GlobalKey<NavigatorState> navKey, String defaultName) {
-    String? currentRouteName;
-    navKey.currentState?.popUntil((route) {
-      currentRouteName = route.settings.name;
-      return true;
-    });
-
-    if (currentRouteName == null || currentRouteName == 'Home') {
-      return defaultName;
-    }
-    return currentRouteName!;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final model = context.watch<TabsModel>();
-    if (model.tabs.length <= 1) {
-      return Container();
-    }
-
-    return GCWPopupMenu(
-      customIcon: Stack(
-        alignment: Alignment.center,
-        children: [
-          Icon(
-            Icons.crop_square_rounded,
-            color: themeColors().mainFont(),
-          ),
-          Text(
-            model.tabs.length.toString(),
-            style: TextStyle(
-              fontSize: defaultFontSize() - 5,
-              color: themeColors().mainFont()
-            )
-          )
-        ],
-      ),
-      buttonNoBorder: true,
-      menuItemBuilder: (context) => List.generate(
-        model.tabs.length,
-            (i) {
-          final tab = model.tabs[i];
-
-
-
-          String displayName = _getDynamicName(
-            tab.navKey, i == 0
-              ? _HOMETAB_TITLE
-              : (tab.tool as GCWTool).toolName!
-          );
-
-          if (displayName.length > _MAX_DISPLAYNAME_LENGTH) {
-            displayName = displayName.substring(0, _MAX_DISPLAYNAME_LENGTH) + '...';
-          }
-
-          return GCWPopupMenuItem(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  children: [
-                    Text(
-                      displayName,
-                      style: TextStyle(
-                        color: themeColors().dialogText(),
-                      ),
-                    ),
-                    i == 0 && displayName != _HOMETAB_TITLE ? Text(
-                      '(Home Tab)',
-                      style: gcwDescriptionTextStyle().copyWith(color: themeColors().dialogText()),
-                    ) : Container(),
-                  ],
-                ),
-                i == 0 ? Container() :
-                  GCWIconButton(
-                    icon: Icons.close,
-                    iconColor: themeColors().dialogText(),
-                    onPressed: () {
-                      Navigator.pop(context);
-                      context.read<TabsModel>().removeTab(tab.id);
-                    },
-                  ),
-              ],
-            ), action: (int index) => context.read<TabsModel>().switchTab(index),
-          );
-        },
-      ),
-    );
-  }
-}
-
 class TabsModel extends ChangeNotifier {
   List<TabInfo> tabs = [
     TabInfo(id: DEFAULT_TAB_ID, tool: Container(), navKey: GlobalKey<NavigatorState>())
@@ -121,7 +27,7 @@ class TabsModel extends ChangeNotifier {
     var newIndex = _nextUniqueTabIndex();
     tabs.add(TabInfo(
       id: newIndex,
-      tool: tool,
+      tool: tool.clone(),
       navKey: GlobalKey<NavigatorState>(),
     ));
     currentTabIndex = tabs.length - 1;
@@ -188,6 +94,105 @@ class TabNavigator extends StatelessWidget {
           builder: (context) => tabInfo.tool,
         );
       },
+    );
+  }
+}
+
+class GCWTabMenu extends StatelessWidget {
+  const GCWTabMenu({super.key});
+
+  String _getDynamicName(GlobalKey<NavigatorState> navKey, String defaultName) {
+    String? currentRouteName;
+    navKey.currentState?.popUntil((route) {
+      currentRouteName = route.settings.name;
+      return true;
+    });
+
+    if (currentRouteName == null || currentRouteName == 'Home') {
+      return defaultName;
+    }
+    return currentRouteName!;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final model = context.watch<TabsModel>();
+    if (model.tabs.length <= 1) {
+      return Container();
+    }
+
+    return GCWPopupMenu(
+      customIcon: Stack(
+        alignment: Alignment.center,
+        children: [
+          Icon(
+            Icons.crop_square_rounded,
+            color: themeColors().mainFont(),
+          ),
+          Text(
+              model.tabs.length.toString(),
+              style: TextStyle(
+                  fontSize: defaultFontSize() - 5,
+                  color: themeColors().mainFont()
+              )
+          )
+        ],
+      ),
+      buttonNoBorder: true,
+      menuItemBuilder: (context) => List.generate(
+        model.tabs.length,
+            (i) {
+          final tab = model.tabs[i];
+
+          String displayName = _getDynamicName(
+              tab.navKey, i == 0
+              ? _HOMETAB_TITLE
+              : (tab.tool as GCWTool).toolName!
+          );
+
+          if (displayName.length > _MAX_DISPLAYNAME_LENGTH) {
+            displayName = displayName.substring(0, _MAX_DISPLAYNAME_LENGTH) + '...';
+          }
+
+          String name;
+          try {
+            name = Uri.decodeComponent(displayName);
+          } catch (e) {
+            name = displayName;
+          }
+
+          return GCWPopupMenuItem(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  children: [
+                    Text(
+                      name,
+                      style: TextStyle(
+                        color: themeColors().dialogText(),
+                      ),
+                    ),
+                    i == 0 && displayName != _HOMETAB_TITLE ? Text(
+                      '(Home Tab)',
+                      style: gcwDescriptionTextStyle().copyWith(color: themeColors().dialogText()),
+                    ) : Container(),
+                  ],
+                ),
+                i == 0 ? Container() :
+                GCWIconButton(
+                  icon: Icons.close,
+                  iconColor: themeColors().dialogText(),
+                  onPressed: () {
+                    Navigator.pop(context);
+                    context.read<TabsModel>().removeTab(tab.id);
+                  },
+                ),
+              ],
+            ), action: (int index) => context.read<TabsModel>().switchTab(index),
+          );
+        },
+      ),
     );
   }
 }

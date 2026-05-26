@@ -46,7 +46,7 @@ class _GCWTextViewerState extends State<GCWTextViewer> {
 void openInTextViewer(BuildContext context, String text) {
   Navigator.push(
       context,
-      NoAnimationMaterialPageRoute<GCWTool>(
+      NoAnimationMaterialPageRoute<Object?>(
           builder: (context) => GCWTool(
                 tool: GCWTextViewer(text: text),
                 toolName: i18n(context, 'textviewer_title'),

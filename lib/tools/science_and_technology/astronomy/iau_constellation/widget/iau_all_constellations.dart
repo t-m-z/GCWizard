@@ -182,7 +182,7 @@ class IAUAllConstellationsState extends State<IAUAllConstellations> {
   }
 
   void _showConstellation(String ConstellationName) {
-    Navigator.of(context).push(NoAnimationMaterialPageRoute<GCWTool>(
+    Navigator.of(context).push(NoAnimationMaterialPageRoute<Object?>(
         builder: (context) =>
             GCWTool(tool: IAUSingleConstellation(ConstellationName: ConstellationName), id: 'iau_constellation')));
   }

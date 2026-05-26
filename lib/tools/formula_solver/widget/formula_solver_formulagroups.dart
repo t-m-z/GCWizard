@@ -196,7 +196,7 @@ class _FormulaSolverFormulaGroupsState extends State<FormulaSolverFormulaGroups>
 
     Navigator.push(
         context,
-        NoAnimationMaterialPageRoute<GCWTool>(builder: (context) => gcwTool));
+        NoAnimationMaterialPageRoute<Object?>(builder: (context) => gcwTool));
   }
 
   GCWTool? _buildNavigateGCWTool(int id) {
@@ -241,6 +241,6 @@ int importFormulaGroupFromJson(BuildContext context, String data) {
 void openInFormulaGroups(BuildContext context) {
   Navigator.push(
       context,
-      NoAnimationMaterialPageRoute<GCWTool>(
+      NoAnimationMaterialPageRoute<Object?>(
           builder: (context) => GCWTool(tool: FormulaSolverFormulaGroups(), id: 'formulasolver')));
 }

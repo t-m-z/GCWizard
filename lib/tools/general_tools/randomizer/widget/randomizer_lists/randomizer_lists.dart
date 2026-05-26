@@ -232,7 +232,7 @@ class _RandomizerListsState extends State<RandomizerLists> {
           if (list.name.isNotEmpty) {
             var listTool = _buildNavigateGCWTool(list.name);
             if (listTool != null) {
-              Navigator.push(context, NoAnimationMaterialPageRoute<GCWTool>(builder: (context) => listTool))
+              Navigator.push(context, NoAnimationMaterialPageRoute<Object?>(builder: (context) => listTool))
                   .whenComplete(() {
                 setState(() {});
               });

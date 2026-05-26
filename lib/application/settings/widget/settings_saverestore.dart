@@ -138,7 +138,7 @@ class _SaveRestoreSettingsState extends State<SaveRestoreSettings> {
               i18n(context, 'settings_preferences_warning_text'),
               () {
                 Navigator.of(context)
-                    .push(NoAnimationMaterialPageRoute<GCWTool>(
+                    .push(NoAnimationMaterialPageRoute<Object?>(
                         builder: (context) => GCWTool(tool: const SettingsPreferences(), id: 'settings_preferences')))
                     .whenComplete(() {
                   setState(() {

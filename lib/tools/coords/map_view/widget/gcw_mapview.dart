@@ -445,7 +445,7 @@ class _GCWMapViewState extends State<GCWMapView> {
               if (child is GCWMapLine) {
                 Navigator.push(
                     context,
-                    NoAnimationMaterialPageRoute<GCWTool>(
+                    NoAnimationMaterialPageRoute<Object?>(
                         builder: (context) => GCWTool(
                             tool: MapPolylineEditor(polyline: child.parent),
                             toolName: i18n(context, 'coords_openmap_title') + ': ' + i18n(context, 'coords_openmap_lineeditor_title'),
@@ -461,7 +461,7 @@ class _GCWMapViewState extends State<GCWMapView> {
                 var mapPoint = widget.points.firstWhere((element) => element.circle == child);
                 Navigator.push(
                     context,
-                    NoAnimationMaterialPageRoute<GCWTool>(
+                    NoAnimationMaterialPageRoute<Object?>(
                         builder: (context) => GCWTool(
                             tool: MapPointEditor(mapPoint: mapPoint, lengthUnit: defaultLengthUnitGCWMapView, precision: _currentMapPrecision),
                             toolName: i18n(context, 'coords_openmap_title') + ': ' + i18n(context, 'coords_openmap_pointeditor_title'),
@@ -724,7 +724,7 @@ class _GCWMapViewState extends State<GCWMapView> {
 
             Navigator.push(
               context,
-              NoAnimationMaterialPageRoute<GCWTool>(
+              NoAnimationMaterialPageRoute<Object?>(
                   builder: (context) => GCWTool(
                       tool: MapPointEditor(
                           mapPoint: mapPoint, lengthUnit: defaultLengthUnitGCWMapView, precision: _currentMapPrecision,),
@@ -1114,7 +1114,7 @@ class _GCWMapViewState extends State<GCWMapView> {
 
                             Navigator.push(
                                 context,
-                                NoAnimationMaterialPageRoute<GCWTool>(
+                                NoAnimationMaterialPageRoute<Object?>(
                                     builder: (context) => GCWTool(
                                         tool: MapPointEditor(
                                             mapPoint: point, lengthUnit: defaultLengthUnitGCWMapView, precision: _currentMapPrecision,),
@@ -1361,7 +1361,7 @@ void openInMap(BuildContext context, List<GCWMapPoint> mapPoints,
     {List<GCWMapPolyline>? mapPolylines, bool isCommonMap = false}) {
   Navigator.push(
       context,
-      NoAnimationMaterialPageRoute<GCWTool>(
+      NoAnimationMaterialPageRoute<Object?>(
           builder: (context) => GCWTool(
               tool: GCWMapView(
                 points: List<GCWMapPoint>.from(mapPoints),

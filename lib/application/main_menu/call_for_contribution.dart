@@ -6,7 +6,6 @@ import 'package:gc_wizard/application/main_menu/mainmenuentry_stub.dart';
 import 'package:gc_wizard/application/navigation/no_animation_material_page_route.dart';
 import 'package:gc_wizard/application/registry.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
-import 'package:gc_wizard/application/tools/widget/gcw_tool.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_divider.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/common_widget_utils.dart';
 
@@ -77,7 +76,7 @@ class _CallForContributionState extends State<CallForContribution> {
             text: i18n(context, 'callforcontribution_24'),
             recognizer: TapGestureRecognizer()
               ..onTap = () {
-                Navigator.of(context).push(NoAnimationMaterialPageRoute<GCWTool>(
+                Navigator.of(context).push(NoAnimationMaterialPageRoute<Object?>(
                     builder: (context) =>
                         registeredTools.firstWhere((tool) => className(tool.tool) == className(const About()))));
               },

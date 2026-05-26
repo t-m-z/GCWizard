@@ -107,7 +107,7 @@ class _PeriodicTableState extends State<PeriodicTable> {
               ),
             ),
             onTap: () {
-              Navigator.of(context).push(NoAnimationMaterialPageRoute<GCWTool>(
+              Navigator.of(context).push(NoAnimationMaterialPageRoute<Object?>(
                   builder: (context) => GCWTool(
                       tool: PeriodicTableDataView(atomicNumber: element.atomicNumber), id: 'periodictable_dataview')));
             },

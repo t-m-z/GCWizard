@@ -223,7 +223,7 @@ class _HiddenDataState extends State<HiddenData> {
 void openInHiddenData(BuildContext context, GCWFile file) {
   Navigator.push(
       context,
-      NoAnimationMaterialPageRoute<GCWTool>(
+      NoAnimationMaterialPageRoute<Object?>(
           builder: (context) =>
               GCWTool(tool: HiddenData(file: file), toolName: i18n(context, 'hiddendata_title'), id: 'hiddendata')));
 }

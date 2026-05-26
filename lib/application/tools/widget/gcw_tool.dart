@@ -113,7 +113,7 @@ class GCWTool extends StatefulWidget {
   String indexedSearchStrings = '';
 
   GCWTool(
-      {super.key,
+      {Key? key,
       required this.tool,
       this.toolName,
       this.defaultLanguageToolName,
@@ -131,7 +131,7 @@ class GCWTool extends StatefulWidget {
       this.suppressCopyToTab = false,
       this.deeplinkAlias,
       this.licenses,
-      this.toolBarItemList = const []}) {
+      this.toolBarItemList = const []}): super(key: GlobalKey()) {
     longId = className(tool) + '_' + (id);
 
     if (iconPath != null) {
@@ -143,6 +143,30 @@ class GCWTool extends StatefulWidget {
 
   bool get isFavorite {
     return Favorites.isFavorite(longId);
+  }
+
+  GCWTool clone() {
+    return GCWTool(
+      key: GlobalKey(),
+      tool: tool,
+      toolName: toolName,
+      defaultLanguageToolName: defaultLanguageToolName,
+      id: id,
+      id_prefix: id_prefix,
+      categories: categories,
+      autoScroll: autoScroll,
+      suppressToolMargin: suppressToolMargin,
+      iconPath: iconPath,
+      searchKeys: searchKeys,
+      helpSearchString: helpSearchString,
+      isBeta: isBeta,
+      suppressHelpButton: suppressHelpButton,
+      suppressAppBarButtons: suppressAppBarButtons,
+      suppressCopyToTab: suppressCopyToTab,
+      deeplinkAlias: deeplinkAlias,
+      licenses: licenses,
+      toolBarItemList: toolBarItemList
+    );
   }
 
   @override
@@ -262,7 +286,7 @@ class _GCWToolState extends State<GCWTool> {
   }
 
   List<GCWPopupMenuItem> _buildToolBarItems() {
-    final model = context.read<TabsModel>();
+    final tabModel = context.read<TabsModel>();
     var menuItems = <GCWPopupMenuItem>[];
 
     menuItems.addAll(widget.toolBarItemList);
@@ -270,10 +294,12 @@ class _GCWToolState extends State<GCWTool> {
     if (!widget.suppressCopyToTab) {
       menuItems.add(GCWPopupMenuItem(
         child: iconedGCWPopupMenuItem(context, Icons.open_in_new, 'tabs_copytotab'),
-        action: (index) => setState(() {
-              model.addTab(widget);
-            }))
-      );
+        action: (index) {
+          setState(() {
+            tabModel.addTab(widget.clone());
+          });
+        }
+      ));
     }
 
     menuItems.add(GCWPopupMenuItem(
@@ -296,7 +322,7 @@ class _GCWToolState extends State<GCWTool> {
           action: (index) => setState(() {
             Navigator.push(
               context,
-              NoAnimationMaterialPageRoute<GCWTool>(
+              NoAnimationMaterialPageRoute<Object?>(
                 builder: (context) =>
                   GCWTool(
                     tool: ToolLicenses(licenses: widget.licenses!),

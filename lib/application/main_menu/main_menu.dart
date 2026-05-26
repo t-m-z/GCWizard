@@ -114,8 +114,8 @@ void closeDrawerOpenTool(BuildContext context, GlobalKey<ScaffoldState> scaffold
   final activeTab = model.tabs[model.currentTabIndex];
   if (activeTab.navKey.currentState != null) {
     activeTab.navKey.currentState!.push(
-      NoAnimationMaterialPageRoute<GCWTool>(
-        settings: RouteSettings(name: tool.toolName),
+      NoAnimationMaterialPageRoute<Object?>(
+        settings: RouteSettings(name: Uri.encodeComponent(tool.toolName ?? '')),
         builder: (context) => tool,
       ),
     );

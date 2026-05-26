@@ -41,7 +41,7 @@ class _RandomizerListsListState extends State<_RandomizerListsList> {
                 onPressed: () {
                   Navigator.push(
                       context,
-                      NoAnimationMaterialPageRoute<GCWTool>(
+                      NoAnimationMaterialPageRoute<Object?>(
                           builder: (context) => GCWTool(
                             tool: _RandomizerListsElements(list: widget.list),
                             toolName: i18n(context, 'randomizer_lists_list_elements'),
@@ -59,7 +59,7 @@ class _RandomizerListsListState extends State<_RandomizerListsList> {
                 onPressed: () {
                   Navigator.push(
                       context,
-                      NoAnimationMaterialPageRoute<GCWTool>(
+                      NoAnimationMaterialPageRoute<Object?>(
                           builder: (context) => GCWTool(
                             tool: _RandomizerListsShuffle(list: widget.list),
                             toolName: i18n(context, 'randomizer_lists_list_shuffle'),
@@ -77,7 +77,7 @@ class _RandomizerListsListState extends State<_RandomizerListsList> {
                 onPressed: () {
                   Navigator.push(
                       context,
-                      NoAnimationMaterialPageRoute<GCWTool>(
+                      NoAnimationMaterialPageRoute<Object?>(
                           builder: (context) => GCWTool(
                             tool: _RandomizerListsGroups(list: widget.list),
                             toolName: i18n(context, 'randomizer_lists_list_groups'),
