@@ -2267,6 +2267,7 @@
   "coords_openmap_hidepoints": "Hide all points",
   "coords_openmap_mapprecision_increase": "Increase Drawing Precision (Slower)",
   "coords_openmap_mapprecision_decrease": "Decrease Drawing Precision (Faster)",
+  "coords_openmap_weblinkview": "Weblink for current view",
   "coords_averaging_title": "Coordinate Measurement",
   "coords_averaging_start": "Start Measurement",
   "coords_averaging_stop": "Stop Measurement",
