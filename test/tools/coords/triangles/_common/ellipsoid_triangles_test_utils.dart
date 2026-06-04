@@ -1,8 +1,7 @@
 import 'package:latlong2/latlong.dart';
 
 List<Map<String, Object?>> validEllipsoidTrianglesForTests = [
-  //Very narrow
-  {'inputA': LatLng(70, 0), 'inputB': LatLng(13.56832726660199, 74.33418761525557), 'inputC': LatLng(38.59652460733987, 62.72751487512538)},
+  //Very narrow,
   {'inputA': LatLng(1, 1), 'inputB': LatLng(2, 2), 'inputC': LatLng(3, 3)}, // NOT SAME LINE IN GEODETICS!
 
   //On same meridian/great circle/geodetic
@@ -112,6 +111,7 @@ List<Map<String, Object?>> invalidEllipsoidTrianglesForTests = [
   {'inputA': LatLng(80, -180), 'inputB': LatLng(70, 180), 'inputC': LatLng(60, 180)},
   {'inputA': LatLng(80, 0), 'inputB': LatLng(70, 0), 'inputC': LatLng(60, 0)},
   {'inputA': LatLng(90, 100), 'inputB': LatLng(0,0), 'inputC': LatLng(-90,50)},
+  {'inputA': LatLng(70, 0), 'inputB': LatLng(13.56832726660199, 74.33418761525557), 'inputC': LatLng(38.59652460733987, 62.72751487512538)}, // Not really on same line but close enough for line test with 1e-3 precision
 
   //Poles
   {'inputA': LatLng(90, 0), 'inputB': LatLng(90, 1), 'inputC': LatLng(90, -1)},

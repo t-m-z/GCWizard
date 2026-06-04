@@ -7,12 +7,12 @@ import 'package:latlong2/latlong.dart';
 import '../../../../science_and_technology/euclidic_triangle/logic/triangle_test_utils.dart';
 
 void main() async {
-  group("triangle.calculateEllipsoidTriangleSideMidPoints:", () {
+  group("triangle.calculateEllipsoidTriangleMedians:", () {
     List<Map<String, Object?>> _inputsToExpected = [
       {'inputA': LatLng(0, 0), 'inputB': LatLng(0, 0), 'inputC': LatLng(0, 0),
-        'expectedOutput': []},
+        'expectedOutput': <LatLng>[]},
       {'inputA': LatLng(1, 1), 'inputB': LatLng(1, 1), 'inputC': LatLng(1, 1),
-        'expectedOutput': []},
+        'expectedOutput': <LatLng>[]},
       {'inputA': LatLng(1, 1), 'inputB': LatLng(2, 2), 'inputC': LatLng(3, 3),
         'expectedOutput': [LatLng(1.5000586225465693, 1.4998865008673827), LatLng(2.500097624104694, 2.4998107563440044), LatLng(2.0003125707038807, 1.9993944677402233)]},
       {'inputA': LatLng(0, 0), 'inputB': LatLng(0, 3), 'inputC': LatLng(4, 0),

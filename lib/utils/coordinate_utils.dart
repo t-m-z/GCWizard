@@ -6,7 +6,21 @@ import 'package:gc_wizard/utils/data_type_utils/double_type_utils.dart';
 import 'package:gc_wizard/utils/math_utils.dart';
 import 'package:latlong2/latlong.dart';
 
+bool isValidLatLng(LatLng latlng) {
+  return !latlng.latitude.isNaN && !latlng.longitude.isNaN
+    && !latlng.latitude.isInfinite && !latlng.longitude.isInfinite;
+}
+
 bool equalsLatLng(LatLng a, LatLng b, {double tolerance = 1e-10}) {
+  var validLatLngs = [isValidLatLng(a), isValidLatLng(b)];
+  if (validLatLngs.contains(false)) {
+    if (validLatLngs[0] == false && validLatLngs[1] == false) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   var _a = normalizeLatLon(a.latitude, a.longitude);
   var _b = normalizeLatLon(b.latitude, b.longitude);
 

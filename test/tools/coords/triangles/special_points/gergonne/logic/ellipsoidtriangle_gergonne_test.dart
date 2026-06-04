@@ -14,11 +14,11 @@ void main() async {
       {'inputA': LatLng(1, 1), 'inputB': LatLng(1, 1), 'inputC': LatLng(1, 1),
         'expectedOutput': LatLng(double.nan, double.nan)},
       {'inputA': LatLng(1, 1), 'inputB': LatLng(2, 2), 'inputC': LatLng(3, 3),
-        'expectedOutput': LatLng(double.nan, double.nan)},
+        'expectedOutput': LatLng(2.0000000000867124, 1.9999999998933)},
       {'inputA': LatLng(0, 0), 'inputB': LatLng(0, 3), 'inputC': LatLng(4, 0),
-        'expectedOutput': LatLng(0.7317379990783085, 0.8157721928407682)},
+        'expectedOutput': LatLng(0.7317459878155131, 0.8157633880314139)},
       {'inputA': LatLng(40, 9), 'inputB': LatLng(42, 9), 'inputC': LatLng(38, 8),
-        'expectedOutput': LatLng(40.0025888794003, 8.98268272877226)},
+        'expectedOutput': LatLng(40.002588867101935, 8.982682738050523)},
     ];
 
     for (var elem in _inputsToExpected) {

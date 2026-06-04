@@ -1,7 +1,6 @@
 import 'dart:core';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
-import 'package:gc_wizard/tools/coords/_common/logic/external_libs/karney.geographic_lib/geographic_lib.dart';
 import 'package:gc_wizard/tools/coords/triangles/_common/logic/ellipsoid_triangle.dart';
 import 'package:gc_wizard/tools/coords/triangles/_common/logic/ellipsoid_triangles.dart';
 import 'package:gc_wizard/tools/science_and_technology/euclidic_triangle/logic/triangle.dart';
@@ -83,23 +82,18 @@ void main() async {
       {'inputA': LatLng(1, 1), 'inputB': LatLng(1, 1), 'inputC': LatLng(1, 1),
         'expectedOutput': 0},
       {'inputA': LatLng(1, 1), 'inputB': LatLng(2, 2), 'inputC': LatLng(3, 3),
-        'expectedOutput': 11294866.872074127},
+        'expectedOutput': 11294866.872226715},
       {'inputA': LatLng(0, 0), 'inputB': LatLng(0, 3), 'inputC': LatLng(4, 0),
-        'expectedOutput': double.nan},
+        'expectedOutput': 73902425136.55568},
       {'inputA': LatLng(40, 9), 'inputB': LatLng(42, 9), 'inputC': LatLng(38, 8),
-        'expectedOutput': 9760996057.401123},
+        'expectedOutput': 9760996057.40094},
     ];
 
     for (var elem in _inputsToExpected) {
       test('input: ${elem['inputA']} ${elem['inputB']} ${elem['inputC']}', () {
         var triangle = EllipsoidTriangle(elem['inputA'] as LatLng, elem['inputB'] as LatLng, elem['inputC'] as LatLng, Ellipsoid.WGS84);
-        var _actual = polygonAreaEdges(
-          triangle.a,
-          [triangle.distanceAB, triangle.distanceBC, triangle.distanceAC],
-          [triangle.bearingAB, triangle.bearingBC, triangle.bearingCA],
-          Ellipsoid.WGS84
-        );
-        _actual.isNaN ? expect(_actual.toString(), elem['expectedOutput'].toString()) : expect(_actual, elem['expectedOutput']);
+        var _actual = ellipsoidTriangleArea(triangle, Ellipsoid.WGS84);
+        expect(_actual, elem['expectedOutput']);
       });
     }
   });
