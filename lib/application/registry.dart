@@ -2946,6 +2946,24 @@ void initializeRegistry(BuildContext context) {
         licenses: [
           ToolLicenseOnlineArticle(
               context: context,
+              author: 'en.wikipedia.org and contributors',
+              title: 'Braille',
+              sourceUrl: 'https://en.wikipedia.org/w/index.php?title=Braille&oldid=1355175549',
+              licenseType: ToolLicenseType.CCBYSA4),
+          ToolLicenseOnlineArticle(
+              context: context,
+              author: 'en.wikipedia.org and contributors',
+              title: 'English Braille',
+              sourceUrl: 'https://en.wikipedia.org/w/index.php?title=English_Braille&oldid=1348642453',
+              licenseType: ToolLicenseType.CCBYSA4),
+          ToolLicenseOnlineArticle(
+              context: context,
+              author: 'en.wikipedia.org and contributors',
+              title: 'Brailleschrift',
+              sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Brailleschrift&oldid=267157120',
+              licenseType: ToolLicenseType.CCBYSA4),
+          ToolLicenseOnlineArticle(
+              context: context,
               author: 'Alexander Fakoó',
               title: 'FAKOO.DE',
               sourceUrl:
