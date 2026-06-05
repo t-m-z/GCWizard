@@ -15,8 +15,12 @@ import 'package:uuid/uuid.dart';
 enum MapPrecision {LOW, HIGH}
 
 MapPrecision getMapPrecision() {
-  var prefMapPrecision = Prefs.getString(PREFERENCE_COORD_MAP_DEFAULT_PRECISION_GEOMETRIES);
-  return MapPrecision.values.firstWhere((e) => e.toString() == prefMapPrecision);
+  try {
+    var prefMapPrecision = Prefs.getString(PREFERENCE_COORD_MAP_DEFAULT_PRECISION_GEOMETRIES);
+    return MapPrecision.values.firstWhere((e) => e.toString() == prefMapPrecision);
+  } catch (e) {
+    return MapPrecision.HIGH;
+  }
 }
 
 class GCWMapPoint {
