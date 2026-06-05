@@ -115,6 +115,10 @@ void latLngTest(LatLng a, LatLng b) {
   expect(true, equalsLatLng(a, b));
 }
 
+String latLngToString(LatLng a) {
+  return 'LatLng(latitude:${a.latitude.toString()}, longitude:${a.longitude.toString()})';
+}
+
 void latLngListTest(List<LatLng> aL1, List<LatLng> bL2) {
   expect(true, equalsLatLngList(aL1, bL2));
 }

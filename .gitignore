@@ -29,6 +29,8 @@ crowdin.properties
 .pub-cache/
 .pub/
 /build/
+build/
+ephemeral/
 
 # Android related
 **/android/**/gradle-wrapper.jar
