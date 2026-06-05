@@ -48,7 +48,7 @@ Future<AnimatedImageMorseOutput?> analyseImageMorseCode(Uint8List bytes, {SendPo
     filteredList = _searchHighSignalImage(out.frames!, filteredList);
     var outMorse = AnimatedImageMorseOutput(out, filteredList);
 
-    return Future.value(outMorse);
+    return outMorse;
   } on Exception {
     return null;
   }
@@ -129,7 +129,7 @@ Future<Uint8List?> _createImage(Uint8List highImage, Uint8List lowImage, String 
     }
 
     var list = encoder.finish();
-    return Future.value((list == null) ? null : Uint8List.fromList(list));
+    return (list == null) ? null : Uint8List.fromList(list);
   } on Exception {
     return null;
   }

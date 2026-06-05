@@ -19,7 +19,7 @@ Future<String?> scanBytes(Uint8List? bytes) async {
   if (bytes == null) return null;
   try {
     var codes = await scan.RScan.scanImageMemory(bytes);
-    return Future.value(codes.message);
+    return codes.message;
   } catch (e) {}
   return null;
 }

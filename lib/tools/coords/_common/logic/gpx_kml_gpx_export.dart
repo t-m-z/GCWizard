@@ -32,7 +32,7 @@ Future<bool> exportCoordinates(BuildContext context, List<GCWMapPoint> points, L
   if (data.isEmpty) return false;
   try {
     var fileName = buildFileNameWithDate('coords_', fileType);
-    return saveStringToFile(context, data, fileName);
+    return await saveStringToFile(context, data, fileName);
   } on Exception {
     return false;
   }

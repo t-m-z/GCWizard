@@ -390,9 +390,6 @@ void _checkFileType(FileType type) {
 
 String fileExtension(FileType type) {
   _checkFileType(type);
-  if (_FILE_TYPES[type]!.extensions.contains(null)) {
-    throw Exception('No file type extension');
-  }
 
   return _FILE_TYPES[type]!.extensions.first;
 }
@@ -401,9 +398,6 @@ List<String> fileExtensions(List<FileType> types) {
   return types
       .map((type) {
         _checkFileType(type);
-        if (_FILE_TYPES[type]!.extensions.contains(null)) {
-          throw Exception('No file type extension');
-        }
 
         return _FILE_TYPES[type]!.extensions;
       })

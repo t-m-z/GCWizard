@@ -62,7 +62,6 @@ class YPbPr extends GCWBaseColor {
   static const double _K_B = 0.114;
   static const double _K_G = 1.0 - _K_R - _K_B;
 
-  @override
   YPbPr(double y, double p_b, double p_r) {
     this.y = min(1.0, max(0.0, y));
     pb = min(0.5, max(-0.5, p_b));

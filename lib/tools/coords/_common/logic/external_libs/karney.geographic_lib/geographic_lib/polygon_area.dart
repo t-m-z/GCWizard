@@ -165,6 +165,7 @@ class _PolygonArea {
    * This does nothing if no points have been added yet.  Use
    * PolygonArea.CurrentPoint to determine the position of the new vertex.
    **********************************************************************/
+  // ignore: unused_element
   void _AddEdge(double azi, double s) {
     if (_num > 0) {             // Do nothing if _num is zero
       GeodesicData g = _earth.direct(_lat1, _lon1, azi, false, s, outmask: _mask);
