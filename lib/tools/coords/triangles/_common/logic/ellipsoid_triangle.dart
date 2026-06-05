@@ -80,6 +80,8 @@ class EllipsoidTriangle {
     return orderEllipsoidTrianglePointsClockwise(this, ellipsoid);
   }
 
+  List<LatLng> get points => [a, b, c];
+
   @override
   String toString() {
     return 'A: ' + a.latitude.toString() + ", " + a.longitude.toString() + ' | '

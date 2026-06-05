@@ -201,30 +201,25 @@ LatLng reverseAzimuthalProjection(LatLng coord, double bearing, double distance,
   return LatLng(_lat2, _lon2);
 }
 
-_PolygonArea _createPolygonEdges(LatLng start, List<double> distances, List<double> bearings, Ellipsoid ellipsoid) {
+_PolygonArea _createPolygon(List<LatLng> points, Ellipsoid ellipsoid) {
   var polygonArea = _PolygonArea(earth: _Geodesic(ellipsoid.a, ellipsoid.f));
-  polygonArea._AddPoint(start.latitude, start.longitude);
 
-  for (int i = 0; i < distances.length - 1; i++) {
-    polygonArea._AddEdge(bearings[i], distances[i]);
+  for (var p in points) {
+    polygonArea._AddPoint(p.latitude, p.longitude);
   }
 
   return polygonArea;
 }
 
-double polygonAreaEdges(LatLng start, List<double> distances, List<double> bearings, Ellipsoid ellipsoid) {
-  if (distances.length != bearings.length) {
-    return 0.0;
-  }
-
-  var polygonArea = _createPolygonEdges(start, distances, bearings, ellipsoid);
+double polygonArea(List<LatLng> points, Ellipsoid ellipsoid) {
+  var polygonArea = _createPolygon(points, ellipsoid);
 
   var result = polygonArea._Compute();
   return result.area;
 }
 
-bool polygonAreaIsHalfEllipsoid(LatLng start, List<double> distances, List<double> bearings, Ellipsoid ellipsoid) {
-  var polygonArea = _createPolygonEdges(start, distances, bearings, ellipsoid);
+bool polygonAreaIsHalfEllipsoid(List<LatLng> points, Ellipsoid ellipsoid) {
+  var polygonArea = _createPolygon(points, ellipsoid);
 
   var result = polygonArea._Compute();
   return (result.area * 2 - polygonArea._area0).abs() <= 1e-3;

@@ -37,6 +37,12 @@ void main() {
 
   group('CoordinateUtils.equalsLatLng:', () {
     List<Map<String, Object>> _inputsToExpected = [
+      {'a': const LatLng(double.nan,double.nan), 'b': const LatLng(double.nan,double.nan), 'expectedOutput': true}, // both invalid => true
+      {'a': const LatLng(double.nan,double.nan), 'b': const LatLng(0.0,0.0), 'expectedOutput': false}, // only one invalid
+      {'a': const LatLng(double.nan,0.0), 'b': const LatLng(0.0,0.0), 'expectedOutput': false}, // only one invalid
+      {'a': const LatLng(0.0,0.0), 'b': const LatLng(0.0,double.infinity), 'expectedOutput': false}, // only one invalid
+      {'a': const LatLng(double.nan,0.0), 'b': const LatLng(0.0,double.infinity), 'expectedOutput': true}, // both invalid => true
+
       {'a': const LatLng(42,21), 'b': const LatLng(42,21), 'expectedOutput': true},
       {'a': const LatLng(41,21), 'b': const LatLng(42,21), 'expectedOutput': false},
       {'a': const LatLng(42,21), 'b': const LatLng(42,22), 'expectedOutput': false},
