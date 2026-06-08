@@ -136,6 +136,7 @@ const List<String> _ABOUT_TESTER = [
   'trekkiefreak76',
   'Vlad_Tepes',
   'Vyrembi',
+  'xl600rm',
   'waldstadt',
   'WeinWalker',
   'WingsAndTales',
