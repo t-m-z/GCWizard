@@ -8,8 +8,8 @@ environment:
 
 dependencies:
   archive: ^4.0.9
-  audio_decoder: ^0.8.0
-  audioplayers: ^6.5.1
+  audio_decoder: ^0.8.1
+  audioplayers: ^6.7.1
   auto_size_text: ^3.0.0
   base32: ^2.2.0
   cached_network_image: ^3.4.1
@@ -39,17 +39,17 @@ dependencies:
   highlight: ^0.7.0
   http: ^1.6.0
   http_parser: ^4.1.2
-  image: ^4.8.0
+  image: ^4.9.1
   image_picker: ^1.2.1
   intl: ^0.20.2
   latlong2: ^0.9.0
   location: ^8.0.1
   mask_text_input_formatter: ^2.5.0
   math_expressions: ^3.1.0
-  package_info_plus: ^9.0.0
+  package_info_plus: ^9.0.1
   path: ^1.9.0
   path_provider: ^2.1.5
-  permission_handler: ^12.0.1
+  permission_handler: ^12.0.3
   photo_view: ^0.15.0
   pointycastle: ^3.9.1
   prefs: ^4.2.0
@@ -70,7 +70,7 @@ dependencies:
   url_launcher: ^6.3.2
   utility: ^1.0.3
   week_of_year: ^2.0.0
-  xml: ^6.6.1
+  xml: ^7.0.1
   shelf: ^1.4.0
 
 dependency_overrides:
