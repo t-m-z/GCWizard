@@ -2199,7 +2199,6 @@ class _EclipseEvent {
  * `totalBegin` and `totalEnd` indicate when the total/annular phase begins/ends.
  * When an event field is valid, the caller must also check its `altitude` field to
  * see whether the Sun is above the horizon at the time indicated by the `time` field.
- * </remarks>
  */
 class _LocalSolarEclipseInfo {
   /**

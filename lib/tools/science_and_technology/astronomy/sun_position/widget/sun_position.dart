@@ -56,7 +56,6 @@ class _SunPositionState extends State<SunPosition> {
     var format = NumberFormat('0.00');
 
     var dateTime = _currentDateTimeUTCWithTZ;
-    print(dateTime.dateTimeUtc);
     var sunPosition = astronomy.SunPosition(_currentCoords.toLatLng() ?? defaultCoordinate, dateTime.dateTimeUtc);
 
     var outputsSun = [

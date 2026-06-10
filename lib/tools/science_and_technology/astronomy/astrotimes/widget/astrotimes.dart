@@ -55,10 +55,7 @@ class _AstroTimesState extends State<AstroTimes> {
 
   Widget _buildOutput() {
     var format = NumberFormat('0.000000');
-
     var astrotimes = astronomy.AstroTime(_currentCoords.toLatLng() ?? defaultCoordinate, _currentDateTimeUTCWithTZ.dateTimeUtc);
-
-    var utcStr = DateFormat.yMd(Localizations.localeOf(context).toString()).add_jms().format(_currentDateTimeUTCWithTZ.dateTimeUtc);
 
     var outputsTimes = [
       [i18n(context, 'astronomy_astrotimestimes_utc') + ' (UTC)', formatDateTimeUTCWithTZ(context, _currentDateTimeUTCWithTZ.dateTimeUtc, Duration.zero)],

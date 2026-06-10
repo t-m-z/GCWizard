@@ -52,7 +52,6 @@ class _MoonRiseSetState extends State<MoonRiseSet> {
   }
 
   Widget _buildOutput() {
-    print(_currentDateTimeUTCWithTZ.dateTimeUtc);
     var moonRise = astronomy.moonRiseSetUTC(_currentCoords.toLatLng() ?? defaultCoordinate, _currentDateTimeUTCWithTZ.dateTimeUtc);
 
     var outputs = [
