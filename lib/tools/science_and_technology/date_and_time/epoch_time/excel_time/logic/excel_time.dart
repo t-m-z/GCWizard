@@ -19,7 +19,7 @@ class ExcelTimeOutput {
 }
 
 EpochTimeOutput DateTimeUTCToExcelTime(DateTime currentDateTimeUTC) {
-  if (_invalidExcelDate(gregorianCalendarToJulianDate(currentDateTimeUTC))) {
+  if (_invalidExcelDate(gregorianCalendarToJulianDayNumber(currentDateTimeUTC))) {
     return EpochTimeOutput(error: 'dates_calendar_excel_error', timeStamp: 0, gregorianDateTimeUTC: currentDateTimeUTC);
   }
 

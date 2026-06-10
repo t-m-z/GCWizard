@@ -5,10 +5,9 @@ import 'package:gc_wizard/common_widgets/gcw_datetime_picker.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 import 'package:gc_wizard/tools/coords/_common/widget/gcw_coords.dart';
-import 'package:gc_wizard/tools/science_and_technology/astronomy/_common/logic/julian_date.dart';
-import 'package:gc_wizard/tools/science_and_technology/astronomy/moon_rise_set/logic/moon_rise_set.dart' as logic;
+import 'package:gc_wizard/tools/science_and_technology/astronomy/_common/logic/external_libs/cosinekitty.astronomy/astronomy.dart' as astronomy;
+import 'package:gc_wizard/tools/science_and_technology/astronomy/_common/widget/astronomy_i18n.dart';
 import 'package:gc_wizard/utils/complex_return_types.dart';
-import 'package:gc_wizard/utils/datetime_utils.dart';
 
 class MoonRiseSet extends StatefulWidget {
   const MoonRiseSet({super.key});
@@ -18,7 +17,7 @@ class MoonRiseSet extends StatefulWidget {
 }
 
 class _MoonRiseSetState extends State<MoonRiseSet> {
-  var _currentDateTime = DateTimeTZ.now();
+  var _currentDateTimeUTCWithTZ = DateTimeUTCwithTZ.now();
   var _currentCoords = defaultBaseCoordinate;
 
   @override
@@ -43,7 +42,7 @@ class _MoonRiseSetState extends State<MoonRiseSet> {
           config: const {DateTimePickerConfig.DATE, DateTimePickerConfig.TIMEZONES},
           onChanged: (datetime) {
             setState(() {
-              _currentDateTime = datetime;
+              _currentDateTimeUTCWithTZ = datetime;
             });
           },
         ),
@@ -53,21 +52,27 @@ class _MoonRiseSetState extends State<MoonRiseSet> {
   }
 
   Widget _buildOutput() {
-    var moonRise = logic.MoonRiseSet(_currentCoords.toLatLng() ?? defaultCoordinate, JulianDate(_currentDateTime),
-        _currentDateTime.timezone, defaultEllipsoid);
+    print(_currentDateTimeUTCWithTZ.dateTimeUtc);
+    var moonRise = astronomy.moonRiseSetUTC(_currentCoords.toLatLng() ?? defaultCoordinate, _currentDateTimeUTCWithTZ.dateTimeUtc);
 
     var outputs = [
       [
         i18n(context, 'astronomy_riseset_moonrise'),
-        moonRise.rise.isNaN ? i18n(context, 'astronomy_riseset_notavailable') : formatHoursToHHmmss(moonRise.rise)
+        moonRise.rise == null
+            ? i18n(context, 'astronomy_riseset_notavailable')
+            : formatTimeUTCWithTZ(context, moonRise.rise!, _currentDateTimeUTCWithTZ.timezoneOffset)
       ],
       [
         i18n(context, 'astronomy_riseset_transit'),
-        moonRise.transit.isNaN ? i18n(context, 'astronomy_riseset_notavailable') : formatHoursToHHmmss(moonRise.transit)
+        moonRise.culmination == null
+            ? i18n(context, 'astronomy_riseset_notavailable')
+            : formatTimeUTCWithTZ(context, moonRise.culmination!, _currentDateTimeUTCWithTZ.timezoneOffset)
       ],
       [
         i18n(context, 'astronomy_riseset_moonset'),
-        moonRise.set.isNaN ? i18n(context, 'astronomy_riseset_notavailable') : formatHoursToHHmmss(moonRise.set)
+        moonRise.set == null
+            ? i18n(context, 'astronomy_riseset_notavailable')
+            : formatTimeUTCWithTZ(context, moonRise.set!, _currentDateTimeUTCWithTZ.timezoneOffset)
       ],
     ];
 

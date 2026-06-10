@@ -4,7 +4,8 @@ import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/gcw_datetime_picker.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
-import 'package:gc_wizard/tools/science_and_technology/astronomy/seasons/logic/seasons.dart' as seasons;
+import 'package:gc_wizard/tools/science_and_technology/astronomy/_common/logic/external_libs/cosinekitty.astronomy/astronomy.dart';
+import 'package:gc_wizard/tools/science_and_technology/astronomy/_common/widget/astronomy_i18n.dart';
 import 'package:intl/intl.dart';
 
 class Seasons extends StatefulWidget {
@@ -39,7 +40,7 @@ class _SeasonsState extends State<Seasons> {
           config: const {DateTimePickerConfig.TIMEZONES},
           onChanged: (datetime) {
             setState(() {
-              _currentTimeZoneOffset = datetime.timezone;
+              _currentTimeZoneOffset = datetime.timezoneOffset;
             });
           }
         ),
@@ -49,54 +50,51 @@ class _SeasonsState extends State<Seasons> {
   }
 
   Widget _buildOutput(BuildContext context) {
-    var season = seasons.seasons(_currentYear, _currentTimeZoneOffset);
-    var spring = season.spring.toLocalTime();
-    var summer = season.summer.toLocalTime();
-    var autumn = season.autumn.toLocalTime();
-    var winter = season.winter.toLocalTime();
-    var aphel = seasons.aphelion(_currentYear, _currentTimeZoneOffset);
-    var perihel = seasons.perihelion(_currentYear, _currentTimeZoneOffset);
-
-    var dateFormat = DateFormat('yMd', Localizations.localeOf(context).toString());
-    var timeFormat = DateFormat('HH:mm:ss.SSS');
+    var seasons = SeasonsUTC(_currentYear);
+    var spring = seasons.spring;
+    var summer = seasons.summer;
+    var fall = seasons.fall;
+    var winter = seasons.winter;
+    var aphelion = seasons.aphelion;
+    var perihelion = seasons.perihelion;
 
     var outputs = [
       [
         i18n(context, 'astronomy_seasons_spring'),
-        dateFormat.format(spring) + ' ' + timeFormat.format(spring)
+        formatDateTimeUTCWithTZ(context, spring!, _currentTimeZoneOffset)
       ],
       [
         i18n(context, 'astronomy_seasons_summer'),
-        dateFormat.format(summer) + ' ' + timeFormat.format(summer)
+        formatDateTimeUTCWithTZ(context, summer!, _currentTimeZoneOffset)
       ],
       [
         i18n(context, 'astronomy_seasons_autumn'),
-        dateFormat.format(autumn) + ' ' + timeFormat.format(autumn)
+        formatDateTimeUTCWithTZ(context, fall!, _currentTimeZoneOffset)
       ],
       [
         i18n(context, 'astronomy_seasons_winter'),
-        dateFormat.format(winter) + ' ' + timeFormat.format(winter)
+        formatDateTimeUTCWithTZ(context, winter!, _currentTimeZoneOffset)
       ],
       [
         i18n(context, 'astronomy_seasons_perihelion'),
-        dateFormat.format(perihel.dateTimeTZ.toLocalTime()) +
-            ' ' +
-            timeFormat.format(perihel.dateTimeTZ.toLocalTime()) +
-            '\n' +
+        formatDateTimeUTCWithTZ(context, perihelion.date, _currentTimeZoneOffset) +
+            '\n\n' +
             i18n(context, 'astronomy_seasons_distance') +
-            ' = ' +
-            NumberFormat('0.0000000').format(perihel.value) +
+            ' =\n' +
+            NumberFormat('0.0000000').format(perihelion.distanceKm) +
+            ' km\n=\n' +
+            NumberFormat('0.0000000').format(perihelion.distanceAu) +
             ' AU'
       ],
       [
         i18n(context, 'astronomy_seasons_aphelion'),
-        dateFormat.format(aphel.dateTimeTZ.toLocalTime()) +
-            ' ' +
-            timeFormat.format(aphel.dateTimeTZ.toLocalTime()) +
-            '\n' +
+        formatDateTimeUTCWithTZ(context, aphelion.date, _currentTimeZoneOffset) +
+            '\n\n' +
             i18n(context, 'astronomy_seasons_distance') +
-            ' = ' +
-            NumberFormat('0.0000000').format(aphel.value) +
+            ' =\n' +
+            NumberFormat('0.0000000').format(aphelion.distanceKm) +
+            ' km\n=\n' +
+            NumberFormat('0.0000000').format(aphelion.distanceAu) +
             ' AU'
       ],
     ];

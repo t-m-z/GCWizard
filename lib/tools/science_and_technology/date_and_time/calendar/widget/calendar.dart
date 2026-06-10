@@ -25,7 +25,7 @@ class Calendar extends StatefulWidget {
 
 class _CalendarState extends State<Calendar> {
   CalendarSystem _currentCalendarSystem = CalendarSystem.JULIANDATE;
-  double _currentJulianDate = gregorianCalendarToJulianDate(DateTime.now());
+  double _currentJulianDate = gregorianCalendarToJulianDayNumber(DateTime.now());
   CustomCalendarDate _currentCalendarDate = CustomCalendarDate(
       year: DateTime.now().year,
       month: DateTime.now().month,
@@ -176,12 +176,12 @@ class _CalendarState extends State<Calendar> {
           output['dates_weekday_title'] = i18n(context, WEEKDAY[Weekday(jd)]!);
           break;
         case CalendarSystem.GREGORIANCALENDAR:
-          jd = gregorianCalendarToJulianDate(DateTime(_currentCalendarDate.year,
+          jd = gregorianCalendarToJulianDayNumber(DateTime(_currentCalendarDate.year,
               _currentCalendarDate.month, _currentCalendarDate.day));
           output['dates_weekday_title'] = i18n(context, WEEKDAY[Weekday(jd)]!);
           break;
         case CalendarSystem.JULIANCALENDAR:
-          jd = julianCalendarToJulianDate(DateTime(_currentCalendarDate.year,
+          jd = julianCalendarToJulianDayNumber(DateTime(_currentCalendarDate.year,
               _currentCalendarDate.month, _currentCalendarDate.day));
           output['dates_weekday_title'] = i18n(context, WEEKDAY[Weekday(jd)]!);
           break;
@@ -228,13 +228,13 @@ class _CalendarState extends State<Calendar> {
 
         (_currentCalendarSystem != CalendarSystem.JULIANCALENDAR)
             ? output['dates_calendar_system_juliancalendar'] =
-                _DateOutputToString(context, julianDateToJulianCalendar(jd),
+                _DateOutputToString(context, julianDayNumberToJulianCalendar(jd),
                     CalendarSystem.JULIANCALENDAR)
             : null;
 
         (_currentCalendarSystem != CalendarSystem.GREGORIANCALENDAR)
             ? output['dates_calendar_system_gregoriancalendar'] =
-                _DateOutputToString(context, julianDateToGregorianCalendar(jd),
+                _DateOutputToString(context, julianDayNumberToGregorianCalendar(jd),
                     CalendarSystem.GREGORIANCALENDAR)
             : null;
 

@@ -35,8 +35,8 @@ class EpochTime extends StatefulWidget {
 
 class _EpochTimeState extends State<EpochTime> {
   late Object _currentTimeStamp;
-  var _currentDateTimeEncrypt = DateTimeTZ.now();
-  var _currentDateTimeDecrypt = DateTimeTZ.now();
+  var _currentDateTimeEncrypt = DateTimeUTCwithTZ.now();
+  var _currentDateTimeDecrypt = DateTimeUTCwithTZ.now();
   GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
 
   @override
@@ -61,9 +61,9 @@ class _EpochTimeState extends State<EpochTime> {
             setState(() {
               _currentMode = value;
               if (_currentMode == GCWSwitchPosition.left) {
-                _currentDateTimeEncrypt = DateTimeTZ.now();
+                _currentDateTimeEncrypt = DateTimeUTCwithTZ.now();
               } else {
-                _currentDateTimeDecrypt = DateTimeTZ.now();
+                _currentDateTimeDecrypt = DateTimeUTCwithTZ.now();
               }
             });
           },
@@ -131,12 +131,12 @@ class _EpochTimeState extends State<EpochTime> {
       );
     } else {
       DateTime local =
-          DateTimeTZ(dateTimeUtc: output.gregorianDateTimeUTC, timezone: DateTime.now().timeZoneOffset).toLocalTime();
+          DateTimeUTCwithTZ(dateTimeUtc: output.gregorianDateTimeUTC, timezoneOffset: DateTime.now().timeZoneOffset).toLocalTime();
       DateTime localPicker =
-          DateTimeTZ(dateTimeUtc: output.gregorianDateTimeUTC, timezone: _currentDateTimeDecrypt.timezone)
+          DateTimeUTCwithTZ(dateTimeUtc: output.gregorianDateTimeUTC, timezoneOffset: _currentDateTimeDecrypt.timezoneOffset)
               .toLocalTime();
       String localTimezoneAllNames =
-          DateTimeTZ(dateTimeUtc: output.gregorianDateTimeUTC, timezone: _currentDateTimeDecrypt.timezone)
+          DateTimeUTCwithTZ(dateTimeUtc: output.gregorianDateTimeUTC, timezoneOffset: _currentDateTimeDecrypt.timezoneOffset)
               .toLocalTimezoneAllNames();
       return GCWDefaultOutput(
         child: Column(
@@ -170,8 +170,8 @@ class _EpochTimeState extends State<EpochTime> {
                     onChanged: (datetime) {
                       setState(() {
                         _currentDateTimeDecrypt = datetime;
-                        localTimezoneAllNames = DateTimeTZ(
-                                dateTimeUtc: output.gregorianDateTimeUTC, timezone: _currentDateTimeDecrypt.timezone)
+                        localTimezoneAllNames = DateTimeUTCwithTZ(
+                                dateTimeUtc: output.gregorianDateTimeUTC, timezoneOffset: _currentDateTimeDecrypt.timezoneOffset)
                             .toLocalTimezoneAllNames();
                       });
                     },
@@ -182,9 +182,9 @@ class _EpochTimeState extends State<EpochTime> {
                     data: [
                       [
                         localTimezoneAllNames,
-                        ((_currentDateTimeDecrypt.timezone.inMinutes ~/ 60).toString() +
+                        ((_currentDateTimeDecrypt.timezoneOffset.inMinutes ~/ 60).toString() +
                                 ':' +
-                                (_currentDateTimeDecrypt.timezone.inMinutes % 60).toString())
+                                (_currentDateTimeDecrypt.timezoneOffset.inMinutes % 60).toString())
                             .replaceAll(':0', ''),
                         _formatDate(context, localPicker, (output.error == 'EXCEL_BUG')),
                       ],

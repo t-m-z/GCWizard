@@ -4,6 +4,7 @@ import 'package:gc_wizard/application/registry.dart';
 import 'package:gc_wizard/application/tools/widget/gcw_tool.dart';
 import 'package:gc_wizard/application/tools/widget/gcw_toollist.dart';
 import 'package:gc_wizard/common_widgets/gcw_selection.dart';
+import 'package:gc_wizard/tools/science_and_technology/astronomy/astrotimes/widget/astrotimes.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/iau_constellation/widget/iau_all_constellations.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/moon_position/widget/moon_position.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/moon_rise_set/widget/moon_rise_set.dart';
@@ -29,6 +30,7 @@ class AstronomySelection extends GCWSelection {
         className(const EasterSelection()),
         className(const Seasons()),
         className(const ShadowLength()),
+        className(const AstroTimes()),
         className(const RightAscensionToDegree())
       ].contains(className(element.tool));
     }).toList();

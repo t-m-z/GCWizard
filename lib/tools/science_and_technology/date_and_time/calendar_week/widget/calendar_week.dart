@@ -17,7 +17,7 @@ class CalendarWeek extends StatefulWidget {
 }
 
 class _CalendarWeekState extends State<CalendarWeek> {
-  late DateTimeTZ _currentEncryptionDate;
+  late DateTimeUTCwithTZ _currentEncryptionDate;
 
   var _currentWeek = 1;
   late int _currentYear;
@@ -27,7 +27,7 @@ class _CalendarWeekState extends State<CalendarWeek> {
 
   @override
   void initState() {
-    _currentEncryptionDate = DateTimeTZ.now();
+    _currentEncryptionDate = DateTimeUTCwithTZ.now();
     _currentYear = _currentEncryptionDate.toLocalTime().year;
     super.initState();
   }

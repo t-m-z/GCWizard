@@ -5,7 +5,7 @@ import 'package:gc_wizard/tools/science_and_technology/date_and_time/epoch_time/
 import 'package:gc_wizard/utils/datetime_utils.dart';
 
 EpochTimeOutput DateTimeUTCToUnixTime(DateTime currentDateTimeUTC) {
-  if (_invalidUnixDate(gregorianCalendarToJulianDate(currentDateTimeUTC))) {
+  if (_invalidUnixDate(gregorianCalendarToJulianDayNumber(currentDateTimeUTC))) {
     return EpochTimeOutput(timeStamp: 0.0, gregorianDateTimeUTC: currentDateTimeUTC, error: 'dates_calendar_unix_error');
   }
 

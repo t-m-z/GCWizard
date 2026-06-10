@@ -3,7 +3,7 @@ part of 'package:gc_wizard/tools/science_and_technology/date_and_time/calendar/l
 double UnixTimestampToJulianDate(int timestamp) {
   DateTime date = DateTime(1970, 1, 1, 0, 0, 0).add(Duration(seconds: timestamp));
 
-  return gregorianCalendarToJulianDate(date);
+  return gregorianCalendarToJulianDayNumber(date);
 }
 
 String JulianDateToUnixTimestamp(double jd) {
