@@ -1,44 +1,261 @@
 import 'dart:math' as math;
 
+import 'package:gc_wizard/tools/science_and_technology/astronomy/_common/logic/astronomy_constants.dart';
 import 'package:latlong2/latlong.dart';
 
 part 'package:gc_wizard/tools/science_and_technology/astronomy/_common/logic/external_libs/cosinekitty.astronomy/astronomy/astronomy.dart';
 
-class RiseSet {
+class RiseSetUTC {
   final DateTime? rise;
   final DateTime? culmination;
   final DateTime? set;
 
-  RiseSet(this.rise, this.culmination, this.set);
+  RiseSetUTC(this.rise, this.culmination, this.set);
 }
 
-class Twilights {
-  final DateTime? astronomicalMorning;
-  final DateTime? nauticalMorning;
-  final DateTime? civilMorning;
-  final DateTime? civilEvening;
-  final DateTime? nauticalEvening;
-  final DateTime? astronomicalEvening;
+class TwilightsUTC {
+  late DateTime? astronomicalMorning;
+  late DateTime? nauticalMorning;
+  late DateTime? civilMorning;
+  late DateTime? civilEvening;
+  late DateTime? nauticalEvening;
+  late DateTime? astronomicalEvening;
 
-  Twilights(
-    this.astronomicalMorning,
-    this.nauticalMorning,
-    this.civilMorning,
-    this.civilEvening,
-    this.nauticalEvening,
-    this.astronomicalEvening
-  );
+  TwilightsUTC(LatLng coord, DateTime utcDate) {
+    var observer = _Observer(coord.latitude, coord.longitude, 0.0);
+    var time = _Time._fromMillisecondsSince1970(_withoutTime(utcDate).millisecondsSinceEpoch);
+
+    _Time? searchSunAltitude(_Direction direction, double altitude) {
+      return _searchAltitude(_Body.Sun, observer, direction, time, 1, altitude);
+    }
+
+    var _astronomicalMorning = searchSunAltitude(_Direction.Rise, -18.0);
+    astronomicalMorning = _timeToDateTime(_astronomicalMorning);
+
+    var _nauticalMorning = searchSunAltitude(_Direction.Rise, -12.0);
+    nauticalMorning = _timeToDateTime(_nauticalMorning);
+
+    var _civilMorning = searchSunAltitude(_Direction.Rise, -6.0);
+    civilMorning = _timeToDateTime(_civilMorning);
+
+    var _civilEvening = searchSunAltitude(_Direction.Set, -6.0);
+    civilEvening = _timeToDateTime(_civilEvening);
+
+    var _nauticalEvening = searchSunAltitude(_Direction.Set, -12.0);
+    nauticalEvening = _timeToDateTime(_nauticalEvening);
+
+    var _astronomicalEvening = _searchAltitude(_Body.Sun, observer, _Direction.Set, time, 1, -18.0);
+    astronomicalEvening = _timeToDateTime(_astronomicalEvening);
+  }
+}
+
+class PlanetApsis {
+  final DateTime date;
+  final double distanceKm;
+  final double distanceAu;
+
+  PlanetApsis(this.date, this.distanceKm, this.distanceAu);
+}
+
+class SeasonsUTC {
+  late DateTime? spring;
+  late DateTime? summer;
+  late DateTime? fall;
+  late DateTime? winter;
+
+  late PlanetApsis perihelion;
+  late PlanetApsis aphelion;
+
+  SeasonsUTC(int year) {
+    var _s = _seasons(year);
+    spring = _timeToDateTime(_s.marchEquinox);
+    summer = _timeToDateTime(_s.juneSolstice);
+    fall = _timeToDateTime(_s.septemberEquinox);
+    winter = _timeToDateTime(_s.decemberSolstice);
+
+    var _perihelion = _searchPlanetApsis(_Body.Earth, _Time.fromCalendar(year, 1, 1, 0, 0, 0));
+    var _aphelion = _nextPlanetApsis(_Body.Earth, _perihelion);
+
+    perihelion = PlanetApsis(
+      _timeToDateTime(_perihelion.time)!,
+      _perihelion.distanceKm,
+      _perihelion.distanceAu
+    );
+    aphelion = PlanetApsis(
+      _timeToDateTime(_aphelion.time)!,
+      _aphelion.distanceKm,
+      _aphelion.distanceAu
+    );
+  }
+}
+
+class SunPosition {
+  late double distanceCenterToEarthCenterKm;
+  late double distanceCenterToObserverKm;
+  late double distanceSurfaceToObserverKm;
+  late double eclipticLongitudeDeg;
+  late double rightAscensionDeg;
+  late double declinationDeg;
+  late double azimuthDeg;
+  late double altitudeDeg;
+  late double apparentDiameterDeg;
+
+  SunPosition(LatLng coord, DateTime utcDate) {
+    var observer = _Observer(coord.latitude, coord.longitude, 0.0);
+    var time = _Time._fromMillisecondsSince1970(utcDate.millisecondsSinceEpoch);
+
+    final equ2000 = _equator(_Body.Sun, time, observer, _EquatorEpoch.J2000, _Aberration.Corrected);
+    final equOfDate = _equator(_Body.Sun, time, observer, _EquatorEpoch.OfDate, _Aberration.Corrected);
+    final hor = _horizon(time, observer, equOfDate.ra, equOfDate.dec, _Refraction.Normal);
+
+    rightAscensionDeg = equ2000.ra;
+    declinationDeg = equ2000.dec;
+    azimuthDeg = hor.azimuth;
+    altitudeDeg = hor.altitude;
+
+    distanceCenterToEarthCenterKm = _distanceSunCenterToEarthCenter(time);
+    distanceCenterToObserverKm = _distanceSunCenterToEarthSurface(observer, coord, time);
+    distanceSurfaceToObserverKm = distanceCenterToObserverKm - _SUN_RADIUS_KM;
+    apparentDiameterDeg = _apparentDiameter();
+    eclipticLongitudeDeg = _eclipticLng(time);
+  }
+
+  double _distanceSunCenterToEarthCenter(_Time time) {
+    var sunGeo = _geoVector(_Body.Sun, time, _Aberration.Corrected);
+    return sunGeo.length() * _KM_PER_AU;
+  }
+
+  double _distanceSunCenterToEarthSurface(_Observer observer, LatLng coord, _Time time) {
+    var observer = _Observer(coord.latitude, coord.longitude, 0.0);
+    var topocentricEquator = _equator(_Body.Sun, time, observer, _EquatorEpoch.OfDate, _Aberration.Corrected);
+    return topocentricEquator.dist * _KM_PER_AU;
+  }
+
+  double _apparentDiameter() {
+    var angularRad = 2.0 * math.atan(_SUN_RADIUS_KM / distanceCenterToObserverKm);
+    return _radiansToDegrees(angularRad);
+  }
+
+  double _eclipticLng(_Time time) {
+    var el = _eclipticLongitude(_Body.Earth, time);
+    if (el <= 180) {
+      return el + 180;
+    } else {
+      return el - 180;
+    }
+  }
+}
+
+class MoonPosition {
+  late double distanceCenterToEarthCenterKm;
+  late double distanceCenterToObserverKm;
+  late double distanceSurfaceToObserverKm;
+  late double eclipticLongitudeDeg;
+  late double eclipticLatitudeDeg;
+  late double rightAscensionDeg;
+  late double declinationDeg;
+  late double azimuthDeg;
+  late double altitudeDeg;
+  late double apparentDiameterDeg;
+  late int phaseNumber;
+  late MoonPhase phaseName;
+  late double age;
+  late double illuminationPercent;
+
+  MoonPosition(LatLng coord, DateTime utcDate) {
+    var observer = _Observer(coord.latitude, coord.longitude, 0.0);
+    var time = _Time._fromMillisecondsSince1970(utcDate.millisecondsSinceEpoch);
+
+    final equ2000 = _equator(_Body.Moon, time, observer, _EquatorEpoch.J2000, _Aberration.Corrected);
+    final equOfDate = _equator(_Body.Moon, time, observer, _EquatorEpoch.OfDate, _Aberration.Corrected);
+    final hor = _horizon(time, observer, equOfDate.ra, equOfDate.dec, _Refraction.Normal);
+
+    rightAscensionDeg = equ2000.ra;
+    declinationDeg = equ2000.dec;
+    azimuthDeg = hor.azimuth;
+    altitudeDeg = hor.altitude;
+
+    distanceCenterToEarthCenterKm = _distanceMoonCenterToEarthCenter(time);
+    distanceCenterToObserverKm = _distanceMoonCenterToEarthSurface(observer, coord, time);
+    distanceSurfaceToObserverKm = _distanceMoonSurfaceToEarthSurface(distanceCenterToObserverKm, time);
+    apparentDiameterDeg = _apparentDiameter();
+
+    illuminationPercent = _illumination(_Body.Moon, time).phaseFraction * 100;
+    age = _moonPhase(time) / 360.0 * _MEAN_SYNODIC_MONTH;
+    phaseName = _moonPhaseName(time);
+    phaseNumber = MoonPhase.values.indexOf(phaseName) + 1;
+
+    var moonEcliptic = _eclipticGeoMoon(time);
+    eclipticLatitudeDeg = moonEcliptic.lat;
+    eclipticLongitudeDeg = moonEcliptic.lon;
+  }
+
+  double _distanceMoonCenterToEarthCenter(_Time time) {
+    var sunGeo = _geoVector(_Body.Moon, time, _Aberration.Corrected);
+    return sunGeo.length() * _KM_PER_AU;
+  }
+
+  double _distanceMoonCenterToEarthSurface(_Observer observer, LatLng coord, _Time time) {
+    var observer = _Observer(coord.latitude, coord.longitude, 0.0);
+    var topocentricEquator = _equator(_Body.Moon, time, observer, _EquatorEpoch.OfDate, _Aberration.Corrected);
+    return topocentricEquator.dist * _KM_PER_AU;
+  }
+
+  double _distanceMoonSurfaceToEarthSurface(double observerToMoonCenterKm, _Time time) {
+    var libration = _libration(time);
+    var latRad = _degreesToRadians(libration.elat);
+
+    var sinLat = math.sin(latRad);
+    var cosLat = math.cos(latRad);
+
+    var a = _MOON_EQUATORIAL_RADIUS_KM;
+    var b = _MOON_POLAR_RADIUS_KM;
+
+    var numerator = a * b;
+    var denominator = math.sqrt((a * a * sinLat * sinLat) + (b * b * cosLat * cosLat));
+    var dynamicMoonRadiusKm = numerator / denominator;
+
+    return observerToMoonCenterKm - dynamicMoonRadiusKm;
+  }
+
+  double _apparentDiameter() {
+    var angularRad = 2.0 * math.atan(_MOON_MEAN_RADIUS_KM / distanceCenterToObserverKm);
+    return _radiansToDegrees(angularRad);
+  }
+
+  MoonPhase _moonPhaseName(_Time time) {
+    var degrees = _moonPhase(time);
+
+    // Tolerance for main phases (full, quarters, new) which are only at one specific degree value.
+    // 6.0 deg are approx 1 day.
+    var t = 6.0;
+    if (degrees >= 360.0 - t || degrees < 0.0 + t) return MoonPhase.NEW_MOON;
+    if (degrees >= 90.0 - t && degrees < 90.0 + t) return MoonPhase.FIRST_QUARTER;
+    if (degrees >= 180.0 - t && degrees < 180.0 + t) return MoonPhase.FULL_MOON;
+    if (degrees >= 270.0 - t && degrees < 270.0 + t) return MoonPhase.LAST_QUARTER;
+
+    if (degrees >= 0.0 + t && degrees < 90.0 - t) return MoonPhase.WAXING_CRESCENT;
+    if (degrees >= 90.0 + t && degrees < 180.0 - t) return MoonPhase.WAXING_GIBBOUS;
+    if (degrees >= 180.0 + t && degrees < 270.0 - t) return MoonPhase.WANING_GIBBOUS;
+    if (degrees >= 270.0 + t && degrees < 360.0 - t) return MoonPhase.WANING_CRESCENT;
+
+    return MoonPhase.FULL_MOON; // dummy, should not happen
+  }
 }
 
 DateTime _withoutTime(DateTime utcDate) {
-  return DateTime(utcDate.year, utcDate.month, utcDate.day);
+  return DateTime.utc(utcDate.year, utcDate.month, utcDate.day, 0, 0, 0, 10); //extra ms to avoid double precision error
 }
 
-DateTime _timeToDateTime(_Time time) {
+DateTime? _timeToDateTime(_Time? time) {
+  if (time == null) {
+    return null;
+  }
+
   return DateTime.fromMillisecondsSinceEpoch(time._toMillisecondsSince1970(), isUtc: true);
 }
 
-RiseSet _riseSetUTC(LatLng coord, DateTime utcDate, _Body body) {
+RiseSetUTC _riseSetUTC(LatLng coord, DateTime utcDate, _Body body) {
   DateTime? rise;
   DateTime? culmination;
   DateTime? set;
@@ -63,84 +280,140 @@ RiseSet _riseSetUTC(LatLng coord, DateTime utcDate, _Body body) {
     set = _timeToDateTime(_set);
   }
 
-  return RiseSet(rise, culmination, set);
+  return RiseSetUTC(rise, culmination, set);
 }
 
-RiseSet moonRiseSetUTC(LatLng coord, DateTime utcDate) {
+RiseSetUTC moonRiseSetUTC(LatLng coord, DateTime utcDate) {
   return _riseSetUTC(coord, utcDate, _Body.Moon);
 }
 
-RiseSet sunRiseSetUTC(LatLng coord, DateTime utcDate) {
+RiseSetUTC sunRiseSetUTC(LatLng coord, DateTime utcDate) {
   return _riseSetUTC(coord, utcDate, _Body.Sun);
 }
 
-Twilights twilights(LatLng coord, DateTime utcDate) {
-  DateTime? astronomicalMorning;
-  DateTime? nauticalMorning;
-  DateTime? civilMorning;
-  DateTime? civilEvening;
-  DateTime? nauticalEvening;
-  DateTime? astronomicalEvening;
+class AstroTime {
+  late double julianDateUT;
+  late double julianDateTT;
+  late double julianDateReduced;
+  late double julianDateModified;
+  late int julianDateTruncated;
+  late double julianDateDublin;
+  late double julianDateCNES;
+  late double julianDateCCSDS;
+  late double julianDateJD2000;
+  late double julianDateModifiedJD2000;
+  late double julianCenturies;
+  late double julianMillennia;
+  late double deltaT;
+  late double universalTime;
+  late double terrestrialTime;
+  late double greenwichApparentSiderealTime;
+  late double localApparentSiderealTime;
 
-  var observer = _Observer(coord.latitude, coord.longitude, 0.0);
-  var time = _Time._fromMillisecondsSince1970(_withoutTime(utcDate).millisecondsSinceEpoch);
+  AstroTime(LatLng coord, DateTime utcDate) {
+    var time = _Time._fromMillisecondsSince1970(utcDate.millisecondsSinceEpoch);
 
-  _Time? searchSunAltitude(_Direction direction, double altitude) {
-    return _searchAltitude(_Body.Sun, observer, direction, time, 1, altitude);
+    julianDateUT = time.ut + 2451545.0;
+    julianDateTT = time.tt + 2451545.0;
+
+    // https://en.wikipedia.org/wiki/Julian_day
+
+    julianDateReduced = julianDateUT - 2400000;
+    julianDateModified = julianDateUT - 2400000.5;
+    julianDateTruncated = (julianDateUT - 2440000.5).floor();
+    julianDateDublin = julianDateUT - 2415020;
+    julianDateCNES = julianDateUT - 2433282.5;
+    julianDateCCSDS = julianDateUT - 2436204.5;
+    julianDateJD2000 = julianDateUT - 2451545.5;
+    julianDateModifiedJD2000 = julianDateUT - 2451544.5;
+
+    julianCenturies = time._julianCenturies();
+    julianMillennia = time._julianMillennia();
+
+    universalTime = time.ut;
+    terrestrialTime = time.tt;
+    deltaT = (time.tt - time.ut) * 86400.0;
+
+    greenwichApparentSiderealTime = _siderealTime(time);
+    var observer = _Observer(coord.latitude, coord.longitude, 0.0);
+    localApparentSiderealTime = greenwichApparentSiderealTime + (observer.longitude / 15.0);
+
+    // Normalize LST so it stays strictly within the 0.0 to 24.0 hour bounds
+    localApparentSiderealTime %= 24.0;
+    if (localApparentSiderealTime < 0.0) {
+      localApparentSiderealTime += 24.0;
+    }
   }
-
-  var _astronomicalMorning = searchSunAltitude(_Direction.Rise, -18.0);
-  if (_astronomicalMorning != null) {
-    astronomicalMorning = _timeToDateTime(_astronomicalMorning);
-  }
-
-  var _nauticalMorning = searchSunAltitude(_Direction.Rise, -12.0);
-  if (_nauticalMorning != null) {
-    nauticalMorning = _timeToDateTime(_nauticalMorning);
-  }
-
-  var _civilMorning = searchSunAltitude(_Direction.Rise, -6.0);
-  if (_civilMorning != null) {
-    civilMorning = _timeToDateTime(_civilMorning);
-  }
-
-  var _civilEvening = searchSunAltitude(_Direction.Set, -6.0);
-  if (_civilEvening != null) {
-    civilEvening = _timeToDateTime(_civilEvening);
-  }
-
-  var _nauticalEvening = searchSunAltitude(_Direction.Set, -12.0);
-  if (_nauticalEvening != null) {
-    nauticalEvening = _timeToDateTime(_nauticalEvening);
-  }
-
-  var _astronomicalEvening = _searchAltitude(_Body.Sun, observer, _Direction.Set, time, 1, -18.0);
-  if (_astronomicalEvening != null) {
-    astronomicalEvening = _timeToDateTime(_astronomicalEvening);
-  }
-
-  return Twilights(astronomicalMorning, nauticalMorning, civilMorning, civilEvening, nauticalEvening, astronomicalEvening);
 }
 
 void main() {
+  // var ll = LatLng(52.43, 13.43);
   var ll = LatLng(52, 13);
-  var time = DateTime(2026, 6, 4, 17, 24, 4);
+  // var time = DateTime.utc(2026, 6, 5, 5, 18, 0);
+  var time = DateTime.utc(2026, 6, 10, 9, 24, 0);
   var moonRise = moonRiseSetUTC(ll, time);
   var sunRise = sunRiseSetUTC(ll, time);
-  print(moonRise.rise!.toLocal());
+  print(moonRise.rise?.toLocal());
   print(moonRise.culmination?.toLocal());
-  print(moonRise.set!.toLocal());
+  print(moonRise.set?.toLocal());
   print('');
   print(sunRise.rise!.toLocal());
   print(sunRise.culmination!.toLocal());
   print(sunRise.set!.toLocal());
   print('');
 
-  var tl = twilights(ll, time);
+  var tl = TwilightsUTC(ll, time);
   print(tl.astronomicalMorning?.toLocal());
   print(tl.nauticalMorning?.toLocal());
   print(tl.civilMorning?.toLocal());
   print(tl.civilEvening?.toLocal());
   print(tl.nauticalEvening?.toLocal());
   print(tl.astronomicalEvening?.toLocal());
+  print('');
+
+  var s = SeasonsUTC(2026);
+  print(s.spring?.toLocal());
+  print(s.summer?.toLocal());
+  print(s.fall?.toLocal());
+  print(s.winter?.toLocal());
+  print('${s.perihelion.date}, ${s.perihelion.distanceKm}');
+  print('${s.aphelion.date}, ${s.aphelion.distanceKm}');
+  print('');
+
+  var sp = SunPosition(ll, time);
+  print(sp.rightAscensionDeg);
+  print(sp.declinationDeg);
+  print(sp.azimuthDeg);
+  print(sp.altitudeDeg);
+  print(sp.distanceCenterToEarthCenterKm);
+  print(sp.distanceCenterToObserverKm);
+  print(sp.distanceSurfaceToObserverKm);
+  print(sp.apparentDiameterDeg);
+  print(sp.eclipticLongitudeDeg);print('');
+
+  var mp = MoonPosition(ll, time);
+  print(mp.rightAscensionDeg);
+  print(mp.declinationDeg);
+  print(mp.azimuthDeg);
+  print(mp.altitudeDeg);
+  print(mp.distanceCenterToEarthCenterKm);
+  print(mp.distanceCenterToObserverKm);
+  print(mp.distanceSurfaceToObserverKm);
+  print(mp.apparentDiameterDeg);
+  print(mp.illuminationPercent);
+  print(mp.age);
+  print(mp.phaseName);
+  print(mp.phaseNumber);
+  print(mp.eclipticLatitudeDeg);
+  print(mp.eclipticLongitudeDeg);
+  print('');
+
+  var t = AstroTime(ll, time);
+  print(t.julianDateUT);
+  print(t.julianDateTT);
+  print(t.universalTime);
+  print(t.terrestrialTime);
+  print(t.deltaT);
+  print(t.greenwichApparentSiderealTime);
+  print(t.localApparentSiderealTime);
 }

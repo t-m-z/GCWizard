@@ -367,6 +367,7 @@ import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/humi
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/summer_simmer/widget/summer_simmer.dart';
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/wet_bulb_temperature/widget/wet_bulb_temperature.dart';
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/windchill/widget/windchill.dart';
+import 'package:gc_wizard/tools/science_and_technology/astronomy/astrotimes/widget/astrotimes.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/easter/easter_date/widget/easter_date.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/easter/easter_years/widget/easter_years.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/iau_constellation/widget/iau_all_constellations.dart';
@@ -2564,9 +2565,10 @@ void initializeRegistry(BuildContext context) {
           'astronomy_sunriseset',
         ],
         licenses: [
+          stl._toolLicenseAstronomy,
           stl._toolLicensePracticalAstronomy,
-          stl._toolLicenseAstronomieInfo,
-          stl._toolLicenseNASADeltaT,
+          stl._toolLicenseAstronomieMitPC,
+          stl._toolLicenseMeuss
         ]),
     GCWTool(
         tool: const SunPosition(),
@@ -2577,9 +2579,10 @@ void initializeRegistry(BuildContext context) {
           'astronomy_sun',
         ],
         licenses: [
+          stl._toolLicenseAstronomy,
           stl._toolLicensePracticalAstronomy,
-          stl._toolLicenseAstronomieInfo,
-          stl._toolLicenseNASADeltaT,
+          stl._toolLicenseAstronomieMitPC,
+          stl._toolLicenseMeuss
         ]),
     GCWTool(
         tool: const MoonRiseSet(),
@@ -2590,9 +2593,10 @@ void initializeRegistry(BuildContext context) {
           'astronomy_moon',
         ],
         licenses: [
+          stl._toolLicenseAstronomy,
           stl._toolLicensePracticalAstronomy,
-          stl._toolLicenseAstronomieInfo,
-          stl._toolLicenseNASADeltaT,
+          stl._toolLicenseAstronomieMitPC,
+          stl._toolLicenseMeuss
         ]),
     GCWTool(
         tool: const MoonPosition(),
@@ -2604,42 +2608,47 @@ void initializeRegistry(BuildContext context) {
           'astronomy_moonposition',
         ],
         licenses: [
+          stl._toolLicenseAstronomy,
           stl._toolLicensePracticalAstronomy,
-          stl._toolLicenseAstronomieInfo,
-          stl._toolLicenseNASADeltaT,
+          stl._toolLicenseAstronomieMitPC,
+          stl._toolLicenseMeuss
         ]),
     GCWTool(
         tool: const EasterSelection(),
         id: 'astronomy_easter_selection',
         searchKeys: const [
           'easter_date',
-        ]),
+        ],
+        licenses: [
+          stl._toolLicenseMeuss
+        ]
+    ),
     GCWTool(tool: const Seasons(), id: 'astronomy_seasons', searchKeys: const [
       'astronomy',
       'astronomy_seasons',
     ], licenses: [
-      stl._toolLicenseJanMeeus,
-      ToolLicensePortedCode(
-        context: context,
-        author: 'Jürgen Giesen (jgiesen.de)',
-        title: 'Equinoxes and Solstices',
-        privatePermission: ToolLicensePrivatePermission(
-          context: context,
-          medium: 'e-mail',
-          permissionYear: 2020,
-          permissionMonth: 6,
-          permissionDay: 29,
-        ),
-        sourceUrl:
-            'https://web.archive.org/web/20140805014345/http://www.jgiesen.de/astro/astroJS/seasons2/seasons.js',
-        licenseType: ToolLicenseType.PRIVATE_PERMISSION,
-      )
+      stl._toolLicenseAstronomy,
+      stl._toolLicensePracticalAstronomy,
+      stl._toolLicenseAstronomieMitPC,
+      stl._toolLicenseMeuss
     ]),
     GCWTool(tool: const ShadowLength(), id: 'shadowlength', searchKeys: const [
       'astronomy',
       'astronomy_shadow_length',
     ], licenses: [
-      stl._toolLicenseNASADeltaT,
+      stl._toolLicenseAstronomy,
+      stl._toolLicensePracticalAstronomy,
+      stl._toolLicenseAstronomieMitPC,
+      stl._toolLicenseMeuss
+    ]),
+    GCWTool(tool: const AstroTimes(), id: 'astronomy_astrotimes', searchKeys: const [
+      'astronomy',
+      'astronomy_shadow_length',
+    ], licenses: [
+      stl._toolLicenseAstronomy,
+      stl._toolLicensePracticalAstronomy,
+      stl._toolLicenseAstronomieMitPC,
+      stl._toolLicenseMeuss
     ]),
     GCWTool(
         tool: const RightAscensionToDegree(),

@@ -157,7 +157,7 @@ double _radiansToDegrees(double rad) => rad * _RAD2DEG;
 /**
  * The number of kilometers in one astronomical unit (AU).
  */
-const double KM_PER_AU = 1.4959787069098932e+8;
+const double _KM_PER_AU = 1.4959787069098932e+8;
 
 /**
  * The number of minutes in a day.
@@ -182,20 +182,20 @@ const double _ASEC360 = 1296000.0;
 const double _ASEC2RAD = 4.848136811095359935899141e-6;
 const double _PI2 = 2.0 * math.pi;
 const double _SUN_RADIUS_KM = 695700.0;
-const double _SUN_RADIUS_AU = _SUN_RADIUS_KM / KM_PER_AU;
+const double _SUN_RADIUS_AU = _SUN_RADIUS_KM / _KM_PER_AU;
 const double _EARTH_FLATTENING = 0.996647180302104;
 const double _EARTH_FLATTENING_SQUARED = _EARTH_FLATTENING * _EARTH_FLATTENING;
 const double _EARTH_EQUATORIAL_RADIUS_KM = 6378.1366;
-const double _EARTH_EQUATORIAL_RADIUS_AU = _EARTH_EQUATORIAL_RADIUS_KM / KM_PER_AU;
+const double _EARTH_EQUATORIAL_RADIUS_AU = _EARTH_EQUATORIAL_RADIUS_KM / _KM_PER_AU;
 const double _EARTH_POLAR_RADIUS_KM = _EARTH_EQUATORIAL_RADIUS_KM * _EARTH_FLATTENING;
 const double _EARTH_MEAN_RADIUS_KM = 6371.0;    // mean radius of the Earth's geoid, without atmosphere
 const double _EARTH_ATMOSPHERE_KM = 88.0;       // effective atmosphere thickness for lunar eclipses
 const double _EARTH_ECLIPSE_RADIUS_KM = _EARTH_MEAN_RADIUS_KM + _EARTH_ATMOSPHERE_KM;
 const double _MOON_EQUATORIAL_RADIUS_KM = 1738.1;
-const double _MOON_EQUATORIAL_RADIUS_AU = (_MOON_EQUATORIAL_RADIUS_KM / KM_PER_AU);
+const double _MOON_EQUATORIAL_RADIUS_AU = (_MOON_EQUATORIAL_RADIUS_KM / _KM_PER_AU);
 const double _MOON_MEAN_RADIUS_KM       = 1737.4;
 const double _MOON_POLAR_RADIUS_KM      = 1736.0;
-const double _MOON_POLAR_RADIUS_AU      = (_MOON_POLAR_RADIUS_KM / KM_PER_AU);
+const double _MOON_POLAR_RADIUS_AU      = (_MOON_POLAR_RADIUS_KM / _KM_PER_AU);
 const double _ANGVEL = 7.2921150e-5;
 const double _SOLAR_DAYS_PER_SIDEREAL_DAY = 0.9972695717592592;
 const double _MEAN_SYNODIC_MONTH = 29.530588;     // average number of days for Moon to return to the same phase
@@ -728,7 +728,7 @@ class _Time implements Comparable<_Time> {
    * @param days A floating point number of days by which to adjust `time`. May be negative, 0, or positive.
    * @return A date and time that is conceptually equal to `time + days`.
    */
-  _Time addDays(double days) => _Time(ut + days);
+  _Time _addDays(double days) => _Time(ut + days);
 
   double _julianCenturies() => tt / 36525.0;
   double _julianMillennia() => tt / _DAYS_PER_MILLENNIUM;
@@ -989,7 +989,7 @@ class _Vector {
    * [Refraction.Normal]: correct altitude for atmospheric refraction.
    * [Refraction.JplHor]: for JPL Horizons compatibility testing only; not recommended for normal use.
    */
-  _Spherical toHorizontal(Refraction refraction) {
+  _Spherical toHorizontal(_Refraction refraction) {
     final sphere = toSpherical();
     return _Spherical(
       sphere.lat + _refractionAngle(refraction, sphere.lat),
@@ -1433,7 +1433,7 @@ class _Spherical {
    *
    * @return A vector in the horizontal system: `x` = north, `y` = west, and `z` = zenith (up).
    */
-  _Vector toVectorFromHorizon(_Time time, Refraction refraction) =>
+  _Vector toVectorFromHorizon(_Time time, _Refraction refraction) =>
       _Spherical(
         lat + _inverseRefractionAngle(refraction, lat),
         _toggleAzimuthDirection(lon),
@@ -1479,7 +1479,7 @@ class _Observer {
    * to the Earth's equator at the specified time.
    *
    * The returned vector has components expressed in astronomical units (AU).
-   * To convert to kilometers, multiply the vector values by the scalar value [KM_PER_AU].
+   * To convert to kilometers, multiply the vector values by the scalar value [_KM_PER_AU].
    *
    * The inverse of this function is also available: [_Vector.toObserver].
    *
@@ -1512,7 +1512,7 @@ class _Observer {
    * to the Earth's equator at the specified time.
    *
    * The returned position vector has components expressed in astronomical units (AU).
-   * To convert to kilometers, multiply the vector values by the scalar value [KM_PER_AU].
+   * To convert to kilometers, multiply the vector values by the scalar value [_KM_PER_AU].
    *
    * The returned velocity vector is measured in AU/day.
    *
@@ -1603,7 +1603,7 @@ enum _Aberration {
 /**
  * Selects whether to correct for atmospheric refraction, and if so, how.
  */
-enum Refraction {
+enum _Refraction {
   /**
    * No atmospheric refraction correction (airless).
    */
@@ -1977,7 +1977,7 @@ class _ApsisInfo {
   final double distanceKm;
 
   _ApsisInfo(this.time, this.kind, this.distanceAu)
-      : distanceKm = distanceAu * KM_PER_AU;
+      : distanceKm = distanceAu * _KM_PER_AU;
 }
 
 /**
@@ -2326,7 +2326,7 @@ _ShadowInfo _calcShadow(
   final dx = (u * dir.x) - target.x;
   final dy = (u * dir.y) - target.y;
   final dz = (u * dir.z) - target.z;
-  final r = KM_PER_AU * math.sqrt(dx * dx + dy * dy + dz * dz);
+  final r = _KM_PER_AU * math.sqrt(dx * dx + dy * dy + dz * dz);
   final k = _SUN_RADIUS_KM - (1.0 + u) * (_SUN_RADIUS_KM - bodyRadiusKm);
   final p = -_SUN_RADIUS_KM + (1.0 + u) * (_SUN_RADIUS_KM + bodyRadiusKm);
   return _ShadowInfo(time, r, k, p, target, dir);
@@ -2380,8 +2380,8 @@ double _shadowSemiDurationMinutes(_Time centerTime, double radiusLimit, double w
   // Search backwards and forwards from the center time until
   // the shadow axis distance crosses the specified radius limit.
   final windowDays = windowMinutes / _MINUTES_PER_DAY;
-  final before = centerTime.addDays(-windowDays);
-  final after = centerTime.addDays(windowDays);
+  final before = centerTime._addDays(-windowDays);
+  final after = centerTime._addDays(windowDays);
   final t1 = _searchEarthShadow(radiusLimit, -1.0, before, centerTime);
   final t2 = _searchEarthShadow(radiusLimit, 1.0, centerTime, after);
   // Convert days to minutes and average the semi-durations.
@@ -2399,8 +2399,8 @@ _Time _searchEarthShadow(double radiusLimit, double direction, _Time t1, _Time t
 // This reduces memory allocation overhead and is thread-safe.
 double _earthShadowSlopeContext(_Time time) {
   final dt = 1.0 / _SECONDS_PER_DAY;
-  final t1 = time.addDays(-dt);
-  final t2 = time.addDays(dt);
+  final t1 = time._addDays(-dt);
+  final t2 = time._addDays(dt);
   final shadow1 = _earthShadow(t1);
   final shadow2 = _earthShadow(t2);
   return (shadow2.r - shadow1.r) / dt;
@@ -2408,8 +2408,8 @@ double _earthShadowSlopeContext(_Time time) {
 
 _ShadowInfo _peakEarthShadow(_Time searchCenterTime) {
   final window = 0.03;      // initial search window, in days, before/after searchCenterTime
-  final t1 = searchCenterTime.addDays(-window);
-  final t2 = searchCenterTime.addDays(window);
+  final t1 = searchCenterTime._addDays(-window);
+  final t2 = searchCenterTime._addDays(window);
   final tx = _search(t1, t2, 1.0, _earthShadowSlopeContext) ??
       (throw _InternalError("Failed to find Earth peak shadow event."));
   return _earthShadow(tx);
@@ -2417,8 +2417,8 @@ _ShadowInfo _peakEarthShadow(_Time searchCenterTime) {
 
 double _moonShadowSlopeContext(_Time time) {
   final dt = 1.0 / _SECONDS_PER_DAY;
-  final t1 = time.addDays(-dt);
-  final t2 = time.addDays(dt);
+  final t1 = time._addDays(-dt);
+  final t2 = time._addDays(dt);
   final shadow1 = _moonShadow(t1);
   final shadow2 = _moonShadow(t2);
   return (shadow2.r - shadow1.r) / dt;
@@ -2427,8 +2427,8 @@ double _moonShadowSlopeContext(_Time time) {
 _ShadowInfo _peakMoonShadow(_Time searchCenterTime) {
   // Search for when the Moon's shadow axis is closest to the center of the Earth.
   final window = 0.03;      // days before/after new moon to search for minimum shadow distance
-  final t1 = searchCenterTime.addDays(-window);
-  final t2 = searchCenterTime.addDays(window);
+  final t1 = searchCenterTime._addDays(-window);
+  final t2 = searchCenterTime._addDays(window);
   final tx = _search(t1, t2, 1.0, _moonShadowSlopeContext) ??
       (throw _InternalError("Failed to find Moon peak shadow event."));
   return _moonShadow(tx);
@@ -2438,12 +2438,12 @@ _ShadowInfo _peakLocalMoonShadow(_Time searchCenterTime, _Observer observer) {
   // Search for the time near searchCenterTime that the Moon's shadow axis
   // comes closest to the given observer.
   final window = 0.2;
-  final time1 = searchCenterTime.addDays(-window);
-  final time2 = searchCenterTime.addDays(window);
+  final time1 = searchCenterTime._addDays(-window);
+  final time2 = searchCenterTime._addDays(window);
   final time = _search(time1, time2, 1.0, (time) {
     final dt = 1.0 / _SECONDS_PER_DAY;
-    final t1 = time.addDays(-dt);
-    final t2 = time.addDays(dt);
+    final t1 = time._addDays(-dt);
+    final t2 = time._addDays(dt);
     final shadow1 = _localMoonShadow(t1, observer);
     final shadow2 = _localMoonShadow(t2, observer);
     return (shadow2.r - shadow1.r) / dt;
@@ -2454,12 +2454,12 @@ _ShadowInfo _peakLocalMoonShadow(_Time searchCenterTime, _Observer observer) {
 _ShadowInfo _peakPlanetShadow(_Body body, double planetRadiusKm, _Time searchCenterTime) {
   // Search for when the body's shadow axis is closest to the center of the Earth.
   final window = 1.0;       // days before/after conjunction to search for minimum shadow distance
-  final t1 = searchCenterTime.addDays(-window);
-  final t2 = searchCenterTime.addDays(window);
+  final t1 = searchCenterTime._addDays(-window);
+  final t2 = searchCenterTime._addDays(window);
   final time = _search(t1, t2, 1.0, (time) {
     final dt = 1.0 / _SECONDS_PER_DAY;
-    final shadow1 = _planetShadow(body, planetRadiusKm, time.addDays(-dt));
-    final shadow2 = _planetShadow(body, planetRadiusKm, time.addDays(dt));
+    final shadow1 = _planetShadow(body, planetRadiusKm, time._addDays(-dt));
+    final shadow2 = _planetShadow(body, planetRadiusKm, time._addDays(dt));
     return (shadow2.r - shadow1.r) / dt;
   }) ?? (throw _InternalError("Failed to find peak planet shadow event."));
   return _planetShadow(body, planetRadiusKm, time);
@@ -2598,7 +2598,7 @@ _LunarEclipseInfo _searchLunarEclipse(_Time startTime) {
       }
     }
 
-    fmtime = fullmoon.addDays(10.0);
+    fmtime = fullmoon._addDays(10.0);
   }
 
   // This should never happen, because there should be at least 2 lunar eclipses per year.
@@ -2624,7 +2624,7 @@ _LunarEclipseInfo _searchLunarEclipse(_Time startTime) {
  * Information about the next lunar eclipse in a series.
  */
 _LunarEclipseInfo _nextLunarEclipse(_Time prevEclipseTime) =>
-    _searchLunarEclipse(prevEclipseTime.addDays(10.0));
+    _searchLunarEclipse(prevEclipseTime._addDays(10.0));
 
 
 /**
@@ -2655,9 +2655,9 @@ double _moonEclipticLatitudeDegrees(_Time time) => _MoonContext(time).calcMoon()
 // See p 184 in Montenbruck & Pfleger's "Astronomy on the Personal Computer", second edition.
 _Vector _kmSpherical(_Vector v) =>
     _Vector(
-      v.x * KM_PER_AU,
-      v.y * KM_PER_AU,
-      v.z * (KM_PER_AU / _EARTH_FLATTENING),
+      v.x * _KM_PER_AU,
+      v.y * _KM_PER_AU,
+      v.z * (_KM_PER_AU / _EARTH_FLATTENING),
       v.t
     );
 
@@ -2719,7 +2719,7 @@ _GlobalSolarEclipseInfo _geoidIntersect(_ShadowInfo shadow) {
     final inv = rot.inverse();
 
     // Get the EQD geocentric coordinates of the observer.
-    final obs = _Vector(px / KM_PER_AU, py / KM_PER_AU, pz / KM_PER_AU, shadow.time);
+    final obs = _Vector(px / _KM_PER_AU, py / _KM_PER_AU, pz / _KM_PER_AU, shadow.time);
 
     // Rotate the observer's geocentric EQD back to the EQJ system,
     // and convert the geocentric vector to a lunacentric vector.
@@ -2780,7 +2780,7 @@ _GlobalSolarEclipseInfo _searchGlobalSolarEclipse(_Time startTime) {
       }
     }
 
-    nmtime = newmoon.addDays(10.0);
+    nmtime = newmoon._addDays(10.0);
   }
   // This should never happen, because at least 2 solar eclipses happen every year.
   throw _InternalError("Failure to find global solar eclipse.");
@@ -2804,7 +2804,7 @@ _GlobalSolarEclipseInfo _searchGlobalSolarEclipse(_Time startTime) {
  * @return Information about the next consecutive solar eclipse.
  */
 _GlobalSolarEclipseInfo _nextGlobalSolarEclipse(_Time prevEclipseTime) =>
-    _searchGlobalSolarEclipse(prevEclipseTime.addDays(10.0));
+    _searchGlobalSolarEclipse(prevEclipseTime._addDays(10.0));
 
 
 /**
@@ -2881,7 +2881,7 @@ _LocalSolarEclipseInfo _searchLocalSolarEclipse(_Time startTime, _Observer obser
     }
 
     // We didn't find an eclipse on this new moon, so search for the next one.
-    nmtime = newmoon.addDays(10.0);
+    nmtime = newmoon._addDays(10.0);
   }
 }
 
@@ -2890,16 +2890,16 @@ _LocalSolarEclipseInfo _localEclipse(_ShadowInfo shadow, _Observer observer) {
   final PARTIAL_WINDOW = 0.2;
   final TOTAL_WINDOW = 0.01;
   final peak = _calcEvent(observer, shadow.time);
-  final t1p = shadow.time.addDays(-PARTIAL_WINDOW);
-  final t2p = shadow.time.addDays(PARTIAL_WINDOW);
+  final t1p = shadow.time._addDays(-PARTIAL_WINDOW);
+  final t2p = shadow.time._addDays(PARTIAL_WINDOW);
   final partialBegin = _localEclipseTransition(observer, 1.0, t1p, shadow.time, (it) => it.p - it.r);
   final partialEnd   = _localEclipseTransition(observer, -1.0, shadow.time, t2p, (it) => it.p - it.r);
   _EclipseEvent? totalBegin;
   _EclipseEvent? totalEnd;
   final _EclipseKind kind;
   if (shadow.r < shadow.k.abs()) {    // take absolute value of `k` to handle annular eclipses too.
-    final t1t = shadow.time.addDays(-TOTAL_WINDOW);
-    final t2t = shadow.time.addDays(TOTAL_WINDOW);
+    final t1t = shadow.time._addDays(-TOTAL_WINDOW);
+    final t2t = shadow.time._addDays(TOTAL_WINDOW);
     totalBegin = _localEclipseTransition(observer, 1.0, t1t, shadow.time, (it) => it.k.abs() - it.r);
     totalEnd   = _localEclipseTransition(observer, -1.0, shadow.time, t2t, (it) => it.k.abs() - it.r);
     kind = _eclipseKindFromUmbra(shadow.k);
@@ -2927,7 +2927,7 @@ _EclipseEvent _localEclipseTransition(
 
 _EclipseEvent _calcEvent(_Observer observer, _Time time) {
   final sunEqu = _equator(_Body.Sun, time, observer, _EquatorEpoch.OfDate, _Aberration.Corrected);
-  final sunHor = _horizon(time, observer, sunEqu.ra, sunEqu.dec, Refraction.Normal);
+  final sunHor = _horizon(time, observer, sunEqu.ra, sunEqu.dec, _Refraction.Normal);
   return _EclipseEvent(time, sunHor.altitude);
 }
 
@@ -2952,7 +2952,7 @@ _EclipseEvent _calcEvent(_Observer observer, _Time time) {
  * @return Information about the next solar eclipse visible at the specified observer location.
  */
 _LocalSolarEclipseInfo _nextLocalSolarEclipse(_Time prevEclipseTime, _Observer observer) =>
-    _searchLocalSolarEclipse(prevEclipseTime.addDays(10.0), observer);
+    _searchLocalSolarEclipse(prevEclipseTime._addDays(10.0), observer);
 
 
 /**
@@ -4100,13 +4100,13 @@ double _universalTime(double tt) {
  * @param altitude
  * An altitude angle in a horizontal coordinate system. Must be a value between -90 and +90.
  */
-double _refractionAngle(Refraction refraction, double altitude) {
+double _refractionAngle(_Refraction refraction, double altitude) {
   if (altitude < -90.0 || altitude > 90.0) {
     return 0.0;    // no attempt to correct an invalid altitude
   }
 
   double angle;
-  if (refraction == Refraction.Normal || refraction == Refraction.JplHor) {
+  if (refraction == _Refraction.Normal || refraction == _Refraction.JplHor) {
     // http://extras.springer.com/1999/978-1-4471-0555-8/chap4/horizons/horizons.pdf
     // JPL Horizons says it uses refraction algorithm from
     // Meeus "Astronomical Algorithms", 1991, p. 101-102.
@@ -4118,7 +4118,7 @@ double _refractionAngle(Refraction refraction, double altitude) {
     final hd = math.max(altitude, -1.0);
     angle = (1.02 / _dtan(hd + 10.3 / (hd + 5.11))) / 60.0;
 
-    if (refraction == Refraction.Normal && altitude < -1.0) {
+    if (refraction == _Refraction.Normal && altitude < -1.0) {
       // In "normal" mode we gradually reduce refraction toward the nadir
       // so that we never get an altitude angle less than -90 degrees.
       // When horizon angle is -1 degrees, the factor is exactly 1.
@@ -4152,7 +4152,7 @@ double _refractionAngle(Refraction refraction, double altitude) {
  * altitude angle to remove atmospheric lensing.
  * This will be less than or equal to zero.
  */
-double _inverseRefractionAngle(Refraction refraction, double bentAltitude) {
+double _inverseRefractionAngle(_Refraction refraction, double bentAltitude) {
   if (bentAltitude < -90.0 || bentAltitude > 90.0) {
     return 0.0;    // no attempt to correct an invalid altitude
   }
@@ -4413,11 +4413,11 @@ _StateVector _terra(_Observer observer, _Time time) {
   final cosst = math.cos(stlocl);
 
   return _StateVector(
-    ach * cosphi * cosst / KM_PER_AU,
-    ach * cosphi * sinst / KM_PER_AU,
-    ash * sinphi / KM_PER_AU,
-    -(_ANGVEL * 86400.0 / KM_PER_AU) * ach * cosphi * sinst,
-    (_ANGVEL * 86400.0 / KM_PER_AU) * ach * cosphi * cosst,
+    ach * cosphi * cosst / _KM_PER_AU,
+    ach * cosphi * sinst / _KM_PER_AU,
+    ash * sinphi / _KM_PER_AU,
+    -(_ANGVEL * 86400.0 / _KM_PER_AU) * ach * cosphi * sinst,
+    (_ANGVEL * 86400.0 / _KM_PER_AU) * ach * cosphi * cosst,
     0.0,
     time
   );
@@ -4446,9 +4446,9 @@ _Observer _inverseTerra(_Vector ovec) {
   final double heightKm;
 
   // Convert from AU to kilometers.
-  final x = ovec.x * KM_PER_AU;
-  final y = ovec.y * KM_PER_AU;
-  final z = ovec.z * KM_PER_AU;
+  final x = ovec.x * _KM_PER_AU;
+  final y = ovec.y * _KM_PER_AU;
+  final z = ovec.z * _KM_PER_AU;
   final p = _hypot(x, y);
   if (p < 1.0e-6) {
     // Special case: within 1 millimeter of a pole!
@@ -4944,8 +4944,8 @@ _StateVector _geoMoonState(_Time time) {
   // Calculate just before and just after the given time.
   // Average to find position, subtract to find velocity.
   final dt = 1.0e-5;       // 0.864 seconds
-  final t1 = time.addDays(-dt);
-  final t2 = time.addDays(dt);
+  final t1 = time._addDays(-dt);
+  final t2 = time._addDays(dt);
   final r1 = _geoMoon(t1);
   final r2 = _geoMoon(t2);
 
@@ -5264,7 +5264,7 @@ _Vector _correctLightTravel(_PositionFunction func, _Time time) {
   var ltime = time;
   for (var iter = 0; iter <= 10; iter++) {
     final pos = func(ltime);
-    final ltime2 = time.addDays(-pos.length() / C_AUDAY);
+    final ltime2 = time._addDays(-pos.length() / C_AUDAY);
     final dt = (ltime2.tt - ltime.tt).abs();
     if (dt < 1.0e-9) {       // 86.4 microseconds
       return pos;
@@ -5493,10 +5493,10 @@ _Equatorial _equator(
  * aberration correction by passing in [_Aberration.Corrected] as the `aberration` parameter.
  *
  * This function optionally corrects for atmospheric refraction.
- * For most uses, it is recommended to pass [Refraction.Normal] in the `refraction` parameter to
+ * For most uses, it is recommended to pass [_Refraction.Normal] in the `refraction` parameter to
  * correct for optical lensing of the Earth's atmosphere that causes objects
  * to appear somewhat higher above the horizon than they actually are.
- * However, callers may choose to avoid this correction by passing in [Refraction.None].
+ * However, callers may choose to avoid this correction by passing in [_Refraction.None].
  * If refraction correction is enabled, the azimuth, altitude, right ascension, and declination
  * in the [_Topocentric] object returned by this function will all be corrected for refraction.
  * If refraction is disabled, none of these four coordinates will be corrected; in that case,
@@ -5528,7 +5528,7 @@ _Topocentric _horizon(
   _Observer observer,
   double ra,
   double dec,
-  Refraction refraction
+  _Refraction refraction
 ) {
   final sinlat = _dsin(observer.latitude);
   final coslat = _dcos(observer.latitude);
@@ -5602,7 +5602,7 @@ _Topocentric _horizon(
   var horRa = ra;
   var horDec = dec;
 
-  if (refraction != Refraction.None) {
+  if (refraction != _Refraction.None) {
     final zd0 = zd;
     final refr = _refractionAngle(refraction, 90.0 - zd);
     zd -= refr;
@@ -5758,7 +5758,7 @@ _Time _searchRelativeLongitude(_Body body, double targetRelativeLongitude, _Time
     // Estimate how many days in the future (postive) or past (negative)
     // we have to go to get closer to the target relative longitude.
     final dayAdjust = (-errorAngle / 360.0) * syn;
-    time = time.addDays(dayAdjust);
+    time = time._addDays(dayAdjust);
     if (dayAdjust.abs() * _SECONDS_PER_DAY < 1.0) {
       return time;    // we found the solution within a 1-second tolerance
     }
@@ -5826,10 +5826,10 @@ _TransitInfo _searchTransit(_Body body, _Time startTime) {
       final shadow = _peakPlanetShadow(body, planetRadiusKm, conj);
       if (shadow.r < shadow.p) {      // does the planet's penumbra touch the Earth's center?
         // Find the beginning and end of the penumbral contact.
-        final t1 = shadow.time.addDays(-dtDays);
+        final t1 = shadow.time._addDays(-dtDays);
         final transitStart = _planetTransitBoundary(body, planetRadiusKm, t1, shadow.time, -1.0);
 
-        final t2 = shadow.time.addDays(dtDays);
+        final t2 = shadow.time._addDays(dtDays);
         final transitFinish = _planetTransitBoundary(body, planetRadiusKm, shadow.time, t2, 1.0);
 
         final transitSeparation = 60.0 * _angleFromSun(body, shadow.time);
@@ -5839,7 +5839,7 @@ _TransitInfo _searchTransit(_Body body, _Time startTime) {
     }
 
     // This inferior conjunction was not a transit. Try the next inferior conjunction.
-    searchTime = conj.addDays(10.0);
+    searchTime = conj._addDays(10.0);
   }
 }
 
@@ -5860,7 +5860,7 @@ _TransitInfo _searchTransit(_Body body, _Time startTime) {
  * A date and time near the previous transit.
  */
 _TransitInfo _nextTransit(_Body body, _Time prevTransitTime) =>
-    _searchTransit(body, prevTransitTime.addDays(100.0));
+    _searchTransit(body, prevTransitTime._addDays(100.0));
 
 
 /**
@@ -5994,7 +5994,7 @@ _Time? _search(
 
   for (var iter = 1; iter <= iterLimit; iter++) {
     final dt = (t2.tt - t1.tt) / 2.0;
-    final tmid = t1.addDays(dt);
+    final tmid = t1._addDays(dt);
     if (dt.abs() < toleranceDays) {
       // We are close enough to the event to stop the search.
       return tmid;
@@ -6056,8 +6056,8 @@ _Time? _search(
         // Try guessing a tighter boundary with the interpolated root at the center.
         dtGuess *= 1.2;
         if (dtGuess < dt / 10.0) {
-          final tleft = tq.addDays(-dtGuess);
-          final tright = tq.addDays(dtGuess);
+          final tleft = tq._addDays(-dtGuess);
+          final tright = tq._addDays(dtGuess);
           if ((tleft.ut - t1.ut) * (tleft.ut - t2.ut) < 0.0) {
             if ((tright.ut - t1.ut) * (tright.ut - t2.ut) < 0.0) {
               final fleft = func(tleft);
@@ -6127,7 +6127,7 @@ _Time? _search(
 _Ecliptic _sunPosition(_Time time) {
   // Correct for light travel time from the Sun.
   // Otherwise season calculations (equinox, solstice) will all be early by about 8 minutes!
-  final adjustedTime = time.addDays(-1.0 / C_AUDAY);
+  final adjustedTime = time._addDays(-1.0 / C_AUDAY);
   final earth2000 = _helioEarthPos(adjustedTime);
 
   // Convert heliocentric location of Earth to geocentric location of Sun.
@@ -6199,7 +6199,7 @@ _Ecliptic _equatorialToEcliptic(_Vector eqj) {
  * It is recommended to keep the window smaller than 10 days when possible.
  */
 _Time? _searchSunLongitude(double targetLon, _Time startTime, double limitDays) {
-  final time2 = startTime.addDays(limitDays);
+  final time2 = startTime._addDays(limitDays);
   return _search(startTime, time2, 0.01, (time) {
     return _longitudeOffset(_sunPosition(time).elon - targetLon);
   });
@@ -6239,7 +6239,7 @@ _Time? _searchSunLongitude(double targetLon, _Time startTime, double limitDays) 
  * A [_SeasonsInfo] object that contains four [_Time] values:
  * the March and September equinoxes and the June and December solstices.
  */
-_SeasonsInfo seasons(int year) =>
+_SeasonsInfo _seasons(int year) =>
     _SeasonsInfo(
       _findSeasonChange(  0.0, year,  3, 10),
       _findSeasonChange( 90.0, year,  6, 10),
@@ -6389,8 +6389,8 @@ _Time? _searchMoonPhase(double targetLon, _Time startTime, double limitDays) {
     }
     dt2 = math.min(limitDays, estDt + uncertainty);
   }
-  final t1 = startTime.addDays(dt1);
-  final t2 = startTime.addDays(dt2);
+  final t1 = startTime._addDays(dt1);
+  final t2 = startTime._addDays(dt2);
   return _search(t1, t2, 0.1, moonOffset);
 }
 
@@ -6440,7 +6440,7 @@ _MoonQuarterInfo _nextMoonQuarter(_MoonQuarterInfo mq) {
   // Skip 6 days past the previous found moon quarter to find the next one.
   // This is less than the minimum possible increment.
   // So far I have seen the interval well contained by the range (6.5, 8.3) days.
-  final time = mq.time.addDays(6.0);
+  final time = mq.time._addDays(6.0);
   final nextMoonQuarter = _searchMoonQuarter(time);
   // Verify that we found the expected moon quarter.
   final expected = (1 + mq.quarter) % 4;
@@ -6572,13 +6572,13 @@ _HourAngleInfo _searchHourAngle(
 
     // If the error is tolerable (less than 0.1 seconds), the search has succeeded.
     if (deltaSiderealHours.abs() * 3600.0 < 0.1) {
-      final hor = _horizon(time, observer, ofdate.ra, ofdate.dec, Refraction.Normal);
+      final hor = _horizon(time, observer, ofdate.ra, ofdate.dec, _Refraction.Normal);
       return _HourAngleInfo(time, hor);
     }
 
     // We need to loop another time to get more accuracy.
     // Update the terrestrial time (in solar days) by adjusting sidereal time.
-    time = time.addDays((deltaSiderealHours / 24.0) * _SOLAR_DAYS_PER_SIDEREAL_DAY);
+    time = time._addDays((deltaSiderealHours / 24.0) * _SOLAR_DAYS_PER_SIDEREAL_DAY);
   }
 }
 
@@ -6856,7 +6856,7 @@ class _SearchContext_Altitude {
 
   double eval(_Time time) {
     final _Equatorial ofdate = _equator(body, time, observer, _EquatorEpoch.OfDate, _Aberration.Corrected);
-    final _Topocentric hor = _horizon(time, observer, ofdate.ra, ofdate.dec, Refraction.None);
+    final _Topocentric hor = _horizon(time, observer, ofdate.ra, ofdate.dec, _Refraction.None);
     final altitude = hor.altitude + math.asin(bodyRadiusAu / ofdate.dist).radiansToDegrees();
     return direction.sign * (altitude - targetAltitude);
   }
@@ -6888,10 +6888,10 @@ _Time? _internalSearchAltitude(
 
   while (true) {
     if (limitDays < 0.0) {
-      t1 = t2.addDays(-_RISE_SET_DT);
+      t1 = t2._addDays(-_RISE_SET_DT);
       a1 = context.eval(t1);
     } else {
-      t2 = t1.addDays(_RISE_SET_DT);
+      t2 = t1._addDays(_RISE_SET_DT);
       a2 = context.eval(t2);
     }
 
@@ -7131,8 +7131,8 @@ double _moonDistance(_Time time) => _MoonContext(time).calcMoon().dist;
 
 double _moonRadialSpeed(_Time time) {
   final dt = 0.001;
-  final t1 = time.addDays(-dt / 2.0);
-  final t2 = time.addDays(dt / 2.0);
+  final t1 = time._addDays(-dt / 2.0);
+  final t2 = time._addDays(dt / 2.0);
   final dist1 = _moonDistance(t1);
   final dist2 = _moonDistance(t2);
   return (dist2 - dist1) / dt;
@@ -7174,7 +7174,7 @@ _ApsisInfo _searchLunarApsis(_Time startTime) {
   var m1 = _moonRadialSpeed(t1);
   var iter = 0;
   while (iter * increment < 2.0 * _MEAN_SYNODIC_MONTH) {
-    final t2 = t1.addDays(increment);
+    final t2 = t1._addDays(increment);
     final m2 = _moonRadialSpeed(t2);
     if (m1 * m2 <= 0.0) {
       // There is a change of slope polarity within the time range [t1, t2].
@@ -7225,7 +7225,7 @@ _ApsisInfo _searchLunarApsis(_Time startTime) {
  * An [ApsisInfo] value obtained from a call to [searchLunarApsis] or [nextLunarApsis].
  */
 _ApsisInfo _nextLunarApsis(_ApsisInfo apsis) {
-  final time = apsis.time.addDays(11.0);
+  final time = apsis.time._addDays(11.0);
   final next = _searchLunarApsis(time);
   if (next.kind == apsis.kind) {
     throw _InternalError("Found ${next.kind} for two consecutive apsis events: ${apsis.time} and ${next.time}.");
@@ -7289,8 +7289,8 @@ _ElongationInfo _elongation(_Body body, _Time time) {
 
 double _negativeElongationSlope(_Body body, _Time time) {
   final dt = 0.1;
-  final t1 = time.addDays(-dt / 2.0);
-  final t2 = time.addDays(dt / 2.0);
+  final t1 = time._addDays(-dt / 2.0);
+  final t2 = time._addDays(dt / 2.0);
   final e1 = _angleFromSun(body, t1);
   final e2 = _angleFromSun(body, t2);
   return (e1 - e2) / dt;
@@ -7379,7 +7379,7 @@ _ElongationInfo _searchMaxElongation(_Body body, _Time startTime) {
       rlonHi = -s1;
     }
 
-    final tStart = startTime.addDays(adjustDays);
+    final tStart = startTime._addDays(adjustDays);
 
     final t1 = _searchRelativeLongitude(body, rlonLo, tStart);
     final t2 = _searchRelativeLongitude(body, rlonHi, t1);
@@ -7406,7 +7406,7 @@ _ElongationInfo _searchMaxElongation(_Body body, _Time startTime) {
 
     // This event is in the past (earlier than startTime).
     // We need to search forward from t2 to find the next possible window.
-    searchTime = t2.addDays(1.0);
+    searchTime = t2._addDays(1.0);
   }
 
   throw _InternalError("Maximum _elongation search iterated too many times.");
@@ -7535,7 +7535,7 @@ double _moonMagnitude(double phase, double helioDist, double geoDist) {
   final rad2 = rad * rad;
   final rad4 = rad2 * rad2;
   final mag = -12.717 + 1.49 * rad.abs() + 0.0431 * rad4;
-  final moonMeanDistanceAu = 385000.6 / KM_PER_AU;
+  final moonMeanDistanceAu = 385000.6 / _KM_PER_AU;
   final geoAu = geoDist / moonMeanDistanceAu;
   return mag + 5.0 * _log10(helioDist * geoAu);
 }
@@ -7604,8 +7604,8 @@ double _magnitudeSlope(_Body body, _Time time) {
   // get smaller. At peak magnitude dy/dt = 0, then as the object gets dimmer,
   // dy/dt > 0.
   final dt = 0.01;
-  final t1 = time.addDays(-dt / 2);
-  final t2 = time.addDays(dt / 2);
+  final t1 = time._addDays(-dt / 2);
+  final t2 = time._addDays(dt / 2);
   final y1 = _illumination(body, t1);
   final y2 = _illumination(body, t2);
   return (y2.mag - y1.mag) / dt;
@@ -7620,9 +7620,9 @@ double _magnitudeSlope(_Body body, _Time time) {
  * Mercury's peak magnitude occurs at superior conjunction, when it is virtually impossible to see from the Earth,
  * so peak magnitude events have little practical value for that planet.
  * Planets other than Venus and Mercury reach peak magnitude at opposition, which can
- * be found using [searchRelativeLongitude].
+ * be found using [_searchRelativeLongitude].
  * The Moon reaches peak magnitude at full moon, which can be found using
- * [_searchMoonQuarter] or [searchMoonPhase].
+ * [_searchMoonQuarter] or [_searchMoonPhase].
  * The Sun reaches peak magnitude at perihelion, which occurs each year in January.
  * However, the difference is minor and has little practical value.
  *
@@ -7690,7 +7690,7 @@ _IlluminationInfo _searchPeakMagnitude(_Body body, _Time startTime) {
       rlonHi = -s1;
     }
 
-    final tStart = searchTime.addDays(adjustDays);
+    final tStart = searchTime._addDays(adjustDays);
     final t1 = _searchRelativeLongitude(body, rlonLo, tStart);
     final t2 = _searchRelativeLongitude(body, rlonHi, t1);
 
@@ -7717,7 +7717,7 @@ _IlluminationInfo _searchPeakMagnitude(_Body body, _Time startTime) {
     // This event is in the past (earlier than startTime).
     // We need to search forward from t2 to find the next possible window.
     // We never need to search more than twice.
-    searchTime = t2.addDays(1.0);
+    searchTime = t2._addDays(1.0);
   }
   // This should never happen. If it does, please report as a bug in Astronomy Engine.
   throw _InternalError("Peak magnitude search failed.");
@@ -8058,7 +8058,7 @@ _LibrationInfo _libration(_Time time) {
 
   final mlon = moon.lon.degreesToRadians();
   final mlat = moon.lat.degreesToRadians();
-  final distanceKm = moon.dist * KM_PER_AU;
+  final distanceKm = moon.dist * _KM_PER_AU;
   final diamDeg = 2.0 * _datan(_MOON_MEAN_RADIUS_KM / math.sqrt(distanceKm * distanceKm - _MOON_MEAN_RADIUS_KM * _MOON_MEAN_RADIUS_KM));
 
   // Inclination angle in radians = 0.026930430358272504
@@ -8174,7 +8174,7 @@ _NodeEventInfo _searchMoonNode(_Time startTime) {
   var time1 = startTime;
   var eclip1 = _MoonContext(time1).calcMoon();
   while (true) {
-    final time2 = time1.addDays(_moonNodeStepDays);
+    final time2 = time1._addDays(_moonNodeStepDays);
     final eclip2 = _MoonContext(time2).calcMoon();
     if (eclip1.lat * eclip2.lat <= 0.0) {
       // There is a node somewhere in this closed time interval.
@@ -8210,7 +8210,7 @@ _NodeEventInfo _searchMoonNode(_Time startTime) {
  * The previous node found from calling [searchMoonNode] or `nextMoonNode`.
  */
 _NodeEventInfo _nextMoonNode(_NodeEventInfo prevNode) {
-  final time = prevNode.time.addDays(_moonNodeStepDays);
+  final time = prevNode.time._addDays(_moonNodeStepDays);
   final node = _searchMoonNode(time);
   if (node.kind == prevNode.kind) {
     throw _InternalError("Invalid repeated moon node kind: ${node.kind}");
@@ -8280,7 +8280,7 @@ _ApsisInfo _searchPlanetApsis(_Body body, _Time startTime) {
   var iter = 0;
   var m1 = _helioDistanceSlope(body, t1);
   while (iter * increment < 2.0 * orbitPeriodDays) {
-    final t2 = t1.addDays(increment);
+    final t2 = t1._addDays(increment);
     final m2 = _helioDistanceSlope(body, t2);
     if (m1 * m2 <= 0.0) {
       // There is a change of slope polarity within the time range [t1, t2].
@@ -8340,7 +8340,7 @@ _ApsisInfo _searchPlanetApsis(_Body body, _Time startTime) {
  */
 _ApsisInfo _nextPlanetApsis(_Body body, _ApsisInfo apsis) {
   // Skip 1/4 of an orbit before starting search again.
-  final time = apsis.time.addDays(_planetOrbitalPeriod(body) / 4.0);
+  final time = apsis.time._addDays(_planetOrbitalPeriod(body) / 4.0);
   final next = _searchPlanetApsis(body, time);
   // Verify that we found the opposite kind of apsis from the previous one.
   if (next.kind == apsis.kind) {
@@ -8385,8 +8385,8 @@ double _planetOrbitalPeriod(_Body body) =>
 
 double _helioDistanceSlope(_Body body, _Time time) {
   final dt = 0.001;
-  final t1 = time.addDays(-dt / 2.0);
-  final t2 = time.addDays(dt / 2.0);
+  final t1 = time._addDays(-dt / 2.0);
+  final t2 = time._addDays(dt / 2.0);
   final r1 = _helioDistance(body, t1);
   final r2 = _helioDistance(body, t2);
   return (r2 - r1) / dt;
@@ -8418,15 +8418,15 @@ _ApsisInfo _bruteSearchPlanetApsis(_Body body, _Time startTime) {
 
   final npoints = 100;
   final period = _planetOrbitalPeriod(body);
-  final t1 = startTime.addDays(period * (-30.0 / 360.0));
-  final t2 = startTime.addDays(period * (270.0 / 360.0));
+  final t1 = startTime._addDays(period * (-30.0 / 360.0));
+  final t2 = startTime._addDays(period * (270.0 / 360.0));
   var tMin = t1;
   var tMax = t1;
   final interval = (t2.ut - t1.ut) / (npoints - 1.0);
   var maxDist = -1.0;
   var minDist = -1.0;
   for (var i = 0; i < npoints; i++) {
-    final time = t1.addDays(i * interval);
+    final time = t1._addDays(i * interval);
     final dist = _helioDistance(body, time);
     if (i == 0) {
       maxDist = dist;
@@ -8443,8 +8443,8 @@ _ApsisInfo _bruteSearchPlanetApsis(_Body body, _Time startTime) {
     }
   }
 
-  final perihelion = _planetExtreme(body, _ApsisKind.Pericenter, tMin.addDays(-2.0 * interval), 4.0 * interval);
-  final aphelion   = _planetExtreme(body, _ApsisKind.Apocenter,  tMax.addDays(-2.0 * interval), 4.0 * interval);
+  final perihelion = _planetExtreme(body, _ApsisKind.Pericenter, tMin._addDays(-2.0 * interval), 4.0 * interval);
+  final aphelion   = _planetExtreme(body, _ApsisKind.Apocenter,  tMax._addDays(-2.0 * interval), 4.0 * interval);
 
   if (perihelion.time.tt >= startTime.tt) {
     if (aphelion.time.tt >= startTime.tt) {
@@ -8476,14 +8476,14 @@ _ApsisInfo _planetExtreme(_Body body, _ApsisKind kind, _Time startTime, double i
   while (true) {
     final interval = daySpan / (npoints - 1);
     if (interval < 1.0 / 1440.0) {      // iterate until uncertainty is less than one minute
-      final apsisTime = searchTime.addDays(interval / 2.0);
+      final apsisTime = searchTime._addDays(interval / 2.0);
       final distance = _helioDistance(body, apsisTime);
       return _ApsisInfo(apsisTime, kind, distance);
     }
     var bestI = -1;
     var bestDistance = 0.0;
     for (var i = 0; i < npoints; i++) {
-      final time = searchTime.addDays(i * interval);
+      final time = searchTime._addDays(i * interval);
       final distance = direction * _helioDistance(body, time);
       if (i == 0 || distance > bestDistance) {
         bestI = i;
@@ -8492,7 +8492,7 @@ _ApsisInfo _planetExtreme(_Body body, _ApsisKind kind, _Time startTime, double i
     }
 
     // Narrow in on the extreme point.
-    searchTime = searchTime.addDays((bestI - 1) * interval);
+    searchTime = searchTime._addDays((bestI - 1) * interval);
     daySpan = 2.0 * interval;
   }
 }

@@ -50,5 +50,5 @@ int Weekday(double JD) {
 }
 
 int JulianDay(DateTime date) {
-  return 1 + (gregorianCalendarToJulianDate(DateTime(date.year, date.month, date.day)) - gregorianCalendarToJulianDate(DateTime(date.year, 1, 1))).toInt();
+  return 1 + (gregorianCalendarToJulianDayNumber(DateTime(date.year, date.month, date.day)) - gregorianCalendarToJulianDayNumber(DateTime(date.year, 1, 1))).toInt();
 }

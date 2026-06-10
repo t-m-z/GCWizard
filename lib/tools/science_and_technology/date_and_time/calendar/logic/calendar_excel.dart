@@ -8,7 +8,7 @@ double ExcelTimestampToJulianDate(int timestamp) {
     1,
     0,
   ).add(days);
-  return gregorianCalendarToJulianDate(date);
+  return gregorianCalendarToJulianDayNumber(date);
 }
 
 String JulianDateToExcelTimestamp(double jd) {

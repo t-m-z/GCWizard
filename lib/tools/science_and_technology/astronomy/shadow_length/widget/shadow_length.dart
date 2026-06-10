@@ -26,7 +26,7 @@ class ShadowLength extends StatefulWidget {
 }
 
 class _ShadowLengthState extends State<ShadowLength> {
-  var _currentDateTime = DateTimeTZ.now();
+  var _currentDateTime = DateTimeUTCwithTZ.now();
   var _currentInputCoords = defaultBaseCoordinate;
   var _currentHeight = 0.0;
 
@@ -87,7 +87,7 @@ class _ShadowLengthState extends State<ShadowLength> {
   Widget _buildOutput() {
     var _startCoords = _currentInputCoords.toLatLng() ?? defaultCoordinate;
 
-    var shadowLen = shadowLength(_currentHeight, _startCoords, defaultEllipsoid, _currentDateTime);
+    var shadowLen = shadowLength(_currentHeight, _startCoords, defaultEllipsoid, _currentDateTime.dateTimeUtc);
 
     String lengthOutput = '';
     String bearingOutput = '';
@@ -137,8 +137,8 @@ class _ShadowLengthState extends State<ShadowLength> {
     }
 
     var outputsSun = [
-      [i18n(context, 'astronomy_position_azimuth'), format.format(shadowLen.sunPosition.azimuth) + '°'],
-      [i18n(context, 'astronomy_position_altitude'), format.format(shadowLen.sunPosition.altitude) + '°'],
+      [i18n(context, 'astronomy_position_azimuth'), format.format(shadowLen.sunPosition.azimuthDeg) + '°'],
+      [i18n(context, 'astronomy_position_altitude'), format.format(shadowLen.sunPosition.altitudeDeg) + '°'],
     ];
 
     Widget rowsSunData = GCWColumnedMultilineOutput(
