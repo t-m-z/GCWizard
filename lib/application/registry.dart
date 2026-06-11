@@ -2643,7 +2643,7 @@ void initializeRegistry(BuildContext context) {
     ]),
     GCWTool(tool: const AstroTimes(), id: 'astronomy_astrotimes', searchKeys: const [
       'astronomy',
-      'astronomy_shadow_length',
+      'astronomy_astrotimes',
     ], licenses: [
       stl._toolLicenseAstronomy,
       stl._toolLicensePracticalAstronomy,
