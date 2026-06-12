@@ -65,6 +65,7 @@ const _MAPBOX_SATELLITE_TEXT = 'coords_mapview_mapbox_satellite';
 const _MAPBOX_SATELLITE_URL = 'coords_mapview_mapbox_satellite_url';
 const uriContent = 'content';
 const _mapViewId = 'coords_openmap';
+const _HIGH_PRECISION_MIN_ZOOM = 10;
 
 final _DEFAULT_BOUNDS = LatLngBounds(const LatLng(51.5, 12.9), const LatLng(53.5, 13.9));
 const _POLYGON_STROKEWIDTH = 3.0;
@@ -143,7 +144,7 @@ class _GCWMapViewState extends State<GCWMapView> {
   }
 
   MapPrecision _mapPrecision() {
-    if (_mapController.camera.zoom > 6) {
+    if (_mapController.camera.zoom > _HIGH_PRECISION_MIN_ZOOM) {
       return _currentMapPrecision;
     } else {
       return MapPrecision.LOW;
@@ -902,7 +903,7 @@ class _GCWMapViewState extends State<GCWMapView> {
         isDivider: true,
         action: (index) {}
       ),
-      GCWPopupMenuItem(
+      /* if (_mapController.camera.zoom > _HIGH_PRECISION_MIN_ZOOM) */ GCWPopupMenuItem(
         child: iconedGCWPopupMenuItem(context,
             _currentMapPrecision == MapPrecision.LOW ? Icons.arrow_upward : Icons.arrow_downward,
             _currentMapPrecision == MapPrecision.LOW ? i18n(context, 'coords_openmap_mapprecision_increase') : i18n(context, 'coords_openmap_mapprecision_decrease')),
