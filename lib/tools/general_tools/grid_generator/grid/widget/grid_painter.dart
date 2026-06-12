@@ -27,6 +27,7 @@ final _GRID_COLORS = {
 class _GridPoint {
   final Point<int> point;
   final _GridPaintColor color;
+  bool isEndOfLine = false;
 
   _GridPoint({required this.point, required this.color});
 
@@ -74,6 +75,8 @@ class _GridPainterState extends State<_GridPainter> {
   var _lastClickedX = -1;
   var _lastClickedY = -1;
   var _lastSetColor = _GridPaintColor.ERASER;
+
+  var _doubleTapped = false;
 
   List<String>? _fillBoxEnumeration() {
     if (widget.boxEnumeration.isEmpty) return null;
@@ -294,7 +297,9 @@ class _GridPainterState extends State<_GridPainter> {
                             if (_lastClickedX == j
                                 && _lastClickedY == i
                                 && _lastSetColor == widget.tapColor) {
-                              if (_lastSetColor != _GridPaintColor.ERASER) return;
+                              _doubleTapped = (_lastSetColor != _GridPaintColor.ERASER);
+                            } else {
+                              _doubleTapped = false;
                             }
                           }
                           _lastClickedX = j;
@@ -335,6 +340,9 @@ class _GridPainterState extends State<_GridPainter> {
     for (int k = _gridState.length - 1; k >= 0; k--) {
       var point = _gridState[k];
       if (point.point.x == j && point.point.y == i) {
+        if (point.isEndOfLine && k > 0) {
+          _gridState[k - 1].isEndOfLine = true;
+        }
         _gridState.remove(point);
         break;
       }
@@ -373,10 +381,14 @@ class _GridPainterState extends State<_GridPainter> {
       return;
     }
 
-    _gridState.add(_GridPoint(
-      point: Point(j, i),
-      color: widget.tapColor
-    ));
+    if (_gridState.isNotEmpty && _doubleTapped) {
+      _gridState.last.isEndOfLine = true;
+    } else {
+      _gridState.add(_GridPoint(
+        point: Point(j, i),
+        color: widget.tapColor
+      ));
+    }
   }
 }
 
@@ -495,6 +507,7 @@ class _CustomGridPainter extends CustomPainter {
 
     var lastX = double.nan;
     var lastY = double.nan;
+    var foundEndOfLine = false;
 
     for (_GridPoint point in gridState) {
       var i = point.point.y;
@@ -506,6 +519,7 @@ class _CustomGridPainter extends CustomPainter {
       paint.color = _GRID_COLORS[point.color]!['color']!;
 
       paint.style = PaintingStyle.fill;
+      paint.strokeCap = StrokeCap.round;
 
       var circleRadius = mode == _GridMode.POINTS ? 0.3 : 0.15;
 
@@ -514,7 +528,7 @@ class _CustomGridPainter extends CustomPainter {
         boxWidth * circleRadius,
         paint);
 
-      if (mode == _GridMode.LINES && !lastX.isNaN && !lastY.isNaN) {
+      if (mode == _GridMode.LINES && !foundEndOfLine && !lastX.isNaN && !lastY.isNaN) {
         paint.strokeWidth = _strokeWidth() * 2;
         _touchCanvas.drawLine(
           Offset(x + boxWidth, y + boxHeight),
@@ -525,6 +539,7 @@ class _CustomGridPainter extends CustomPainter {
 
       lastX = x;
       lastY = y;
+      foundEndOfLine = point.isEndOfLine;
     }
 
     paint.color = paint.color.withAlpha(0);
@@ -606,6 +621,7 @@ class _CustomGridPainter extends CustomPainter {
 
     var lastX = double.nan;
     var lastY = double.nan;
+    var foundEndOfLine = false;
 
     if (mode == _GridMode.LINES) {
       for (_GridPoint point in gridState) {
@@ -618,18 +634,27 @@ class _CustomGridPainter extends CustomPainter {
 
         paint.color = _GRID_COLORS[point.color]!['color']!;
         paint.style = PaintingStyle.fill;
+        paint.strokeCap = StrokeCap.round;
 
-        if (!lastX.isNaN && !lastY.isNaN) {
-          paint.strokeWidth = _strokeWidth() * 3;
+        paint.strokeWidth = _strokeWidth() * 3;
+
+        if (!foundEndOfLine && !lastX.isNaN && !lastY.isNaN) {
           _touchCanvas.drawLine(
             Offset(x + boxWidth / 2, y + boxHeight / 2),
             Offset(lastX + boxWidth / 2, lastY + boxHeight / 2),
+            paint
+          );
+        } else {
+          _touchCanvas.drawCircle(
+            Offset(x + boxWidth / 2, y + boxHeight / 2),
+            paint.strokeWidth / 2,
             paint
           );
         }
 
         lastX = x;
         lastY = y;
+        foundEndOfLine = point.isEndOfLine;
       }
     }
 
