@@ -136,6 +136,11 @@ class _OrthogonalProjectionTwoPointsState extends State<OrthogonalProjectionTwoP
       _currentMapPolylines.add(GCWMapPolyline(points: [_currentMapPoints[2], _currentMapPoints[4]]));
     }
 
+    _currentMapPolylines.add(
+      GCWMapPolyline(points: [_currentMapPoints[0], _currentMapPoints[3]], color: COLOR_MAP_CALCULATEDPOINT)
+    );
+
+
     _currentOutput = _currentValues.map((LatLng coord) {
       return buildCoordinate(_currentOutputFormat, coord);
     }).toList();

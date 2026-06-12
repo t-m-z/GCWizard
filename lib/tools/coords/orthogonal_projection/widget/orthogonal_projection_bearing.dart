@@ -125,6 +125,10 @@ class _OrthogonalProjectionBearingState extends State<OrthogonalProjectionBearin
       _currentMapPolylines.add(GCWMapPolyline(points: [_currentMapPoints[1], _currentMapPoints[4]]));
     }
 
+    _currentMapPolylines.add(
+      GCWMapPolyline(points: [_currentMapPoints[0], _currentMapPoints[2]], color: COLOR_MAP_CALCULATEDPOINT)
+    );
+
     _currentOutput = _currentValues.map((LatLng coord) {
       return buildCoordinate(_currentOutputFormat, coord);
     }).toList();
