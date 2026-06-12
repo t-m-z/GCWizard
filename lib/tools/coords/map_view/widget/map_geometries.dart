@@ -103,9 +103,9 @@ class GCWMapLine extends GCWMapSimpleGeometry {
 
   void _calculateGeodeticShape(MapPrecision precision) {
     _calculateLineShape(
-        precision == MapPrecision.LOW ? projectionVincenty : projection,
-        precision == MapPrecision.LOW ? geodetic.distanceBearingVincenty : geodetic.distanceBearing,
-        precision == MapPrecision.LOW ? 5000.0 : 500.0
+      precision == MapPrecision.LOW ? projectionVincenty : projection,
+      precision == MapPrecision.LOW ? geodetic.distanceBearingVincenty : geodetic.distanceBearing,
+      precision == MapPrecision.LOW ? 5000.0 : 500.0
     );
   }
 
