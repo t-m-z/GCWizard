@@ -24,8 +24,8 @@
   "astronomy_seasons": "seasons spring summer winter autumn fall nearest closest farthest furthest",
   "astronomy_shadow_length": "shadow length",
   "astronomy_sun": "sun",
-  "astronomy_sunriseset": "twilight morning evening nautical astronomical civil sunset sunrise",
-  "astronomy_astrotimes": "astronomytimes astrotimes astronomictimes astronomicaltimes juliandates universaltimes terrestrialtimes juliancentury juliancenturies julianmillennium julianmillenium julianmillennia julianmillenia"
+  "astronomy_sunriseset": "twilight morning evening nautical astronomical civil sunset sunrise dusk dawn",
+  "astronomy_astrotimes": "astronomytimes astrotimes astronomictimes astronomicaltimes juliandates universaltimes terrestrialtimes juliancentury juliancenturies julianmillennium julianmillenium julianmillennia julianmillenia",
   "atbash": "hebrew reverse",
   "autokey": "",
   "babylonian_numerals": "babylonian numbers numerals cuneiform",
