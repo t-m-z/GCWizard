@@ -33,7 +33,7 @@ dependencies:
   flutter_highlight: ^0.7.0
   flutter_localizations:
     sdk: flutter
-  flutter_map: ^8.3.0
+  flutter_map: 8.2.2 #crash with 8.3.0 on fast in/out zoom
   flutter_map_marker_popup: ^8.1.1
   flutter_midi_engine: ^0.1.3
   highlight: ^0.7.0
@@ -53,7 +53,7 @@ dependencies:
   photo_view: ^0.15.0
   pointycastle: ^3.9.1
   prefs: ^4.2.0
-  proj4dart: ^3.0.0
+  proj4dart: ^2.1.0
   provider: ^6.1.5+1
   qr: ^4.0.0
   r_scan:
