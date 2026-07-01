@@ -33,8 +33,8 @@ class WaveForm extends StatefulWidget {
 }
 
 class WaveFormState extends State<WaveForm> {
-  Uint8List _bytes = Uint8List.fromList([]);
-  Uint8List _soundfilePNGImage = Uint8List.fromList([]);
+  Uint8List _bytes = Uint8List(0);
+  Uint8List _soundfilePNGImage = Uint8List(0);
 
   AudioInfo _audioInfo = AudioInfo(
       duration: Duration(milliseconds: 0),
@@ -42,7 +42,7 @@ class WaveFormState extends State<WaveForm> {
       channels: 0,
       bitRate: 0,
       format: '',
-      bytes: Uint8List.fromList([]),
+      bytes: Uint8List(0),
       status: AUDIO_INFO_STATUS.ERROR,
       error: '');
 
@@ -346,7 +346,7 @@ class WaveFormState extends State<WaveForm> {
           child: SizedBox(
             height: GCW_ASYNC_EXECUTER_INDICATOR_HEIGHT,
             width: GCW_ASYNC_EXECUTER_INDICATOR_WIDTH,
-            child: GCWAsyncExecuter<WaveformAndMorseResult>(
+            child: GCWAsyncExecuter<WavedataAndMorseResult>(
               isolatedFunction: analyseSoundfileAsync,
               parameter: _buildJobData,
               onReady: (data) => _showOutput(data),
@@ -365,12 +365,11 @@ class WaveFormState extends State<WaveForm> {
           smoothingWindow: _currentSmoothingWindow,
           thresholdFactor: _currentThresholdFactor,
           minRunLength: _currentMinRunLength,
-          unitTolerance: _currentUnitTolerance),
-      jobHeight: 400,
+          unitTolerance: _currentUnitTolerance)
     ));
   }
 
-  void _showOutput(WaveformAndMorseResult output) {
+  void _showOutput(WavedataAndMorseResult output) {
     if (output.status == PARSE_STATUS.ERROR) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         setState(() {
@@ -380,8 +379,8 @@ class WaveFormState extends State<WaveForm> {
         });
       });
     } else {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        _soundfilePNGImage = output.pngBytes;
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        _soundfilePNGImage = await renderWav(wavData: output.wavData, height: 400);
         _decodedMorseCode = output.morse;
         _decodedMorseText = output.text;
         _spectrumCreated = true;

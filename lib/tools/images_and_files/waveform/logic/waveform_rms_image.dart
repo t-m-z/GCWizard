@@ -10,10 +10,8 @@ import 'package:gc_wizard/tools/images_and_files/waveform/logic/waveform.dart';
 
 enum PARSE_STATUS { OK, ERROR }
 
-class WaveformAndMorseResult {
-  final Uint8List pngBytes;
-  final int width;
-  final int height;
+class WavedataAndMorseResult {
+  final WavData wavData;
 
   final String bits;
   final String morse;
@@ -22,10 +20,8 @@ class WaveformAndMorseResult {
   final PARSE_STATUS status;
   final String error;
 
-  WaveformAndMorseResult({
-    required this.pngBytes,
-    required this.width,
-    required this.height,
+  WavedataAndMorseResult({
+    required this.wavData,
     required this.bits,
     required this.morse,
     required this.text,
@@ -748,7 +744,6 @@ Future<MorseAnalysisResult> analyzeMorseFromWavBytes(
     MorseUnitMode.cluster   => _estimateUnitsCluster(runs),
   };
 
-
   final morse = _runsToMorse(runs, units, params);
   final text = _decodeMorse(morse);
 
@@ -759,14 +754,8 @@ Future<MorseAnalysisResult> analyzeMorseFromWavBytes(
   );
 }
 
-Future<WaveformAndMorseResult> renderAndAnalyzeWav({
+Future<WavedataAndMorseResult> analyzeWav({
   required Uint8List wavBytes,
-  required double height,
-  int? maxWidth,
-  int minWidth = 300,
-  Color backgroundColor = Colors.black,
-  Color waveformColor = Colors.orange,
-  double strokeWidth = 1.0,
   MorseParams morseParams = const MorseParams(
     smoothingWindow: 5,
     thresholdFactor: 4.0,
@@ -778,11 +767,8 @@ Future<WaveformAndMorseResult> renderAndAnalyzeWav({
   final wavData = await WavParser.parse(wavBytes);
 
   if (wavData.status == PARSE_STATUS.ERROR) {
-    return WaveformAndMorseResult(
-      // rgbaBytes: rgbaBytes,
-      pngBytes: Uint8List.fromList([]),
-      width: 0,
-      height: 0,
+    return WavedataAndMorseResult(
+      wavData: wavData,
       bits: '',
       morse: '',
       text: '',
@@ -791,6 +777,54 @@ Future<WaveformAndMorseResult> renderAndAnalyzeWav({
     );
   }
 
+  final morse = await analyzeMorseFromWavBytes(wavBytes, params: morseParams);
+
+  return WavedataAndMorseResult(
+    wavData: wavData,
+    bits: morse.bits,
+    morse: morse.morse,
+    text: morse.text,
+    status: PARSE_STATUS.OK,
+    error: '',
+  );
+}
+
+Future<WavedataAndMorseResult> analyseSoundfileAsync(GCWAsyncExecuterParameters? jobData) async {
+  if (jobData?.parameters is! WaveformJobData) {
+    return Future.value(
+      WavedataAndMorseResult(
+          wavData: WavData(sampleRate: 0, numChannels: 0, channels: <List<double>>[], status: PARSE_STATUS.ERROR, error: ''),
+          bits: '',
+          morse: '',
+          text: '',
+          status: PARSE_STATUS.ERROR,
+          error: ''));
+  }
+
+  var params = jobData!.parameters as WaveformJobData;
+  var output = await analyzeWav(
+      sendAsyncPort: jobData.sendAsyncPort,
+      wavBytes: params.jobDataBytes,
+      morseParams: params.jobMorseParams,
+  );
+
+  jobData.sendAsyncPort?.send(output);
+  return output;
+}
+
+Future<Uint8List> renderWav({
+    required WavData wavData,
+    required double height,
+    int? maxWidth,
+    int minWidth = 300,
+    Color backgroundColor = Colors.black,
+    Color waveformColor = Colors.orange,
+    double strokeWidth = 1.0
+  }) async {
+
+  if (wavData.status == PARSE_STATUS.ERROR) {
+    return Uint8List(0);
+  }
   const int webMaxTextureSize = 8192; // WebGL Limit
 
   final totalSamples = wavData.length;
@@ -807,8 +841,7 @@ Future<WaveformAndMorseResult> renderAndAnalyzeWav({
   if (width < minWidth) width = minWidth;
 
   final recorder = ui.PictureRecorder();
-  final canvas =
-      Canvas(recorder, Rect.fromLTWH(0, 0, width.toDouble(), height));
+  final canvas = Canvas(recorder, Rect.fromLTWH(0, 0, width.toDouble(), height));
 
   final painter = WavWaveformPainter(
     data: wavData,
@@ -824,55 +857,7 @@ Future<WaveformAndMorseResult> renderAndAnalyzeWav({
 
   final pngData = await uiImage.toByteData(format: ui.ImageByteFormat.png);
   if (pngData == null) {
-    return WaveformAndMorseResult(
-      pngBytes: Uint8List.fromList([]),
-      width: 0,
-      height: 0,
-      bits: '',
-      morse: '',
-      text: '',
-      status: PARSE_STATUS.ERROR,
-      error: 'waveform_error_png_not_created',
-    );
+    return Uint8List(0);
   }
-  final pngBytes = pngData.buffer.asUint8List();
-
-  final morse = await analyzeMorseFromWavBytes(wavBytes, params: morseParams);
-
-  return WaveformAndMorseResult(
-    // rgbaBytes: rgbaBytes,
-    pngBytes: pngBytes,
-    width: width,
-    height: height.toInt(),
-    bits: morse.bits,
-    morse: morse.morse,
-    text: morse.text,
-    status: PARSE_STATUS.OK,
-    error: '',
-  );
-}
-
-Future<WaveformAndMorseResult> analyseSoundfileAsync(GCWAsyncExecuterParameters? jobData) async {
-  if (jobData?.parameters is! WaveformJobData) {
-    return Future.value(
-      WaveformAndMorseResult(
-          pngBytes: Uint8List.fromList([]),
-          width: 0,
-          height: 0,
-          bits: '',
-          morse: '',
-          text: '',
-          status: PARSE_STATUS.ERROR,
-          error: ''));
-  }
-  var params = jobData!.parameters as WaveformJobData;
-  var output = await renderAndAnalyzeWav(
-      sendAsyncPort: jobData.sendAsyncPort,
-      wavBytes: params.jobDataBytes,
-      height: params.jobHeight,
-      morseParams: params.jobMorseParams,
-  );
-
-  jobData.sendAsyncPort?.send(output);
-  return output;
+  return pngData.buffer.asUint8List();
 }
