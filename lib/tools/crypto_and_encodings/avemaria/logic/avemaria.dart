@@ -1,4 +1,4 @@
-import 'dart:math';
+import 'package:gc_wizard/utils/math_utils.dart';
 
 part 'package:gc_wizard/tools/crypto_and_encodings/avemaria/logic/avemaria_data.dart';
 
@@ -32,7 +32,7 @@ String encodeAveMaria(String plain) {
     for (String letter in word.split('')) {
       var results = aveMaria.where((entry) => entry.value == letter);
       if (results.isNotEmpty) {
-        result.add(results.elementAt(Random().nextInt(results.length)).key);
+        result.add(results.elementAt(getRandom().nextInt(results.length)).key);
       }
     }
     result.add(' ');

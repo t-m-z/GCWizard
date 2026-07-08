@@ -370,7 +370,7 @@ void _setStereoPixel(int x, int y, RGBPixel pixel) {
 }
 
 Image.Image _generateColoredDotsTexture(int resX, int resY) {
-  Random random = Random();
+  Random random = getRandom();
   var pixels = Uint8List(resX * resY * _channelCount); // (RGBA)
 
   for (int i = 0; i < pixels.length; i++) {

@@ -1,13 +1,13 @@
 import 'dart:convert';
 import 'dart:core';
 import 'dart:io';
-import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:archive/archive_io.dart';
 import 'package:collection/collection.dart';
 import 'package:gc_wizard/utils/collection_utils.dart';
 import 'package:gc_wizard/utils/file_utils/gcw_file.dart';
+import 'package:gc_wizard/utils/math_utils.dart';
 import 'package:image/image.dart' as Image;
 import 'package:intl/intl.dart';
 import 'package:path/path.dart';
@@ -516,7 +516,7 @@ String buildFileNameWithDate(String name, FileType? type) {
 
 Future<File> _createTmpFile(String extension, Uint8List bytes) async {
   String tmpDir = (await getTemporaryDirectory()).path;
-  var random = Random();
+  var random = getRandom();
   String randomFileName = String.fromCharCodes(List.generate(20, (index) => random.nextInt(26) + 97));
   var filePath = '$tmpDir/$randomFileName.$extension';
 

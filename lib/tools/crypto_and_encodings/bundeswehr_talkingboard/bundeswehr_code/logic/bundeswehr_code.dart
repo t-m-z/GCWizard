@@ -1,7 +1,6 @@
-import 'dart:math';
-
 import 'package:gc_wizard/tools/crypto_and_encodings/bundeswehr_talkingboard/bundeswehr_auth/logic/bundeswehr_auth.dart';
 import 'package:gc_wizard/utils/constants.dart';
+import 'package:gc_wizard/utils/math_utils.dart';
 
 const BUNDESWEHR_TALKINGBOARD_CODE_RESPONSE_OK = 'bundeswehr_talkingboard_auth_response_ok';
 
@@ -26,7 +25,7 @@ BundeswehrTalkingBoardCodingOutput encodeBundeswehr(
   plainText = plainText.toUpperCase();
 
   List<String> result = [];
-  var random = Random();
+  var random = getRandom();
   plainText.split('').forEach((char) {
     if (random.nextInt(100) > 75) {
       result.add(_getObfuscatedTupel(tableEncoding));
@@ -82,7 +81,7 @@ String _decodeNumeralCode(String tupel, BundeswehrTalkingBoardAuthentificationTa
 }
 
 String _getObfuscatedTupel(BundeswehrTalkingBoardAuthentificationTable tableNumeralCode) {
-  var random = Random();
+  var random = getRandom();
   if (random.nextInt(100) > 50) {
     return tableNumeralCode.yAxis[random.nextInt(13)] + tableNumeralCode.yAxis[random.nextInt(13)];
   } else {

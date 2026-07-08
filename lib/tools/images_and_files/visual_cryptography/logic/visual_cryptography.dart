@@ -7,6 +7,7 @@ import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_param
 import 'package:gc_wizard/utils/complex_return_types.dart';
 import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:gc_wizard/utils/image_utils.dart';
+import 'package:gc_wizard/utils/math_utils.dart';
 import 'package:image/image.dart' as Image;
 
 var _whiteColor = convertColor(Colors.white);
@@ -379,7 +380,7 @@ void _setPixel(Image.Image image, int offsetX, int offsetY, int pixelSize, Image
 }
 
 ({List<bool> layer1, List<bool> layer2}) _randomPixel(bool black) {
-  var random = Random();
+  var random = getRandom();
   var pixel1 = random.nextInt(4);
   int pixel2;
   do {

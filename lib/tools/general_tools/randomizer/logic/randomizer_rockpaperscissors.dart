@@ -1,4 +1,4 @@
-import 'package:gc_wizard/tools/general_tools/randomizer/logic/randomizer.dart';
+part of 'package:gc_wizard/tools/general_tools/randomizer/logic/randomizer.dart';
 
 enum RockPaperScissorsElement {ROCK, PAPER, SCISSORS, LIZARD, SPOCK}
 enum RockPaperScissorsGameResult {LEFT, RIGHT, DRAW}

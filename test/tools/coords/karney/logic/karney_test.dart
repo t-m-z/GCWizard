@@ -1,8 +1,6 @@
 
 // ignore_for_file: avoid_print
 
-import 'dart:math';
-
 import "package:flutter_test/flutter_test.dart";
 import 'package:gc_wizard/tools/coords/_common/logic/distance_bearing_data.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
@@ -11,6 +9,7 @@ import 'package:gc_wizard/tools/coords/_common/logic/external_libs/pkohut.geofor
 import 'package:gc_wizard/tools/coords/antipodes/logic/antipodes.dart';
 import 'package:gc_wizard/utils/coordinate_utils.dart' as utils;
 import 'package:gc_wizard/utils/data_type_utils/double_type_utils.dart';
+import 'package:gc_wizard/utils/math_utils.dart';
 import 'package:latlong2/latlong.dart';
 
 void main() {
@@ -93,7 +92,7 @@ void main() {
     var countErrors = 0;
 
     for (int i = 0; i < 1000000; i++) {
-      var rand = Random();
+      var rand = getRandom();
       var coord1 = LatLng(rand.nextDouble() * 180.0 - 90.0, rand.nextDouble() * 360.0 - 180.0);
       var coord2 = LatLng(rand.nextDouble() * 180.0 - 90.0, rand.nextDouble() * 360.0 - 180.0);
 
@@ -243,7 +242,7 @@ void main() {
     int countErrors = 0;
 
     for (int i = 0; i < 1000000; i++) {
-      var rand = Random();
+      var rand = getRandom();
       var coord1 = LatLng(rand.nextDouble() * 180.0 - 90.0, rand.nextDouble() * 360.0 - 180.0);
       var coord2 = LatLng(rand.nextDouble() * 180.0 - 90.0, rand.nextDouble() * 360.0 - 180.0);
 

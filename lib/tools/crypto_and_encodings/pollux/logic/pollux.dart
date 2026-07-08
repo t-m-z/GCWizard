@@ -1,6 +1,6 @@
-import 'dart:math';
 
 import 'package:gc_wizard/tools/crypto_and_encodings/morse/logic/morse.dart';
+import 'package:gc_wizard/utils/math_utils.dart';
 import 'package:gc_wizard/utils/string_utils.dart';
 
 Map<String, String> _keyMap(String key) {
@@ -52,7 +52,7 @@ String polluxEncrypt(String input, String key) {
 
   var out = morse.split('').map((character) {
     var chars = keyMap[character]!;
-    var index = Random().nextInt(chars.length);
+    var index = getRandom().nextInt(chars.length);
     return chars[index];
   }).join();
 

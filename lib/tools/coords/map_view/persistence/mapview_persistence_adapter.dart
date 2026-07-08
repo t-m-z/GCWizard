@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -14,6 +12,7 @@ import 'package:gc_wizard/tools/coords/map_view/widget/gcw_mapview.dart';
 import 'package:gc_wizard/tools/coords/rhumb_line/logic/rhumb_line.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/substitution/logic/substitution.dart';
 import 'package:gc_wizard/utils/collection_utils.dart';
+import 'package:gc_wizard/utils/math_utils.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/color_utils.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:uuid/uuid.dart';
@@ -134,7 +133,7 @@ class MapViewPersistenceAdapter {
   }
 
   GCWMapPoint addMapPoint(LatLng coordinate, {CoordinateFormat? coordinateFormat}) {
-    var random = Random();
+    var random = getRandom();
     var mapPoint = GCWMapPoint(
         point: coordinate,
         coordinateFormat: coordinateFormat ?? defaultCoordinateFormat,

@@ -7,6 +7,6 @@ const _GCWizardScriptGraphicWidthG = 'widthG';
 const _GCWizardScriptGraphicHeightG = 'heightG';
 const _GCWizardScriptGraphicColors = 'colors';
 
-Random _random = Random();
+Random _random = getRandom();
 
 late ScriptState _state;

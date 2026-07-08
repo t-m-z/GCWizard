@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:gc_wizard/tools/science_and_technology/primes/_common/logic/primes_list.dart';
 import 'package:gc_wizard/tools/science_and_technology/primes/_common/logic/probably_prime.dart';
 import 'package:gc_wizard/utils/collection_utils.dart';
+import 'package:gc_wizard/utils/math_utils.dart';
 
 bool isPrime(BigInt x) {
   return isProbablePrime(x, 16);
@@ -10,7 +11,7 @@ bool isPrime(BigInt x) {
 
 BigInt _findPrimeFactor(BigInt n) {
   BigInt a, b, fac = n;
-  var rnd = Random();
+  var rnd = getRandom();
 
   while (!isProbablePrime(fac, 16)) {
     n = fac;

@@ -903,7 +903,7 @@ class _GCWMapViewState extends State<GCWMapView> {
         isDivider: true,
         action: (index) {}
       ),
-      /* if (_mapController.camera.zoom > _HIGH_PRECISION_MIN_ZOOM) */ GCWPopupMenuItem(
+      if (_mapController.camera.zoom > _HIGH_PRECISION_MIN_ZOOM) GCWPopupMenuItem(
         child: iconedGCWPopupMenuItem(context,
             _currentMapPrecision == MapPrecision.LOW ? Icons.arrow_upward : Icons.arrow_downward,
             _currentMapPrecision == MapPrecision.LOW ? i18n(context, 'coords_openmap_mapprecision_increase') : i18n(context, 'coords_openmap_mapprecision_decrease')),
