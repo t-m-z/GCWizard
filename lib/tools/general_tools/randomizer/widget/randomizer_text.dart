@@ -3,10 +3,9 @@ import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_submit_button.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_onoff_switch.dart';
+import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/general_tools/randomizer/logic/randomizer.dart';
-
-import '../../../../common_widgets/switches/gcw_twooptions_switch.dart';
 
 class RandomizerText extends StatefulWidget {
   const RandomizerText({super.key});
