@@ -474,11 +474,6 @@ class _GCWDateTimePickerState extends State<GCWDateTimePicker> {
     duration *= _currentSign;
 
     var timezone = Duration(minutes: _currentTimezoneOffset);
-    // MAL (06/2026): It is not clear why a localized timezone should be used if timezone is not even configured.
-    // if (!widget.config.contains(DateTimePickerConfig.TIMEZONES)) {
-    //   timezone = DateTime(_currentYear, _currentMonth, _currentDay,
-    //       _currentHour, _currentMinute, _currentSecond, _currentMilliSecond).timeZoneOffset;
-    // }
 
     DateTime dateTimeUtc;
     if (widget.config.contains(DateTimePickerConfig.TIME)) {
@@ -486,7 +481,7 @@ class _GCWDateTimePickerState extends State<GCWDateTimePicker> {
         _currentYear, _currentMonth, _currentDay, _currentHour, _currentMinute, _currentSecond, _currentMilliSecond
       ).subtract(timezone);
     } else {
-      dateTimeUtc = DateTime.utc(_currentYear, _currentMonth, _currentDay);
+      dateTimeUtc = DateTime.utc(_currentYear, _currentMonth, _currentDay).subtract(timezone);
     }
 
     var output = DateTimeUTCwithTZDuration(

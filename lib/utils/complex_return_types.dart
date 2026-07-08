@@ -67,13 +67,19 @@ class DateTimeUTCwithTZ {
 
   static DateTimeUTCwithTZ fromLocalTime(DateTime localDatetime, {Duration? timezone}) {
     return DateTimeUTCwithTZ(
-      dateTimeUtc: timezone != null ? localDatetime.add(-timezone) : localDatetime.toUtc(),
+      dateTimeUtc: timezone != null
+          ? DateTime.fromMillisecondsSinceEpoch(
+              localDatetime.millisecondsSinceEpoch - timezone.inMilliseconds, isUtc: true
+            )
+          : localDatetime.toUtc(),
       timezoneOffset: timezone ?? localDatetime.timeZoneOffset
     );
   }
 
   DateTime toLocalTime() {
-    return dateTimeUtc.add(timezoneOffset);
+    return  DateTime.fromMillisecondsSinceEpoch(
+      dateTimeUtc.millisecondsSinceEpoch + timezoneOffset.inMilliseconds, isUtc: false
+    );
   }
 
   String toLocalTimezoneAllNames(){

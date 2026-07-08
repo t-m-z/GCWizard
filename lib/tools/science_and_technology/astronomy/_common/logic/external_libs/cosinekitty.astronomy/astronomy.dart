@@ -5,12 +5,14 @@ import 'package:latlong2/latlong.dart';
 
 part 'package:gc_wizard/tools/science_and_technology/astronomy/_common/logic/external_libs/cosinekitty.astronomy/astronomy/astronomy.dart';
 
-class RiseSetUTC {
-  final DateTime? rise;
-  final DateTime? culmination;
-  final DateTime? set;
+enum RiseSetType {RISE, CULMINATION, SET}
 
-  RiseSetUTC(this.rise, this.culmination, this.set);
+class RiseSetUTC {
+  final List<DateTime> rises;
+  final List<DateTime> culminations;
+  final List<DateTime> sets;
+
+  RiseSetUTC(this.rises, this.culminations, this.sets);
 }
 
 class TwilightsUTC {
@@ -23,29 +25,41 @@ class TwilightsUTC {
 
   TwilightsUTC(LatLng coord, DateTime utcDate) {
     var observer = _Observer(coord.latitude, coord.longitude, 0.0);
-    var time = _Time._fromMillisecondsSince1970(_withoutTime(utcDate).millisecondsSinceEpoch);
+    var time = _Time._fromMillisecondsSince1970(utcDate.millisecondsSinceEpoch);
 
-    _Time? searchSunAltitude(_Direction direction, double altitude) {
-      return _searchAltitude(_Body.Sun, observer, direction, time, 1, altitude);
+    _Time? searchSunAltitude(_Direction direction, double altitude, [bool searchBackwards = false]) {
+      return _searchAltitude(_Body.Sun, observer, direction, time,  366 * (searchBackwards ? -1 : 1), altitude);
     }
 
     var _astronomicalMorning = searchSunAltitude(_Direction.Rise, -18.0);
-    astronomicalMorning = _timeToDateTime(_astronomicalMorning);
+    if (_astronomicalMorning != null) {
+      astronomicalMorning = _timeToDateTime(_astronomicalMorning);
+    }
 
     var _nauticalMorning = searchSunAltitude(_Direction.Rise, -12.0);
-    nauticalMorning = _timeToDateTime(_nauticalMorning);
+    if (_nauticalMorning != null) {
+      nauticalMorning = _timeToDateTime(_nauticalMorning);
+    }
 
     var _civilMorning = searchSunAltitude(_Direction.Rise, -6.0);
-    civilMorning = _timeToDateTime(_civilMorning);
+    if (_civilMorning != null) {
+      civilMorning = _timeToDateTime(_civilMorning);
+    }
 
     var _civilEvening = searchSunAltitude(_Direction.Set, -6.0);
-    civilEvening = _timeToDateTime(_civilEvening);
+    if (_civilEvening != null) {
+      civilEvening = _timeToDateTime(_civilEvening);
+    }
 
     var _nauticalEvening = searchSunAltitude(_Direction.Set, -12.0);
-    nauticalEvening = _timeToDateTime(_nauticalEvening);
+    if (_nauticalEvening != null) {
+      nauticalEvening = _timeToDateTime(_nauticalEvening);
+    }
 
-    var _astronomicalEvening = _searchAltitude(_Body.Sun, observer, _Direction.Set, time, 1, -18.0);
-    astronomicalEvening = _timeToDateTime(_astronomicalEvening);
+    var _astronomicalEvening = searchSunAltitude(_Direction.Set, -18.0);
+    if (_astronomicalEvening != null) {
+      astronomicalEvening = _timeToDateTime(_astronomicalEvening);
+    }
   }
 }
 
@@ -77,12 +91,12 @@ class SeasonsUTC {
     var _aphelion = _nextPlanetApsis(_Body.Earth, _perihelion);
 
     perihelion = PlanetApsis(
-      _timeToDateTime(_perihelion.time)!,
+      _timeToDateTime(_perihelion.time),
       _perihelion.distanceKm,
       _perihelion.distanceAu
     );
     aphelion = PlanetApsis(
-      _timeToDateTime(_aphelion.time)!,
+      _timeToDateTime(_aphelion.time),
       _aphelion.distanceKm,
       _aphelion.distanceAu
     );
@@ -243,44 +257,38 @@ class MoonPosition {
   }
 }
 
-DateTime _withoutTime(DateTime utcDate) {
-  return DateTime.utc(utcDate.year, utcDate.month, utcDate.day, 0, 0, 0, 10); //extra ms to avoid double precision error
-}
-
-DateTime? _timeToDateTime(_Time? time) {
-  if (time == null) {
-    return null;
-  }
-
+DateTime _timeToDateTime(_Time time) {
   return DateTime.fromMillisecondsSinceEpoch(time._toMillisecondsSince1970(), isUtc: true);
 }
 
 RiseSetUTC _riseSetUTC(LatLng coord, DateTime utcDate, _Body body) {
-  DateTime? rise;
-  DateTime? culmination;
-  DateTime? set;
+  var rises = <_Time>[];
+  var culminations = <_Time>[];
+  var sets = <_Time>[];
 
   var observer = _Observer(coord.latitude, coord.longitude, 0.0);
-  var time = _Time._fromMillisecondsSince1970(_withoutTime(utcDate).millisecondsSinceEpoch);
+  var time = _Time._fromMillisecondsSince1970(utcDate.subtract(Duration(days: 2)).millisecondsSinceEpoch);
 
-  var _rise = _searchRiseSet(body, observer, _Direction.Rise, time, 1);
-  if (_rise != null) {
-    rise = _timeToDateTime(_rise);
+  var limitDays = time._addDays(5);
+  var limitDaysReached = false;
+  var _rise = time;
+  while (!limitDaysReached) {
+    var rise = _searchRiseSet(body, observer, _Direction.Rise, _rise, 5)!;
+    limitDaysReached = rise.compareTo(limitDays) >= 0;
+    rises.add(rise);
+    _rise = rise._addDays(1 / 60 / 24); // add a minute
   }
 
-  var _culmination = DateTime.fromMillisecondsSinceEpoch(
-    _searchHourAngle(body, observer, 0.0, time).time._toMillisecondsSince1970(), isUtc: true
+  for (_Time rise in rises) {
+    sets.add(_searchRiseSet(body, observer, _Direction.Set, rise, 5)!);
+    culminations.add(_searchHourAngle(body, observer, 0.0, rise).time);
+  }
+
+  return RiseSetUTC(
+    rises.map((_Time rise) => _timeToDateTime(rise)).toList(),
+    culminations.map((_Time culmination) => _timeToDateTime(culmination)).toList(),
+    sets.map((_Time set) => _timeToDateTime(set)).toList()
   );
-  if (_culmination.day == utcDate.day && _culmination.month == utcDate.month) {
-    culmination = _culmination;
-  }
-
-  var _set = _searchRiseSet(body, observer, _Direction.Set, time, 1);
-  if (_set != null) {
-    set = _timeToDateTime(_set);
-  }
-
-  return RiseSetUTC(rise, culmination, set);
 }
 
 RiseSetUTC moonRiseSetUTC(LatLng coord, DateTime utcDate) {

@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
@@ -7,8 +8,10 @@ import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.d
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 import 'package:gc_wizard/tools/coords/_common/widget/gcw_coords.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/_common/logic/external_libs/cosinekitty.astronomy/astronomy.dart' as astronomy;
+import 'package:gc_wizard/tools/science_and_technology/astronomy/_common/logic/rise_set.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/_common/widget/astronomy_i18n.dart';
 import 'package:gc_wizard/utils/complex_return_types.dart';
+import 'package:intl/intl.dart';
 
 class SunRiseSet extends StatefulWidget {
   const SunRiseSet({super.key});
@@ -54,8 +57,15 @@ class _SunRiseSetState extends State<SunRiseSet> {
 
   Widget _buildOutput() {
     var coords = _currentCoords.toLatLng() ?? defaultCoordinate;
-    var sunRise = astronomy.sunRiseSetUTC(coords, _currentDateTimeUTCWithTZ.dateTimeUtc);
+    var sunRiseCulSetsUTC = astronomy.sunRiseSetUTC(coords, _currentDateTimeUTCWithTZ.dateTimeUtc);
+    var riseSets = getRiseSetsAtDay(sunRiseCulSetsUTC, _currentDateTimeUTCWithTZ, strict: true);
     var twilights = astronomy.TwilightsUTC(coords, _currentDateTimeUTCWithTZ.dateTimeUtc);
+
+    var rise = riseSets.firstWhereOrNull((e) => e.$1 == RiseSetType.RISE);
+    var culmination = riseSets.firstWhereOrNull((e) => e.$1 == RiseSetType.CULMINATION);
+    var set = riseSets.firstWhereOrNull((e) => e.$1 == RiseSetType.SET);
+
+    var dateFormat = DateFormat.jms(Localizations.localeOf(context).toString());
 
     var outputs = [
       [
@@ -78,21 +88,21 @@ class _SunRiseSetState extends State<SunRiseSet> {
       ],
       [
         i18n(context, 'astronomy_riseset_sunrise'),
-        sunRise.rise == null
+        rise == null
             ? i18n(context, 'astronomy_riseset_notavailable')
-            : formatTimeUTCWithTZ(context, sunRise.rise!, _currentDateTimeUTCWithTZ.timezoneOffset)
+            : dateFormat.format(rise.$2)
       ],
       [
         i18n(context, 'astronomy_riseset_transit'),
-        sunRise.culmination == null
+        culmination == null
             ? i18n(context, 'astronomy_riseset_notavailable')
-            : formatTimeUTCWithTZ(context, sunRise.culmination!, _currentDateTimeUTCWithTZ.timezoneOffset)
+            : dateFormat.format(culmination.$2)
       ],
       [
         i18n(context, 'astronomy_riseset_sunset'),
-        sunRise.set == null
+        set == null
             ? i18n(context, 'astronomy_riseset_notavailable')
-            : formatTimeUTCWithTZ(context, sunRise.set!, _currentDateTimeUTCWithTZ.timezoneOffset)
+            : dateFormat.format(set.$2)
       ],
       [
         i18n(context, 'astronomy_riseset_civilevening'),
