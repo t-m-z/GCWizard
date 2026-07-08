@@ -343,6 +343,7 @@ import 'package:gc_wizard/tools/general_tools/randomizer/widget/randomizer_lists
 import 'package:gc_wizard/tools/general_tools/randomizer/widget/randomizer_password.dart';
 import 'package:gc_wizard/tools/general_tools/randomizer/widget/randomizer_rockpaperscissors.dart';
 import 'package:gc_wizard/tools/general_tools/randomizer/widget/randomizer_selection.dart';
+import 'package:gc_wizard/tools/general_tools/randomizer/widget/randomizer_text.dart';
 import 'package:gc_wizard/tools/images_and_files/animated_image/widget/animated_image.dart';
 import 'package:gc_wizard/tools/images_and_files/animated_image_morse_code/widget/animated_image_morse_code.dart';
 import 'package:gc_wizard/tools/images_and_files/binary2image/widget/binary2image.dart';
@@ -6911,6 +6912,10 @@ void initializeRegistry(BuildContext context) {
     GCWTool(
         tool: const RandomizerLetter(),
         id: 'randomizer_letter',
+        searchKeys: const []),
+    GCWTool(
+        tool: const RandomizerText(),
+        id: 'randomizer_text',
         searchKeys: const []),
     GCWTool(
         tool: const RandomizerCoordinates(),

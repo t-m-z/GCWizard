@@ -27,7 +27,7 @@ import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
-import 'package:gc_wizard/tools/general_tools/randomizer/logic/randomizer_lists.dart';
+import 'package:gc_wizard/tools/general_tools/randomizer/logic/randomizer.dart';
 import 'package:gc_wizard/tools/general_tools/randomizer/persistance/json_provider.dart';
 import 'package:gc_wizard/tools/general_tools/randomizer/persistance/model.dart';
 import 'package:gc_wizard/utils/file_utils/file_utils.dart';

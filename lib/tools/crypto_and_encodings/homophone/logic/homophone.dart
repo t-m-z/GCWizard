@@ -1,6 +1,6 @@
-import 'dart:math';
 
 import 'package:gc_wizard/utils/alphabets.dart';
+import 'package:gc_wizard/utils/math_utils.dart';
 
 class HomophoneOutput {
   final String output;
@@ -155,7 +155,7 @@ int _charToNumber(String character, Map<String, List<int>> table) {
   if (table.containsKey(character)) {
     var list = table[character];
     if (list!.isEmpty) return -1;
-    var rnd = Random();
+    var rnd = getRandom();
     var index = rnd.nextInt(list.length);
 
     return list[index];

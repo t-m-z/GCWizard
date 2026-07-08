@@ -1,4 +1,4 @@
-import 'dart:math';
+import 'package:gc_wizard/utils/math_utils.dart';
 
 enum GuitarStringName { E4, H3, G3, D3, A2, E2 }
 
@@ -88,7 +88,7 @@ List<({GuitarStringName string, int fret})?> textToGuitarTabs(String input) {
 
   input = input.toLowerCase().replaceAll(RegExp(r'[^abcdefgh]'), '');
 
-  var rand = Random();
+  var rand = getRandom();
   int i;
 
   return input.split('').map((character) {

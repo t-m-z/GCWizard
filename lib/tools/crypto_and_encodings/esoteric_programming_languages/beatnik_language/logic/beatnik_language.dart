@@ -5,9 +5,8 @@
 // - http://search.cpan.org/~beatnik/Acme-Beatnik-0.02/Beatnik.pm
 // - https://github.com/catseye/Beatnik
 
-import 'dart:math';
-
 import 'package:gc_wizard/tools/games/scrabble/logic/scrabble.dart';
+import 'package:gc_wizard/utils/math_utils.dart';
 
 class BeatnikOutput {
   final List<String> output;
@@ -29,7 +28,7 @@ class DebugOutput {
 }
 
 BeatnikOutput generateBeatnik(String scrabbleVersion, String output) {
-  var random = Random();
+  var random = getRandom();
   int number = 0;
   int h = 0;
   int r = 0;

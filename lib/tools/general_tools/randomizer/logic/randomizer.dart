@@ -4,11 +4,17 @@ import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
 import 'package:gc_wizard/tools/coords/waypoint_projection/logic/projection.dart';
 import 'package:gc_wizard/tools/science_and_technology/colors/logic/colors_rgb.dart';
 import 'package:gc_wizard/utils/alphabets.dart';
+import 'package:gc_wizard/utils/math_utils.dart';
 import 'package:latlong2/latlong.dart';
+
+part 'package:gc_wizard/tools/general_tools/randomizer/logic/randomizer_cards.dart';
+part 'package:gc_wizard/tools/general_tools/randomizer/logic/randomizer_lists.dart';
+part 'package:gc_wizard/tools/general_tools/randomizer/logic/randomizer_password.dart';
+part 'package:gc_wizard/tools/general_tools/randomizer/logic/randomizer_rockpaperscissors.dart';
 
 String randomLetter(Alphabet alphabet, bool caseSensitive) {
   var length = alphabet.alphabet.length;
-  var random = Random();
+  var random = getRandom();
   var randomIndex = random.nextInt(length);
   var randomLetter = alphabet.alphabet.keys.toList()[randomIndex];
 
@@ -26,7 +32,7 @@ int randomInteger(int start, int end) {
     start = temp;
   }
 
-  return Random().nextInt(end + 1 - start) + start;
+  return getRandom().nextInt(end + 1 - start) + start;
 }
 
 double randomDouble(double start, double end) {
@@ -36,11 +42,11 @@ double randomDouble(double start, double end) {
     start = temp;
   }
 
-  return Random().nextDouble() * (end - start) + start;
+  return getRandom().nextDouble() * (end - start) + start;
 }
 
 RGB randomColor() {
-  var random = Random();
+  var random = getRandom();
   var r = random.nextInt(256);
   var g = random.nextInt(256);
   var b = random.nextInt(256);
@@ -79,4 +85,19 @@ LatLng randomCoordinateInsideBounds(LatLng northWest, LatLng southEast) {
   }
 
   return LatLng(lat, lon);
+}
+
+String shuffleString(String text, bool removeWhitespace) {
+  var _text = text;
+  if (removeWhitespace) {
+    _text = _text.replaceAll(RegExp(r'\s'), '');
+  }
+
+  var list = shuffleList(_text.split('').toList());
+  return list.join();
+}
+
+String shuffleLines(String text) {
+  var list = shuffleList(text.split(RegExp(r'\r?\n')).toList());
+  return list.join('\n');
 }

@@ -212,3 +212,14 @@ num ieeeRemainder(num x, num y) {
 
   return x - nRounded * y;
 }
+
+/* try get secure Random, but if fails then get normal Random */
+Random getRandom() {
+  Random random;
+  try {
+    random = Random.secure();
+   } catch(e) {
+    random = Random();
+  }
+  return random;
+}

@@ -1,5 +1,7 @@
 import 'dart:math';
 
+import 'package:gc_wizard/utils/math_utils.dart';
+
 const _ranges = [
   [0x0300, 0x036F], //default range
   [0x1AB0, 0x1AFF],
@@ -10,7 +12,7 @@ const _ranges = [
 ];
 
 String encodeZalgoText(String text, int intensity) {
-  final Random rnd = Random();
+  final Random rnd = getRandom();
   final StringBuffer result = StringBuffer();
 
   for (final ch in text.runes) {

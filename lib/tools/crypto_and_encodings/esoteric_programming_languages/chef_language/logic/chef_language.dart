@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:gc_wizard/tools/science_and_technology/primes/_common/logic/primes.dart';
+import 'package:gc_wizard/utils/math_utils.dart';
 import 'package:gc_wizard/utils/string_utils.dart';
 import 'package:intl/intl.dart';
 
@@ -94,7 +95,7 @@ String generateChef(String language, String title, String remark, String time, S
   List<String> ingredientOne = <String>[]; // store 1st ingredient, amount an measure for aux recipe
   List<String> ingredientTwo = <String>[]; // store 2nd ingredient, amount an measure for aux recipe
 
-  Random random = Random();
+  Random random = getRandom();
 
   // fill the lists for the ingredients depending on language
   if (language == 'ENG') {

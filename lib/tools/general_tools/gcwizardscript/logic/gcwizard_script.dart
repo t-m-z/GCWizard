@@ -68,6 +68,7 @@ import 'package:gc_wizard/tools/science_and_technology/physical_constants/logic/
 import 'package:gc_wizard/tools/science_and_technology/primes/_common/logic/primes.dart';
 import 'package:gc_wizard/utils/alphabets.dart';
 import 'package:gc_wizard/utils/complex_return_types.dart';
+import 'package:gc_wizard/utils/math_utils.dart';
 import 'package:gc_wizard/utils/stack.dart' as datastack;
 import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';

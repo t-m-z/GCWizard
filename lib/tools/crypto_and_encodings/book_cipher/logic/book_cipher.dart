@@ -1,6 +1,5 @@
-import 'dart:math';
-
 import 'package:diacritic/diacritic.dart';
+import 'package:gc_wizard/utils/math_utils.dart';
 
 class _wordClass {
   int sectionIndex;
@@ -473,7 +472,7 @@ int _globalCharacterPosition(_wordClass word, int characterPosition, List<_wordC
   }
 
   if (letterCount > 0) {
-    var randomIndex = Random().nextInt(letterCount);
+    var randomIndex = getRandom().nextInt(letterCount);
 
     letterCount = 0;
     letterCountTmp = 0;

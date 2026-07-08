@@ -8,7 +8,7 @@ import 'package:gc_wizard/common_widgets/gcw_text.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
-import 'package:gc_wizard/tools/general_tools/randomizer/logic/randomizer_cards.dart' as cards;
+import 'package:gc_wizard/tools/general_tools/randomizer/logic/randomizer.dart' as cards;
 
 class RandomizerCards extends StatefulWidget {
   const RandomizerCards({super.key});

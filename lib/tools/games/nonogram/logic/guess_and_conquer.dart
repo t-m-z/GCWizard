@@ -3,12 +3,13 @@ import 'dart:math';
 import 'package:collection/collection.dart';
 import 'package:gc_wizard/tools/games/nonogram/logic/puzzle.dart';
 import 'package:gc_wizard/tools/games/nonogram/logic/strategy.dart';
+import 'package:gc_wizard/utils/math_utils.dart';
 import 'package:utility/utility.dart';
 
 int _getNextIndex(List<int> zeroIndexes, bool randomize) {
   if (zeroIndexes.isEmpty) return 0;
   if (randomize) {
-    var random = (Random().nextDouble() * zeroIndexes.length).floor();
+    var random = (getRandom().nextDouble() * zeroIndexes.length).floor();
     return zeroIndexes.removeAt(random);
   }
   return zeroIndexes.removeFirst()!;
