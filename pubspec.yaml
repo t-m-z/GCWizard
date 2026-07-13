@@ -1,6 +1,6 @@
 name: gc_wizard
 description: GC Wizard
-version: 3.6.0+345
+version: 3.7.0+365
 publish_to: none
 
 environment:
@@ -33,7 +33,7 @@ dependencies:
   flutter_highlight: ^0.7.0
   flutter_localizations:
     sdk: flutter
-  flutter_map: ^8.3.1
+  flutter_map: 8.2.2 #crash with 8.3.0/ 8.3.1 on fast in/out zoom
   flutter_map_marker_popup: ^8.1.1
   flutter_midi_engine: ^0.1.5
   highlight: ^0.7.0
