@@ -1,6 +1,6 @@
 part of 'package:gc_wizard/tools/general_tools/grid_generator/grid/widget/grid.dart';
 
-enum _GridType { BOXES, LINES, INTERSECTIONS }
+enum _GridType { BOXES, INTERSECTIONS }
 
 enum _GridEnumerationStart { TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT }
 
@@ -8,7 +8,9 @@ enum _GridBoxEnumerationStartDirection { UP, DOWN, LEFT, RIGHT }
 
 enum _GridBoxEnumerationBehaviour { ALIGNED, ALTERNATED, SPIRAL }
 
-enum _GridPaintColor { BLACK, WHITE, RED, YELLOW, BLUE, GREEN }
+enum _GridPaintColor { BLACK, WHITE, RED, YELLOW, BLUE, GREEN, ERASER }
+
+enum _GridMode {POINTS, LINES}
 
 enum _TapMode { SINGLE, ROW, COLUMN, ALL }
 
@@ -19,12 +21,27 @@ final _GRID_COLORS = {
   _GridPaintColor.YELLOW: {'color': Colors.yellow, 'fontColor': Colors.black},
   _GridPaintColor.BLUE: {'color': Colors.indigo, 'fontColor': Colors.white},
   _GridPaintColor.GREEN: {'color': Colors.green, 'fontColor': Colors.black},
+  _GridPaintColor.ERASER: {'color': Color.fromARGB(0, 0, 0, 0)},
 };
+
+class _GridPoint {
+  final Point<int> point;
+  final _GridPaintColor color;
+  bool isEndOfLine = false;
+
+  _GridPoint({required this.point, required this.color});
+
+  @override
+  String toString() {
+    return 'P: (${point.x}, ${point.y}; C: $color}';
+  }
+}
 
 class _GridPainter extends StatefulWidget {
   final _GridType type;
   final int countRows;
   final int countColumns;
+  final _GridMode mode;
   final _GridPaintColor tapColor;
   final List<String> boxEnumeration;
   final List<String> columnEnumeration;
@@ -37,6 +54,7 @@ class _GridPainter extends StatefulWidget {
     this.type = _GridType.BOXES,
     this.countRows = 10,
     this.countColumns = 10,
+    this.mode = _GridMode.POINTS,
     this.tapColor = _GridPaintColor.BLACK,
     required this.boxEnumeration,
     required this.columnEnumeration,
@@ -53,6 +71,12 @@ class _GridPainter extends StatefulWidget {
 class _GridPainterState extends State<_GridPainter> {
   List<String>? _boxEnumeration;
   List<String>? _originalBoxEnumeration;
+
+  var _lastClickedX = -1;
+  var _lastClickedY = -1;
+  var _lastSetColor = _GridPaintColor.ERASER;
+
+  var _doubleTapped = false;
 
   List<String>? _fillBoxEnumeration() {
     if (widget.boxEnumeration.isEmpty) return null;
@@ -262,19 +286,27 @@ class _GridPainterState extends State<_GridPainter> {
                               widget.type,
                               widget.countRows,
                               widget.countColumns,
+                              widget.mode,
                               widget.tapColor,
                               _boxEnumeration ?? [],
                               widget.columnEnumeration,
                               widget.rowEnumeration,
-                              _gridState ?? {}, (int i, int j, int countRows, int countColumns, _TapMode mode) {
+                              _gridState, (int i, int j, int countRows, int countColumns, _TapMode mode) {
                         setState(() {
-                          _gridState ??= <int, Map<int, _GridPaintColor>>{};
-
-                          if (_gridState![i] == null) {
-                            _gridState![i] = <int, _GridPaintColor>{};
+                          if (_gridState.isNotEmpty) {
+                            if (_lastClickedX == j
+                                && _lastClickedY == i
+                                && _lastSetColor == widget.tapColor) {
+                              _doubleTapped = (_lastSetColor != _GridPaintColor.ERASER);
+                            } else {
+                              _doubleTapped = false;
+                            }
                           }
+                          _lastClickedX = j;
+                          _lastClickedY = i;
+                          _lastSetColor = widget.tapColor;
 
-                          var delete = _gridState![i]![j] == widget.tapColor;
+                          var delete = widget.tapColor == _GridPaintColor.ERASER;
 
                           switch (mode) {
                             case _TapMode.ALL:
@@ -305,19 +337,57 @@ class _GridPainterState extends State<_GridPainter> {
   }
 
   void _removeColor(int i, int j) {
-    if (_gridState == null) return;
-    if (_gridState![i] == null) {
-      _gridState![i] = <int, _GridPaintColor>{};
+    for (int k = _gridState.length - 1; k >= 0; k--) {
+      var point = _gridState[k];
+      if (point.point.x == j && point.point.y == i) {
+        if (point.isEndOfLine && k > 0) {
+          _gridState[k - 1].isEndOfLine = true;
+        }
+        _gridState.remove(point);
+        break;
+      }
     }
 
-    _gridState![i]!.remove(j);
+    // If maybe before remove the pointlist was (1, 2, 1),
+    // now you remove 2, the list is now (1, 1), which should not be, so clearing
+    if (_gridState.length <= 1) return;
+
+    var _clearedGridState = <_GridPoint>[];
+
+    var _lastX = -1;
+    var _lastY = -1;
+    var _lastColor = _GridPaintColor.ERASER; //ERASER is only a placeholder which can never be found in the list
+    for (_GridPoint point in _gridState) {
+      if (_clearedGridState.isEmpty) {
+        _clearedGridState.add(point);
+      } else {
+        if (point.point.x == _lastX && point.point.y == _lastY && point.color == _lastColor) {
+          continue;
+        }
+
+        _clearedGridState.add(point);
+      }
+      _lastX = point.point.x;
+      _lastY = point.point.y;
+      _lastColor = point.color;
+    }
+
+    _gridState = _clearedGridState;
   }
 
   void _setColor(int i, int j, bool delete) {
-    _removeColor(i, j);
+    if (delete) {
+      _removeColor(i, j);
+      return;
+    }
 
-    if (!delete) {
-      _gridState![i]!.putIfAbsent(j, () => widget.tapColor);
+    if (_gridState.isNotEmpty && _doubleTapped) {
+      _gridState.last.isEndOfLine = true;
+    } else {
+      _gridState.add(_GridPoint(
+        point: Point(j, i),
+        color: widget.tapColor
+      ));
     }
   }
 }
@@ -327,11 +397,12 @@ class _CustomGridPainter extends CustomPainter {
   final _GridType type;
   final int countRows;
   final int countColumns;
+  final _GridMode mode;
   final _GridPaintColor tapColor;
   final List<String> boxEnumeration;
   final List<String> columnEnumeration;
   final List<String> rowEnumeration;
-  final Map<int, Map<int, _GridPaintColor>> gridState;
+  final List<_GridPoint> gridState;
   final void Function(int, int, int, int, _TapMode) onTapped;
 
   _CustomGridPainter(
@@ -339,6 +410,7 @@ class _CustomGridPainter extends CustomPainter {
     this.type,
     this.countRows,
     this.countColumns,
+    this.mode,
     this.tapColor,
     this.boxEnumeration,
     this.columnEnumeration,
@@ -366,133 +438,6 @@ class _CustomGridPainter extends CustomPainter {
       case _GridType.INTERSECTIONS:
         _drawPointsBoard(size, paint, _touchCanvas, canvas);
         break;
-      case _GridType.LINES:
-        _drawGridBoard(size, paint, _touchCanvas, canvas);
-        break;
-    }
-  }
-
-  void _drawGridBoard(Size size, Paint paint, TouchyCanvas _touchCanvas, Canvas canvas) {
-    double _countRows = countRows + 0.5;
-    double _countColumns = countColumns + 0.5;
-
-    double boxWidth = size.width / _countColumns;
-    double boxHeight = size.height / _countRows;
-
-    paint.color = themeColors().secondary();
-    paint.strokeWidth = _strokeWidth();
-
-    for (int i = 0; i < _countRows - 1; i++) {
-      for (int j = 0; j < _countColumns - 1; j++) {
-        var x = j * boxWidth;
-        var y = i * boxHeight;
-
-        _touchCanvas.drawLine(Offset(x + boxWidth, boxHeight * 0.8),
-            Offset(x + boxWidth, (size.width / (countColumns / countRows) - boxHeight / 2)), paint);
-        _touchCanvas.drawLine(Offset(boxWidth * 0.8, y + boxHeight),
-            Offset((size.height * (countColumns / countRows) - boxWidth / 2), y + boxHeight), paint);
-      }
-    }
-
-    for (int i = 0; i < _countRows - 1; i++) {
-      for (int j = 0; j < _countColumns - 1; j++) {
-        var x = j * boxWidth;
-        var y = i * boxHeight;
-
-        String? enumerationTextColumn;
-        String? enumerationTextRow;
-        if (i == 0) {
-          enumerationTextColumn = _getEnumeration(columnEnumeration, j);
-        }
-        if (j == 0) {
-          enumerationTextRow = _getEnumeration(rowEnumeration, i);
-        }
-
-        var textColor = themeColors().mainFont();
-
-        if (enumerationTextColumn != null && enumerationTextColumn.isNotEmpty) {
-          TextPainter textPainter = _setFontSize(textColor, enumerationTextColumn, boxHeight, boxWidth);
-
-          textPainter.paint(canvas, Offset(x + boxWidth - textPainter.width * 0.5, 0.0));
-        }
-
-        if (enumerationTextRow != null && enumerationTextRow.isNotEmpty) {
-          TextPainter textPainter = _setFontSize(textColor, enumerationTextRow, boxHeight, boxWidth);
-
-          textPainter.paint(canvas, Offset(0.0, y + boxHeight - textPainter.height * 0.5));
-        }
-      }
-    }
-
-    for (int i = 0; i < (_countRows * 2 - 1); i++) {
-      for (int j = 0; j < (_countColumns * 2 - 1); j++) {
-        if ((i + j) % 2 == 0) continue;
-
-        var x = j * boxWidth / 2;
-        var y = i * boxHeight / 2;
-
-        if (gridState[i] != null && gridState[i]![j] != null) {
-          paint.color = _GRID_COLORS[gridState[i]?[j]]?['color'] ?? Colors.black;
-          paint.style = PaintingStyle.stroke;
-          paint.strokeWidth = 6;
-
-          var path = Path();
-
-          if (j % 2 == 0 && i > 1) {
-            path.moveTo(x + boxWidth, y - boxHeight * 0.5);
-            path.relativeLineTo(0.0, boxHeight);
-          } else if (i % 2 == 0 && j > 1) {
-            path.moveTo(x - boxWidth * 0.5, y + boxHeight);
-            path.relativeLineTo(boxWidth, 0.0);
-          }
-
-          _touchCanvas.drawPath(path, paint);
-        }
-
-        paint.style = PaintingStyle.fill;
-        paint.color = paint.color.withAlpha(0);
-
-        var mode = _TapMode.SINGLE;
-
-        var path = Path();
-        if (i % 2 == 0) {
-          path.moveTo(x, y + boxHeight * 0.5);
-          if (j == 1) {
-            path.relativeLineTo(boxWidth / 2, boxHeight / 2);
-            path.relativeLineTo(-boxWidth / 2, boxHeight / 2);
-            path.relativeLineTo(-boxWidth / 2, 0.0);
-            path.relativeLineTo(0.0, -boxHeight);
-          } else {
-            path.relativeLineTo(boxWidth / 2, boxHeight / 2);
-            path.relativeLineTo(-boxWidth / 2, boxHeight / 2);
-            path.relativeLineTo(-boxWidth / 2, -boxHeight / 2);
-            path.relativeLineTo(boxWidth / 2, -boxHeight / 2);
-          }
-        } else if (j % 2 == 0) {
-          path.moveTo(x + boxWidth * 0.5, y);
-          if (i == 1) {
-            path.relativeLineTo(0.0, -boxHeight / 2);
-            path.relativeLineTo(boxWidth, 0.0);
-            path.relativeLineTo(0.0, boxHeight / 2);
-            path.relativeLineTo(-boxWidth / 2, boxHeight / 2);
-          } else {
-            path.relativeLineTo(boxWidth / 2, -boxHeight / 2);
-            path.relativeLineTo(boxWidth / 2, boxHeight / 2);
-            path.relativeLineTo(-boxWidth / 2, boxHeight / 2);
-            path.relativeLineTo(-boxWidth / 2, -boxHeight / 2);
-          }
-        }
-
-        _touchCanvas.drawPath(path, paint, onTapDown: (tapDetail) {
-          if (j == 1) {
-            mode = _TapMode.ROW;
-          } else if (i == 1) {
-            mode = _TapMode.COLUMN;
-          }
-
-          onTapped(i, j, countRows * 2 - 1, countColumns * 2 - 1, mode);
-        });
-      }
     }
   }
 
@@ -543,7 +488,7 @@ class _CustomGridPainter extends CustomPainter {
         paint.color = paint.color.withAlpha(0);
 
         _touchCanvas.drawRect(Rect.fromLTWH(x + boxWidth / 2, 0.0, boxWidth, boxHeight), paint, onTapDown: (tapDetail) {
-          onTapped(i, j, countRows, countColumns, _TapMode.COLUMN);
+          onTapped(i, j, countRows - 1, countColumns - 1, _TapMode.COLUMN);
         });
 
         if (enumerationTextRow != null && enumerationTextRow.isNotEmpty) {
@@ -554,27 +499,64 @@ class _CustomGridPainter extends CustomPainter {
 
         paint.color = paint.color.withAlpha(0);
 
-        _touchCanvas.drawRect(Rect.fromLTWH(0.0 / 2, y + boxHeight / 2, boxWidth, boxHeight), paint,
-            onTapDown: (tapDetail) {
-          onTapped(i, j, countRows, countColumns, _TapMode.ROW);
+        _touchCanvas.drawRect(Rect.fromLTWH(0.0 / 2, y + boxHeight / 2, boxWidth, boxHeight), paint, onTapDown: (tapDetail) {
+          onTapped(i, j, countRows - 1, countColumns - 1, _TapMode.ROW);
         });
       }
     }
 
+    var lastX = double.nan;
+    var lastY = double.nan;
+    var foundEndOfLine = false;
+
+    for (_GridPoint point in gridState) {
+      var i = point.point.y;
+      var j = point.point.x;
+
+      var x = j * boxWidth;
+      var y = i * boxHeight;
+
+      paint.color = _GRID_COLORS[point.color]!['color']!;
+
+      paint.style = PaintingStyle.fill;
+      paint.strokeCap = StrokeCap.round;
+
+      var circleRadius = mode == _GridMode.POINTS ? 0.3 : 0.15;
+
+      _touchCanvas.drawCircle(
+        Offset(x + boxWidth, y + boxHeight),
+        boxWidth * circleRadius,
+        paint);
+
+      if (mode == _GridMode.LINES && !foundEndOfLine && !lastX.isNaN && !lastY.isNaN) {
+        paint.strokeWidth = _strokeWidth() * 2;
+        _touchCanvas.drawLine(
+          Offset(x + boxWidth, y + boxHeight),
+          Offset(lastX + boxWidth, lastY + boxHeight),
+          paint
+        );
+      }
+
+      lastX = x;
+      lastY = y;
+      foundEndOfLine = point.isEndOfLine;
+    }
+
+    paint.color = paint.color.withAlpha(0);
+
+    // Create invisible touchfields
     for (int i = 0; i < _countRows - 1; i++) {
       for (int j = 0; j < _countColumns - 1; j++) {
         var x = j * boxWidth;
         var y = i * boxHeight;
 
-        paint.color = gridState[i] != null && gridState[i]![j] != null
-            ? (_GRID_COLORS[gridState[i]?[j]]?['color']) ?? Colors.black
-            : paint.color.withAlpha(0);
-
-        paint.style = PaintingStyle.fill;
-
-        _touchCanvas.drawCircle(Offset(x + boxWidth, y + boxHeight), boxWidth * 0.4, paint, onTapDown: (tapDetail) {
-          onTapped(i, j, countRows, countColumns, _TapMode.SINGLE);
-        });
+        _touchCanvas.drawRect(
+          Rect.fromCircle(center: Offset(x + boxWidth, y + boxHeight), radius: boxWidth * 0.5),
+          paint,
+          onTapDown: (tapDetail) {
+            onTapped(i, j, countRows, countColumns, _TapMode.SINGLE);
+          }
+        );
       }
     }
   }
@@ -594,27 +576,17 @@ class _CustomGridPainter extends CustomPainter {
         var x = j * boxWidth;
         var y = i * boxHeight;
 
-        paint.color = gridState[i] != null && gridState[i]![j] != null
-            ? (_GRID_COLORS[gridState[i]?[j]]?['color']) ?? Colors.black
-            : themeColors().gridBackground();
+        var point = gridState.firstWhereOrNull((_GridPoint point) => point.point.x == j && point.point.y == i);
+        paint.color = point != null ? _GRID_COLORS[point.color]!['color']! : themeColors().gridBackground();
         paint.style = PaintingStyle.fill;
 
-        if (i == 0 || j == 0) paint.color = paint.color.withAlpha(0);
+        if (i == 0 || j == 0) {
+          paint.color = paint.color.withAlpha(0);
+        } else if (mode == _GridMode.LINES) {
+          paint.color = paint.color.withAlpha(100);
+        }
 
-        _touchCanvas.drawRect(Rect.fromLTWH(x, y, boxWidth, boxHeight), paint, onTapDown: (tapDetail) {
-          _TapMode mode;
-          if (i == 0 && j == 0) {
-            mode = _TapMode.ALL;
-          } else if (i == 0) {
-            mode = _TapMode.COLUMN;
-          } else if (j == 0) {
-            mode = _TapMode.ROW;
-          } else {
-            mode = _TapMode.SINGLE;
-          }
-
-          onTapped(i, j, _countRows, countColumns, mode);
-        });
+        _touchCanvas.drawRect(Rect.fromLTWH(x, y, boxWidth, boxHeight), paint);
 
         paint.color = themeColors().secondary();
         paint.strokeWidth = _strokeWidth();
@@ -638,14 +610,76 @@ class _CustomGridPainter extends CustomPainter {
 
         if (enumerationText == null || enumerationText.isEmpty) continue;
 
-        var textColor = gridState[i] != null && gridState[i]![j] != null && i > 0 && j > 0
-            ? (_GRID_COLORS[gridState[i]?[j]]?['fontColor']) ?? Colors.white
-            : themeColors().mainFont();
+        var textColor = point != null ? _GRID_COLORS[point.color]!['fontColor']! : themeColors().mainFont();
 
         TextPainter textPainter = _setFontSize(textColor, enumerationText, boxHeight, boxWidth);
 
         textPainter.paint(
             canvas, Offset(x + (boxWidth - textPainter.width) * 0.5, y + (boxHeight - textPainter.height) * 0.5));
+      }
+    }
+
+    var lastX = double.nan;
+    var lastY = double.nan;
+    var foundEndOfLine = false;
+
+    if (mode == _GridMode.LINES) {
+      for (_GridPoint point in gridState) {
+        var i = point.point.y;
+        var j = point.point.x;
+        if (i == 0 || j == 0) continue;
+
+        var x = j * boxWidth;
+        var y = i * boxHeight;
+
+        paint.color = _GRID_COLORS[point.color]!['color']!;
+        paint.style = PaintingStyle.fill;
+        paint.strokeCap = StrokeCap.round;
+
+        paint.strokeWidth = _strokeWidth() * 3;
+
+        if (!foundEndOfLine && !lastX.isNaN && !lastY.isNaN) {
+          _touchCanvas.drawLine(
+            Offset(x + boxWidth / 2, y + boxHeight / 2),
+            Offset(lastX + boxWidth / 2, lastY + boxHeight / 2),
+            paint
+          );
+        } else {
+          _touchCanvas.drawCircle(
+            Offset(x + boxWidth / 2, y + boxHeight / 2),
+            paint.strokeWidth / 2,
+            paint
+          );
+        }
+
+        lastX = x;
+        lastY = y;
+        foundEndOfLine = point.isEndOfLine;
+      }
+    }
+
+    paint.color = paint.color.withAlpha(0);
+
+    // Create invisible touchfields
+    for (int i = 0; i < _countRows; i++) {
+      for (int j = 0; j < _countColumns; j++) {
+        var x = j * boxWidth;
+        var y = i * boxHeight;
+
+        _touchCanvas.drawRect(Rect.fromLTWH(x, y, boxWidth, boxHeight), paint, onTapDown: (tapDetail) {
+          _TapMode mode;
+          if (i == 0 && j == 0) {
+            mode = _TapMode.ALL;
+          } else if (i == 0) {
+            mode = _TapMode.COLUMN;
+          } else if (j == 0) {
+            mode = _TapMode.ROW;
+          } else {
+            mode = _TapMode.SINGLE;
+          }
+
+          onTapped(i, j, countRows, countColumns, mode);
+        });
       }
     }
   }

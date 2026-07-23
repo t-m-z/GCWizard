@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -7,13 +5,14 @@ import 'package:gc_wizard/application/theme/fixed_colors.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format_definition.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
-import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
+import 'package:gc_wizard/tools/coords/map_view/widget/map_geometries.dart';
 import 'package:gc_wizard/tools/coords/map_view/persistence/json_provider.dart';
 import 'package:gc_wizard/tools/coords/map_view/persistence/model.dart';
 import 'package:gc_wizard/tools/coords/map_view/widget/gcw_mapview.dart';
 import 'package:gc_wizard/tools/coords/rhumb_line/logic/rhumb_line.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/substitution/logic/substitution.dart';
 import 'package:gc_wizard/utils/collection_utils.dart';
+import 'package:gc_wizard/utils/math_utils.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/color_utils.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:uuid/uuid.dart';
@@ -134,7 +133,7 @@ class MapViewPersistenceAdapter {
   }
 
   GCWMapPoint addMapPoint(LatLng coordinate, {CoordinateFormat? coordinateFormat}) {
-    var random = Random();
+    var random = getRandom();
     var mapPoint = GCWMapPoint(
         point: coordinate,
         coordinateFormat: coordinateFormat ?? defaultCoordinateFormat,
@@ -156,7 +155,7 @@ class MapViewPersistenceAdapter {
     return _mapViewDAO.polylines.firstWhere((polyline) => polyline.uuid == uuid);
   }
 
-  void updateMapPoint(GCWMapPoint mapPoint) {
+  void updateMapPoint(GCWMapPoint mapPoint, MapPrecision precision) {
     mapPoint.update();
 
     var mapPointDAO = _mapPointDAOByUUID(mapPoint.uuid!);
@@ -176,11 +175,11 @@ class MapViewPersistenceAdapter {
 
     _mapWidget.polylines
         .where((polyline) => polyline.points.contains(mapPoint))
-        .forEach((polyline) => updateMapPolyline(polyline));
+        .forEach((polyline) => updateMapPolyline(polyline, precision));
   }
 
-  void updateMapPolyline(GCWMapPolyline polyline) {
-    polyline.update();
+  void updateMapPolyline(GCWMapPolyline polyline, MapPrecision precision) {
+    polyline.update(precision: precision);
 
     var mapPolylineDAO = _mapPolylineDAOByUUID(polyline.uuid!);
     mapPolylineDAO.pointUUIDs = polyline.points.map((GCWMapPoint point) => point.uuid!).toList();
@@ -352,7 +351,7 @@ class MapViewPersistenceAdapter {
 
   bool _isMergeableDistance(LatLng a, LatLng b) {
     // below 2 meters, there's nearly no visible difference of points
-    return distanceBearing(a, b, defaultEllipsoid).distance < 1.8;
+    return distanceBearingRhumbline(a, b, defaultEllipsoid).distance < 1.8;
   }
 
   void mergePoints() {
@@ -431,7 +430,7 @@ class MapViewPersistenceAdapter {
       "(\",isVisible\":true})": "}",
       "(\"isEditable\":false,)": "",
       "(\",isEditable\":false})": "}",
-      "(\"type\":geodetic,)": "",
+      "(\"type\":geodetic) {": "",
       "(\",type\":geodetic})": "}",
       "(\"circleColorSameAsColor\":true,)": "",
       "(\"circleColor\":\"#000000\",)": "",

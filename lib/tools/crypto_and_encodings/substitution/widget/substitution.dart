@@ -13,6 +13,7 @@ import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/substitution/logic/substitution.dart';
 import 'package:gc_wizard/utils/alphabets.dart';
 import 'package:gc_wizard/utils/complex_return_types.dart';
+import 'package:gc_wizard/utils/math_utils.dart';
 
 enum _GenerateAlphabet {
   CAPLETTERS,
@@ -205,7 +206,7 @@ class _SubstitutionState extends State<Substitution> {
     var _toList = _to.split('').toList();
     _toList.shuffle();
 
-    var rand = Random();
+    var rand = getRandom();
     var len = fromAlphabet.length;
     if (_currentUniqueResults) {
       len = min<int>(fromAlphabet.length, _toList.length);

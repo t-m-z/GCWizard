@@ -33,7 +33,7 @@ import 'package:gc_wizard/common_widgets/textfields/gcw_code_textfield.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 import 'package:gc_wizard/tools/coords/_common/widget/coordinate_text_formatter.dart';
 import 'package:gc_wizard/tools/coords/_common/widget/gcw_coords_export_dialog.dart';
-import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
+import 'package:gc_wizard/tools/coords/map_view/widget/map_geometries.dart';
 import 'package:gc_wizard/tools/coords/map_view/widget/gcw_mapview.dart';
 import 'package:gc_wizard/tools/images_and_files/hex_viewer/widget/hex_viewer.dart';
 import 'package:gc_wizard/tools/wherigo/krevo/logic/ucommons.dart';
@@ -108,6 +108,9 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
   int _answerIndex = 1;
   int _identifierIndex = 1;
   int _builderIdentifierIndex = 1;
+
+  var _isClosingDialogShowing = false;
+  var _canClosePopReady = false;
 
   @override
   void initState() {
@@ -230,34 +233,49 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
     // https://stackoverflow.com/questions/77500680/willpopscope-is-deprecated-after-flutter-3-12
     // https://api.flutter.dev/flutter/widgets/PopScope-class.html
     return PopScope(
-      canPop: false,
-      onPopInvokedWithResult: (didPop, result) {
+      canPop: _canClosePopReady,
+      onPopInvokedWithResult: (didPop, result) async {
         // show the confirm dialog
         if (didPop) {
           return;
         } else {
-          showDialog<bool>(
+          if (_isClosingDialogShowing) return;
+          _isClosingDialogShowing = true;
+
+          if (!context.mounted) return;
+
+          final bool? shouldExit = await showDialog<bool>(
               context: context,
-              builder: (_) => AlertDialog(
-                    title: Text(i18n(context, 'wherigo_exit_title')),
-                    titleTextStyle: const TextStyle(color: Colors.black, fontSize: 16.0, fontWeight: FontWeight.bold),
-                    content: Text(i18n(context, 'wherigo_exit_message')),
-                    contentTextStyle: const TextStyle(color: Colors.black, fontSize: 16.0),
-                    backgroundColor: themeColors().dialog(),
-                    actions: [
-                      TextButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                            Navigator.pop(context);
-                          },
-                          child: Text(i18n(context, 'common_yes'))),
-                      ElevatedButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          child: Text(i18n(context, 'common_no')))
-                    ],
-                  ));
+              builder: (dialogContext) => AlertDialog(
+                title: Text(i18n(context, 'wherigo_exit_title')),
+                titleTextStyle: const TextStyle(color: Colors.black, fontSize: 16.0, fontWeight: FontWeight.bold),
+                content: Text(i18n(context, 'wherigo_exit_message')),
+                contentTextStyle: const TextStyle(color: Colors.black, fontSize: 16.0),
+                backgroundColor: themeColors().dialog(),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(dialogContext, true);
+                    },
+                    child: Text(i18n(context, 'common_yes'))),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.pop(dialogContext, false);
+                    },
+                    child: Text(i18n(context, 'common_no')))
+                ],
+              ));
+
+          _isClosingDialogShowing = false;
+
+          if (shouldExit == true) {
+            setState(() {
+              _canClosePopReady = true;
+            });
+
+            Navigator.pop(context);
+          }
+
           return;
         }
       },
@@ -1220,7 +1238,7 @@ class _WherigoAnalyzeState extends State<WherigoAnalyze> {
   void _openInMap(List<GCWMapPoint> points, List<GCWMapPolyline> polylines) {
     Navigator.push(
         context,
-        NoAnimationMaterialPageRoute<GCWTool>(
+        NoAnimationMaterialPageRoute<Object?>(
             builder: (context) => GCWTool(
                 tool: GCWMapView(
                   points: List<GCWMapPoint>.from(points),

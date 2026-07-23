@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:gc_wizard/application/_common/gcw_package_info.dart';
 import 'package:gc_wizard/application/category_views/favorites.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/babylon_numbers_selection.dart';
@@ -43,6 +44,7 @@ import 'package:gc_wizard/application/category_views/selector_lists/tomtom_selec
 import 'package:gc_wizard/application/category_views/selector_lists/uic_wagoncode_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/vanity_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/wherigo_urwigo_selection.dart';
+import 'package:gc_wizard/application/category_views/tabs.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/main_menu/changelog.dart';
 import 'package:gc_wizard/application/main_menu/main_menu.dart';
@@ -76,9 +78,20 @@ import 'package:gc_wizard/tools/coords/intersect_three_circles/widget/intersect_
 import 'package:gc_wizard/tools/coords/intersect_two_circles/widget/intersect_two_circles.dart';
 import 'package:gc_wizard/tools/coords/intersection/widget/intersection.dart';
 import 'package:gc_wizard/tools/coords/map_view/widget/map_view.dart';
+import 'package:gc_wizard/tools/coords/orthogonal_projection/widget/orthogonal_projection_bearing.dart';
+import 'package:gc_wizard/tools/coords/orthogonal_projection/widget/orthogonal_projection_twopoints.dart';
 import 'package:gc_wizard/tools/coords/resection/widget/resection.dart';
 import 'package:gc_wizard/tools/coords/rhumb_line/widget/rhumbline_distancebearing.dart';
 import 'package:gc_wizard/tools/coords/rhumb_line/widget/rhumbline_waypoint_projection.dart';
+import 'package:gc_wizard/tools/coords/triangles/area/widget/ellipsoidtriangle_area.dart';
+import 'package:gc_wizard/tools/coords/triangles/circles/circumcircle/widget/circumcircle.dart';
+import 'package:gc_wizard/tools/coords/triangles/circles/excircles/widget/ellipsoidtriangle_excircles.dart';
+import 'package:gc_wizard/tools/coords/triangles/circles/incircle/widget/ellipsoidtriangle_incircle.dart';
+import 'package:gc_wizard/tools/coords/triangles/medians/widget/ellipsoidtriangle_medians.dart';
+import 'package:gc_wizard/tools/coords/triangles/special_points/centerofgravity/widget/ellipsoidtriangle_centerofgravity.dart';
+import 'package:gc_wizard/tools/coords/triangles/special_points/gergonne/widget/ellipsoidtriangle_gergonne.dart';
+import 'package:gc_wizard/tools/coords/triangles/special_points/napoleon/widget/ellipsoidtriangle_napoleon.dart';
+import 'package:gc_wizard/tools/coords/triangles/special_points/orthocenter/widget/ellipsoidtriangle_orthocenter.dart';
 import 'package:gc_wizard/tools/coords/variable_coordinate/widget/variable_coordinate_formulas.dart';
 import 'package:gc_wizard/tools/coords/waypoint_projection/widget/waypoint_projection_geodetic.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/abaddon/widget/abaddon.dart';
@@ -87,6 +100,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/affine/widget/affine.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/alphabet_values/widget/alphabet_values.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/amsco/widget/amsco.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/atbash/widget/atbash.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/autokey/widget/autokey.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/avemaria/widget/avemaria.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/bacon/widget/bacon.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/bacon/widget/bacon_analyze.dart';
@@ -162,6 +176,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/rotation/rot18/widget/rot18
 import 'package:gc_wizard/tools/crypto_and_encodings/rotation/rot47/widget/rot47.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/rotation/rot5/widget/rot5.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/rotation/rotation_general/widget/rotation_general.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/rotation/rotxyz/widget/rotxyz.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/skytale/widget/skytale.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/slash_and_pipe/widget/slash_and_pipe.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/solitaire/widget/solitaire.dart';
@@ -205,6 +220,7 @@ import 'package:gc_wizard/tools/images_and_files/qr_code/widget/qr_code.dart';
 import 'package:gc_wizard/tools/images_and_files/stegano/widget/stegano.dart';
 import 'package:gc_wizard/tools/images_and_files/tupper_formula/widget/tupper_formula.dart';
 import 'package:gc_wizard/tools/images_and_files/visual_cryptography/widget/visual_cryptography.dart';
+import 'package:gc_wizard/tools/images_and_files/waveform/widget/waveform.dart';
 import 'package:gc_wizard/tools/science_and_technology/alcohol_mass/widget/alcohol_mass.dart';
 import 'package:gc_wizard/tools/science_and_technology/alphabet_number_systems/hebrew/widget/hebrew_number_system.dart';
 import 'package:gc_wizard/tools/science_and_technology/alphabet_number_systems/milesian/widget/milesian_number_system.dart';
@@ -213,6 +229,7 @@ import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/humi
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/summer_simmer/widget/summer_simmer.dart';
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/wet_bulb_temperature/widget/wet_bulb_temperature.dart';
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/windchill/widget/windchill.dart';
+import 'package:gc_wizard/tools/science_and_technology/astronomy/astrotimes/widget/astrotimes.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/iau_constellation/widget/iau_all_constellations.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/iau_constellation/widget/iau_single_constellations.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/moon_position/widget/moon_position.dart';
@@ -258,6 +275,7 @@ import 'package:gc_wizard/tools/science_and_technology/dna/dna_aminoacids/widget
 import 'package:gc_wizard/tools/science_and_technology/dna/dna_aminoacids_table/widget/dna_aminoacids_table.dart';
 import 'package:gc_wizard/tools/science_and_technology/dna/dna_nucleicacidsequence/widget/dna_nucleicacidsequence.dart';
 import 'package:gc_wizard/tools/science_and_technology/dtmf/widget/dtmf.dart';
+import 'package:gc_wizard/tools/science_and_technology/euclidic_triangle/widget/triangle.dart';
 import 'package:gc_wizard/tools/science_and_technology/gcd/widget/gcd.dart';
 import 'package:gc_wizard/tools/science_and_technology/hexadecimal/widget/hexadecimal.dart';
 import 'package:gc_wizard/tools/science_and_technology/iata_icao_search/widget/iata_icao_search.dart';
@@ -269,6 +287,7 @@ import 'package:gc_wizard/tools/science_and_technology/kaprekar/widget/kaprekar.
 import 'package:gc_wizard/tools/science_and_technology/lcm/widget/lcm.dart';
 import 'package:gc_wizard/tools/science_and_technology/mathematical_constants/widget/mathematical_constants.dart';
 import 'package:gc_wizard/tools/science_and_technology/music_notes/music_notes/widget/music_notes.dart';
+import 'package:gc_wizard/tools/science_and_technology/number_sequences/look_and_say/widget/look_and_say_text.dart';
 import 'package:gc_wizard/tools/science_and_technology/numeral_bases/widget/numeral_bases.dart';
 import 'package:gc_wizard/tools/science_and_technology/paperformat/widget/paperformat.dart';
 import 'package:gc_wizard/tools/science_and_technology/periodic_table/atomic_numbers_to_text/widget/atomic_numbers_to_text.dart';
@@ -280,8 +299,10 @@ import 'package:gc_wizard/tools/science_and_technology/physical_constants/widget
 import 'package:gc_wizard/tools/science_and_technology/piano/widget/piano.dart';
 import 'package:gc_wizard/tools/science_and_technology/postcode/widget/postcode.dart';
 import 'package:gc_wizard/tools/science_and_technology/projectiles/widget/projectiles.dart';
+import 'package:gc_wizard/tools/science_and_technology/punycode/widget/punycode.dart';
 import 'package:gc_wizard/tools/science_and_technology/quadratic_equation/widget/quadratic_equation.dart';
 import 'package:gc_wizard/tools/science_and_technology/recycling/widget/recycling.dart';
+import 'package:gc_wizard/tools/science_and_technology/regex/widget/regex.dart';
 import 'package:gc_wizard/tools/science_and_technology/segment_display/14_segment_display/widget/fourteen_segments.dart';
 import 'package:gc_wizard/tools/science_and_technology/segment_display/16_segment_display/widget/sixteen_segments.dart';
 import 'package:gc_wizard/tools/science_and_technology/segment_display/7_segment_display/widget/seven_segments.dart';
@@ -320,6 +341,7 @@ import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/utils/string_utils.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/common_widget_utils.dart';
 import 'package:prefs/prefs.dart';
+import 'package:provider/provider.dart';
 
 class MainView extends GCWWebStatefulWidget {
   MainView({super.key, super.webParameter})
@@ -366,7 +388,7 @@ class _MainViewState extends State<MainView> {
                 onPressed: () {
                   Navigator.push(
                       context,
-                      NoAnimationMaterialPageRoute<GCWTool>(
+                      NoAnimationMaterialPageRoute<Object?>(
                           builder: (context) => registeredTools
                               .firstWhere((tool) => className(tool.tool) == className(const Changelog()))));
                 }),
@@ -386,7 +408,7 @@ class _MainViewState extends State<MainView> {
 
       if (countAppOpened > 0 && (countAppOpened == 10 || countAppOpened % _SHOW_SUPPORT_HINT_EVERY_N == 0)) {
         _checkForGoldVersion().then((value) {
-          if (!value) {
+          if (!value && !kIsWeb) {
             showGCWAlertDialog(
               context,
               i18n(context, 'common_support_title'),
@@ -414,6 +436,9 @@ class _MainViewState extends State<MainView> {
 
   @override
   Widget build(BuildContext context) {
+    final tabModel = context.watch<TabsModel>();
+    final activeTab = tabModel.tabs[tabModel.currentTabIndex];
+
     if (registeredTools.isEmpty) {
       initializeRegistry(context);
 
@@ -430,14 +455,15 @@ class _MainViewState extends State<MainView> {
 
     var toolList = (_isSearching && _searchText.isNotEmpty) ? _getSearchedList() : null;
     if (!(_isSearching && _searchText.isNotEmpty)) {
-      return DefaultTabController(
-        length: 3,
-        initialIndex: Prefs.getBool(PREFERENCE_TABS_USE_DEFAULT_TAB)
+      tabModel.setDefaultTab(
+        DefaultTabController(
+          length: 3,
+          initialIndex: Prefs.getBool(PREFERENCE_TABS_USE_DEFAULT_TAB)
             ? Prefs.getInt(PREFERENCE_TABS_DEFAULT_TAB)
             : Prefs.getInt(PREFERENCE_TABS_LAST_VIEWED_TAB),
-        child: Scaffold(
-          key: _scaffoldKey,
-          appBar: AppBar(
+          child: Scaffold(
+            key: _scaffoldKey,
+            appBar: AppBar(
               bottom: TabBar(
                 onTap: (value) {
                   Prefs.setInt(PREFERENCE_TABS_LAST_VIEWED_TAB, value);
@@ -450,35 +476,81 @@ class _MainViewState extends State<MainView> {
               ),
               leading: _buildIcon(),
               title: _buildTitleAndSearchTextField(),
-              actions: <Widget>[_buildSearchActionButton()]),
-          drawer: buildMainMenu(context),
+              actions: <Widget>[
+                _buildSearchActionButton(),
+                _isSearching ? Container() : GCWTabMenu()
+              ]),
+            drawer: buildMainMenu(context, _scaffoldKey),
+            body: SafeArea(
+              bottom: true,
+              top: false,
+              child: TabBarView(
+                children: [
+                  GCWToolList(toolList: toolList ?? _categoryList),
+                  GCWToolList(toolList: toolList ?? _mainToolList),
+                  GCWToolList(toolList: toolList ?? Favorites.favoritedGCWTools()),
+                ],
+              ),
+            ),
+          ),
+        )
+      );
+    } else {
+      tabModel.setDefaultTab(
+        Scaffold(
+          key: _scaffoldKey,
+          appBar: AppBar(
+            leading: _buildIcon(),
+            title: _buildTitleAndSearchTextField(),
+            actions: <Widget>[_buildSearchActionButton()]
+          ),
+          drawer: buildMainMenu(context, _scaffoldKey),
           body: SafeArea(
             bottom: true,
             top: false,
-            child: TabBarView(
-              children: [
-                GCWToolList(toolList: toolList ?? _categoryList),
-                GCWToolList(toolList: toolList ?? _mainToolList),
-                GCWToolList(toolList: toolList ?? Favorites.favoritedGCWTools()),
-              ],
-            ),
-          ),
-        ),
+            child: GCWToolList(toolList: toolList!)
+          )
+        )
       );
-    } else {
-      return Scaffold(
-          key: _scaffoldKey,
-          appBar: AppBar(
-              leading: _buildIcon(),
-              title: _buildTitleAndSearchTextField(),
-              actions: <Widget>[_buildSearchActionButton()]
-          ),
-          drawer: buildMainMenu(context),
-          body: GCWToolList(toolList: toolList!));
     }
+
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) async {
+        if (didPop) return;
+
+        final navigator = activeTab.navKey.currentState;
+
+        if (navigator != null && navigator.canPop()) { // Subpage of a tab
+          navigator.maybePop();
+        } else { // ROOT Level of a tab
+          if (tabModel.tabs.length == 1) {
+            SystemNavigator.pop();
+            return;
+          }
+
+          showGCWAlertDialog(
+            context,
+            i18n(context, 'tabs_closetab_title'),
+            i18n(context, 'tabs_closetab_text', parameters: [(activeTab.tool as GCWTool).toolName]),
+                () {
+              if (context.mounted) {
+                context.read<TabsModel>().removeTab(activeTab.id);
+              }
+            }
+          );
+        }
+      },
+      child: IndexedStack(
+        index: tabModel.currentTabIndex,
+        children: tabModel.tabs.map((tabInfo) {
+          return TabNavigator(tabInfo: tabInfo);
+        }).toList()
+      )
+    );
   }
 
-  NoAnimationMaterialPageRoute<GCWTool>? _checkDeepLink() {
+  NoAnimationMaterialPageRoute<Object?>? _checkDeepLink() {
     if (widget.hasWebParameter()) {
       return createStartDeepLinkRoute(context, widget.webParameter!);
     }
@@ -567,7 +639,9 @@ void _initStaticToolList() {
       className(const AnimatedImageMorseCode()),
       className(const Antipodes()),
       className(const ASCIIValues()),
+      className(const AstroTimes()),
       className(Atbash()),
+      className(const Autokey()),
       className(const AtomicNumbersToText()),
       className(const AveMaria()),
       className(const BabylonNumbersSelection()),
@@ -645,12 +719,22 @@ void _initStaticToolList() {
       className(const ElementsOfGeocaching()),
       className(const ElementsOfGeocachingDataView(atomicNumber: 1)),
       className(const EllipsoidTransform()),
+      className(const EllipsoidTriangleCenterOfGravity()),
+      className(const EllipsoidTriangleCircumCircle()),
+      className(const EllipsoidTriangleExcircles()),
+      className(const EllipsoidTriangleGergonnePoint()),
+      className(const EllipsoidTriangleIncircle()),
+      className(const EllipsoidTriangleNapoleonPoints()),
+      className(const EllipsoidTriangleOrthocenter()),
+      className(const EllipsoidTriangleMedians()),
+      className(const EllipsoidTriangleArea()),
       className(const EnclosedAreas()),
       className(const Enigma()),
       className(const ExcelTime()),
       className(const ExifReader()),
       className(const EquilateralTriangle()),
       className(const ESelection()),
+      className(const EuclidicTriangle()),
       className(const FormatConverter()),
       className(FormulaSolverFormulaGroups()),
       className(const FourteenSegments()),
@@ -662,6 +746,7 @@ void _initStaticToolList() {
       className(const GCD()),
       className(const Geohashing()),
       className(const Gray()),
+      className(Grenztruppen535()),
       className(const Gronsfeld()),
       className(const HeatIndex()),
       className(const HebrewNumberSystem()),
@@ -676,6 +761,7 @@ void _initStaticToolList() {
       className(const Homophone()),
       className(const Houdini()),
       className(const Humidex()),
+      className(HVA()),
       className(const IATAICAOSearch()),
       className(const IAUAllConstellations()),
       className(const IAUSingleConstellation(
@@ -699,6 +785,8 @@ void _initStaticToolList() {
       className(const IteratedCrossSumRange()),
       className(const IteratedCrossSumRangeFrequency()),
       className(const Judoon()),
+      className(Juno()),
+      className(Jupiter()),
       className(const Kamasutra()),
       className(const Kaprekar()),
       className(const KarolRobot()),
@@ -707,6 +795,7 @@ void _initStaticToolList() {
       className(Larrabee()),
       className(const LCM()),
       className(const LogicalSupporter()),
+      className(const LookAndSayText()),
       className(const MagicEyeSolver()),
       className(const MajorSystem()),
       className(const MathematicalConstants()),
@@ -715,6 +804,8 @@ void _initStaticToolList() {
       className(const MayaCalendarSelection()),
       className(const MayaNumbersSelection()),
       className(const MexicanArmyCipherWheel()),
+      className(const MIDI()),
+      className(const MIDICoding()),
       className(const MilesianNumberSystem()),
       className(const MoonPosition()),
       className(const MoonRiseSet()),
@@ -733,6 +824,8 @@ void _initStaticToolList() {
       className(const OhlsenTelegraph()),
       className(OneTimePad()),
       className(Ook()),
+      className(const OrthogonalProjectionBearing()),
+      className(const OrthogonalProjectionTwoPoints()),
       className(const PantoneColorCodes()),
       className(const PaperFormats()),
       className(const PasleyTelegraph()),
@@ -758,6 +851,7 @@ void _initStaticToolList() {
       className(const PrimeAlphabet()),
       className(const PrimesSelection()),
       className(const Projectiles()),
+      className(const Punycode()),
       className(const PrussiaTelegraph()),
       className(const QrCode()),
       className(const QuadraticEquation()),
@@ -768,6 +862,7 @@ void _initStaticToolList() {
       className(const RandomizerSelection()),
       className(const RC4()),
       className(const Recycling()),
+      className(const RegEx()),
       className(const Resection()),
       className(const ResistorSelection()),
       className(const Reverse()),
@@ -779,6 +874,7 @@ void _initStaticToolList() {
       className(Rot18()),
       className(Rot5()),
       className(Rot47()),
+      className(RotXYZ()),
       className(RotationGeneral()),
       className(const RSASelection()),
       className(const SchillingCanstattTelegraph()),
@@ -838,6 +934,7 @@ void _initStaticToolList() {
       className(Vigenere()),
       className(const VigenereBreaker()),
       className(const VisualCryptography()),
+      className(const WaveForm()),
       className(const WASD()),
       className(const WaypointProjectionGeodetic()),
       className(const WaypointProjectionRhumbline()),
@@ -853,6 +950,7 @@ void _initStaticToolList() {
       className(const Z22()),
       className(ZamonianNumbers()),
       className(const ZC1()),
+      className(Zebra()),
       className(const Zodiac()),
     ].contains(className(element.tool));
   }).toList();

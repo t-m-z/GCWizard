@@ -17,7 +17,7 @@ class CalendarWeek extends StatefulWidget {
 }
 
 class _CalendarWeekState extends State<CalendarWeek> {
-  late DateTimeTZ _currentEncryptionDate;
+  late DateTimeUTCwithTZ _currentEncryptionDate;
 
   var _currentWeek = 1;
   late int _currentYear;
@@ -27,7 +27,7 @@ class _CalendarWeekState extends State<CalendarWeek> {
 
   @override
   void initState() {
-    _currentEncryptionDate = DateTimeTZ.now();
+    _currentEncryptionDate = DateTimeUTCwithTZ.now();
     _currentYear = _currentEncryptionDate.toLocalTime().year;
     super.initState();
   }
@@ -100,8 +100,8 @@ class _CalendarWeekState extends State<CalendarWeek> {
         var dateFormat = DateFormat('yMd', Localizations.localeOf(context).toString());
 
         out = GCWColumnedMultilineOutput(data: [
-          [i18n(context, 'common_start'), dateFormat.format(dates.item1)],
-          [i18n(context, 'common_end'), dateFormat.format(dates.item2)],
+          [i18n(context, 'common_start'), dateFormat.format(dates.start)],
+          [i18n(context, 'common_end'), dateFormat.format(dates.end)],
         ]);
       } catch (e) {
         out = i18n(context, 'dates_calendarweek_error_invalidweek');

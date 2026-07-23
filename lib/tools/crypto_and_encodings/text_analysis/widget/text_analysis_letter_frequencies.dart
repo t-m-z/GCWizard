@@ -223,7 +223,7 @@ class _TextAnalysisLetterFrequenciesState extends State<TextAnalysisLetterFreque
               onPressed: () {
                 Navigator.push(
                     context,
-                    NoAnimationMaterialPageRoute<GCWTool>(
+                    NoAnimationMaterialPageRoute<Object?>(
                         builder: (context) => GCWTool(
                             tool: Substitution(input: _currentInput, substitutions: substitutionMap),
                             id: 'substitution')));

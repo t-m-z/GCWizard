@@ -229,7 +229,7 @@ class _HexViewerState extends State<HexViewer> {
 void openInHexViewer(BuildContext context, GCWFile file) {
   Navigator.push(
       context,
-      NoAnimationMaterialPageRoute<GCWTool>(
+      NoAnimationMaterialPageRoute<Object?>(
           builder: (context) =>
               GCWTool(tool: HexViewer(file: file), toolName: i18n(context, 'hexviewer_title'), id: 'hexviewer')));
 }

@@ -1,7 +1,6 @@
 import "package:flutter_test/flutter_test.dart";
-import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
-import 'package:gc_wizard/tools/science_and_technology/astronomy/_common/logic/julian_date.dart';
-import 'package:gc_wizard/tools/science_and_technology/astronomy/sun_position/logic/sun_position.dart' as logic;import 'package:gc_wizard/utils/complex_return_types.dart';
+import 'package:gc_wizard/tools/science_and_technology/astronomy/_common/logic/external_libs/cosinekitty.astronomy/astronomy.dart';
+import 'package:gc_wizard/utils/complex_return_types.dart';
 import 'package:latlong2/latlong.dart';
 
 void main() {
@@ -22,7 +21,7 @@ void main() {
         'hour': 16,
         'minute': 9,
         'second': 0,
-        'utc': 2,
+        'timezone': 2,
         'coords': const LatLng(52.43115, 13.4337),
         'expectedOutputAzimuth': 247.35,
         'expectedOutputAltitude': 45.24,
@@ -34,7 +33,7 @@ void main() {
         'hour': 12,
         'minute': 53,
         'second': 42,
-        'utc': -10,
+        'timezone': -10,
         'coords': const LatLng(21.3, -157.85),
         'expectedOutputAzimuth': 190.01,
         'expectedOutputAltitude': 68.24,
@@ -46,7 +45,7 @@ void main() {
         'hour': 12,
         'minute': 53,
         'second': 42,
-        'utc': 11,
+        'timezone': 11,
         'coords': const LatLng(-38.13455, 145.371093),
         'expectedOutputAzimuth': 13.2,
         'expectedOutputAltitude': 51.65,
@@ -58,7 +57,7 @@ void main() {
         'hour': 12,
         'minute': 53,
         'second': 42,
-        'utc': -3,
+        'timezone': -3,
         'coords': const LatLng(-55.07836, -67.851562),
         'expectedOutputAzimuth': 13.78,
         'expectedOutputAltitude': 34.45,
@@ -67,14 +66,23 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('year: ${elem['year']}, month: ${elem['month']}, day: ${elem['day']}, hour: ${elem['hour']}, minute: ${elem['minute']}, second: ${elem['second']}, utc: ${elem['utc']}, coords: ${elem['coords']}', () {
-        var _actual = logic.SunPosition(
+        var _actual = SunPosition(
             elem['coords'] as LatLng,
-            JulianDate(DateTimeTZ(dateTimeUtc: DateTime(elem['year'] as int, elem['month'] as int, elem['day'] as int,
-                (elem['hour'] as int) - (elem['utc'] as int), elem['minute'] as int, elem['second'] as int))),
-            Ellipsoid.WGS84);
+            DateTimeUTCwithTZ(
+              dateTimeUtc: DateTime.utc(
+                elem['year'] as int,
+                elem['month'] as int,
+                elem['day'] as int,
+                (elem['hour'] as int) - (elem['timezone'] as int),
+                elem['minute'] as int,
+                elem['second'] as int,
+              ),
+              timezoneOffset: Duration(hours: (elem['timezone'] as int))
+            ).dateTimeUtc
+        );
 
-        expect(_equals(_actual.azimuth, elem['expectedOutputAzimuth'] as double, tolerance), true);
-        expect(_equals(_actual.altitude, elem['expectedOutputAltitude'] as double, tolerance), true);
+        expect(_equals(_actual.azimuthDeg, elem['expectedOutputAzimuth'] as double, tolerance), true);
+        expect(_equals(_actual.altitudeDeg, elem['expectedOutputAltitude'] as double, tolerance), true);
 
       });
     }

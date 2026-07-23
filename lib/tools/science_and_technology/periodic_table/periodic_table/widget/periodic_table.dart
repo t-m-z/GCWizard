@@ -107,7 +107,7 @@ class _PeriodicTableState extends State<PeriodicTable> {
               ),
             ),
             onTap: () {
-              Navigator.of(context).push(NoAnimationMaterialPageRoute<GCWTool>(
+              Navigator.of(context).push(NoAnimationMaterialPageRoute<Object?>(
                   builder: (context) => GCWTool(
                       tool: PeriodicTableDataView(atomicNumber: element.atomicNumber), id: 'periodictable_dataview')));
             },
@@ -131,7 +131,7 @@ class _PeriodicTableState extends State<PeriodicTable> {
           )),
           Expanded(
               child: AutoSizeText(
-            group?.item2 == null ? '' : encodeRomanNumbers(group!.item2),
+            group?.value == null ? '' : encodeRomanNumbers(group!.value),
             style: gcwTextStyle().copyWith(fontWeight: FontWeight.bold),
             minFontSize: AUTO_FONT_SIZE_MIN,
             maxLines: 1,

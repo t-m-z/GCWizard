@@ -1,4 +1,4 @@
-import 'dart:math';
+part of 'package:gc_wizard/tools/general_tools/randomizer/logic/randomizer.dart';
 
 enum CardDeck {SKAT, POKER, ROMME}
 class Card {

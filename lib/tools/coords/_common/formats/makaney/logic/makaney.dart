@@ -49,7 +49,6 @@ LatLng? __makaneyToLatLon(MakaneyCoordinate makaney) {
   }
 
   var latLon = _makaneyToLatLon(_text);
-  if (latLon.contains(null)) return null;
 
   try {
     return LatLng(latLon[0], latLon[1]);

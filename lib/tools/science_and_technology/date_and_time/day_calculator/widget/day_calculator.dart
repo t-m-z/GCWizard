@@ -15,8 +15,8 @@ class DayCalculator extends StatefulWidget {
 }
 
 class _DayCalculatorState extends State<DayCalculator> {
-  late DateTimeTZ _currentStartDate;
-  late DateTimeTZ _currentEndDate;
+  late DateTimeUTCwithTZ _currentStartDate;
+  late DateTimeUTCwithTZ _currentEndDate;
 
   var _currentCountStart = true;
   var _currentCountEnd = true;
@@ -26,8 +26,8 @@ class _DayCalculatorState extends State<DayCalculator> {
     super.initState();
 
     DateTime now = DateTime.now();
-    _currentStartDate = DateTimeTZ(dateTimeUtc: DateTime.utc(now.year, now.month, now.day), timezone: now.timeZoneOffset);
-    _currentEndDate = DateTimeTZ(dateTimeUtc: DateTime.utc(now.year, now.month, now.day), timezone: now.timeZoneOffset);
+    _currentStartDate = DateTimeUTCwithTZ(dateTimeUtc: DateTime.utc(now.year, now.month, now.day), timezoneOffset: now.timeZoneOffset);
+    _currentEndDate = DateTimeUTCwithTZ(dateTimeUtc: DateTime.utc(now.year, now.month, now.day), timezoneOffset: now.timeZoneOffset);
   }
 
   @override

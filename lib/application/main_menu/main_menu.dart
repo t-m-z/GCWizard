@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/application/category_views/tabs.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/main_menu/about.dart';
 import 'package:gc_wizard/application/main_menu/call_for_contribution.dart';
@@ -15,8 +16,9 @@ import 'package:gc_wizard/application/theme/theme_colors.dart';
 import 'package:gc_wizard/application/tools/widget/gcw_tool.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/common_widget_utils.dart';
+import 'package:provider/provider.dart';
 
-Drawer buildMainMenu(BuildContext context) {
+Drawer buildMainMenu(BuildContext context, GlobalKey<ScaffoldState> scaffoldKey) {
   var header = SizedBox(
     height: 120.0,
     child: DrawerHeader(
@@ -51,7 +53,7 @@ Drawer buildMainMenu(BuildContext context) {
   );
 
   var menuEntries = <Widget>[];
-  menuEntries.add(_buildSettingsItem(context));
+  menuEntries.add(_buildSettingsItem(context, scaffoldKey));
 
   final otherMenuItems = [
     _CategoryMetaData(
@@ -63,7 +65,7 @@ Drawer buildMainMenu(BuildContext context) {
   ];
 
   menuEntries.addAll(otherMenuItems.map((_CategoryMetaData item) {
-    return _buildMenuItem(context, item);
+    return _buildMenuItem(context, scaffoldKey, item);
   }).toList());
 
   var footer = Column(
@@ -87,10 +89,9 @@ Drawer buildMainMenu(BuildContext context) {
                 ],
               )),
           onTap: () {
-            Navigator.pop(context); //close Drawer
-            Navigator.of(context).push(NoAnimationMaterialPageRoute<GCWTool>(
-                builder: (context) => registeredTools
-                    .firstWhere((tool) => className(tool.tool) == className(const CallForContribution()))));
+            var tool = registeredTools.firstWhere((tool) => className(tool.tool) == className(const CallForContribution()));
+
+            closeDrawerOpenTool(context, scaffoldKey, tool);
           })
     ],
   );
@@ -110,6 +111,21 @@ Drawer buildMainMenu(BuildContext context) {
   ));
 }
 
+void closeDrawerOpenTool(BuildContext context, GlobalKey<ScaffoldState> scaffoldKey, GCWTool tool) {
+  scaffoldKey.currentState?.closeDrawer();
+
+  final model = context.read<TabsModel>();
+  final activeTab = model.tabs[model.currentTabIndex];
+  if (activeTab.navKey.currentState != null) {
+    activeTab.navKey.currentState!.push(
+      NoAnimationMaterialPageRoute<Object?>(
+        settings: RouteSettings(name: Uri.encodeComponent(tool.toolName ?? '')),
+        builder: (context) => tool,
+      ),
+    );
+  }
+}
+
 class _CategoryMetaData {
   final GCWTool tool;
   final String? toolName;
@@ -118,7 +134,7 @@ class _CategoryMetaData {
   _CategoryMetaData(this.tool, this.icon, [this.toolName]);
 }
 
-ExpansionTile _buildSettingsItem(BuildContext context) {
+ExpansionTile _buildSettingsItem(BuildContext context, GlobalKey<ScaffoldState> scaffoldKey) {
   // TODO class type
   final settingsItems = [
     _CategoryMetaData(
@@ -152,11 +168,11 @@ ExpansionTile _buildSettingsItem(BuildContext context) {
         color: themeColors().mainFont(),
       ),
       children: settingsItems.map((item) {
-        return Padding(padding: const EdgeInsets.only(left: 25), child: _buildMenuItem(context, item));
+        return Padding(padding: const EdgeInsets.only(left: 25), child: _buildMenuItem(context, scaffoldKey, item));
       }).toList());
 }
 
-ListTile _buildMenuItem(BuildContext context, _CategoryMetaData item) {
+ListTile _buildMenuItem(BuildContext context, GlobalKey<ScaffoldState> scaffoldKey, _CategoryMetaData item) {
   return ListTile(
       leading: Icon(
         item.icon,
@@ -164,8 +180,7 @@ ListTile _buildMenuItem(BuildContext context, _CategoryMetaData item) {
       ),
       title: Text(item.toolName ?? item.tool.toolName ?? '', style: _menuItemStyle()),
       onTap: () {
-        Navigator.pop(context); //close Drawer
-        Navigator.of(context).push(NoAnimationMaterialPageRoute<GCWTool>(builder: (BuildContext context) => item.tool));
+        closeDrawerOpenTool(context, scaffoldKey, item.tool);
       });
 }
 

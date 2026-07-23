@@ -1,4 +1,4 @@
-import 'dart:math';
+part of 'package:gc_wizard/tools/general_tools/randomizer/logic/randomizer.dart';
 
 String passwordGenerator(String characters, int length) {
   var out = '';
@@ -6,7 +6,7 @@ String passwordGenerator(String characters, int length) {
     return out;
   }
 
-  var random = Random();
+  var random = getRandom();
   for (int i = 0; i < length; i++) {
     var index = random.nextInt(characters.length);
     out += characters[index];

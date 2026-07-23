@@ -91,24 +91,36 @@ class _SpecificToolLicenses {
     );
   }
 
-  ToolLicenseEntry get _toolLicenseNASADeltaT {
-    return ToolLicenseOnlineArticle(
+  ToolLicenseEntry get _toolLicenseAstronomy {
+    return ToolLicenseCodeLibrary(
       context: _context,
-      author: 'NASA',
-      title: 'Polynomial Expressions for Delta T (ΔT)',
-      sourceUrl: 'https://web.archive.org/web/20240601113536/http://eclipse.gsfc.nasa.gov/SEcat5/deltatpoly.html'
+      author: 'Don Cross (@cosinekitty)',
+      title: 'astronomy',
+      sourceUrl: 'https://web.archive.org/web/20260426004116/https://github.com/cosinekitty/astronomy/',
+      licenseType: ToolLicenseType.MIT,
+      licenseUrl: 'https://web.archive.org/web/20260426004116/https://github.com/cosinekitty/astronomy/blob/master/LICENSE'
     );
   }
 
+  ToolLicenseEntry get _toolLicenseMeuss {
+    return ToolLicenseOfflineBook(
+        context: _context,
+        author: 'Jean Meuss',
+        title: 'Astronomical Algorithms',
+        isbn: '978-0943396613',
+        year: 1998,
+        publisher: 'Willmann-Bell'
+    );
+  }
 
-  ToolLicenseEntry get _toolLicenseAstronomieInfo {
-    return ToolLicensePortedCode(
-      context: _context,
-      author: 'Helmut Lehmeyer, Arnold Barmettler\n(astronomie.info)',
-      title: 'Astronomical Calculations',
-      licenseType: ToolLicenseType.GPL3,
-      licenseUrl: 'http://web.archive.org/web/20180502230101/http://lexikon.astronomie.info/java/sunmoon/progs/Astronomy.java',
-      sourceUrl: 'http://web.archive.org/web/20180502230101/http://lexikon.astronomie.info/java/sunmoon/progs/Astronomy.java'
+  ToolLicenseEntry get _toolLicenseAstronomieMitPC {
+    return ToolLicenseOfflineBook(
+        context: _context,
+        author: 'Oliver Montenbruck & Thomas Pfleger',
+        title: 'Astronomie mit dem Personal Computer',
+        isbn: '978-3540212043',
+        year: 2004,
+        publisher: 'Springer-Verlag'
     );
   }
 

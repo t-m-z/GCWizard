@@ -107,7 +107,7 @@ int cyear2pesach(int xx) {
 }
 
 int JewishYearLength(double jd) {
-  DateTime GregorianDate = julianDateToGregorianCalendar(jd);
+  DateTime GregorianDate = julianDayNumberToGregorianCalendar(jd);
   int jyearlength = 0;
   int cy = GregorianDate.year;
   int pd = cyear2pesach(cy);
@@ -116,7 +116,7 @@ int JewishYearLength(double jd) {
     pd = pd - 31;
     pm = 4;
   }
-  int pjd = (gregorianCalendarToJulianDate(DateTime(cy, pm, pd)) + 0.5).floor();
+  int pjd = (gregorianCalendarToJulianDayNumber(DateTime(cy, pm, pd)) + 0.5).floor();
   int jnyjd = pjd + 163;
   int jy = cy + 3761;
   if (jd < jnyjd) {
@@ -127,7 +127,7 @@ int JewishYearLength(double jd) {
       pdprev = pdprev - 31;
       pmprev = 4;
     }
-    int pjdprev = (gregorianCalendarToJulianDate(DateTime(cy - 1, pmprev, pdprev)) + 0.5).floor();
+    int pjdprev = (gregorianCalendarToJulianDayNumber(DateTime(cy - 1, pmprev, pdprev)) + 0.5).floor();
 
     jyearlength = pjd - pjdprev;
   } else {
@@ -137,7 +137,7 @@ int JewishYearLength(double jd) {
       pdnext = pdnext - 31;
       pmnext = 4;
     }
-    int pjnext = (gregorianCalendarToJulianDate(DateTime(cy + 1, pmnext, pdnext)) + 0.5).floor();
+    int pjnext = (gregorianCalendarToJulianDayNumber(DateTime(cy + 1, pmnext, pdnext)) + 0.5).floor();
 
     jyearlength = pjnext - pjd;
   }
@@ -151,7 +151,7 @@ DateTime? JulianDateToHebrewCalendar(double jd) {
 
   int jday = 1;
   int jmonth = 1;
-  DateTime GregorianDate = julianDateToGregorianCalendar(jd);
+  DateTime GregorianDate = julianDayNumberToGregorianCalendar(jd);
   int cy = GregorianDate.year;
   int pd = cyear2pesach(cy);
   int pm = 3;
@@ -162,7 +162,7 @@ DateTime? JulianDateToHebrewCalendar(double jd) {
   if (!validDateTime(cy, pm, pd)) {
     return null;
   }
-  int pjd = (gregorianCalendarToJulianDate(DateTime(cy, pm, pd)) + 0.5).floor();
+  int pjd = (gregorianCalendarToJulianDayNumber(DateTime(cy, pm, pd)) + 0.5).floor();
   int jnyjd = pjd + 163;
 
   int jy = cy + 3761;
@@ -176,7 +176,7 @@ DateTime? JulianDateToHebrewCalendar(double jd) {
       pmprev = 4;
     }
     if (!validDateTime(cy - 1, pmprev, pdprev)) return null;
-    int pjdprev = (gregorianCalendarToJulianDate(DateTime(cy - 1, pmprev, pdprev)) + 0.5).floor();
+    int pjdprev = (gregorianCalendarToJulianDayNumber(DateTime(cy - 1, pmprev, pdprev)) + 0.5).floor();
 
     int jyearlength = pjd - pjdprev;
     int days = (jd + 0.5).floor() - pjdprev - 163;
@@ -191,7 +191,7 @@ DateTime? JulianDateToHebrewCalendar(double jd) {
       pmnext = 4;
     }
     if (!validDateTime(cy + 1, pmnext, pdnext)) return null;
-    int pjnext = (gregorianCalendarToJulianDate(DateTime(cy + 1, pmnext, pdnext)) + 0.5).floor();
+    int pjnext = (gregorianCalendarToJulianDayNumber(DateTime(cy + 1, pmnext, pdnext)) + 0.5).floor();
 
     int jyearlength = pjnext - pjd;
     int days = (jd + 0.5).floor() - pjd - 163;
@@ -218,7 +218,7 @@ double HebrewCalendarToJulianDate(CustomCalendarDate date) {
     pd = pd - 31;
     pm = 4;
   }
-  int pjd = (gregorianCalendarToJulianDate(DateTime(cy, pm, pd)) + 0.5).floor();
+  int pjd = (gregorianCalendarToJulianDayNumber(DateTime(cy, pm, pd)) + 0.5).floor();
   int jnyjd = pjd + 163;
   int pdnext = cyear2pesach(cy + 1);
   int pmnext = 3;
@@ -226,7 +226,7 @@ double HebrewCalendarToJulianDate(CustomCalendarDate date) {
     pdnext = pdnext - 31;
     pmnext = 4;
   }
-  int pjnext = (gregorianCalendarToJulianDate(DateTime(cy + 1, pmnext, pdnext)) + 0.5).floor();
+  int pjnext = (gregorianCalendarToJulianDayNumber(DateTime(cy + 1, pmnext, pdnext)) + 0.5).floor();
   int jyearlength = pjnext - pjd;
 
   int days = daysInJewYear(d, m, jyearlength);

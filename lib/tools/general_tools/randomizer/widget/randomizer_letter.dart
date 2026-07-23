@@ -11,7 +11,6 @@ import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_onoff_switch.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/alphabet_values/logic/alphabet_values.dart';
 import 'package:gc_wizard/tools/general_tools/randomizer/logic/randomizer.dart';
-import 'package:gc_wizard/tools/general_tools/randomizer/logic/randomizer_lists.dart';
 import 'package:gc_wizard/tools/science_and_technology/cross_sums/widget/crosstotal_output.dart';
 import 'package:gc_wizard/utils/alphabets.dart';
 
@@ -164,7 +163,7 @@ class _RandomizerLetterState extends State<RandomizerLetter> {
       output.add(Container(height: DOUBLE_DEFAULT_MARGIN));
     }
     output.add(GCWOutput(child: outText));
-    output.add(CrosstotalOutput(text: outText, values: outValues, suppressWordMode: true,));
+    output.add(CrosstotalOutput(text: outText, values: outValues, suppressWordMode: true));
 
     _currentOutput = GCWDefaultOutput(
       child: Column(

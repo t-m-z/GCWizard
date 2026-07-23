@@ -1,6 +1,5 @@
-import 'dart:math';
-
 import 'package:gc_wizard/utils/alphabets.dart';
+import 'package:gc_wizard/utils/math_utils.dart';
 
 int _getMaxValue(int wheelNo) {
   switch (wheelNo) {
@@ -28,7 +27,7 @@ String encryptMexicanArmyCipherWheel(String input, List<int> keys) {
 
     int randomWheel;
     do {
-      randomWheel = Random().nextInt(4);
+      randomWheel = getRandom().nextInt(4);
       var maxValue = _getMaxValue(randomWheel);
       value = tmpValue + keys[randomWheel] - 1;
       if (value > maxValue) value -= 26;

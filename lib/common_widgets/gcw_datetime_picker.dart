@@ -84,8 +84,8 @@ const TIMEZONES = [
 ];
 
 class GCWDateTimePicker extends StatefulWidget {
-  final void Function(DateTimeTZDuration) onChanged;
-  final DateTimeTZ? datetime;
+  final void Function(DateTimeUTCwithTZDuration) onChanged;
+  final DateTimeUTCwithTZ? datetime;
   final Duration? duration;
   final Set<DateTimePickerConfig> config;
   final int minDays;
@@ -149,7 +149,7 @@ class _GCWDateTimePickerState extends State<GCWDateTimePicker> {
 
     DateTime date = widget.datetime?.toLocalTime() ?? DateTime.now();
     if (widget.datetime != null) {
-      _currentTimezoneOffset = widget.datetime!.timezone.inMinutes;
+      _currentTimezoneOffset = widget.datetime!.timezoneOffset.inMinutes;
     }
 
     if (widget.config.contains(DateTimePickerConfig.SIGN)) {
@@ -474,15 +474,24 @@ class _GCWDateTimePickerState extends State<GCWDateTimePicker> {
     duration *= _currentSign;
 
     var timezone = Duration(minutes: _currentTimezoneOffset);
-    if (!widget.config.contains(DateTimePickerConfig.TIMEZONES)) {
-      timezone = DateTime(_currentYear, _currentMonth, _currentDay,
-          _currentHour, _currentMinute, _currentSecond, _currentMilliSecond).timeZoneOffset;
+
+    DateTime dateTimeUtc;
+    if (widget.config.contains(DateTimePickerConfig.TIME)) {
+      dateTimeUtc = DateTime.utc(
+        _currentYear, _currentMonth, _currentDay, _currentHour, _currentMinute, _currentSecond, _currentMilliSecond
+      ).subtract(timezone);
+    } else {
+      dateTimeUtc = DateTime.utc(_currentYear, _currentMonth, _currentDay).subtract(timezone);
     }
-    var output = DateTimeTZDuration(
-        dateTimeUtc: DateTimeTZ.fromLocalTime(DateTime.utc(_currentYear, _currentMonth, _currentDay,
-            _currentHour, _currentMinute, _currentSecond, _currentMilliSecond), timezone).dateTimeUtc,
-        timezone: timezone,
-        duration: duration);
+
+    var output = DateTimeUTCwithTZDuration(
+      dateTimeUtc: DateTimeUTCwithTZ(
+        dateTimeUtc: dateTimeUtc,
+        timezoneOffset: timezone
+      ).dateTimeUtc,
+      timezoneOffset: timezone,
+      duration: duration
+    );
 
     widget.onChanged(output);
   }

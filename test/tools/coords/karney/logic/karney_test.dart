@@ -1,16 +1,15 @@
 
 // ignore_for_file: avoid_print
 
-import 'dart:math';
-
 import "package:flutter_test/flutter_test.dart";
-import 'package:gc_wizard/tools/coords/_common/logic/distance_bearing.dart';
+import 'package:gc_wizard/tools/coords/_common/logic/distance_bearing_data.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/external_libs/karney.geographic_lib/geographic_lib.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/external_libs/pkohut.geoformulas/geoformulas.dart';
 import 'package:gc_wizard/tools/coords/antipodes/logic/antipodes.dart';
 import 'package:gc_wizard/utils/coordinate_utils.dart' as utils;
 import 'package:gc_wizard/utils/data_type_utils/double_type_utils.dart';
+import 'package:gc_wizard/utils/math_utils.dart';
 import 'package:latlong2/latlong.dart';
 
 void main() {
@@ -93,7 +92,7 @@ void main() {
     var countErrors = 0;
 
     for (int i = 0; i < 1000000; i++) {
-      var rand = Random();
+      var rand = getRandom();
       var coord1 = LatLng(rand.nextDouble() * 180.0 - 90.0, rand.nextDouble() * 360.0 - 180.0);
       var coord2 = LatLng(rand.nextDouble() * 180.0 - 90.0, rand.nextDouble() * 360.0 - 180.0);
 
@@ -176,7 +175,7 @@ void main() {
               GeodesicData karneyA = geodeticDirect(coord2, karneyAzi2, karney.s12, ellipsoid);
               LatLng calcA = LatLng(karneyA.lat2, karneyA.lon2);
 
-              if (!utils.equalsLatLng(calcB, coord2, tolerance: 1e-5))
+              if (!utils.equalsLatLng(calcB, coord2, tolerance: 1e-7))
               {
                 countErrors++;
                 print('A -> B ==============================');
@@ -196,7 +195,7 @@ void main() {
                 print(coord2);
               }
 
-              if (!utils.equalsLatLng(calcA, coord1, tolerance: 1e-5))
+              if (!utils.equalsLatLng(calcA, coord1, tolerance: 1e-7))
               {
                 countErrors++;
                 print('B -> A ==============================');
@@ -233,13 +232,17 @@ void main() {
     });
   });
 
+  /** In Extreme Edge Case it may fail. Should be only in very rare cases! (it's because of the very low tolerance)
+   *  So in some runs a very low number of errors are ok. In most runs, no error should occur.
+   *  It is critical if errors happen always and with a more significant number of errors.
+   */
   group("Karney Direct VS Inverse - RANDOM:", () {
     var ellipsoid = Ellipsoid.WGS84;
 
     int countErrors = 0;
 
     for (int i = 0; i < 1000000; i++) {
-      var rand = Random();
+      var rand = getRandom();
       var coord1 = LatLng(rand.nextDouble() * 180.0 - 90.0, rand.nextDouble() * 360.0 - 180.0);
       var coord2 = LatLng(rand.nextDouble() * 180.0 - 90.0, rand.nextDouble() * 360.0 - 180.0);
 
@@ -255,7 +258,7 @@ void main() {
         GeodesicData karneyA = geodeticDirect(coord2, karneyAzi2, karney.s12, ellipsoid);
         LatLng calcA = LatLng(karneyA.lat2, karneyA.lon2);
 
-        if (!utils.equalsLatLng(calcB, coord2, tolerance: 1e-5)) {
+        if (!utils.equalsLatLng(calcB, coord2, tolerance: 1e-7)) {
           countErrors++;
           print('A -> B ==============================');
           print('A:');
@@ -274,7 +277,7 @@ void main() {
           print(coord2);
         }
 
-        if (!utils.equalsLatLng(calcA, coord1, tolerance: 1e-5)) {
+        if (!utils.equalsLatLng(calcA, coord1, tolerance: 1e-7)) {
           countErrors++;
           print('B -> A ==============================');
           print('A:');
@@ -303,7 +306,7 @@ void main() {
     }
 
     test('errors', () {
-      expect(countErrors, 0);
+      expect(countErrors < 5, true);
     });
   });
 }

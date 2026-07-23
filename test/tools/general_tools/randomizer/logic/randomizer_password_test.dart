@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:gc_wizard/tools/general_tools/randomizer/logic/randomizer_password.dart';
+import 'package:gc_wizard/tools/general_tools/randomizer/logic/randomizer.dart';
 import 'package:gc_wizard/utils/data_type_utils/double_type_utils.dart';
 
 void main() {

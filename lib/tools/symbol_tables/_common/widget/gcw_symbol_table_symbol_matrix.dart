@@ -193,7 +193,7 @@ class _GCWSymbolTableSymbolMatrixState extends State<GCWSymbolTableSymbolMatrix>
   void openInSymbolReplacer(BuildContext context, String symbolKey) {
     Navigator.push(
         context,
-        NoAnimationMaterialPageRoute<GCWTool>(
+        NoAnimationMaterialPageRoute<Object?>(
             builder: (context) => GCWTool(
                 tool: SymbolReplacer(symbolKey: symbolKey),
                 toolName: i18n(context, 'symbol_replacer_title'),

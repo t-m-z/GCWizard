@@ -22,7 +22,7 @@ void main() {
     ];
     for (var elem in _inputsToExpected) {
       test('jd: ${elem['jd']}', () {
-        var _actual = julianDateToGregorianCalendar(elem['jd'] as double);
+        var _actual = julianDayNumberToGregorianCalendar(elem['jd'] as double);
 
         expect(_actual.day, (elem['expectedOutput'] as DateTime).day);
         expect(_actual.month, (elem['expectedOutput'] as DateTime).month);
@@ -53,7 +53,7 @@ void main() {
     ];
     for (var elem in _inputsToExpected) {
       test('jd: ${elem['jd']}', () {
-        var _actual = julianDateToJulianCalendar(elem['jd'] as double);
+        var _actual = julianDayNumberToJulianCalendar(elem['jd'] as double);
 
         expect(_actual.day, (elem['expectedOutput'] as DateTime).day);
         expect(_actual.month, (elem['expectedOutput'] as DateTime).month);
@@ -83,7 +83,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('date: ${elem['date']}', () {
-        var _actual = gregorianCalendarToJulianDate(elem['date'] as DateTime);
+        var _actual = gregorianCalendarToJulianDayNumber(elem['date'] as DateTime);
         expect(_actual, elem['expectedOutput']);
       });
     }
@@ -111,7 +111,7 @@ void main() {
 
     for (var elem in _inputsToExpected) {
       test('date: ${elem['date']}', () {
-        var _actual = julianCalendarToJulianDate(elem['date'] as DateTime);
+        var _actual = julianCalendarToJulianDayNumber(elem['date'] as DateTime);
         expect(_actual, elem['expectedOutput']);
       });
     }

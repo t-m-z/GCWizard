@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
@@ -11,6 +12,7 @@ import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/common_widgets/gcw_painter_container.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
+import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/utils/variable_string_expander.dart';
 import 'package:touchable/touchable.dart';
@@ -32,7 +34,7 @@ class _GridConfiguration {
       {this.enumeration, this.columnEnumeration, this.rowEnumeration});
 }
 
-Map<int, Map<int, _GridPaintColor>>? _gridState;
+List<_GridPoint> _gridState = [];
 
 const _GRID_CUSTOM_KEY = 'grid_custom';
 
@@ -135,6 +137,8 @@ class _GridState extends State<Grid> {
   late TextEditingController _boxEnumerationController;
   late TextEditingController _columnEnumerationController;
   late TextEditingController _rowEnumerationController;
+
+  var _currentMode = _GridMode.POINTS;
 
   @override
   void initState() {
@@ -252,6 +256,20 @@ class _GridState extends State<Grid> {
             )
           ],
         ),
+        _isConfiguration ? Container() : GCWTwoOptionsSwitch(
+          notitle: true,
+          leftValue: i18n(context, 'grid_modes_points'),
+          rightValue: i18n(context, 'grid_modes_lines'),
+          value: (_currentMode == _GridMode.POINTS) ? GCWSwitchPosition.left : GCWSwitchPosition.right,
+          onChanged: (value) {
+            setState(() {
+              switch (value) {
+                case GCWSwitchPosition.left: _currentMode = _GridMode.POINTS; break;
+                case GCWSwitchPosition.right: _currentMode = _GridMode.LINES; break;
+              }
+            });
+          }
+        ),
         if (_isConfiguration) _buildConfiguration() else _buildGrid()
       ],
     );
@@ -269,7 +287,6 @@ class _GridState extends State<Grid> {
           items: {
             _GridType.BOXES: 'grid_boxes_title',
             _GridType.INTERSECTIONS: 'grid_intersections_title',
-            _GridType.LINES: 'grid_lines_title',
           }
               .map((type, name) {
                 return MapEntry(type, GCWDropDownMenuItem(value: type, child: i18n(context, name)));
@@ -471,6 +488,7 @@ class _GridState extends State<Grid> {
           child: _GridPainter(
             tapColor: _currentColor,
             type: _currentConfigType,
+            mode: _currentMode,
             countColumns: _currentConfigColumns,
             countRows: _currentConfigRows,
             boxEnumeration: _getEnumeration(_currentConfigBoxEnumeration ?? ''),
@@ -494,7 +512,7 @@ class _GridState extends State<Grid> {
   }
 
   void _clearGrid() {
-    _gridState = <int, Map<int, _GridPaintColor>>{};
+    _gridState = [];
   }
 
   List<String> _getEnumeration(String enumeration) {
@@ -535,6 +553,9 @@ class _GridState extends State<Grid> {
           left: _GridPaintColor.values.indexOf(color) == 0 ? 0.0 : DEFAULT_MARGIN,
           right: _GridPaintColor.values.indexOf(color) == _GridPaintColor.values.length - 1 ? 0.0 : DEFAULT_MARGIN,
         ),
+        child: color == _GridPaintColor.ERASER
+          ? Icon(Icons.edit_off, size: 30)
+          : Container(),
       ),
       onTap: () {
         setState(() {

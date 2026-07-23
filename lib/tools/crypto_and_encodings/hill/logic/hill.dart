@@ -165,7 +165,7 @@ String generateValidKey(int matrixSize, Map<String, String> alphabet) {
 }
 
 List<List<double>> _generateRandomMatrix(int matrixSize, List<double> values) {
-  Random rand = Random();
+  Random rand = getRandom();
   var _matrix = List<List<double>>.generate(matrixSize, (index) => List<double>.filled(matrixSize, 0));
   for (int i = 0; i < matrixSize; i++) {
     for (int j = 0; j < matrixSize; j++) {

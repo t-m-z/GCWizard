@@ -223,7 +223,7 @@ class _GCWFormulaListEditor extends State<GCWFormulaListEditor> {
           if (entry.id != null) {
             var formulaTool = widget.buildGCWTool(entry.id!);
             if (formulaTool != null) {
-              Navigator.push(context, NoAnimationMaterialPageRoute<GCWTool>(builder: (context) => formulaTool))
+              Navigator.push(context, NoAnimationMaterialPageRoute<Object?>(builder: (context) => formulaTool))
                   .whenComplete(() {
                 setState(() {});
               });

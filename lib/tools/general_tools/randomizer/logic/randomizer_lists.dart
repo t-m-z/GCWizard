@@ -1,4 +1,4 @@
-import 'dart:math';
+part of 'package:gc_wizard/tools/general_tools/randomizer/logic/randomizer.dart';
 
 List<T> shuffleList<T>(List<T> list) {
   if (list.isEmpty) {
@@ -6,7 +6,7 @@ List<T> shuffleList<T>(List<T> list) {
   }
 
   var outList = List<T>.from(list);
-  outList.shuffle();
+  outList.shuffle(getRandom());
 
   return outList;
 }

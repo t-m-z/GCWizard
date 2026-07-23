@@ -489,7 +489,7 @@ Image.Image _doAdjustColor(_AdjustColorInput input) {
 void openInColorCorrections(BuildContext context, GCWFile file) {
   Navigator.push(
       context,
-      NoAnimationMaterialPageRoute<GCWTool>(
+      NoAnimationMaterialPageRoute<Object?>(
           builder: (BuildContext context) => GCWTool(
               tool: ImageColorCorrections(file: file),
               toolName: i18n(context, 'image_colorcorrections_title'),

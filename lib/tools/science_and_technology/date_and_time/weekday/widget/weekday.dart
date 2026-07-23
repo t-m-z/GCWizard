@@ -14,11 +14,11 @@ class Weekday extends StatefulWidget {
 }
 
 class _WeekdayState extends State<Weekday> {
-  late DateTimeTZ _currentDate;
+  late DateTimeUTCwithTZ _currentDate;
 
   @override
   void initState() {
-    _currentDate = DateTimeTZ.now();
+    _currentDate = DateTimeUTCwithTZ.now();
     super.initState();
   }
 

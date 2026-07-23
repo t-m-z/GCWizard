@@ -14,6 +14,8 @@ import 'package:gc_wizard/common_widgets/clipboard/gcw_clipboard_editor.dart';
 import 'package:prefs/prefs.dart';
 import 'package:provider/provider.dart';
 
+import 'application/category_views/tabs.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -34,8 +36,11 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<AppLanguage>(
-        create: (_) => appLanguage,
+    return MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (_) => appLanguage),
+          ChangeNotifierProvider(create: (_) => TabsModel()),
+        ],
         child: Consumer<AppLanguage>(builder: (context, model, child) {
           return AppBuilder(builder: (context) {
             return MaterialApp(

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
+import 'package:gc_wizard/tools/coords/map_view/widget/map_geometries.dart';
 import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/color_utils.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/file_widget_utils.dart';
@@ -32,7 +32,7 @@ Future<bool> exportCoordinates(BuildContext context, List<GCWMapPoint> points, L
   if (data.isEmpty) return false;
   try {
     var fileName = buildFileNameWithDate('coords_', fileType);
-    return saveStringToFile(context, data, fileName);
+    return await saveStringToFile(context, data, fileName);
   } on Exception {
     return false;
   }

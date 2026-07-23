@@ -49,34 +49,43 @@ class Uint8ListText {
   Uint8ListText(this.text, this.value);
 }
 
-class DateTimeTZDuration extends DateTimeTZ {
+class DateTimeUTCwithTZDuration extends DateTimeUTCwithTZ {
   Duration duration;
 
-  DateTimeTZDuration({required super.dateTimeUtc, super.timezone, required this.duration});
+  DateTimeUTCwithTZDuration({required super.dateTimeUtc, super.timezoneOffset, required this.duration});
 }
 
-class DateTimeTZ {
+class DateTimeUTCwithTZ {
   DateTime dateTimeUtc;
-  Duration timezone;
+  Duration timezoneOffset;
 
-  DateTimeTZ({required this.dateTimeUtc, this.timezone = const Duration()});
+  DateTimeUTCwithTZ({required this.dateTimeUtc, this.timezoneOffset = const Duration()});
 
-  static DateTimeTZ now() {
-    return fromLocalTime(DateTime.now(), DateTime.now().timeZoneOffset);
+  static DateTimeUTCwithTZ now() {
+    return fromLocalTime(DateTime.now());
   }
 
-  static DateTimeTZ fromLocalTime(DateTime localDatetime, Duration timezone) {
-    return DateTimeTZ(dateTimeUtc: localDatetime.add(-timezone), timezone: timezone);
+  static DateTimeUTCwithTZ fromLocalTime(DateTime localDatetime, {Duration? timezone}) {
+    return DateTimeUTCwithTZ(
+      dateTimeUtc: timezone != null
+          ? DateTime.fromMillisecondsSinceEpoch(
+              localDatetime.millisecondsSinceEpoch - timezone.inMilliseconds, isUtc: true
+            )
+          : localDatetime.toUtc(),
+      timezoneOffset: timezone ?? localDatetime.timeZoneOffset
+    );
   }
 
   DateTime toLocalTime() {
-    return dateTimeUtc.add(timezone);
+    return  DateTime.fromMillisecondsSinceEpoch(
+      dateTimeUtc.millisecondsSinceEpoch + timezoneOffset.inMilliseconds, isUtc: false
+    );
   }
 
   String toLocalTimezoneAllNames(){
     // https://en.wikipedia.org/wiki/List_of_time_zone_abbreviations
     // https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-    switch (timezone.inMinutes) {
+    switch (timezoneOffset.inMinutes) {
       case -720: return 'BIT IDLW'; // UTC - 12
       case -660: return 'NUT SST'; // UTC - 11
       case -600: return 'CKT HST SDT TAHT'; // UTC - 10

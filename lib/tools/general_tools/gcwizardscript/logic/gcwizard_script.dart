@@ -37,7 +37,7 @@ import 'package:gc_wizard/tools/coords/centerpoint/logic/centerpoint_distance.da
 import 'package:gc_wizard/tools/coords/centroid/centroid_arithmetic_mean/logic/centroid_arithmetic_mean.dart';
 import 'package:gc_wizard/tools/coords/centroid/centroid_center_of_gravity/logic/centroid_center_of_gravity.dart';
 import 'package:gc_wizard/tools/coords/distance_and_bearing/logic/distance_and_bearing.dart';
-import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
+import 'package:gc_wizard/tools/coords/map_view/widget/map_geometries.dart';
 import 'package:gc_wizard/tools/coords/waypoint_projection/logic/projection.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/_common/logic/crypt_alphabet_modification.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/abaddon/logic/abaddon.dart';
@@ -68,6 +68,7 @@ import 'package:gc_wizard/tools/science_and_technology/physical_constants/logic/
 import 'package:gc_wizard/tools/science_and_technology/primes/_common/logic/primes.dart';
 import 'package:gc_wizard/utils/alphabets.dart';
 import 'package:gc_wizard/utils/complex_return_types.dart';
+import 'package:gc_wizard/utils/math_utils.dart';
 import 'package:gc_wizard/utils/stack.dart' as datastack;
 import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';

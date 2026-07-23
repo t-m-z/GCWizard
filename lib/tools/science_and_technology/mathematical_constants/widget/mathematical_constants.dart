@@ -162,7 +162,7 @@ class _MathematicalConstantsState extends State<MathematicalConstants> {
       onPressed: () {
         Navigator.push(
             context,
-            NoAnimationMaterialPageRoute<GCWTool>(
+            NoAnimationMaterialPageRoute<Object?>(
                 builder: (context) => GCWTool(tool: widget, toolName: i18n(context, title), id: '')));
       },
     );

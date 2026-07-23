@@ -17,6 +17,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/utils/math_utils.dart';
 
 part 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_languages/befunge/logic/befunge_classes.dart';
 part 'package:gc_wizard/tools/crypto_and_encodings/esoteric_programming_languages/befunge/logic/befunge_const.dart';
@@ -83,7 +84,7 @@ BefungeOutput interpretBefunge(String program, {String input = ''}) {
   }
 
   if (_correctBefungeProgramLength(program)) {
-    Random random = Random();
+    Random random = getRandom();
     BefungeStack stack = BefungeStack([]);
     int dx = 1;
     int dy = 0;

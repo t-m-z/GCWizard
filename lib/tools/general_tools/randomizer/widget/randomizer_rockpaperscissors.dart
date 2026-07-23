@@ -6,7 +6,8 @@ import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.d
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
-import 'package:gc_wizard/tools/general_tools/randomizer/logic/randomizer_rockpaperscissors.dart';
+import 'package:gc_wizard/tools/general_tools/randomizer/logic/randomizer.dart';
+
 
 class RandomizerRockPaperScissors extends StatefulWidget {
   const RandomizerRockPaperScissors({super.key});

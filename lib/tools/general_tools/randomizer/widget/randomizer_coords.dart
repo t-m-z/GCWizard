@@ -7,13 +7,12 @@ import 'package:gc_wizard/common_widgets/outputs/gcw_output_text.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/coordinate_format.dart';
-import 'package:gc_wizard/tools/coords/_common/logic/coordinates.dart';
 import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
 import 'package:gc_wizard/tools/coords/_common/widget/coordinate_text_formatter.dart';
 import 'package:gc_wizard/tools/coords/_common/widget/gcw_coords.dart';
 import 'package:gc_wizard/tools/coords/_common/widget/gcw_coords_formatselector.dart';
 import 'package:gc_wizard/tools/coords/_common/widget/gcw_coords_output/gcw_coords_output.dart';
-import 'package:gc_wizard/tools/coords/map_view/logic/map_geometries.dart';
+import 'package:gc_wizard/tools/coords/map_view/widget/map_geometries.dart';
 import 'package:gc_wizard/tools/general_tools/randomizer/logic/randomizer.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/default_units_getter.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/length.dart';
@@ -31,8 +30,8 @@ class _RandomizerCoordinatesState extends State<RandomizerCoordinates> {
 
   var _currentMode = GCWSwitchPosition.left;
 
-  var _currentCoordsNW = buildCoordinate(defaultCoordinateFormat, const LatLng(90, -179.99999), defaultEllipsoid);
-  var _currentCoordsSE = buildCoordinate(defaultCoordinateFormat, const LatLng(-90, 179.99999), defaultEllipsoid);
+  var _currentCoordsNW = defaultBaseCoordinate;
+  var _currentCoordsSE = defaultBaseCoordinate;
 
   var _currentCoordsCenter = defaultBaseCoordinate;
   var _currentDistance = 0.0;
@@ -71,7 +70,6 @@ class _RandomizerCoordinatesState extends State<RandomizerCoordinates> {
               children: [
                 GCWCoords(
                   title: i18n(context, 'randomizer_coords_nwcorner'),
-                  coordinates: _currentCoordsNW.toLatLng(),
                   coordsFormat: _currentCoordsNW.format,
                   onChanged: (ret) {
                     setState(() {
@@ -83,7 +81,6 @@ class _RandomizerCoordinatesState extends State<RandomizerCoordinates> {
                 ),
                 GCWCoords(
                   title: i18n(context, 'randomizer_coords_secorner'),
-                  coordinates: _currentCoordsSE.toLatLng(),
                   coordsFormat: _currentCoordsSE.format,
                   onChanged: (ret) {
                     setState(() {

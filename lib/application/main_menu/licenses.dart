@@ -428,7 +428,7 @@ class _LicensesState extends State<Licenses> {
             author: 'Christian Robertson (Google Fonts)',
             licenseType: ToolLicenseType.APACHE2,
             licenseUrl: 'https://fonts.google.com/specimen/Roboto',
-            sourceUrl: 'https://github.com/GCWizard/GCWizard/blob/master/lib/application/_common/assets/fonts/Roboto/LICENSE.txt'
+            sourceUrl: 'https://codeberg.org/GCWizard/GCWizard/blob/master/lib/application/_common/assets/fonts/Roboto/LICENSE.txt'
         ),
       ]);
 

@@ -172,7 +172,7 @@ class _PantoneColorCodesState extends State<PantoneColorCodes> {
   }
 
   void _showElement(RGB color) {
-    Navigator.of(context).push(NoAnimationMaterialPageRoute<GCWTool>(
+    Navigator.of(context).push(NoAnimationMaterialPageRoute<Object?>(
         builder: (context) => GCWTool(tool: ColorTool(color: color), id: 'colors')));
   }
 }

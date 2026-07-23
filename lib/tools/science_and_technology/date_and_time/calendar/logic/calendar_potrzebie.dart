@@ -13,7 +13,7 @@ PotrzebieCalendarOutput? JulianDateToPotrzebieCalendar(double jd) {
 
 // Day 0 in the Potrzebie-System is 01.10.1952
 // Before MAD - B.M.   -   zero   -   Cowzofski Madi C.M
-  double jd_p_zero = gregorianCalendarToJulianDate(DateTime(1952, 10, 1));
+  double jd_p_zero = gregorianCalendarToJulianDayNumber(DateTime(1952, 10, 1));
   int diff = (jd - jd_p_zero).round();
   bool bm = (diff < 0);
   if (diff < 0) diff = diff * -1;
@@ -39,7 +39,7 @@ double PotrzebieCalendarToJulianDate(DateTime date) {
 
   int days = p_y * 100 + p_m * 10 + p_d;
 
-  double jd_p_zero = gregorianCalendarToJulianDate(DateTime(1952, 10, 1)).floorToDouble() - 1;
+  double jd_p_zero = gregorianCalendarToJulianDayNumber(DateTime(1952, 10, 1)).floorToDouble() - 1;
 
   return jd_p_zero + days;
 }

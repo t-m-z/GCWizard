@@ -6,9 +6,10 @@ import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_onoff_switch.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
-import 'package:gc_wizard/tools/general_tools/randomizer/logic/randomizer_password.dart';
+import 'package:gc_wizard/tools/general_tools/randomizer/logic/randomizer.dart';
 import 'package:gc_wizard/utils/alphabets.dart';
 import 'package:intl/intl.dart';
+
 
 class RandomizerPassword extends StatefulWidget {
   const RandomizerPassword({super.key});

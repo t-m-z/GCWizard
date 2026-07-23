@@ -77,7 +77,7 @@ class _ElementsOfGeocachingState extends State<ElementsOfGeocaching> {
         ),
       ),
       onTap: () {
-        Navigator.of(context).push(NoAnimationMaterialPageRoute<GCWTool>(
+        Navigator.of(context).push(NoAnimationMaterialPageRoute<Object?>(
             builder: (context) => GCWTool(
                 tool: ElementsOfGeocachingDataView(atomicNumber: element.atomicNumber), id: 'elementsofgeocaching_dataview')));
       },

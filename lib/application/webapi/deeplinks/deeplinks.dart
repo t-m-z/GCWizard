@@ -20,7 +20,6 @@ import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.d
 import 'package:gc_wizard/common_widgets/textfields/gcw_code_textfield.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/common_widget_utils.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/deeplink_utils.dart';
-import 'package:tuple/tuple.dart';
 
 part 'package:gc_wizard/application/webapi/deeplinks/deeplinks_toolinfo.dart';
 part 'package:gc_wizard/application/webapi/deeplinks/deeplinks_toolinfo_codecolorscheme.dart';
@@ -36,26 +35,26 @@ class WebParameter {
   WebParameter({required this.title, required this.arguments, required this.settings});
 }
 
-NoAnimationMaterialPageRoute<GCWTool>? createRoute(BuildContext context, RouteSettings settings) {
+NoAnimationMaterialPageRoute<Object?>? createRoute(BuildContext context, RouteSettings settings) {
   var args = _parseUrl(settings);
   return (args == null) ? null : _createRoute(context, args, settings);
 }
 
-List<Route<GCWTool>> startMainView(BuildContext context, String route) {
+List<Route<Object?>> startMainView(BuildContext context, String route) {
   return [
-    NoAnimationMaterialPageRoute<GCWTool>(
+    NoAnimationMaterialPageRoute<Object?>(
         builder: (context) =>
             MainView(webParameter: _parseUrl(RouteSettings(name: route), initRoute: true)?.arguments)),
   ];
 }
 
-NoAnimationMaterialPageRoute<GCWTool>? createStartDeepLinkRoute(BuildContext context, Map<String, String> arguments) {
+NoAnimationMaterialPageRoute<Object?>? createStartDeepLinkRoute(BuildContext context, Map<String, String> arguments) {
   var webparameter = WebParameter(title: arguments[_initRoute] ?? '', arguments: arguments, settings: null);
   return _createRoute(context, webparameter, const RouteSettings());
 }
 
 // A Widget that accepts the necessary arguments via the constructor.
-NoAnimationMaterialPageRoute<GCWTool>? _createRoute(
+NoAnimationMaterialPageRoute<Object?>? _createRoute(
     BuildContext context, WebParameter arguments, RouteSettings settings) {
   var gcwTool = _findGCWTool(context, arguments);
   if (gcwTool == null) return null;
@@ -68,9 +67,9 @@ NoAnimationMaterialPageRoute<GCWTool>? _createRoute(
   return _buildRoute(context, gcwTool, settings);
 }
 
-NoAnimationMaterialPageRoute<GCWTool> _buildRoute(BuildContext context, GCWTool gcwTool, RouteSettings settings) {
+NoAnimationMaterialPageRoute<Object?> _buildRoute(BuildContext context, GCWTool gcwTool, RouteSettings settings) {
   // arguments settings only for view the path in the url , settings: arguments.settings
-  return NoAnimationMaterialPageRoute<GCWTool>(builder: (context) => gcwTool, settings: settings);
+  return NoAnimationMaterialPageRoute<Object?>(builder: (context) => gcwTool, settings: settings);
 }
 
 GCWTool? _findGCWTool(BuildContext context, WebParameter arguments) {
@@ -164,18 +163,18 @@ Future<List<Widget>> _buildRows(BuildContext context, List<GCWTool> toolList) as
 }
 
 Widget _buildRow(BuildContext context, GCWTool tool) {
-  return FutureBuilder<Tuple2<String, String>>(
+  return FutureBuilder<({String id, String info})>(
       future: _toolInfoTextShort(context, tool),
-      builder: (BuildContext context, AsyncSnapshot<Tuple2<String, String>> snapshot) {
+      builder: (BuildContext context, AsyncSnapshot<({String id, String info})> snapshot) {
         return _buildRowWidget(
-            context, tool, snapshot.data?.item2 ?? '', deepLinkURL(tool, fallbackPath: snapshot.data?.item1));
+            context, tool, snapshot.data?.info ?? '', deepLinkURL(tool, fallbackPath: snapshot.data?.id));
       });
 }
 
-Future<Tuple2<String, String>> _toolInfoTextShort(BuildContext context, GCWTool tool) async {
+Future<({String id, String info})> _toolInfoTextShort(BuildContext context, GCWTool tool) async {
   var id = deeplinkToolId(tool);
   var info = id;
-  return Tuple2<String, String>(id, info);
+  return (id: id, info: info);
 }
 
 bool _hasAPISpecification(GCWTool tool) {

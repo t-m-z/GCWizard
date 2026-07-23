@@ -27,23 +27,23 @@ const Map<int, String> MONTH = {
 
 enum _CalendarType { JULIAN, GREGORIAN }
 
-DateTime julianDateToGregorianCalendar(double jd) {
-  return _JDToCal(jd, _CalendarType.GREGORIAN);
+DateTime julianDayNumberToGregorianCalendar(double jdn) {
+  return _JDNToCal(jdn, _CalendarType.GREGORIAN);
 }
 
-DateTime julianDateToJulianCalendar(double jd) {
-  return _JDToCal(jd, _CalendarType.JULIAN);
+DateTime julianDayNumberToJulianCalendar(double jdn) {
+  return _JDNToCal(jdn, _CalendarType.JULIAN);
 }
 
-double gregorianCalendarToJulianDate(DateTime date) {
-  return _calToJD(date, _CalendarType.GREGORIAN);
+double gregorianCalendarToJulianDayNumber(DateTime date) {
+  return _calToJDN(date, _CalendarType.GREGORIAN);
 }
 
-double julianCalendarToJulianDate(DateTime date) {
-  return _calToJD(date, _CalendarType.JULIAN);
+double julianCalendarToJulianDayNumber(DateTime date) {
+  return _calToJDN(date, _CalendarType.JULIAN);
 }
 
-double _calToJD(DateTime date, _CalendarType type) {
+double _calToJDN(DateTime date, _CalendarType type) {
   int day = date.day;
   int month = date.month;
   int year = date.year;
@@ -59,7 +59,7 @@ double _calToJD(DateTime date, _CalendarType type) {
   return (365.25 * (year + 4716)).floor() + (30.6001 * (month + 1)).floor() + day + b - 1524.5;
 }
 
-DateTime _JDToCal(double jd, _CalendarType type) {
+DateTime _JDNToCal(double jd, _CalendarType type) {
   int z = (jd + 0.5).floor();
   double f = jd + 0.5 - z;
   int a = z;

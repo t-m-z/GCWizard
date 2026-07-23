@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
@@ -27,5 +28,8 @@ Widget imageContent(BuildContext context, Uint8List data) {
   return Container(
       margin: const EdgeInsets.only(top: 25),
       decoration: BoxDecoration(border: Border.all(color: themeColors().dialogText())),
-      child: Image.memory(data));
+      child: Image(
+          image: ResizeImage(MemoryImage(data),
+              width: min(MediaQuery.widthOf(context) ~/ 2, MediaQuery.heightOf(context) ~/ 2), // Half of the screen's width.
+              )));
 }

@@ -19,6 +19,7 @@ import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:gc_wizard/utils/file_utils/gcw_file.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/file_widget_utils.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/image_utils/image_utils.dart';
+import 'package:qr/qr.dart' as qr;
 
 class QrCode extends StatefulWidget {
   final GCWFile? file;
@@ -166,9 +167,9 @@ class _QrCodeState extends State<QrCode> {
               Row(children: <Widget>[
                 Expanded(child: GCWText(text: i18n(context, 'qr_code_error_correct_level'))),
                 Expanded(
-                  child: GCWDropDown<int>(
+                  child: GCWDropDown<qr.QrErrorCorrectLevel>(
                     value: _currentErrorCorrectLevel,
-                    onChanged: (int value) {
+                    onChanged: (qr.QrErrorCorrectLevel value) {
                       setState(() {
                         _currentErrorCorrectLevel = value;
                         _updateOutput();
@@ -231,7 +232,7 @@ class _QrCodeState extends State<QrCode> {
             moduleSize: _currentModulSize,
             border: 2 * _currentModulSize,
             errorCorrectLevel: _currentErrorCorrectLevel,
-            version: _currentSize);
+            typeNumber: _currentSize);
         if (qrCode == null) return;
         if (qrCode.lines.length == 2 && qrCode.lines.first == inputTooLongException) {
           _outDataEncryptText = i18n(context, 'qr_code_size_error') + ' (' + qrCode.lines[1] + ')';

@@ -1,4 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/_common/logic/astronomy_constants.dart';
+import 'package:intl/intl.dart';
 
 String? getAstrologicalSign(AstrologicalSign sign) {
   switch (sign) {
@@ -33,19 +35,29 @@ String? getMoonPhase(MoonPhase phase) {
   switch (phase) {
     case MoonPhase.NEW_MOON:
       return 'astronomy_moonphase_newmoon';
-    case MoonPhase.INCREASING_CRESCENT:
+    case MoonPhase.WAXING_CRESCENT:
       return 'astronomy_moonphase_increasingcrescent';
     case MoonPhase.FIRST_QUARTER:
       return 'astronomy_moonphase_firstquarter';
-    case MoonPhase.INCREASING_MOON:
+    case MoonPhase.WAXING_GIBBOUS:
       return 'astronomy_moonphase_increasingmoon';
     case MoonPhase.FULL_MOON:
       return 'astronomy_moonphase_fullmoon';
-    case MoonPhase.DECREASING_MOON:
+    case MoonPhase.WANING_GIBBOUS:
       return 'astronomy_moonphase_decreasingmoon';
     case MoonPhase.LAST_QUARTER:
       return 'astronomy_moonphase_lastquarter';
-    case MoonPhase.DECREASING_CRESCENT:
+    case MoonPhase.WANING_CRESCENT:
       return 'astronomy_moonphase_decreasingcrescent';
   }
+}
+
+String formatDateTimeUTCWithTZ(BuildContext context, DateTime dateTimeUtc, Duration timeZoneOffset) {
+  var dateFormat = DateFormat.yMd(Localizations.localeOf(context).toString()).add_jms();
+  return dateFormat.format(dateTimeUtc.add(timeZoneOffset));
+}
+
+String formatTimeUTCWithTZ(BuildContext context, DateTime dateTimeUtc, Duration timeZoneOffset) {
+  var dateFormat = DateFormat.jms(Localizations.localeOf(context).toString());
+  return dateFormat.format(dateTimeUtc.add(timeZoneOffset));
 }

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/app_builder.dart';
 import 'package:gc_wizard/application/category_views/all_tools_view.dart';
 import 'package:gc_wizard/application/category_views/favorites.dart';
+import 'package:gc_wizard/application/category_views/tabs.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/navigation/no_animation_material_page_route.dart';
 import 'package:gc_wizard/application/settings/logic/preferences.dart';
@@ -11,9 +12,11 @@ import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
 import 'package:gc_wizard/application/tools/widget/gcw_tool.dart';
 import 'package:gc_wizard/common_widgets/dialogs/gcw_dialog.dart';
+import 'package:gc_wizard/common_widgets/gcw_snackbar.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
 import 'package:gc_wizard/utils/constants.dart';
 import 'package:prefs/prefs.dart';
+import 'package:provider/provider.dart';
 
 class GCWToolList extends StatefulWidget {
   final List<GCWTool> toolList;
@@ -47,6 +50,8 @@ class _GCWToolListState extends State<GCWToolList> {
   }
 
   Widget _buildRow(BuildContext context, int index) {
+    final model = context.watch<TabsModel>();
+
     // Vertical space after the list items
     if (index == widget.toolList.length) {
       return const ListTile();
@@ -55,7 +60,13 @@ class _GCWToolListState extends State<GCWToolList> {
     var tool = widget.toolList[index];
 
     Future<void> _navigateToSubPage(BuildContext context) async {
-      Navigator.push(context, NoAnimationMaterialPageRoute<GCWTool>(builder: (context) => tool));
+      Navigator.push(
+        context,
+        NoAnimationMaterialPageRoute<Object?>(
+          settings: RouteSettings(name: Uri.encodeComponent(tool.toolName ?? '')),
+          builder: (context) => tool
+        )
+      );
     }
 
     return ListTile(
@@ -80,6 +91,12 @@ class _GCWToolListState extends State<GCWToolList> {
         ],
       ),
       subtitle: _buildDescription(context, tool),
+      onLongPress: () {
+        setState(() {
+          model.addTab(tool);
+          showSnackBar(i18n(context, 'tabs_tab_created', parameters: [tool.toolName]), context);
+        });
+      },
       onTap: () {
         setState(() {
           _navigateToSubPage(context);

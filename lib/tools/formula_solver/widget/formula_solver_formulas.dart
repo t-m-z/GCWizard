@@ -69,7 +69,7 @@ class _FormulaSolverFormulasState extends State<_FormulaSolverFormulas> {
     );
 
     Future<void> _navigateToSubPage(BuildContext context) async {
-      Navigator.push(context, NoAnimationMaterialPageRoute<GCWTool>(builder: (context) => formulaTool))
+      Navigator.push(context, NoAnimationMaterialPageRoute<Object?>(builder: (context) => formulaTool))
           .whenComplete(() {
         setState(() {});
       });
@@ -164,7 +164,7 @@ class _FormulaSolverFormulasState extends State<_FormulaSolverFormulas> {
   void _openInVariableCoordinate(var_coords_model.VariableCoordinateFormula formula) {
     Navigator.push(
         context,
-        NoAnimationMaterialPageRoute<GCWTool>(
+        NoAnimationMaterialPageRoute<Object?>(
             builder: (context) => GCWTool(
                 tool: VariableCoordinate(formula: formula),
                 toolName: '${formula.name} - ${i18n(context, 'coords_variablecoordinate_title')}',
@@ -330,7 +330,7 @@ class _FormulaSolverFormulasState extends State<_FormulaSolverFormulas> {
                                   child: iconedGCWPopupMenuItem(
                                       context, Icons.edit, 'formulasolver_formulas_modifyformula'),
                                   action: (index) => setState(() {
-                                        _showFormulaReplaceDialog(context, [parserResult.formula],
+                                        showFormulaReplaceDialog(context, [parserResult.formula],
                                             onOkPressed: (List<Formula> value) {
                                           if (parserResult.formula.formula == value.first.formula) return;
 
@@ -445,7 +445,7 @@ class _FormulaSolverFormulasState extends State<_FormulaSolverFormulas> {
                               child:
                                   iconedGCWPopupMenuItem(context, Icons.edit, 'formulasolver_formulas_modifyformulas'),
                               action: (index) => setState(() {
-                                    _showFormulaReplaceDialog(context, widget.group.formulas,
+                                    showFormulaReplaceDialog(context, widget.group.formulas,
                                         onOkPressed: (List<Formula> value) {
                                       for (int i = 0; i < widget.group.formulas.length; i++) {
                                         if (widget.group.formulas[i].formula != value[i].formula) {
@@ -593,7 +593,7 @@ class _FormulaSolverFormulasState extends State<_FormulaSolverFormulas> {
   void _showFormulaResultOnMap(List<GCWMapPoint> coordinates) {
     Navigator.push(
         context,
-        NoAnimationMaterialPageRoute<GCWTool>(
+        NoAnimationMaterialPageRoute<Object?>(
             builder: (context) => GCWTool(
                 tool: GCWMapView(
                   points: coordinates,

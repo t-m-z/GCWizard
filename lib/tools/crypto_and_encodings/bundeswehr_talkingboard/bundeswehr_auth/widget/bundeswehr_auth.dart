@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -24,6 +23,7 @@ import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/bundeswehr_talkingboard/bundeswehr_auth/logic/bundeswehr_auth.dart';
 import 'package:gc_wizard/utils/file_utils/file_utils.dart';
 import 'package:gc_wizard/utils/file_utils/gcw_file.dart';
+import 'package:gc_wizard/utils/math_utils.dart';
 
 class BundeswehrTalkingBoardAuthentification extends StatefulWidget {
   const BundeswehrTalkingBoardAuthentification({super.key});
@@ -137,7 +137,7 @@ class _BundeswehrTalkingBoardAuthentificationState
             suppressTopSpace: false,
             trailing: Row(
               children: [
-                _widgetIconButtonRandom(),
+                _widgetIconButtongetRandom(),
                 _widgetIconButtonOpen(),
                 _widgetIconButtonQR(context),
               ],
@@ -226,7 +226,7 @@ class _BundeswehrTalkingBoardAuthentificationState
     );
   }
 
-  GCWIconButton _widgetIconButtonRandom() {
+  GCWIconButton _widgetIconButtongetRandom() {
     return GCWIconButton(
       icon: Icons.auto_fix_high,
       size: IconButtonSize.SMALL,
@@ -604,7 +604,7 @@ class _BundeswehrTalkingBoardAuthentificationState
         }
       });
     } else {
-      var random = Random();
+      var random = getRandom();
       int rnd = 0;
       while (authCode.length != 65) {
         rnd = random.nextInt(100);
@@ -726,7 +726,7 @@ class _BundeswehrTalkingBoardAuthentificationState
         'Y',
         'Z',
       ];
-      var random = Random();
+      var random = getRandom();
       int rnd = 0;
       String description = '';
       while (alphabet.isNotEmpty) {

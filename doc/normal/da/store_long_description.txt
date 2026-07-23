@@ -12,7 +12,7 @@ Oversat til 🇬🇧 🇩🇪 🇫🇷 🇰🇷
 • Formel løser: Til håndtering af svar i multier
 • Multi Dekoder: Indtast en tekst i en ukendt kode, og GC Matrix kan afprøve teksten i flere dekodere og regnemaskiner
 • Over 200 sæt symboltabeller: afkoder symboler til tegn, eller gem egen kodning som billede
-• Online Manual: Hvert værktøj har sin egen manual, oversat til 🇬🇧 :Tyskland: 🇫🇷
+• Online Manual: Hvert værktøj har sin egen manual, oversat til 🇬🇧 🇩🇪 🇫🇷
 
 <b>Krypteringer & Kodninger</b>
 • Alphabet Values (A = 1, B = 2, ...): Configurable alphabets with language specific special character handling

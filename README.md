@@ -83,7 +83,7 @@ Based on **Flutter/Dart**.
 * [FAQ](https://blog.gcwizard.net/category/faq/)
 
 ### Development
-* [Github](https://github.com/GCWizard/GCWizard): Code and assets
+* [Codeberg](https://codeberg.org/GCWizard/GCWizard): Code and assets
 * [Crowdin](https://crowdin.com/project/gc-wizard): Translations
   
 ### E-mail

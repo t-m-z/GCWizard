@@ -23,13 +23,7 @@ import 'dart:math';
 import 'package:gc_wizard/tools/crypto_and_encodings/substitution/logic/substitution.dart';
 import 'package:gc_wizard/utils/collection_utils.dart';
 import 'package:gc_wizard/utils/constants.dart';
-
-class Offset {
-  final int xOffset;
-  final int yOffset;
-  final int leftBorder;
-  Offset(this.xOffset, this.yOffset, this.leftBorder);
-}
+import 'package:gc_wizard/utils/math_utils.dart';
 
 enum WASD_TYPE { CURSORS, WASD, IJMK, ESDF, ULDR, OLUR, VLZR, WQSE, ARROWS, NWSE, NWSO, NUMERIC, CUSTOM }
 
@@ -135,7 +129,7 @@ String encodeWASD(String input, List<String> controlSet) {
   controlSet = _normalizeControlSet(controlSet);
   input = input.toUpperCase().replaceAll(RegExp(r'[^\d ]'), '');
 
-  Random rnd = Random();
+  Random rnd = getRandom();
   List<String> result = [];
   input.split('').forEach((element) {
     if (_WASD_ENCODE[element] == null) {

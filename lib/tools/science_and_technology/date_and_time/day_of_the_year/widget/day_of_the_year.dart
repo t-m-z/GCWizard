@@ -23,8 +23,8 @@ class DayOfTheYear extends StatefulWidget {
 
 class _DayOfTheYearState extends State<DayOfTheYear> {
   var _currentMode = GCWSwitchPosition.right;
-  late DateTimeTZ _currentEncodeDate;
-  late DateTimeTZ _currentDecodeDate;
+  late DateTimeUTCwithTZ _currentEncodeDate;
+  late DateTimeUTCwithTZ _currentDecodeDate;
 
   late FocusNode _dayFocusNode;
   var _currentYear = 0;
@@ -35,8 +35,8 @@ class _DayOfTheYearState extends State<DayOfTheYear> {
     super.initState();
 
     DateTime now = DateTime.now();
-    _currentEncodeDate = DateTimeTZ(dateTimeUtc: DateTime.utc(now.year, now.month, now.day), timezone: now.timeZoneOffset);
-    _currentDecodeDate = DateTimeTZ(dateTimeUtc: DateTime.utc(now.year, now.month, now.day), timezone: now.timeZoneOffset);
+    _currentEncodeDate = DateTimeUTCwithTZ(dateTimeUtc: DateTime.utc(now.year, now.month, now.day), timezoneOffset: now.timeZoneOffset);
+    _currentDecodeDate = DateTimeUTCwithTZ(dateTimeUtc: DateTime.utc(now.year, now.month, now.day), timezoneOffset: now.timeZoneOffset);
     _dayFocusNode = FocusNode();
 
     _currentYear = _currentEncodeDate.toLocalTime().year;

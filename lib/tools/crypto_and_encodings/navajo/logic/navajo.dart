@@ -1,12 +1,11 @@
 // https://www.history.navy.mil/research/library/online-reading-room/title-list-alphabetically/n/navajo-code-talker-dictionary.html
 // https://www.ancestrycdn.com/aa-k12/1112/assets/Navajo-Code-Talkers-dictionary.pdf
 
-import 'dart:math';
-
 import 'package:collection/collection.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/substitution/logic/substitution.dart';
 import 'package:gc_wizard/utils/collection_utils.dart';
 import 'package:gc_wizard/utils/constants.dart';
+import 'package:gc_wizard/utils/math_utils.dart';
 
 part 'package:gc_wizard/tools/crypto_and_encodings/navajo/logic/navajo_dictionary.dart';
 
@@ -73,7 +72,7 @@ String encodeLetterWise(String plainText) {
     if (entrys.isEmpty) {
       result.add(element);
     } else {
-      result.add(entrys.elementAt(Random().nextInt(entrys.length)).value);
+      result.add(entrys.elementAt(getRandom().nextInt(entrys.length)).value);
     }
   });
   return result.join(' ');
