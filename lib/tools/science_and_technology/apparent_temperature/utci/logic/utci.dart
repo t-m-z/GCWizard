@@ -10,13 +10,9 @@
 //
 
 import 'dart:math';
-import 'package:gc_wizard/tools/coords/_common/logic/default_coord_getter.dart';
-import 'package:gc_wizard/tools/coords/_common/logic/ellipsoid.dart';
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/_common/logic/common.dart';
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/wet_bulb_globe_temperature/logic/liljegren.dart';
-import 'package:gc_wizard/tools/science_and_technology/astronomy/_common/logic/julian_date.dart';
-import 'package:gc_wizard/tools/science_and_technology/astronomy/sun_position/logic/sun_position.dart' as sunposition;
-import 'package:gc_wizard/tools/science_and_technology/astronomy/sun_position/logic/sun_position.dart';
+import 'package:gc_wizard/tools/science_and_technology/astronomy/_common/logic/external_libs/cosinekitty.astronomy/astronomy.dart' as astronomy;
 import 'package:gc_wizard/utils/complex_return_types.dart';
 import 'package:latlong2/latlong.dart';
 
@@ -51,14 +47,14 @@ class UTCIOutput {
   final double Tdew;
   final double Tmrt;
   final double UTCI;
-  final sunposition.SunPosition SunPos;
+  final astronomy.SunPosition SunPos;
 
   UTCIOutput(
       {this.Solar = 0.0, this.Tg = 0.0, this.Tmrt = 0.0, this.Tdew = 0.0, required this.UTCI, required this.SunPos});
 }
 
 UTCIOutput calculateUTCI(double Ta, double RH, double va, double Tmrt, bool calculateTmrt,
-    {DateTimeTZ? dateTime, LatLng? coords, double? airPressure, bool? urban, CLOUD_COVER? cloudcover}) {
+    {DateTimeUTCwithTZ? dateTime, LatLng? coords, double? airPressure, bool? urban, CLOUD_COVER? cloudcover}) {
   // http://james-ramsden.com/calculate-utci-c-code/
   // http://www.utci.org/utci_doku.php
   // http://www.utci.org/public/UTCI%20Program%20Code/UTCI_a002.f90
@@ -111,10 +107,9 @@ UTCIOutput calculateUTCI(double Ta, double RH, double va, double Tmrt, bool calc
   double solar = 0.0;
 
   if (calculateTmrt) {
-    var sunPosition = sunposition.SunPosition(LatLng(coords!.latitude, coords.longitude), JulianDate(dateTime!),
-        const Ellipsoid(ELLIPSOID_NAME_WGS84, 6378137.0, 298.257223563));
-    solar = calc_solar_irradiance(solarElevationAngle: sunPosition.altitude, cloudcover: cloudcover!);
-    double hour_gmt = dateTime.dateTimeUtc.hour - dateTime.timezone.inHours + (dateTime.dateTimeUtc.minute) / 60.0;
+    var sunPosition = astronomy.SunPosition(LatLng(coords!.latitude, coords.longitude), dateTime!.toLocalTime(),);
+    solar = calc_solar_irradiance(solarElevationAngle: sunPosition.altitudeDeg, cloudcover: cloudcover!);
+    double hour_gmt = dateTime.dateTimeUtc.hour - dateTime.timezoneOffset.inHours + (dateTime.dateTimeUtc.minute) / 60.0;
     double dday = dateTime.dateTimeUtc.day + hour_gmt / 24.0;
     liljegrenOutputSolarParameter solpar = calc_solar_parameters(
         dateTime.dateTimeUtc.year, dateTime.dateTimeUtc.month, dday, coords.latitude, coords.longitude);
@@ -141,7 +136,11 @@ UTCIOutput calculateUTCI(double Ta, double RH, double va, double Tmrt, bool calc
         Tg: Tg,
         Tmrt: Tmrt,
         Tdew: Tdew,
-        SunPos: SunPosition(coords!, JulianDate(dateTime!), defaultEllipsoid));
+        SunPos: astronomy.SunPosition(
+            LatLng(coords!.latitude, coords.longitude),
+            dateTime!.dateTimeUtc
+        )
+    );
   } else {
     return UTCIOutput(
         UTCI: UTCI,
@@ -149,10 +148,10 @@ UTCIOutput calculateUTCI(double Ta, double RH, double va, double Tmrt, bool calc
         Tg: Tg,
         Tmrt: Tmrt,
         Tdew: Tdew,
-        SunPos: SunPosition(
+        SunPos: astronomy.SunPosition(
             const LatLng(0.0, 0.0),
-            JulianDate(DateTimeTZ(dateTimeUtc: DateTime.now(), timezone: DateTime.now().timeZoneOffset)),
-            defaultEllipsoid));
+            DateTime.now())
+    );
   }
 }
 

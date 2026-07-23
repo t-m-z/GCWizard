@@ -39,8 +39,8 @@ class UTCIState extends State<UTCI> {
   double _currentHumidity = 0.0;
   double _currentWindSpeed = 0.5;
 
-  DateTimeTZ _currentDateTime =
-  DateTimeTZ(dateTimeUtc: DateTime.now(), timezone: DateTime.now().timeZoneOffset);
+  DateTimeUTCwithTZ _currentDateTime =
+  DateTimeUTCwithTZ(dateTimeUtc: DateTime.now(), timezoneOffset: DateTime.now().timeZoneOffset);
   BaseCoordinate _currentCoords = defaultBaseCoordinate;
   double _currentAirPressure = 1013.25;
   bool _currentAreaUrban = true;
@@ -291,8 +291,8 @@ class UTCIState extends State<UTCI> {
               _currentOutputUnit.fromReference(TEMPERATURE_CELSIUS.toKelvin(calculatedUTCI.Tmrt)).toStringAsFixed(2) + ' ' + _currentOutputUnit.symbol
               ],
             [i18n(context, 'astronomy_sunposition_title'), ''],
-            [i18n(context, 'astronomy_position_altitude'), calculatedUTCI.SunPos.altitude.toStringAsFixed(2) + ' °'],
-            [i18n(context, 'astronomy_position_azimuth'), calculatedUTCI.SunPos.azimuth.toStringAsFixed(2) + ' °'],
+            [i18n(context, 'astronomy_position_altitude'), calculatedUTCI.SunPos.altitudeDeg.toStringAsFixed(2) + ' °'],
+            [i18n(context, 'astronomy_position_azimuth'), calculatedUTCI.SunPos.azimuthDeg.toStringAsFixed(2) + ' °'],
 
           ]),
         )

@@ -14,13 +14,13 @@ class AudioInfo {
 
   AudioInfo(
       {required this.duration,
-      required this.sampleRate,
-      required this.channels,
-      required this.bitRate,
-      required this.format,
-      required this.bytes,
-      required this.error,
-      required this.status});
+        required this.sampleRate,
+        required this.channels,
+        required this.bitRate,
+        required this.format,
+        required this.bytes,
+        required this.error,
+        required this.status});
 }
 
 class WaveformJobData {

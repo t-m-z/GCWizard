@@ -1,7 +1,6 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
-import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
 import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer.dart';
 import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
@@ -259,19 +258,19 @@ class WaveFormState extends State<WaveForm> {
     return Column(children: [
       (_soundfilePNGImage.isNotEmpty)
           ? GCWExpandableTextDivider(
-              text: i18n(context, 'waveform_output_morsecode'),
-              expanded: false,
-              suppressTopSpace: false,
-              child: Column(
-                children: <Widget>[
-                  GCWOutputText(text: _decodedMorseCode),
-                  GCWOutputText(text: _decodedMorseText),
-                ],
-              ),
-            )
+        text: i18n(context, 'waveform_output_morsecode'),
+        expanded: false,
+        suppressTopSpace: false,
+        child: Column(
+          children: <Widget>[
+            GCWOutputText(text: _decodedMorseCode),
+            GCWOutputText(text: _decodedMorseText),
+          ],
+        ),
+      )
           : GCWOutputText(
-              text: _errorText('waveform_error_png_not_created'),
-            ),
+        text: _errorText('waveform_error_png_not_created'),
+      ),
     ]);
   }
 
@@ -361,12 +360,12 @@ class WaveFormState extends State<WaveForm> {
 
   Future<GCWAsyncExecuterParameters?> _buildJobData() async {
     return GCWAsyncExecuterParameters(WaveformJobData(
-      jobDataBytes: _audioInfo.bytes,
-      jobMorseParams: MorseParams(
-          smoothingWindow: _currentSmoothingWindow,
-          thresholdFactor: _currentThresholdFactor,
-          minRunLength: _currentMinRunLength,
-          unitTolerance: _currentUnitTolerance)
+        jobDataBytes: _audioInfo.bytes,
+        jobMorseParams: MorseParams(
+            smoothingWindow: _currentSmoothingWindow,
+            thresholdFactor: _currentThresholdFactor,
+            minRunLength: _currentMinRunLength,
+            unitTolerance: _currentUnitTolerance)
     ));
   }
 

@@ -42,12 +42,13 @@ dependencies:
   flutter_map: 8.2.2 #crash with 8.3.0/ 8.3.1 on fast in/out zoom
   flutter_map_marker_popup: ^8.1.1
   flutter_midi_engine: ^0.1.5
+  fluttermocklocation: ^0.0.5
   highlight: ^0.7.0
   http: ^1.6.0
   http_parser: ^4.1.2
   image: ^4.9.1
   image_picker: ^1.2.3
-  intl: ^0.20.3
+  intl: ^0.20.2
   latlong2: ^0.9.1
   location: ^8.0.1
   mask_text_input_formatter: ^2.5.0

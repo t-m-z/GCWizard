@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gc_wizard/application/_common/gcw_package_info.dart';
@@ -156,6 +157,11 @@ import 'package:gc_wizard/tools/crypto_and_encodings/mexican_army_cipher_wheel/w
 import 'package:gc_wizard/tools/crypto_and_encodings/morbit/widget/morbit.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/navajo/widget/navajo.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/navajo/widget/navajo_list.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/nva_substitution_tables/535/widget/535.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/nva_substitution_tables/hva/widget/hva.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/nva_substitution_tables/juno/widget/juno.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/nva_substitution_tables/jupiter/widget/jupiter.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/nva_substitution_tables/zebra/widget/zebra.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/one_time_pad/widget/one_time_pad.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/playfair/widget/playfair.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/pokemon/widget/pokemon.dart';
@@ -286,6 +292,8 @@ import 'package:gc_wizard/tools/science_and_technology/ip_codes/widget/ip_codes.
 import 'package:gc_wizard/tools/science_and_technology/kaprekar/widget/kaprekar.dart';
 import 'package:gc_wizard/tools/science_and_technology/lcm/widget/lcm.dart';
 import 'package:gc_wizard/tools/science_and_technology/mathematical_constants/widget/mathematical_constants.dart';
+import 'package:gc_wizard/tools/science_and_technology/midi/midi_coding/widget/midi_coding.dart';
+import 'package:gc_wizard/tools/science_and_technology/midi/midi_overview/widget/midi_overview.dart';
 import 'package:gc_wizard/tools/science_and_technology/music_notes/music_notes/widget/music_notes.dart';
 import 'package:gc_wizard/tools/science_and_technology/number_sequences/look_and_say/widget/look_and_say_text.dart';
 import 'package:gc_wizard/tools/science_and_technology/numeral_bases/widget/numeral_bases.dart';

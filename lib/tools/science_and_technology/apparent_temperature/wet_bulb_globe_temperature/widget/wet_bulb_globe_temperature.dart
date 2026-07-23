@@ -44,8 +44,8 @@ class WetBulbGlobeTemperature extends StatefulWidget {
 }
 
 class WetBulbGlobeTemperatureState extends State<WetBulbGlobeTemperature> {
-  DateTimeTZ _currentDateTime =
-  DateTimeTZ(dateTimeUtc: DateTime.now(), timezone: DateTime.now().timeZoneOffset);
+  DateTimeUTCwithTZ _currentDateTime =
+  DateTimeUTCwithTZ(dateTimeUtc: DateTime.now(), timezoneOffset: DateTime.now().timeZoneOffset);
   BaseCoordinate _currentCoords = defaultBaseCoordinate;
 
   double _currentTemperature = 0.0;
@@ -278,7 +278,7 @@ class WetBulbGlobeTemperatureState extends State<WetBulbGlobeTemperature> {
         day: _currentDateTime.dateTimeUtc.day,
         hour: _currentDateTime.dateTimeUtc.hour,
         minute: _currentDateTime.dateTimeUtc.minute,
-        gmt: _currentDateTime.timezone.inHours,
+        gmt: _currentDateTime.timezoneOffset.inHours,
         coords: _currentCoords.toLatLng()!,
         windSpeed: _currentWindSpeed,
         windSpeedHeight: _currentWindSpeedHeight,

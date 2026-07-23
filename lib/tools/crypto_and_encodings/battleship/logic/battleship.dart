@@ -67,6 +67,7 @@ String decodeBattleship(String text, bool numberMode) {
     } else {
       tupel = _splitPair(pair);
     }
+
     if (tupel.length != 2) {
       absoluteError = true;
       faultyTupel = '( ' + tupel.toString() + ' )';
@@ -84,6 +85,7 @@ String decodeBattleship(String text, bool numberMode) {
           }
         }
       }
+
       if (column > _BATTLESHIP_MAX_COLUMNS) {
         columnsError = true;
         faultyColumnsTupel = '( ' + tupel[0] + ',' + tupel[1] + ' )';
@@ -108,29 +110,41 @@ String decodeBattleship(String text, bool numberMode) {
       }
 
       if (!absoluteError) {
-        if (column > maxColumn) maxColumn = column;
-        if (row > maxRow) maxRow = row;
+        if (column > maxColumn) {
+          maxColumn = column;
+        }
+
+        if (row > maxRow) {
+          maxRow = row;
+        }
+
         if (maxColumn > _BATTLESHIP_MAX_COLUMNS) {
           columnsError = true;
         }
+
         if (maxRow > _BATTLESHIP_MAX_ROWS) {
           rowsError = true;
         }
+
         world[column.toString() + '|' + row.toString()] = '#';
       }
+
       if (rowsError) {
         maxRow = _BATTLESHIP_MAX_ROWS;
       }
+
       if (columnsError) {
         maxColumn = _BATTLESHIP_MAX_COLUMNS;
       }
     }
   });
+
   List<List<String>> binaryWorld =
-      List.generate(maxColumn, (y) => List.generate(maxRow, (x) => ' ', growable: false), growable: false);
+      List.generate(maxColumn + 1, (y) => List.generate(maxRow + 1, (x) => ' ', growable: false), growable: false);
+
   world.forEach((key, value) {
-    column = int.parse(key.split('|')[0]) - 1;
-    row = int.parse(key.split('|')[1]) - 1;
+    column = int.parse(key.split('|')[0]);
+    row = int.parse(key.split('|')[1]);
     if (column < _BATTLESHIP_MAX_COLUMNS && row < _BATTLESHIP_MAX_ROWS) {
       binaryWorld[column][row] = value;
     }
@@ -138,9 +152,9 @@ String decodeBattleship(String text, bool numberMode) {
 
   String outputLine = '';
   List<String> output = [];
-  for (int y = 0; y < maxRow; y++) {
+  for (int y = 0; y < maxRow + 1; y++) {
     outputLine = '';
-    for (int x = 0; x < maxColumn; x++) {
+    for (int x = 0; x < maxColumn + 1; x++) {
       outputLine = outputLine + binaryWorld[x][y];
     }
     output.add(outputLine);

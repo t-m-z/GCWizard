@@ -26,7 +26,6 @@ class RotationSelection extends GCWSelection {
         className(Rot47()),
         className(Rot123()),
         className(RotXYZ()),
-        className(RotationGeneral())
         className(RotationGeneral()),
         className(RotationWeird())
       ].contains(className(element.tool));

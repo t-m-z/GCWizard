@@ -172,7 +172,7 @@ class WavParser {
 
     final channels = List.generate(
       numChannels,
-      (_) => List<double>.filled(totalFrames, 0.0, growable: false),
+          (_) => List<double>.filled(totalFrames, 0.0, growable: false),
     );
 
     int pos = dataOffset;
@@ -208,11 +208,11 @@ class WavParser {
   }
 
   static _SampleResult _readSample(
-    ByteData bd,
-    int offset,
-    int bitsPerSample,
-    int audioFormat,
-  ) {
+      ByteData bd,
+      int offset,
+      int bitsPerSample,
+      int audioFormat,
+      ) {
     // PCM
     if (audioFormat == 1) {
       switch (bitsPerSample) {
@@ -231,7 +231,7 @@ class WavParser {
             error: '',
           );
         case 24:
-          // 24-bit little endian, sign-extend auf 32-bit
+        // 24-bit little endian, sign-extend auf 32-bit
           final b0 = bd.getUint8(offset);
           final b1 = bd.getUint8(offset + 1);
           final b2 = bd.getUint8(offset + 2);
@@ -258,7 +258,7 @@ class WavParser {
               error: 'waveform_error_parse_unsupported_pcm_bit_depth' +
                   ':' +
                   bitsPerSample.toString());
-        // throw FormatException('waveform_error_unsupported_pcm_bit_depth: $bitsPerSample');
+      // throw FormatException('waveform_error_unsupported_pcm_bit_depth: $bitsPerSample');
       }
     }
 
@@ -332,12 +332,12 @@ class WavWaveformPainter extends CustomPainter {
   }
 
   void _drawChannel(
-    Canvas canvas,
-    Size size,
-    int channelIndex,
-    double channelHeight,
-    Paint paintWave,
-  ) {
+      Canvas canvas,
+      Size size,
+      int channelIndex,
+      double channelHeight,
+      Paint paintWave,
+      ) {
     final samples = data.channels[channelIndex];
     final totalSamples = samples.length;
 
@@ -632,7 +632,7 @@ bool _isDot(int len, double dot, MorseParams p) =>
 
 bool _isDash(int len, double dot, MorseParams p) =>
     len >= dot * (3 - 3 * p.unitTolerance) &&
-    len <= dot * (3 + 3 * p.unitTolerance);
+        len <= dot * (3 + 3 * p.unitTolerance);
 
 String _classifyPause(int len, double dot, MorseParams p) {
   if (len < dot * (2 + 2 * p.unitTolerance)) return ""; // intra-symbol
@@ -725,9 +725,9 @@ String _decodeMorse(String morse) {
 // Main: PCM → MORSE → TEXT
 // ------------------------------------------------------------
 Future<MorseAnalysisResult> analyzeMorseFromWavBytes(
-  Uint8List bytes, {
-  MorseParams params = const MorseParams()
-}) async {
+    Uint8List bytes, {
+      MorseParams params = const MorseParams()
+    }) async {
   final wav = await WavParser.parse(bytes);
   final mono = _toMono(wav);
 
@@ -792,20 +792,20 @@ Future<WavedataAndMorseResult> analyzeWav({
 Future<WavedataAndMorseResult> analyseSoundfileAsync(GCWAsyncExecuterParameters? jobData) async {
   if (jobData?.parameters is! WaveformJobData) {
     return Future.value(
-      WavedataAndMorseResult(
-          wavData: WavData(sampleRate: 0, numChannels: 0, channels: <List<double>>[], status: PARSE_STATUS.ERROR, error: ''),
-          bits: '',
-          morse: '',
-          text: '',
-          status: PARSE_STATUS.ERROR,
-          error: ''));
+        WavedataAndMorseResult(
+            wavData: WavData(sampleRate: 0, numChannels: 0, channels: <List<double>>[], status: PARSE_STATUS.ERROR, error: ''),
+            bits: '',
+            morse: '',
+            text: '',
+            status: PARSE_STATUS.ERROR,
+            error: ''));
   }
 
   var params = jobData!.parameters as WaveformJobData;
   var output = await analyzeWav(
-      sendAsyncPort: jobData.sendAsyncPort,
-      wavBytes: params.jobDataBytes,
-      morseParams: params.jobMorseParams,
+    sendAsyncPort: jobData.sendAsyncPort,
+    wavBytes: params.jobDataBytes,
+    morseParams: params.jobMorseParams,
   );
 
   jobData.sendAsyncPort?.send(output);
@@ -813,14 +813,14 @@ Future<WavedataAndMorseResult> analyseSoundfileAsync(GCWAsyncExecuterParameters?
 }
 
 Future<Uint8List> renderWav({
-    required WavData wavData,
-    required double height,
-    int? maxWidth,
-    int minWidth = 300,
-    Color backgroundColor = Colors.black,
-    Color waveformColor = Colors.orange,
-    double strokeWidth = 1.0
-  }) async {
+  required WavData wavData,
+  required double height,
+  int? maxWidth,
+  int minWidth = 300,
+  Color backgroundColor = Colors.black,
+  Color waveformColor = Colors.orange,
+  double strokeWidth = 1.0
+}) async {
 
   if (wavData.status == PARSE_STATUS.ERROR) {
     return Uint8List(0);
