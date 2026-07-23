@@ -44,7 +44,7 @@ class _MIDIState extends State<MIDI> {
 
   final FlutterMidiEngine _midiEngine = FlutterMidiEngine();
   bool _isInitialized = false;
-  int _currentProgram = 0;
+  int _currentInstrument = 0;
   int _currentVolume = 100;
   int _currentMIDINote = 0;
   final String _ASSET_PATH =
@@ -57,7 +57,7 @@ class _MIDIState extends State<MIDI> {
 
       if (success) {
         await _midiEngine.setVolume(volume: _currentVolume);
-        await _midiEngine.changeProgram(program: _currentProgram);
+        await _midiEngine.changeProgram(program: _currentInstrument);
 
         setState(() {
           _isInitialized = true;
@@ -102,7 +102,7 @@ class _MIDIState extends State<MIDI> {
     await _midiEngine.changeProgram(program: program);
 
     setState(() {
-      _currentProgram = program;
+      _currentInstrument = program;
     });
   }
 
@@ -211,8 +211,8 @@ class _MIDIState extends State<MIDI> {
                 },
               ),
               GCWDropDownSpinner(
-                title: i18n(context, 'midi_program'),
-                index: _currentProgram,
+                title: i18n(context, 'midi_instrument'),
+                index: _currentInstrument,
                 items: MIDI_INSTRUMENTS
                     .map((key, value) {
                   return MapEntry(key, value);
@@ -221,8 +221,8 @@ class _MIDIState extends State<MIDI> {
                     .toList(),
                 onChanged: (value) {
                   setState(() {
-                    _currentProgram = value;
-                    _changeInstrument(_currentProgram);
+                    _currentInstrument = value;
+                    _changeInstrument(_currentInstrument);
                   });
                 },
               )
