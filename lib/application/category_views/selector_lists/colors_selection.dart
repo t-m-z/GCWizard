@@ -6,6 +6,7 @@ import 'package:gc_wizard/common_widgets/gcw_selection.dart';
 import 'package:gc_wizard/tools/science_and_technology/colors/color_tool/widget/color_tool.dart';
 import 'package:gc_wizard/tools/science_and_technology/colors/pantone_color_codes/widget/pantone_color_codes.dart';
 import 'package:gc_wizard/tools/science_and_technology/colors/ral_color_codes/widget/ral_color_codes.dart';
+import 'package:gc_wizard/tools/science_and_technology/colors/xkcd_color_codes/widget/xkcd_color_codes.dart';
 import 'package:gc_wizard/tools/symbol_tables/_common/widget/symbol_table.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/common_widget_utils.dart';
 
@@ -20,7 +21,11 @@ class ColorsSelection extends GCWSelection {
         return true;
       }
 
-      return [className(const ColorTool()), className(const PantoneColorCodes()), className(const RALColorCodes())]
+      return [
+        className(const ColorTool()),
+        className(const PantoneColorCodes()),
+        className(const RALColorCodes()),
+        className(const XKCDColorCodes())]
           .contains(className(element.tool));
     }).toList();
 

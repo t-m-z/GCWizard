@@ -253,6 +253,7 @@ import 'package:gc_wizard/tools/science_and_technology/blood_alcohol_content/wid
 import 'package:gc_wizard/tools/science_and_technology/colors/color_tool/widget/color_tool.dart';
 import 'package:gc_wizard/tools/science_and_technology/colors/pantone_color_codes/widget/pantone_color_codes.dart';
 import 'package:gc_wizard/tools/science_and_technology/colors/ral_color_codes/widget/ral_color_codes.dart';
+import 'package:gc_wizard/tools/science_and_technology/colors/xkcd_color_codes/widget/xkcd_color_codes.dart';
 import 'package:gc_wizard/tools/science_and_technology/combinatorics/combination/widget/combination.dart';
 import 'package:gc_wizard/tools/science_and_technology/combinatorics/combination_permutation/widget/combination_permutation.dart';
 import 'package:gc_wizard/tools/science_and_technology/combinatorics/permutation/widget/permutation.dart';
@@ -955,6 +956,7 @@ void _initStaticToolList() {
       className(const WigWagSemaphoreTelegraph()),
       className(const Windchill()),
       className(const WordSearch()),
+      className(const XKCDColorCodes()),
       className(const Z22()),
       className(ZamonianNumbers()),
       className(const ZC1()),
