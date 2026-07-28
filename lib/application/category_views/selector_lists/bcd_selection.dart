@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/registry.dart';
-import 'package:gc_wizard/application/tools/widget/gcw_tool.dart';
 import 'package:gc_wizard/application/tools/widget/gcw_toollist.dart';
 import 'package:gc_wizard/common_widgets/gcw_selection.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/bcd/bcd1of10/widget/bcd1of10.dart';
@@ -19,33 +17,30 @@ import 'package:gc_wizard/tools/crypto_and_encodings/bcd/bcdoriginal/widget/bcdo
 import 'package:gc_wizard/tools/crypto_and_encodings/bcd/bcdpetherick/widget/bcdpetherick.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/bcd/bcdstibitz/widget/bcdstibitz.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/bcd/bcdtompkins/widget/bcdtompkins.dart';
-import 'package:gc_wizard/utils/ui_dependent_utils/common_widget_utils.dart';
 
 class BCDSelection extends GCWSelection {
   const BCDSelection({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final List<GCWTool> _toolList = registeredTools.where((element) {
-      return [
-        className(const BCDOriginal()),
-        className(const BCDAiken()),
-        className(const BCDGlixon()),
-        className(const BCDGray()),
-        className(const BCDGrayExcess()),
-        className(const BCDPetherick()),
-        className(const BCDOBrien()),
-        className(const BCDStibitz()),
-        className(const BCDTompkins()),
-        className(const BCDLibawCraig()),
-        className(const BCD2of5()),
-        className(const BCD2of5Postnet()),
-        className(const BCD2of5Planet()),
-        className(const BCDHamming()),
-        className(const BCDBiquinary()),
-        className(const BCD1of10()),
-      ].contains(className(element.tool));
-    }).toList();
+    final _toolList = filterTools(const {
+        BCDOriginal,
+        BCDAiken,
+        BCDGlixon,
+        BCDGray,
+        BCDGrayExcess,
+        BCDPetherick,
+        BCDOBrien,
+        BCDStibitz,
+        BCDTompkins,
+        BCDLibawCraig,
+        BCD2of5,
+        BCD2of5Postnet,
+        BCD2of5Planet,
+        BCDHamming,
+        BCDBiquinary,
+        BCD1of10
+      });
 
     return GCWToolList(toolList: _toolList);
   }

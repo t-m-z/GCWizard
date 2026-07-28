@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/registry.dart';
 import 'package:gc_wizard/application/tools/widget/gcw_tool.dart';
 import 'package:gc_wizard/application/tools/widget/gcw_toollist.dart';
 import 'package:gc_wizard/common_widgets/gcw_selection.dart';
@@ -9,11 +8,8 @@ class ImagesAndFilesSelection extends GCWSelection {
 
   @override
   Widget build(BuildContext context) {
-    final List<GCWTool> _toolList =
-        registeredTools.where((element) => element.categories.contains(ToolCategory.IMAGES_AND_FILES)).toList();
+    final _toolList = filterCategory(ToolCategory.IMAGES_AND_FILES);
 
-    _toolList.sort((a, b) => sortToolList(a, b));
-
-    return GCWToolList(toolList: _toolList);
+    return GCWToolList(toolList: sortTools(_toolList));
   }
 }

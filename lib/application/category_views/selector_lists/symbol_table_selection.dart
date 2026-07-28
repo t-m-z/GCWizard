@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
-import 'package:gc_wizard/application/registry.dart';
 import 'package:gc_wizard/application/tools/widget/gcw_tool.dart';
 import 'package:gc_wizard/application/tools/widget/gcw_toollist.dart';
 import 'package:gc_wizard/common_widgets/dialogs/gcw_dialog.dart';
@@ -16,25 +15,13 @@ class SymbolTableSelection extends GCWSelection {
 
   @override
   Widget build(BuildContext context) {
-    List<GCWTool> _toolList = registeredTools.where((element) {
-      return [
-        className(const SymbolTable()),
-      ].contains(className(element.tool));
-    }).toList();
+    List<GCWTool> _toolList = sortTools(filterTools(const {
+        SymbolTable
+      }));
 
-    _toolList.sort((a, b) => sortToolList(a, b));
+    _toolList.insert(0, filterFirstTool(SymbolReplacer));
 
-    _toolList.insert(0, registeredTools.firstWhere((element) {
-      return [
-        className(const SymbolReplacer()),
-      ].contains(className(element.tool));
-    }));
-
-    _toolList.insert(0, registeredTools.firstWhere((element) {
-      return [
-        className(const SymbolTableExamplesSelect()),
-      ].contains(className(element.tool));
-    }));
+    _toolList.insert(0, filterFirstTool(SymbolTableExamplesSelect));
 
     return GCWToolList(toolList: _toolList);
   }

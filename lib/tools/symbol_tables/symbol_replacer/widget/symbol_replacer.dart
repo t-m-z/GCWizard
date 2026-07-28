@@ -4,10 +4,10 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/navigation/no_animation_material_page_route.dart';
-import 'package:gc_wizard/application/registry.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
 import 'package:gc_wizard/application/tools/widget/gcw_tool.dart';
+import 'package:gc_wizard/application/tools/widget/gcw_toollist.dart';
 import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer.dart';
 import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_button.dart';
@@ -37,7 +37,6 @@ import 'package:gc_wizard/tools/symbol_tables/symbol_replacer/widget/symbol_repl
 import 'package:gc_wizard/tools/symbol_tables/symbol_replacer/widget/symbol_replacer_symboldata.dart';
 import 'package:gc_wizard/utils/file_utils/gcw_file.dart';
 import 'package:gc_wizard/utils/method_limiter.dart';
-import 'package:gc_wizard/utils/ui_dependent_utils/common_widget_utils.dart';
 
 class SymbolReplacer extends StatefulWidget {
   final GCWFile? platformFile;
@@ -424,12 +423,7 @@ class _SymbolReplacerState extends State<SymbolReplacer> {
 
   void _initDropDownLists() {
     if (_compareSymbolItems.isEmpty) {
-      List<GCWTool> _toolList = registeredTools.where((element) {
-        return [
-          className(const SymbolTable()),
-        ].contains(className(element.tool));
-      }).toList();
-      _toolList.sort((a, b) => sortToolList(a, b));
+      List<GCWTool> _toolList = sortTools(filterTools(const {SymbolTable}));
 
       _compareSymbolItems = _toolList.map((tool) {
         return GCWDropDownMenuItem(

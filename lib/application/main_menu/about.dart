@@ -4,11 +4,10 @@ import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/main_menu/licenses.dart';
 import 'package:gc_wizard/application/main_menu/mainmenuentry_stub.dart';
 import 'package:gc_wizard/application/navigation/no_animation_material_page_route.dart';
-import 'package:gc_wizard/application/registry.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
+import 'package:gc_wizard/application/tools/widget/gcw_toollist.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_divider.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
-import 'package:gc_wizard/utils/ui_dependent_utils/common_widget_utils.dart';
 import 'package:gc_wizard/utils/ui_dependent_utils/text_widget_utils.dart';
 
 part 'about_data.dart';
@@ -123,8 +122,7 @@ class _AboutState extends State<About> {
           ),
           onTap: () {
             Navigator.of(context).push(NoAnimationMaterialPageRoute<Object?>(
-                builder: (context) =>
-                    registeredTools.firstWhere((tool) => className(tool.tool) == className(const Licenses()))));
+                builder: (context) => filterFirstTool(Licenses)));
           },
         ),
         const GCWDivider(),

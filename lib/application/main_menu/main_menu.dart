@@ -5,7 +5,6 @@ import 'package:gc_wizard/application/main_menu/about.dart';
 import 'package:gc_wizard/application/main_menu/call_for_contribution.dart';
 import 'package:gc_wizard/application/main_menu/changelog.dart';
 import 'package:gc_wizard/application/navigation/no_animation_material_page_route.dart';
-import 'package:gc_wizard/application/registry.dart';
 import 'package:gc_wizard/application/settings/widget/settings_coordinates.dart';
 import 'package:gc_wizard/application/settings/widget/settings_general.dart';
 import 'package:gc_wizard/application/settings/widget/settings_saverestore.dart';
@@ -13,8 +12,8 @@ import 'package:gc_wizard/application/settings/widget/settings_tools.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
 import 'package:gc_wizard/application/tools/widget/gcw_tool.dart';
+import 'package:gc_wizard/application/tools/widget/gcw_toollist.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
-import 'package:gc_wizard/utils/ui_dependent_utils/common_widget_utils.dart';
 import 'package:provider/provider.dart';
 
 Drawer buildMainMenu(BuildContext context, GlobalKey<ScaffoldState> scaffoldKey) {
@@ -54,10 +53,8 @@ Drawer buildMainMenu(BuildContext context, GlobalKey<ScaffoldState> scaffoldKey)
   menuEntries.add(_buildSettingsItem(context, scaffoldKey));
 
   final otherMenuItems = [
-    _CategoryMetaData(
-        registeredTools.firstWhere((tool) => className(tool.tool) == className(const Changelog())), Icons.show_chart),
-    _CategoryMetaData(
-        registeredTools.firstWhere((tool) => className(tool.tool) == className(const About())), Icons.info)
+    _CategoryMetaData(filterFirstTool(Changelog), Icons.show_chart),
+    _CategoryMetaData(filterFirstTool(About), Icons.info)
   ];
 
   menuEntries.addAll(otherMenuItems.map((_CategoryMetaData item) {
@@ -85,7 +82,7 @@ Drawer buildMainMenu(BuildContext context, GlobalKey<ScaffoldState> scaffoldKey)
                 ],
               )),
           onTap: () {
-            var tool = registeredTools.firstWhere((tool) => className(tool.tool) == className(const CallForContribution()));
+            var tool = filterFirstTool(CallForContribution);
 
             closeDrawerOpenTool(context, scaffoldKey, tool);
           })
@@ -134,22 +131,22 @@ ExpansionTile _buildSettingsItem(BuildContext context, GlobalKey<ScaffoldState> 
   // TODO class type
   final settingsItems = [
     _CategoryMetaData(
-      registeredTools.firstWhere((tool) => className(tool.tool) == className(const GeneralSettings())),
+      filterFirstTool(GeneralSettings),
       Icons.settings,
       i18n(context, 'mainmenu_settings_general_title'),
     ),
     _CategoryMetaData(
-      registeredTools.firstWhere((tool) => className(tool.tool) == className(const CoordinatesSettings())),
+      filterFirstTool(CoordinatesSettings),
       Icons.language,
       i18n(context, 'mainmenu_settings_coordinates_title'),
     ),
     _CategoryMetaData(
-      registeredTools.firstWhere((tool) => className(tool.tool) == className(const ToolSettings())),
+      filterFirstTool(ToolSettings),
       Icons.category,
       i18n(context, 'mainmenu_settings_tools_title'),
     ),
     _CategoryMetaData(
-      registeredTools.firstWhere((tool) => className(tool.tool) == className(const SaveRestoreSettings())),
+      filterFirstTool(SaveRestoreSettings),
       Icons.save,
       i18n(context, 'mainmenu_settings_saverestore_title'),
     )
