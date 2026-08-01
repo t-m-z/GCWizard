@@ -19,7 +19,7 @@ class AstroTimes extends StatefulWidget {
 }
 
 class _AstroTimesState extends State<AstroTimes> {
-  var _currentDateTimeUTCWithTZ = DateTimeUTCwithTZ.now();
+  var _currentDateTimeUTCWithTZ = DateTimeUTCwithTZ.nowTimestamp();
   var _currentCoords = defaultBaseCoordinate;
 
   @override

@@ -18,7 +18,7 @@ class SunPosition extends StatefulWidget {
 }
 
 class _SunPositionState extends State<SunPosition> {
-  var _currentDateTimeUTCWithTZ = DateTimeUTCwithTZ.now();
+  var _currentDateTimeUTCWithTZ = DateTimeUTCwithTZ.nowTimestamp();
   var _currentCoords = defaultBaseCoordinate;
 
   @override

@@ -35,8 +35,8 @@ class EpochTime extends StatefulWidget {
 
 class _EpochTimeState extends State<EpochTime> {
   late Object _currentTimeStamp;
-  var _currentDateTimeEncrypt = DateTimeUTCwithTZ.now();
-  var _currentDateTimeDecrypt = DateTimeUTCwithTZ.now();
+  var _currentDateTimeEncrypt = DateTimeUTCwithTZ.nowTimestamp();
+  var _currentDateTimeDecrypt = DateTimeUTCwithTZ.nowTimestamp();
   GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
 
   @override
@@ -61,9 +61,9 @@ class _EpochTimeState extends State<EpochTime> {
             setState(() {
               _currentMode = value;
               if (_currentMode == GCWSwitchPosition.left) {
-                _currentDateTimeEncrypt = DateTimeUTCwithTZ.now();
+                _currentDateTimeEncrypt = DateTimeUTCwithTZ.nowTimestamp();
               } else {
-                _currentDateTimeDecrypt = DateTimeUTCwithTZ.now();
+                _currentDateTimeDecrypt = DateTimeUTCwithTZ.nowTimestamp();
               }
             });
           },

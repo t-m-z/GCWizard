@@ -27,7 +27,7 @@ class _CalendarWeekState extends State<CalendarWeek> {
 
   @override
   void initState() {
-    _currentEncryptionDate = DateTimeUTCwithTZ.now();
+    _currentEncryptionDate = DateTimeUTCwithTZ.nowTimestamp();
     _currentYear = _currentEncryptionDate.toLocalTime().year;
     super.initState();
   }

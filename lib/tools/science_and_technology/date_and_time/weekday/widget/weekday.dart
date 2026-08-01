@@ -18,7 +18,7 @@ class _WeekdayState extends State<Weekday> {
 
   @override
   void initState() {
-    _currentDate = DateTimeUTCwithTZ.now();
+    _currentDate = DateTimeUTCwithTZ.nowTimestamp();
     super.initState();
   }
 

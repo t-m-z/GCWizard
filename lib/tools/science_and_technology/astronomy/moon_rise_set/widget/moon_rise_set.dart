@@ -18,7 +18,7 @@ class MoonRiseSet extends StatefulWidget {
 }
 
 class _MoonRiseSetState extends State<MoonRiseSet> {
-  var _currentDateTimeUTCWithTZ = DateTimeUTCwithTZ.now();
+  var _currentDateTimeUTCWithTZ = DateTimeUTCwithTZ.nowDate();
   var _currentCoords = defaultBaseCoordinate;
 
   @override
@@ -51,8 +51,6 @@ class _MoonRiseSetState extends State<MoonRiseSet> {
       ],
     );
   }
-
-
 
   Widget _buildOutput() {
     var moonRiseCulSets = astronomy.moonRiseSetUTC(

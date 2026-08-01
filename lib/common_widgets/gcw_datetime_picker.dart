@@ -176,11 +176,6 @@ class _GCWDateTimePickerState extends State<GCWDateTimePicker> {
         _currentMinute = widget.duration!.inMinutes.remainder(60);
         _currentSecond = widget.duration!.inSeconds.remainder(60);
         _currentMilliSecond = _durationMilliseconds(widget.duration!);
-      } else {
-        _currentHour = date.hour;
-        _currentMinute = date.minute;
-        _currentSecond = date.second;
-        _currentMilliSecond = date.millisecond;
       }
     }
 
@@ -483,7 +478,6 @@ class _GCWDateTimePickerState extends State<GCWDateTimePicker> {
     } else {
       dateTimeUtc = DateTime.utc(_currentYear, _currentMonth, _currentDay).subtract(timezone);
     }
-
     var output = DateTimeUTCwithTZDuration(
       dateTimeUtc: DateTimeUTCwithTZ(
         dateTimeUtc: dateTimeUtc,
