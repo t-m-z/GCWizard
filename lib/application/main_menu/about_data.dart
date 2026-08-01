@@ -72,6 +72,7 @@ const List<String> _ABOUT_TRANSLATORS = [
 const List<String> _ABOUT_TESTER = [
   '4-Everus',
   '83_Seth',
+  'AJSN',
   'Amelie2401',
   'Andreas E.',
   'Andreas L.',
