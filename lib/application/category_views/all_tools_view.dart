@@ -199,6 +199,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/universal_product_code/widg
 import 'package:gc_wizard/tools/crypto_and_encodings/upsidedown/widget/upsidedown.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/vigenere/widget/vigenere.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/wasd/widget/wasd.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/zalgo_text/widget/zalgo_text.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/zamonian_numbers/widget/zamonian_numbers.dart';
 import 'package:gc_wizard/tools/formula_solver/widget/formula_solver_formulagroups.dart';
 import 'package:gc_wizard/tools/games/bowling/widget/bowling.dart';
@@ -937,6 +938,7 @@ const Set<Type> _mainToolTypes = {
   WordSearch,
   XKCDColorCodes,
   Z22,
+  ZalgoText,
   ZamonianNumbers,
   ZC1,
   Zebra,
