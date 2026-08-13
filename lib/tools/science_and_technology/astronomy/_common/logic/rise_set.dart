@@ -4,7 +4,6 @@ import 'package:gc_wizard/utils/complex_return_types.dart';
 enum RiseSetType {RISE, CULMINATION, SET}
 
 List<(RiseSetType, DateTime)> getRiseSetsAtDay(RiseSetUTC riseCulSets, DateTimeUTCwithTZ dateTime, {bool strict = false}) {
-
   var riseSets = <(RiseSetType, DateTime)>[];
   for (var rise in riseCulSets.rises) {
     riseSets.add((RiseSetType.RISE, DateTimeUTCwithTZ(dateTimeUtc: rise, timezoneOffset: dateTime.timezoneOffset).toLocalTime()));

@@ -61,24 +61,41 @@ class DateTimeUTCwithTZ {
 
   DateTimeUTCwithTZ({required this.dateTimeUtc, this.timezoneOffset = const Duration()});
 
-  static DateTimeUTCwithTZ now() {
+  static DateTimeUTCwithTZ nowTimestamp() {
     return fromLocalTime(DateTime.now());
   }
 
-  static DateTimeUTCwithTZ fromLocalTime(DateTime localDatetime, {Duration? timezone}) {
+  static DateTimeUTCwithTZ nowDate() {
+    var now = DateTime.now();
+    var dateTime = DateTime(now.year, now.month, now.day);
+    return fromLocalTime(dateTime);
+  }
+
+  static DateTimeUTCwithTZ fromLocalTime(DateTime localDatetime) {
     return DateTimeUTCwithTZ(
-      dateTimeUtc: timezone != null
-          ? DateTime.fromMillisecondsSinceEpoch(
-              localDatetime.millisecondsSinceEpoch - timezone.inMilliseconds, isUtc: true
-            )
-          : localDatetime.toUtc(),
-      timezoneOffset: timezone ?? localDatetime.timeZoneOffset
+      dateTimeUtc: localDatetime.toUtc(),
+      timezoneOffset: localDatetime.timeZoneOffset
     );
   }
 
+  /**
+   * Adds the timezone offset to the UTC value to give the "local" time
+   * which is given by the offset.
+   *
+   * ATTENTION!
+   *
+   * Internal DateTime type logic adds the real systems timezone to the result
+   * additionally if not marked as UTC. To avoid this, the result internally
+   * is still handled as UTC internally.
+   * So be careful when you use it! The values are "local" according to the
+   * given timezone offset but the DateTime object is not from the system's
+   * locale's point of view.
+   *
+   * TODO: Find a way to define the internal locale's timezone to avoid the described behaviour.
+   */
   DateTime toLocalTime() {
     return  DateTime.fromMillisecondsSinceEpoch(
-      dateTimeUtc.millisecondsSinceEpoch + timezoneOffset.inMilliseconds, isUtc: false
+      dateTimeUtc.millisecondsSinceEpoch + timezoneOffset.inMilliseconds, isUtc: true
     );
   }
 
