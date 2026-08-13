@@ -113,9 +113,9 @@ class _EllipsoidTriangleNapoleonPointsState extends State<EllipsoidTriangleNapol
     }
 
     var _specialPoints = calculateEllipsoidTriangleNapoleonPoints(triangle, defaultEllipsoid);
-    var specialPoint = _specialPoints.first;
+    var specialPoint = _specialPoints.last;
     if (_currentNapoleonPoint == GCWSwitchPosition.right) {
-      specialPoint = _specialPoints.last;
+      specialPoint = _specialPoints.first;
     }
 
     _currentOutput = ellipsoidTriangleSpecialPointOutput(context, _currentOutputFormat, triangle, specialPoint);
