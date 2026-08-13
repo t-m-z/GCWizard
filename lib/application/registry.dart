@@ -276,6 +276,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/polybios/widget/polybios.da
 import 'package:gc_wizard/tools/crypto_and_encodings/porta/widget/porta.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/predator/widget/predator.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/prime_alphabet/widget/prime_alphabet.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/punycode/widget/punycode.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/rabbit/widget/rabbit.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/ragbaby/widget/ragbaby.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/rail_fence/widget/rail_fence.dart';
@@ -507,7 +508,6 @@ import 'package:gc_wizard/tools/science_and_technology/primes/primes_nearestprim
 import 'package:gc_wizard/tools/science_and_technology/primes/primes_nthprime/widget/primes_nthprime.dart';
 import 'package:gc_wizard/tools/science_and_technology/primes/primes_primeindex/widget/primes_primeindex.dart';
 import 'package:gc_wizard/tools/science_and_technology/projectiles/widget/projectiles.dart';
-import 'package:gc_wizard/tools/science_and_technology/punycode/widget/punycode.dart';
 import 'package:gc_wizard/tools/science_and_technology/quadratic_equation/widget/quadratic_equation.dart';
 import 'package:gc_wizard/tools/science_and_technology/recycling/widget/recycling.dart';
 import 'package:gc_wizard/tools/science_and_technology/regex/widget/regex.dart';
@@ -1875,7 +1875,7 @@ void initializeRegistry(BuildContext context) {
       'projectiles',
     ], licenses: []),
     GCWTool(tool: const Punycode(), id: 'punycode', categories: const [
-      ToolCategory.SCIENCE_AND_TECHNOLOGY
+      ToolCategory.CRYPTOGRAPHY
     ], searchKeys: const [
       'punycode',
     ], licenses: [
