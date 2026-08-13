@@ -140,7 +140,7 @@ class WordokuBoardPainter extends CustomPainter {
           text: value,
           textStyle: gcwTextStyle().copyWith(fontSize: 32, color: themeColors().dialogText()),
           onPressed: () {
-            Navigator.of(context).pop();
+            Navigator.of(context, rootNavigator: true).pop();
             setBoxValue(x, y, value);
           },
         ));
@@ -155,7 +155,7 @@ class WordokuBoardPainter extends CustomPainter {
     columns.add(GCWButton(
       text: i18n(context, 'sudokusolver_removevalue'),
       onPressed: () {
-        Navigator.of(context).pop();
+        Navigator.of(context, rootNavigator: true).pop();
         setBoxValue(x, y, null);
       },
     ));
