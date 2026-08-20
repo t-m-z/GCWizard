@@ -97,7 +97,7 @@ class _GCWAsyncExecuterState<T> extends State<GCWAsyncExecuter<T>> {
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             if (widget.isOverlay) {
-              Navigator.of(context).pop(); // Pop from dialog on completion (needen on overlay)
+              Navigator.of(context, rootNavigator: true).pop(); // Pop from dialog on completion (needen on overlay)
               _cancelProcess();
             }
             if (_result is T) {

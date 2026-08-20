@@ -307,7 +307,7 @@ void showOpenFileDialog(BuildContext context, List<FileType> supportedFileTypes,
             onLoaded: (GCWFile? _file) {
               onLoaded(_file);
 
-              Navigator.of(context).pop();
+              Navigator.of(context, rootNavigator: true).pop();
             },
           ),
           GCWText(
