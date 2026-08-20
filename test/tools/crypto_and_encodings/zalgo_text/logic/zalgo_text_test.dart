@@ -1,5 +1,5 @@
 import "package:flutter_test/flutter_test.dart";
-import 'package:gc_wizard/tools/science_and_technology/zalgo_text/logic/zalgo_text.dart';
+import "package:gc_wizard/tools/crypto_and_encodings/zalgo_text/logic/zalgo_text.dart";
 
 void main() {
   group("ZalgoText.decodeZalgoText:", () {
