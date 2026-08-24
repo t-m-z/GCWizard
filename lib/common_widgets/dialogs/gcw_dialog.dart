@@ -59,7 +59,9 @@ class _GCWDialogButtonState extends State<GCWDialogButton> {
           style: _boldTextStyle,
         ),
         onPressed: () {
-          if (!widget.suppressClose) Navigator.of(context, rootNavigator: true).pop();
+          if (!widget.suppressClose) {
+            Navigator.of(context, rootNavigator: true).pop();
+          }
 
           if (widget.onPressed != null) widget.onPressed!();
         });
