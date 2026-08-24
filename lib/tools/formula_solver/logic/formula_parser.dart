@@ -696,7 +696,7 @@ abstract class _FormulaSolverResult {
 }
 
 class FormulaSolverSingleResult extends _FormulaSolverResult {
-  final String result;
+  String result;
 
   FormulaSolverSingleResult(super.state, this.result, {super.variables});
 

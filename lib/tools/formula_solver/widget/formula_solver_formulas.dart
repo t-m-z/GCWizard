@@ -186,21 +186,49 @@ class _FormulaSolverFormulasState extends State<_FormulaSolverFormulas> {
                   : _FormulaSolverResultType.FIXED;
 
 
+          var _isDMMCoord = false;
           Map<int, _ParsedCoordinate> _foundFormulaCoordinates = {};
           parserResult.output.results.asMap().forEach((idx, result) {
             BaseCoordinate? _foundFormulaCoordinate = parseStandardFormats(result.result, wholeString: true);
             if (_foundFormulaCoordinate != null && _foundFormulaCoordinate.toLatLng() != null) {
+              _isDMMCoord = _foundFormulaCoordinate.format.type == CoordinateFormatKey.DMM;
+              if (parserResult.formula.dmmLeadZeros && _isDMMCoord) {
+                var dmmLeftPad = DMMCoordinate.parse(result.result, leftPadMilliMinutes: true)!;
+                if (!equalsLatLng(_foundFormulaCoordinate.toLatLng()!, dmmLeftPad.toLatLng()!, tolerance: 10e-5)) {
+                  _foundFormulaCoordinate = dmmLeftPad;
+
+                  final regex = RegExp(
+                    r'^(.*[,.].*?)(\d{1,3})(.*[,.].*?)(\d{1,3})(.*)$',
+                  );
+                  result.result = result.result.replaceFirstMapped(regex, (m) {
+                    var north = m.group(2)!.padLeft(3, '0');
+                    var east = m.group(4)!.padLeft(3, '0');
+
+                    return '${m.group(1)}$north'
+                      '${m.group(3)}$east'
+                      '${m.group(5)}';
+                  });
+                }
+              }
+
+              var parsedFormulaMarkerName = parserResult.formula.name;
+              if (parsedFormulaMarkerName.isEmpty) {
+                parsedFormulaMarkerName = i18n(context, 'formulasolver_formulas_showonmap_coordinatetext') + ' ' + parserResult.formula.id.toString();
+              }
+              if (parserResult.output.results.length > 1 && result.variables != null && result.variables!.isNotEmpty) {
+                parsedFormulaMarkerName += ' (' + result.variables!.entries.map((entry) => entry.key.toString() + ': ' + entry.value.toString()).join(', ') + ')';
+              }
+
               _foundFormulaCoordinates.putIfAbsent(
                   idx + 1,
-                  () => _ParsedCoordinate(_foundFormulaCoordinate, resultType,
-                      '${parserResult.formula.id}' + (parserResult.output.results.length > 1 ? '.${idx + 1}' : '')));
+                  () => _ParsedCoordinate(_foundFormulaCoordinate!, resultType,parsedFormulaMarkerName));
             }
           });
           if (_foundFormulaCoordinates.isNotEmpty) {
             _foundCoordinates.putIfAbsent(index + 1, () => _foundFormulaCoordinates);
           }
 
-          var hasName =parserResult.formula.name.isNotEmpty;
+          var hasName = parserResult.formula.name.isNotEmpty;
 
           Widget row = Container(
             padding: const EdgeInsets.only(top: DEFAULT_MARGIN),
@@ -320,7 +348,7 @@ class _FormulaSolverFormulasState extends State<_FormulaSolverFormulas> {
                               GCWPopupMenuItem(
                                   child:
                                       iconedGCWPopupMenuItem(context, Icons.edit, 'formulasolver_formulas_editformula'),
-                                  action: (index) => setState(() {
+                                  action: (itemIndex) => setState(() {
                                         _currentEditId = parserResult.formula.id;
                                         _currentEditedFormula = parserResult.formula.formula;
                                         _editFormulaController.text = parserResult.formula.formula;
@@ -329,7 +357,7 @@ class _FormulaSolverFormulasState extends State<_FormulaSolverFormulas> {
                               GCWPopupMenuItem(
                                   child: iconedGCWPopupMenuItem(
                                       context, Icons.edit, 'formulasolver_formulas_modifyformula'),
-                                  action: (index) => setState(() {
+                                  action: (itemIndex) => setState(() {
                                         showFormulaReplaceDialog(context, [parserResult.formula],
                                             onOkPressed: (List<Formula> value) {
                                           if (parserResult.formula.formula == value.first.formula) return;
@@ -342,7 +370,7 @@ class _FormulaSolverFormulasState extends State<_FormulaSolverFormulas> {
                               GCWPopupMenuItem(
                                   child: iconedGCWPopupMenuItem(
                                       context, Icons.text_fields, 'formulasolver_formulas_nameformula'),
-                                  action: (index) => setState(() {
+                                  action: (itemIndex) => setState(() {
                                         _currentEditNameId = parserResult.formula.id;
                                         _currentEditedName = parserResult.formula.name;
                                         _editNameController.text = parserResult.formula.name;
@@ -362,7 +390,7 @@ class _FormulaSolverFormulasState extends State<_FormulaSolverFormulas> {
                               GCWPopupMenuItem(
                                 child: iconedGCWPopupMenuItem(
                                     context, Icons.content_copy, 'formulasolver_formulas_copyformula'),
-                                action: (index) => insertIntoGCWClipboard(context, parserResult.formula.formula),
+                                action: (itemIndex) => insertIntoGCWClipboard(context, parserResult.formula.formula),
                               ),
                               GCWPopupMenuItem(
                                   child: iconedGCWPopupMenuItem(
@@ -371,15 +399,29 @@ class _FormulaSolverFormulasState extends State<_FormulaSolverFormulas> {
                                       parserResult.output.results.length > 1
                                           ? 'formulasolver_formulas_copyresults'
                                           : 'formulasolver_formulas_copyresult'),
-                                  action: (index) => insertIntoGCWClipboard(
+                                  action: (itemIndex) => insertIntoGCWClipboard(
                                       context, parserResult.output.results.map((result) => result.result).join('\n'))),
+                              if (_isDMMCoord)
+                                GCWPopupMenuItem(
+                                  child: iconedGCWPopupMenuItem(
+                                    context,
+                                    Icons.exposure_zero,
+                                    parserResult.formula.dmmLeadZeros
+                                      ? 'formulasolver_formulas_suppressdmmleftpadding'
+                                      : 'formulasolver_formulas_dmmleftpadding'
+                                  ),
+                                  action: (itemIndex) {
+                                    setState(() {
+                                      parserResult.formula.dmmLeadZeros = !parserResult.formula.dmmLeadZeros;
+                                    });
+                                  }),
                               GCWPopupMenuItem(
                                   child: iconedGCWPopupMenuItem(
                                     context,
                                     Icons.forward,
                                     'formulasolver_formulas_openinvarcoords',
                                   ),
-                                  action: (index) {
+                                  action: (itemIndex) {
                                     var varCoordsFormula = _exportToVariableCoordinate(parserResult.formula);
                                     _openInVariableCoordinate(varCoordsFormula);
                                   }),
@@ -390,7 +432,7 @@ class _FormulaSolverFormulasState extends State<_FormulaSolverFormulas> {
                                       Icons.my_location,
                                       'formulasolver_formulas_showonmap',
                                     ),
-                                    action: (index) {
+                                    action: (itemIndex) {
                                       if (_foundFormulaCoordinates.isEmpty) return;
 
                                       _showFormulaResultOnMap(_foundFormulaCoordinates
@@ -583,7 +625,7 @@ class _FormulaSolverFormulasState extends State<_FormulaSolverFormulas> {
 
     return GCWMapPoint(
         point: coord.toLatLng()!,
-        markerText: i18n(context, 'formulasolver_formulas_showonmap_coordinatetext') + ' $name',
+        markerText: coordinate.name,
         coordinateFormat: CoordinateFormat(coord.format.type),
         color: resultType == _FormulaSolverResultType.FIXED
             ? COLOR_MAP_POINT
