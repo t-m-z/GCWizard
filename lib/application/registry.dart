@@ -85,6 +85,7 @@ import 'package:gc_wizard/application/category_views/selector_lists/number_seque
 import 'package:gc_wizard/application/category_views/selector_lists/number_sequences/numbersequence_taxicab_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/number_sequences/numbersequence_weirdnumbers_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/numeral_words_selection.dart';
+import 'package:gc_wizard/application/category_views/selector_lists/pau_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/periodic_table_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/phi_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/pi_selection.dart';
@@ -105,6 +106,7 @@ import 'package:gc_wizard/application/category_views/selector_lists/sqrt2_select
 import 'package:gc_wizard/application/category_views/selector_lists/sqrt3_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/sqrt5_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/symbol_table_selection.dart';
+import 'package:gc_wizard/application/category_views/selector_lists/tau_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/telegraph_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/teletypewriter_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/toki_pona_selection.dart';
@@ -440,12 +442,14 @@ import 'package:gc_wizard/tools/science_and_technology/ip_address/widget/ip_addr
 import 'package:gc_wizard/tools/science_and_technology/ip_address/widget/ip_address_minimumsubnet.dart';
 import 'package:gc_wizard/tools/science_and_technology/ip_codes/widget/ip_codes.dart';
 import 'package:gc_wizard/tools/science_and_technology/irrational_numbers/e/widget/e.dart';
+import 'package:gc_wizard/tools/science_and_technology/irrational_numbers/pau/widget/pau.dart';
 import 'package:gc_wizard/tools/science_and_technology/irrational_numbers/phi/widget/phi.dart';
 import 'package:gc_wizard/tools/science_and_technology/irrational_numbers/pi/widget/pi.dart';
 import 'package:gc_wizard/tools/science_and_technology/irrational_numbers/silver_ratio/widget/silver_ratio.dart';
 import 'package:gc_wizard/tools/science_and_technology/irrational_numbers/sqrt2/widget/sqrt2.dart';
 import 'package:gc_wizard/tools/science_and_technology/irrational_numbers/sqrt3/widget/sqrt3.dart';
 import 'package:gc_wizard/tools/science_and_technology/irrational_numbers/sqrt5/widget/sqrt5.dart';
+import 'package:gc_wizard/tools/science_and_technology/irrational_numbers/tau/widget/tau.dart';
 import 'package:gc_wizard/tools/science_and_technology/kaprekar/widget/kaprekar.dart';
 import 'package:gc_wizard/tools/science_and_technology/keyboard/keyboard_layout/widget/keyboard_layout.dart';
 import 'package:gc_wizard/tools/science_and_technology/keyboard/keyboard_numbers/widget/keyboard_numbers.dart';
@@ -1749,6 +1753,15 @@ void initializeRegistry(BuildContext context) {
     ], searchKeys: const [
       'paperformat',
     ]),
+    GCWTool(tool: const PauSelection(), id: 'pau_selection', categories: const [
+      ToolCategory.SCIENCE_AND_TECHNOLOGY
+    ], searchKeys: const [
+      'pau',
+      'irrationalnumbers',
+    ], licenses: [
+      stl._toolLicensePauXKCD,
+      stl._toolLicensePauSpektrum,
+    ]),
     GCWTool(
         tool: const PeriodicTableSelection(),
         id: 'periodictable_selection',
@@ -1770,21 +1783,6 @@ void initializeRegistry(BuildContext context) {
       'music',
       'music_notes',
       'piano',
-    ]),
-    GCWTool(tool: const Postcode(), id: 'postcode', categories: const [
-      ToolCategory.SCIENCE_AND_TECHNOLOGY
-    ], searchKeys: const [
-      'postcode',
-      'barcodes',
-      'symbol_postcode01247',
-      'symbol_postcode8421',
-      'binary'
-    ], licenses: [
-      ToolLicenseOnlineArticle(
-          context: context,
-          author: 'de.wikipedia.org and contributors',
-          title: 'Zielcode',
-          sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Zielcode&oldid=246247471')
     ]),
     GCWTool(tool: const PiSelection(), id: 'pi_selection', categories: const [
       ToolCategory.SCIENCE_AND_TECHNOLOGY
@@ -1839,6 +1837,21 @@ void initializeRegistry(BuildContext context) {
         month: 01,
         day: 24,
       )
+    ]),
+    GCWTool(tool: const Postcode(), id: 'postcode', categories: const [
+      ToolCategory.SCIENCE_AND_TECHNOLOGY
+    ], searchKeys: const [
+      'postcode',
+      'barcodes',
+      'symbol_postcode01247',
+      'symbol_postcode8421',
+      'binary'
+    ], licenses: [
+      ToolLicenseOnlineArticle(
+          context: context,
+          author: 'de.wikipedia.org and contributors',
+          title: 'Zielcode',
+          sourceUrl: 'https://de.wikipedia.org/w/index.php?title=Zielcode&oldid=246247471')
     ]),
     GCWTool(
         tool: const PredatorSelection(),
@@ -2145,6 +2158,12 @@ void initializeRegistry(BuildContext context) {
         id: 'tapir',
         categories: const [ToolCategory.CRYPTOGRAPHY],
         searchKeys: const ['tapir', 'numbers']),
+    GCWTool(tool: const TauSelection(), id: 'tau_selection', categories: const [
+      ToolCategory.SCIENCE_AND_TECHNOLOGY
+    ], searchKeys: const [
+      'tau',
+      'irrationalnumbers',
+    ], licenses: [stl._toolLicenseTauOEIS],),
     GCWTool(
         tool: const TelegraphSelection(),
         id: 'telegraph_selection',
@@ -3226,6 +3245,16 @@ void initializeRegistry(BuildContext context) {
         searchKeys: const [
           'color',
           'xkcd',
+        ], licenses: [
+          ToolLicenseOnlineArticle(
+            context: context,
+            author: 'Randall Munroe (xkcd.com)',
+            title: 'XKCD RGB Colors',
+            licenseType: ToolLicenseType.PUBLIC_DOMAIN,
+            licenseUrl:
+              'https://web.archive.org/web/20260101000112/https://creativecommons.org/publicdomain/zero/1.0/',
+            sourceUrl:
+              'https://web.archive.org/web/20260702175112/https://xkcd.com/color/rgb.txt'),
         ]),
 
     //CombinatoricsSelection ***************************************************************************************
@@ -6766,6 +6795,41 @@ void initializeRegistry(BuildContext context) {
           'numbersequence_look_and_saynumbersselection'
         ]),
 
+    //PauSelection **********************************************************************************************
+    GCWTool(
+        tool: const PauNthDecimal(),
+        id: 'irrationalnumbers_nthdecimal',
+        id_prefix: 'pau_',
+        searchKeys: const [
+          'irrationalnumbers',
+          'paunthdecimal',
+        ], licenses: [
+          stl._toolLicensePauXKCD,
+          stl._toolLicensePauSpektrum,
+        ]),
+    GCWTool(
+        tool: const PauDecimalRange(),
+        id: 'irrationalnumbers_decimalrange',
+        id_prefix: 'pau_',
+        searchKeys: const [
+          'irrationalnumbers',
+          'paudecimalrange',
+        ], licenses: [
+      stl._toolLicensePauXKCD,
+      stl._toolLicensePauSpektrum,
+    ]),
+    GCWTool(
+        tool: const PauSearch(),
+        id: 'irrationalnumbers_search',
+        id_prefix: 'pau_',
+        searchKeys: const [
+          'irrationalnumbers',
+          'pausearch',
+        ], licenses: [
+      stl._toolLicensePauXKCD,
+      stl._toolLicensePauSpektrum,
+    ]),
+
     //PeriodicTableSelection ***************************************************************************************
     GCWTool(
         tool: const PeriodicTable(),
@@ -6818,7 +6882,7 @@ void initializeRegistry(BuildContext context) {
           'phisearch',
         ]),
 
-    //Pi Selection **********************************************************************************************
+    //PiSelection **********************************************************************************************
     GCWTool(
         tool: const PiNthDecimal(),
         id: 'irrationalnumbers_nthdecimal',
@@ -11620,6 +11684,32 @@ void initializeRegistry(BuildContext context) {
               'https://en.wikisource.org/w/index.php?title=Index:Zodiac_Killer_cipher_deciphered_by_Donald_and_Bettye_Harden.pdf&oldid=11214165',
           licenseType: ToolLicenseType.CCBYSA4)
     ]),
+
+    //TauSelection **********************************************************************************************
+    GCWTool(
+        tool: const TauNthDecimal(),
+        id: 'irrationalnumbers_nthdecimal',
+        id_prefix: 'tau_',
+        searchKeys: const [
+          'irrationalnumbers',
+          'taunthdecimal',
+        ], licenses: [stl._toolLicenseTauOEIS],),
+    GCWTool(
+        tool: const TauDecimalRange(),
+        id: 'irrationalnumbers_decimalrange',
+        id_prefix: 'pi_',
+        searchKeys: const [
+          'irrationalnumbers',
+          'taudecimalrange',
+        ], licenses: [stl._toolLicenseTauOEIS],),
+    GCWTool(
+        tool: const TauSearch(),
+        id: 'irrationalnumbers_search',
+        id_prefix: 'tau_',
+        searchKeys: const [
+          'irrationalnumbers',
+          'tausearch',
+        ], licenses: [stl._toolLicenseTauOEIS],),
 
     // TelegraphSelection *********************************************************************************************
     GCWTool(
