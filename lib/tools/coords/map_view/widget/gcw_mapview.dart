@@ -452,6 +452,7 @@ class _GCWMapViewState extends State<GCWMapView> {
             iconColor: themeColors().dialogText(),
             onPressed: () {
               if (child is GCWMapLine) {
+                Navigator.of(context, rootNavigator: true).pop();
                 Navigator.push(
                     context,
                     NoAnimationMaterialPageRoute<Object?>(
@@ -460,14 +461,15 @@ class _GCWMapViewState extends State<GCWMapView> {
                             toolName: i18n(context, 'coords_openmap_title') + ': ' + i18n(context, 'coords_openmap_lineeditor_title'),
                             id: 'coords_openmap_lineeditor'))).whenComplete(() {
                   setState(() {
-                    Navigator.pop(context);
                     if (widget.isEditable && _persistanceAdapter != null) {
                       _persistanceAdapter!.updateMapPolyline(child.parent, _mapPrecision());
                     }
+                    _popupLayerController.hidePopup();
                   });
                 });
               } else if (child is GCWMapCircle) {
                 var mapPoint = widget.points.firstWhere((element) => element.circle == child);
+                Navigator.of(context, rootNavigator: true).pop();
                 Navigator.push(
                     context,
                     NoAnimationMaterialPageRoute<Object?>(
@@ -488,8 +490,6 @@ class _GCWMapViewState extends State<GCWMapView> {
             icon: Icons.delete,
             iconColor: themeColors().dialogText(),
             onPressed: () {
-              Navigator.pop(context);
-
               if (child is GCWMapLine) {
                 showGCWDialog(
                     context,
