@@ -4020,6 +4020,7 @@
   "numeralwords_mode_right": "Decode",
   "numeralwords_decodemode_left": "Entire words",
   "numeralwords_decodemode_right": "Word parts",
+  "numeralwords_decodemode_numbers": "include numbers",
   "numeralwords_n": "north",
   "numeralwords_s": "south",
   "numeralwords_e": "east",

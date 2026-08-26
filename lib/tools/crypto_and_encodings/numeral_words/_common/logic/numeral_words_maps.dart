@@ -2492,6 +2492,19 @@ final Map<NumeralWordsLanguage, Map<String, String>> NUMERAL_WORDS = {
   NumeralWordsLanguage.VOL: _VOLWordToNum,
 };
 
+const List<String> NUMERAL_WORDS_DIGITS = [
+  '1',
+  '2',
+  '3',
+  '4',
+  '5',
+  '6',
+  '7',
+  '8',
+  '9',
+  '0',
+];
+
 const Map<NumeralWordsLanguage, List<String>> NUMERAL_WORDS_ACCENTS = {
   NumeralWordsLanguage.DEU: [
     'dreißig',

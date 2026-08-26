@@ -17,7 +17,10 @@ part 'package:gc_wizard/tools/crypto_and_encodings/numeral_words/_common/logic/n
 part 'package:gc_wizard/tools/crypto_and_encodings/numeral_words/_common/logic/numeral_words_maps.dart';
 
 List<NumeralWordsDecodeOutput> decodeNumeralwords(
-    {required String input, required NumeralWordsLanguage language, bool decodeModeWholeWords = false}) {
+    {required String input,
+      required NumeralWordsLanguage language,
+      bool decodeModeWholeWords = false,
+    bool includeNumbers = false}) {
   RegExp expr;
   List<NumeralWordsDecodeOutput> output = [];
 
@@ -278,7 +281,10 @@ List<NumeralWordsDecodeOutput> decodeNumeralwords(
               NumeralWordsDecodeOutput(_decodeNavi(element).number.toString(), element, _languageList?[NumeralWordsLanguage.NAVI] ?? ''));
         } else if (_isNumeral(element)) {
           // checks - if is a number/digit
-          output.add(NumeralWordsDecodeOutput(element, element, _languageList?[NumeralWordsLanguage.NUM] ?? ''));
+          if (includeNumbers) {
+            output.add(NumeralWordsDecodeOutput(element, element,
+                _languageList?[NumeralWordsLanguage.NUM] ?? ''));
+          }
         } else {
           _alreadyFound = false;
 
@@ -351,6 +357,17 @@ List<NumeralWordsDecodeOutput> decodeNumeralwords(
 
     for (int i = 0; i < input.length; i++) {
       String checkWord = input.substring(i);
+      if (includeNumbers){
+        if (checkWord.startsWith(RegExp(r'[0-9]'))) {
+          var number = '';
+          while (checkWord.startsWith(RegExp(r'[0-9]'))) {
+            number = number + checkWord[0];
+            i++;
+            checkWord = input.substring(i);
+          }
+          output.add(NumeralWordsDecodeOutput(number, number, ''));
+        }
+      }
       if (language == NumeralWordsLanguage.ALL) {
         // search entire parts in all languages - Standard for Numeral Words Language search
         _alreadyFound = false;
