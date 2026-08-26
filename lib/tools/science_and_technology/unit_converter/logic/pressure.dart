@@ -48,8 +48,8 @@ final List<Pressure> pressures = [
   _PRESSURE_TORR
 ];
 
-List<Unit> allPressures() {
-  var additionalPressures = List<Unit>.from(pressures);
+List<Pressure> allPressures() {
+  var additionalPressures = List<Pressure>.from(pressures);
   var indexM = pressures.indexOf(_PRESSURE_TORR);
   additionalPressures.insert(indexM + 1, PRESSURE_MBAR);
   additionalPressures.insert(indexM + 2, PRESSURE_HPASCAL);

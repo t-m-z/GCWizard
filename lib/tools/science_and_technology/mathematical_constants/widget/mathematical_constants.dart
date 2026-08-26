@@ -129,6 +129,10 @@ class _MathematicalConstantsState extends State<MathematicalConstants> {
         widget = const ESelection();
         title = 'e_selection_title';
         break;
+      case 'pau':
+        widget = const PiSelection();
+        title = 'pau_selection_title';
+        break;
       case 'pi':
         widget = const PiSelection();
         title = 'pi_selection_title';
@@ -152,6 +156,10 @@ class _MathematicalConstantsState extends State<MathematicalConstants> {
       case 'sqrt5':
         widget = const SQRT5Selection();
         title = 'sqrt5_selection_title';
+        break;
+      case 'tau':
+        widget = const PiSelection();
+        title = 'tau_selection_title';
         break;
       default:
         return Container();

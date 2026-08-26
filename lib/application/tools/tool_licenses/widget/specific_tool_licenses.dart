@@ -297,5 +297,39 @@ class _SpecificToolLicenses {
         sourceUrl: 'https://web.archive.org/web/20241103163521/https://geocachen.be/geocaching/geocache-puzzels-oplossen/elements-of-geocaching/'
     );
   }
+
+  ToolLicenseEntry get _toolLicensePauXKCD {
+    return ToolLicenseOnlineArticle(
+        context: context,
+        author: 'Randall Munroe (xkcd.com)',
+        title: 'xkcd 12692: Pi vs. Tau',
+        licenseType: ToolLicenseType.CCNC25,
+        licenseUrl:
+        'https://web.archive.org/web/20240715221350/https://creativecommons.org/licenses/by-nc/2.5/',
+        sourceUrl:
+        'https://web.archive.org/web/20260822230006/https://xkcd.com/1292/'
+    );
+  }
+
+  ToolLicenseEntry get _toolLicensePauSpektrum {
+    return ToolLicenseOnlineArticle(
+        context: context,
+        author: 'Manon Bischoff',
+        title: 'Streit um die Kreiskonstante',
+        publisher: 'Spektrum.de',
+        sourceUrl:
+        'https://web.archive.org/web/20260423001307/https://www.spektrum.de/news/pi-versus-tau-streit-um-die-kreiszahl/2314219'
+    );
+  }
+
+  ToolLicenseEntry get _toolLicenseTauOEIS {
+    return ToolLicenseOnlineArticle(
+      context: context,
+      author: 'The On-Line Encyclopedia of Integer Sequences (OEIS)',
+      title: 'A019692',
+      sourceUrl:
+      'https://web.archive.org/web/20230407105028/https://oeis.org/A019692/b019692.txt',
+    );
+  }
 }
 
