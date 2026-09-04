@@ -36,3 +36,4 @@
 *.jpg    binary
 *.jpeg   binary
 *.zip    binary
+*.lua    binary
