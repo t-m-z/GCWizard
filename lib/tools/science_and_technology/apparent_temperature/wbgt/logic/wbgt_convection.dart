@@ -35,7 +35,7 @@ double _convectiveCoefficientCylinder({
 /// pressure [pressureMb], and wind speed [speedMs].
 ///
 /// Reference: Bird, Stewart, and Lightfoot (BSL), page 409.
-double _convectiveCoefficientSphere({
+double convectiveCoefficientSphere({
   required double diameterM,
   required double tempK,
   required double pressureMb,

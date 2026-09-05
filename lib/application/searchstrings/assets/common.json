@@ -16,7 +16,7 @@
   "apparenttemperature_summersimmerindex": "ssi summersimmerindex",
   "apparenttemperature_wet_bulb_globe_temperature": "wbgt wetbulbglobetemperature osha occupationalsafetyandhealthadministration",
   "apparenttemperature_windchill": "windchill  ",
-  "apparenttemperature_utci": "UTCI universaltheramlcomfortindex",
+  "apparenttemperature_utci": "UTCI universalthermalcomfortindex",
   "apparenttemperature_wbgt": "wbgt wetbulbglobetemperature",
   "asciivalues": "ascii utf8 unicode ",
   "astronomy": "",

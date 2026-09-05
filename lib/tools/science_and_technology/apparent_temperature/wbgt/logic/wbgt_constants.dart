@@ -22,7 +22,7 @@ const double _twoPi = 2 * math.pi;
 const double _solarConst = 1367.0;
 
 /// Stefan-Boltzmann constant, W/(m^2 K^4).
-const double _stefanBoltzmann = 5.6696e-8;
+const double stefanBoltzmann = 5.6696e-8;
 
 /// Specific heat of air at constant pressure, J/(kg K).
 const double _cpAir = 1003.5;
@@ -58,13 +58,13 @@ const double _dWick = 0.007;
 const double _lWick = 0.0254;
 
 /// Globe thermometer emissivity.
-const double _emisGlobe = 0.95;
+const double emisGlobe = 0.95;
 
 /// Globe thermometer albedo.
 const double _albGlobe = 0.05;
 
 /// Globe thermometer diameter, m.
-const double _dGlobe = 0.0508;
+const double dGlobe = 0.0508;
 
 /// Surface emissivity.
 const double _emisSfc = 0.999;

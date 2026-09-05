@@ -52,7 +52,7 @@ double? _naturalOrPsychrometricWetBulbC({
       pressureMb: pressureMb,
       speedMs: speedMs,
     );
-    final fatm = _stefanBoltzmann *
+    final fatm = stefanBoltzmann *
         _emisWick *
         (0.5 * (_atmosphericEmissivity(tempK, rh) * _dpow(tempK, 4.0) + _emisSfc * _dpow(tsfc, 4.0)) -
             _dpow(twbPrev, 4.0)) +
@@ -101,17 +101,17 @@ double? _globeTemperatureC({
   do {
     iter++;
     final tref = 0.5 * (tGlobePrev + tempK); // properties at the average temperature
-    final h = _convectiveCoefficientSphere(
-      diameterM: _dGlobe,
+    final h = convectiveCoefficientSphere(
+      diameterM: dGlobe,
       tempK: tref,
       pressureMb: pressureMb,
       speedMs: speedMs,
     );
     tGlobeNew = _dpow(
       0.5 * (_atmosphericEmissivity(tempK, rh) * _dpow(tempK, 4.0) + _emisSfc * _dpow(tsfc, 4.0)) -
-          h / (_stefanBoltzmann * _emisGlobe) * (tGlobePrev - tempK) +
+          h / (stefanBoltzmann * emisGlobe) * (tGlobePrev - tempK) +
           solarWm2 /
-              (2.0 * _stefanBoltzmann * _emisGlobe) *
+              (2.0 * stefanBoltzmann * emisGlobe) *
               (1.0 - _albGlobe) *
               (fdir * (1.0 / (2.0 * cza) - 1.0) + 1.0 + _albSfc),
       0.25,

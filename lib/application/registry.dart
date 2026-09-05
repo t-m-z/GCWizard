@@ -370,6 +370,7 @@ import 'package:gc_wizard/tools/science_and_technology/alphabet_number_systems/m
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/heat_index/widget/heat_index.dart';
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/humidex/widget/humidex.dart';
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/summer_simmer/widget/summer_simmer.dart';
+import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/utci/widget/utci.dart';
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/wbgt/widget/wbgt.dart';
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/wet_bulb_temperature/widget/wet_bulb_temperature.dart';
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/windchill/widget/windchill.dart';
@@ -2514,6 +2515,30 @@ void initializeRegistry(BuildContext context) {
             sourceUrl:
                 'https://web.archive.org/web/20240910160327/https://ncalculators.com/meteorology/summer-simmer-index-calculator.htm',
           )
+        ]),
+    GCWTool(
+        tool: const UTCI(),
+        id: 'utci',
+        searchKeys: const [
+          'apparenttemperature',
+          'apparenttemperature_utci',
+        ],
+        licenses: [
+          ToolLicenseOnlineArticle(
+              context: context,
+              author: 'https://utci.org/',
+              title: 'UTCI Universal Thermal Climate Index',
+              sourceUrl:
+              'https://utci.org/',),
+          ToolLicensePortedCode(
+              context: context,
+              author: 'Peter Broede',
+              title: ' Program for calculating UTCI Temperature (UTCI)',
+              licenseType: ToolLicenseType.OPEN_SOURCE,
+              //TO DO Web Archive
+              sourceUrl:
+              'https://utci.org/resources/UTCI%20Program%20Code.zip'),
+
         ]),
     GCWTool(tool: const Windchill(), id: 'windchill', searchKeys: const [
       'apparenttemperature',
