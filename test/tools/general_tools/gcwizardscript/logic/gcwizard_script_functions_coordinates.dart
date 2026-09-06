@@ -23,18 +23,22 @@ CONVERTFROM(11, C)
 PRINT GETLAT()
 PRINT GETLON()''';
 
+String _wgs84 = '''LAT = 52.47270
+LON = 13.13836
+K = WGS84(LAT, LON)
+PRINT K''';
 // ignore: unused_element
 List<Map<String, Object?>> _inputsCoordinatesToExpected = [
 
   {'code' : 'print BEARING(x, 13.678, 52.123, 11.534)', 'expectedOutput' : '358.3236011961208'},
   {'code' : 'print BEARING(54.123, 52.123, 11.534)', 'expectedOutput' : '', 'error': 'gcwizard_script_syntax_error'},
   {'code' : 'print BEARING(54.123, 13.678, 52.123, 11.534, 34.45)', 'expectedOutput' : '', 'error': 'gcwizard_script_syntax_error'},
-  {'code' : 'print BEARING(54.123, 13.678, 52.123, 11.534)', 'expectedOutput' : '213.6786724810965'},
+  {'code' : 'print BEARING(54.123, 13.678, 52.123, 11.534)', 'expectedOutput' : '213.67867248109647'},
 
   {'code' : 'print DISTANCE(x, 13.678, 52.123, 11.534)', 'expectedOutput' : '5780521.806478069'},
   {'code' : 'print DISTANCE(54.123, 52.123, 11.534)', 'expectedOutput' : '', 'error': 'gcwizard_script_syntax_error'},
   {'code' : 'print DISTANCE(54.123, 13.678, 52.123, 11.534, 34.45)', 'expectedOutput' : '', 'error': 'gcwizard_script_syntax_error'},
-  {'code' : 'print DISTANCE(54.123, 13.678, 52.123, 11.534)', 'expectedOutput' : '264815.84563546465'},
+  {'code' : 'print DISTANCE(54.123, 13.678, 52.123, 11.534)', 'expectedOutput' : '264815.84563546535'},
 
   {'code' : 'PROJECTION(x, 13.678, 52.123)', 'expectedOutput' : '', 'error': 'gcwizard_script_syntax_error_invalid_number_of_parameters'},
   {'code' : 'PROJECTION(54.123, 52.123, 11.534)', 'expectedOutput' : '', 'error': 'gcwizard_script_syntax_error_invalid_number_of_parameters'},
@@ -76,4 +80,7 @@ List<Map<String, Object?>> _inputsCoordinatesToExpected = [
 
   {'code' : _convertFrom_3, 'expectedOutput' : '52.34567800325836\n13.456788999833897'},
   {'code' : _convertFrom_11, 'expectedOutput' : '52.34567795138889\n13.456788917824042'},
+
+  {'code' : _wgs84, 'expectedOutput' : 'N 52° 28.362\'\n'
+      'E 013° 08.3016\''},
 ];
