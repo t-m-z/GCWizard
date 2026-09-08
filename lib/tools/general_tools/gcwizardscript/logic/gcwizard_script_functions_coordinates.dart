@@ -6,7 +6,9 @@ String _wgs84(Object x, Object y) {
     return '';
   }
   var coord = LatLng(x as double, y as double);
-  return coord.latitude.toString() + ' ' + coord.longitude.toString();
+  DMMCoordinate result = DMMCoordinate.fromLatLon(coord);
+
+  return result.toString();
 }
 
 double _getLon() {
