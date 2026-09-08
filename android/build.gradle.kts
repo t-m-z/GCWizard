@@ -3,17 +3,14 @@ buildscript {
         google()
         mavenCentral()
     }
-
 }
 
 allprojects {
     repositories {
         google()
         mavenCentral()
-        maven { url 'https://jitpack.io' }
-        maven {
-            url 'https://storage.googleapis.com/download.flutter.io'
-        }
+        maven("https://jitpack.io")
+        maven("https://storage.googleapis.com/download.flutter.io")
     }
 }
 
@@ -21,6 +18,6 @@ subprojects {
     project.evaluationDependsOn(":app")
 }
 
-tasks.register("clean", Delete) {
-    delete rootProject.layout.buildDirectory
+tasks.register<Delete>("clean") {
+    delete(rootProject.layout.buildDirectory)
 }

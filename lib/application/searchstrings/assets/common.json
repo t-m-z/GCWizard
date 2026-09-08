@@ -362,6 +362,7 @@
   "primes_primeindex": "index",
   "predator": "predators",
   "projectiles": "",
+  "protocolbuffer": "protocolbuffer google zigzag wire",
   "punycode": "ascii unicode RFC 3492 dns domainnamesystem idna internationalizingdomainnamesinapplications",
   "quadraticequation": "",
   "rabbit": "",

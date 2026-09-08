@@ -171,6 +171,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/pollux/widget/pollux.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/polybios/widget/polybios.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/porta/widget/porta.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/prime_alphabet/widget/prime_alphabet.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/protocolbuffer/widget/protocolbuffer.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/punycode/widget/punycode.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/rabbit/widget/rabbit.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/ragbaby/widget/ragbaby.dart';
@@ -840,6 +841,7 @@ const Set<Type> _mainToolTypes = {
   PrimeAlphabet,
   PrimesSelection,
   Projectiles,
+  ProtocolBuffer,
   Punycode,
   PrussiaTelegraph,
   QrCode,
