@@ -1,5 +1,6 @@
 import "package:flutter_test/flutter_test.dart";
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/utci/logic/mean_radiant_temperature.dart';
+import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/wbgt/logic/wbgt.dart' as wbgt;
 
 
 void main() {
