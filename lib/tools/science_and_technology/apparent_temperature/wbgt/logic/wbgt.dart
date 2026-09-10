@@ -166,16 +166,6 @@ class WbgtResult {
 /// range supported by the solar position model (years 1950-2049, valid
 /// latitude/longitude).
 WbgtResult calculateWbgt(WbgtInput input) {
-  print('cacl wbgt ------------------------------------------------------------');
-  print('DT '+input.observationTime.toString());
-  print('la '+input.latitude.toString());
-  print('lo '+input.longitude.toString());
-  print('T '+input.airTemperatureC.toString());
-  print('H '+input.relativeHumidityPct.toString());
-  print('P '+input.pressureMb.toString());
-  print('W '+input.windSpeedMs.toString());
-  print('WM '+input.windSpeedHeightM.toString());
-  print('CC '+input.cloudCoverFraction.toString());
 
   final t = input.observationTime;
 

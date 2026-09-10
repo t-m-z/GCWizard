@@ -1,6 +1,6 @@
-import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/wbgt/logic/wbgt.dart' as wbgt;
 import 'dart:math' as math;
 
+import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/wbgt/logic/wbgt.dart' as wbgt;
 import 'package:gc_wizard/tools/science_and_technology/apparent_temperature/utci/logic/mean_radiant_temperature.dart';
 
 
@@ -34,33 +34,33 @@ const Map<UTCI_HEATSTRESS_CONDITION, double> UTCI_HEAT_STRESS = {
 // intermediate globe temperature / mean radiant temperature steps.
 
 
-/// Calculates the Universal Thermal Climate Index (UTCI), degree Celsius,
-/// directly from standard meteorological measurements — the same kind of
-/// input [wbgt.calculateWbgt] itself takes.
-///
-/// This is the simplest way to get a UTCI value when no globe thermometer
-/// reading or mean radiant temperature is available: it runs Liljegren's
-/// WBGT model (`package:wbgt`) to estimate the globe temperature `Tg` from
-/// [input], converts `Tg` to the mean radiant temperature Tmrt (see
-/// [meanRadiantTemperatureFromGlobe]), derives the water vapour pressure
-/// from [wbgt.WbgtInput.relativeHumidityPct] (see
-/// [vapourPressureFromRelativeHumidity]), and feeds all of that into
-/// [utciApprox]:
-///
-/// ```
-/// weather -> (wbgt.calculateWbgt) -> Tg -> (meanRadiantTemperatureFromGlobe) -> Tmrt -> (utciApprox) -> UTCI
-/// ```
-///
-/// [input.windSpeedMs] is passed straight through as `utciApprox`'s wind
-/// speed argument; per the original FORTRAN model, `utciApprox` is only
-/// validated for wind speed measured 10 m above ground level (see
-/// [UtciValidRange]) — if [input.windSpeedHeightM] differs, that mismatch
-/// is not corrected here (it only affects the globe/wet-bulb solvers
-/// inside `wbgt.calculateWbgt`, which do estimate their own wind speed at
-/// their 2-m reference height).
-///
-/// Returns `null` if the underlying globe-temperature solver failed to
-/// converge (see `wbgt.WbgtResult.converged`).
+// Calculates the Universal Thermal Climate Index (UTCI), degree Celsius,
+// directly from standard meteorological measurements — the same kind of
+// input [wbgt.calculateWbgt] itself takes.
+//
+// This is the simplest way to get a UTCI value when no globe thermometer
+// reading or mean radiant temperature is available:
+// it runs Liljegren's WBGT model (`package:wbgt`) to estimate the globe
+// temperature `Tg` from [input],
+// converts `Tg` to the mean radiant temperature Tmrt (see [meanRadiantTemperatureFromGlobe]),
+// derives the water vapour pressure from [wbgt.WbgtInput.relativeHumidityPct] (see
+// [vapourPressureFromRelativeHumidity]),
+// and feeds all of that into [utciApprox]:
+//
+// weather -> (wbgt.calculateWbgt) -> Tg -> (meanRadiantTemperatureFromGlobe) -> Tmrt -> (utciApprox) -> UTCI
+//
+// [input.windSpeedMs] is passed straight through as `utciApprox`'s wind
+// speed argument; per the original FORTRAN model, `utciApprox` is only
+// validated for wind speed measured 10 m above ground level (see
+// [UtciValidRange]) — if [input.windSpeedHeightM] differs, that mismatch
+// is not corrected here (it only affects the globe/wet-bulb solvers
+// inside `wbgt.calculateWbgt`, which do estimate their own wind speed at
+// their 2-m reference height).
+//
+// Returns `null` if the underlying globe-temperature solver failed to
+// converge, or if the resulting globe temperature has no physically valid
+// Tmrt (see [meanRadiantTemperatureFromWeather]).
+
 double? calculateUtciFromWeather(wbgt.WbgtInput input) {
   final double? tmrt = meanRadiantTemperatureFromWeather(input);
   if (tmrt == null) return null;
@@ -71,6 +71,7 @@ double? calculateUtciFromWeather(wbgt.WbgtInput input) {
   );
   return utciApprox(input.airTemperatureC, ehPa, tmrt, input.windSpeedMs);
 }
+
 
 // Dart port of UTCI_a002.f90 (Universal Thermal Climate Index, UTCI).
 //
@@ -83,16 +84,17 @@ double? calculateUtciFromWeather(wbgt.WbgtInput input) {
 // order polynomial approximation unchanged.
 
 
-/// Result range of validity for [utciApprox], as documented in the
-/// original FORTRAN ReadMe:
-/// - air temperature: -50 to +50 degC
-/// - mean radiant temperature: 30 degC below to 70 degC above air
-///   temperature
-/// - wind speed at 10 m: 0.5 to 17 m/s
-/// - water vapour pressure: below 50 hPa (or 100% relative humidity)
-///
-/// Values outside this range are still computed, but the polynomial
-/// approximation is no longer validated there.
+// Result range of validity for [utciApprox], as documented in the
+// original FORTRAN ReadMe:
+// - air temperature: -50 to +50 degC
+// - mean radiant temperature: 30 degC below to 70 degC above air
+//   temperature
+// - wind speed at 10 m: 0.5 to 17 m/s
+// - water vapour pressure: below 50 hPa (or 100% relative humidity)
+//
+// Values outside this range are still computed, but the polynomial
+// approximation is no longer validated there.
+
 class UtciValidRange {
   static const double minAirTemperatureC = -50;
   static const double maxAirTemperatureC = 50;
@@ -103,25 +105,26 @@ class UtciValidRange {
   static const double maxVapourPressureHpa = 50;
 }
 
-/// Calculates the Universal Thermal Climate Index (UTCI), in degree
-/// Celsius, approximated by a 6th order polynomial regression function
-/// from the 4 input parameters.
-///
-/// This is a direct port of the `UTCI_approx` DOUBLE PRECISION function
-/// from `UTCI_a002.f90` (Version a 0.002, October 2009, Peter Broede).
-///
-/// Parameters:
-/// - [ta]: air temperature, degree Celsius (valid range: -50 to +50 degC)
-/// - [ehPa]: water vapour pressure, hPa = hecto Pascal (valid range: up
-///   to 50 hPa, or 100% relative humidity)
-/// - [tmrt]: mean radiant temperature, degree Celsius (valid range: 30
-///   degC below to 70 degC above air temperature)
-/// - [va]: wind speed 10 m above ground level, in m/s (valid range: 0.5
-///   to 17 m/s)
-///
-/// Returns the UTCI in degree Celsius. The polynomial approximation is
-/// only validated within the ranges given above; this function does not
-/// enforce or clamp them, mirroring the original FORTRAN function.
+// Calculates the Universal Thermal Climate Index (UTCI), in degree
+// Celsius, approximated by a 6th order polynomial regression function
+// from the 4 input parameters.
+//
+// This is a direct port of the `UTCI_approx` DOUBLE PRECISION function
+// from `UTCI_a002.f90` (Version a 0.002, October 2009, Peter Broede).
+//
+// Parameters:
+// - [ta]: air temperature, degree Celsius (valid range: -50 to +50 degC)
+// - [ehPa]: water vapour pressure, hPa = hecto Pascal (valid range: up
+//   to 50 hPa, or 100% relative humidity)
+// - [tmrt]: mean radiant temperature, degree Celsius (valid range: 30
+//   degC below to 70 degC above air temperature)
+// - [va]: wind speed 10 m above ground level, in m/s (valid range: 0.5
+//   to 17 m/s)
+//
+// Returns the UTCI in degree Celsius. The polynomial approximation is
+// only validated within the ranges given above; this function does not
+// enforce or clamp them, mirroring the original FORTRAN function.
+
 double utciApprox(double ta, double ehPa, double tmrt, double va) {
   final double dTmrt = tmrt - ta;
   final double pa = ehPa / 10.0; // use vapour pressure in kPa
@@ -341,18 +344,19 @@ double utciApprox(double ta, double ehPa, double tmrt, double va) {
       ( 1.48348065e-03 ) * pa*pa*pa*pa*pa*pa;
 }
 
-/// Calculates the saturation vapour pressure over water, in hPa, for the
-/// given air temperature [ta] in degree Celsius.
-///
-/// This is a direct port of the `es` FUNCTION from `UTCI_a002.f90`,
-/// following:
-/// Hardy, R.; ITS-90 Formulations for Vapor Pressure, Frostpoint
-/// Temperature, Dewpoint Temperature and Enhancement Factors in the
-/// Range -100 to 100 degC; Proceedings of Third International Symposium
-/// on Humidity and Moisture; edited by National Physical Laboratory
-/// (NPL), London, 1998, pp. 214-221.
-/// http://www.thunderscientific.com/tech_info/reflibrary/its90formulas.pdf
-/// (retrieved 2008-10-01)
+// Calculates the saturation vapour pressure over water, in hPa, for the
+// given air temperature [ta] in degree Celsius.
+//
+// This is a direct port of the `es` FUNCTION from `UTCI_a002.f90`,
+// following:
+// Hardy, R.; ITS-90 Formulations for Vapor Pressure, Frostpoint
+// Temperature, Dewpoint Temperature and Enhancement Factors in the
+// Range -100 to 100 degC; Proceedings of Third International Symposium
+// on Humidity and Moisture; edited by National Physical Laboratory
+// (NPL), London, 1998, pp. 214-221.
+// http://www.thunderscientific.com/tech_info/reflibrary/its90formulas.pdf
+// (retrieved 2008-10-01)
+
 double saturationVapourPressure(double ta) {
   const List<double> g = <double>[
     -2.8365744e3,
@@ -373,13 +377,14 @@ double saturationVapourPressure(double ta) {
   return math.exp(es) * 0.01; // convert Pa to hPa
 }
 
-/// Converts relative humidity [relativeHumidityPercent] (0-100) at air
-/// temperature [ta] (degree Celsius) to water vapour pressure in hPa,
-/// using [saturationVapourPressure].
-///
-/// Mirrors the conversion done in the original FORTRAN `UTCI_Temperature`
-/// program when the user chooses to enter relative humidity instead of
-/// vapour pressure directly (`ehPa = es(tt) * RH / 100.0D0`).
+// Converts relative humidity [relativeHumidityPercent] (0-100) at air
+// temperature [ta] (degree Celsius) to water vapour pressure in hPa,
+// using [saturationVapourPressure].
+//
+// Mirrors the conversion done in the original FORTRAN `UTCI_Temperature`
+// program when the user chooses to enter relative humidity instead of
+// vapour pressure directly (`ehPa = es(tt) * RH / 100.0D0`).
+
 double vapourPressureFromRelativeHumidity(
     double ta,
     double relativeHumidityPercent,
