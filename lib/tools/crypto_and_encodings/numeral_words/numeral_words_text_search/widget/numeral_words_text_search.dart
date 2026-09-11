@@ -219,9 +219,9 @@ class _NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
       }
     });
 
-    NUMERAL_WORDS_DIGITS.forEach((element) {
+    for (var element in NUMERAL_WORDS_DIGITS) {
       result[r'' + element + ''] = const TextStyle(color: Colors.deepOrange);
-    });
+    }
 
     return result;
   }
