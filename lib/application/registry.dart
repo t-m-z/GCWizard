@@ -331,6 +331,7 @@ import 'package:gc_wizard/tools/games/scrabble/widget/scrabble.dart';
 import 'package:gc_wizard/tools/games/scrabble/widget/scrabble_overview.dart';
 import 'package:gc_wizard/tools/games/sudoku/widget/sudoku_solver.dart';
 import 'package:gc_wizard/tools/games/tower_of_hanoi/widget/tower_of_hanoi.dart';
+import 'package:gc_wizard/tools/games/tridoku/widget/tridoku_solver.dart';
 import 'package:gc_wizard/tools/games/verbal_arithmetic/widget/verbal_arithmetic.dart';
 import 'package:gc_wizard/tools/games/word_search/widget/word_search.dart';
 import 'package:gc_wizard/tools/games/wordoku/widget/wordoku_solver.dart';
@@ -2263,6 +2264,12 @@ void initializeRegistry(BuildContext context) {
                   'https://web.archive.org/web/20170504070744/https://www.sanfoundry.com/csharp-program-tower-of-hanoi/',
               licenseType: ToolLicenseType.FREE_TO_USE)
         ]),
+    GCWTool(tool: const TridokuSolver(), id: 'tridokusolver', categories: const [
+      ToolCategory.GAMES
+    ], searchKeys: const [
+      'games',
+      'games_tridokusolver',
+    ]),
     GCWTool(tool: const TTS(), id: 'tts', categories: const [
       ToolCategory.SCIENCE_AND_TECHNOLOGY
     ], searchKeys: const [

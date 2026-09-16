@@ -621,7 +621,6 @@ class _FormulaSolverFormulasState extends State<_FormulaSolverFormulas> {
   GCWMapPoint _createMapPoint(_ParsedCoordinate coordinate) {
     var coord = coordinate.coords;
     var resultType = coordinate.resultType;
-    var name = coordinate.name;
 
     return GCWMapPoint(
         point: coord.toLatLng()!,

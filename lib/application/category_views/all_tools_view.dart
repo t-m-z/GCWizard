@@ -211,6 +211,7 @@ import 'package:gc_wizard/tools/games/nonogram/widget/nonogram_solver.dart';
 import 'package:gc_wizard/tools/games/number_pyramid/widget/number_pyramid_solver.dart';
 import 'package:gc_wizard/tools/games/sudoku/widget/sudoku_solver.dart';
 import 'package:gc_wizard/tools/games/tower_of_hanoi/widget/tower_of_hanoi.dart';
+import 'package:gc_wizard/tools/games/tridoku/widget/tridoku_solver.dart';
 import 'package:gc_wizard/tools/games/verbal_arithmetic/widget/verbal_arithmetic.dart';
 import 'package:gc_wizard/tools/games/word_search/widget/word_search.dart';
 import 'package:gc_wizard/tools/general_tools/gcwizardscript/widget/gcwizard_script.dart';
@@ -906,6 +907,7 @@ const Set<Type> _mainToolTypes = {
   TimeCalculator,
   TomTomSelection,
   TowerOfHanoi,
+  TridokuSolver,
   TupperFormula,
   Trifid,
   Trithemius,

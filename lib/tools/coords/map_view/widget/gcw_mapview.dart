@@ -84,6 +84,7 @@ class GCWMapView extends StatefulWidget {
 }
 
 class _GCWMapViewState extends State<GCWMapView> {
+  static const double DIALOG_WIDTH = 250;
   late MapMarkerIcon _markerIcon;
 
   final MapController _mapController = MapController();
@@ -495,7 +496,7 @@ class _GCWMapViewState extends State<GCWMapView> {
                     context,
                     i18n(context, 'coords_openmap_lineremove_dialog_title'),
                     SizedBox(
-                      width: 250,
+                      width: DIALOG_WIDTH,
                       height: 100,
                       child: GCWText(
                           text: i18n(context, 'coords_openmap_lineremove_dialog_text'), style: gcwDialogTextStyle()),
@@ -540,7 +541,7 @@ class _GCWMapViewState extends State<GCWMapView> {
         context,
         '',
         SizedBox(
-          width: 250,
+          width: DIALOG_WIDTH,
           height: output.length * 50.0,
           child: Column(
             children: output,
@@ -790,7 +791,7 @@ class _GCWMapViewState extends State<GCWMapView> {
               context,
               i18n(context, 'coords_openmap_removeeverything_title'),
               SizedBox(
-                width: 250,
+                width: DIALOG_WIDTH,
                 height: 100,
                 child: GCWText(
                   text: i18n(context, 'coords_openmap_removeeverything_text'),
@@ -1042,7 +1043,7 @@ class _GCWMapViewState extends State<GCWMapView> {
     height += defaultFontSize() * containerHeightMultiplier;
 
     return Container(
-        width: 250,
+        width: DIALOG_WIDTH,
         height: height,
         padding: const EdgeInsets.all(10),
         margin: const EdgeInsets.only(bottom: 5),
@@ -1084,9 +1085,12 @@ class _GCWMapViewState extends State<GCWMapView> {
                         transform: widget.isEditable && !_isOwnPosition(gcwMarker.mapPoint)
                             ? Matrix4.translationValues(-10.0, 0.0, 0.0)
                             : null,
-                        child: GCWText(
+                        child: SizedBox(
+                          width: DIALOG_WIDTH - 62,
+                          child: GCWText(
                             text: gcwMarker.coordinateDescription!,
-                            style: gcwDialogTextStyle().copyWith(fontWeight: FontWeight.bold)),
+                            style: gcwDialogTextStyle().copyWith(fontWeight: FontWeight.bold)
+                          )),
                       ),
               ],
             ),
