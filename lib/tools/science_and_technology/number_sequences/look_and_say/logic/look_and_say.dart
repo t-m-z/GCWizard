@@ -59,6 +59,7 @@ class LookAndSayNumberSequence extends BaseNumberSequence {
 }
 
 String lookAndSay(String input) {
+  input = input.trim();
   final regex = RegExp(r'(.)\1*');
   return input.replaceAllMapped(regex, (match) {
     final seq = match.group(0)!;
@@ -70,20 +71,23 @@ String lookAndSay(String input) {
 List<String>? lookAndSayReverse(String input) {
   var current = input.trim();
   var result = <String>[];
-  if (current.length % 2 != 0) return null;
+  if (current.isEmpty || current.length % 2 != 0) return null;
 
   while (true) {
     if (current.length % 2 != 0) break;
 
     var next = _lookAndSayReverseHelper(current);
-    if (next == null) return null;
+    if (next == null) break;
 
     if (lookAndSay(next) != current) return result;
-    if (next == current) break;
+    if (next == current) {
+      if (result.isEmpty) result.add(current);
+      break;
+    }
     current = next;
     result.add(current);
   }
-  return result;
+  return result.isEmpty ? null : result;
 }
 
 String? _lookAndSayReverseHelper(String input) {
