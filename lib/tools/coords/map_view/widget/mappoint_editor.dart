@@ -11,6 +11,7 @@ import 'package:gc_wizard/tools/coords/map_view/widget/map_geometries.dart';
 import 'package:gc_wizard/tools/science_and_technology/unit_converter/logic/length.dart';
 
 double _DEFAULT_RADIUS = 161.0;
+double _MAX_RADIUS = 10e15;
 
 class MapPointEditor extends StatefulWidget {
   final GCWMapPoint mapPoint;
@@ -101,10 +102,7 @@ class _MapPointEditorState extends State<MapPointEditor> {
         onChanged: (value) {
           setState(() {
             if (value) {
-              widget.mapPoint.circle = GCWMapCircle(
-                centerPoint: widget.mapPoint.point,
-                radius: _currentRadius,
-              );
+              widget.mapPoint.circle = _initializeMapCircle();
             } else {
               widget.mapPoint.circle = null;
             }
@@ -119,9 +117,17 @@ class _MapPointEditorState extends State<MapPointEditor> {
                 GCWDistance(
                   value: _currentRadius,
                   unit: widget.lengthUnit,
+                  max: _MAX_RADIUS,
                   onChanged: (value) {
-                    _currentRadius = value;
-                    widget.mapPoint.circle!.radius = _currentRadius;
+                    if (value <= 0.0) {
+                      widget.mapPoint.circle = null;
+                    } else {
+                      if (widget.mapPoint.circle == null) {
+                        widget.mapPoint.circle = _initializeMapCircle();
+                      }
+                      _currentRadius = value;
+                      widget.mapPoint.circle!.radius = _currentRadius;
+                    }
                     widget.mapPoint.update(precision: widget.precision);
                   },
                 ),
@@ -153,5 +159,12 @@ class _MapPointEditorState extends State<MapPointEditor> {
             )
           : Container(),
     ]);
+  }
+
+  GCWMapCircle _initializeMapCircle() {
+    return GCWMapCircle(
+      centerPoint: widget.mapPoint.point,
+      radius: _currentRadius,
+    );
   }
 }
