@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
+import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/tools/science_and_technology/lueneburg_calculation_table/logic/lueneburg_calculation_table.dart';
@@ -85,13 +86,22 @@ class _LuenebuergCalculationTableState extends State<LuenebuergCalculationTable>
 
   Widget _buildOutput() {
     var output =buildSegmentMap(_currentDisplays);
-    List<int> calculated = calculateLueneburgTable(
+    Map<String, List<int>> calculated = calculateLueneburgTable(
         output, (_currentMode == GCWSwitchPosition.left)
     );
-    int result = _roman(calculated);
-    var outputDisplay = _buildVisualOutput(calculated);
+    int result = _roman(calculated['R']!);
+    var outputDisplay = _buildVisualOutput(calculated['R']!);
     return Column(
       children: <Widget>[
+        GCWColumnedMultilineOutput(
+          suppressCopyButtons: true,
+            data: [
+              [
+                calculated['S']![0],
+                _currentMode == GCWSwitchPosition.left ? '+' : '-',
+                calculated['S']![1]
+              ]
+            ]),
         GCWDefaultOutput(
           child: result.toString(),
         ),

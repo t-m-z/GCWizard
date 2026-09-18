@@ -1,9 +1,9 @@
-List<int> calculateLueneburgTable(Map<String, bool> data, bool add) {
+Map<String, List<int>> calculateLueneburgTable(Map<String, bool> data, bool add) {
   Map<String, int> summands = _calculateSummands(data) ;
   int a = summands['L']!;
   int b = summands['R']!;
   int r = add ? a + b : a - b;
-  return _roman(r);
+  return {'R':_roman(r), 'S':[a, b]};
 }
 
 const _letters = {
