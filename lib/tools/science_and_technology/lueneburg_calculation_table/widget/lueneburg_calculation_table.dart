@@ -84,9 +84,9 @@ class _LuenebuergCalculationTableState extends State<LuenebuergCalculationTable>
   }
 
   Widget _buildOutput() {
-    var output = _currentDisplays.buildOutput();
+    var output =buildSegmentMap(_currentDisplays);
     List<int> calculated = calculateLueneburgTable(
-      output, (_currentMode == GCWSwitchPosition.left)
+        output, (_currentMode == GCWSwitchPosition.left)
     );
     int result = _roman(calculated);
     var outputDisplay = _buildVisualOutput(calculated);
@@ -119,7 +119,22 @@ class _LuenebuergCalculationTableState extends State<LuenebuergCalculationTable>
   }
 
   Map<String, bool> _buildVisualOutput(List<int> input){
-      return {};
+    var result =buildSegmentMap(Segments.Empty());
+
+    for (int i = 0; i <= input[6]; i++) { result['IL' + i.toString()] = true;}
+    for (int i = 0; i <= input[5]; i++) { result['VL' + i.toString()] = true;}
+    for (int i = 0; i <= input[4]; i++) { result['XL' + i.toString()] = true;}
+    for (int i = 0; i <= input[3]; i++) { result['LL' + i.toString()] = true;}
+    for (int i = 0; i <= input[2]; i++) { result['CL' + i.toString()] = true;}
+    for (int i = 0; i <= input[1]; i++) { result['DL' + i.toString()] = true;}
+    for (int i = 0; i <= input[0]; i++) {
+      if (i <= 5) {
+        result['ML' + i.toString()] = true;
+      } else {
+        result['MR' + (i - 5).toString()] = true;
+      }}
+
+    return result;
   }
 
 }
