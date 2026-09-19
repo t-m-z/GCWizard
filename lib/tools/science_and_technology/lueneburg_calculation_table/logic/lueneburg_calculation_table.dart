@@ -24,7 +24,9 @@ Map<String, int> _calculateSummands(Map<String, bool> data){
       for (String digit in ['1', '2', '3', '4','5']) {
         identifier = key + summand + digit;
         if (data[identifier] != null) {
-          summands[summand] = summands[summand]! + value;
+          if (data[identifier]!) {
+            summands[summand] = summands[summand]! + value;
+          }
         }
       }
     });

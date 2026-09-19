@@ -138,10 +138,10 @@ class _LuenebuergCalculationTableState extends State<LuenebuergCalculationTable>
     for (int i = 0; i <= input[2]; i++) { result['CL' + i.toString()] = true;}
     for (int i = 0; i <= input[1]; i++) { result['DL' + i.toString()] = true;}
     for (int i = 0; i <= input[0]; i++) {
-      if (i <= 5) {
+      if (i < 5) {
         result['ML' + i.toString()] = true;
       } else {
-        result['MR' + (i - 5).toString()] = true;
+        result['MR' + (i - 4).toString()] = true;
       }}
 
     return result;
