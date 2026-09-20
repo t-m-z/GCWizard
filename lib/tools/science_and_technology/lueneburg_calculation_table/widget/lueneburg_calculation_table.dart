@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
+import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/tools/science_and_technology/lueneburg_calculation_table/logic/lueneburg_calculation_table.dart';
 import 'package:gc_wizard/tools/science_and_technology/lueneburg_calculation_table/widget/lueneburg_calculation_table_display.dart';
-
+import 'package:gc_wizard/tools/science_and_technology/lueneburg_calculation_table/widget/lueneburg_calculation_table_result_display.dart';
 import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/logic/segment_display.dart';
 import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/widget/n_segment_display.dart';
+
 
 class LuenebuergCalculationTable extends StatefulWidget {
   const LuenebuergCalculationTable({super.key});
@@ -21,6 +24,7 @@ class _LuenebuergCalculationTableState extends State<LuenebuergCalculationTable>
   var _currentDisplays = Segments.Empty();
 
   var _currentMode = GCWSwitchPosition.left;
+
 
     @override
   void initState() {
@@ -55,12 +59,20 @@ class _LuenebuergCalculationTableState extends State<LuenebuergCalculationTable>
     return Column(
       children: <Widget>[
         GCWTwoOptionsSwitch(
-          leftValue: '+',
-          rightValue: '-',
+          leftValue: i18n(context, 'common_math_add'),
+          rightValue: i18n(context, 'common_math_sub'),
           value: _currentMode,
           onChanged: (value) {
             setState(() {
               _currentMode = value;
+            });
+          },
+        ),
+        GCWIconButton(
+          icon: Icons.clear,
+          onPressed: () {
+            setState(() {
+              _currentDisplays = Segments.Empty();
             });
           },
         ),
@@ -72,7 +84,7 @@ class _LuenebuergCalculationTableState extends State<LuenebuergCalculationTable>
           child: Row(
             children: <Widget>[
               Expanded(
-                child: MICSegmentDisplay(
+                child: LCTSegmentDisplay(
                   segments: currentDisplay,
                   onChanged: onChanged,
                 ),
@@ -85,7 +97,7 @@ class _LuenebuergCalculationTableState extends State<LuenebuergCalculationTable>
   }
 
   Widget _buildOutput() {
-    var output =buildSegmentMap(_currentDisplays);
+    var output = buildSegmentMap(_currentDisplays);
     Map<String, List<int>> calculated = calculateLueneburgTable(
         output, (_currentMode == GCWSwitchPosition.left)
     );
@@ -113,7 +125,7 @@ class _LuenebuergCalculationTableState extends State<LuenebuergCalculationTable>
           child: Row(
             children: <Widget>[
               Expanded(
-                child: MICSegmentDisplay(
+                child: LCTResultSegmentDisplay(
                   segments: outputDisplay,
                 ),
               )

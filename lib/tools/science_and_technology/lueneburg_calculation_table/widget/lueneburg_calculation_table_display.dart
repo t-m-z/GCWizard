@@ -26,8 +26,8 @@ const _LCT_RELATIVE_DISPLAY_WIDTH = 250;
 const _LCT_RELATIVE_DISPLAY_HEIGHT = 150;
 const _LCT_RADIUS = 5.0;
 
-class MICSegmentDisplay extends NSegmentDisplay {
-  MICSegmentDisplay(
+class LCTSegmentDisplay extends NSegmentDisplay {
+  LCTSegmentDisplay(
       {super.key,
         required super.segments,
         super.readOnly,

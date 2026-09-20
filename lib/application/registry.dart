@@ -1461,12 +1461,13 @@ void initializeRegistry(BuildContext context) {
         ]),
     GCWTool(
         tool: const LuenebuergCalculationTable(),
-        id: 'luenebuerg_calculation_table',
+        id: 'lueneburg_calculation_table',
         categories: const [
           ToolCategory.SCIENCE_AND_TECHNOLOGY
         ],
         searchKeys: const [
-          'luenebuerg_calculation_table',
+          'lueneburg_calculation_table',
+          'roman_numbers'
         ]),
     GCWTool(
         tool: const MagicEyeSolver(),
