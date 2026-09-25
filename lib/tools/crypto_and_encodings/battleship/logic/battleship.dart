@@ -48,6 +48,8 @@ List<String> _splitPair(String pair) {
 String decodeBattleship(String text, bool numberMode) {
   if (text.isEmpty) return '';
 
+  text = text.trim();
+
   bool startWithZero = false;
 
   bool absoluteError = false;
