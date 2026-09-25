@@ -22,10 +22,6 @@ const _INITIAL_SEGMENTS = <String, bool>{
   'IR1' : false,  'IR2' : false,  'IR3' : false,  'IR4' : false,
 };
 
-const _LCT_RELATIVE_DISPLAY_WIDTH = 250;
-const _LCT_RELATIVE_DISPLAY_HEIGHT = 150;
-const _LCT_RADIUS = 5.0;
-
 class LCTSegmentDisplay extends NSegmentDisplay {
   LCTSegmentDisplay(
       {super.key,
@@ -41,48 +37,45 @@ class LCTSegmentDisplay extends NSegmentDisplay {
         var SEGMENTS_COLOR_ON = segment_color_on;
         var SEGMENTS_COLOR_OFF = segment_color_off;
 
-        const lines = {20, 60, 100, 140};
-        paint.color = SEGMENTS_COLOR_OFF;
+        var distX = size.width / 23;
+        var distY = size.height / 15;
+
+        const lines = {0, 2, 4, 6};
+        paint.color = Colors.brown;
         paint.strokeWidth = 2.0;
         for (var height in lines) {
           canvas.touchCanvas.drawLine(
-              Offset(size.width / _LCT_RELATIVE_DISPLAY_WIDTH * 10,
-                  size.height / _LCT_RELATIVE_DISPLAY_HEIGHT * height),
-              Offset(size.width / _LCT_RELATIVE_DISPLAY_WIDTH * 55,
-                  size.height / _LCT_RELATIVE_DISPLAY_HEIGHT * height), paint);
+              Offset(distX, distY * (height * 2 + 1) + distY / 2),
+              Offset(distX * 10, distY * (height * 2 + 1) + distY / 2), paint);
           canvas.touchCanvas.drawLine(
-              Offset(size.width / _LCT_RELATIVE_DISPLAY_WIDTH * 100,
-                  size.height / _LCT_RELATIVE_DISPLAY_HEIGHT * height),
-              Offset(size.width / _LCT_RELATIVE_DISPLAY_WIDTH * 145,
-                  size.height / _LCT_RELATIVE_DISPLAY_HEIGHT * height), paint);
+              Offset(distX * 13, distY * (height * 2 + 1) + distY / 2),
+              Offset(distX * 22, distY * (height * 2 + 1) + distY / 2), paint);
         }
 
         const circles = {
-          'ML1' : [10,20], 'ML2' : [25, 20], 'ML3': [40, 20], 'ML4': [55, 20],
-          'MR1' : [100,20], 'MR2' : [115, 20], 'MR3': [130, 20], 'MR4': [145, 20],
-          'DL1' : [33,40],
-          'DR1' : [123,40],
-          'CL1' : [10,60], 'CL2' : [25, 60], 'CL3': [40, 60], 'CL4': [55, 60],
-          'CR1' : [100,60], 'CR2' : [115, 60], 'CR3': [130, 60], 'CR4': [145, 60],
-          'LL1' : [33,80],
-          'LR1' : [123,80],
-          'XL1' : [10,100], 'XL2' : [25, 100], 'XL3': [40, 100], 'XL4': [55, 100],
-          'XR1' : [100,100], 'XR2' : [115, 100], 'XR3': [130, 100], 'XR4': [145, 100],
-          'VL1' : [33,120],
-          'VR1' : [123,120],
-          'IL1' : [10,140], 'IL2' : [25, 140], 'IL3': [40, 140], 'IL4': [55, 140],
-          'IR1' : [100,140], 'IR2' : [115, 140], 'IR3': [130, 140], 'IR4': [145, 140],
+          'ML1' : [0,0], 'ML2' : [1, 0], 'ML3': [2, 0], 'ML4': [3, 0],
+          'MR1' : [6,0], 'MR2' : [7, 0], 'MR3': [8, 0], 'MR4': [9, 0],
+          'DL1' : [2,1],
+          'DR1' : [7,1],
+          'CL1' : [0,2], 'CL2' : [1, 2], 'CL3': [2, 2], 'CL4': [3, 2],
+          'CR1' : [6,2], 'CR2' : [7, 2], 'CR3': [8, 2], 'CR4': [9, 2],
+          'LL1' : [2,3],
+          'LR1' : [7,3],
+          'XL1' : [0,4], 'XL2' : [1, 4], 'XL3': [2, 4], 'XL4': [3, 4],
+          'XR1' : [6,4], 'XR2' : [7, 4], 'XR3': [8, 4], 'XR4': [9, 4],
+          'VL1' : [2,5],
+          'VR1' : [7,5],
+          'IL1' : [0,6], 'IL2' : [1, 6], 'IL3': [2, 6], 'IL4': [3, 6],
+          'IR1' : [6,6], 'IR2' : [7, 6], 'IR3': [8, 6], 'IR4': [9, 6],
         };
 
         circles.forEach((key, value) {
           paint.color = segmentActive(currentSegments, key) ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
 
-          var pointSize = size.height / _LCT_RELATIVE_DISPLAY_HEIGHT * _LCT_RADIUS;
-
           canvas.touchCanvas.drawCircle(
-              Offset(size.width / _LCT_RELATIVE_DISPLAY_WIDTH * value[0],
-                  size.height / _LCT_RELATIVE_DISPLAY_HEIGHT * value[1]),
-              pointSize,
+              Offset(distX + distX * (value[0] * 2 + 1) + distX / 2,
+                  distY * (value[1] * 2 + 1) + distY / 2),
+              distX / 2,
               paint, onTapDown: (tapDetail) {
             setSegmentState(key, !segmentActive(currentSegments, key));
           });
@@ -92,24 +85,24 @@ class LCTSegmentDisplay extends NSegmentDisplay {
         });
 
         const letters = {
-          'M' : 20,
-          'D' : 40,
-          'C' : 60,
-          'L' : 80,
-          'X' : 100,
-          'V' : 120,
-          'I' : 140,
+          'M' : 0,
+          'D' : 1,
+          'C' : 2,
+          'L' : 3,
+          'X' : 4,
+          'V' : 5,
+          'I' : 6,
         };
         letters.forEach((key, value) {
           TextSpan span =
-          TextSpan(style: gcwTextStyle().copyWith(color: Colors.brown, fontSize: 16 * 1.3), text: key);
+          TextSpan(style: gcwTextStyle().copyWith(color: Colors.brown, fontSize: distX * 1.5), text: key);
           TextPainter textPainter = TextPainter(text: span, textDirection: TextDirection.ltr);
           textPainter.layout();
 
           textPainter.paint(
               canvas.canvas,
-              Offset(size.width / _LCT_RELATIVE_DISPLAY_WIDTH * 78 - textPainter.width * 0.5,
-                  size.height / _LCT_RELATIVE_DISPLAY_HEIGHT * value - textPainter.height * 0.5));
+              Offset(distX * 12 - textPainter.width,
+                  distY * (value * 2 + 1) + distY / 2 - textPainter.height * 0.5));
         });
 
       });

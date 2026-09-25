@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/common_widgets/buttons/gcw_iconbutton.dart';
+import 'package:gc_wizard/common_widgets/gcw_painter_container.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
@@ -11,7 +12,6 @@ import 'package:gc_wizard/tools/science_and_technology/lueneburg_calculation_tab
 import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/logic/segment_display.dart';
 import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/widget/n_segment_display.dart';
 
-
 class LuenebuergCalculationTable extends StatefulWidget {
   const LuenebuergCalculationTable({super.key});
 
@@ -20,13 +20,13 @@ class LuenebuergCalculationTable extends StatefulWidget {
       _LuenebuergCalculationTableState();
 }
 
-class _LuenebuergCalculationTableState extends State<LuenebuergCalculationTable> {
+class _LuenebuergCalculationTableState
+    extends State<LuenebuergCalculationTable> {
   var _currentDisplays = Segments.Empty();
 
   var _currentMode = GCWSwitchPosition.left;
 
-
-    @override
+  @override
   void initState() {
     super.initState();
   }
@@ -38,10 +38,10 @@ class _LuenebuergCalculationTableState extends State<LuenebuergCalculationTable>
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: <Widget>[_buildVisualDecryption(), _buildOutput()]);
+    return Column(children: <Widget>[_buildCalculateTable(), _buildOutput()]);
   }
 
-  Widget _buildVisualDecryption() {
+  Widget _buildCalculateTable() {
     var currentDisplay = buildSegmentMap(_currentDisplays);
 
     onChanged(Map<String, bool> d) {
@@ -68,28 +68,19 @@ class _LuenebuergCalculationTableState extends State<LuenebuergCalculationTable>
             });
           },
         ),
-        GCWIconButton(
-          icon: Icons.clear,
-          onPressed: () {
-            setState(() {
-              _currentDisplays = Segments.Empty();
-            });
-          },
-        ),
-        Container(
-          width: 600,
-          height: 250,
-          padding: const EdgeInsets.only(
-              top: DEFAULT_MARGIN * 2, bottom: DEFAULT_MARGIN * 4),
-          child: Row(
-            children: <Widget>[
-              Expanded(
-                child: LCTSegmentDisplay(
-                  segments: currentDisplay,
-                  onChanged: onChanged,
-                ),
-              )
-            ],
+        GCWPainterContainer(
+          trailing: GCWIconButton(
+            size: IconButtonSize.SMALL,
+            icon: Icons.clear,
+            onPressed: () {
+              setState(() {
+                _currentDisplays = Segments.Empty();
+              });
+            },
+          ),
+          child: LCTSegmentDisplay(
+            segments: currentDisplay,
+            onChanged: onChanged,
           ),
         ),
       ],
@@ -99,21 +90,18 @@ class _LuenebuergCalculationTableState extends State<LuenebuergCalculationTable>
   Widget _buildOutput() {
     var output = buildSegmentMap(_currentDisplays);
     Map<String, List<int>> calculated = calculateLueneburgTable(
-        output, (_currentMode == GCWSwitchPosition.left)
-    );
+        output, (_currentMode == GCWSwitchPosition.left));
     int result = _roman(calculated['R']!);
     var outputDisplay = _buildVisualOutput(calculated['R']!);
     return Column(
       children: <Widget>[
-        GCWColumnedMultilineOutput(
-          suppressCopyButtons: true,
-            data: [
-              [
-                calculated['S']![0],
-                _currentMode == GCWSwitchPosition.left ? '+' : '-',
-                calculated['S']![1]
-              ]
-            ]),
+        GCWColumnedMultilineOutput(suppressCopyButtons: true, data: [
+          [
+            calculated['S']![0],
+            _currentMode == GCWSwitchPosition.left ? '+' : '-',
+            calculated['S']![1]
+          ]
+        ]),
         GCWDefaultOutput(
           child: result.toString(),
         ),
@@ -136,27 +124,45 @@ class _LuenebuergCalculationTableState extends State<LuenebuergCalculationTable>
     );
   }
 
-  int _roman(List<int> r){
-    return r[0] * 1000 + r[1] * 500 + r[2] * 100 + r[3] * 50 + r[4] * 10 + r[5] * 5 + r[6];
+  int _roman(List<int> r) {
+    return r[0] * 1000 +
+        r[1] * 500 +
+        r[2] * 100 +
+        r[3] * 50 +
+        r[4] * 10 +
+        r[5] * 5 +
+        r[6];
   }
 
-  Map<String, bool> _buildVisualOutput(List<int> input){
-    var result =buildSegmentMap(Segments.Empty());
+  Map<String, bool> _buildVisualOutput(List<int> input) {
+    var result = buildSegmentMap(Segments.Empty());
 
-    for (int i = 0; i <= input[6]; i++) { result['IL' + i.toString()] = true;}
-    for (int i = 0; i <= input[5]; i++) { result['VL' + i.toString()] = true;}
-    for (int i = 0; i <= input[4]; i++) { result['XL' + i.toString()] = true;}
-    for (int i = 0; i <= input[3]; i++) { result['LL' + i.toString()] = true;}
-    for (int i = 0; i <= input[2]; i++) { result['CL' + i.toString()] = true;}
-    for (int i = 0; i <= input[1]; i++) { result['DL' + i.toString()] = true;}
+    for (int i = 0; i <= input[6]; i++) {
+      result['IL' + i.toString()] = true;
+    }
+    for (int i = 0; i <= input[5]; i++) {
+      result['VL' + i.toString()] = true;
+    }
+    for (int i = 0; i <= input[4]; i++) {
+      result['XL' + i.toString()] = true;
+    }
+    for (int i = 0; i <= input[3]; i++) {
+      result['LL' + i.toString()] = true;
+    }
+    for (int i = 0; i <= input[2]; i++) {
+      result['CL' + i.toString()] = true;
+    }
+    for (int i = 0; i <= input[1]; i++) {
+      result['DL' + i.toString()] = true;
+    }
     for (int i = 0; i <= input[0]; i++) {
       if (i < 5) {
         result['ML' + i.toString()] = true;
       } else {
         result['MR' + (i - 4).toString()] = true;
-      }}
+      }
+    }
 
     return result;
   }
-
 }
