@@ -147,7 +147,7 @@ class BattleshipState extends State<Battleship> {
             _encodeGraphicController.text, _GRAPHICMODE, (_currentNumberExcelMode == GCWSwitchPosition.left));
       }
     } else {
-      _decodeOutput = decodeBattleship(_currentDecode, (_currentNumberExcelMode == GCWSwitchPosition.left));
+      _decodeOutput = decodeBattleship(_currentDecode.trim(), (_currentNumberExcelMode == GCWSwitchPosition.left));
     }
     setState(() {});
   }
