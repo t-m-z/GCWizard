@@ -48,6 +48,8 @@ List<String> _splitPair(String pair) {
 String decodeBattleship(String text, bool numberMode) {
   if (text.isEmpty) return '';
 
+  bool startWithZero = false;
+
   bool absoluteError = false;
   bool rowsError = false;
   bool columnsError = false;
@@ -73,6 +75,9 @@ String decodeBattleship(String text, bool numberMode) {
     } else {
       if (isInteger(tupel[0])) {
         column = int.parse(tupel[0]);
+        if (column == 0) {
+          startWithZero = true;
+        }
       } else {
         if (numberMode) {
           column = int.parse(convertBase(tupel[0], 36, 10).trim());
@@ -92,6 +97,9 @@ String decodeBattleship(String text, bool numberMode) {
 
       if (isInteger(tupel[1])) {
         row = int.parse(tupel[1]);
+        if (row == 0) {
+          startWithZero = true;
+        }
       } else {
         String h = convertBase(tupel[1], 36, 10);
         if (int.tryParse(h) != null) {
@@ -117,6 +125,10 @@ String decodeBattleship(String text, bool numberMode) {
           rowsError = true;
         }
         world[column.toString() + '|' + row.toString()] = '#';
+        if (startWithZero) {
+          maxColumn = maxColumn + 1;
+          maxRow = maxRow + 1;
+        }
       }
       if (rowsError) {
         maxRow = _BATTLESHIP_MAX_ROWS;
@@ -129,8 +141,13 @@ String decodeBattleship(String text, bool numberMode) {
   List<List<String>> binaryWorld =
       List.generate(maxColumn, (y) => List.generate(maxRow, (x) => ' ', growable: false), growable: false);
   world.forEach((key, value) {
-    column = int.parse(key.split('|')[0]) - 1;
-    row = int.parse(key.split('|')[1]) - 1;
+    if (startWithZero) {
+      column = int.parse(key.split('|')[0]);
+      row = int.parse(key.split('|')[1]);
+    } else {
+      column = int.parse(key.split('|')[0]) - 1;
+      row = int.parse(key.split('|')[1]) - 1;
+    }
     if (column < _BATTLESHIP_MAX_COLUMNS && row < _BATTLESHIP_MAX_ROWS) {
       binaryWorld[column][row] = value;
     }
