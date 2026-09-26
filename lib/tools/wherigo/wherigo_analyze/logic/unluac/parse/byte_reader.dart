@@ -8,9 +8,9 @@ class _ByteReader {
   final Uint8List _bytes;
   int _pos = 0;
   int _mark = 0;
-  Endian order;
+  Endian order = Endian.big;
 
-  _ByteReader(Uint8List bytes, {this.order = Endian.big})
+  _ByteReader(Uint8List bytes)
       : _bytes = bytes,
         _data = ByteData.sublistView(bytes);
 
