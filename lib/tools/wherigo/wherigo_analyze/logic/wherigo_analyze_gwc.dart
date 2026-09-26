@@ -91,7 +91,6 @@ part of 'package:gc_wizard/tools/wherigo/wherigo_analyze/logic/wherigo_analyze.d
 
 List<String> _GWCResultsGWC = [];
 WHERIGO_ANALYSE_RESULT_STATUS _GWCStatus = WHERIGO_ANALYSE_RESULT_STATUS.OK;
-WHERIGO_FILE_LOAD_STATE _checksToDo = WHERIGO_FILE_LOAD_STATE.NULL;
 String _GWCSignature = '';
 int _GWCNumberOfObjects = 0;
 List<_WherigoMediaFileHeader> _GWCMediaFilesHeaders = [];
@@ -124,63 +123,79 @@ int _GWCMediaFileLength = 0;
 int _GWCValidMediaFile = 0;
 int _GWCMediaFileType = 0;
 
-Future<WherigoCartridge> getCartridgeGWC(Uint8List byteListGWC, bool offline, {SendPort? sendAsyncPort}) async {
-  if (byteListGWC.isNotEmpty) _checksToDo = WHERIGO_FILE_LOAD_STATE.GWC;
+Future<WherigoCartridge> getCartridge(Uint8List byteListGWC, {SendPort? sendAsyncPort}) async {
+  if (byteListGWC.isEmpty) {
+    return WherigoCartridge(
+      cartridgeGWC: _WHERIGO_EMPTYCARTRIDGE_GWC,
+      cartridgeLUA: WHERIGO_EMPTYCARTRIDGE_LUA,
+      results: ['wherigo_error_empty_gwc'],
+      resultStatus: WHERIGO_ANALYSE_RESULT_STATUS.ERROR_GWC,
+  );
+  }
 
   _GWCResultsGWC = [];
   _GWCMediaFilesHeaders = [];
   _GWCMediaFilesContents = [];
 
-  if (_checksToDo == WHERIGO_FILE_LOAD_STATE.NULL) {
-    _GWCResultsGWC.add('wherigo_error_runtime');
-    _GWCResultsGWC.add('wherigo_error_empty_gwc');
-    return WherigoCartridge(cartridgeGWC: _WHERIGO_EMPTYCARTRIDGE_GWC, cartridgeLUA: WHERIGO_EMPTYCARTRIDGE_LUA);
-  }
-
-  if (_checksToDo == WHERIGO_FILE_LOAD_STATE.GWC) {
-
-    if (isInvalidCartridge(byteListGWC)) {
+  if (isInvalidCartridge(byteListGWC)) {
       _GWCResultsGWC.add('wherigo_error_runtime');
       _GWCResultsGWC.add('wherigo_error_invalid_gwc');
       _GWCStatus = WHERIGO_ANALYSE_RESULT_STATUS.ERROR_GWC;
-    } else {
+  } else {
       // analyse GWC-File
       _getHeaderFromGWC(byteListGWC);
       _getLUAByteCodeFromGWC(byteListGWC);
       _getMediaFilesFromGWC(byteListGWC);
-    }
-  } // if checks to do GWC
+  }
 
+  var cartridgeGWC = WherigoCartridgeGWC(
+    Signature: _GWCSignature,
+    NumberOfObjects: _GWCNumberOfObjects,
+    MediaFilesHeaders: _GWCMediaFilesHeaders,
+    MediaFilesContents: _GWCMediaFilesContents,
+    HeaderLength: _GWCHeaderLength,
+    Latitude: _GWCLatitude,
+    Longitude: _GWCLongitude,
+    Altitude: _GWCAltitude,
+    Splashscreen: _GWCSplashscreen,
+    SplashscreenIcon: _GWCSplashscreenIcon,
+    DateOfCreation: _GWCDateOfCreation,
+    TypeOfCartridge: _GWCTypeOfCartridge,
+    Player: _GWCPlayer,
+    PlayerID: _GWCPlayerID,
+    CartridgeLUAName: _GWCCartridgeLUAName,
+    CartridgeGUID: _GWCCartridgeGUID,
+    CartridgeDescription: _GWCCartridgeDescription,
+    StartingLocationDescription: _GWCStartingLocationDescription,
+    Version: _GWCVersion,
+    Author: _GWCAuthor,
+    Company: _GWCCompany,
+    RecommendedDevice: _GWCRecommendedDevice,
+    LengthOfCompletionCode: _GWCLengthOfCompletionCode,
+    CompletionCode: _GWCCompletionCode,
+    ResultStatus: _GWCStatus,
+    ResultsGWC: _GWCResultsGWC,
+  );
+
+  var cartridgeLUA = WHERIGO_EMPTYCARTRIDGE_LUA;
+
+  cartridgeLUA = _getCartridgeLUA(
+      cartridgeGWC.MediaFilesContents[0].MediaFileBytes,
+      sendAsyncPort: sendAsyncPort);
+
+  if (cartridgeLUA.ResultStatus == WHERIGO_ANALYSE_RESULT_STATUS.ERROR_LUA) {
+    return WherigoCartridge(
+        cartridgeGWC: cartridgeGWC,
+        cartridgeLUA: cartridgeLUA,
+        resultStatus: WHERIGO_ANALYSE_RESULT_STATUS.ERROR_LUA,
+        results: cartridgeLUA.ResultsLUA);
+  }
   return WherigoCartridge(
-      cartridgeGWC: WherigoCartridgeGWC(
-        Signature: _GWCSignature,
-        NumberOfObjects: _GWCNumberOfObjects,
-        MediaFilesHeaders: _GWCMediaFilesHeaders,
-        MediaFilesContents: _GWCMediaFilesContents,
-        HeaderLength: _GWCHeaderLength,
-        Latitude: _GWCLatitude,
-        Longitude: _GWCLongitude,
-        Altitude: _GWCAltitude,
-        Splashscreen: _GWCSplashscreen,
-        SplashscreenIcon: _GWCSplashscreenIcon,
-        DateOfCreation: _GWCDateOfCreation,
-        TypeOfCartridge: _GWCTypeOfCartridge,
-        Player: _GWCPlayer,
-        PlayerID: _GWCPlayerID,
-        CartridgeLUAName: _GWCCartridgeLUAName,
-        CartridgeGUID: _GWCCartridgeGUID,
-        CartridgeDescription: _GWCCartridgeDescription,
-        StartingLocationDescription: _GWCStartingLocationDescription,
-        Version: _GWCVersion,
-        Author: _GWCAuthor,
-        Company: _GWCCompany,
-        RecommendedDevice: _GWCRecommendedDevice,
-        LengthOfCompletionCode: _GWCLengthOfCompletionCode,
-        CompletionCode: _GWCCompletionCode,
-        ResultStatus: _GWCStatus,
-        ResultsGWC: _GWCResultsGWC,
-      ),
-      cartridgeLUA: WHERIGO_EMPTYCARTRIDGE_LUA);
+      cartridgeGWC: cartridgeGWC,
+      cartridgeLUA: cartridgeLUA,
+      resultStatus: WHERIGO_ANALYSE_RESULT_STATUS.OK,
+      results: []
+  );
 }
 
 void _getHeaderFromGWC(Uint8List byteListGWC) {

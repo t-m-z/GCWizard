@@ -18,12 +18,12 @@ void _checkAndGetObfuscatorURWIGO(List<String> lines) {
   for (int i = 0; i < lines.length; i++) {
     lines[i] = lines[i].trim();
 
-    if (RegExp(r'(local dtable = ")').hasMatch(lines[i])) {
+    if (RegExp(r'(dtable = ")').hasMatch(lines[i])) {
       obFunction = lines[i - 2].replaceAll('function ', '').replaceAll('(str)', '');
       _obfuscatorFunction.add(obFunction);
       _obfuscatorFound = true;
 
-      obTable = lines[i].trim().substring(0, lines[i].length - 1).replaceAll('local dtable = "', '');
+      obTable = lines[i].trim().substring(0, lines[i].length - 1).replaceAll('dtable = "', '');
       _obfuscatorTable.add(obTable);
     }
   }

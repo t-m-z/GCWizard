@@ -29,7 +29,11 @@ String _normalizeLUAmultiLineText(String LUA) {
       .replaceAll('\\195\\159', 'ß')
       .replaceAll('\\194\\176', '°')
       .replaceAll('\\194\\160', '')
-      .replaceAll('\n\n', '\n');
+      .replaceAll('\n\n', '\n')
+      .replaceAll('local ', '')
+      .replaceAll('Wherigo.Distance', 'Distance')
+      .replaceAll('Wherigo.ZonePoint', 'ZonePoint')
+      .replaceAll('Wherigo.OriginalPoint', 'OriginalPoint');
 }
 
 WherigoZonePoint _getPoint(String line) {
@@ -158,46 +162,7 @@ bool isInvalidLUASourcecode(String header) {
   return (!header
       .replaceAll('(', ' ')
       .replaceAll(')', '')
-      .startsWith('require "Wherigo"'));
+      .contains('require "Wherigo"'));
 }
 
-WherigoCartridgeLUA _faultyWherigoCartridgeLUA(
-    String _LUAFile,
-    WHERIGO_ANALYSE_RESULT_STATUS resultStatus,
-    List<String> _http_code_http,
-    int _httpCode,
-    String _httpMessage) {
-  return WherigoCartridgeLUA(
-      CartridgeLUAName: '',
-      CartridgeGUID: '',
-      ObfuscatorTable: [],
-      ObfuscatorFunction: [],
-      Builder: WHERIGO_BUILDER.NONE,
-      BuilderVersion: '',
-      TargetDevice: '',
-      TargetDeviceVersion: '',
-      StartLocation: const WherigoZonePoint(),
-      StateID: '',
-      UseLogging: '',
-      CountryID: '',
-      CreateDate: '',
-      PublishDate: '',
-      UpdateDate: '',
-      LastPlayedDate: '',
-      LUAFile: _LUAFile,
-      Characters: [],
-      Items: [],
-      Tasks: [],
-      Inputs: [],
-      Zones: [],
-      Timers: [],
-      Media: [],
-      Messages: [],
-      Variables: [],
-      BuilderVariables: [],
-      NameToObject: {},
-      ResultStatus: resultStatus,
-      ResultsLUA: _http_code_http,
-      httpCode: _httpCode,
-      httpMessage: _httpMessage);
-}
+

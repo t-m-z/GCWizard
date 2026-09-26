@@ -12232,6 +12232,15 @@ void initializeRegistry(BuildContext context) {
           sourceUrl:
               'https://web.archive.org/web/20240722202351/https://github.com/WFoundation/WF.Compiler',
           licenseType: ToolLicenseType.GITHUB_DEFAULT),
+      ToolLicensePortedCode(
+          context: context,
+          author: 'Hans Wessels',
+          title: 'unluac',
+          //TODO save to webarchive
+          sourceUrl:
+          'https://github.com/HansWessels/unluac',
+          licenseUrl: 'https://github.com/HansWessels/unluac?tab=License-1-ov-file',
+          licenseType: ToolLicenseType.FREE_TO_USE),
     ]),
     //UrwigoHashBreaker already inserted in section "Hashes"
     GCWTool(

@@ -392,8 +392,6 @@ class WherigoCartridgeLUA {
   final String PublishDate;
   final String UpdateDate;
   final String LastPlayedDate;
-  final int httpCode;
-  final String httpMessage;
 
   const WherigoCartridgeLUA({
     required this.LUAFile,
@@ -426,27 +424,27 @@ class WherigoCartridgeLUA {
     required this.PublishDate,
     required this.UpdateDate,
     required this.LastPlayedDate,
-    required this.httpCode,
-    required this.httpMessage,
   });
 }
 
 class WherigoCartridge {
   final WherigoCartridgeGWC cartridgeGWC;
   final WherigoCartridgeLUA cartridgeLUA;
+  final WHERIGO_ANALYSE_RESULT_STATUS resultStatus;
+  final List<String> results;
 
-  WherigoCartridge({this.cartridgeGWC = _WHERIGO_EMPTYCARTRIDGE_GWC, this.cartridgeLUA = WHERIGO_EMPTYCARTRIDGE_LUA});
+  WherigoCartridge({
+    this.cartridgeGWC = _WHERIGO_EMPTYCARTRIDGE_GWC,
+    this.cartridgeLUA = WHERIGO_EMPTYCARTRIDGE_LUA,
+    this.resultStatus = WHERIGO_ANALYSE_RESULT_STATUS.NONE,
+    this.results = const []});
 }
 
 class WherigoJobData {
   final Uint8List jobDataBytes;
-  final bool jobDataMode;
-  final WHERIGO_CARTRIDGE_DATA_TYPE jobDataType;
 
   WherigoJobData({
     required this.jobDataBytes,
-    required this.jobDataMode,
-    required this.jobDataType,
   });
 }
 

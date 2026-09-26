@@ -24,7 +24,7 @@ List<List<String>> _buildOutputListTimerDataExpertMode(BuildContext context, Whe
     [i18n(context, 'wherigo_output_name'), data.TimerName],
     [i18n(context, 'wherigo_output_description'), data.TimerDescription],
     [i18n(context, 'wherigo_output_duration'), data.TimerDuration + ' ' + i18n(context, 'dates_daycalculator_seconds')],
-    [i18n(context, 'wherigo_output_type'), i18n(context, 'wherigo_output_timer_' + data.TimerType + ' s')],
+    [i18n(context, 'wherigo_output_type'), i18n(context, 'wherigo_output_timer_' + data.TimerType)],
     [i18n(context, 'wherigo_output_visible'), i18n(context, 'common_' + data.TimerVisible)],
   ];
 }

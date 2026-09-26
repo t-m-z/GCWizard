@@ -38,6 +38,29 @@ List<List<WherigoActionMessageElementData>> testOutputMESSAGE = [
   ]
 ];
 
+List<List<WherigoActionMessageElementData>> testOutputMESSAGECacheSleuth = [
+  [
+    WherigoActionMessageElementData(
+      ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.TEXT,
+      ActionMessageContent: 'Gratuliere. Suche bei N47 53.770 E014 43.673 Du findest diesen Eintrag auch unter "Aufgaben" - "zeige Beleg',
+    ),
+    WherigoActionMessageElementData(
+      ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.IMAGE,
+      ActionMessageContent: 'media2',
+    ),
+  ],
+  [
+    WherigoActionMessageElementData(
+      ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.TEXT,
+      ActionMessageContent: 'Sorry, dir fehlen noch ein paar items.',
+    ),
+    WherigoActionMessageElementData(
+      ActionMessageType: WHERIGO_ACTIONMESSAGETYPE.IMAGE,
+      ActionMessageContent: 'media3',
+    ),
+  ],
+];
+
 String testInputMESSAGE = '''objHinweise = 0
 currentZone = "zCache"
 currentCharacter = "objFredericVester"
@@ -89,6 +112,49 @@ function zPolitik:OnEnter()
   }, function(action)
     Wherigo.ShowScreen(Wherigo.MAINSCREEN)
   end)
+end''';
+
+String testInputMESSAGECacheSleuth = '''function wb_cb_18(action)
+  if action == "Button1" then
+    objCartridge.ZVariables.varCountItems = 0
+    if itmFeuerwehrhelm.Container == Player then
+      objCartridge.ZVariables.varCountItems = wb_num(objCartridge.ZVariables.varCountItems) + 1
+    end
+    if itmEintrittskarte.Container == Player then
+      objCartridge.ZVariables.varCountItems = wb_num(objCartridge.ZVariables.varCountItems) + 1
+    end
+    if itmZwerg.Container == Player then
+      objCartridge.ZVariables.varCountItems = wb_num(objCartridge.ZVariables.varCountItems) + 1
+    end
+    if itmWegweiser.Container == Player then
+      objCartridge.ZVariables.varCountItems = wb_num(objCartridge.ZVariables.varCountItems) + 1
+    end
+    if itmGugga.Container == Player then
+      objCartridge.ZVariables.varCountItems = wb_num(objCartridge.ZVariables.varCountItems) + 1
+    end
+    if itmViehgatterPassierschein.Container == Player then
+      objCartridge.ZVariables.varCountItems = wb_num(objCartridge.ZVariables.varCountItems) + 1
+    end
+    if itmEinkaufskorbUndRechnung.Container == Player then
+      objCartridge.ZVariables.varCountItems = wb_num(objCartridge.ZVariables.varCountItems) + 1
+    end
+    if wb_num(objCartridge.ZVariables.varCountItems) >= wb_num(objCartridge.ZVariables.varMinimumItems) then
+      Wherigo.MessageBox({
+        Text = [[
+Gratuliere. Suche bei
+N47 53.770 E014 43.673
+
+Du findest diesen Eintrag auch unter "Aufgaben" - "zeige Beleg"]],
+        Media = media2
+      })
+    else
+      Wherigo.MessageBox({
+        Text = "Sorry, dir fehlen noch ein paar items.",
+        Media = media3
+      })
+    end
+    tsk08_ZeigeBeleg.Complete = true
+  end
 end''';
 
 void expectMessage(List<List<WherigoActionMessageElementData>> actual, List<List<WherigoActionMessageElementData>> expected){
