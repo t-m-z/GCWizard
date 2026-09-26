@@ -9,7 +9,7 @@ plugins {
 
 android {
     namespace = "de.sman42.gc_wizard"
-    compileSdk = 36
+    compileSdk = 37
     ndkVersion = flutter.ndkVersion
 
     compileOptions {
