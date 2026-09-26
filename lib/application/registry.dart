@@ -8975,6 +8975,22 @@ void initializeRegistry(BuildContext context) {
                   'https://web.archive.org/web/20240730050939/https://fontstruct.com/fontstructions/show/677781/gnommish_31',
               licenseType: ToolLicenseType.CCBYSA3)
         ]),
+    GCWSymbolTableTool(
+        symbolKey: 'gorn',
+        symbolSearchStrings: const [
+          'symbol_gorn',
+          'morse',
+        ],
+        licenses: [
+          ToolLicenseFont(
+              context: context,
+              author: 'Memory Alpha Fandom TV Community.',
+              title: 'Gorn',
+              sourceUrl:
+              //TODO Webarchive
+              'https://memory-alpha.fandom.com/wiki/Gorn#Technology',
+              licenseType: ToolLicenseType.CCBYNC40)
+        ]),
     GCWSymbolTableTool(symbolKey: 'greek_numerals', symbolSearchStrings: const [
       'symbol_greek_numerals',
     ], licenses: [

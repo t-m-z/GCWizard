@@ -250,6 +250,7 @@ flutter:
     - lib/tools/symbol_tables/_common/assets/gesture_numbers_02/
     - lib/tools/symbol_tables/_common/assets/glagolitic/
     - lib/tools/symbol_tables/_common/assets/gnommish/
+    - lib/tools/symbol_tables/_common/assets/gorn/
     - lib/tools/symbol_tables/_common/assets/greek_numerals/
     - lib/tools/symbol_tables/_common/assets/hangul_korean/
     - lib/tools/symbol_tables/_common/assets/hangul_sino_korean/
