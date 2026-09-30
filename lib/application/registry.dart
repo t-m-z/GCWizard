@@ -455,6 +455,7 @@ import 'package:gc_wizard/tools/science_and_technology/kaprekar/widget/kaprekar.
 import 'package:gc_wizard/tools/science_and_technology/keyboard/keyboard_layout/widget/keyboard_layout.dart';
 import 'package:gc_wizard/tools/science_and_technology/keyboard/keyboard_numbers/widget/keyboard_numbers.dart';
 import 'package:gc_wizard/tools/science_and_technology/lcm/widget/lcm.dart';
+import 'package:gc_wizard/tools/science_and_technology/machine_identification_code/widget/machine_identification_code.dart';
 import 'package:gc_wizard/tools/science_and_technology/mathematical_constants/widget/mathematical_constants.dart';
 import 'package:gc_wizard/tools/science_and_technology/maya_calendar/widget/maya_calendar.dart';
 import 'package:gc_wizard/tools/science_and_technology/midi/midi_coding/widget/midi_coding.dart';
@@ -1458,6 +1459,23 @@ void initializeRegistry(BuildContext context) {
           'games',
           'games_logicalsupporter',
         ]),
+    GCWTool(
+        tool: const MachineIdentificationCode(),
+        id: 'machine_identification_code',
+        categories: const [ToolCategory.SCIENCE_AND_TECHNOLOGY],
+      searchKeys: const [
+        'machine_identification_code'
+      ],
+      licenses: [
+        ToolLicenseOnlineArticle(
+            context: context,
+            author: 'Electronic Frontier Foundation',
+            title: 'DocuColor Tracking Dot Decoding Guide',
+            licenseType: ToolLicenseType.GPL2,
+            sourceUrl:
+            'https://web.archive.org/web/20260930190056/https://w2.eff.org/Privacy/printers/docucolor/'),
+      ],
+    ),
     GCWTool(
         tool: const MagicEyeSolver(),
         id: 'magic_eye',
