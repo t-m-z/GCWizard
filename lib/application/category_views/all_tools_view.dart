@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gc_wizard/application/_common/gcw_package_info.dart';
 import 'package:gc_wizard/application/category_views/favorites.dart';
+import 'package:gc_wizard/application/category_views/gcc/gcc_view.dart';
+import 'package:gc_wizard/application/category_views/links/link_view.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/babylon_numbers_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/base_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/bcd_selection.dart';
@@ -465,7 +467,7 @@ class _MainViewState extends State<MainView> {
     if (!(_isSearching && _searchText.isNotEmpty)) {
       tabModel.setDefaultTab(
         DefaultTabController(
-          length: 3,
+          length: 5,
           initialIndex: Prefs.getBool(PREFERENCE_TABS_USE_DEFAULT_TAB)
             ? Prefs.getInt(PREFERENCE_TABS_DEFAULT_TAB)
             : Prefs.getInt(PREFERENCE_TABS_LAST_VIEWED_TAB),
@@ -476,9 +478,17 @@ class _MainViewState extends State<MainView> {
                 onTap: (value) {
                   Prefs.setInt(PREFERENCE_TABS_LAST_VIEWED_TAB, value);
                 },
-                tabs: const [
+                tabs: [
                   Tab(icon: Icon(Icons.category)),
                   Tab(icon: Icon(Icons.list)),
+                  Tab(icon: Icon(Icons.link)),
+                  Tab(
+                    //text: 'GCC',
+                    child: Image.asset(
+                        'lib/application/category_views/gcc/icons/gcc-logo.png',
+                        width: 25,
+                        height: 25),
+                  ),
                   Tab(icon: Icon(Icons.star)),
                 ],
               ),
@@ -496,6 +506,8 @@ class _MainViewState extends State<MainView> {
                 children: [
                   GCWToolList(toolList: toolList ?? _categoryList),
                   GCWToolList(toolList: toolList ?? _mainToolList),
+                  const LinkView(),
+                  const GCCView(),
                   GCWToolList(toolList: toolList ?? Favorites.favoritedGCWTools()),
                 ],
               ),

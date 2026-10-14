@@ -32,8 +32,6 @@ class _NightlyState extends State<Nightly> {
         const GCWTextDivider(text: 'Near Term Previews'),
         GCWColumnedMultilineOutput(
           data: [
-            [i18n(context, 'imagesandfiles_selection_title'), 'Waveform\nAnalyse von WAV-Dateien'],
-            [i18n(context, 'scienceandtechnology_selection_title'), 'Triangle\nBerechnungen von Dreiecken'],
           ],
           flexValues: [3, 7],),
         const GCWTextDivider(text: 'Long Term Previews'),
