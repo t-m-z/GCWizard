@@ -1,0 +1,52 @@
+const Map<String, List<String>> LINK = {
+  // '': ['', ''],
+  'netteleute': ['NetteLeut(h)e - GC Tools', 'https://gc.de/gc/'],
+  'cyberchef': ['CyberChef', 'https://gchq.github.io/CyberChef/', ],
+  'cachesleuth': ['CacheSleuth', 'https://www.cachesleuth.com/', ],
+  'geocachingmysterytoolbox': ['Geocaching Mystery Toolbox', 'https://mysterytoolbox.organisingchaos.com/Home/About'],
+  'dennistreysa': ['Multisolver', 'https://geocaching.dennistreysa.de/multisolver/'],
+  'mysterymaster': ['Mystery Master', 'https://gps-cache.de/geocaching/mystery-master/mysterymaster-mobil.htm'],
+  'kryptografie': ['Kryptografie.de', 'https://kryptografie.de/kryptografie/index.htm'],
+  'dcode': ['DCODE.FR', 'https://www.dcode.fr/en'],
+  'codeknacker': ['CODE-Knacker', 'https://www.code-knacker.de/sitemap_ck.htm'],
+  'cipheridentifier': ['Neural Cipher Identifier', 'https://www.cryptool.org/de/cto/ncid'],
+  'cryptii': ['cryptii', 'https://cryptii.com/'],
+  'boxentriq': ['BOXENTRIQ Solve Ciphers, Codes & Hidden Clues', 'https://www.boxentriq.com/'],
+
+  'steg01' : ['StegOnline', 'https://stegonline.georgeom.net/upload'],
+  'steg02': ['Bergziege Steganography Solver', 'https://www.bergziege-owl.de/steganografie-solver/'],
+  'steg03': ['stylesuxx Steganography Online', 'https://stylesuxx.github.io/steganography/'],
+  'steg04': ['many tools Steganography ', 'https://manytools.org/hacker-tools/steganography-encode-text-into-image/'],
+  'steg05': ['Osric Decode an Image', 'https://osric.com/chris/steganography/decode.html'],
+  'steg06': ['Future Boy Steganographic Decoder', 'https://futureboy.us/stegano/decinput.html'],
+
+  'magiceye' : ['Magic Eye Solver / Viewer', 'http://magiceye.ecksdee.co.uk/'],
+  'ezgif': ['Online GIF maker and image editor', 'https://ezgif.com/'],
+  'decryptimage': ['Decrypt image', 'https://decrypt.imageonline.co/index.php'],
+  'fotoforensic': ['Foto Forensic', 'https://29a.ch/photo-forensics/#forensic-magnifier'],
+
+  'oscilloscope' : ['Oscilloscope', 'https://oscilloscopemusic.com/software/oscilloscope/'],
+
+  'wolfram' : ['Wolfram alpha', 'https://www.wolframalpha.com/'],
+  'bruenner': ['Mathematik-Seiten von Arndt Brünner', 'https://www.arndt-bruenner.de/mathe/mathekurse.htm'],
+  'numbersequence': ['Number sequence solver', 'https://briskpuzzles.com/tools/number-sequence-solver'],
+  'numberempire': ['Numberempire', 'https://de.numberempire.com/'],
+  'pi': ['Pi stuff', 'https://www.angio.net/pi/bigpi.cgi'],
+
+  'sun' : ['Sonnenverlauf', 'https://www.sonnenverlauf.de/'],
+  'circuit': ['Circuit Simulator', 'https://falstad.com/circuit/'],
+  'chemistry': ['Chemie Tools', 'https://www.chemie.de/tools/'],
+  'logicly': ['Logic Simulator', 'https://logic.ly/demo/'],
+  'epochconverter': ['Epoch converter', 'https://www.epochconverter.com/'],
+
+  'wortsuchen' : ['Wort suchen', 'https://www.wort-suchen.de/buchstabensalat-loesen/'],
+  'anagram' : ['Anagramm-Generator', 'https://www.kreuzwortraetsel.de/anagramm'],
+
+  'wigcrumbler' : ['Team Hildesheim WIG-Crumbler', 'https://wigcrumbler.team-hildesheim.de/de_DE/'],
+  'coordinates': ['Koordinaten Umrechner für WGS84, UTM, CH1903, UTMREF(MGRS), Gauß-Krüger, NAC, W3W', 'https://www.koordinaten-umrechner.de', ],
+  'lab2gpx': ['Lab2GPX', 'https://lab2gpx.gcutils.de/', ],
+  'flopp': ["Flopp's Map", 'https://flopp.net/', ],
+  'steno': ['Kurzschrift/Stenographie', 'https://steno.tu-clausthal.de/', ],
+  'samuraisudoku': ['Samurai Sudoku Solver', 'https://www.invik.xyz/samurai/', ],
+  'jigidi': ['Solved Jigidi database', 'https://solvedjigidi.com/'],
+};
