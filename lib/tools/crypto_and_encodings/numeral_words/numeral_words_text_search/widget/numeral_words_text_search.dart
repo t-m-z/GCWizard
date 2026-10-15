@@ -9,6 +9,7 @@ import 'package:gc_wizard/common_widgets/gcw_expandable.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_output_text.dart';
+import 'package:gc_wizard/common_widgets/switches/gcw_onoff_switch.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_code_textfield.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
@@ -31,6 +32,7 @@ class _NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
   GCWSwitchPosition _currentDecodeMode = GCWSwitchPosition.left;
   late NumeralWordsLanguage _currentLanguage;
   bool _setDefaultLanguage = false;
+  bool _currentDecodeNumerals = false;
 
   Map<String, NumeralWordsLanguage>? _languageList;
 
@@ -98,6 +100,15 @@ class _NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
             });
           },
         ),
+        GCWOnOffSwitch(
+          title: i18n(context, 'numeralwords_decodemode_numbers'),
+          value: _currentDecodeNumerals,
+          onChanged: (value) {
+            setState(() {
+              _currentDecodeNumerals = value;
+            });
+          },
+        ),
         GCWDefaultOutput(
           child: _buildOutput(context),
         )
@@ -108,10 +119,14 @@ class _NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
   Widget _buildOutput(BuildContext context) {
     List<NumeralWordsDecodeOutput> detailedOutput;
     List<String> output = [];
+
     detailedOutput = decodeNumeralwords(
         input: _currentDecodeInput,
         language: _currentLanguage,
-        decodeModeWholeWords: (_currentDecodeMode == GCWSwitchPosition.left));
+        decodeModeWholeWords: (_currentDecodeMode == GCWSwitchPosition.left),
+        includeNumbers: _currentDecodeNumerals,
+    );
+
     for (int i = 0; i < detailedOutput.length; i++) {
       if (detailedOutput[i].number.isNotEmpty) {
         if (detailedOutput[i].number.startsWith('numeralwords_')) {
@@ -203,6 +218,11 @@ class _NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
         result[r'' + key + ''] = const TextStyle(color: Colors.yellow);
       }
     });
+
+    NUMERAL_WORDS_DIGITS.forEach((element) {
+      result[r'' + element + ''] = const TextStyle(color: Colors.deepOrange);
+    });
+
     return result;
   }
 

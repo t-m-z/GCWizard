@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/easter_selection.dart';
-import 'package:gc_wizard/application/registry.dart';
-import 'package:gc_wizard/application/tools/widget/gcw_tool.dart';
 import 'package:gc_wizard/application/tools/widget/gcw_toollist.dart';
 import 'package:gc_wizard/common_widgets/gcw_selection.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/astrotimes/widget/astrotimes.dart';
@@ -13,27 +11,24 @@ import 'package:gc_wizard/tools/science_and_technology/astronomy/seasons/widget/
 import 'package:gc_wizard/tools/science_and_technology/astronomy/shadow_length/widget/shadow_length.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/sun_position/widget/sun_position.dart';
 import 'package:gc_wizard/tools/science_and_technology/astronomy/sun_rise_set/widget/sun_rise_set.dart';
-import 'package:gc_wizard/utils/ui_dependent_utils/common_widget_utils.dart';
 
 class AstronomySelection extends GCWSelection {
   const AstronomySelection({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final List<GCWTool> _toolList = registeredTools.where((element) {
-      return [
-        className(const IAUAllConstellations()),
-        className(const SunRiseSet()),
-        className(const SunPosition()),
-        className(const MoonRiseSet()),
-        className(const MoonPosition()),
-        className(const EasterSelection()),
-        className(const Seasons()),
-        className(const ShadowLength()),
-        className(const AstroTimes()),
-        className(const RightAscensionToDegree())
-      ].contains(className(element.tool));
-    }).toList();
+    final _toolList = filterTools(const {
+        IAUAllConstellations,
+        SunRiseSet,
+        SunPosition,
+        MoonRiseSet,
+        MoonPosition,
+        EasterSelection,
+        Seasons,
+        ShadowLength,
+        AstroTimes,
+        RightAscensionToDegree
+      });
 
     return GCWToolList(toolList: _toolList);
   }

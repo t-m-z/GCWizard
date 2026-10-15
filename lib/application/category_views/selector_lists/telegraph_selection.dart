@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/application/registry.dart';
-import 'package:gc_wizard/application/tools/widget/gcw_tool.dart';
 import 'package:gc_wizard/application/tools/widget/gcw_toollist.dart';
 import 'package:gc_wizard/common_widgets/gcw_selection.dart';
 import 'package:gc_wizard/tools/science_and_technology/telegraphs/chappe/widget/chappe.dart';
@@ -17,31 +15,28 @@ import 'package:gc_wizard/tools/science_and_technology/telegraphs/semaphore/widg
 import 'package:gc_wizard/tools/science_and_technology/telegraphs/steinheil/widget/steinheil.dart';
 import 'package:gc_wizard/tools/science_and_technology/telegraphs/wheatstone_cooke_5_needles/widget/wheatstone_cooke_5_needles.dart';
 import 'package:gc_wizard/tools/science_and_technology/telegraphs/wigwag/widget/wigwag.dart';
-import 'package:gc_wizard/utils/ui_dependent_utils/common_widget_utils.dart';
 
 class TelegraphSelection extends GCWSelection {
   const TelegraphSelection({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final List<GCWTool> _toolList = registeredTools.where((element) {
-      return [
-        className(const ChappeTelegraph()),
-        className(const EdelcrantzTelegraph()),
-        className(const FoyBreguetTelegraph()),
-        className(const MurrayTelegraph()),
-        className(const OhlsenTelegraph()),
-        className(const PasleyTelegraph()),
-        className(const PophamTelegraph()),
-        className(const PrussiaTelegraph()),
-        className(const SemaphoreTelegraph()),
-        className(const WigWagSemaphoreTelegraph()),
-        className(const GaussWeberTelegraph()),
-        className(const SchillingCanstattTelegraph()),
-        className(const SteinheilTelegraph()),
-        className(const WheatstoneCookeNeedleTelegraph()),
-      ].contains(className(element.tool));
-    }).toList();
+    final _toolList = filterTools(const {
+        ChappeTelegraph,
+        EdelcrantzTelegraph,
+        FoyBreguetTelegraph,
+        MurrayTelegraph,
+        OhlsenTelegraph,
+        PasleyTelegraph,
+        PophamTelegraph,
+        PrussiaTelegraph,
+        SemaphoreTelegraph,
+        WigWagSemaphoreTelegraph,
+        GaussWeberTelegraph,
+        SchillingCanstattTelegraph,
+        SteinheilTelegraph,
+        WheatstoneCookeNeedleTelegraph
+      }).toList();
 
     return GCWToolList(toolList: _toolList);
   }

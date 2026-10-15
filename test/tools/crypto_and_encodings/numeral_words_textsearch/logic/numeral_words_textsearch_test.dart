@@ -436,7 +436,6 @@ void main(){
           NumeralWordsDecodeOutput('3', 'drei', 'common_language_german'),
           NumeralWordsDecodeOutput('.', '.', ''),
           NumeralWordsDecodeOutput('.', '.', ''),
-          NumeralWordsDecodeOutput('2', '2', 'numeralwords_language_num'),
           NumeralWordsDecodeOutput('.', '.', ''),
           NumeralWordsDecodeOutput('395', 'dreihundertfünfundneunzig', 'common_language_german'),
           NumeralWordsDecodeOutput('465', 'vierhundertfünfundsechzig', 'common_language_german'),
@@ -445,7 +444,6 @@ void main(){
           NumeralWordsDecodeOutput('.', '.', ''),
           NumeralWordsDecodeOutput('.', '.', ''),
           NumeralWordsDecodeOutput('.', '.', ''),
-          NumeralWordsDecodeOutput('7', '7', 'numeralwords_language_num'),
           NumeralWordsDecodeOutput('.', '.', ''),
           NumeralWordsDecodeOutput('.', '.', ''),
           NumeralWordsDecodeOutput('.', '.', ''),
@@ -933,6 +931,203 @@ void main(){
       test(
           'input: ${elem['input']}, language: ${elem['language']}, decodeMode: ${elem['decodeMode']}', () {
         var _actual = decodeNumeralwords(input: elem['input'] as String, language: elem['language'] as NumeralWordsLanguage, decodeModeWholeWords: elem['decodeMode'] as bool);
+        var expected = elem['expectedOutput'] as List<NumeralWordsDecodeOutput>;
+        var length = expected.length;
+        for (int i = 0; i < length; i++) {
+          expect(_actual[i].number, expected[i].number);
+          expect(_actual[i].numWord, expected[i].numWord);
+          expect(_actual[i].language, expected[i].language);
+        }
+      });
+    }
+  });
+
+  group("NumeralWords.DEU.Numbers:", () {
+    String GCAC6A5 = '"Hallo. Wir haben uns ja schon lange nicht mehr gesehen. Wie geht es Dir?" "Hallo Sorglos. Mir geht es gut. Ich bin auf dem Weg in die Innenstadt, um dort den tierischen Multi zu spielen, der fehlt mir noch und ich habe heute Zeit und Lust dazu." "Den sind wir schon vor langer Zeit abgelaufen und haben das Final auch problemlos gefunden. Wenn Du Hilfe benötigst, kannst Du mich gerne als Telefonjoker anrufen. Wo Du gerade den tierischen Multi erwähnst, erinnerst Du dich, als vor 53 Tagen eine Löwin in Kleinmachnow gesichtet wurde. Das war vielleicht eine Aufregung. Und am Ende stellt sich heraus, das es gar keine Löwin war." "Ja, ich erinnere mich. Spezialisten erkannten anhand des Körperbaus und des Bewegungsbildes, dass es sich nicht um eine Raubkatze handeln konnte. Das war wohl doch nur ein Wildschwein." "Hast Du übrigens gehört, dass jetzt in Bremen Elefanten gesichtet wurden? Und dabei handelt es sich auch nicht nur um einen Einzelgänger, sondern um eine ganze Horde. Davon haben wohl noch gar nicht so viele Leute etwas mitbekommen. Ich habe sie jedenfalls schon mit den eigenen Augen gesehen." "Ne, das habe ich noch nicht gehört. Los erzähl mal, die Fahrt in die Stadt dauert ja noch etwas. Bevor ich den Multi absolviere bin ich gespannt auf Deine Erläuterungen. Ich bezweifle aber, dass Du hier in Bremen wirklich Elefanten gesehen hast." "Du kannst mir ruhig glauben, ich habe die ganze große Horde wirklich gesehen. Ein Marineunteroffizier aus der Nachbarschaft hat mich darauf aufmerksam gemacht. Und dann habe ich vor Ort gleich mal nachgesehen. Die ganze Horde ist wirklich da. Außer mir gab es auch noch einige andere, die die Dickhäuter schon beobachtet haben." "Aus wie vielen Tieren besteht denn die von Dir gesichtete Gruppe?" "So genau konnte ich das nicht zählen, ich schätze die Horde so auf mindestens 55 Tiere, vielleicht auch noch deutlich mehr. Das Zählen von Einzeltieren in einer ganzen Gruppe ist ja auch nicht so einfach. Und zu sehr nähern will man sich dann ja auch nicht. Man weiss ja nicht, wie die Tiere dann auf einen reagieren." "Das hört sich ja fast an wie aus einem Movie. Rudel von Elefanten wandert aufgrund des Klimawandels in Richtung Deutschland. Sie benötigen eine neue Heimat und ziehen nach Bremen. Vielleicht werden das ja die neuen Bremer Stadtmusikanten. Dann könnte davon eine ganze Bildreihe produziert werden und das lockt wieder deutlich mehr Touristen in die Stadt." "Sicher, das wird bestimmt ein neuer Touristenmagnet. Ich muss jetzt aber aussteigen, um ein paar Besorgungen zu machen. Ich wünsche Dir jedenfalls noch viel Spaß bei dem Multi. Tschüß und bis zum nächsten Mal." "Hey, wo finde ich denn jetzt die Elefantenherde? Die will ich doch auch mal sehen."';
+
+    List<Map<String, Object?>> _inputsToExpected = [
+      {
+        'input' : 'Gen Norden wand er sich. Zweiundfünfzig Tage lang wanderte er an der Elbe entlang. Als die Gegend immer flacher wurde, kam er ins Grübeln. Da er sich nicht auskannte, fragte er mal diesen und mal jenen Einheimischen, wo es in diesen Landen Berge geben konnte. Erst der fünfundzwanzigste verriet ihm, dass es weiter östlich ein paar Berge neben einem großen See gab. Erleichtert gab Rübezahl dem Mann als Dank vierhundertunddreißig Taler. Rübezahl wand sich also nach Osten und wanderte weiter durch dieses Land. Im Morgengrauen des dreizehnten Tages kam er an einer großen Siedlung vorbei, die an einer Wasserkreuzung mit drei Flussarmen lag und sieben Brücken hatte. Hinter der Siedlung, zwischen zwei der drei Flussarme, entdeckte er einen großen See. Dies musste der See sein, von dem ihm erzählt wurde. Als sich der Morgennebel lichtete, erblickte er hinter dem See eine Bergkette, bestehend aus 2 Gipfeln. Der eine war dreihundertfünfundneunzig und der andere gar vierhundertundfünfundsechzig Meter hoch. Für diese Gegend also zusammen gewaltige … Meter. Schnellen Schrittes erreichte er den Fuß der Bergkette. Er suchte eine Weile nach einem passenden Versteck für sein Goldenes Drachenei. An einer flachen, offenen Stelle wurde er eines Wegelagerers gewahr. Er belegte ihn mit einem tausendjährigen TAPIR-Fluch und verbannte ihn in ein enges Grab, bewacht von 7 schwarz-weißen. Unbemerkt konnte er nun ein geeignetes Objekt finden, um sein Goldenes Drachenei darin zu verstecken. Zur Absicherung baute er noch ein paar Hürden ein, und sicherte das Ganze noch mit einem Schloss.',
+        'language' : NumeralWordsLanguage.DEU,
+        'decodeMode' : true,
+        'includeNumbers' : true,
+        'expectedOutput' : [
+            NumeralWordsDecodeOutput('.', '.', ''),
+            NumeralWordsDecodeOutput('52', 'zweiundfünfzig', 'common_language_german'),
+            NumeralWordsDecodeOutput('.', '.', ''),
+            NumeralWordsDecodeOutput('.', '.', ''),
+            NumeralWordsDecodeOutput('.', '.', ''),
+            NumeralWordsDecodeOutput('25', 'fünfundzwanzig', 'common_language_german'),
+            NumeralWordsDecodeOutput('.', '.', ''),
+            NumeralWordsDecodeOutput('430', 'vierhundertdreißig', 'common_language_german'),
+            NumeralWordsDecodeOutput('.', '.', ''),
+            NumeralWordsDecodeOutput('.', '.', ''),
+            NumeralWordsDecodeOutput('13', 'dreizehn', 'common_language_german'),
+            NumeralWordsDecodeOutput('3', 'drei', 'common_language_german'),
+            NumeralWordsDecodeOutput('7', 'sieben', 'common_language_german'),
+            NumeralWordsDecodeOutput('.', '.', ''),
+            NumeralWordsDecodeOutput('2', 'zwei', 'common_language_german'),
+            NumeralWordsDecodeOutput('3', 'drei', 'common_language_german'),
+            NumeralWordsDecodeOutput('.', '.', ''),
+            NumeralWordsDecodeOutput('.', '.', ''),
+            NumeralWordsDecodeOutput('2', '2', 'numeralwords_language_num'),
+            NumeralWordsDecodeOutput('.', '.', ''),
+            NumeralWordsDecodeOutput('395', 'dreihundertfünfundneunzig', 'common_language_german'),
+            NumeralWordsDecodeOutput('465', 'vierhundertfünfundsechzig', 'common_language_german'),
+            NumeralWordsDecodeOutput('.', '.', ''),
+            NumeralWordsDecodeOutput('.', '.', ''),
+            NumeralWordsDecodeOutput('.', '.', ''),
+            NumeralWordsDecodeOutput('.', '.', ''),
+            NumeralWordsDecodeOutput('.', '.', ''),
+            NumeralWordsDecodeOutput('7', '7', 'numeralwords_language_num'),
+            NumeralWordsDecodeOutput('.', '.', ''),
+            NumeralWordsDecodeOutput('.', '.', ''),
+            NumeralWordsDecodeOutput('.', '.', ''),
+        ]
+      },
+
+      // https://www.geocaching.com/geocache/GCAC6A5_elefanten-in-bremen
+      {
+        'input' : GCAC6A5,
+        'language' : NumeralWordsLanguage.DEU,
+        'decodeMode' : false,
+        'includeNumbers' : true,
+        'expectedOutput' :[
+          NumeralWordsDecodeOutput('53', '53', ''),
+          NumeralWordsDecodeOutput('4', 'vier', 'common_language_german'),
+          NumeralWordsDecodeOutput('2', 'zwei', 'common_language_german'),
+          NumeralWordsDecodeOutput('9', 'neun', 'common_language_german'),
+          NumeralWordsDecodeOutput('8', 'acht', 'common_language_german'),
+          NumeralWordsDecodeOutput('8', 'acht', 'common_language_german'),
+          NumeralWordsDecodeOutput('55', '55', ''),
+          NumeralWordsDecodeOutput('4', 'vier', 'common_language_german'),
+          NumeralWordsDecodeOutput('7', 'sieben', 'common_language_german'),
+          NumeralWordsDecodeOutput('3', 'drei', 'common_language_german'),
+        ],
+      },
+      {
+        'input' : GCAC6A5,
+        'language' : NumeralWordsLanguage.DEU,
+        'decodeMode' : false,
+        'includeNumbers' : false,
+        'expectedOutput' :[
+          NumeralWordsDecodeOutput('4', 'vier', 'common_language_german'),
+          NumeralWordsDecodeOutput('2', 'zwei', 'common_language_german'),
+          NumeralWordsDecodeOutput('9', 'neun', 'common_language_german'),
+          NumeralWordsDecodeOutput('8', 'acht', 'common_language_german'),
+          NumeralWordsDecodeOutput('8', 'acht', 'common_language_german'),
+          NumeralWordsDecodeOutput('4', 'vier', 'common_language_german'),
+          NumeralWordsDecodeOutput('7', 'sieben', 'common_language_german'),
+          NumeralWordsDecodeOutput('3', 'drei', 'common_language_german'),
+        ],
+      },
+      {
+        'input' : GCAC6A5,
+        'language' : NumeralWordsLanguage.DEU,
+        'decodeMode' : true,
+        'includeNumbers' : false,
+        'expectedOutput' :[
+          NumeralWordsDecodeOutput('.', '.', ''),
+          NumeralWordsDecodeOutput('.', '.', ''),
+          NumeralWordsDecodeOutput('.', '.', ''),
+          NumeralWordsDecodeOutput('.', '.', ''),
+          NumeralWordsDecodeOutput('.', '.', ''),
+          NumeralWordsDecodeOutput('.', '.', ''),
+          NumeralWordsDecodeOutput('.', '.', ''),
+          NumeralWordsDecodeOutput('.', '.', ''),
+          NumeralWordsDecodeOutput('.', '.', ''),
+          NumeralWordsDecodeOutput('.', '.', ''),
+          NumeralWordsDecodeOutput('.', '.', ''),
+          NumeralWordsDecodeOutput('.', '.', ''),
+          NumeralWordsDecodeOutput('.', '.', ''),
+          NumeralWordsDecodeOutput('.', '.', ''),
+          NumeralWordsDecodeOutput('.', '.', ''),
+          NumeralWordsDecodeOutput('.', '.', ''),
+          NumeralWordsDecodeOutput('.', '.', ''),
+          NumeralWordsDecodeOutput('.', '.', ''),
+          NumeralWordsDecodeOutput('.', '.', ''),
+          NumeralWordsDecodeOutput('.', '.', ''),
+          NumeralWordsDecodeOutput('.', '.', ''),
+          NumeralWordsDecodeOutput('.', '.', ''),
+          NumeralWordsDecodeOutput('.', '.', ''),
+          NumeralWordsDecodeOutput('.', '.', ''),
+          NumeralWordsDecodeOutput('.', '.', ''),
+          NumeralWordsDecodeOutput('.', '.', ''),
+          NumeralWordsDecodeOutput('.', '.', ''),
+          NumeralWordsDecodeOutput('.', '.', ''),
+          NumeralWordsDecodeOutput('.', '.', ''),
+          NumeralWordsDecodeOutput('.', '.', ''),
+          NumeralWordsDecodeOutput('.', '.', ''),
+          NumeralWordsDecodeOutput('.', '.', ''),
+          NumeralWordsDecodeOutput('.', '.', ''),
+          NumeralWordsDecodeOutput('.', '.', ''),
+          NumeralWordsDecodeOutput('.', '.', ''),
+          NumeralWordsDecodeOutput('.', '.', ''),
+          NumeralWordsDecodeOutput('.', '.', ''),
+          NumeralWordsDecodeOutput('.', '.', ''),
+          NumeralWordsDecodeOutput('.', '.', ''),
+        ],
+      },
+      {
+        'input' : GCAC6A5,
+        'language' : NumeralWordsLanguage.DEU,
+        'decodeMode' : true,
+        'includeNumbers' : true,
+        'expectedOutput' :[
+          NumeralWordsDecodeOutput('.', '.', ''),
+          NumeralWordsDecodeOutput('.', '.', ''),
+          NumeralWordsDecodeOutput('.', '.', ''),
+          NumeralWordsDecodeOutput('.', '.', ''),
+          NumeralWordsDecodeOutput('.', '.', ''),
+          NumeralWordsDecodeOutput('.', '.', ''),
+          NumeralWordsDecodeOutput('.', '.', ''),
+          NumeralWordsDecodeOutput('53', '53', 'numeralwords_language_num'),
+          NumeralWordsDecodeOutput('.', '.', ''),
+          NumeralWordsDecodeOutput('.', '.', ''),
+          NumeralWordsDecodeOutput('.', '.', ''),
+          NumeralWordsDecodeOutput('.', '.', ''),
+          NumeralWordsDecodeOutput('.', '.', ''),
+          NumeralWordsDecodeOutput('.', '.', ''),
+          NumeralWordsDecodeOutput('.', '.', ''),
+          NumeralWordsDecodeOutput('.', '.', ''),
+          NumeralWordsDecodeOutput('.', '.', ''),
+          NumeralWordsDecodeOutput('.', '.', ''),
+          NumeralWordsDecodeOutput('.', '.', ''),
+          NumeralWordsDecodeOutput('.', '.', ''),
+          NumeralWordsDecodeOutput('.', '.', ''),
+          NumeralWordsDecodeOutput('.', '.', ''),
+          NumeralWordsDecodeOutput('.', '.', ''),
+          NumeralWordsDecodeOutput('.', '.', ''),
+          NumeralWordsDecodeOutput('.', '.', ''),
+          NumeralWordsDecodeOutput('.', '.', ''),
+          NumeralWordsDecodeOutput('55', '55', 'numeralwords_language_num'),
+          NumeralWordsDecodeOutput('.', '.', ''),
+          NumeralWordsDecodeOutput('.', '.', ''),
+          NumeralWordsDecodeOutput('.', '.', ''),
+          NumeralWordsDecodeOutput('.', '.', ''),
+          NumeralWordsDecodeOutput('.', '.', ''),
+          NumeralWordsDecodeOutput('.', '.', ''),
+          NumeralWordsDecodeOutput('.', '.', ''),
+          NumeralWordsDecodeOutput('.', '.', ''),
+          NumeralWordsDecodeOutput('.', '.', ''),
+          NumeralWordsDecodeOutput('.', '.', ''),
+          NumeralWordsDecodeOutput('.', '.', ''),
+          NumeralWordsDecodeOutput('.', '.', ''),
+          NumeralWordsDecodeOutput('.', '.', ''),
+          NumeralWordsDecodeOutput('.', '.', ''),
+        ],
+      }
+    ];
+
+    for (var elem in _inputsToExpected) {
+      test(
+          'input: ${elem['input']}, language: ${elem['language']}, decodeMode: ${elem['decodeMode']}, includeNumbers: ${elem['includeNumbers']}', () {
+        var _actual = decodeNumeralwords(
+            input: elem['input'] as String,
+            language: elem['language'] as NumeralWordsLanguage,
+            decodeModeWholeWords: elem['decodeMode'] as bool,
+            includeNumbers: elem['includeNumbers'] as bool,
+        );
         var expected = elem['expectedOutput'] as List<NumeralWordsDecodeOutput>;
         var length = expected.length;
         for (int i = 0; i < length; i++) {

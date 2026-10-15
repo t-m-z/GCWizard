@@ -377,56 +377,46 @@ void _setToolCount(String id) {
   Prefs.setString(PREFERENCE_TOOL_COUNT, jsonEncode(toolCounts));
 }
 
-int _sortToolListAlphabetically(GCWTool a, GCWTool b) {
-  var aName = a.toolName;
-  var bName = b.toolName;
+List<GCWTool> sortTools(Iterable<GCWTool> tools) {
+  final toolList = tools.toList();
+  if (toolList.isEmpty) return toolList;
 
-  if (aName == null && bName == null) {
-    return 0;
+  final bool countSort = Prefs.getBool(PREFERENCE_TOOL_COUNT_SORT);
+  final Map<String, int> toolCounts = countSort ? _toolCounts() : const {};
+  final Map<GCWTool, String> normalizedNames = {};
+
+  String getNormalizedName(GCWTool tool) {
+    return normalizedNames.putIfAbsent(tool, () {
+      return removeDiacritics(tool.toolName ?? '').toLowerCase();
+    });
   }
 
-  if (aName == null && bName != null) {
-    return 1;
-  }
+  toolList.sort((a, b) {
+    if (countSort) {
+      final countA = toolCounts[a.longId];
+      final countB = toolCounts[b.longId];
 
-  if (bName == null && aName != null) {
-    return -1;
-  }
-
-  return removeDiacritics(aName!).toLowerCase().compareTo(removeDiacritics(bName!).toLowerCase());
-}
-
-int sortToolList(GCWTool a, GCWTool b) {
-  if (!Prefs.getBool(PREFERENCE_TOOL_COUNT_SORT)) {
-    return _sortToolListAlphabetically(a, b);
-  }
-
-  var toolCounts = _toolCounts();
-
-  var toolCountA = toolCounts[a.longId];
-  var toolCountB = toolCounts[b.longId];
-
-  if (toolCountA == null && toolCountB == null) {
-    return _sortToolListAlphabetically(a, b);
-  }
-
-  if (toolCountA == null && toolCountB != null) {
-    return 1;
-  }
-
-  if (toolCountA != null && toolCountB == null) {
-    return -1;
-  }
-
-  if (toolCountA != null && toolCountB != null) {
-    if (toolCountA == toolCountB) {
-      return _sortToolListAlphabetically(a, b);
-    } else {
-      return toolCountB.compareTo(toolCountA);
+      if (countA != null || countB != null) {
+        if (countA == null) return 1;
+        if (countB == null) return -1;
+        if (countA != countB) {
+          return countB.compareTo(countA);
+        }
+      }
     }
-  }
 
-  return 0;
+    // Alphabetical fallback
+    final aName = a.toolName;
+    final bName = b.toolName;
+
+    if (aName == null && bName == null) return 0;
+    if (aName == null) return 1;
+    if (bName == null) return -1;
+
+    return getNormalizedName(a).compareTo(getNormalizedName(b));
+  });
+
+  return toolList;
 }
 
 Map<String, int> _toolCounts() {

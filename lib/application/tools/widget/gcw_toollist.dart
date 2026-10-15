@@ -7,6 +7,7 @@ import 'package:gc_wizard/application/category_views/favorites.dart';
 import 'package:gc_wizard/application/category_views/tabs.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/application/navigation/no_animation_material_page_route.dart';
+import 'package:gc_wizard/application/registry.dart';
 import 'package:gc_wizard/application/settings/logic/preferences.dart';
 import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
@@ -14,12 +15,13 @@ import 'package:gc_wizard/application/tools/widget/gcw_tool.dart';
 import 'package:gc_wizard/common_widgets/dialogs/gcw_dialog.dart';
 import 'package:gc_wizard/common_widgets/gcw_snackbar.dart';
 import 'package:gc_wizard/common_widgets/gcw_text.dart';
+import 'package:gc_wizard/tools/symbol_tables/_common/widget/symbol_table.dart';
 import 'package:gc_wizard/utils/constants.dart';
 import 'package:prefs/prefs.dart';
 import 'package:provider/provider.dart';
 
 class GCWToolList extends StatefulWidget {
-  final List<GCWTool> toolList;
+  final Iterable<GCWTool> toolList;
 
   const GCWToolList({super.key, required this.toolList});
 
@@ -57,7 +59,7 @@ class _GCWToolListState extends State<GCWToolList> {
       return const ListTile();
     }
 
-    var tool = widget.toolList[index];
+    var tool = widget.toolList.elementAt(index);
 
     Future<void> _navigateToSubPage(BuildContext context) async {
       Navigator.push(
@@ -172,4 +174,72 @@ class _GCWToolListState extends State<GCWToolList> {
 void _showDeleteFavoriteAlertDialog(BuildContext context, String deleteableText, void Function() onOKPressed) {
   showGCWAlertDialog(context, i18n(context, 'common_deletealtert_favorite_title'),
       i18n(context, 'common_deletealtert_favorite_text', parameters: [deleteableText]), onOKPressed);
+}
+
+Type _classType(Widget widget) {
+  return widget.runtimeType;
+}
+
+bool ContainsType(Iterable<Type> types, Widget tool) {
+  return types.contains(_classType(tool));
+}
+
+bool ContainsSymbolTableSymbolKey(Iterable<String> symbolKeys, Widget tool, {bool startsWith = false}) {
+  if (_classType(tool) == SymbolTable) {
+    if (startsWith) {
+      return symbolKeys.firstWhere((symbolKey) =>
+          (tool as SymbolTable).symbolKey.startsWith(symbolKey), orElse: () => '').isNotEmpty;
+    } else {
+      return symbolKeys.contains((tool as SymbolTable).symbolKey);
+    }
+  }
+  return false;
+}
+
+Iterable<GCWTool> filterTools(Iterable<Type> toolTypes) {
+  return registeredTools.where((element) {
+    return ContainsType(toolTypes, element.tool);
+  });
+}
+
+GCWTool filterFirstTool(Type toolType) {
+  return registeredTools.firstWhere((tool) => ContainsType({toolType}, tool.tool));
+}
+
+Iterable<GCWTool> filterSymbolTableTools(
+    Iterable<String> symbolTables, Iterable<Type> toolTypes, {bool startsWith = false}) {
+
+  return registeredTools.where((element) {
+    if (ContainsSymbolTableSymbolKey(symbolTables, element.tool, startsWith: startsWith)) {
+      return true;
+    }
+
+    return ContainsType(toolTypes, element.tool);
+  });
+}
+
+Iterable<GCWTool> filterSymbolTableTools2(
+    Iterable<String> symbolTables, Iterable<Type> toolTypes, {bool startsWith = false,
+      required Iterable<String> symbolTables2}) {
+
+  return registeredTools.where((element) {
+    if (ContainsSymbolTableSymbolKey(symbolTables, element.tool, startsWith: startsWith)) {
+      return true;
+    }
+    if (ContainsSymbolTableSymbolKey(symbolTables2, element.tool)) {
+      return true;
+    }
+
+    return ContainsType(toolTypes, element.tool);
+  });
+}
+
+Iterable<GCWTool> filterCategory(ToolCategory category, {Iterable<String>? symbolTables}) {
+  if (symbolTables == null) {
+    return registeredTools.where((element) => element.categories.contains(category));
+  } else {
+    return registeredTools.where((element) =>
+        element.categories.contains(category) ||
+        ContainsSymbolTableSymbolKey(symbolTables, element.tool));
+  }
 }

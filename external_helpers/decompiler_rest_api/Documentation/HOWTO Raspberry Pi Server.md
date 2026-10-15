@@ -140,8 +140,8 @@ To boot the Raspberry Pi via SSD, you must install an operating system, such as 
 
 | Feld                          | Wert          |
 | ----------------------------- | ------------- |
-| Hostname                      | raspberry     |
-| Benutzername                  | pi            |
+| Hostname                      | geocache      |
+| Benutzername                  | owner         |
 | Passwort                      | <PASSWORT>    |
 | Wifi einrichten               |               |
 | SSID                          | <SSID>        |
@@ -196,6 +196,14 @@ Alternativ
 sudo systemctl enable ssh
 sudo systemctl start ssh
 ```
+
+**Interface Options**
+
+Enable I5 I2C
+
+Enable I8 Remote GPIO
+
+Reboot Raspi
 
 
 
@@ -306,6 +314,12 @@ This guide is based on SELinux being disabled or in permissive mode. SELinux is 
 sudo dpkg -l selinux*
 ```
 
+Switch to permissive mode temporarily when you need to confirm that SELinux is the source of a denial.
+
+`sudo setenforce 0`
+
+
+
 ### **Prerequisites**
 
 Perform these steps to install the pre-requisite packages.
@@ -412,7 +426,7 @@ sudo a2enmod cgi
 
 ### **Configure Firewall**
 
-You need to allow port 80 and 1417 inbound traffic on the local firewall so you can reach the Nagios Core web interface.
+You need to allow port 80 and <your special port> inbound traffic on the local firewall so you can reach the Nagios Core web interface.
 
 ```
 sudo apt-get install -y iptables-persistent
@@ -421,7 +435,7 @@ sudo apt-get install -y iptables-persistent
 Answer yes to saving existing rules
 
 `sudo iptables -I INPUT -p tcp --destination-port 80 -j ACCEPT`
-`sudo iptables -I INPUT -p tcp --destination-port 1417 -j ACCEPT`
+`sudo iptables -I INPUT -p tcp --destination-port <your speecial port> -j ACCEPT`
 
  
 
@@ -826,10 +840,31 @@ sudo apt-get update
 Danach installieren wir das OpenJDK mit
 
 ```
-sudo apt-get install openjdk-11-jre
+sudo apt-get install openjdk-11-jdk
 ```
 
 Die Konfigurationsdateien werden dabei nicht durch die Maintainer-Version überschrieben.
+
+Falls es Fehler gibt bzgl. Abhängigkeiten:
+
+**Attempt Automatic Fix**
+Run the following command to let APT attempt to fix broken dependencies:
+
+```bash
+sudo apt --fix-broken install
+```
+
+**Configure Partially Installed Packages**
+If some packages are left in a half-installed state, complete their configuration:
+
+`sudo dpkg --configure -a`
+
+**Force Overwrite if Necessary**
+In cases where files conflict between packages, you can force APT to overwrite:
+
+`sudo apt -o Dpkg::Options::="--force-overwrite" --fix-broken install`
+
+
 
 Nun legen wir einen symbolischen Link *`/usr/lib/jvm/java`* an, der auf dieses Verzeichnis zeigt und den wir später in anderen Programmen oder Diensten, z. B. im Tomcat, nutzen können.
 
@@ -1053,6 +1088,8 @@ sudo nano /opt/tomcat/home/webapps/manager/META-INF/context.xml
 Dort tragen wir getrennt durch "|" die IP-Adressen der Rechner ein, die auch Zugriff auf die Manager-App haben sollen. 
 
 ![](image018.jpg)
+
+`192\.168\.178\.\d+`
 
 Für den Zugriff auf die Dokumentation ist analog auch die Datei der Document-App zu ergänzen.
 
@@ -1563,7 +1600,7 @@ sudo nano /usr/local/nagios/etc/objects/commands.cfg
 ```
 define command{
        command_name          check_temp
-       command_line          echo PASSWORD | sudo -S /usr/bin/python /usr/local/nagios/libexec/check_temp
+       command_line          echo PASSWORD | sudo -S /usr/bin/python3 /usr/local/nagios/libexec/check_temp
 }
 ```
 
@@ -1604,12 +1641,12 @@ Für einen einfachen Zugriff auf den Raspberry Pi via ist keine zusätzliche Ins
 
 Um auf den sFTP-Server zuzugreifen, verwende einfach die Benutzerdaten:
 
-| Feld              | Wert       |
-| ----------------- | ---------- |
-| Host              | IP-ADRESSE |
-| Port              | 22         |
-| Benutzer Name     | pi         |
-| Benutzer Kennwort | PASSWORT   |
+| Feld              | Wert         |
+| ----------------- | ------------ |
+| Host              | IP-ADRESSE   |
+| Port              | 22           |
+| Benutzer Name     | BENUTZERNAME |
+| Benutzer Kennwort | PASSWORT     |
 
 
 

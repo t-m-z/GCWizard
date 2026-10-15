@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
+import 'package:gc_wizard/application/theme/theme.dart';
 import 'package:gc_wizard/application/theme/theme_colors.dart';
 import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer.dart';
 import 'package:gc_wizard/common_widgets/async_executer/gcw_async_executer_parameters.dart';
@@ -18,7 +19,6 @@ import 'package:gc_wizard/common_widgets/outputs/gcw_output_text.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_double_spinner.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_onoff_switch.dart';
-import 'package:gc_wizard/common_widgets/switches/gcw_threeoptionsswitch.dart';
 import 'package:gc_wizard/tools/images_and_files/hex_viewer/widget/hex_viewer.dart';
 import 'package:gc_wizard/tools/images_and_files/waveform/logic/waveform.dart';
 import 'package:gc_wizard/tools/images_and_files/waveform/logic/waveform_rms_image.dart';
@@ -60,8 +60,6 @@ class WaveFormState extends State<WaveForm> {
   int _currentMinRunLength = 3;
   double _currentUnitTolerance = 0.40;
 
-  int _currentMode = 1;
-
   @override
   void initState() {
     super.initState();
@@ -90,8 +88,6 @@ class WaveFormState extends State<WaveForm> {
     _currentThresholdFactor = 4.0;
     _currentMinRunLength = 3;
     _currentUnitTolerance = 0.40;
-
-    _currentMode = 1;
   }
 
   @override
@@ -164,14 +160,21 @@ class WaveFormState extends State<WaveForm> {
   }
 
   Widget _buildExpertMode() {
-    return GCWOnOffSwitch(
-      value: _currentExpertMode,
-      title: i18n(context, 'waveform_expertmode'),
-      onChanged: (value) {
-        setState(() {
-          _currentExpertMode = value;
-        });
-      },
+    return Column(
+        children: [
+          SizedBox(
+            height: DOUBLE_DEFAULT_MARGIN,
+          ),
+          GCWOnOffSwitch(
+            value: _currentExpertMode,
+            title: i18n(context, 'waveform_expertmode'),
+            onChanged: (value) {
+              setState(() {
+                _currentExpertMode = value;
+              });
+            },
+          )
+        ]
     );
   }
 
@@ -190,67 +193,49 @@ class WaveFormState extends State<WaveForm> {
     // unitTolerance    Slider (0–0.8)    Standard: 0.40
     // (höher = toleranter gegenüber unregelmäßigem Morse)
     //
-    return GCWExpandableTextDivider(
-      suppressTopSpace: false,
-      text: i18n(context, 'waveform_settings'),
-      expanded: false,
-      child: Column(
-        children: [
-          GCWThreeOptionsSwitch(
-              notitle: true,
-              labels: [
-                i18n(context, 'waveform_settings_threshold'),
-                i18n(context, 'waveform_settings_mode_tolerant'),
-                i18n(context, 'waveform_settings_mode_cluster')
-              ],
-              position: _currentMode,
-              onChanged: (position) {
-                setState(() {
-                  _currentMode = position;
-                });
-              }),
-          GCWIntegerSpinner(
-              title: i18n(context, 'waveform_settings_smoothing'),
-              min: 1,
-              max: 25,
-              value: _currentSmoothingWindow,
-              onChanged: (value) {
-                setState(() {
-                  _currentSmoothingWindow = value;
-                });
-              }),
-          GCWDoubleSpinner(
-              title: i18n(context, 'waveform_settings_threshold'),
-              min: 1.0,
-              max: 10.0,
-              value: _currentThresholdFactor,
-              onChanged: (value) {
-                setState(() {
-                  _currentThresholdFactor = value;
-                });
-              }),
-          GCWIntegerSpinner(
-              title: i18n(context, 'waveform_settings_minrunlength'),
-              min: 1,
-              max: 20,
-              value: _currentMinRunLength,
-              onChanged: (value) {
-                setState(() {
-                  _currentMinRunLength = value;
-                });
-              }),
-          GCWDoubleSpinner(
-              title: i18n(context, 'waveform_settings_tolerance'),
-              min: 0,
-              max: 0.8,
-              value: _currentUnitTolerance,
-              onChanged: (value) {
-                setState(() {
-                  _currentUnitTolerance = value;
-                });
-              }),
-        ],
-      ),
+    return Column(
+      children: [
+        GCWIntegerSpinner(
+            title: i18n(context, 'waveform_settings_smoothing'),
+            min: 1,
+            max: 25,
+            value: _currentSmoothingWindow,
+            onChanged: (value) {
+              setState(() {
+                _currentSmoothingWindow = value;
+              });
+            }),
+        GCWDoubleSpinner(
+            title: i18n(context, 'waveform_settings_threshold'),
+            min: 1.0,
+            max: 10.0,
+            value: _currentThresholdFactor,
+            onChanged: (value) {
+              setState(() {
+                _currentThresholdFactor = value;
+              });
+            }),
+        GCWIntegerSpinner(
+            title: i18n(context, 'waveform_settings_minrunlength'),
+            min: 1,
+            max: 20,
+            value: _currentMinRunLength,
+            onChanged: (value) {
+              setState(() {
+                _currentMinRunLength = value;
+              });
+            }),
+        GCWDoubleSpinner(
+            title: i18n(context, 'waveform_settings_tolerance'),
+            min: 0,
+            max: 0.8,
+            value: _currentUnitTolerance,
+            onChanged: (value) {
+              setState(() {
+                _currentUnitTolerance = value;
+              });
+            }),
+      ],
     );
   }
 

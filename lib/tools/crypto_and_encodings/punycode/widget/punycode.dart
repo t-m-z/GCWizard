@@ -3,7 +3,7 @@ import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
-import 'package:gc_wizard/tools/science_and_technology/punycode/logic/punycode.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/punycode/logic/punycode.dart';
 
 class Punycode extends StatefulWidget {
   const Punycode({super.key});

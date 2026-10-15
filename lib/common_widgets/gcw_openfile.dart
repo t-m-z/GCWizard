@@ -307,7 +307,7 @@ void showOpenFileDialog(BuildContext context, List<FileType> supportedFileTypes,
             onLoaded: (GCWFile? _file) {
               onLoaded(_file);
 
-              Navigator.of(context).pop();
+              Navigator.of(context, rootNavigator: true).pop();
             },
           ),
           GCWText(
@@ -430,7 +430,8 @@ Future<GCWFile?> openFileExplorer({List<FileType>? allowedFileTypes}) async {
   try {
      var files = (await filePicker.FilePicker.pickFiles(
             type: filePicker.FileType.any,
-            allowMultiple: false
+            allowMultiple: false,
+            withData: kIsWeb
          ))?.files;
 
     if (allowedFileTypes != null && allowedFileTypes.isNotEmpty && files != null) files = _filterFiles(files, allowedFileTypes);

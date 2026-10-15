@@ -35,59 +35,52 @@ import 'package:gc_wizard/application/category_views/selector_lists/number_seque
 import 'package:gc_wizard/application/category_views/selector_lists/number_sequences/numbersequence_superperfectnumbers_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/number_sequences/numbersequence_taxicab_selection.dart';
 import 'package:gc_wizard/application/category_views/selector_lists/number_sequences/numbersequence_weirdnumbers_selection.dart';
-import 'package:gc_wizard/application/registry.dart';
-import 'package:gc_wizard/application/tools/widget/gcw_tool.dart';
 import 'package:gc_wizard/application/tools/widget/gcw_toollist.dart';
 import 'package:gc_wizard/common_widgets/gcw_selection.dart';
-import 'package:gc_wizard/utils/ui_dependent_utils/common_widget_utils.dart';
 
 class NumberSequenceSelection extends GCWSelection {
   const NumberSequenceSelection({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final List<GCWTool> _toolList = registeredTools.where((element) {
-      return [
-        className(const NumberSequenceFactorialSelection()),
-        className(const NumberSequenceFibonacciSelection()),
-        className(const NumberSequencePrimesSelection()),
-        className(const NumberSequenceMersenneSelection()),
-        className(const NumberSequenceMersennePrimesSelection()),
-        className(const NumberSequenceMersenneExponentsSelection()),
-        className(const NumberSequenceMersenneFermatSelection()),
-        className(const NumberSequenceFermatSelection()),
-        className(const NumberSequencePerfectNumbersSelection()),
-        className(const NumberSequenceSuperPerfectNumbersSelection()),
-        className(const NumberSequencePrimaryPseudoPerfectNumbersSelection()),
-        className(const NumberSequenceWeirdNumbersSelection()),
-        className(const NumberSequenceSublimeNumbersSelection()),
-        className(const NumberSequencePermutablePrimesSelection()),
-        className(const NumberSequenceMemorablePrimesSelection()),
-        className(const NumberSequenceMemorablePrimesIndexesSelection()),
-        className(const NumberSequenceLuckyNumbersSelection()),
-        className(const NumberSequenceHappyNumbersSelection()),
-        className(const NumberSequenceBellSelection()),
-        className(const NumberSequenceCatalanSelection()),
-        className(const NumberSequenceJacobsthalSelection()),
-        className(const NumberSequenceJacobsthalLucasSelection()),
-        className(const NumberSequenceJacobsthalOblongSelection()),
-        className(const NumberSequenceLucasSelection()),
-        className(const NumberSequencePellSelection()),
-        className(const NumberSequencePellLucasSelection()),
-        className(const NumberSequenceRecamanSelection()),
-        className(const NumberSequenceLychrelSelection()),
-        className(const NumberSequenceSphenicNumbersSelection()),
-        className(const NumberSequenceCarmichaelNumbersSelection()),
-        className(const NumberSequenceTaxicabNumbersSelection()),
-        className(const NumberSequenceHarshadNumbersSelection()),
-        className(const NumberSequenceLonelyNumbersSelection()),
-        className(const NumberSequencePalindromePrimesSelection()),
-        className(const NumberSequenceSuitableNumbersSelection()),
-        className(const NumberSequenceLookAndSaySelection()),
-      ].contains(className(element.tool));
-    }).toList();
-
-    _toolList.sort((a, b) => sortToolList(a, b));
+    final _toolList = filterTools(const {
+        NumberSequenceFactorialSelection,
+        NumberSequenceFibonacciSelection,
+        NumberSequencePrimesSelection,
+        NumberSequenceMersenneSelection,
+        NumberSequenceMersennePrimesSelection,
+        NumberSequenceMersenneExponentsSelection,
+        NumberSequenceMersenneFermatSelection,
+        NumberSequenceFermatSelection,
+        NumberSequencePerfectNumbersSelection,
+        NumberSequenceSuperPerfectNumbersSelection,
+        NumberSequencePrimaryPseudoPerfectNumbersSelection,
+        NumberSequenceWeirdNumbersSelection,
+        NumberSequenceSublimeNumbersSelection,
+        NumberSequencePermutablePrimesSelection,
+        NumberSequenceMemorablePrimesSelection,
+        NumberSequenceMemorablePrimesIndexesSelection,
+        NumberSequenceLuckyNumbersSelection,
+        NumberSequenceHappyNumbersSelection,
+        NumberSequenceBellSelection,
+        NumberSequenceCatalanSelection,
+        NumberSequenceJacobsthalSelection,
+        NumberSequenceJacobsthalLucasSelection,
+        NumberSequenceJacobsthalOblongSelection,
+        NumberSequenceLucasSelection,
+        NumberSequencePellSelection,
+        NumberSequencePellLucasSelection,
+        NumberSequenceRecamanSelection,
+        NumberSequenceLychrelSelection,
+        NumberSequenceSphenicNumbersSelection,
+        NumberSequenceCarmichaelNumbersSelection,
+        NumberSequenceTaxicabNumbersSelection,
+        NumberSequenceHarshadNumbersSelection,
+        NumberSequenceLonelyNumbersSelection,
+        NumberSequencePalindromePrimesSelection,
+        NumberSequenceSuitableNumbersSelection,
+        NumberSequenceLookAndSaySelection
+      });
 
     return GCWToolList(toolList: _toolList);
   }

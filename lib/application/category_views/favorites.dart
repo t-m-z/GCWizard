@@ -36,10 +36,7 @@ class Favorites {
     return _favoritedToolList.contains(toolId);
   }
 
-  static List<GCWTool> favoritedGCWTools() {
-    var gcwTools = registeredTools.where((tool) => _favoritedToolList.contains(tool.longId)).toList();
-    gcwTools.sort((a, b) => sortToolList(a, b));
-
-    return gcwTools;
+  static Iterable<GCWTool> favoritedGCWTools() {
+    return sortTools(registeredTools.where((tool) => _favoritedToolList.contains(tool.longId)));
   }
 }

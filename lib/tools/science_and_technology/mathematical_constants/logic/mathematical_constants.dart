@@ -50,6 +50,27 @@ const Map<String, MathematicalConstant> MATHEMATICAL_CONSTANTS = {
         'mathematical_constants_ludolph'
       ],
       tool: 'pi'),
+  'mathematical_constants_tau': MathematicalConstant(
+      symbol: '\u03c4',
+      value: '6.28318 53071 79586 47692 52867 66559 00576 ...',
+      additional_names: [
+        'mathematical_constants_2pi',
+      ],
+      tool: 'tau'),
+  'mathematical_constants_pau': MathematicalConstant(
+      symbol: '',
+      value: '4.71238 89803 84689 85769 39650 74919 25432 ...',
+      additional_names: [
+        'mathematical_constants_15pi',
+        'mathematical_constants_devilsratio',
+      ],
+      tool: 'pau'),
+  'mathematical_constants_copelanderdos': MathematicalConstant(
+      symbol: 'C_10_',
+      value: '0.23571 11317 19232 93137 41434 75359 61677 ...'),
+  'mathematical_constants_champernowne': MathematicalConstant(
+      symbol: 'C_10_',
+      value: '0.01234 56789 10111 21314 15161 71819 20212...'),
   'mathematical_constants_e': MathematicalConstant(
       symbol: 'e',
       value: '2.71828 18284 59045 23536 02874 71352 66249 ...',

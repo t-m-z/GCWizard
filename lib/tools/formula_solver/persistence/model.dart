@@ -85,14 +85,16 @@ class FormulaGroup extends FormulaBase {
 
 class Formula extends FormulaBase {
   String formula;
+  bool dmmLeadZeros;
 
-  Formula(this.formula) : super('');
+  Formula(this.formula, [this.dmmLeadZeros = true]) : super('');
 
   @override
   Map<String, Object?> toMap() {
     var map = {
       'id': id,
       'formula': formula,
+      if (!dmmLeadZeros) 'dmmLeadZeros': dmmLeadZeros,
     };
 
     if (name.isNotEmpty) map.putIfAbsent('name', () => name);
@@ -104,6 +106,7 @@ class Formula extends FormulaBase {
     var newFormula = Formula(toStringOrNull(json['formula']) ?? ''); // TODO Proper default types if key is not in map
     newFormula.id = toIntOrNull(json['id']);
     newFormula.name = toStringOrNull(json['name']) ?? '';
+    newFormula.dmmLeadZeros = toBoolOrNull(json['dmmLeadZeros']) ?? true;
     return newFormula;
   }
 
@@ -111,6 +114,7 @@ class Formula extends FormulaBase {
     var newFormula = Formula(formula.formula);
     newFormula.id = formula.id;
     newFormula.name = formula.name;
+    newFormula.dmmLeadZeros = formula.dmmLeadZeros;
     return newFormula;
   }
 
@@ -134,15 +138,6 @@ FormulaValueType _readType(String? jsonType) {
 }
 
 class FormulaValue extends KeyValueBase {
-  // int? id;
-  // String key;
-  // String value;
-  // int? _id;
-  // @override
-  // int? get id => _id;
-  // //@override
-  // set id(int? id) => _id = id;
-
   FormulaValueType? type;
 
   FormulaValue(String key, String value, {this.type}) : super('', key, value);

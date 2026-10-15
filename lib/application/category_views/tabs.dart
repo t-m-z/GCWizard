@@ -108,7 +108,7 @@ class GCWTabMenu extends StatelessWidget {
       return true;
     });
 
-    if (currentRouteName == null || currentRouteName == 'Home') {
+    if (currentRouteName == null || currentRouteName == _HOMETAB_TITLE) {
       return defaultName;
     }
     return currentRouteName!;

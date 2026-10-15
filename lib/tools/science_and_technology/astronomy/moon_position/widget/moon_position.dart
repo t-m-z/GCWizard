@@ -19,7 +19,7 @@ class MoonPosition extends StatefulWidget {
 }
 
 class _MoonPositionState extends State<MoonPosition> {
-  var _currentDateTimeUTCWithTZ = DateTimeUTCwithTZ.now();
+  var _currentDateTimeUTCWithTZ = DateTimeUTCwithTZ.nowTimestamp();
   var _currentCoords = defaultBaseCoordinate;
 
   @override

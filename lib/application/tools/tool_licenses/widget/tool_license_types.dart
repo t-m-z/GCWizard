@@ -36,6 +36,7 @@ enum ToolLicenseType {
   GPL3, //GNU GPL v3.0
   GITHUB_DEFAULT, //Github Default
   GFDL, // GNU Free Documentation License
+  OPEN_SOURCE, // Open Source
   PUBLIC_DOMAIN,// Public Domain
   NON_COMMERCIAL,
   REPRODUCTION_NEEDED,
@@ -80,6 +81,7 @@ String _licenseType(BuildContext context, ToolLicenseType licenseType) {
     case ToolLicenseType.GPL3: return 'GNU GPL v3.0 License';
     case ToolLicenseType.GITHUB_DEFAULT: return 'Github Default License';
     case ToolLicenseType.GFDL: return 'GNU Free Documentation License';
+    case ToolLicenseType.OPEN_SOURCE: return 'Open Source';
     case ToolLicenseType.PUBLIC_DOMAIN: return 'Public Domain';
     case ToolLicenseType.CHARITYWARE: return 'Charityware';
     case ToolLicenseType.NON_COMMERCIAL: return i18n(context, 'toollicenses_noncommercial');
