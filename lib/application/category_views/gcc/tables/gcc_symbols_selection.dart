@@ -11,13 +11,13 @@ class GCCSymbolsSelection extends GCWSelection {
 
   @override
   Widget build(BuildContext context) {
-    List<GCWTool> _toolList = registeredTools.where((element) {
-      return [
-        className(const SymbolTable()),
-      ].contains(className(element.tool));
-    }).toList();
+     List<GCWTool> _toolList = registeredTools.where((element) {
+       return [
+         className(const SymbolTable()),
+       ].contains(className(element.tool));
+     }).toList();
 
- /*   _toolList = registeredTools.where((element) {
+     /*_toolList = registeredTools.where((element) {
       return [
         // 8Bit Braille
         'symboltables_alchemy',
@@ -78,7 +78,7 @@ class GCCSymbolsSelection extends GCWSelection {
       ].contains(element.id);
     }).toList();*/
 
-    _toolList.sort((a, b) => sortToolList(a, b));
+    //_toolList.sort((a, b) => sortToolList(a, b));
 
     return GCWToolList(toolList: _toolList);
   }
