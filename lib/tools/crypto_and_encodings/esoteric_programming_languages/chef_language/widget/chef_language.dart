@@ -39,6 +39,7 @@ class _ChefState extends State<Chef> {
   String _currentLanguageString = 'ENG';
   String _currentAdjustedRecipe = '';
 
+  Widget _currentGeneratedRecipe = Container();
 
   var TimeInputFormatter = GCWMaskTextInputFormatter(
       mask: '#' * 3, // allow 3 characters input
@@ -64,7 +65,8 @@ class _ChefState extends State<Chef> {
     _remarkController = TextEditingController(text: _currentRemark);
     _timeController = TextEditingController(text: _currentTime);
     _temperatureController = TextEditingController(text: _currentTemperature);
-    _outputToGenerateController = TextEditingController(text: _currentOutputToGenerate);
+    _outputToGenerateController =
+        TextEditingController(text: _currentOutputToGenerate);
   }
 
   @override
@@ -83,6 +85,11 @@ class _ChefState extends State<Chef> {
   Widget build(BuildContext context) {
     if (init) {
       _currentLanguage = _defaultLanguage(context);
+      if (_currentLanguage == GCWSwitchPosition.left) {
+        _currentLanguageString = 'DEU';
+      } else {
+        _currentLanguageString = 'ENG';
+      }
       init = false;
     }
     return Column(
@@ -97,7 +104,7 @@ class _ChefState extends State<Chef> {
     );
   }
 
-  Widget _buildWidgetLanguageMode(BuildContext context){
+  Widget _buildWidgetLanguageMode(BuildContext context) {
     return GCWTwoOptionsSwitch(
       leftValue: i18n(context, 'common_language_german'),
       rightValue: i18n(context, 'common_language_english'),
@@ -110,13 +117,12 @@ class _ChefState extends State<Chef> {
           } else {
             _currentLanguageString = 'ENG';
           }
-
         });
       },
     );
   }
 
-  Widget _buildWidgetProgramMode(BuildContext context){
+  Widget _buildWidgetProgramMode(BuildContext context) {
     return GCWTwoOptionsSwitch(
       leftValue: i18n(context, 'common_programming_mode_interpret'),
       rightValue: i18n(context, 'common_programming_mode_generate'),
@@ -129,7 +135,7 @@ class _ChefState extends State<Chef> {
     );
   }
 
-  Widget _buildWidgetGenerateChefProgram(BuildContext context){
+  Widget _buildWidgetGenerateChefProgram(BuildContext context) {
     return Column(
       children: <Widget>[
         GCWTextField(
@@ -190,12 +196,42 @@ class _ChefState extends State<Chef> {
             });
           },
         ),
-        GCWTextDivider(text: i18n(context, 'common_programming_hint_sourcecode')),
+        GCWSubmitButton(
+          onPressed: () {
+            setState(() {
+              if (_currentTitle.isEmpty) {
+                _currentOutputGenerator = chefBuildOutputText(context, [
+                  'chef_error_structure_recipe',
+                  'chef_error_structure_recipe_missing_title'
+                ]);
+              } else if (_currentOutputGenerator.isEmpty) {
+                _currentOutputGenerator = chefBuildOutputText(context, [
+                  'chef_error_structure_recipe',
+                  'chef_error_structure_recipe_missing_output'
+                ]);
+              } else {
+                _currentOutputGenerator = generateChef(
+                    _currentLanguageString,
+                    _currentTitle,
+                    _currentRemark,
+                    _currentTime,
+                    _currentTemperature,
+                    _currentOutputToGenerate,
+                    _auxilaryRecipes);
+              }
+              _currentGeneratedRecipe = GCWOutputText(
+                text: _currentOutputGenerator.trim(),
+                isMonotype: true,
+              );
+            });
+          },
+        ),
+        //GCWTextDivider(text: i18n(context, 'common_programming_hint_sourcecode')),
       ],
     );
   }
 
-  Widget _buildWidgetInterpretChefProgram(BuildContext context){
+  Widget _buildWidgetInterpretChefProgram(BuildContext context) {
     return Column(
       children: <Widget>[
         GCWTextField(
@@ -225,8 +261,12 @@ class _ChefState extends State<Chef> {
             setState(() {
               if (isValid(_currentInputFromFridge)) {
                 try {
-                  CHEFOutputInterpret output = interpretChef(_currentLanguageString, _currentRecipe, _currentInputFromFridge);
-                  _currentOutputInterpreter = chefBuildOutputText(context, output.output);
+                  CHEFOutputInterpret output = interpretChef(
+                      _currentLanguageString,
+                      _currentRecipe,
+                      _currentInputFromFridge);
+                  _currentOutputInterpreter =
+                      chefBuildOutputText(context, output.output);
                   _currentAdjustedRecipe = output.recipe;
                 } catch (e) {
                   _currentOutputInterpreter = chefBuildOutputText(context, [
@@ -235,7 +275,10 @@ class _ChefState extends State<Chef> {
                   ]);
                 }
               } else {
-                _currentOutputInterpreter = chefBuildOutputText(context, ['common_programming_error_runtime', 'chef_error_runtime_invalid_input']);
+                _currentOutputInterpreter = chefBuildOutputText(context, [
+                  'common_programming_error_runtime',
+                  'chef_error_runtime_invalid_input'
+                ]);
               }
             });
           },
@@ -245,25 +288,11 @@ class _ChefState extends State<Chef> {
   }
 
   Widget _buildOutput(BuildContext context) {
-
     Widget outputWidget;
 
     if (_currentMode == GCWSwitchPosition.right) {
       // generate chef
-      if (_currentTitle.isEmpty) {
-        _currentOutputGenerator =
-            chefBuildOutputText(context, ['chef_error_structure_recipe', 'chef_error_structure_recipe_missing_title']);
-      } else if (_currentOutputGenerator.isEmpty) {
-        _currentOutputGenerator =
-            chefBuildOutputText(context, ['chef_error_structure_recipe', 'chef_error_structure_recipe_missing_output']);
-      } else {
-        _currentOutputGenerator = generateChef(_currentLanguageString, _currentTitle, _currentRemark, _currentTime, _currentTemperature,
-            _currentOutputGenerator, _auxilaryRecipes);
-      }
-      outputWidget = GCWOutputText(
-        text: _currentOutputGenerator.trim(),
-        isMonotype: true,
-      );
+      outputWidget = _currentGeneratedRecipe;
     } else {
       // interpret chef
 
@@ -307,7 +336,8 @@ class _ChefState extends State<Chef> {
 String chefBuildOutputText(BuildContext context, List<String> outputList) {
   String output = '';
   for (var element in outputList) {
-    if (element.startsWith('chef_') || element.startsWith('common_programming')) {
+    if (element.startsWith('chef_') ||
+        element.startsWith('common_programming')) {
       output = output + i18n(context, element) + '\n';
     } else {
       output = output + element + '\n';
@@ -315,5 +345,3 @@ String chefBuildOutputText(BuildContext context, List<String> outputList) {
   }
   return output;
 }
-
-

@@ -35,17 +35,17 @@ android {
     signingConfigs {
         create("release") {
             if (keystorePropertiesFile.exists()) {
-                keyAlias = keystoreProperties["keyAlias"]  as String
+                keyAlias = keystoreProperties["keyAlias"] as String
                 keyPassword = keystoreProperties["keyPassword"] as String
-                storeFile = file(keystoreProperties["storeFile"]  as String)
-                storePassword = keystoreProperties["storePassword"]  as String
+                storeFile = file(keystoreProperties["storeFile"] as String)
+                storePassword = keystoreProperties["storePassword"] as String
             }
         }
     }
 
     buildTypes {
-        release {
-            signingConfig = signingConfigs["release"]
+        getByName("release") {
+            signingConfig = signingConfigs.getByName("release")
             // Enables code-related app optimization.
             isMinifyEnabled = true
 

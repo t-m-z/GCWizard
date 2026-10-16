@@ -32,8 +32,8 @@ dependencies:
   fixnum: ^1.1.1
   flutter:
     sdk: flutter
-  flutter_dtmf:
-    git:
+  flutter_dtmf: #^0.1.5 Temporarily on URL due to Google 16K request
+    git:       # https://github.com/Brewnbeer/flutter_midi_engine/pull/1
       url: https://github.com/vaibhavdreambolix/flutter_dtmf.git
   flutter_email_sender: ^6.0.2
   flutter_highlight: ^0.7.0
@@ -41,7 +41,9 @@ dependencies:
     sdk: flutter
   flutter_map: 8.2.2 #crash with 8.3.0/ 8.3.1 on fast in/out zoom
   flutter_map_marker_popup: ^8.1.1
-  flutter_midi_engine: ^0.1.5
+  flutter_midi_engine:
+    git:
+      url: 'https://github.com/cyber-pride/flutter_midi_engine.git'
   fluttermocklocation: ^0.0.5
   highlight: ^0.7.0
   http: ^1.6.0

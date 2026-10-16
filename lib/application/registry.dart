@@ -286,6 +286,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/polybios/widget/polybios.da
 import 'package:gc_wizard/tools/crypto_and_encodings/porta/widget/porta.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/predator/widget/predator.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/prime_alphabet/widget/prime_alphabet.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/protocolbuffer/widget/protocolbuffer.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/punycode/widget/punycode.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/rabbit/widget/rabbit.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/ragbaby/widget/ragbaby.dart';
@@ -338,6 +339,7 @@ import 'package:gc_wizard/tools/games/scrabble/widget/scrabble.dart';
 import 'package:gc_wizard/tools/games/scrabble/widget/scrabble_overview.dart';
 import 'package:gc_wizard/tools/games/sudoku/widget/sudoku_solver.dart';
 import 'package:gc_wizard/tools/games/tower_of_hanoi/widget/tower_of_hanoi.dart';
+import 'package:gc_wizard/tools/games/tridoku/widget/tridoku_solver.dart';
 import 'package:gc_wizard/tools/games/verbal_arithmetic/widget/verbal_arithmetic.dart';
 import 'package:gc_wizard/tools/games/word_search/widget/word_search.dart';
 import 'package:gc_wizard/tools/games/wordoku/widget/wordoku_solver.dart';
@@ -1908,6 +1910,16 @@ void initializeRegistry(BuildContext context) {
     ], searchKeys: const [
       'projectiles',
     ], licenses: []),
+    GCWTool(tool: const ProtocolBuffer(), id: 'protocolbuffer', categories: const [
+      ToolCategory.CRYPTOGRAPHY
+    ], searchKeys: const [
+      'protocolbuffer',
+    ], licenses: [ToolLicenseOnlineArticle(
+        context: context,
+        author: '',
+        title: 'Protocol Buffers Documentation',
+        sourceUrl: 'https://protobuf.dev/',)
+    ]),
     GCWTool(tool: const Punycode(), id: 'punycode', categories: const [
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: const [
@@ -2273,6 +2285,12 @@ void initializeRegistry(BuildContext context) {
                   'https://web.archive.org/web/20170504070744/https://www.sanfoundry.com/csharp-program-tower-of-hanoi/',
               licenseType: ToolLicenseType.FREE_TO_USE)
         ]),
+    GCWTool(tool: const TridokuSolver(), id: 'tridokusolver', categories: const [
+      ToolCategory.GAMES
+    ], searchKeys: const [
+      'games',
+      'games_tridokusolver',
+    ]),
     GCWTool(tool: const TTS(), id: 'tts', categories: const [
       ToolCategory.SCIENCE_AND_TECHNOLOGY
     ], searchKeys: const [

@@ -171,6 +171,7 @@ import 'package:gc_wizard/tools/crypto_and_encodings/pollux/widget/pollux.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/polybios/widget/polybios.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/porta/widget/porta.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/prime_alphabet/widget/prime_alphabet.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/protocolbuffer/widget/protocolbuffer.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/punycode/widget/punycode.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/rabbit/widget/rabbit.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/ragbaby/widget/ragbaby.dart';
@@ -211,6 +212,7 @@ import 'package:gc_wizard/tools/games/nonogram/widget/nonogram_solver.dart';
 import 'package:gc_wizard/tools/games/number_pyramid/widget/number_pyramid_solver.dart';
 import 'package:gc_wizard/tools/games/sudoku/widget/sudoku_solver.dart';
 import 'package:gc_wizard/tools/games/tower_of_hanoi/widget/tower_of_hanoi.dart';
+import 'package:gc_wizard/tools/games/tridoku/widget/tridoku_solver.dart';
 import 'package:gc_wizard/tools/games/verbal_arithmetic/widget/verbal_arithmetic.dart';
 import 'package:gc_wizard/tools/games/word_search/widget/word_search.dart';
 import 'package:gc_wizard/tools/general_tools/gcwizardscript/widget/gcwizard_script.dart';
@@ -854,6 +856,7 @@ const Set<Type> _mainToolTypes = {
   PrimeAlphabet,
   PrimesSelection,
   Projectiles,
+  ProtocolBuffer,
   Punycode,
   PrussiaTelegraph,
   QrCode,
@@ -918,6 +921,7 @@ const Set<Type> _mainToolTypes = {
   TimeCalculator,
   TomTomSelection,
   TowerOfHanoi,
+  TridokuSolver,
   TupperFormula,
   Trifid,
   Trithemius,
