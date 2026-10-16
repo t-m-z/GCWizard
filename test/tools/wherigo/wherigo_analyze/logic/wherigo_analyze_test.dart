@@ -385,6 +385,10 @@ void main() {
       {
         'input': testInputMESSAGE,
         'expectedOutput': testOutputMESSAGE,
+      },
+      {
+        'input': testInputMESSAGECacheSleuth,
+        'expectedOutput': testOutputMESSAGECacheSleuth,
       }
     ];
 

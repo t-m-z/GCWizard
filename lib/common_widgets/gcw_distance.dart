@@ -16,6 +16,7 @@ class GCWDistance extends StatefulWidget {
   final Length? unit;
   final bool allowNegativeValues;
   final TextEditingController? controller;
+  final double? max;
 
   const GCWDistance(
       {super.key,
@@ -23,6 +24,7 @@ class GCWDistance extends StatefulWidget {
       this.hintText,
       this.value,
       this.unit,
+      this.max,
       this.allowNegativeValues = false,
       this.controller});
 
@@ -68,6 +70,7 @@ class _GCWDistanceState extends State<GCWDistance> {
                 child: GCWDoubleTextField(
                   hintText: widget.hintText ?? i18n(context, 'common_distance_hint'),
                   min: widget.allowNegativeValues ? null : 0.0,
+                  max: widget.max,
                   controller: _controller,
                   onChanged: (DoubleText ret) {
                     setState(() {

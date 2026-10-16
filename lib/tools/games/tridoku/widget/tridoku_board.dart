@@ -89,7 +89,7 @@ class TridokuBoardPainter extends CustomPainter {
           var yPos = corner.P1.dy + heightInner / 2 + (pointsUp ? 0.12 : -0.12) * heightInner;
 
           TextSpan span = TextSpan(
-              style: gcwTextStyle().copyWith(color: textColor, fontSize: heightInner * 0.8),
+              style: gcwTextStyle().copyWith(color: textColor, fontSize: heightInner * 0.7),
               text: board.getValue(boardY, boardX)?.toString());
           TextPainter textPainter = TextPainter(text: span, textDirection: TextDirection.ltr);
           textPainter.layout();

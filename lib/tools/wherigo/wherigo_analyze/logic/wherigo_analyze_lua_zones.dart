@@ -44,7 +44,7 @@ WherigoZoneData _analyzeAndExtractZoneSectionData(List<String> lines) {
   for (int i = 0; i < lines.length; i++) {
     lines[i] = lines[i].trim();
     if (RegExp(r'( Wherigo.Zone\()').hasMatch(lines[i])) {
-      LUAname = _getLUAName(lines[i]);
+      LUAname = _getLUAName(lines[i].replaceAll('local ', ''));
     }
     if (lines[i].startsWith(LUAname + '.Id')) {
       id = _getLineData(lines[i], LUAname, 'Id', _obfuscatorFunction, _obfuscatorTable);

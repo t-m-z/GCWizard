@@ -1492,6 +1492,23 @@ void initializeRegistry(BuildContext context) {
           'roman_numbers'
         ]),
     GCWTool(
+        tool: const MachineIdentificationCode(),
+        id: 'machine_identification_code',
+        categories: const [ToolCategory.SCIENCE_AND_TECHNOLOGY],
+      searchKeys: const [
+        'machine_identification_code'
+      ],
+      licenses: [
+        ToolLicenseOnlineArticle(
+            context: context,
+            author: 'Electronic Frontier Foundation',
+            title: 'DocuColor Tracking Dot Decoding Guide',
+            licenseType: ToolLicenseType.GPL2,
+            sourceUrl:
+            'https://web.archive.org/web/20260930190056/https://w2.eff.org/Privacy/printers/docucolor/'),
+      ],
+    ),
+    GCWTool(
         tool: const MagicEyeSolver(),
         id: 'magic_eye',
         isBeta: true,

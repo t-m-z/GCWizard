@@ -428,15 +428,11 @@ Future<Uint8ListText> _downloadWithProxyStream(Uri uri, SendPort? sendAsyncPort)
 /// Returns null if nothing was selected.
 Future<GCWFile?> openFileExplorer({List<FileType>? allowedFileTypes}) async {
   try {
-     var files = (await filePicker.FilePicker.pickFiles(
-            type: filePicker.FileType.any,
-            allowMultiple: false,
-            withData: kIsWeb
-         ))?.files;
+    var files = await filePicker.FilePicker.pickFiles(type: filePicker.FileType.any);
 
-    if (allowedFileTypes != null && allowedFileTypes.isNotEmpty && files != null) files = _filterFiles(files, allowedFileTypes);
+    if (allowedFileTypes != null && allowedFileTypes.isNotEmpty) files = _filterFiles(files, allowedFileTypes);
 
-    if (files == null || files.isEmpty) return null;
+    if (files.isEmpty) return null;
 
     var bytes = await _getFileData(files.first);
     var path = kIsWeb ? null : files.first.path;
@@ -449,7 +445,7 @@ Future<GCWFile?> openFileExplorer({List<FileType>? allowedFileTypes}) async {
 
 Future<Uint8List?> _getFileData(filePicker.PlatformFile file) async {
   return kIsWeb
-      ? Future.value(file.bytes)
+      ? file.readAsBytes()
       : (file.path == null)
           ? null
           : readByteDataFromFile(file.path!);

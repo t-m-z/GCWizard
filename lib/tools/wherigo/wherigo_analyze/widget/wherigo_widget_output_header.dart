@@ -122,7 +122,9 @@ List<List<String>> _buildHeaderExpertMode(BuildContext context) {
     case WHERIGO_BUILDER.GROUNDSPEAK:
       header.add([i18n(context, 'wherigo_header_builder'), 'Groundspeak']);
       break;
-
+    case WHERIGO_BUILDER.CACHESLEUTH:
+      header.add([i18n(context, 'wherigo_header_builder'), 'CacheSleuth Wherigo Builder']);
+      break;
     default:
       {}
   }

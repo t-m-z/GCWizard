@@ -10,22 +10,22 @@ environment:
   sdk: ">=3.5.0 <4.0.0"
 
 dependencies:
-  archive: ^4.0.9
+  archive: ^4.2.0
   audio_decoder: ^0.8.1
   audioplayers: ^6.8.1
   auto_size_text: ^3.0.0
   base32: ^2.2.0
-  cached_network_image: ^3.4.1
+  cached_network_image: ^4.0.0
   code_text_field: ^1.1.0
   collection: ^1.19.0
   dart_openai: ^5.1.0
   #dart_numerics: DO NOT USE! CURRENT VERSION 0.0.6 NOT WEB COMPATIBLE (02/2024)
-  device_info_plus: ^12.4.0
+  device_info_plus: ^13.2.0
   diacritic: ^0.1.6
   dio: ^5.3.3
   encrypt: ^5.0.3
   exif: ^3.1.4
-  file_picker: ^11.0.2
+  file_picker: ^13.1.0
   file_picker_writable:
     git:
       url: https://github.com/amake/file_picker_writable.git
@@ -39,8 +39,8 @@ dependencies:
   flutter_highlight: ^0.7.0
   flutter_localizations:
     sdk: flutter
-  flutter_map: 8.2.2 #crash with 8.3.0/ 8.3.1 on fast in/out zoom
-  flutter_map_marker_popup: ^8.1.1
+  flutter_map: 8.3.2
+  flutter_map_marker_popup: ^8.1.2
   flutter_midi_engine:
     git:
       url: 'https://github.com/cyber-pride/flutter_midi_engine.git'
@@ -48,21 +48,21 @@ dependencies:
   highlight: ^0.7.0
   http: ^1.6.0
   http_parser: ^4.1.2
-  image: ^4.9.1
+  image: ^4.9.2
   image_picker: ^1.2.3
   intl: ^0.20.2
-  latlong2: ^0.9.1
+  latlong2: ^0.10.1
   location: ^8.0.1
   mask_text_input_formatter: ^2.5.0
-  math_expressions: ^3.1.0
-  package_info_plus: ^9.0.1
+  math_expressions: ^3.2.0
+  package_info_plus: ^10.2.1
   path: ^1.9.0
   path_provider: ^2.1.6
-  permission_handler: ^12.0.3
+  permission_handler: ^13.0.2
   photo_view: ^0.15.0
   pointycastle: ^3.9.1
   prefs: ^4.2.0
-  proj4dart: ^2.1.0
+  proj4dart: ^3.0.0
   provider: ^6.1.5+1
   qr: ^4.0.0
   r_scan:
@@ -75,7 +75,7 @@ dependencies:
   unrar_file:
     git:
       url: https://github.com/Makarov96/unrar_file_fork.git
-  uuid: ^4.5.2
+  uuid: ^4.6.0
   url_launcher: ^6.3.2
   utility: ^1.0.3
   week_of_year: ^2.0.0
@@ -259,6 +259,7 @@ flutter:
     - lib/tools/symbol_tables/_common/assets/gesture_numbers_02/
     - lib/tools/symbol_tables/_common/assets/glagolitic/
     - lib/tools/symbol_tables/_common/assets/gnommish/
+    - lib/tools/symbol_tables/_common/assets/gorn/
     - lib/tools/symbol_tables/_common/assets/greek_numerals/
     - lib/tools/symbol_tables/_common/assets/hangul_korean/
     - lib/tools/symbol_tables/_common/assets/hangul_sino_korean/

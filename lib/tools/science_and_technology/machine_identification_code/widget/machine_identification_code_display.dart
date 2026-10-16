@@ -1,0 +1,320 @@
+import 'package:flutter/material.dart';
+import 'package:gc_wizard/application/theme/theme.dart';
+import 'package:gc_wizard/common_widgets/gcw_touchcanvas.dart';
+import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/logic/segment_display.dart';
+import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/widget/n_segment_display.dart';
+import 'package:gc_wizard/tools/science_and_technology/segment_display/_common/widget/segmentdisplay_painter.dart';
+
+const _INITIAL_SEGMENTS = <String, bool>{
+  '011': false,
+  '012': false,
+  '013': false,
+  '014': false,
+  '015': false,
+  '016': false,
+  '017': false,
+  '010': false,
+  '021': false,
+  '022': false,
+  '023': false,
+  '024': false,
+  '025': false,
+  '026': false,
+  '027': false,
+  '020': false,
+  '031': false,
+  '032': false,
+  '033': false,
+  '034': false,
+  '035': false,
+  '036': false,
+  '037': false,
+  '030': false,
+  '041': false,
+  '042': false,
+  '043': false,
+  '044': false,
+  '045': false,
+  '046': false,
+  '047': false,
+  '040': false,
+  '051': false,
+  '052': false,
+  '053': false,
+  '054': false,
+  '055': false,
+  '056': false,
+  '057': false,
+  '050': false,
+  '061': false,
+  '062': false,
+  '063': false,
+  '064': false,
+  '065': false,
+  '066': false,
+  '067': false,
+  '060': false,
+  '071': false,
+  '072': false,
+  '073': false,
+  '074': false,
+  '075': false,
+  '076': false,
+  '077': false,
+  '070': false,
+  '081': false,
+  '082': false,
+  '083': false,
+  '084': false,
+  '085': false,
+  '086': false,
+  '087': false,
+  '080': false,
+  '091': false,
+  '092': false,
+  '093': false,
+  '094': false,
+  '095': false,
+  '096': false,
+  '097': false,
+  '090': false,
+  '101': true,
+  '102': true,
+  '103': true,
+  '104': true,
+  '105': true,
+  '106': true,
+  '107': true,
+  '100': false,
+  '111': false,
+  '112': false,
+  '113': false,
+  '114': false,
+  '115': false,
+  '116': false,
+  '117': false,
+  '110': false,
+  '121': false,
+  '122': false,
+  '123': false,
+  '124': false,
+  '125': false,
+  '126': false,
+  '127': false,
+  '120': false,
+  '131': false,
+  '132': false,
+  '133': false,
+  '134': false,
+  '135': false,
+  '136': false,
+  '137': false,
+  '130': false,
+  '141': false,
+  '142': false,
+  '143': false,
+  '144': false,
+  '145': false,
+  '146': false,
+  '147': false,
+  '140': false,
+  '151': false,
+  '152': false,
+  '153': false,
+  '154': false,
+  '155': false,
+  '156': false,
+  '157': false,
+  '150': false,
+};
+
+
+class MICSegmentDisplay extends NSegmentDisplay {
+  MICSegmentDisplay(
+      {super.key, required super.segments, super.readOnly, super.onChanged})
+      : super(
+            initialSegments: _INITIAL_SEGMENTS,
+            type: SegmentDisplayType.CUSTOM,
+            aspectRatio: 31 / 17,
+            customPaint: (GCWTouchCanvas canvas,
+                Size size,
+                Map<String, bool> currentSegments,
+                Function setSegmentState,
+                Color segment_color_on,
+                Color segment_color_off) {
+
+              var distX = size.width / 31;
+              var distY = size.height / 17;
+              distY = distX;
+              
+              var paint = defaultSegmentPaint();
+              var SEGMENTS_COLOR_ON = Colors.yellow; //segment_color_on;
+              var SEGMENTS_COLOR_OFF = segment_color_off;
+
+              const circles = {
+                '010': [0, 0],
+                '020': [1, 0],
+                '030': [2, 0],
+                '040': [3, 0],
+                '050': [4, 0],
+                '060': [5, 0],
+                '070': [6, 0],
+                '080': [7, 0],
+                '090': [8, 0],
+                '100': [9, 0],
+                '110': [10, 0],
+                '120': [11, 0],
+                '130': [12, 0],
+                '140': [13, 0],
+                '150': [14, 0],
+                '011': [0, 1],
+                '021': [1, 1],
+                '031': [2, 1],
+                '041': [3, 1],
+                '051': [4, 1],
+                '061': [5, 1],
+                '071': [6, 1],
+                '081': [7, 1],
+                '091': [8, 1],
+                '101': [9, 1],
+                '111': [10, 1],
+                '121': [11, 1],
+                '131': [12, 1],
+                '141': [13, 1],
+                '151': [14, 1],
+                '012': [0, 2],
+                '022': [1, 2],
+                '032': [2, 2],
+                '042': [3, 2],
+                '052': [4, 2],
+                '062': [5, 2],
+                '072': [6, 2],
+                '082': [7, 2],
+                '092': [8, 2],
+                '102': [9, 2],
+                '112': [10, 2],
+                '122': [11, 2],
+                '132': [12, 2],
+                '142': [13, 2],
+                '152': [14, 2],
+                '013': [0, 3],
+                '023': [1, 3],
+                '033': [2, 3],
+                '043': [3, 3],
+                '053': [4, 3],
+                '063': [5, 3],
+                '073': [6, 3],
+                '083': [7, 3],
+                '093': [8, 3],
+                '103': [9, 3],
+                '113': [10, 3],
+                '123': [11, 3],
+                '133': [12, 3],
+                '143': [13, 3],
+                '153': [14, 3],
+                '014': [0, 4],
+                '024': [1, 4],
+                '034': [2, 4],
+                '044': [3, 4],
+                '054': [4, 4],
+                '064': [5, 4],
+                '074': [6, 4],
+                '084': [7, 4],
+                '094': [8, 4],
+                '104': [9, 4],
+                '114': [10, 4],
+                '124': [11, 4],
+                '134': [12, 4],
+                '144': [13, 4],
+                '154': [14, 4],
+                '015': [0, 5],
+                '025': [1, 5],
+                '035': [2, 5],
+                '045': [3, 5],
+                '055': [4, 5],
+                '065': [5, 5],
+                '075': [6, 5],
+                '085': [7, 5],
+                '095': [8, 5],
+                '105': [9, 5],
+                '115': [10, 5],
+                '125': [11, 5],
+                '135': [12, 5],
+                '145': [13, 5],
+                '155': [14, 5],
+                '016': [0, 6],
+                '026': [1, 6],
+                '036': [2, 6],
+                '046': [3, 6],
+                '056': [4, 6],
+                '066': [5, 6],
+                '076': [6, 6],
+                '086': [7, 6],
+                '096': [8, 6],
+                '106': [9, 6],
+                '116': [10, 6],
+                '126': [11, 6],
+                '136': [12, 6],
+                '146': [13, 6],
+                '156': [14, 6],
+                '017': [0, 7],
+                '027': [1, 7],
+                '037': [2, 7],
+                '047': [3, 7],
+                '057': [4, 7],
+                '067': [5, 7],
+                '077': [6, 7],
+                '087': [7, 7],
+                '097': [8, 7],
+                '107': [9, 7],
+                '117': [10, 7],
+                '127': [11, 7],
+                '137': [12, 7],
+                '147': [13, 7],
+                '157': [14, 7],
+              };
+
+              circles.forEach((key, value) {
+                paint.color = segmentActive(currentSegments, key)
+                    ? SEGMENTS_COLOR_ON
+                    : SEGMENTS_COLOR_OFF;
+
+                canvas.touchCanvas.drawCircle(
+                    Offset(distX + distX * (value[0] * 2 + 1) + distX / 2,
+                        distY * (value[1] * 2 + 1) + distY / 2),
+                    distX / 2,paint, onTapDown: (tapDetail) {
+                  setSegmentState(key, !segmentActive(currentSegments, key));
+                });
+
+                if (size.height < NSegmentDisplay.MIN_HEIGHT) return;
+              });
+
+              for (int i = 1; i <= 15; i++) {
+                TextSpan span = TextSpan(
+                    style: gcwTextStyle().copyWith(
+                        color: SEGMENTS_COLOR_OFF, fontSize: distX),
+                    text: i.toString());
+                TextPainter textPainter =
+                    TextPainter(text: span, textDirection: TextDirection.ltr);
+                textPainter.layout();
+
+                textPainter.paint(
+                    canvas.canvas,
+                    Offset(distX * i * 2 + distX / 2 - textPainter.width / 2,
+                        distY - textPainter.height));
+              }
+
+              paint.color = SEGMENTS_COLOR_OFF;
+              paint.strokeWidth = 2.0;
+
+              canvas.touchCanvas.drawLine(
+                  Offset(3 * distX + distX / 2, 2 * distY + distY / 2),
+                  Offset(distX * 31, 2 * distY + distY / 2),
+                  paint);
+
+              canvas.touchCanvas.drawLine(
+                  Offset(3 * distX + distX / 2, 2 * distY + distY / 2),
+                  Offset(3 * distX + distX / 2, distY * 17),
+                  paint);
+            });
+}
