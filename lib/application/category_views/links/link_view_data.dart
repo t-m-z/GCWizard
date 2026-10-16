@@ -27,6 +27,7 @@ const Map<String, List<String>> LINK = {
   'decryptimage': ['Decrypt image', 'https://decrypt.imageonline.co/index.php'],
   'fotoforensic': ['Foto Forensic', 'https://29a.ch/photo-forensics/#forensic-magnifier'],
   'jabcode': ['JAB Codescanner', 'https://jabcode.org/scan'],
+  'barcode': ['Barcode Scanner', 'https://myqrcode.com/barcode-scanner'],
 
   'oscilloscope' : ['Oscilloscope', 'https://oscilloscopemusic.com/software/oscilloscope/'],
 

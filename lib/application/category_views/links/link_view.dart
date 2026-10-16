@@ -90,6 +90,7 @@ class _LinkViewState extends State<LinkView> {
                 _buildUrl('decryptimage'),
                 _buildUrl('fotoforensic'),
                 _buildUrl('jabcode'),
+                _buildUrl('barcode'),
               ],
             ),
           ),
