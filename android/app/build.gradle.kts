@@ -9,7 +9,7 @@ plugins {
 
 android {
     namespace = "de.tmz.sman42.gc_wizard.nightly"
-    compileSdk = 36
+    compileSdk = 37
     ndkVersion = flutter.ndkVersion
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17

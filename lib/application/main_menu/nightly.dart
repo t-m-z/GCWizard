@@ -32,6 +32,12 @@ class _NightlyState extends State<Nightly> {
         const GCWTextDivider(text: 'Near Term Previews'),
         GCWColumnedMultilineOutput(
           data: [
+            [i18n(context, 'scienceandtechnology_selection_title'), 'Lüneburg Calculation Table'],
+            [i18n(context, 'scienceandtechnology_selection_title'), 'Machine Identification Code'],
+            [i18n(context, 'scienceandtechnology_selection_title'), 'Protocol Buffer'],
+            [i18n(context, 'scienceandtechnology_selection_title'), 'UTCI\nApparent temperature'],
+            [i18n(context, 'scienceandtechnology_selection_title'), 'WBGT\nApparent temperature'],
+            [i18n(context, 'symboltables_selection_title'), 'Gorn'],
           ],
           flexValues: [3, 7],),
         const GCWTextDivider(text: 'Long Term Previews'),

@@ -12,6 +12,8 @@ const Map<String, List<String>> LINK = {
   'cipheridentifier': ['Neural Cipher Identifier', 'https://www.cryptool.org/de/cto/ncid'],
   'cryptii': ['cryptii', 'https://cryptii.com/'],
   'boxentriq': ['BOXENTRIQ Solve Ciphers, Codes & Hidden Clues', 'https://www.boxentriq.com/'],
+  'guballasubstitution' : ['Guballa\'s Substitution solver','https://guballa.de/substitution-solver'],
+  'guballavigenere' : ['Guballa\'s Vigenere solver','https://guballa.de/vigenere-solver'],
 
   'steg01' : ['StegOnline', 'https://stegonline.georgeom.net/upload'],
   'steg02': ['Bergziege Steganography Solver', 'https://www.bergziege-owl.de/steganografie-solver/'],
@@ -24,6 +26,7 @@ const Map<String, List<String>> LINK = {
   'ezgif': ['Online GIF maker and image editor', 'https://ezgif.com/'],
   'decryptimage': ['Decrypt image', 'https://decrypt.imageonline.co/index.php'],
   'fotoforensic': ['Foto Forensic', 'https://29a.ch/photo-forensics/#forensic-magnifier'],
+  'jabcode': ['JAB Codescanner', 'https://jabcode.org/scan'],
 
   'oscilloscope' : ['Oscilloscope', 'https://oscilloscopemusic.com/software/oscilloscope/'],
 

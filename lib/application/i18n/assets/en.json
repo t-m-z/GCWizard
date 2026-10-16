@@ -6713,6 +6713,7 @@
   "tapir_title": "Tapir",
   "tapir_description": "Code of the former East German military (NVA) and intelligence service (StaSi)",
   "tapir_example": "ABCDEFG → 05052 55565 78383",
+  "tapir_onetimepad" : "OTP Key",
   "tau_selection_title": "Tau (τ = 2 × π = 6.2831853...)",
   "tau_selection_description": "Mathematical constant: Alternative Circle Number",
   "telegraph_selection_title": "Telegraph Systems, optical/electrical",

@@ -467,6 +467,7 @@ import 'package:gc_wizard/tools/science_and_technology/keyboard/keyboard_layout/
 import 'package:gc_wizard/tools/science_and_technology/keyboard/keyboard_numbers/widget/keyboard_numbers.dart';
 import 'package:gc_wizard/tools/science_and_technology/lcm/widget/lcm.dart';
 import 'package:gc_wizard/tools/science_and_technology/lueneburg_calculation_table/widget/lueneburg_calculation_table.dart';
+import 'package:gc_wizard/tools/science_and_technology/machine_identification_code/widget/machine_identification_code.dart';
 import 'package:gc_wizard/tools/science_and_technology/mathematical_constants/widget/mathematical_constants.dart';
 import 'package:gc_wizard/tools/science_and_technology/maya_calendar/widget/maya_calendar.dart';
 import 'package:gc_wizard/tools/science_and_technology/midi/midi_coding/widget/midi_coding.dart';
