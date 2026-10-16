@@ -48,6 +48,10 @@ List<String> _splitPair(String pair) {
 String decodeBattleship(String text, bool numberMode) {
   if (text.isEmpty) return '';
 
+  text = text.trim();
+
+  bool startWithZero = false;
+
   bool absoluteError = false;
   bool rowsError = false;
   bool columnsError = false;
@@ -67,13 +71,15 @@ String decodeBattleship(String text, bool numberMode) {
     } else {
       tupel = _splitPair(pair);
     }
-
     if (tupel.length != 2) {
       absoluteError = true;
       faultyTupel = '( ' + tupel.toString() + ' )';
     } else {
       if (isInteger(tupel[0])) {
         column = int.parse(tupel[0]);
+        if (column == 0) {
+          startWithZero = true;
+        }
       } else {
         if (numberMode) {
           column = int.parse(convertBase(tupel[0], 36, 10).trim());
@@ -85,7 +91,6 @@ String decodeBattleship(String text, bool numberMode) {
           }
         }
       }
-
       if (column > _BATTLESHIP_MAX_COLUMNS) {
         columnsError = true;
         faultyColumnsTupel = '( ' + tupel[0] + ',' + tupel[1] + ' )';
@@ -94,6 +99,9 @@ String decodeBattleship(String text, bool numberMode) {
 
       if (isInteger(tupel[1])) {
         row = int.parse(tupel[1]);
+        if (row == 0) {
+          startWithZero = true;
+        }
       } else {
         String h = convertBase(tupel[1], 36, 10);
         if (int.tryParse(h) != null) {
@@ -110,41 +118,38 @@ String decodeBattleship(String text, bool numberMode) {
       }
 
       if (!absoluteError) {
-        if (column > maxColumn) {
-          maxColumn = column;
-        }
-
-        if (row > maxRow) {
-          maxRow = row;
-        }
-
+        if (column > maxColumn) maxColumn = column;
+        if (row > maxRow) maxRow = row;
         if (maxColumn > _BATTLESHIP_MAX_COLUMNS) {
           columnsError = true;
         }
-
         if (maxRow > _BATTLESHIP_MAX_ROWS) {
           rowsError = true;
         }
-
         world[column.toString() + '|' + row.toString()] = '#';
+        if (startWithZero) {
+          maxColumn = maxColumn + 1;
+          maxRow = maxRow + 1;
+        }
       }
-
       if (rowsError) {
         maxRow = _BATTLESHIP_MAX_ROWS;
       }
-
       if (columnsError) {
         maxColumn = _BATTLESHIP_MAX_COLUMNS;
       }
     }
   });
-
   List<List<String>> binaryWorld =
-      List.generate(maxColumn + 1, (y) => List.generate(maxRow + 1, (x) => ' ', growable: false), growable: false);
-
+      List.generate(maxColumn, (y) => List.generate(maxRow, (x) => ' ', growable: false), growable: false);
   world.forEach((key, value) {
-    column = int.parse(key.split('|')[0]);
-    row = int.parse(key.split('|')[1]);
+    if (startWithZero) {
+      column = int.parse(key.split('|')[0]);
+      row = int.parse(key.split('|')[1]);
+    } else {
+      column = int.parse(key.split('|')[0]) - 1;
+      row = int.parse(key.split('|')[1]) - 1;
+    }
     if (column < _BATTLESHIP_MAX_COLUMNS && row < _BATTLESHIP_MAX_ROWS) {
       binaryWorld[column][row] = value;
     }
@@ -152,9 +157,9 @@ String decodeBattleship(String text, bool numberMode) {
 
   String outputLine = '';
   List<String> output = [];
-  for (int y = 0; y < maxRow + 1; y++) {
+  for (int y = 0; y < maxRow; y++) {
     outputLine = '';
-    for (int x = 0; x < maxColumn + 1; x++) {
+    for (int x = 0; x < maxColumn; x++) {
       outputLine = outputLine + binaryWorld[x][y];
     }
     output.add(outputLine);

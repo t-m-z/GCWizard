@@ -117,6 +117,7 @@ class BattleshipState extends State<Battleship> {
             ])
           : GCWTextField(
               controller: _decodeController,
+              hintText: (_currentNumberExcelMode == GCWSwitchPosition.left) ? '12,45 36,12 3,6 ...' : 'B1 F1 J1 N1 T1 AA1 AB1 ...',
               onChanged: (text) {
                 setState(() {
                   _currentDecode = text;
