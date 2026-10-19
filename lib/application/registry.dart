@@ -714,7 +714,7 @@ void initializeRegistry(BuildContext context) {
           title:
               'Polygraphiae libri sex, Ioannis Trithemii abbatis Peapolitani, quondam Spanheimensis, ad Maximilianum Caesarem',
           sourceUrl:
-              'https://www.loc.gov/resource/rbc0001.2009fabyan12345/?r=-0.956,-0.016,2.912,1.143,0')
+              'https://web.archive.org/web/20261017122804/https://www.loc.gov/resource/rbc.2009fabyan12345/')
     ]),
     GCWTool(
         tool: const BabylonNumbersSelection(),
@@ -1117,9 +1117,9 @@ void initializeRegistry(BuildContext context) {
           title: 'Game of Life pattern generator and tools',
           licenseType: ToolLicenseType.MIT,
           licenseUrl:
-              'https://github.com/tlrobinson/life-gen/commit/005f5cca4a10ab5884983755ddafab2617a90188',
+              'https://web.archive.org/web/20261017123440/https://github.com/tlrobinson/life-gen/commit/005f5cca4a10ab5884983755ddafab2617a90188',
           sourceUrl:
-              'https://github.com/tlrobinson/life-gen/'),
+              'https://web.archive.org/web/20261017123201/https://github.com/tlrobinson/life-gen/'),
       ToolLicenseCodeLibrary(
           context: context,
           author: 'NovaCrypto',
@@ -1167,7 +1167,7 @@ void initializeRegistry(BuildContext context) {
         licenseType: ToolLicenseType.FREE_TO_USE,
         licenseUrl:
             'https://web.archive.org/web/20240725231749/https://geohashing.site/index.php?title=Dow_Jones_Industrial_Average&type=revision&diff=21062&oldid=21061',
-        sourceUrl: 'http://geo.crox.net/djia',
+        sourceUrl: 'https://web.archive.org/web/20261017123616/http://geo.crox.net/djia',
       ),
     ]),
     GCWTool(tool: const Gray(), id: 'gray', categories: const [
@@ -2133,10 +2133,10 @@ void initializeRegistry(BuildContext context) {
               author: 'Jens Guballa (guballa.de)',
               title: 'SubstitutionBreaker',
               sourceUrl:
-                  'https://gitlab.com/guballa/SubstitutionBreaker/-/tree/93dcc269efbfe6c62c3a93a6ce66077d6ff335fb',
+                  'https://web.archive.org/web/20261017124009/https://gitlab.com/guballa/SubstitutionBreaker/-/tree/93dcc269efbfe6c62c3a93a6ce66077d6ff335fb',
               licenseType: ToolLicenseType.MIT,
               licenseUrl:
-                  'https://gitlab.com/guballa/SubstitutionBreaker/-/blob/93dcc269efbfe6c62c3a93a6ce66077d6ff335fb/LICENSE'),
+                  'https://web.archive.org/web/20261017124257/https://gitlab.com/guballa/SubstitutionBreaker/-/blob/93dcc269efbfe6c62c3a93a6ce66077d6ff335fb/LICENSE'),
         ]),
     GCWTool(tool: const SudokuSolver(), id: 'sudokusolver', categories: const [
       ToolCategory.GAMES
@@ -3145,7 +3145,7 @@ void initializeRegistry(BuildContext context) {
             author: 'https://opengtindb.org/',
             title: 'Open EAN/GTIN Database API',
             licenseType: ToolLicenseType.GFDL,
-            sourceUrl: 'https://opengtindb.org/api.php',
+            sourceUrl: 'https://web.archive.org/web/20261017124552/https://opengtindb.org/api.php',
           )
         ]),
     GCWTool(
@@ -3479,7 +3479,6 @@ void initializeRegistry(BuildContext context) {
                 'https://web.archive.org/web/20121102023141/http://www.moenk.de/index.php?serendipity[subpage]=downloadmanager&level=1&thiscat=4',
             licenseType: ToolLicenseType.PRIVATE_PERMISSION),
         ToolLicensePortedCode(
-            //TODO: When webarchive save working again: Store links in WebArchive
             context: context,
             author: 'Patrick \'PattuX\' Wienhöft (GitHub)',
             title: 'Auto Reverse Wherigo Solver',
@@ -4313,7 +4312,6 @@ void initializeRegistry(BuildContext context) {
           sourceUrl:
               'https://web.archive.org/web/20240722070830/https://github.com/Atomk/C-COW-Interpreter/blob/master/cow-interpreter.c',
           licenseType: ToolLicenseType.MIT),
-      // TODO: @Thomas: PortedCode richtig oder OnlineArticle?
       ToolLicensePortedCode(
           context: context,
           author: 'Frank Buß',
@@ -4362,7 +4360,7 @@ void initializeRegistry(BuildContext context) {
           author: 'Esolang, the esoteric programming languages wiki',
           title: 'Deadfish',
           sourceUrl:
-              'https://esolangs.org/w/index.php?title=Deadfish&oldid=133382'),
+              'https://web.archive.org/web/20261017124946/https://esolangs.org/w/index.php?title=Deadfish&oldid=133382'),
       ToolLicensePortedCode(
           context: context,
           author: 'Jonathan Todd Skinner',
@@ -4463,7 +4461,7 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'David Morgan-Mar',
           title: 'Ook!',
-          sourceUrl: 'https://www.dangermouse.net/esoteric/ook.html',
+          sourceUrl: 'https://web.archive.org/web/20261017125148/https://www.dangermouse.net/esoteric/ook.html',
           licenseType: ToolLicenseType.FREE_TO_USE),
     ]),
     GCWTool(tool: const Piet(), id: 'piet', isBeta: true, searchKeys: const [
@@ -7690,7 +7688,7 @@ void initializeRegistry(BuildContext context) {
           title: "Essai sur divers procédés d'expéditive française",
           year: 1815,
           sourceUrl:
-              "https://books.google.de/books?id=lkVzrUr1RvEC&q=essai+sur+divers+proc%C3%A9d%C3%A9s+d%27exp%C3%A9ditive+fran%C3%A7aise&pg=PA1&redir_esc=y#v=snippet&q=essai%20sur%20divers%20proc%C3%A9d%C3%A9s%20d'exp%C3%A9ditive%20fran%C3%A7aise&f=false")
+              "https://web.archive.org/web/20261017125437/https://books.google.de/books?id=lkVzrUr1RvEC&q=essai+sur+divers+proc%C3%A9d%C3%A9s+d%27exp%C3%A9ditive+fran%C3%A7aise&pg=PA1&redir_esc=y#v=snippet&q=essai%20sur%20divers%20proc%C3%A9d%C3%A9s%20d'exp%C3%A9ditive%20fran%C3%A7aise&f=false")
     ]),
     GCWSymbolTableTool(symbolKey: 'barcode39', symbolSearchStrings: const [
       'barcodes',
@@ -7798,7 +7796,7 @@ void initializeRegistry(BuildContext context) {
           author: 'New Order (https://www.youtube.com/watch?v=c1GxjzHm5us)',
           title: 'Song Blue Monday',
           sourceUrl:
-              'https://geocachen.be/geocaching/geocache-puzzels-oplossen/blue-monday-kleurencode/',
+              'https://web.archive.org/web/20261017130047/https://geocachen.be/geocaching/geocache-puzzels-oplossen/blue-monday-kleurencode/',
           licenseType: ToolLicenseType.FREE_TO_USE)
     ]),
     GCWSymbolTableTool(
@@ -7938,7 +7936,7 @@ void initializeRegistry(BuildContext context) {
           author: 'Museum für Post und Telekommunikation',
           title:
               'Kupferstich: Optischer Telegraf auf dem Louvre in Paris mit Zeichenalphabet',
-          sourceUrl: '',
+          sourceUrl: 'https://web.archive.org/web/20261017130424/https://onlinesammlung.museumsstiftung.de/detail/collection/f7655ae6-a0a2-47ba-8f6b-7f9fa0022e88',
           customComment: 'Inventarnummer 4.2012.446')
     ]),
     GCWSymbolTableTool(
@@ -8998,8 +8996,7 @@ void initializeRegistry(BuildContext context) {
               author: 'Memory Alpha Fandom TV Community.',
               title: 'Gorn',
               sourceUrl:
-              //TODO Webarchive
-              'https://memory-alpha.fandom.com/wiki/Gorn#Technology',
+              'https://web.archive.org/web/20261017122144/https://memory-alpha.fandom.com/wiki/Gorn',
               licenseType: ToolLicenseType.CCBYNC40)
         ]),
     GCWSymbolTableTool(symbolKey: 'greek_numerals', symbolSearchStrings: const [
@@ -9265,7 +9262,7 @@ void initializeRegistry(BuildContext context) {
           author: 'Berlin Version Font',
           title: 'Illuminati Dirigens Cipher',
           sourceUrl:
-              'https://fontmeme.com/fonts/illuminati-dirigens-cipher-berlin-version-font/',
+              'https://web.archive.org/web/20261017130711/https://fontmeme.com/fonts/illuminati-dirigens-cipher-berlin-version-font/',
           licenseType: ToolLicenseType.FREE_TO_USE)
     ]),
     GCWSymbolTableTool(symbolKey: 'interlac', symbolSearchStrings: const [
@@ -9538,7 +9535,7 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'Jérémie Dupuis',
           title: 'Pigpen Cipher Font',
-          sourceUrl: 'https://fontmeme.com/fonts/pigpen-cipher-font/',
+          sourceUrl: 'https://web.archive.org/web/20261017131110/https://fontmeme.com/fonts/pigpen-cipher-font/',
           licenseType: ToolLicenseType.FREE_TO_USE),
     ]),
     GCWSymbolTableTool(
@@ -9552,14 +9549,14 @@ void initializeRegistry(BuildContext context) {
               context: context,
               author: 'Leitz',
               title: 'Buchstabensignale',
-              sourceUrl: 'https://www.bueromarkt-ag.de/buchstabensignale.html',
+              sourceUrl: 'https://web.archive.org/web/20261017131320/https://www.bueromarkt-ag.de/buchstabensignale.html',
               licenseType: ToolLicenseType.FREE_TO_USE),
           ToolLicenseOnlineArticle(
               context: context,
               author: 'Leitz',
               title: 'Ziffernsignale',
               sourceUrl:
-                  'https://www.bueromarkt-ag.de/buchstabensignale,b-ziffernsignale.html',
+                  'https://web.archive.org/web/20261017131526/https://www.bueromarkt-ag.de/buchstabensignale,b-ziffernsignale.html',
               licenseType: ToolLicenseType.FREE_TO_USE),
         ]),
     GCWSymbolTableTool(symbolKey: 'linear_b', symbolSearchStrings: const [
@@ -9760,7 +9757,7 @@ void initializeRegistry(BuildContext context) {
           author: 'Trackah',
           title: 'Medieval Runes',
           sourceUrl:
-              'https://fontstruct.com/fontstructions/show/491366/medieval_runes',
+              'https://web.archive.org/web/20261017131657/https://fontstruct.com/fontstructions/show/491366/medieval_runes',
           licenseType: ToolLicenseType.CCBYSA3)
     ]),
     GCWSymbolTableTool(symbolKey: 'minimoys', symbolSearchStrings: const [
@@ -9851,7 +9848,7 @@ void initializeRegistry(BuildContext context) {
               author: 'Taliaferro Preston Shaffner',
               title:
                   'The Telegraph Manual: A Complete History and Description of the Semaphoric, Electri and Magnetic Telegraphs of Europe, Asia, Africa, and America, Ancient and Modern',
-              sourceUrl: '',
+              sourceUrl: 'https://archive.org/details/telegraphmanualc00shafrich/page/n3/mode/2up',
               year: 1859,
               publisher: 'Pudney & Russell',
               customComment: 'Chapter XII, Page 178')
@@ -9954,7 +9951,7 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'WC Fonts',
           title: 'WC Musica Bta Font',
-          sourceUrl: 'https://fontmeme.com/fonts/wc-musica-bta-font/',
+          sourceUrl: 'https://web.archive.org/web/20261017132035/https://fontmeme.com/fonts/wc-musica-bta-font/',
           licenseType: ToolLicenseType.FREE_TO_USE)
     ]),
     GCWSymbolTableTool(symbolKey: 'nazcaan', symbolSearchStrings: const [
@@ -10723,7 +10720,7 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'Googe',
           title: 'Skullz',
-          sourceUrl: 'https://fontmeme.com/schriftarten/skullz-schriftart/',
+          sourceUrl: 'https://web.archive.org/web/20261017140102/https://fontmeme.com/fonts/skullz-font/',
           licenseType: ToolLicenseType.FREE_TO_USE)
     ]),
     GCWSymbolTableTool(symbolKey: 'slash_and_pipe', symbolSearchStrings: const [
@@ -10861,7 +10858,7 @@ void initializeRegistry(BuildContext context) {
           author: 'Taliaferro Preston Shaffner',
           title:
               'The Telegraph Manual: A Complete History and Description of the Semaphoric, Electri and Magnetic Telegraphs of Europe, Asia, Africa, and America, Ancient and Modern',
-          sourceUrl: '',
+          sourceUrl: 'https://archive.org/details/telegraphmanualc00shafrich/page/n3/mode/2up',
           year: 1859,
           publisher: 'Pudney & Russell',
           customComment: 'Chapter XII, Page 178')
@@ -10992,7 +10989,7 @@ void initializeRegistry(BuildContext context) {
               author: 'Museumsstiftung Post und Kommunikation',
               title:
                   'Lithografie: "Deutsche Volks-Telegraphie" mit der Darstellung des Zeichensystem des optischen Telegrafen von Schmidt',
-              sourceUrl: 'https://sammlungen.museumsstiftung.de/',
+              sourceUrl: 'https://web.archive.org/web/20261017140521/https://onlinesammlung.museumsstiftung.de/detail/collection/a4b88130-b7b2-4619-8a08-2ca2cb620743',
               licenseType: ToolLicenseType.CCBYSA4,
               customComment: 'Inventarnummer 4.2012.518')
         ]),
@@ -11599,7 +11596,7 @@ void initializeRegistry(BuildContext context) {
             author: 'Tommy of Escondido',
             title: "StarWars Yavin 4 temple font",
             sourceUrl:
-            'https://www.oocities.org/timessquare/4965/swyavin4.zip',
+            'https://web.archive.org/web/20261017140850/https://www.oocities.org/timessquare/4965/swyavin4.zip',
             licenseType: ToolLicenseType.CHARITYWARE,
           )
         ]),
@@ -11952,7 +11949,7 @@ void initializeRegistry(BuildContext context) {
               author: 'Taliaferro Preston Shaffner',
               title:
                   'The Telegraph Manual: A Complete History and Description of the Semaphoric, Electri and Magnetic Telegraphs of Europe, Asia, Africa, and America, Ancient and Modern',
-              sourceUrl: '',
+              sourceUrl: 'https://archive.org/details/telegraphmanualc00shafrich/page/n3/mode/2up',
               year: 1859,
               publisher: 'Pudney & Russell',
               customComment: 'Chapter XII, Page 178')
@@ -12263,10 +12260,9 @@ void initializeRegistry(BuildContext context) {
           context: context,
           author: 'Hans Wessels',
           title: 'unluac',
-          //TODO save to webarchive
           sourceUrl:
-          'https://github.com/HansWessels/unluac',
-          licenseUrl: 'https://github.com/HansWessels/unluac?tab=License-1-ov-file',
+          'https://web.archive.org/web/20261017122406/https://github.com/HansWessels/unluac',
+          licenseUrl: 'https://web.archive.org/web/20261017122525/https://github.com/HansWessels/unluac?tab=License-1-ov-file',
           licenseType: ToolLicenseType.FREE_TO_USE),
     ]),
     //UrwigoHashBreaker already inserted in section "Hashes"
