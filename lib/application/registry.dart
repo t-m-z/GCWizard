@@ -359,6 +359,7 @@ import 'package:gc_wizard/tools/images_and_files/hidden_data/widget/hidden_data.
 import 'package:gc_wizard/tools/images_and_files/image_colorcorrections/widget/image_colorcorrections.dart';
 import 'package:gc_wizard/tools/images_and_files/image_flip_rotate/widget/image_flip_rotate.dart';
 import 'package:gc_wizard/tools/images_and_files/image_stretch_shrink/widget/image_stretch_shrink.dart';
+import 'package:gc_wizard/tools/images_and_files/jabcode/widget/jab_code.dart';
 import 'package:gc_wizard/tools/images_and_files/magic_eye_solver/widget/magic_eye_solver.dart';
 import 'package:gc_wizard/tools/images_and_files/qr_code/widget/qr_code.dart';
 import 'package:gc_wizard/tools/images_and_files/stegano/widget/stegano.dart';
@@ -1361,6 +1362,18 @@ void initializeRegistry(BuildContext context) {
         id: 'ipcodes',
         categories: const [ToolCategory.SCIENCE_AND_TECHNOLOGY],
         searchKeys: const ['ipcodes']),
+    GCWTool(tool: const JabCode(), id: 'jab_code', isBeta: true,
+        categories: const [ToolCategory.IMAGES_AND_FILES],
+        searchKeys: const ['jabcode'],
+        licenses: [
+          ToolLicenseOnlineArticle(
+            context: context,
+            author: 'Fraunhofer SIT',
+            title: 'jabcode',
+            licenseType: ToolLicenseType.MIT,
+            licenseUrl: 'https://web.archive.org/web/20260916222148/https://github.com/jabcode/jabcode/blob/master/LICENSE',
+            sourceUrl: 'https://web.archive.org/web/20260916222137/https://github.com/jabcode/jabcode'),
+        ]),
     GCWTool(
         tool: Juno(),
         id: 'juno',

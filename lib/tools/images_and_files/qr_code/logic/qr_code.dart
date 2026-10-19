@@ -30,8 +30,8 @@ Map<qr.QrErrorCorrectLevel, String> errorCorrectLevel() {
 }
 
 /// Generating Bar Code
-DrawableImageData? generateBarCode(String code,
-    {int moduleSize = 5, int border = 10, qr.QrErrorCorrectLevel errorCorrectLevel = defaultErrorCorrectLevel, int typeNumber = 0}) {
+DrawableImageData? generateBarCode(String code, {int moduleSize = 5, int border = 10,
+  qr.QrErrorCorrectLevel errorCorrectLevel = defaultErrorCorrectLevel, int typeNumber = 0}) {
   if (code == '') return null;
 
   if (!qr.QrErrorCorrectLevel.values.contains(errorCorrectLevel)) {

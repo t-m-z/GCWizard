@@ -225,6 +225,7 @@ import 'package:gc_wizard/tools/images_and_files/hidden_data/widget/hidden_data.
 import 'package:gc_wizard/tools/images_and_files/image_colorcorrections/widget/image_colorcorrections.dart';
 import 'package:gc_wizard/tools/images_and_files/image_flip_rotate/widget/image_flip_rotate.dart';
 import 'package:gc_wizard/tools/images_and_files/image_stretch_shrink/widget/image_stretch_shrink.dart';
+import 'package:gc_wizard/tools/images_and_files/jabcode/widget/jab_code.dart';
 import 'package:gc_wizard/tools/images_and_files/magic_eye_solver/widget/magic_eye_solver.dart';
 import 'package:gc_wizard/tools/images_and_files/qr_code/widget/qr_code.dart';
 import 'package:gc_wizard/tools/images_and_files/stegano/widget/stegano.dart';
@@ -777,6 +778,7 @@ const Set<Type> _mainToolTypes = {
   IPCodes,
   IteratedCrossSumRange,
   IteratedCrossSumRangeFrequency,
+  JabCode,
   Judoon,
   Juno,
   Jupiter,

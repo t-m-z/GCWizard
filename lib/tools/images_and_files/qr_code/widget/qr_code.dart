@@ -9,7 +9,6 @@ import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/common_widgets/gcw_expandable.dart';
 import 'package:gc_wizard/common_widgets/gcw_openfile.dart';
 import 'package:gc_wizard/common_widgets/gcw_snackbar.dart';
-import 'package:gc_wizard/common_widgets/gcw_text.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
@@ -149,43 +148,37 @@ class _QrCodeState extends State<QrCode> {
               });
             },
             child: Column(children: [
-              Row(children: <Widget>[
-                Expanded(child: GCWText(text: i18n(context, 'qr_code_size_version'))),
-                Expanded(
-                  child: GCWDropDown<int>(
-                    value: _currentSize,
-                    onChanged: (int value) {
-                      setState(() {
-                        _currentSize = value;
-                        _updateOutput();
-                      });
-                    },
-                    items: buildSizeList(),
-                  ),
-                ),
-              ]),
-              Row(children: <Widget>[
-                Expanded(child: GCWText(text: i18n(context, 'qr_code_error_correct_level'))),
-                Expanded(
-                  child: GCWDropDown<qr.QrErrorCorrectLevel>(
-                    value: _currentErrorCorrectLevel,
-                    onChanged: (qr.QrErrorCorrectLevel value) {
-                      setState(() {
-                        _currentErrorCorrectLevel = value;
-                        _updateOutput();
-                      });
-                    },
-                    items: errorCorrectLevel().entries.map((set) {
-                      return GCWDropDownMenuItem(
-                        value: set.key,
-                        child: set.value,
-                      );
-                    }).toList(),
-                  ),
-                )
-              ])
-            ])),
-      ],
+              GCWDropDown<int>(
+                title: i18n(context, 'qr_code_size_version'),
+                flexValues: const [1, 1],
+                value: _currentSize,
+                onChanged: (int value) {
+                  setState(() {
+                    _currentSize = value;
+                    _updateOutput();
+                  });
+                },
+                items: buildSizeList(),
+              ),
+              GCWDropDown<qr.QrErrorCorrectLevel>(
+                title: i18n(context, 'qr_code_error_correct_level'),
+                flexValues: const [1, 1],
+                value: _currentErrorCorrectLevel,
+                onChanged: (qr.QrErrorCorrectLevel value) {
+                  setState(() {
+                    _currentErrorCorrectLevel = value;
+                    _updateOutput();
+                  });
+                },
+                items: errorCorrectLevel().entries.map((set) {
+                  return GCWDropDownMenuItem(
+                    value: set.key,
+                    child: set.value,
+                  );
+                }).toList(),
+              ),
+            ])
+        )],
     );
   }
 
