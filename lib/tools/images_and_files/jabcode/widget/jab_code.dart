@@ -206,6 +206,8 @@ class JabCodeState extends State<JabCode> {
             if (data?.Data == null || data!.Data!.isEmpty) {
               text = i18n(context, 'jab_code_nothingfound');
               if (data?.DecodeStatus != null) text +="\n" + data!.DecodeStatus!;
+            } else {
+              text = data.Data!;
             }
             _outDataDecrypt = text;
           });
