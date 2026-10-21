@@ -39,13 +39,13 @@ class GCWOpenFile extends StatefulWidget {
 
   const GCWOpenFile(
       {super.key,
-      required this.onLoaded,
-      this.supportedFileTypes,
-      this.title,
-      this.isDialog = false,
-      this.file,
-      this.suppressHeader = false,
-      this.suppressGallery = true}
+        required this.onLoaded,
+        this.supportedFileTypes,
+        this.title,
+        this.isDialog = false,
+        this.file,
+        this.suppressHeader = false,
+        this.suppressGallery = true}
       );
 
   @override
@@ -226,15 +226,15 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
         (widget.suppressGallery || kIsWeb)
             ? const SizedBox()
             : GCWIconButton(
-                icon: Icons.photo_library,
-                iconColor: widget.isDialog ? themeColors().dialogText() : themeColors().mainFont(),
-                size: IconButtonSize.LARGE,
-                onPressed: () {
-                  setState(() {
-                    _currentMode = OpenFileType.GALLERY;
-                  });
-                  _buildOpenFromGallery();
-                }),
+            icon: Icons.photo_library,
+            iconColor: widget.isDialog ? themeColors().dialogText() : themeColors().mainFont(),
+            size: IconButtonSize.LARGE,
+            onPressed: () {
+              setState(() {
+                _currentMode = OpenFileType.GALLERY;
+              });
+              _buildOpenFromGallery();
+            }),
         Container(width: widget.suppressGallery ? null : DOUBLE_DEFAULT_MARGIN),
         GCWIconButton(
             icon: Icons.folder,
@@ -266,15 +266,15 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
         widget.isDialog || widget.suppressHeader
             ? content
             : GCWExpandableTextDivider(
-                text: i18n(context, 'common_loadfile_showopen') +
-                    (widget.title != null ? ' (' + widget.title! + ')' : ''),
-                expanded: _currentExpanded,
-                onChanged: (value) {
-                  setState(() {
-                    _currentExpanded = value;
-                  });
-                },
-                child: content),
+            text: i18n(context, 'common_loadfile_showopen') +
+                (widget.title != null ? ' (' + widget.title! + ')' : ''),
+            expanded: _currentExpanded,
+            onChanged: (value) {
+              setState(() {
+                _currentExpanded = value;
+              });
+            },
+            child: content),
         if (_currentExpanded && _loadedFile != null)
           GCWText(
             text: i18n(context, 'common_loadfile_currentlyloaded') +
@@ -311,11 +311,11 @@ void showOpenFileDialog(BuildContext context, List<FileType> supportedFileTypes,
             },
           ),
           GCWText(
-            text: i18n(context, 'common_exportfile_supported_formats') +':',
-            style: text_style),
+              text: i18n(context, 'common_exportfile_supported_formats') +':',
+              style: text_style),
           GCWText(
-            text: supportedFileTypes.map((element) => element.name).toList().join(', '),
-            style: text_style),
+              text: supportedFileTypes.map((element) => element.name).toList().join(', '),
+              style: text_style),
         ],
       ),
       []);
@@ -338,7 +338,7 @@ Future<Uint8ListText?> downloadFileAsync(GCWAsyncExecuterParameters? jobData) as
 
   SendPort? sendAsyncPort = jobData?.sendAsyncPort;
   Uri? uri = jobData!.parameters as Uri;
-  
+
   var result = await _downloadWithStream(uri, sendAsyncPort);
   if (result.text.isNotEmpty) result = await _downloadWithProxyStream(uri, sendAsyncPort);
   if (result.text.isNotEmpty) result = await _downloadWithGet(uri, sendAsyncPort);
@@ -428,27 +428,69 @@ Future<Uint8ListText> _downloadWithProxyStream(Uri uri, SendPort? sendAsyncPort)
 /// Returns null if nothing was selected.
 Future<GCWFile?> openFileExplorer({List<FileType>? allowedFileTypes}) async {
   try {
-    var files = await filePicker.FilePicker.pickFiles(type: filePicker.FileType.any);
+    var fileType = filePicker.FileType.any;
+    List<String>? allowedExtensions;
+
+    if (allowedFileTypes != null && allowedFileTypes.isNotEmpty) {
+      allowedExtensions = fileExtensions(allowedFileTypes).toList();
+      fileType = filePicker.FileType.custom;
+    }
+
+    var file = await filePicker.FilePicker.pickFile(type: fileType, allowedExtensions: allowedExtensions);
+
+    if (file == null) return null;
+    if (allowedFileTypes != null && allowedFileTypes.isNotEmpty) file = _filterFile(file, allowedFileTypes);
+
+    if (file == null) return null;
+
+    return await _getGCWFile(file);
+  } catch (e) {}
+  return null;
+}
+
+/// Open File Picker dialog
+/// Returns null if nothing was selected.
+Future<Iterable<Future<GCWFile?>>?> openFilesExplorer({List<FileType>? allowedFileTypes}) async {
+  try {
+    var fileType = filePicker.FileType.any;
+    List<String>? allowedExtensions;
+
+    if (allowedFileTypes != null && allowedFileTypes.isNotEmpty) {
+      allowedExtensions = fileExtensions(allowedFileTypes).toList();
+      fileType = filePicker.FileType.custom;
+    }
+
+    var files = await filePicker.FilePicker.pickFiles(type: fileType, allowedExtensions: allowedExtensions);
 
     if (allowedFileTypes != null && allowedFileTypes.isNotEmpty) files = _filterFiles(files, allowedFileTypes);
 
     if (files.isEmpty) return null;
 
-    var bytes = await _getFileData(files.first);
-    var path = kIsWeb ? null : files.first.path;
-    if (bytes == null) return null;
-
-    return GCWFile(path: path, name: files.first.name, bytes: bytes);
+    return files.map((file) => _getGCWFile(file));
   } catch (e) {}
   return null;
+}
+
+Future<GCWFile?> _getGCWFile(filePicker.PlatformFile file) async {
+  var bytes = await _getFileData(file);
+  var path = kIsWeb ? null : file.path;
+  if (bytes == null) return null;
+
+  return GCWFile(path: path, name: file.name, bytes: bytes);
 }
 
 Future<Uint8List?> _getFileData(filePicker.PlatformFile file) async {
   return kIsWeb
       ? file.readAsBytes()
       : (file.path == null)
-          ? null
-          : readByteDataFromFile(file.path!);
+      ? null
+      : readByteDataFromFile(file.path!);
+}
+
+filePicker.PlatformFile? _filterFile(filePicker.PlatformFile file, List<FileType> allowedFileTypes) {
+  var allowedExtensions = fileExtensions(allowedFileTypes);
+
+  return allowedExtensions.contains(file.extension.toString().toLowerCase()) ? file : null;
 }
 
 List<filePicker.PlatformFile> _filterFiles(List<filePicker.PlatformFile> files, List<FileType> allowedFileTypes) {
