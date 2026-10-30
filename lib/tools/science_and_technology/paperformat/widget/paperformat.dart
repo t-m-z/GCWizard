@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
-import 'package:gc_wizard/common_widgets/gcw_text.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_columned_multiline_output.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/tools/science_and_technology/paperformat/logic/paperformat.dart';
@@ -41,22 +40,16 @@ class _PaperFormatState extends State<PaperFormats> {
             });
           },
         ),
-        Row(
-          children: [
-            Expanded(flex: 3, child: GCWText(text: i18n(context, 'unitconverter_unit') + ':')),
-            Expanded(
-                flex: 4,
-                child: GCWDropDown<(UnitPrefix, Length, Area)>(
-                  value: _currentTargetUnit,
-                  items: getDropDownItems(context),
-                  onChanged: ((UnitPrefix, Length, Area)  value) {
-                    setState(() {
-                      _currentTargetUnit =  value;
-                    });
-                  })
-            )
-          ],
-        ),
+        GCWDropDown<(UnitPrefix, Length, Area)>(
+          flexValues: [3, 4],
+          title: i18n(context, 'unitconverter_unit'),
+          value: _currentTargetUnit,
+          items: getDropDownItems(context),
+          onChanged: ((UnitPrefix, Length, Area)  value) {
+            setState(() {
+              _currentTargetUnit =  value;
+            });
+          }),
         GCWDefaultOutput(child: _buildOutput()),
       ],
     );

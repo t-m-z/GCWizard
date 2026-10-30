@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
-import 'package:gc_wizard/common_widgets/gcw_text.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
 import 'package:gc_wizard/common_widgets/switches/gcw_twooptions_switch.dart';
@@ -47,21 +46,16 @@ class _RailFenceState extends State<RailFence> {
             });
           },
         ),
-        Row(
-          children: [
-            Expanded(flex: 1, child: GCWText(text: i18n(context, 'railfence_optionalpassword'))),
-            Expanded(
-                flex: 3,
-                child: GCWTextField(
-                  maxLength: _currentKey,
-                  inputFormatters: [_maskInputFormatter],
-                  onChanged: (text) {
-                    setState(() {
-                      _currentPassword = text;
-                    });
-                  },
-                ))
-          ],
+        GCWTextField(
+          flexValues: [1, 3],
+          title: i18n(context, 'railfence_optionalpassword'),
+          maxLength: _currentKey,
+          inputFormatters: [_maskInputFormatter],
+          onChanged: (text) {
+            setState(() {
+              _currentPassword = text;
+            });
+          },
         ),
         GCWIntegerSpinner(
           title: i18n(context, 'railfence_offset'),

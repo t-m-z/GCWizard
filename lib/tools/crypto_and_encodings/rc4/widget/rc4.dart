@@ -3,7 +3,6 @@ import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/dividers/gcw_text_divider.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
 import 'package:gc_wizard/common_widgets/gcw_snackbar.dart';
-import 'package:gc_wizard/common_widgets/gcw_text.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
 import 'package:gc_wizard/common_widgets/textfields/gcw_textfield.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/rc4/logic/rc4.dart';
@@ -49,25 +48,22 @@ class _RC4State extends State<RC4> {
             });
           },
         ),
-        Row(children: <Widget>[
-          Expanded(flex: 1, child: GCWText(text: i18n(context, 'rc4_format') + ':')),
-          Expanded(
-              flex: 2,
-              child: GCWDropDown<InputFormat>(
-                value: _currentInputFormat,
-                onChanged: (value) {
-                  setState(() {
-                    _currentInputFormat = value;
-                  });
-                },
-                items: rc4InputFormatItems.entries.map((mode) {
-                  return GCWDropDownMenuItem(
-                    value: mode.key,
-                    child: mode.value,
-                  );
-                }).toList(),
-              )),
-        ]),
+        GCWDropDown<InputFormat>(
+          flexValues: [1, 2],
+          title: i18n(context, 'rc4_format'),
+          value: _currentInputFormat,
+          onChanged: (value) {
+            setState(() {
+              _currentInputFormat = value;
+            });
+          },
+          items: rc4InputFormatItems.entries.map((mode) {
+            return GCWDropDownMenuItem(
+              value: mode.key,
+              child: mode.value,
+            );
+          }).toList(),
+        ),
         GCWTextDivider(text: i18n(context, 'common_key')),
         GCWTextField(
           hintText: i18n(context, 'common_key'),
@@ -77,45 +73,39 @@ class _RC4State extends State<RC4> {
             });
           },
         ),
-        Row(children: <Widget>[
-          Expanded(flex: 1, child: GCWText(text: i18n(context, 'rc4_format') + ':')),
-          Expanded(
-              flex: 2,
-              child: GCWDropDown<InputFormat>(
-                value: _currentKeyFormat,
-                onChanged: (value) {
-                  setState(() {
-                    _currentKeyFormat = value;
-                  });
-                },
-                items: rc4InputFormatItems.entries.map((mode) {
-                  return GCWDropDownMenuItem(
-                    value: mode.key,
-                    child: mode.value,
-                  );
-                }).toList(),
-              )),
-        ]),
+        GCWDropDown<InputFormat>(
+          flexValues: [1, 2],
+          title: i18n(context, 'rc4_format'),
+          value: _currentKeyFormat,
+          onChanged: (value) {
+            setState(() {
+              _currentKeyFormat = value;
+            });
+          },
+          items: rc4InputFormatItems.entries.map((mode) {
+            return GCWDropDownMenuItem(
+              value: mode.key,
+              child: mode.value,
+            );
+          }).toList(),
+        ),
         GCWTextDivider(text: i18n(context, 'common_output') + ' ' + i18n(context, 'rc4_format')),
-        Row(children: <Widget>[
-          Expanded(flex: 1, child: GCWText(text: i18n(context, 'rc4_format') + ':')),
-          Expanded(
-              flex: 2,
-              child: GCWDropDown<OutputFormat>(
-                value: _currentOutputFormat,
-                onChanged: (value) {
-                  setState(() {
-                    _currentOutputFormat = value;
-                  });
-                },
-                items: rc4OutputFormatItems.entries.map((mode) {
-                  return GCWDropDownMenuItem(
-                    value: mode.key,
-                    child: mode.value,
-                  );
-                }).toList(),
-              )),
-        ]),
+        GCWDropDown<OutputFormat>(
+          flexValues: [1, 2],
+          title: i18n(context, 'rc4_format'),
+          value: _currentOutputFormat,
+          onChanged: (value) {
+            setState(() {
+              _currentOutputFormat = value;
+            });
+          },
+          items: rc4OutputFormatItems.entries.map((mode) {
+            return GCWDropDownMenuItem(
+              value: mode.key,
+              child: mode.value,
+            );
+          }).toList(),
+        ),
         _buildOutput(context)
       ],
     );

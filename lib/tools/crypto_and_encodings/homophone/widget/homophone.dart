@@ -119,58 +119,49 @@ class _HomophoneState extends State<Homophone> {
             });
           },
         ),
-        Row(children: <Widget>[
-          Expanded(flex: 1, child: GCWText(text: i18n(context, 'homophone_keytype') + ':')),
-          Expanded(
-              flex: 2,
-              child: GCWDropDown<_KeyType>(
-                value: _currentKeyType,
+        GCWDropDown<_KeyType>(
+          flexValues: [1, 2],
+          title: i18n(context, 'homophone_keytype'),
+          value: _currentKeyType,
+          onChanged: (value) {
+            setState(() {
+              _currentKeyType = value;
+            });
+          },
+          items: Homophone_KeyTypeItems.entries.map((mode) {
+            return GCWDropDownMenuItem(
+              value: mode.key,
+              child: Text(mode.value),
+            );
+          }).toList(),
+        ),
+        _currentKeyType == _KeyType.GENERATED
+            ? GCWIntegerSpinner(
+                flexValues: [1, 2],
+                title: i18n(context, 'homophone_rotation'),
+                controller: _currentRotationController,
+                value: _currentRotation,
+                min: 0,
+                max: 999999,
                 onChanged: (value) {
                   setState(() {
-                    _currentKeyType = value;
+                    _currentRotation = value;
                   });
                 },
-                items: Homophone_KeyTypeItems.entries.map((mode) {
-                  return GCWDropDownMenuItem(
-                    value: mode.key,
-                    child: Text(mode.value),
-                  );
-                }).toList(),
-              )),
-        ]),
-        _currentKeyType == _KeyType.GENERATED
-            ? Row(children: <Widget>[
-                Expanded(flex: 1, child: GCWText(text: i18n(context, 'homophone_rotation') + ':')),
-                Expanded(
-                    flex: 2,
-                    child: GCWIntegerSpinner(
-                      controller: _currentRotationController,
-                      value: _currentRotation,
-                      min: 0,
-                      max: 999999,
-                      onChanged: (value) {
-                        setState(() {
-                          _currentRotation = value;
-                        });
-                      },
-                    )),
-              ])
+              )
             : Container(),
         _currentKeyType == _KeyType.GENERATED
-            ? Row(children: <Widget>[
-                Expanded(flex: 1, child: GCWText(text: i18n(context, 'homophone_multiplier') + ':')),
-                Expanded(
-                    flex: 2,
-                    child: GCWDropDownSpinner(
-                      index: _currentMultiplierIndex,
-                      items: getMultipliers().map((item) => GCWText(text: item.toString())).toList(),
-                      onChanged: (value) {
-                        setState(() {
-                          _currentMultiplierIndex = value;
-                        });
-                      },
-                    )),
-              ])
+            ? GCWDropDownSpinner(
+                flexValues: [1, 2],
+                title: i18n(context, 'homophone_multiplier'),
+                index: _currentMultiplierIndex,
+                items: getMultipliers().map((item) => GCWText(text: item.toString())).toList(),
+                onChanged: (value) {
+                  setState(() {
+                    _currentMultiplierIndex = value;
+                  });
+                },
+              )
             : Container(),
         _currentKeyType == _KeyType.CUSTOM_KEY_LIST
             ? GCWTextField(
@@ -183,27 +174,24 @@ class _HomophoneState extends State<Homophone> {
               )
             : Container(),
         _currentKeyType == _KeyType.CUSTOM_KEY_MAP ? _buildVariablesEditor() : Container(),
-        Row(children: <Widget>[
-          Expanded(flex: 1, child: GCWText(text: i18n(context, 'common_alphabet') + ':')),
-          Expanded(
-              flex: 2,
-              child: GCWDropDown<Alphabet>(
-                value: _currentAlphabet,
-                onChanged: (value) {
-                  setState(() {
-                    _currentAlphabet = value;
-                    _newKeyController.text = _maxLetter();
-                  });
-                },
-                items: HomophoneAlphabetItems.entries.map((alphabet) {
-                  return GCWDropDownMenuItem(
-                    value: alphabet.key,
-                    child: alphabet.value,
-                    subtitle: _generateItemDescription(alphabet.key),
-                  );
-                }).toList(),
-              )),
-        ]),
+        GCWDropDown<Alphabet>(
+          flexValues: [1, 2],
+          title: i18n(context, 'common_alphabet'),
+          value: _currentAlphabet,
+          onChanged: (value) {
+            setState(() {
+              _currentAlphabet = value;
+              _newKeyController.text = _maxLetter();
+            });
+          },
+          items: HomophoneAlphabetItems.entries.map((alphabet) {
+            return GCWDropDownMenuItem(
+              value: alphabet.key,
+              child: alphabet.value,
+              subtitle: _generateItemDescription(alphabet.key),
+            );
+          }).toList(),
+        ),
         GCWTwoOptionsSwitch(
           value: _currentMode,
           onChanged: (value) {
