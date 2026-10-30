@@ -140,20 +140,15 @@ class _MultiDecoderState extends State<MultiDecoder> {
               _currentExpanded = value;
             });
           },
-          child: Row(
-            children: [
-              Expanded(flex: 1, child: GCWText(text: i18n(context, 'multidecoder_key'))),
-              Expanded(
-                  flex: 3,
-                  child: GCWTextField(
-                    onChanged: (text) {
-                      setState(() {
-                        _currentKey = text;
-                      });
-                    },
-                  ))
-            ],
-          ),
+          child: GCWTextField(
+                  flexValues: [1, 3],
+                  title: i18n(context, 'multidecoder_key'),
+                  onChanged: (text) {
+                    setState(() {
+                      _currentKey = text;
+                    });
+                  },
+                )
         ),
       ],
     );

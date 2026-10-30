@@ -11,6 +11,7 @@ class GCWDropDownSpinner extends StatefulWidget {
   final List<Object> items;
   final SpinnerLayout layout;
   final String? title;
+  final List<int> flexValues;
 
   const GCWDropDownSpinner(
       {super.key,
@@ -18,7 +19,8 @@ class GCWDropDownSpinner extends StatefulWidget {
       this.title,
       required this.index,
       required this.items,
-      this.layout = SpinnerLayout.HORIZONTAL});
+      this.layout = SpinnerLayout.HORIZONTAL,
+      this.flexValues = const []});
 
   @override
   _GCWDropDownSpinnerState createState() => _GCWDropDownSpinnerState();
@@ -47,20 +49,20 @@ class _GCWDropDownSpinnerState extends State<GCWDropDownSpinner> {
         children: <Widget>[
           _buildTitle(),
           Expanded(
-              flex: 3,
-              child: Row(
-                children: <Widget>[
-                  Container(
-                    margin: const EdgeInsets.only(right: DEFAULT_MARGIN),
-                    child: GCWIconButton(icon: Icons.remove, onPressed: _decreaseValue),
-                  ),
-                  Expanded(child: _buildDropDown()),
-                  Container(
-                    margin: const EdgeInsets.only(left: DEFAULT_MARGIN),
-                    child: GCWIconButton(icon: Icons.add, onPressed: _increaseValue),
-                  )
-                ],
-              ))
+            flex: widget.flexValues.length > 1 ? widget.flexValues[1] : 3,
+            child: Row(
+              children: <Widget>[
+                Container(
+                  margin: const EdgeInsets.only(right: DEFAULT_MARGIN),
+                  child: GCWIconButton(icon: Icons.remove, onPressed: _decreaseValue),
+                ),
+                Expanded(child: _buildDropDown()),
+                Container(
+                  margin: const EdgeInsets.only(left: DEFAULT_MARGIN),
+                  child: GCWIconButton(icon: Icons.add, onPressed: _increaseValue),
+                )
+              ],
+            ))
         ],
       );
     } else {
@@ -68,6 +70,7 @@ class _GCWDropDownSpinnerState extends State<GCWDropDownSpinner> {
         children: <Widget>[
           _buildTitle(),
           Expanded(
+            flex: widget.flexValues.length > 1 ? widget.flexValues[1] : 1,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
@@ -83,7 +86,9 @@ class _GCWDropDownSpinnerState extends State<GCWDropDownSpinner> {
   }
 
   Widget _buildTitle() {
-    return widget.title == null ? Container() : Expanded(flex: 1, child: GCWText(text: widget.title! + ':'));
+    return widget.title == null
+        ? Container()
+        : Expanded(flex: widget.flexValues.isNotEmpty ? widget.flexValues[0] : 1, child: GCWText(text: widget.title! + ':'));
   }
 
   Container _buildDropDown() {

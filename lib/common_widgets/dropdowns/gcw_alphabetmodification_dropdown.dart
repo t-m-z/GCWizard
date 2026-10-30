@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/application/i18n/logic/app_localizations.dart';
 import 'package:gc_wizard/common_widgets/dropdowns/gcw_dropdown.dart';
-import 'package:gc_wizard/common_widgets/gcw_text.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/_common/logic/crypt_alphabet_modification.dart';
 
 class GCWAlphabetModificationDropDown extends StatefulWidget {
@@ -46,28 +45,22 @@ class _GCWAlphabetModificationDropDownState extends State<GCWAlphabetModificatio
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: <Widget>[
-        if (!widget.suppressTitle)
-          Expanded(flex: 1, child: GCWText(text: i18n(context, 'common_alphabetmodification_title') + ':')),
-        Expanded(
-            flex: 2,
-            child: GCWDropDown<AlphabetModificationMode>(
-              value: _currentValue ?? widget.value ?? AlphabetModificationMode.J_TO_I,
-              onChanged: (AlphabetModificationMode newValue) {
-                setState(() {
-                  _currentValue = newValue;
-                  widget.onChanged(_currentValue!);
-                });
-              },
-              items: modifications.entries.map((entry) {
-                return GCWDropDownMenuItem(
-                  value: entry.key,
-                  child: i18n(context, entry.value),
-                );
-              }).toList(),
-            ))
-      ],
-    );
+    return GCWDropDown<AlphabetModificationMode>(
+            flexValues: [1, 2],
+            title: widget.suppressTitle ? null : i18n(context, 'common_alphabetmodification_title'),
+            value: _currentValue ?? widget.value ?? AlphabetModificationMode.J_TO_I,
+            onChanged: (AlphabetModificationMode newValue) {
+              setState(() {
+                _currentValue = newValue;
+                widget.onChanged(_currentValue!);
+              });
+            },
+            items: modifications.entries.map((entry) {
+              return GCWDropDownMenuItem(
+                value: entry.key,
+                child: i18n(context, entry.value),
+              );
+            }).toList(),
+          );
   }
 }
