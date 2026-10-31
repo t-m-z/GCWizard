@@ -113,6 +113,7 @@ void _resetErrors() {
 }
 
 void _handleError(int error) {
+  _state.errorCount++;
   _state.halt = true;
   _state.errorMessage = _errorMessages[error] ?? '';
   _state.errorPosition = _state.scriptIndex;

@@ -105,6 +105,16 @@ class _GCWizardScriptClassLabelStack {
   }
 }
 
+class _GCWizardScriptToken {
+  final String token;
+  final int tokenType;
+  final int keywordToken;
+  final int nextIndex;
+  final Object? number;
+
+  const _GCWizardScriptToken(this.token, this.tokenType, this.keywordToken, this.nextIndex, this.number);
+}
+
 class _GCWizardScriptClassForLoopInfo {
   late String loopVariable; // counter variable
   late num targetValue; // target value
@@ -172,6 +182,7 @@ class ScriptState {
 
   //errors
   bool halt = false;
+  int errorCount = 0; // incremented by every _handleError call
   String errorMessage = '';
   int errorPosition = 0;
 

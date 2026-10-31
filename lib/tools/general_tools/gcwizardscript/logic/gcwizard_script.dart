@@ -2,6 +2,7 @@ import 'dart:core';
 import 'dart:io';
 import 'dart:isolate';
 import 'dart:math';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -449,7 +450,27 @@ class _GCWizardSCriptInterpreter {
     state.scriptIndex = 0;
   }
 
+  // Performance: position after the end of the line, precomputed for every
+  // position of the script.
+  late final Int32List _afterEOL = _computeAfterEOL();
+
+  Int32List _computeAfterEOL() {
+    final String script = state.script;
+    final Int32List result = Int32List(script.length + 1);
+    int next = script.length;
+    result[script.length] = script.length;
+    for (int i = script.length - 1; i >= 0; i--) {
+      if (script.codeUnitAt(i) == 0x0A) next = i + 1;
+      result[i] = next;
+    }
+    return result;
+  }
+
   void findEOL() {
+    if (state.scriptIndex >= 0 && state.scriptIndex <= state.script.length) {
+      state.scriptIndex = _afterEOL[state.scriptIndex];
+      return;
+    }
     while (state.scriptIndex < state.script.length &&
         state.script[state.scriptIndex] != LF) {
       ++state.scriptIndex;
@@ -907,11 +928,59 @@ class _GCWizardSCriptInterpreter {
     findEOL();
   }
 
-  void findCorrespondingELSE() {
+  // Performance: block searches (IF/ELSE/ENDIF, loops, SWITCH) only depend on
+  // the start position, so their results are cached per position.
+  final Map<int, int> _scanCache = {};
+
+  int _memoScan(int kind, int start) {
+    final int key = start * 16 + kind;
+    final int? cached = _scanCache[key];
+    if (cached != null) return cached;
+    final int result;
+    switch (kind) {
+      case 0:
+        result = _scan_findCorrespondingELSE(start);
+        break;
+      case 1:
+        result = _scan_findCorrespondingENDIF(start);
+        break;
+      case 2:
+        result = _scan_findNextCASE(start);
+        break;
+      case 3:
+        result = _scan_findCorrespondingENDSWITCH(start);
+        break;
+      case 4:
+        result = _scan_exitLoopNEXT(start);
+        break;
+      case 5:
+        result = _scan_findCorrespondingNEXT(start);
+        break;
+      case 6:
+        result = _scan_exitLoopUNTIL(start);
+        break;
+      case 7:
+        result = _scan_findCorrespondingUNTIL(start);
+        break;
+      case 8:
+        result = _scan_exitLoopWEND(start);
+        break;
+      case 9:
+        result = _scan_findCorrespondingWEND(start);
+        break;
+      default:
+        throw StateError('unknown scan kind');
+    }
+    _scanCache[key] = result;
+    return result;
+  }
+
+  // Pure scan for findCorrespondingELSE (depends only on the start position).
+  int _scan_findCorrespondingELSE(int start) {
     List<int> ifList = [];
     int result = 0;
     bool doElseIf = false;
-    for (int pc = state.scriptIndex; pc < state.script.length; pc++) {
+    for (int pc = start; pc < state.script.length; pc++) {
       if (_keywordAt('ENDIF', pc)) {
         if (ifList.isEmpty) {
           result = pc + 5;
@@ -940,21 +1009,14 @@ class _GCWizardSCriptInterpreter {
         }
       }
     }
-    if (result == 0) {
-      _handleError(_MISSINGENDIF);
-    } else {
-      state.scriptIndex = result;
-      if (doElseIf) {
-        getToken();
-        executeCommandELSEIF();
-      }
-    }
+    return doElseIf ? -result - 1 : result;
   }
 
-  void findCorrespondingENDIF() {
+  // Pure scan for findCorrespondingENDIF (depends only on the start position).
+  int _scan_findCorrespondingENDIF(int start) {
     List<int> ifList = [];
     int result = 0;
-    for (int pc = state.scriptIndex; pc < state.script.length; pc++) {
+    for (int pc = start; pc < state.script.length; pc++) {
       if (_keywordAt('ELSEIF', pc)) {
         pc += 6;
       }
@@ -972,6 +1034,182 @@ class _GCWizardSCriptInterpreter {
         }
       }
     }
+    return result;
+  }
+
+  // Pure scan for findNextCASE (depends only on the start position).
+  int _scan_findNextCASE(int start) {
+    int result = 0;
+    for (int pc = start; pc < state.script.length; pc++) {
+      if (_keywordAt('CASE', pc) ||
+          _keywordAt('DEFAULT', pc)) {
+        result = pc;
+        break;
+      }
+    }
+    return result;
+  }
+
+  // Pure scan for findCorrespondingENDSWITCH (depends only on the start position).
+  int _scan_findCorrespondingENDSWITCH(int start) {
+    List<int> switchList = [];
+    int result = 0;
+    for (int pc = start; pc < state.script.length; pc++) {
+      if (_keywordAt('SWITCH', pc)) {
+        switchList.add(pc);
+      }
+      if (_keywordAt('ENDSWITCH', pc)) {
+        if (switchList.isEmpty) {
+          {
+            result = pc + 9;
+          }
+        } else {
+          switchList.removeLast();
+        }
+      }
+    }
+    return result;
+  }
+
+  // Pure scan for exitLoopNEXT (depends only on the start position).
+  int _scan_exitLoopNEXT(int start) {
+    List<int> forList = [];
+    int result = 0;
+    for (int pc = start; pc < state.script.length; pc++) {
+      if (_keywordAt('FOR', pc)) {
+        forList.add(pc);
+      }
+      if (_keywordAt('NEXT', pc)) {
+        if (forList.isEmpty) {
+          result = pc + 4;
+        } else {
+          forList.removeLast();
+        }
+      }
+    }
+    return result;
+  }
+
+  // Pure scan for findCorrespondingNEXT (depends only on the start position).
+  int _scan_findCorrespondingNEXT(int start) {
+    List<int> forList = [];
+    int result = 0;
+    for (int pc = start; pc < state.script.length; pc++) {
+      if (_keywordAt('FOR', pc)) {
+        forList.add(pc);
+      }
+      if (_keywordAt('NEXT', pc)) {
+        if (forList.isEmpty) {
+          result = pc - 1;
+        } else {
+          forList.removeLast();
+        }
+      }
+    }
+    return result;
+  }
+
+  // Pure scan for exitLoopUNTIL (depends only on the start position).
+  int _scan_exitLoopUNTIL(int start) {
+    List<int> repeatList = [];
+    int result = 0;
+    for (int pc = start; pc < state.script.length; pc++) {
+      if (_keywordAt('REPEAT', pc)) {
+        repeatList.add(pc);
+      }
+      if (_keywordAt('UNTIL', pc)) {
+        if (repeatList.isEmpty) {
+          result = pc + 5;
+        } else {
+          repeatList.removeLast();
+        }
+      }
+    }
+    return result;
+  }
+
+  // Pure scan for findCorrespondingUNTIL (depends only on the start position).
+  int _scan_findCorrespondingUNTIL(int start) {
+    List<int> repeatList = [];
+    int result = 0;
+    for (int pc = start; pc < state.script.length; pc++) {
+      if (_keywordAt('REPEAT', pc)) {
+        repeatList.add(pc);
+      }
+      if (_keywordAt('UNTIL', pc)) {
+        if (repeatList.isEmpty) {
+          result = pc;
+        } else {
+          repeatList.removeLast();
+        }
+      }
+    }
+    return result;
+  }
+
+  // Pure scan for exitLoopWEND (depends only on the start position).
+  int _scan_exitLoopWEND(int start) {
+    List<int> whileList = [];
+    int result = 0;
+    bool foundWend = false;
+    for (int pc = start; pc < state.script.length; pc++) {
+      if (_keywordAt('WHILE', pc)) {
+        whileList.add(pc);
+      } else {
+        if (_keywordAt('WEND', pc)) {
+          if (whileList.isEmpty) {
+            result = pc + 4;
+            foundWend = true;
+          } else {
+            whileList.removeLast();
+          }
+        }
+      }
+      if (foundWend) break;
+    }
+    return result;
+  }
+
+  // Pure scan for findCorrespondingWEND (depends only on the start position).
+  int _scan_findCorrespondingWEND(int start) {
+    List<int> wendList = [];
+    int result = 0;
+    bool foundWend = false;
+    for (int pc = start; pc < state.script.length; pc++) {
+      if (_keywordAt('WHILE', pc)) {
+        wendList.add(pc);
+      } else {
+        if (_keywordAt('WEND', pc)) {
+          if (wendList.isEmpty) {
+            result = pc + 4;
+            foundWend = true;
+          } else {
+            wendList.removeLast();
+          }
+        }
+      }
+      if (foundWend) break;
+    }
+    return result;
+  }
+
+  void findCorrespondingELSE() {
+    int scanned = _memoScan(0, state.scriptIndex);
+    bool doElseIf = scanned < 0;
+    int result = doElseIf ? -scanned - 1 : scanned;
+    if (result == 0) {
+      _handleError(_MISSINGENDIF);
+    } else {
+      state.scriptIndex = result;
+      if (doElseIf) {
+        getToken();
+        executeCommandELSEIF();
+      }
+    }
+  }
+
+  void findCorrespondingENDIF() {
+    int result = _memoScan(1, state.scriptIndex);
     if (result == 0) {
       _handleError(_MISSINGENDIF);
     }
@@ -1027,14 +1265,7 @@ class _GCWizardSCriptInterpreter {
   }
 
   void findNextCASE() {
-    int result = 0;
-    for (int pc = state.scriptIndex; pc < state.script.length; pc++) {
-      if (_keywordAt('CASE', pc) ||
-          _keywordAt('DEFAULT', pc)) {
-        result = pc;
-        break;
-      }
-    }
+    int result = _memoScan(2, state.scriptIndex);
     if (result == 0) {
       _handleError(_SWITCHWITHOUTEND);
     }
@@ -1046,22 +1277,7 @@ class _GCWizardSCriptInterpreter {
   }
 
   void findCorrespondingENDSWITCH() {
-    List<int> switchList = [];
-    int result = 0;
-    for (int pc = state.scriptIndex; pc < state.script.length; pc++) {
-      if (_keywordAt('SWITCH', pc)) {
-        switchList.add(pc);
-      }
-      if (_keywordAt('ENDSWITCH', pc)) {
-        if (switchList.isEmpty) {
-          {
-            result = pc + 9;
-          }
-        } else {
-          switchList.removeLast();
-        }
-      }
-    }
+    int result = _memoScan(3, state.scriptIndex);
     if (result == 0) {
       _handleError(_SWITCHWITHOUTEND);
     }
@@ -1156,20 +1372,7 @@ class _GCWizardSCriptInterpreter {
   }
 
   void exitLoopNEXT() {
-    List<int> forList = [];
-    int result = 0;
-    for (int pc = state.scriptIndex; pc < state.script.length; pc++) {
-      if (_keywordAt('FOR', pc)) {
-        forList.add(pc);
-      }
-      if (_keywordAt('NEXT', pc)) {
-        if (forList.isEmpty) {
-          result = pc + 4;
-        } else {
-          forList.removeLast();
-        }
-      }
-    }
+    int result = _memoScan(4, state.scriptIndex);
     if (result == 0) {
       _handleError(_FORWITHOUTNEXT);
       return;
@@ -1178,20 +1381,7 @@ class _GCWizardSCriptInterpreter {
   }
 
   void findCorrespondingNEXT() {
-    List<int> forList = [];
-    int result = 0;
-    for (int pc = state.scriptIndex; pc < state.script.length; pc++) {
-      if (_keywordAt('FOR', pc)) {
-        forList.add(pc);
-      }
-      if (_keywordAt('NEXT', pc)) {
-        if (forList.isEmpty) {
-          result = pc - 1;
-        } else {
-          forList.removeLast();
-        }
-      }
-    }
+    int result = _memoScan(5, state.scriptIndex);
     if (result == 0) {
       _handleError(_FORWITHOUTNEXT);
       return;
@@ -1231,20 +1421,7 @@ class _GCWizardSCriptInterpreter {
   }
 
   void exitLoopUNTIL() {
-    List<int> repeatList = [];
-    int result = 0;
-    for (int pc = state.scriptIndex; pc < state.script.length; pc++) {
-      if (_keywordAt('REPEAT', pc)) {
-        repeatList.add(pc);
-      }
-      if (_keywordAt('UNTIL', pc)) {
-        if (repeatList.isEmpty) {
-          result = pc + 5;
-        } else {
-          repeatList.removeLast();
-        }
-      }
-    }
+    int result = _memoScan(6, state.scriptIndex);
     if (result == 0) {
       _handleError(_REPEATWITHOUTUNTIL);
       return;
@@ -1253,20 +1430,7 @@ class _GCWizardSCriptInterpreter {
   }
 
   void findCorrespondingUNTIL() {
-    List<int> repeatList = [];
-    int result = 0;
-    for (int pc = state.scriptIndex; pc < state.script.length; pc++) {
-      if (_keywordAt('REPEAT', pc)) {
-        repeatList.add(pc);
-      }
-      if (_keywordAt('UNTIL', pc)) {
-        if (repeatList.isEmpty) {
-          result = pc;
-        } else {
-          repeatList.removeLast();
-        }
-      }
-    }
+    int result = _memoScan(7, state.scriptIndex);
     if (result == 0) {
       _handleError(_REPEATWITHOUTUNTIL);
       return;
@@ -1305,24 +1469,7 @@ class _GCWizardSCriptInterpreter {
   }
 
   void exitLoopWEND() {
-    List<int> whileList = [];
-    int result = 0;
-    bool foundWend = false;
-    for (int pc = state.scriptIndex; pc < state.script.length; pc++) {
-      if (_keywordAt('WHILE', pc)) {
-        whileList.add(pc);
-      } else {
-        if (_keywordAt('WEND', pc)) {
-          if (whileList.isEmpty) {
-            result = pc + 4;
-            foundWend = true;
-          } else {
-            whileList.removeLast();
-          }
-        }
-      }
-      if (foundWend) break;
-    }
+    int result = _memoScan(8, state.scriptIndex);
     if (result == 0) {
       _handleError(_WHILEWITHOUTWEND);
       return;
@@ -1331,25 +1478,8 @@ class _GCWizardSCriptInterpreter {
   }
 
   void findCorrespondingWEND() {
-    List<int> wendList = [];
-    int result = 0;
-    bool foundWend = false;
-    for (int pc = state.scriptIndex; pc < state.script.length; pc++) {
-      if (_keywordAt('WHILE', pc)) {
-        wendList.add(pc);
-      } else {
-        if (_keywordAt('WEND', pc)) {
-          if (wendList.isEmpty) {
-            result = pc + 4;
-            foundWend = true;
-            state.whileStack.pop();
-          } else {
-            wendList.removeLast();
-          }
-        }
-      }
-      if (foundWend) break;
-    }
+    int result = _memoScan(9, state.scriptIndex);
+    if (result != 0) state.whileStack.pop();
     if (result == 0) {
       _handleError(_WHILEWITHOUTWEND);
       return;
@@ -2196,11 +2326,15 @@ class _GCWizardSCriptInterpreter {
         getToken();
         break;
       case NUMBER:
-        try {
-          result = int.tryParse(state.token);
-          result ??= double.parse(state.token);
-        } catch (NumberFormatException) {
-          _handleError(_SYNTAXERROR);
+        if (_tokenNumber != null && identical(_tokenNumberText, state.token)) {
+          result = _tokenNumber; // parsed once while tokenizing
+        } else {
+          try {
+            result = int.tryParse(state.token);
+            result ??= double.parse(state.token);
+          } catch (NumberFormatException) {
+            _handleError(_SYNTAXERROR);
+          }
         }
         getToken();
         break;
@@ -2287,7 +2421,56 @@ class _GCWizardSCriptInterpreter {
     return true;
   }
 
+  // ---------------------------------------------------------------------------
+  // Performance: pre-tokenizing.
+  //
+  // The script is tokenized only once: every token is scanned the first time
+  // the interpreter reaches its start position and stored under that position.
+  // Afterwards (loops, GOSUB, GOTO, ...) getToken() is a single array access.
+  // scriptIndex stays a character position, so error positions, labels,
+  // INPUT continuation and all index arithmetic keep working unchanged.
+  // Tokens whose scanning raised an error are not cached.
+  // ---------------------------------------------------------------------------
+  late final List<_GCWizardScriptToken?> _tokenCache =
+      List<_GCWizardScriptToken?>.filled(state.script.length + 1, null);
+
+  // numeric value of the current NUMBER token (parsed once while scanning)
+  Object? _tokenNumber;
+  String? _tokenNumberText;
+
   void getToken() {
+    final int start = state.scriptIndex;
+    final bool cacheable = start >= 0 && start < _tokenCache.length;
+    if (cacheable) {
+      final _GCWizardScriptToken? cached = _tokenCache[start];
+      if (cached != null) {
+        state.token = cached.token;
+        state.tokenType = cached.tokenType;
+        state.keywordToken = cached.keywordToken;
+        state.scriptIndex = cached.nextIndex;
+        _tokenNumber = cached.number;
+        _tokenNumberText = cached.token;
+        return;
+      }
+    }
+
+    final int errorsBefore = state.errorCount;
+    _scanToken();
+
+    Object? number;
+    if (state.tokenType == NUMBER) {
+      number = int.tryParse(state.token) ?? double.tryParse(state.token);
+    }
+    _tokenNumber = number;
+    _tokenNumberText = state.token;
+
+    if (cacheable && state.errorCount == errorsBefore) {
+      _tokenCache[start] = _GCWizardScriptToken(
+          state.token, state.tokenType, state.keywordToken, state.scriptIndex, number);
+    }
+  }
+
+  void _scanToken() {
     String character;
 
     state.tokenType = NONE;
