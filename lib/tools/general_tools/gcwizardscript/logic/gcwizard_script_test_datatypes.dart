@@ -1,87 +1,66 @@
 part of 'package:gc_wizard/tools/general_tools/gcwizardscript/logic/gcwizard_script.dart';
 
+// Performance: these helpers are called for nearly every token and every
+// arithmetic operation. They used to compare `value.toString()` with 'null',
+// which allocated a string per call and serialized whole lists. They now use
+// plain type tests.
+//
+// Semantics kept: every _isX(null) and every _isNotX(null) is false.
+
 bool _isALetter(String vname) {
-  return const [
-    'A',
-    'B',
-    'C',
-    'D',
-    'E',
-    'F',
-    'G',
-    'H',
-    'I',
-    'J',
-    'K',
-    'L',
-    'M',
-    'N',
-    'O',
-    'P',
-    'Q',
-    'R',
-    'S',
-    'T',
-    'U',
-    'V',
-    'W',
-    'X',
-    'Y',
-    'Z'
-  ].contains(vname.toUpperCase());
+  if (vname.length != 1) return false;
+  return _isALetterCode(vname.codeUnitAt(0));
+}
+
+bool _isALetterCode(int c) {
+  return (c >= 0x41 && c <= 0x5A) || (c >= 0x61 && c <= 0x7A); // A-Z, a-z
 }
 
 bool _isADigit(String vname) {
-  return const ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'].contains(vname);
+  if (vname.length != 1) return false;
+  return _isADigitCode(vname.codeUnitAt(0));
+}
+
+bool _isADigitCode(int c) {
+  return c >= 0x30 && c <= 0x39; // 0-9
 }
 
 bool _isNotADouble(Object? value) {
-  if (value.toString().toLowerCase() == 'null') return false;
-  return !_isADouble(value); //.runtimeType.toString() != 'double');
+  return value != null && value is! double;
 }
 
 bool _isADouble(Object? value) {
-  if (value.toString().toLowerCase() == 'null') return false;
-  return (value is double); //.runtimeType.toString() == 'double');
+  return value is double;
 }
 
 bool _isNotAInt(Object? value) {
-  if (value.toString().toLowerCase() == 'null') return false;
-  return !_isAInt(value); // .runtimeType.toString() != 'int');
+  return value != null && value is! int;
 }
 
 bool _isAInt(Object? value) {
-  if (value.toString().toLowerCase() == 'null') return false;
-  return (value is int); //.runtimeType.toString() == 'int');
+  return value is int;
 }
 
 bool _isNotAString(Object? value) {
-  if (value.toString().toLowerCase() == 'null') return false;
-  return !_isAString(value); //.runtimeType.toString() != 'String');
+  return value != null && value is! String;
 }
 
 bool _isAString(Object? value) {
-  if (value.toString().toLowerCase() == 'null') return false;
-  return (value is String); //.runtimeType.toString() == 'String');
+  return value is String;
 }
 
 bool _isANumber(Object? value) {
-  String result = value.toString().toLowerCase();
-  if (result == 'null') return false;
-  return _isAInt(value) || _isADouble(value); //.runtimeType.toString() == 'String');
+  return value is num;
 }
 
 bool _isNotANumber(Object? value) {
-  if (value.toString().toLowerCase() == 'null') return false;
-  return _isNotAInt(value) && _isNotADouble(value); //.runtimeType.toString() == 'String');
+  return value != null && value is! num;
 }
 
 bool _isAList(Object? value) {
-  if (value.toString().toLowerCase() == 'null') return false;
-  return (value.runtimeType.toString() == '_GCWList');
+  return value is _GCWList;
 }
 
 bool _isNotAList(Object? value) {
-  if (value.toString().toLowerCase() == 'null') return false;
-  return !_isAList(value);
+  return value != null && value is! _GCWList;
 }

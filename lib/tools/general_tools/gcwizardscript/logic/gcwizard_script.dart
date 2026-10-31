@@ -164,7 +164,7 @@ Future<GCWizardScriptOutput> GCWizardScriptInterpretScript(
 
 class _GCWizardSCriptInterpreter {
   static const MAXITERATIONS = 1000000000;
-  static const PROGRESS_STEP = 10000.0;
+  static const PROGRESS_STEP = 10000;
 
   // internal representation of loop types
   static const FORLOOP = 0;
@@ -617,7 +617,7 @@ class _GCWizardSCriptInterpreter {
   }
 
   void executeCommandVERSION() {
-    state.STDOUT = state.STDOUT +
+    state.writeSTDOUT(
         '********** GC Wizard  Skript **********\n' +
         '*      Version as of  2024.08.07      *\n' +
         '*  based on the work of Herb Schildt  *\n' +
@@ -625,7 +625,7 @@ class _GCWizardSCriptInterpreter {
         '* Enhancement for GC Wizard permitted *\n' +
         '*                                     *\n' +
         '*   Thanks linsty for heavy testing   *\n' +
-        '***************************************\n';
+        '***************************************\n');
   }
 
   void executeCommandNEWFILE() {
@@ -772,14 +772,14 @@ class _GCWizardSCriptInterpreter {
       if (state.keywordToken == EOL || state.token == EOP) break;
 
       if (state.tokenType == QUOTEDSTR) {
-        state.STDOUT += state.token;
+        state.writeSTDOUT(state.token);
         len += state.token.length;
         getToken();
       } else {
         putBack();
         result = evaluateExpression();
         getToken();
-        state.STDOUT += result.toString();
+        state.writeSTDOUT(result.toString());
 
         var t = result;
         len += t.toString().length; // save length
@@ -790,11 +790,11 @@ class _GCWizardSCriptInterpreter {
         spaces = 8 - (len % 8);
         len += spaces;
         while (spaces != 0) {
-          state.STDOUT += " ";
+          state.writeSTDOUT(" ");
           spaces--;
         }
       } else if (state.token == ";") {
-        state.STDOUT += " ";
+        state.writeSTDOUT(" ");
         len++;
       } else if (state.token == "+") {
         executeCommandPRINT();
@@ -810,7 +810,7 @@ class _GCWizardSCriptInterpreter {
       if (lastDelimiter != ";" &&
           lastDelimiter != "," &&
           lastDelimiter != "+") {
-        state.STDOUT += LF;
+        state.writeSTDOUT(LF);
       }
     } else {
       _handleError(_SYNTAXERROR);
@@ -912,19 +912,16 @@ class _GCWizardSCriptInterpreter {
     int result = 0;
     bool doElseIf = false;
     for (int pc = state.scriptIndex; pc < state.script.length; pc++) {
-      if (state.script.substring(pc).toUpperCase().startsWith('ENDIF')) {
+      if (_keywordAt('ENDIF', pc)) {
         if (ifList.isEmpty) {
           result = pc + 5;
           break;
         } else {
           ifList.removeLast();
         }
-      } else if (state.script.substring(pc).toUpperCase().startsWith('IF ')) {
+      } else if (_keywordAt('IF ', pc)) {
         ifList.add(pc);
-      } else if (state.script
-          .substring(pc)
-          .toUpperCase()
-          .startsWith('ELSEIF')) {
+      } else if (_keywordAt('ELSEIF', pc)) {
         if (ifList.isEmpty) {
           result = pc;
           doElseIf = true;
@@ -933,7 +930,7 @@ class _GCWizardSCriptInterpreter {
           //ifList.removeLast();
         }
       } else {
-        if (state.script.substring(pc).toUpperCase().startsWith('ELSE')) {
+        if (_keywordAt('ELSE', pc)) {
           if (ifList.isEmpty) {
             result = pc + 4;
             break;
@@ -958,14 +955,14 @@ class _GCWizardSCriptInterpreter {
     List<int> ifList = [];
     int result = 0;
     for (int pc = state.scriptIndex; pc < state.script.length; pc++) {
-      if (state.script.substring(pc).toUpperCase().startsWith('ELSEIF')) {
+      if (_keywordAt('ELSEIF', pc)) {
         pc += 6;
       }
-      if (state.script.substring(pc).toUpperCase().startsWith('IF')) {
+      if (_keywordAt('IF', pc)) {
         ifList.add(pc);
         pc += 2;
       }
-      if (state.script.substring(pc).toUpperCase().startsWith('ENDIF')) {
+      if (_keywordAt('ENDIF', pc)) {
         if (ifList.isEmpty) {
           result = pc;
           break;
@@ -1032,8 +1029,8 @@ class _GCWizardSCriptInterpreter {
   void findNextCASE() {
     int result = 0;
     for (int pc = state.scriptIndex; pc < state.script.length; pc++) {
-      if (state.script.substring(pc).toUpperCase().startsWith('CASE') ||
-          state.script.substring(pc).toUpperCase().startsWith('DEFAULT')) {
+      if (_keywordAt('CASE', pc) ||
+          _keywordAt('DEFAULT', pc)) {
         result = pc;
         break;
       }
@@ -1052,10 +1049,10 @@ class _GCWizardSCriptInterpreter {
     List<int> switchList = [];
     int result = 0;
     for (int pc = state.scriptIndex; pc < state.script.length; pc++) {
-      if (state.script.substring(pc).toUpperCase().startsWith('SWITCH')) {
+      if (_keywordAt('SWITCH', pc)) {
         switchList.add(pc);
       }
-      if (state.script.substring(pc).toUpperCase().startsWith('ENDSWITCH')) {
+      if (_keywordAt('ENDSWITCH', pc)) {
         if (switchList.isEmpty) {
           {
             result = pc + 9;
@@ -1162,10 +1159,10 @@ class _GCWizardSCriptInterpreter {
     List<int> forList = [];
     int result = 0;
     for (int pc = state.scriptIndex; pc < state.script.length; pc++) {
-      if (state.script.substring(pc).toUpperCase().startsWith('FOR')) {
+      if (_keywordAt('FOR', pc)) {
         forList.add(pc);
       }
-      if (state.script.substring(pc).toUpperCase().startsWith('NEXT')) {
+      if (_keywordAt('NEXT', pc)) {
         if (forList.isEmpty) {
           result = pc + 4;
         } else {
@@ -1184,10 +1181,10 @@ class _GCWizardSCriptInterpreter {
     List<int> forList = [];
     int result = 0;
     for (int pc = state.scriptIndex; pc < state.script.length; pc++) {
-      if (state.script.substring(pc).toUpperCase().startsWith('FOR')) {
+      if (_keywordAt('FOR', pc)) {
         forList.add(pc);
       }
-      if (state.script.substring(pc).toUpperCase().startsWith('NEXT')) {
+      if (_keywordAt('NEXT', pc)) {
         if (forList.isEmpty) {
           result = pc - 1;
         } else {
@@ -1237,10 +1234,10 @@ class _GCWizardSCriptInterpreter {
     List<int> repeatList = [];
     int result = 0;
     for (int pc = state.scriptIndex; pc < state.script.length; pc++) {
-      if (state.script.substring(pc).toUpperCase().startsWith('REPEAT')) {
+      if (_keywordAt('REPEAT', pc)) {
         repeatList.add(pc);
       }
-      if (state.script.substring(pc).toUpperCase().startsWith('UNTIL')) {
+      if (_keywordAt('UNTIL', pc)) {
         if (repeatList.isEmpty) {
           result = pc + 5;
         } else {
@@ -1259,10 +1256,10 @@ class _GCWizardSCriptInterpreter {
     List<int> repeatList = [];
     int result = 0;
     for (int pc = state.scriptIndex; pc < state.script.length; pc++) {
-      if (state.script.substring(pc).toUpperCase().startsWith('REPEAT')) {
+      if (_keywordAt('REPEAT', pc)) {
         repeatList.add(pc);
       }
-      if (state.script.substring(pc).toUpperCase().startsWith('UNTIL')) {
+      if (_keywordAt('UNTIL', pc)) {
         if (repeatList.isEmpty) {
           result = pc;
         } else {
@@ -1312,10 +1309,10 @@ class _GCWizardSCriptInterpreter {
     int result = 0;
     bool foundWend = false;
     for (int pc = state.scriptIndex; pc < state.script.length; pc++) {
-      if (state.script.substring(pc).toUpperCase().startsWith('WHILE')) {
+      if (_keywordAt('WHILE', pc)) {
         whileList.add(pc);
       } else {
-        if (state.script.substring(pc).toUpperCase().startsWith('WEND')) {
+        if (_keywordAt('WEND', pc)) {
           if (whileList.isEmpty) {
             result = pc + 4;
             foundWend = true;
@@ -1338,10 +1335,10 @@ class _GCWizardSCriptInterpreter {
     int result = 0;
     bool foundWend = false;
     for (int pc = state.scriptIndex; pc < state.script.length; pc++) {
-      if (state.script.substring(pc).toUpperCase().startsWith('WHILE')) {
+      if (_keywordAt('WHILE', pc)) {
         wendList.add(pc);
       } else {
-        if (state.script.substring(pc).toUpperCase().startsWith('WEND')) {
+        if (_keywordAt('WEND', pc)) {
           if (wendList.isEmpty) {
             result = pc + 4;
             foundWend = true;
@@ -1378,7 +1375,7 @@ class _GCWizardSCriptInterpreter {
     if (state.tokenType == QUOTEDSTR) {
       if (!state.continueLoop) {
         state.quotestr = state.token;
-        state.STDOUT += state.quotestr + LF;
+        state.writeSTDOUT(state.quotestr + LF);
       }
       getToken();
       if (state.token != ",") {
@@ -1388,7 +1385,7 @@ class _GCWizardSCriptInterpreter {
       getToken();
     } else if (!state.continueLoop) {
       state.quotestr = '? ';
-      state.STDOUT += state.quotestr + LF;
+      state.writeSTDOUT(state.quotestr + LF);
     }
     state.continueLoop = false;
 
@@ -2222,9 +2219,20 @@ class _GCWizardSCriptInterpreter {
     return result;
   }
 
+  // Performance: caches the constant lookup per variable name, so that
+  // toUpperCase() is not called on every variable access.
+  final Map<String, double?> _scienceConstCache = {};
+
   Object? getValueOfVariable(String variableName) {
-    if (_GCWIZARDSCRIPT_SCIENCE_CONST[variableName.toUpperCase()] != null) {
-      return _GCWIZARDSCRIPT_SCIENCE_CONST[variableName.toUpperCase()];
+    double? constValue;
+    if (_scienceConstCache.containsKey(variableName)) {
+      constValue = _scienceConstCache[variableName];
+    } else {
+      constValue = _GCWIZARDSCRIPT_SCIENCE_CONST[variableName.toUpperCase()];
+      _scienceConstCache[variableName] = constValue;
+    }
+    if (constValue != null) {
+      return constValue;
     } else {
       if (isNotAVariable(variableName)) {
         state.variables[variableName] = 0.0;
@@ -2235,28 +2243,48 @@ class _GCWizardSCriptInterpreter {
 
   void putBack() {
     if (state.token == EOP) return;
-    for (int i = 0; i < state.token.length; i++) {
-      state.scriptIndex--;
-    }
+    state.scriptIndex -= state.token.length;
   }
 
+  // All function names (without the trailing '(') of _IMPLEMENTED_FUNCTIONS.
+  static final Set<String> _functionNames = {
+    for (var names in _IMPLEMENTED_FUNCTIONS.values)
+      for (var name in names) name.substring(0, name.length - 1)
+  };
+
+  // Performance: a function token is a name of 2..17 characters directly
+  // followed by '('. Function names consist of letters and digits only, so the
+  // only candidate is the text up to the first '('. This replaces 16 substring
+  // + toUpperCase + List.contains calls per token by one Set lookup.
   bool isTokenAFunction() {
-    for (int i = 17; i > 1; i--) {
-      if (_IMPLEMENTED_FUNCTIONS[i]!.contains(state.script
-          .substring(
-              state.scriptIndex,
-              (state.scriptIndex + (i + 1) < state.script.length)
-                  ? state.scriptIndex + (i + 1)
-                  : state.scriptIndex)
-          .toUpperCase())) {
-        state.token = state.script
-            .substring(state.scriptIndex, state.scriptIndex + i)
-            .toUpperCase();
-        state.scriptIndex += i;
-        return true;
-      }
+    final String script = state.script;
+    final int start = state.scriptIndex;
+    final int length = script.length;
+    final int limit = start + 17;
+    int j = start;
+    while (j < length && j <= limit && script.codeUnitAt(j) != 0x28 /* ( */) {
+      j++;
     }
-    return false;
+    if (j >= length || script.codeUnitAt(j) != 0x28) return false;
+    if (j - start < 2 || j + 1 >= length) return false;
+    final String name = script.substring(start, j).toUpperCase();
+    if (!_functionNames.contains(name)) return false;
+    state.token = name;
+    state.scriptIndex = j;
+    return true;
+  }
+
+  // Performance: case-insensitive keyword comparison at a script position
+  // without copying the rest of the script (was: substring(pc).toUpperCase()).
+  bool _keywordAt(String keyword, int pc) {
+    final String script = state.script;
+    if (pc < 0 || pc + keyword.length > script.length) return false;
+    for (int k = 0; k < keyword.length; k++) {
+      int c = script.codeUnitAt(pc + k);
+      if (c >= 0x61 && c <= 0x7A) c -= 0x20;
+      if (c != keyword.codeUnitAt(k)) return false;
+    }
+    return true;
   }
 
   void getToken() {
@@ -2272,7 +2300,7 @@ class _GCWizardSCriptInterpreter {
     }
 
     while (state.scriptIndex < state.script.length &&
-        isSpaceOrTab(state.script[state.scriptIndex])) {
+        _isSpaceOrTabCode(state.script.codeUnitAt(state.scriptIndex))) {
       state.scriptIndex++;
     }
 
@@ -2362,37 +2390,40 @@ class _GCWizardSCriptInterpreter {
 
     if (isTokenAFunction()) {
       state.tokenType = FUNCTION;
-    } else if (isDelimiter(state.script[state.scriptIndex])) {
-      state.token += state.script[state.scriptIndex];
+    } else if (_isDelimiterCode(state.script.codeUnitAt(state.scriptIndex))) {
+      state.token = state.script[state.scriptIndex];
       state.scriptIndex++;
       state.tokenType = DELIMITER;
-    } else if (_isALetter(state.script[state.scriptIndex])) {
-      while (!isDelimiter(state.script[state.scriptIndex])) {
-        state.token += state.script[state.scriptIndex];
+    } else if (_isALetterCode(state.script.codeUnitAt(state.scriptIndex))) {
+      final int start = state.scriptIndex;
+      while (state.scriptIndex < state.script.length &&
+          !_isDelimiterCode(state.script.codeUnitAt(state.scriptIndex))) {
         state.scriptIndex++;
-        if (state.scriptIndex >= state.script.length) break;
       }
+      state.token = state.script.substring(start, state.scriptIndex);
       state.keywordToken = lookUpToken(state.token);
       if (state.keywordToken == UNKNOWNCOMMAND) {
         state.tokenType = VARIABLE;
       } else {
         state.tokenType = COMMAND;
       }
-    } else if (_isADigit(state.script[state.scriptIndex])) {
-      while (!isDelimiter(state.script[state.scriptIndex])) {
-        state.token += state.script[state.scriptIndex];
+    } else if (_isADigitCode(state.script.codeUnitAt(state.scriptIndex))) {
+      final int start = state.scriptIndex;
+      while (state.scriptIndex < state.script.length &&
+          !_isDelimiterCode(state.script.codeUnitAt(state.scriptIndex))) {
         state.scriptIndex++;
-        if (state.scriptIndex >= state.script.length) break;
       }
+      state.token = state.script.substring(start, state.scriptIndex);
       state.tokenType = NUMBER;
     } else if (state.script[state.scriptIndex] == '"') {
       state.scriptIndex++;
+      final int start = state.scriptIndex;
       character = state.script[state.scriptIndex];
       while (character != '"' && (character != CR || character != LF)) {
-        state.token += character;
         state.scriptIndex++;
         character = state.script[state.scriptIndex];
       }
+      state.token = state.script.substring(start, state.scriptIndex);
       if (character == CR || character == LF) _handleError(_MISSINGQUOTE);
       state.scriptIndex++;
       state.tokenType = QUOTEDSTR;
@@ -2407,6 +2438,40 @@ class _GCWizardSCriptInterpreter {
     return false;
   }
 
+  // Performance: same set as isDelimiter, but on a code unit (no allocation).
+  static bool _isDelimiterCode(int c) {
+    switch (c) {
+      case 0x20: // space
+      case 0x0A: // \n
+      case 0x0D: // \r
+      case 0x2C: // ,
+      case 0x3B: // ;
+      case 0x3C: // <
+      case 0x3E: // >
+      case 0x2B: // +
+      case 0x2D: // -
+      case 0x2F: // /
+      case 0x2A: // *
+      case 0x25: // %
+      case 0x5E: // ^
+      case 0x3D: // =
+      case 0x28: // (
+      case 0x29: // )
+      case 0x26: // &
+      case 0x7C: // |
+      case 0x2190: // ←
+      case 0x2192: // →
+      case 0x7E: // ~
+        return true;
+      default:
+        return false;
+    }
+  }
+
+  static bool _isSpaceOrTabCode(int c) {
+    return c == 0x20 || c == 0x09;
+  }
+
   bool isSpaceOrTab(String c) {
     if (c == ' ' || c == '\t') return true;
     return false;
@@ -2417,7 +2482,18 @@ class _GCWizardSCriptInterpreter {
     return false;
   }
 
+  // Performance: caches lower-case conversion + map lookup per identifier.
+  final Map<String, int> _keywordCache = {};
+
   int lookUpToken(String s) {
+    final int? cached = _keywordCache[s];
+    if (cached != null) return cached;
+    final int result = _lookUpTokenUncached(s);
+    _keywordCache[s] = result;
+    return result;
+  }
+
+  int _lookUpTokenUncached(String s) {
     s = s.toLowerCase();
 
     if (registeredKeywords[s] != null) {

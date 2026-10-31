@@ -128,7 +128,19 @@ class ScriptState {
   int scriptIndex = 0;
 
   List<Object?> STDIN = [];
-  String STDOUT = '';
+
+  // Performance: output is collected in a StringBuffer; repeated String
+  // concatenation (STDOUT += ...) was quadratic in the output size.
+  final StringBuffer _stdout = StringBuffer();
+  String get STDOUT => _stdout.toString();
+  set STDOUT(String value) {
+    _stdout.clear();
+    _stdout.write(value);
+  }
+
+  void writeSTDOUT(String text) {
+    _stdout.write(text);
+  }
   num step = 1.0;
 
   String token = '';
