@@ -3,25 +3,26 @@
 Branches (Basis: `tmz-master-3.8.0` @ `59d9c1d67`):
 
 - `perf/gcwscript-quick-wins-master-3.8.0`: lokale Optimierungen
+- `perf/gcwscript-pretokenize-master-3.8.0`: darauf aufbauend einmaliges Tokenisieren
 
 Die Messwerte in der Tabelle stammen vom ersten Stand auf `tmz-master`. Eine
 Kontrollmessung auf `tmz-master-3.8.0` ergab dasselbe Bild (z. B. IF-Schleife
-1506 → 95 ms, verschachtelte FOR 1313 → 92 ms).
+1506 → 95 → 31 ms, verschachtelte FOR 1313 → 92 → 38 ms).
 
 ## Ergebnisse
 
 Laufzeit eines kompletten Skriptlaufs (`GCWizardScriptInterpretScript`), Median.
 
-| Programm | Was es testet | vorher | quick wins | Faktor |
-|---|---|---:|---:|---:|
-| `for_nested_arith` | 200×200 verschachtelte FOR, Arithmetik | 1092 ms | 91 ms | 12× |
-| `if_elseif_else` | 20.000× IF/ELSEIF/ELSE/ENDIF | 1479 ms | 117 ms | 13× |
-| `if_in_long_script` | wie oben, aber 400 Zeilen Code dahinter | 141.316 ms | 88 ms | 1606× |
-| `while_strings` | WHILE/WEND, String-Verkettung, CHAR/LEN/MID | 159 ms | 15 ms | 11× |
-| `repeat_gosub` | REPEAT/UNTIL mit 10.000 GOSUB/RETURN | 386 ms | 21 ms | 18× |
-| `functions_math` | 20.000× ABS(SIN()), SQRT, MOD | 1158 ms | 93 ms | 12× |
-| `list_sieve` | Primzahlsieb mit DIM/LISTADD/LISTGET/LISTINSERT/LISTREMOVE | 847 ms | 276 ms | 3,1× |
-| `print_heavy` | 5.000× PRINT | 123 ms | 6 ms | 20× |
+| Programm | Was es testet | vorher | quick wins | pretokenize | gesamt |
+|---|---|---:|---:|---:|---:|
+| `for_nested_arith` | 200×200 verschachtelte FOR, Arithmetik | 1092 ms | 91 ms | 36 ms | 30× |
+| `if_elseif_else` | 20.000× IF/ELSEIF/ELSE/ENDIF | 1479 ms | 117 ms | 41 ms | 36× |
+| `if_in_long_script` | wie oben, aber 400 Zeilen Code dahinter | 141.316 ms | 88 ms | 29 ms | 4900× |
+| `while_strings` | WHILE/WEND, String-Verkettung, CHAR/LEN/MID | 159 ms | 15 ms | 6,4 ms | 25× |
+| `repeat_gosub` | REPEAT/UNTIL mit 10.000 GOSUB/RETURN | 386 ms | 21 ms | 8,4 ms | 46× |
+| `functions_math` | 20.000× ABS(SIN()), SQRT, MOD | 1158 ms | 93 ms | 42 ms | 27× |
+| `list_sieve` | Primzahlsieb mit DIM/LISTADD/LISTGET/LISTINSERT/LISTREMOVE | 847 ms | 276 ms | 189 ms | 4,5× |
+| `print_heavy` | 5.000× PRINT | 123 ms | 6 ms | 2,8 ms | 44× |
 
 `list_sieve` wird von den Listenoperationen selbst dominiert (Einfügen und
 Entfernen verschieben jedes Mal die ganze Dart-Liste), nicht vom Interpreter.
@@ -29,6 +30,8 @@ Entfernen verschieben jedes Mal die ganze Dart-Liste), nicht vom Interpreter.
 Ausgaben aller Programme sind vorher und nachher identisch.
 
 ## Was geändert wurde
+
+### Branch `perf/gcwscript-quick-wins-master-3.8.0`
 
 - **Typprüfungen** (`_isANumber`, `_isAString`, …): `is`-Tests statt
   `value.toString().toLowerCase() == 'null'`. Das alte Verfahren erzeugte bei
@@ -49,7 +52,29 @@ Ausgaben aller Programme sind vorher und nachher identisch.
 genutzt). Ein neuer Operator muss in **beide**. Fehlt er in
 `_isDelimiterCode()`, wird z. B. `a@b` still als ein Variablenname gelesen.
 
+### Branch `perf/gcwscript-pretokenize-master-3.8.0`
+
+- **Einmal tokenisieren**: Jedes Token wird beim ersten Erreichen gescannt und
+  unter seiner Zeichenposition gespeichert. Schleifen, GOSUB, GOTO und
+  `putBack` lesen danach nur noch aus dem Cache.
+  `scriptIndex` bleibt bewusst eine Zeichenposition statt eines
+  Token-Index: Fehlerposition im Editor, Labels, INPUT-Fortsetzung und die
+  vorhandene Index-Arithmetik (`scriptIndex - 5` bei WHILE usw.) bleiben
+  dadurch ohne Änderung korrekt. Tokens, bei deren Scan ein Fehler gemeldet
+  wurde, werden nicht gecacht.
+- Zahlenliterale werden beim Tokenisieren einmal geparst.
+- Blocksuchen hängen nur von der Startposition ab und werden pro Position
+  gecacht.
+- `findEOL` nutzt eine vorberechnete Zeilenende-Tabelle.
+
+Ausprobiert und verworfen: die Funktionsdefinition in `executeFunction`
+einmal vorab nachschlagen. Das war messbar langsamer (42 → 60 ms bei
+`functions_math`), weil der Wert dann in alle sieben inneren Closures
+übernommen wird.
+
 ## Geänderte Dateien
+
+### Branch `perf/gcwscript-quick-wins-master-3.8.0`
 
 Alle Pfade relativ zu `lib/tools/general_tools/gcwizardscript/logic/` bzw. `test/tools/general_tools/gcwizardscript/`.
 
@@ -61,8 +86,17 @@ Alle Pfade relativ zu `lib/tools/general_tools/gcwizardscript/logic/` bzw. `test
 | `benchmark/gcwizard_script_benchmark_test.dart` | neu | Benchmark-Programme, lauffähig mit `flutter test` |
 | `benchmark/README.md` | neu | diese Datei |
 
+### Branch `perf/gcwscript-pretokenize-master-3.8.0` (zusätzlich)
+
+| Datei | +/− | Änderung |
+|---|---:|---|
+| `gcwizard_script.dart` | +318 / −135 | Token-Cache in `getToken` (alter Scanner jetzt `_scanToken`), vorgeparste Zahlen in `getValueOfAtomExpression`, Blocksuchen als reine `_scan_*`-Funktionen mit `_memoScan`-Cache, `findEOL` über Tabelle `_afterEOL`, Import `dart:typed_data` |
+| `gcwizard_script_classes.dart` | +11 / −0 | neue Klasse `_GCWizardScriptToken`, Fehlerzähler `ScriptState.errorCount` |
+| `gcwizard_script_error_handling.dart` | +1 / −0 | `_handleError` erhöht `errorCount` |
+| `benchmark/README.md` | | dritte Messspalte, Beschreibung des Umbaus |
+
 Nicht geändert: Widget, Funktionsteile (`gcwizard_script_functions_*.dart`),
-Konstanten, Fehlerbehandlung, Hilfetexte, bestehende Tests.
+Konstanten, Hilfetexte, bestehende Tests.
 
 ## Korrektheit
 
