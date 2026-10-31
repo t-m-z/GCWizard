@@ -35,6 +35,21 @@ Ausgaben aller Programme sind vorher und nachher identisch.
 - Caches für Schlüsselwort- und Konstanten-Lookup, `StringBuffer` für STDOUT,
   `putBack` ohne Schleife.
 
+## Geänderte Dateien
+
+Alle Pfade relativ zu `lib/tools/general_tools/gcwizardscript/logic/` bzw. `test/tools/general_tools/gcwizardscript/`.
+
+| Datei | +/− | Änderung |
+|---|---:|---|
+| `gcwizard_script.dart` | +145 / −69 | `isTokenAFunction` mit Set-Lookup, neues `_keywordAt` für alle Blocksuchen, Tokenizer über Code-Units/`substring`, `_isDelimiterCode`, Caches in `lookUpToken` und `getValueOfVariable`, `putBack` ohne Schleife, STDOUT-Zugriffe über `writeSTDOUT` |
+| `gcwizard_script_classes.dart` | +13 / −1 | `ScriptState.STDOUT` als `StringBuffer` mit Getter/Setter und `writeSTDOUT()` |
+| `gcwizard_script_test_datatypes.dart` | +29 / −50 | Typprüfungen als `is`-Tests, `_isALetterCode` / `_isADigitCode` |
+| `benchmark/gcwizard_script_benchmark_test.dart` | neu | Benchmark-Programme, lauffähig mit `flutter test` |
+| `benchmark/README.md` | neu | diese Datei |
+
+Nicht geändert: Widget, Funktionsteile (`gcwizard_script_functions_*.dart`),
+Konstanten, Fehlerbehandlung, Hilfetexte, bestehende Tests.
+
 ## Korrektheit
 
 Alle 330 Testfälle aus `test/tools/general_tools/gcwizardscript/logic`
