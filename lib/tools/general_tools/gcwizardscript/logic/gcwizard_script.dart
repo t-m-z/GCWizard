@@ -2439,6 +2439,7 @@ class _GCWizardSCriptInterpreter {
   }
 
   // Performance: same set as isDelimiter, but on a code unit (no allocation).
+  // Keep both in sync when adding operators.
   static bool _isDelimiterCode(int c) {
     switch (c) {
       case 0x20: // space
@@ -2462,6 +2463,7 @@ class _GCWizardSCriptInterpreter {
       case 0x2190: // ←
       case 0x2192: // →
       case 0x7E: // ~
+      case 0x40: // @ (xor)
         return true;
       default:
         return false;
