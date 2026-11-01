@@ -98,6 +98,24 @@ Alle Pfade relativ zu `lib/tools/general_tools/gcwizardscript/logic/` bzw. `test
 Nicht geändert: Widget, Funktionsteile (`gcwizard_script_functions_*.dart`),
 Konstanten, Hilfetexte, bestehende Tests.
 
+## Fortschrittsanzeige
+
+Der Interpreter meldet den Fortschritt jetzt als Anzahl ausgeführter
+Anweisungen (`IntegerText(PROGRESS_COUNT, n)`), alle 10.000 Anweisungen. Der
+Fortschrittsdialog (`GCWAsyncExecuter`) zeigt dafür einen laufenden Kreis mit
+der Zahl, z. B. `34 620 000`. Vorher zeigte er den Anteil am Limit von
+1 Milliarde Anweisungen in ganzen Prozent; bei langen Skripten blieb das
+minutenlang bei 0 % und sah aus, als liefe nichts.
+
+Andere Tools, die `DoubleText(PROGRESS, …)` melden, behalten ihre
+Prozentanzeige.
+
+| Datei | Änderung |
+|---|---|
+| `lib/common_widgets/async_executer/gcw_async_executer_parameters.dart` | neue Kennung `PROGRESS_COUNT` |
+| `lib/common_widgets/async_executer/gcw_async_executer.dart` | nimmt `IntegerText(PROGRESS_COUNT, …)` an, zeigt Zähler mit Tausendertrennung |
+| `logic/gcwizard_script.dart` | sendet `IntegerText(PROGRESS_COUNT, iterations)` statt Prozent |
+
 ## Korrektheit
 
 Alle 335 Testfälle aus `test/tools/general_tools/gcwizardscript/logic` (inkl.

@@ -62,7 +62,9 @@ class _GCWAsyncExecuterState<T> extends State<GCWAsyncExecuter<T>> {
 
   @override
   Widget build(BuildContext context) {
-    Stream<double> progress() async* {
+    // Yields a double (0..1) for percentage progress (PROGRESS) or an int for
+    // counter progress (PROGRESS_COUNT).
+    Stream<num> progress() async* {
       var parameter = await widget.parameter();
       if (!_cancel && parameter != null) {
         if (kIsWeb) {
@@ -82,6 +84,8 @@ class _GCWAsyncExecuterState<T> extends State<GCWAsyncExecuter<T>> {
             break;
           }
           if (event is DoubleText && event.text == PROGRESS) {
+            yield event.value;
+          } else if (event is IntegerText && event.text == PROGRESS_COUNT) {
             yield event.value;
           } else if (event is T) {
             _result = event;
@@ -124,14 +128,32 @@ class _GCWAsyncExecuterState<T> extends State<GCWAsyncExecuter<T>> {
                       ),
                     ),
                   ]))
-                : const Expanded(
-                    child: Stack(fit: StackFit.expand, children: [
-                    CircularProgressIndicator(
-                      backgroundColor: Colors.white,
-                      valueColor: AlwaysStoppedAnimation<Color>(Colors.amber),
-                      strokeWidth: 20,
-                    )
-                  ])),
+                : (snapshot.hasData && snapshot.data is int)
+                    ? Expanded(
+                        child: Stack(fit: StackFit.expand, children: [
+                        const CircularProgressIndicator(
+                          backgroundColor: Colors.white,
+                          valueColor: AlwaysStoppedAnimation<Color>(Colors.amber),
+                          strokeWidth: 20,
+                        ),
+                        Positioned(
+                          child: Center(
+                            child: Text(
+                              _formatCount(snapshot.data as int),
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(color: Colors.white, decoration: TextDecoration.none),
+                            ),
+                          ),
+                        ),
+                      ]))
+                    : const Expanded(
+                        child: Stack(fit: StackFit.expand, children: [
+                        CircularProgressIndicator(
+                          backgroundColor: Colors.white,
+                          valueColor: AlwaysStoppedAnimation<Color>(Colors.amber),
+                          strokeWidth: 20,
+                        )
+                      ])),
             const SizedBox(height: 10),
             GCWButton(
               text: i18n(context, 'common_cancel'),
@@ -142,6 +164,17 @@ class _GCWAsyncExecuterState<T> extends State<GCWAsyncExecuter<T>> {
             )
           ]);
         });
+  }
+
+  // 1234567 -> '1 234 567' (narrow no-break spaces, language-neutral)
+  String _formatCount(int count) {
+    final digits = count.toString();
+    final buffer = StringBuffer();
+    for (int i = 0; i < digits.length; i++) {
+      if (i > 0 && (digits.length - i) % 3 == 0) buffer.write('\u202F');
+      buffer.write(digits[i]);
+    }
+    return buffer.toString();
   }
 
   void _cancelProcess() {
