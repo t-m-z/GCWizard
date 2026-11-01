@@ -144,7 +144,8 @@ Future<GCWizardScriptOutput> GCWizardScriptInterpretScriptAsync(
       interpreter.jobDataInput,
       interpreter.jobDataCoords,
       interpreter.continueState,
-      sendAsyncPort: jobData.sendAsyncPort);
+      sendAsyncPort: jobData.sendAsyncPort,
+      webProgress: jobData.webProgress);
 
   jobData.sendAsyncPort?.send(output);
   return output;
@@ -152,13 +153,14 @@ Future<GCWizardScriptOutput> GCWizardScriptInterpretScriptAsync(
 
 Future<GCWizardScriptOutput> GCWizardScriptInterpretScript(
     String script, String input, LatLng coords, ScriptState? continueState,
-    {SendPort? sendAsyncPort}) async {
+    {SendPort? sendAsyncPort, bool Function(Object event)? webProgress}) async {
   if (script == '') {
     return GCWizardScriptOutput.empty();
   }
 
   _GCWizardSCriptInterpreter interpreter = _GCWizardSCriptInterpreter(
       script, input, coords, continueState, sendAsyncPort);
+  interpreter.webProgress = webProgress;
   return interpreter.run();
 }
 
@@ -310,6 +312,10 @@ class _GCWizardSCriptInterpreter {
 
   SendPort? sendAsyncPort;
 
+  // Web only (no isolates), see GCWAsyncExecuterParameters.webProgress.
+  bool Function(Object event)? webProgress;
+  static const WEB_YIELD_MILLISECONDS = 100;
+
   static const List<String> relationOperators = [
     GE,
     NE,
@@ -338,7 +344,7 @@ class _GCWizardSCriptInterpreter {
     _state = state; // for global routines
   }
 
-  GCWizardScriptOutput run() {
+  Future<GCWizardScriptOutput> run() async {
     _resetErrors();
     if (state.script == '') {
       return GCWizardScriptOutput.empty();
@@ -348,26 +354,33 @@ class _GCWizardSCriptInterpreter {
       getLabels(); // find the labels in the program
       getDATA(); // find the DATA in the program
     }
+    if (webProgress != null) return scriptInterpreterWeb(); // execute
     return scriptInterpreter(); // execute
   }
 
+  // Executes one statement.
+  void _executeStatement() {
+    getToken();
+    switch (state.tokenType) {
+      case NUMBER:
+        break;
+      case VARIABLE:
+        putBack();
+        executeAssignment();
+        break;
+      case FUNCTION:
+        executeFunction(state.token, state.tokenType);
+        break;
+      default:
+        executeCommand();
+    }
+  }
+
+  // Native platforms: runs in an isolate, synchronous loop.
   GCWizardScriptOutput scriptInterpreter() {
     int iterations = 0;
     do {
-      getToken();
-      switch (state.tokenType) {
-        case NUMBER:
-          break;
-        case VARIABLE:
-          putBack();
-          executeAssignment();
-          break;
-        case FUNCTION:
-          executeFunction(state.token, state.tokenType);
-          break;
-        default:
-          executeCommand();
-      }
+      _executeStatement();
 
       iterations++;
       if (sendAsyncPort != null && iterations % PROGRESS_STEP == 0) {
@@ -377,6 +390,32 @@ class _GCWizardSCriptInterpreter {
       }
     } while (state.token != EOP && !state.halt && iterations < MAXITERATIONS);
 
+    return _finishRun(iterations);
+  }
+
+  // Web: runs on the UI thread. Yields to the browser about every
+  // WEB_YIELD_MILLISECONDS so that progress is shown and cancel works.
+  Future<GCWizardScriptOutput> scriptInterpreterWeb() async {
+    int iterations = 0;
+    final Stopwatch sinceYield = Stopwatch()..start();
+    do {
+      _executeStatement();
+
+      iterations++;
+      if (iterations % 1000 == 0 && sinceYield.elapsedMilliseconds >= WEB_YIELD_MILLISECONDS) {
+        if (!webProgress!(IntegerText(PROGRESS_COUNT, iterations))) {
+          state.halt = true; // cancelled by the user
+          break;
+        }
+        await Future<void>.delayed(Duration.zero);
+        sinceYield.reset();
+      }
+    } while (state.token != EOP && !state.halt && iterations < MAXITERATIONS);
+
+    return _finishRun(iterations);
+  }
+
+  GCWizardScriptOutput _finishRun(int iterations) {
     if (iterations == MAXITERATIONS) _handleError(_INFINITELOOP);
     state.continueLoop = true;
     return GCWizardScriptOutput(

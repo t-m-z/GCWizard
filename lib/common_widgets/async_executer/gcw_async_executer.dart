@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:isolate';
 
 import 'package:flutter/foundation.dart' show kIsWeb;
@@ -68,7 +69,27 @@ class _GCWAsyncExecuterState<T> extends State<GCWAsyncExecuter<T>> {
       var parameter = await widget.parameter();
       if (!_cancel && parameter != null) {
         if (kIsWeb) {
-          _result = await widget.isolatedFunction(parameter);
+          // No isolates on the web: run on the UI thread. Jobs that support
+          // it report progress via webProgress and yield in between.
+          final events = StreamController<Object>();
+          parameter.webProgress = (event) {
+            if (!events.isClosed) events.add(event);
+            return !_cancel;
+          };
+          widget.isolatedFunction(parameter).then((result) {
+            if (!_cancel) _result = result;
+            events.close();
+          }, onError: (Object error, StackTrace stackTrace) {
+            events.addError(error, stackTrace);
+            events.close();
+          });
+          await for (var event in events.stream) {
+            if (event is DoubleText && event.text == PROGRESS) {
+              yield event.value;
+            } else if (event is IntegerText && event.text == PROGRESS_COUNT) {
+              yield event.value;
+            }
+          }
           return;
         } else {
           _receivePort = await _makeIsolate(widget.isolatedFunction, parameter);

@@ -82,6 +82,41 @@ Prozentanzeige.
 | `lib/common_widgets/async_executer/gcw_async_executer.dart` | nimmt `IntegerText(PROGRESS_COUNT, …)` an, zeigt Zähler mit Tausendertrennung |
 | `logic/gcwizard_script.dart` | sendet `IntegerText(PROGRESS_COUNT, iterations)` statt Prozent |
 
+## Web (Flutter Web, z. B. Edge/Chrome)
+
+Im Browser gibt es keine Dart-Isolates. `GCWAsyncExecuter` ruft die Funktion
+dort direkt im UI-Thread auf. Bisher lief der Interpreter dabei synchron
+durch: Der Browser war bis zum Ende blockiert, Fortschrittskreis und
+Abbrechen funktionierten nicht.
+
+Jetzt gibt es dafür einen eigenen Weg:
+
+- `GCWAsyncExecuterParameters.webProgress`: Callback, nur im Web gesetzt.
+  Nimmt dieselben Meldungen wie der `SendPort` entgegen und liefert `false`,
+  wenn der Benutzer abgebrochen hat.
+- `GCWAsyncExecuter` setzt den Callback im Web und zeigt die Meldungen an.
+  Tools ohne Unterstützung laufen wie bisher.
+- Der Interpreter hat im Web eine eigene Schleife (`scriptInterpreterWeb`),
+  die etwa alle 100 ms den Zähler meldet und kurz an den Browser abgibt. Auf
+  allen anderen Plattformen läuft die bisherige synchrone Schleife im Isolate,
+  ohne Tempoverlust.
+
+| Datei | Änderung |
+|---|---|
+| `lib/common_widgets/async_executer/gcw_async_executer_parameters.dart` | Feld `webProgress` |
+| `lib/common_widgets/async_executer/gcw_async_executer.dart` | Web-Pfad mit Fortschritt und Abbrechen |
+| `logic/gcwizard_script.dart` | `run()` asynchron, `_executeStatement()`, `scriptInterpreterWeb()`, `_finishRun()` |
+
+Geprüft durch Simulation des Web-Pfads (UI kommt alle ~100 ms dran,
+Abbrechen greift nach ~100 ms) und durch Ausführen aller Testfälle als
+JavaScript (dart2js unter Node): Basis und Branch liefern im Browser
+identische Ergebnisse.
+
+Bestehende Web-Eigenheit, nicht durch diese Änderungen: Im Browser fehlt bei
+ganzzahligen Kommazahlen das `.0` (`print 6 / 3` ergibt `2` statt `2.0`).
+77 der Testfälle erwarten die VM-Ausgabe und schlagen im Web deshalb schon auf
+der Basis fehl.
+
 ## Korrektheit
 
 Alle 335 Testfälle aus `test/tools/general_tools/gcwizardscript/logic` (inkl.
