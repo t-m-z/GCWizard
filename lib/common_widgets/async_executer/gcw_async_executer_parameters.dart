@@ -11,5 +11,12 @@ class GCWAsyncExecuterParameters {
   SendPort? sendAsyncPort;
   final Object? parameters;
 
+  // Web only: there are no isolates on the web, so the job runs on the UI
+  // thread. Long-running jobs can report progress here (same events as on
+  // sendAsyncPort) and should briefly yield to the event loop afterwards so
+  // that the UI can repaint. Returns false when the user pressed cancel.
+  // Always null on other platforms (not sent to isolates).
+  bool Function(Object event)? webProgress;
+
   GCWAsyncExecuterParameters(this.parameters);
 }
