@@ -1,6 +1,12 @@
 # GC Wizard Script – Performance-Messung
 
-Branch: `perf/gcwscript-quick-wins` (Basis: `tmz-master` @ `88006fcdc`)
+Branches (Basis: `tmz-nightly-3.8.0-666-36-25` @ `db4f88967`):
+
+- `perf/gcwscript-quick-wins-3.8.0`: lokale Optimierungen
+
+Die Messwerte in der Tabelle stammen vom ersten Stand auf `tmz-master`. Eine
+Kontrollmessung auf `nightly` ergab dasselbe Bild (z. B. IF-Schleife
+1519 → 93 ms, Funktionsaufrufe 1245 → 91 ms).
 
 ## Ergebnisse
 
@@ -10,12 +16,15 @@ Laufzeit eines kompletten Skriptlaufs (`GCWizardScriptInterpretScript`), Median.
 |---|---|---:|---:|---:|
 | `for_nested_arith` | 200×200 verschachtelte FOR, Arithmetik | 1092 ms | 91 ms | 12× |
 | `if_elseif_else` | 20.000× IF/ELSEIF/ELSE/ENDIF | 1479 ms | 117 ms | 13× |
-| `if_in_long_script` | wie oben, aber 400 Zeilen Code dahinter | 141.316 ms | 88 ms | 1600× |
+| `if_in_long_script` | wie oben, aber 400 Zeilen Code dahinter | 141.316 ms | 88 ms | 1606× |
 | `while_strings` | WHILE/WEND, String-Verkettung, CHAR/LEN/MID | 159 ms | 15 ms | 11× |
-| `repeat_gosub` | REPEAT/UNTIL mit 10.000 GOSUB/RETURN | 386 ms | 21 ms | 19× |
+| `repeat_gosub` | REPEAT/UNTIL mit 10.000 GOSUB/RETURN | 386 ms | 21 ms | 18× |
 | `functions_math` | 20.000× ABS(SIN()), SQRT, MOD | 1158 ms | 93 ms | 12× |
-| `list_sieve` | Primzahlsieb mit DIM/LISTADD/LISTGET/LISTINSERT/LISTREMOVE | 847 ms | 276 ms | 3× |
-| `print_heavy` | 5.000× PRINT | 123 ms | 6 ms | 21× |
+| `list_sieve` | Primzahlsieb mit DIM/LISTADD/LISTGET/LISTINSERT/LISTREMOVE | 847 ms | 276 ms | 3,1× |
+| `print_heavy` | 5.000× PRINT | 123 ms | 6 ms | 20× |
+
+`list_sieve` wird von den Listenoperationen selbst dominiert (Einfügen und
+Entfernen verschieben jedes Mal die ganze Dart-Liste), nicht vom Interpreter.
 
 Ausgaben aller Programme sind vorher und nachher identisch.
 
@@ -35,13 +44,18 @@ Ausgaben aller Programme sind vorher und nachher identisch.
 - Caches für Schlüsselwort- und Konstanten-Lookup, `StringBuffer` für STDOUT,
   `putBack` ohne Schleife.
 
+**Achtung beim Ergänzen neuer Operatoren:** Es gibt jetzt zwei Trennerprüfungen,
+`isDelimiter()` (String) und `_isDelimiterCode()` (Code-Unit, im Tokenizer
+genutzt). Ein neuer Operator muss in **beide**. Fehlt er in
+`_isDelimiterCode()`, wird z. B. `a@b` still als ein Variablenname gelesen.
+
 ## Geänderte Dateien
 
 Alle Pfade relativ zu `lib/tools/general_tools/gcwizardscript/logic/` bzw. `test/tools/general_tools/gcwizardscript/`.
 
 | Datei | +/− | Änderung |
 |---|---:|---|
-| `gcwizard_script.dart` | +145 / −69 | `isTokenAFunction` mit Set-Lookup, neues `_keywordAt` für alle Blocksuchen, Tokenizer über Code-Units/`substring`, `_isDelimiterCode`, Caches in `lookUpToken` und `getValueOfVariable`, `putBack` ohne Schleife, STDOUT-Zugriffe über `writeSTDOUT` |
+| `gcwizard_script.dart` | +147 / −69 | `isTokenAFunction` mit Set-Lookup, neues `_keywordAt` für alle Blocksuchen, Tokenizer über Code-Units/`substring`, `_isDelimiterCode` (inkl. `@`), Caches in `lookUpToken` und `getValueOfVariable`, `putBack` ohne Schleife, STDOUT-Zugriffe über `writeSTDOUT` |
 | `gcwizard_script_classes.dart` | +13 / −1 | `ScriptState.STDOUT` als `StringBuffer` mit Getter/Setter und `writeSTDOUT()` |
 | `gcwizard_script_test_datatypes.dart` | +29 / −50 | Typprüfungen als `is`-Tests, `_isALetterCode` / `_isADigitCode` |
 | `benchmark/gcwizard_script_benchmark_test.dart` | neu | Benchmark-Programme, lauffähig mit `flutter test` |
@@ -52,11 +66,12 @@ Konstanten, Fehlerbehandlung, Hilfetexte, bestehende Tests.
 
 ## Korrektheit
 
-Alle 330 Testfälle aus `test/tools/general_tools/gcwizardscript/logic`
+Alle 335 Testfälle aus `test/tools/general_tools/gcwizardscript/logic` (inkl.
+der Zeilennummer-Tests aus `nightly`) plus 4 Zusatzfälle für den Operator `@`
 (ohne Koordinaten, Krypto, Hashes, Geocaching, Basen, Wegpunkte, Dateien,
 Grafik, Datum) liefern exakt dieselbe Ausgabe und Fehlermeldung wie vorher
 (Golden-Vergleich). 4 Fälle (`MOD(11, )`, `SGN( )`, `GGT(11, )`, `KGV(11, )`)
-schlagen schon auf `tmz-master` fehl und sind unverändert.
+schlagen schon auf `nightly` fehl und sind unverändert.
 
 Einzige bewusste Verhaltensänderung: Der String `"null"` (in beliebiger
 Schreibweise) wurde von den alten Typprüfungen wie ein fehlender Wert
@@ -66,8 +81,8 @@ behandelt, jetzt ist er ein normaler String.
 
 - Dart SDK 3.13.7, Linux x64, 2 Kerne
 - Interpreter AOT-kompiliert (`dart compile exe`), wie in der App
-- Median aus 7 Läufen (vorher: 3 Läufe; `if_in_long_script` vorher: 3 Läufe
-  in einem separaten Durchgang)
+- Median aus 7 Läufen, alle Stände abwechselnd gemessen (vorher: 3 Läufe;
+  `if_in_long_script` vorher: 3 Läufe in einem separaten Durchgang)
 - Die Maschine streut um ±20 %; Faktoren sind belastbar, Einzelwerte nicht.
 
 Da Flutter-SDK und pub.dev in der Messumgebung nicht erreichbar waren, lief
