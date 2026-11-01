@@ -371,7 +371,9 @@ class _GCWizardSCriptInterpreter {
 
       iterations++;
       if (sendAsyncPort != null && iterations % PROGRESS_STEP == 0) {
-        sendAsyncPort?.send(DoubleText(PROGRESS, (iterations / MAXITERATIONS)));
+        // Progress as number of executed statements: a percentage of
+        // MAXITERATIONS stayed at 0 % for minutes in long-running scripts.
+        sendAsyncPort?.send(IntegerText(PROGRESS_COUNT, iterations));
       }
     } while (state.token != EOP && !state.halt && iterations < MAXITERATIONS);
 
