@@ -1,12 +1,12 @@
 # GC Wizard Script – Performance-Messung
 
-Branches (Basis: `tmz-nightly-3.8.0-666-36-25` @ `db4f88967`):
+Branches (Basis: `tmz-master-3.8.0` @ `59d9c1d67`):
 
-- `perf/gcwscript-quick-wins-3.8.0`: lokale Optimierungen
+- `perf/gcwscript-quick-wins-master-3.8.0`: lokale Optimierungen
 
 Die Messwerte in der Tabelle stammen vom ersten Stand auf `tmz-master`. Eine
-Kontrollmessung auf `nightly` ergab dasselbe Bild (z. B. IF-Schleife
-1519 → 93 ms, Funktionsaufrufe 1245 → 91 ms).
+Kontrollmessung auf `tmz-master-3.8.0` ergab dasselbe Bild (z. B. IF-Schleife
+1506 → 95 ms, verschachtelte FOR 1313 → 92 ms).
 
 ## Ergebnisse
 
@@ -67,15 +67,31 @@ Konstanten, Fehlerbehandlung, Hilfetexte, bestehende Tests.
 ## Korrektheit
 
 Alle 335 Testfälle aus `test/tools/general_tools/gcwizardscript/logic` (inkl.
-der Zeilennummer-Tests aus `nightly`) plus 4 Zusatzfälle für den Operator `@`
+der Zeilennummer-Tests) plus 4 Zusatzfälle für den Operator `@`
 (ohne Koordinaten, Krypto, Hashes, Geocaching, Basen, Wegpunkte, Dateien,
 Grafik, Datum) liefern exakt dieselbe Ausgabe und Fehlermeldung wie vorher
 (Golden-Vergleich). 4 Fälle (`MOD(11, )`, `SGN( )`, `GGT(11, )`, `KGV(11, )`)
-schlagen schon auf `nightly` fehl und sind unverändert.
+schlagen schon auf `tmz-master-3.8.0` fehl und sind unverändert.
 
 Einzige bewusste Verhaltensänderung: Der String `"null"` (in beliebiger
 Schreibweise) wurde von den alten Typprüfungen wie ein fehlender Wert
 behandelt, jetzt ist er ein normaler String.
+
+## Nebenbefund: JIT-Fehler auf der Basis
+
+Auf `tmz-master-3.8.0` rechnet der Interpreter im **JIT-Modus** (so läuft
+Flutter im Debug-Build) nach einer bestimmten Abfolge falsch. Wird zuerst
+eine Schleife mit Ganzzahl-Additionen ausgeführt, danach Kommazahlen, dann
+gemischt, ergibt `a = "ab"`, `b = "cd"`, `print a + b` nur `ab`. Ebenso ergibt
+`input x`, `input y`, `print x + y` mit den Eingaben 5 und 3 im Ablauf der
+App (Isolate, INPUT-Fortsetzung) `5.0` statt `8.0`.
+
+Schon das Auswerten von `op == '+'` vor dem `switch` in
+`evaluateExpressionAddSubOperators` lässt den Fehler verschwinden. Das spricht
+für ein Deoptimierungsproblem der Dart-VM, nicht für einen Logikfehler.
+Im AOT-Modus (Release-Build) tritt er nicht auf. Beide Performance-Branches
+liefern in allen diesen Abläufen das richtige Ergebnis, auch im JIT-Modus.
+Beobachtet mit Dart 3.13.7; mit anderen SDK-Versionen nicht geprüft.
 
 ## Messbedingungen
 
