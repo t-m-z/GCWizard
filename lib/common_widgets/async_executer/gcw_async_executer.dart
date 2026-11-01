@@ -49,10 +49,71 @@ class _GCWAsyncExecuterState<T> extends State<GCWAsyncExecuter<T>> {
 
   _GCWAsyncExecuterState();
 
+  // Created once: build() can run several times (e.g. when the keyboard
+  // closes or the dialog animates). A stream created in build() started a new
+  // isolate on every rebuild; the old isolates were never killed and kept
+  // running, so no progress value ever reached the dialog.
+  late final Stream<num> _progressStream;
+
   @override
   void initState() {
     super.initState();
     isOverlay = widget.isOverlay;
+    _progressStream = _progress();
+  }
+
+  // Yields a double (0..1) for percentage progress (PROGRESS) or an int for
+  // counter progress (PROGRESS_COUNT).
+  Stream<num> _progress() async* {
+    var parameter = await widget.parameter();
+    if (!_cancel && parameter != null) {
+      if (kIsWeb) {
+        // No isolates on the web: run on the UI thread. Jobs that support
+        // it report progress via webProgress and yield in between.
+        final events = StreamController<Object>();
+        parameter.webProgress = (event) {
+          if (!events.isClosed) events.add(event);
+          return !_cancel;
+        };
+        widget.isolatedFunction(parameter).then((result) {
+          if (!_cancel) _result = result;
+          events.close();
+        }, onError: (Object error, StackTrace stackTrace) {
+          events.addError(error, stackTrace);
+          events.close();
+        });
+        await for (var event in events.stream) {
+          if (event is DoubleText && event.text == PROGRESS) {
+            yield event.value;
+          } else if (event is IntegerText && event.text == PROGRESS_COUNT) {
+            yield event.value;
+          }
+        }
+        return;
+      } else {
+        _receivePort = await _makeIsolate(widget.isolatedFunction, parameter);
+      }
+      if (_cancel) {
+        _cancelProcess();
+        return;
+      }
+
+      await for (var event in _receivePort!) {
+        if (_cancel) {
+          _cancelProcess();
+          break;
+        }
+        if (event is DoubleText && event.text == PROGRESS) {
+          yield event.value;
+        } else if (event is IntegerText && event.text == PROGRESS_COUNT) {
+          yield event.value;
+        } else if (event is T) {
+          _result = event;
+          _receivePort!.close();
+          break;
+        }
+      }
+    }
   }
 
   @override
@@ -63,62 +124,8 @@ class _GCWAsyncExecuterState<T> extends State<GCWAsyncExecuter<T>> {
 
   @override
   Widget build(BuildContext context) {
-    // Yields a double (0..1) for percentage progress (PROGRESS) or an int for
-    // counter progress (PROGRESS_COUNT).
-    Stream<num> progress() async* {
-      var parameter = await widget.parameter();
-      if (!_cancel && parameter != null) {
-        if (kIsWeb) {
-          // No isolates on the web: run on the UI thread. Jobs that support
-          // it report progress via webProgress and yield in between.
-          final events = StreamController<Object>();
-          parameter.webProgress = (event) {
-            if (!events.isClosed) events.add(event);
-            return !_cancel;
-          };
-          widget.isolatedFunction(parameter).then((result) {
-            if (!_cancel) _result = result;
-            events.close();
-          }, onError: (Object error, StackTrace stackTrace) {
-            events.addError(error, stackTrace);
-            events.close();
-          });
-          await for (var event in events.stream) {
-            if (event is DoubleText && event.text == PROGRESS) {
-              yield event.value;
-            } else if (event is IntegerText && event.text == PROGRESS_COUNT) {
-              yield event.value;
-            }
-          }
-          return;
-        } else {
-          _receivePort = await _makeIsolate(widget.isolatedFunction, parameter);
-        }
-        if (_cancel) {
-          _cancelProcess();
-          return;
-        }
-
-        await for (var event in _receivePort!) {
-          if (_cancel) {
-            _cancelProcess();
-            break;
-          }
-          if (event is DoubleText && event.text == PROGRESS) {
-            yield event.value;
-          } else if (event is IntegerText && event.text == PROGRESS_COUNT) {
-            yield event.value;
-          } else if (event is T) {
-            _result = event;
-            _receivePort!.close();
-            break;
-          }
-        }
-      }
-    }
-
     return StreamBuilder(
-        stream: progress(),
+        stream: _progressStream,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             if (widget.isOverlay) {
