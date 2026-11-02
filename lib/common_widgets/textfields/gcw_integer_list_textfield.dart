@@ -27,12 +27,12 @@ class _GCWIntegerListTextFieldState extends State<GCWIntegerListTextField> {
       hintText: widget.hintText,
       onChanged: (text) {
         setState(() {
-          var list = textToIntList(text);
+          var list = textToIntList(text, allowNegativeValues: true);
           widget.onChanged(IntegerListText(text, list));
         });
       },
       controller: widget.controller,
-      inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9\s]'))],
+      inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[-0-9\s]'))],
     );
   }
 }

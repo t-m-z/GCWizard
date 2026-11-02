@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/common_widgets/outputs/gcw_default_output.dart';
-import 'package:gc_wizard/common_widgets/spinners/gcw_integer_spinner.dart';
+import 'package:gc_wizard/common_widgets/textfields/gcw_integer_list_textfield.dart';
+import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/utils/math_utils.dart';
 
 class LCM extends StatefulWidget {
@@ -11,29 +12,34 @@ class LCM extends StatefulWidget {
 }
 
 class _LCMState extends State<LCM> {
-  int _currentInputA = 0;
-  int _currentInputB = 0;
+  late TextEditingController _inputController;
+
+  var _currentInput = defaultIntegerListText;
+
+
+  @override
+  void initState() {
+    super.initState();
+    _inputController = TextEditingController(text: _currentInput.text);
+  }
+
+  @override
+  void dispose() {
+    _inputController.dispose();
+
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        GCWIntegerSpinner(
-          value: _currentInputA,
-          onChanged: (value) {
-            setState(() {
-              _currentInputA = value;
-            });
-          },
-        ),
-        GCWIntegerSpinner(
-          value: _currentInputB,
-          onChanged: (value) {
-            setState(() {
-              _currentInputB = value;
-            });
-          },
-        ),
+        GCWIntegerListTextField(controller: _inputController,
+            onChanged: (text) {
+              setState(() {
+                _currentInput = text;
+              });
+            }),
         _buildOutput()
       ],
     );
@@ -41,7 +47,7 @@ class _LCMState extends State<LCM> {
 
   Widget _buildOutput() {
     return GCWDefaultOutput(
-      child: lcm(_currentInputA, _currentInputB).toString(),
+      child: _currentInput.value.isEmpty ? '' : lcmList(_currentInput.value).toString(),
     );
   }
 }

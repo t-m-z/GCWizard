@@ -55,6 +55,8 @@ num round(double number, {int precision = 0}) {
   return (number * exp).round() / exp;
 }
 
+int gcdList(List<int> zahlen) => zahlen.fold(0, gcd);
+
 int gcd(int a, int b) {
   int h;
   if (a == 0) return b.abs();
@@ -69,15 +71,14 @@ int gcd(int a, int b) {
   return a.abs();
 }
 
+int lcmList(List<int> zahlen) => zahlen.fold(1, lcm);
+
 int lcm(int a, int b) {
-  if (gcd(a, b) == 00) return 0;
+  if (a == 0 || b == 0) return 0;
 
-  int result = (a * b).abs() ~/ gcd(a, b);
+  final result = (a ~/ gcd(a, b) * b).abs();
 
-  if ((a < 0) || (b < 0)) {
-    return -result;
-  }
-  return result;
+  return (a < 0 || b < 0) ? -result : result;
 }
 
 double cot(double a) {
