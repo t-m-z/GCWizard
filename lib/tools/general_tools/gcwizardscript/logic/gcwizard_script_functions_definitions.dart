@@ -158,6 +158,7 @@ const List<String> _Functions_10 = [
   'LISTINSERT(',
   'LISTLENGTH(',
   'LISTREMOVE(',
+  'LISTEQUALS(',
   'PROJECTION(',
   'ROMANTODEC(',
   'WPTSCENTER(',
@@ -168,11 +169,13 @@ const List<String> _Functions_11 = [
   'LISTSHUFFLE(',
   'LISTISEMPTY(',
   'WRITETOFILE(',
+  'LISTSUBLIST(',
 ];
 const List<String> _Functions_12 = [
   'LISTTOSTRING(',
   'READFROMFILE(',
   'TEXTANALYSIS(',
+  'LISTREMOVEAT(',
 ];
 const List<String> _Functions_13 = [
   'BINARYTOFLOAT(',
@@ -181,6 +184,7 @@ const List<String> _Functions_13 = [
 ];
 const List<String> _Functions_14 = [
   'LISTISNOTEMPTY(',
+  'LISTREMOVELAST(',
 ];
 const List<String> _Functions_15 = [
   'CENTERTWOPOINTS(',
@@ -231,6 +235,8 @@ const Map<String, _GCWizardScriptClassFunctionDefinition> _FUNCTIONS = {
   'LISTADDALL': _GCWizardScriptClassFunctionDefinition(_listAddAll, 2, functionReturn: false),
   'LISTINSERT': _GCWizardScriptClassFunctionDefinition(_listInsert, 3, functionReturn: false),
   'LISTREMOVE': _GCWizardScriptClassFunctionDefinition(_listRemove, 2, functionReturn: false),
+  'LISTREMOVEAT': _GCWizardScriptClassFunctionDefinition(_listRemoveAt, 2, functionReturn: false),
+  'LISTREMOVELAST': _GCWizardScriptClassFunctionDefinition(_listRemoveLast, 1, functionReturn: false),
   'LISTSHUFFLE': _GCWizardScriptClassFunctionDefinition(_listShuffle, 1, functionReturn: false),
   'LISTSORT': _GCWizardScriptClassFunctionDefinition(_listSort, 2, functionReturn: false),
   'LISTLENGTH': _GCWizardScriptClassFunctionDefinition(_listLength, 1),
@@ -239,6 +245,8 @@ const Map<String, _GCWizardScriptClassFunctionDefinition> _FUNCTIONS = {
   'LISTTOSTRING': _GCWizardScriptClassFunctionDefinition(_listToString, 1),
   'LISTGET': _GCWizardScriptClassFunctionDefinition(_listGet, 2),
   'LISTFROM': _GCWizardScriptClassFunctionDefinition(_listFrom, 2, functionReturn: false),
+  'LISTEQUALS': _GCWizardScriptClassFunctionDefinition(_listEquals, 2, ),
+  'LISTSUBLIST': _GCWizardScriptClassFunctionDefinition(_listSublist, 4, functionReturn: false),
 
   // math
   'ABS': _GCWizardScriptClassFunctionDefinition(_abs, 1),

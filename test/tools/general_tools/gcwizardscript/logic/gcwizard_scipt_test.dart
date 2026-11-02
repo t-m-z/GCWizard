@@ -24,6 +24,7 @@ part 'gcwizard_script_commands_if.dart';
 part 'gcwizard_script_commands_nested_loop_if.dart';
 part 'gcwizard_script_commands_nested_loop_case.dart';
 part 'gcwizard_script_line_numbers.dart';
+part 'gcwizard_script_functions_lists.dart';
 
 void main() {
   group("gcwizard_script.interpretScript:", () {
@@ -46,13 +47,13 @@ void main() {
    // _inputsToExpected.addAll(_inputsMathNestedFunctionsToExpected); // passed 05.05.2024
    // _inputsToExpected.addAll(_inputsNestedLoopsToExpected); // passed 05.05.2024
    // _inputsToExpected.addAll(_inputsConstToExpected); // passed 05.05.2024
-    _inputsToExpected.addAll(_inputsCoordinatesToExpected); // passed 05.05.2024
+   // _inputsToExpected.addAll(_inputsCoordinatesToExpected); // passed 05.05.2024
    // _inputsToExpected.addAll(_inputsCommandsPRINTToExpected); // passed 22.05.2024
    // _inputsToExpected.addAll(_inputsCommandsIFToExpected); // passed 20.07.2024
    // _inputsToExpected.addAll(_inputsCommandsFORIFToExpected); // passed 20.07.2024
    // _inputsToExpected.addAll(_inputsCommandsFORCASEToExpected); // passed 20.07.2024
    // _inputsToExpected.addAll(_inputsLineNumbersToExpected); // passed
-
+_inputsToExpected.addAll(_inputsListsToExpected);
 
     for (var elem in _inputsToExpected) {
       test('code: ${elem['code']}, input: ${elem['input']}', () async {

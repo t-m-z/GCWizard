@@ -27,36 +27,27 @@ class _GCWList {
     _contents.shuffle();
   }
 
-  void sort() {
-    //https://stackoverflow.com/questions/67847956/can-i-sort-listdynamic-in-dart
-    _contents.sort(
-      (a, b) {
-        if (a is num && b is num) {
-          return a.compareTo(b);
-        }
-        if (a is String && b is String) {
-          return a.compareTo(b);
-        }
-        if (a is _GCWList && b is _GCWList) {
-          return a.length().compareTo(b.length());
-        }
+  static int _compare(Object a, Object b) {
+    if (a is num && b is num) return a.compareTo(b);
+    if (a is String && b is String) return a.compareTo(b);
+    if (a is _GCWList && b is _GCWList) return a.length().compareTo(b.length());
 
-        if (a is num && b is String) {
-          return -1;
-        } else if (a is num && b is _GCWList) {
-          return -1;
-        } else if (a is String && b is _GCWList) {
-          return -1;
-        } else if (a is _GCWList && b is num) {
-          return 1;
-        } else if (a is _GCWList && b is String) {
-          return 1;
-        } else if (a is String && b is num) {
-          return 1;
-        }
-        return 0;
-      },
-    );
+    // Typreihenfolge: num < String < _GCWList
+    int rank(Object o) => o is num ? 0 : o is String ? 1 : o is _GCWList ? 2 : 3;
+    return rank(a).compareTo(rank(b));
+  }
+
+  void sort() {
+    _contents.sort(_compare);
+  }
+
+  void sortDescending() {
+    _contents.sort((a, b) => _compare(b, a));
+  }
+
+  // echte Umkehrung der aktuellen Reihenfolge (falls benötigt)
+  void reverse() {
+    _contents = _contents.reversed.toList();
   }
 
   void insert(int index, Object? value) {
@@ -64,41 +55,19 @@ class _GCWList {
   }
 
   void remove(
-    int index,
-  ) {
-    _contents.remove(index);
+      Object? element,
+      ) {
+    _contents.remove(element);
   }
 
-  void reverse() {
-    //https://stackoverflow.com/questions/67847956/can-i-sort-listdynamic-in-dart
-    _contents.sort(
-      (a, b) {
-        if (a is num && b is num) {
-          return a.compareTo(b);
-        }
-        if (a is String && b is String) {
-          return a.compareTo(b);
-        }
-        if (a is _GCWList && b is _GCWList) {
-          return a.length().compareTo(b.length());
-        }
+  void removeAt(
+    int index,
+  ) {
+    _contents.removeAt(index);
+  }
 
-        if (a is num && b is String) {
-          return 1;
-        } else if (a is num && b is _GCWList) {
-          return 1;
-        } else if (a is String && b is _GCWList) {
-          return 1;
-        } else if (a is _GCWList && b is num) {
-          return -1;
-        } else if (a is _GCWList && b is String) {
-          return -1;
-        } else if (a is String && b is num) {
-          return -1;
-        }
-        return 0;
-      },
-    );
+  void removeLast() {
+    _contents.removeLast();
   }
 
   @override
@@ -115,7 +84,11 @@ class _GCWList {
   List<Object> getContent() {
     return _contents;
   }
-}
+
+  List<Object> subList(int start, int end){
+    return _contents.sublist(start, end);
+  }}
+
 
 void _listClear(_GCWList? list) {
   if (list != null) {
@@ -194,7 +167,23 @@ void _listInsert(_GCWList? list, Object? index, Object? value) {
   }
 }
 
-void _listRemove(_GCWList? list, Object? index) {
+void _listRemove(_GCWList? list, Object? element){
+  if (list != null) {
+    list.remove(element);
+  } else {
+    _handleError(_INVALIDLIST);
+  }
+}
+
+void _listRemoveLast(_GCWList? list){
+  if (list != null) {
+    list.removeLast();
+  } else {
+    _handleError(_INVALIDLIST);
+  }
+}
+
+void _listRemoveAt(_GCWList? list, Object? index) {
   if (list != null) {
     if (_isNotAInt(index)) {
       _handleError(_INVALIDTYPECAST);
@@ -202,7 +191,7 @@ void _listRemove(_GCWList? list, Object? index) {
       if (index as int >= list.length()) {
         _handleError(_RANGEERROR);
       } else {
-        list.remove(index);
+        list.removeAt(index);
       }
     }
   } else {
@@ -219,13 +208,16 @@ int _listLength(_GCWList? list) {
 }
 
 int _listIsEmpty(_GCWList? list) {
-  if (_listLength(list) == 0) return 1;
-  return 0;
+  if (list != null) {
+    if (_listLength(list) == 0) return 1;
+    return 0;
+  } else {
+    return 0;
+  }
 }
 
 int _listIsNotEmpty(_GCWList? list) {
-  if (_listLength(list) == 0) return 0;
-  return 1;
+  return _listIsEmpty(list) == 1 ? 0 : 1;
 }
 
 Object? _listGet(_GCWList? list, Object? index) {
@@ -265,3 +257,58 @@ void _listFrom(Object? listName, Object? value) {
     _listAdd(_state.variables[listName] as _GCWList, value);
   }
 }
+
+bool _gcwListContentEquals(_GCWList a, _GCWList b) {
+  if (identical(a, b)) return true;
+  final x = a.getContent();
+  final y = b.getContent();
+  if (x.length != y.length) return false;
+  for (var i = 0; i < x.length; i++) {
+    final ex = x[i];
+    final ey = y[i];
+    if (ex is _GCWList && ey is _GCWList) {
+      if (!_gcwListContentEquals(ex, ey)) return false;
+    } else if (ex.runtimeType != ey.runtimeType || ex != ey) {
+      return false;
+    }
+  }
+  return true;
+}
+
+int _listEquals(_GCWList? list1, _GCWList? list2) {
+  if (list1 == null || list2 == null) {
+    _handleError(_INVALIDLIST);
+    return 0;
+  }
+  return _gcwListContentEquals(list1, list2) ? 1 : 0;
+}
+
+void _listSublist(Object? subListName, _GCWList? list, Object? start, Object? end) {
+  if (_isNotAString(subListName)) {
+    _handleError(_INVALIDTYPECAST);
+    return;
+  }
+  if (list == null) {
+    _handleError(_INVALIDLIST);
+    return;
+  }
+  if (_isNotAInt(start) || _isNotAInt(end)) {
+    _handleError(_INVALIDTYPECAST);
+    return;
+  }
+
+  final s = start as int;
+  final e = end as int;
+  if (s < 0 || e > list.length() || s > e) {
+    _handleError(_RANGEERROR);
+    return;
+  }
+
+  final result = _GCWList();
+  for (final element in list.subList(s, e)) {
+    result.add(element);
+  }
+  _state.variables[subListName as String] = _GCWList();
+  _listAddAll(_state.variables[subListName] as _GCWList, result);
+}
+
